@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'HTF_lecture'
+project = 'HydrothermalFoam Lecture'
 copyright = '2020, Lars Ruepke'
 author = 'Lars Ruepke'
 
