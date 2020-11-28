@@ -3,7 +3,7 @@
 
 # Fill this out with the correct org/repo
 ORG=lruepke
-REPO=/HTF_lecture
+REPO=HTF_lecture
 # This probably should match an email for one of your users.
 EMAIL=lars.ruepke@gmail.com
 
