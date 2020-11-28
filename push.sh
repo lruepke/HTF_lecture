@@ -2,7 +2,7 @@
 # Push HTML files to gh-pages automatically.
 
 # Fill this out with the correct org/repo
-ORG=HTF_lecture
+ORG=lruepke/HTF_lecture
 REPO=site
 # This probably should match an email for one of your users.
 EMAIL=lars.ruepke@gmail.com
