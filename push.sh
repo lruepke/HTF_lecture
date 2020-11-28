@@ -2,8 +2,8 @@
 # Push HTML files to gh-pages automatically.
 
 # Fill this out with the correct org/repo
-ORG=lruepke/HTF_lecture
-REPO=site
+ORG=lruepke
+REPO=/HTF_lecture
 # This probably should match an email for one of your users.
 EMAIL=lars.ruepke@gmail.com
 
@@ -22,7 +22,7 @@ if [ "$1" != "dry" ]; then
 fi
 
 # Copy in the HTML.  You may want to change this with your documentation path.
-cp -R ../$REPO/_build/html/* ./
+cp -R ../$REPO/build/html/* ./
 
 # Add and commit changes.
 git add -A .
