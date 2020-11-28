@@ -44,8 +44,6 @@ The majority of this course will be spent in front of a computer working on exer
     :caption: Course information
 
     general-info/course-details
-    general-info/grading
-    general-info/licensing
 
 .. toctree::
     :maxdepth: 2
