@@ -55,8 +55,4 @@ The majority of this course will be spent in front of a computer working on exer
     :caption: Lecture 1
 
     lectures/L01/intro
-    lessons/L1/basic-terms
-    lessons/L1/uncertainty
-    lessons/L1/reporting-measurements
-    lessons/L1/normal-distribution
-    lessons/L1/exercise-1
+    lectures/L01/exercise
