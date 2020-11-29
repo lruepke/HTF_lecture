@@ -34,9 +34,12 @@ Course format
 -------------
 
 The majority of this course will be spent in front of a computer working on exercises related to (porous) flow problems in marine geodynamics.
-::
-   mkdir test
-   cd !$  
+
+.. code-block:: bash 
+    :name: lst:createCaseDir
+
+    mkdir test
+    cd !$  
 
 
 
