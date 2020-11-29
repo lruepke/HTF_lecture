@@ -49,23 +49,23 @@ The majority of this course will be spent in front of a computer working on exer
     :maxdepth: 2
     :caption: Lecture 1
 
-    source/lectures/L01/Overview
-    source/lectures/L01/slice
-    source/lectures/L01/Installation
-    source/lectures/L01/OpenFoam
-    source/lectures/L01/FirstCase
+    lectures/L01/Overview
+    lectures/L01/slice
+    lectures/L01/Installation
+    lectures/L01/OpenFoam
+    lectures/L01/FirstCase
 
 .. toctree::
     :maxdepth: 2
     :caption: Lecture 2
 
-    source/lectures/L02/intro
+    lectures/L02/intro
 
 .. toctree::
     :maxdepth: 2
     :caption: Lecture 3
 
-    source/lectures/L03/intro  
+    lectures/L03/intro  
 
 
     
