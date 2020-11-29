@@ -1,6 +1,6 @@
 .. include:: /include.rst_
 
-.. _sec_Exercises:
+.. _L01_FirstCase:
 
 A first test case - heat diffusion
 ==================================

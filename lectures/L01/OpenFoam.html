@@ -39,7 +39,7 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Introduction" href="../L02/intro.html" />
+    <link rel="next" title="A first test case - heat diffusion" href="FirstCase.html" />
     <link rel="prev" title="Installation guide" href="Installation.html" /> 
 </head>
 
@@ -98,10 +98,12 @@
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started with OpenFoam</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#why-use-openfoam">Why use OpenFoam</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-openfoam-workflow">The OpenFoam workflow</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="FirstCase.html">A first test case - heat diffusion</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Lecture 1</span></p>
+<p class="caption"><span class="caption-text">Lecture 2</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/exercise.html">Exercises</a></li>
@@ -198,7 +200,29 @@
 <h1>Getting started with OpenFoam<a class="headerlink" href="#getting-started-with-openfoam" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="why-use-openfoam">
 <h2>Why use OpenFoam<a class="headerlink" href="#why-use-openfoam" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="http://www.openfoam.org">OpenFoam</a> is an open-source collection of over 200 programs for multi-physics numerical simulations. It’s mainly used in the field of Computational Fluid Dynamics. It’s written in C++ and is fully parallelized, treats 3D geometries, is easily modifiable, and has an has active community. hhh</p>
+<p><a class="reference external" href="http://www.openfoam.org">OpenFoam</a> is an open-source collection of over 200 programs for multi-physics numerical simulations. It’s mainly used in the field of Computational Fluid Dynamics. It’s written in C++ and is fully parallelized, treats 3D geometries, is easily modifiable, and has an has active user community.</p>
+<p>OpenFoam comes in different flavors and the main forks are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://openfoam.org">The Foundation version</a></p></li>
+<li><p><a class="reference external" href="https://openfoam.com">The ESI version</a></p></li>
+<li><p><a class="reference external" href="http://sourceforge.net/projects/foam-extend/">The foam-extend development versions</a></p></li>
+</ul>
+</div></blockquote>
+<p>The downside is that some of these versions are incompatible with each other and features added to one of the forks may not work in the others. We provided docker image uses the Foundation version.</p>
+</div>
+<div class="section" id="the-openfoam-workflow">
+<h2>The OpenFoam workflow<a class="headerlink" href="#the-openfoam-workflow" title="Permalink to this headline">¶</a></h2>
+<p>A typical workflow involves:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Meshing</strong> of the computational domain either OpenFoam tools like blockMesh or snappyHexMesh or using 3rd party tools</p></li>
+<li><p>Applying <strong>boundary and initial conditions</strong></p></li>
+<li><p><strong>Solving</strong> the case using one of OpenFoam’s solvers like icoFoam, simpleFoam, etc.</p></li>
+<li><p><strong>Post-processing</strong> the results, often done in paraview.</p></li>
+</ul>
+</div></blockquote>
+<p>In the next chapter, we will have detailed look at a first example case and solve our first problem.</p>
 </div>
 </div>
 
@@ -210,7 +234,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../L02/intro.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="FirstCase.html" class="btn btn-neutral float-right" title="A first test case - heat diffusion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="Installation.html" class="btn btn-neutral float-left" title="Installation guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
