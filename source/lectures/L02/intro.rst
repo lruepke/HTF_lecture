@@ -1,5 +1,5 @@
-Introduction
-============
+Navier-Stokes flow with OpenFoam
+================================
 
-Why use OpenFoam
-----------------
+Motivation and theoretical background
+-------------------------------------
