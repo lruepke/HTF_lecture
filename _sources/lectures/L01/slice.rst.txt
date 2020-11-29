@@ -4,8 +4,8 @@
 
     Test Google slice integration.
 
-Slice
-==================
+Accompanying slide deck
+=======================
 
 .. raw:: html
 
