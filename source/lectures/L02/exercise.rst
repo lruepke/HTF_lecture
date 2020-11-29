@@ -62,7 +62,8 @@ The mesh of flange case is prepared as Ansys_ format (see line 8 of :numref:`lst
     ansysToFoam flange.ans -scale 0.001
 
 The :code:`-scale` option is used to set scale factor of the whole mesh. 
-Again, you can use command of :code:`tree` to explore what changes in the case folder, you can get something like :numref:`lst:flange_mesh:tree`, please notice the new files emphasized in the lines 7-13.
+Again, you can use command of :code:`tree` to explore what changes in the case folder, you can get something like :numref:`lst:flange_mesh:tree`, please notice the new files emphasized in the lines 7-13. 
+The :code:`polyMesh` directory contains all the mesh information.
 
 .. code-block:: bash 
     :linenos:
@@ -114,9 +115,93 @@ After converting the mesh, you can use Paraview_ to visualize the mesh,
 
         .. tab:: Interactive
 
-            Mesh and boundary condions of the 3D pipe model.
-
             .. raw:: html
                 
                 <iframe src="../../_static/vtk_js/index.html?fileURL=flange_mesh.vtkjs" width="100%" height="500px"></iframe>
         
+Boundary conditions
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: /_static/cases/flange/0/T
+   :language: c++
+   :linenos:
+   :lines: 8- 
+   :emphasize-lines: 10,12
+   :caption: :code:`0/T`.
+   :name: lst:flange:0:T
+
+.. admonition:: What do we care about the input file ?
+
+    - boundary/initial conditions are in the 0 directory
+    - checkout the 0/T file
+    - Flange is initially at 273K
+    - patch2 and patch4 have the boundary conditions
+    - Units! **[Kg m s K mol A cd]**, unit in the line 10 of :numref:`lst:flange:0:T` is read as :math:`kg^0 \cdot m^0 \cdot s^0 \cdot K^1 \cdot mol^0 \cdot A^0 \cdot cd^0 = K`, it is the unit of temperature.
+
+Transport properties
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: /_static/cases/flange/constant/transportProperties
+   :language: c++
+   :linenos:
+   :lines: 8- 
+   :emphasize-lines: 0
+   :caption: :code:`constant/transportProperties`.
+   :name: lst:flange:constant:transportProperties
+
+The diffusivity :code:`DT` is specified in dictionary file of :code:`constant/transportProperties`, unit is :math:`kg^0 \cdot m^2 \cdot s^{-1} \cdot K^0 \cdot mol^0 \cdot A^0 \cdot cd^0 = m^2/s`, see :ref:`lecture1_flange_physics`.
+
+Solver and controlDict
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: /_static/cases/flange/system/controlDict
+   :language: c++
+   :linenos:
+   :lines: 8- 
+   :emphasize-lines: 11, 13, 15, 17, 19, 21, 25
+   :caption: :code:`system/controlDict`.
+   :name: lst:flange:system:controlDict
+
+.. admonition:: What should we care about ?
+
+    - solver
+    - start/end times
+    - time step 
+    - output writing 
+
+.. _lecture1_flange_physics:
+
+Physics behind the case 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. math::
+    :label: eq:conti
+    
+    \frac{\partial T}{\partial t} = \nabla \cdot D_T \nabla T
+
+where :math:`D_T` is the thermal diffusivity.
+
+Results and post-processing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. only:: html
+
+    .. tabs::
+
+        .. tab:: Solution in ParaView
+
+            .. figure:: /_figures/flange_solution_paraview.png
+                :align: center
+
+                Look at the solution with Paraview
+                
+        .. tab:: Animation of T evolution
+
+            .. raw:: html
+
+                <video width=100% autoplay loop>
+                <source src="../../_static/video/flange_T.mp4" type="video/mp4">
+                Your browser does not support HTML video.
+                </video>
+
+
