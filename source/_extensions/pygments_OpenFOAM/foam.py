@@ -191,7 +191,7 @@ class OpenFOAMLexer(CFamilyLexer):
     tokens = {
         'statements': [
             (words((
-                'FoamFile',
+                'FoamFile','$',
                 'boundaryField',
                 'uniform','zeroGradient','fixedValue',
                 'dictionary','transportProperties','controlDict','fvSchemes','fvSolution',
