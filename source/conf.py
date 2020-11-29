@@ -70,3 +70,13 @@ html_context = {
     'github_version': 'main/',
     'conf_py_path': '/source/'
 }
+
+numfig = True 
+math_numfig = True
+math_eqref_format = '({number})'
+# only valid for latex
+# numfig_format = 'Figure. %s'
+numfig_secnum_depth = 1
+imgmath_latex = 'dvilualatex'
+imgmath_image_format = 'svg'
+imgmath_dvipng_args = ['-gamma', '1.5', '-bg', 'Transparent']
