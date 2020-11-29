@@ -372,7 +372,7 @@ paraview a.foam
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-flange-mesh-bc">
 <div class="code-block-caption"><span class="caption-number">Listing 3 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-flange-mesh-bc" title="Permalink to this code">¶</a></div>
-<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -417,52 +417,52 @@ paraview a.foam
 43
 44
 45
-46</pre></div></td><td class="code"><div class="highlight"><pre><span></span>/*--------------------------------*- C++ -*----------------------------------*<span class="se">\</span>
-<span class="o">=========</span>                 <span class="p">|</span>
-<span class="se">\\</span>      /  F ield         <span class="p">|</span> OpenFOAM: The Open Source CFD Toolbox
- <span class="se">\\</span>    /   O peration     <span class="p">|</span> Website:  https://openfoam.org
-  <span class="se">\\</span>  /    A nd           <span class="p">|</span> Version:  <span class="m">7</span>
-   <span class="se">\\</span>/     M anipulation  <span class="p">|</span>
-<span class="se">\*</span>---------------------------------------------------------------------------*/
-FoamFile
-<span class="o">{</span>
-    version     <span class="m">2</span>.0<span class="p">;</span>
-    format      ascii<span class="p">;</span>
-    class       volScalarField<span class="p">;</span>
-    object      T<span class="p">;</span>
-<span class="o">}</span>
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+46</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="cm">=========                 |</span>
+<span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="cm">   \\/     M anipulation  |</span>
+<span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="k">FoamFile</span>
+<span class="p">{</span>
+    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+    <span class="kt">class</span>       <span class="n">volScalarField</span><span class="p">;</span>
+    <span class="kt">object</span>      <span class="k">T</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
 
-<span class="hll">dimensions      <span class="o">[</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span><span class="o">]</span><span class="p">;</span>
+<span class="hll"><span class="kt">dimensions</span>      <span class="p">[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
 </span>
-internalField   uniform <span class="m">273</span><span class="p">;</span>
+<span class="kt">internalField</span>   <span class="k">uniform</span> <span class="mi">273</span><span class="p">;</span>
 
-boundaryField
-<span class="o">{</span>
-    patch1
-    <span class="o">{</span>
-        <span class="nb">type</span>            zeroGradient<span class="p">;</span>
-    <span class="o">}</span>
+<span class="k">boundaryField</span>
+<span class="p">{</span>
+    <span class="n">patch1</span>
+    <span class="p">{</span>
+        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    patch2
-    <span class="o">{</span>
-<span class="hll">        <span class="nb">type</span>            fixedValue<span class="p">;</span>
-</span><span class="hll">        value           uniform <span class="m">273</span><span class="p">;</span>
-</span>    <span class="o">}</span>
+    <span class="n">patch2</span>
+    <span class="p">{</span>
+<span class="hll">        <span class="kt">type</span>            <span class="k">fixedValue</span><span class="p">;</span>
+</span><span class="hll">        <span class="kt">value</span>           <span class="k">uniform</span> <span class="mi">273</span><span class="p">;</span>
+</span>    <span class="p">}</span>
 
-    patch3
-    <span class="o">{</span>
-        <span class="nb">type</span>            zeroGradient<span class="p">;</span>
-    <span class="o">}</span>
+    <span class="n">patch3</span>
+    <span class="p">{</span>
+        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    patch4
-    <span class="o">{</span>
-        <span class="nb">type</span>            fixedValue<span class="p">;</span>
-        value           uniform <span class="m">573</span><span class="p">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+    <span class="n">patch4</span>
+    <span class="p">{</span>
+        <span class="kt">type</span>            <span class="k">fixedValue</span><span class="p">;</span>
+        <span class="kt">value</span>           <span class="k">uniform</span> <span class="mi">573</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-// ************************************************************************* //
+<span class="c1">// ************************************************************************* //</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -477,7 +477,7 @@ boundaryField
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-flange-mesh-tp">
 <div class="code-block-caption"><span class="caption-number">Listing 4 </span><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-flange-mesh-tp" title="Permalink to this code">¶</a></div>
-<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -497,27 +497,27 @@ boundaryField
 18
 19
 20
-21</pre></div></td><td class="code"><div class="highlight"><pre><span></span>/*--------------------------------*- C++ -*----------------------------------*<span class="se">\</span>
-<span class="o">=========</span>                 <span class="p">|</span>
-<span class="se">\\</span>      /  F ield         <span class="p">|</span> OpenFOAM: The Open Source CFD Toolbox
- <span class="se">\\</span>    /   O peration     <span class="p">|</span> Website:  https://openfoam.org
-  <span class="se">\\</span>  /    A nd           <span class="p">|</span> Version:  <span class="m">7</span>
-   <span class="se">\\</span>/     M anipulation  <span class="p">|</span>
-<span class="se">\*</span>---------------------------------------------------------------------------*/
-FoamFile
-<span class="o">{</span>
-    version     <span class="m">2</span>.0<span class="p">;</span>
-    format      ascii<span class="p">;</span>
-    class       dictionary<span class="p">;</span>
-    location    <span class="s2">&quot;constant&quot;</span><span class="p">;</span>
-    object      transportProperties<span class="p">;</span>
-<span class="o">}</span>
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="cm">=========                 |</span>
+<span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="cm">   \\/     M anipulation  |</span>
+<span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="k">FoamFile</span>
+<span class="p">{</span>
+    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+    <span class="kt">location</span>    <span class="s">&quot;constant&quot;</span><span class="p">;</span>
+    <span class="kt">object</span>      <span class="k">transportProperties</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
 
-<span class="hll">DT              DT <span class="o">[</span><span class="m">0</span> <span class="m">2</span> -1 <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span><span class="o">]</span> 4e-05<span class="p">;</span>
+<span class="hll"><span class="n">DT</span>              <span class="n">DT</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">2</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span> <span class="mf">4e-05</span><span class="p">;</span>
 </span>
 
-// ************************************************************************* //
+<span class="c1">// ************************************************************************* //</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -531,7 +531,7 @@ FoamFile
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-flange-mesh-cd">
 <div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text">controlDict of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-cd" title="Permalink to this code">¶</a></div>
-<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -576,52 +576,52 @@ FoamFile
 43
 44
 45
-46</pre></div></td><td class="code"><div class="highlight"><pre><span></span>/*--------------------------------*- C++ -*----------------------------------*<span class="se">\</span>
-<span class="o">=========</span>                 <span class="p">|</span>
-<span class="se">\\</span>      /  F ield         <span class="p">|</span> OpenFOAM: The Open Source CFD Toolbox
- <span class="se">\\</span>    /   O peration     <span class="p">|</span> Website:  https://openfoam.org
-  <span class="se">\\</span>  /    A nd           <span class="p">|</span> Version:  <span class="m">7</span>
-   <span class="se">\\</span>/     M anipulation  <span class="p">|</span>
-<span class="se">\*</span>---------------------------------------------------------------------------*/
-FoamFile
-<span class="o">{</span>
-    version     <span class="m">2</span>.0<span class="p">;</span>
-    format      ascii<span class="p">;</span>
-    class       dictionary<span class="p">;</span>
-    location    <span class="s2">&quot;system&quot;</span><span class="p">;</span>
-    object      controlDict<span class="p">;</span>
-<span class="o">}</span>
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+46</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="cm">=========                 |</span>
+<span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="cm">   \\/     M anipulation  |</span>
+<span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="k">FoamFile</span>
+<span class="p">{</span>
+    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+    <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
+    <span class="kt">object</span>      <span class="k">controlDict</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
 
-<span class="hll">application     laplacianFoam<span class="p">;</span>
+<span class="hll"><span class="kt">application</span>     <span class="n">laplacianFoam</span><span class="p">;</span>
 </span>
-startFrom       latestTime<span class="p">;</span>
+<span class="kt">startFrom</span>       <span class="k">latestTime</span><span class="p">;</span>
 
-startTime       <span class="m">0</span><span class="p">;</span>
+<span class="kt">startTime</span>       <span class="mi">0</span><span class="p">;</span>
 
-stopAt          endTime<span class="p">;</span>
+<span class="kt">stopAt</span>          <span class="kt">endTime</span><span class="p">;</span>
 
-endTime         <span class="m">3</span><span class="p">;</span>
+<span class="kt">endTime</span>         <span class="mi">3</span><span class="p">;</span>
 
-deltaT          <span class="m">0</span>.005<span class="p">;</span>
+<span class="kt">deltaT</span>          <span class="mf">0.005</span><span class="p">;</span>
 
-writeControl    runTime<span class="p">;</span>
+<span class="kt">writeControl</span>    <span class="k">runTime</span><span class="p">;</span>
 
-writeInterval   <span class="m">0</span>.1<span class="p">;</span>
+<span class="kt">writeInterval</span>   <span class="mf">0.1</span><span class="p">;</span>
 
-purgeWrite      <span class="m">0</span><span class="p">;</span>
+<span class="kt">purgeWrite</span>      <span class="mi">0</span><span class="p">;</span>
 
-writeFormat     ascii<span class="p">;</span>
+<span class="kt">writeFormat</span>     <span class="k">ascii</span><span class="p">;</span>
 
-writePrecision  <span class="m">6</span><span class="p">;</span>
+<span class="kt">writePrecision</span>  <span class="mi">6</span><span class="p">;</span>
 
-writeCompression off<span class="p">;</span>
+<span class="kt">writeCompression</span> <span class="k">off</span><span class="p">;</span>
 
-timeFormat      general<span class="p">;</span>
+<span class="kt">timeFormat</span>      <span class="k">general</span><span class="p">;</span>
 
-timePrecision   <span class="m">6</span><span class="p">;</span>
+<span class="kt">timePrecision</span>   <span class="mi">6</span><span class="p">;</span>
 
-runTimeModifiable true<span class="p">;</span>
+<span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
 </pre></div>
 </td></tr></table></div>
 </div>
