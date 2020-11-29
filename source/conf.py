@@ -71,6 +71,8 @@ html_context = {
     'github_version': 'main/',
     'conf_py_path': '/source/'
 }
+# some customized css style
+html_css_files = ["style.css"]
 
 numfig = True 
 math_numfig = True
