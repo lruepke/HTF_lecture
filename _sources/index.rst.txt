@@ -52,10 +52,9 @@ The majority of this course will be spent in front of a computer working on exer
 
 .. toctree::
     :maxdepth: 2
-    :caption: Lesson 1
+    :caption: Lecture 1
 
-    lessons/L1/overview
-    notebooks/L1/numpy.ipynb
+    lectures/L01/intro
     lessons/L1/basic-terms
     lessons/L1/uncertainty
     lessons/L1/reporting-measurements
