@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>A first test case - heat diffusion &mdash; HydrothermalFoam Lecture  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/sphinx_tabs/tabs.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.js"></script>
+        <script src="../../_static/sphinx_tabs/tabs.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Introduction" href="../L02/intro.html" />
+    <link rel="prev" title="Getting started with OpenFoam" href="OpenFoam.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> HydrothermalFoam Lecture
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 1</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">A first test case - heat diffusion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-case-files">Prepare case files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mesh-generation">Mesh generation</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L02/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/exercise.html">Exercises</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydrothermalFoam Lecture</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>A first test case - heat diffusion</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L01/FirstCase.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="a-first-test-case-heat-diffusion">
+<span id="sec-exercises"></span><h1>A first test case - heat diffusion<a class="headerlink" href="#a-first-test-case-heat-diffusion" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-what-do-we-need admonition">
+<p class="admonition-title">What do we need?</p>
+<ul class="simple">
+<li><p>case files</p></li>
+<li><p>a mesh</p></li>
+<li><p>boundary/initial conditions</p></li>
+<li><p>a solver</p></li>
+<li><p>simulations controls (time step, run time, etc.)</p></li>
+<li><p>post-processing</p></li>
+</ul>
+</div>
+<div class="section" id="prepare-case-files">
+<h2>Prepare case files<a class="headerlink" href="#prepare-case-files" title="Permalink to this headline">¶</a></h2>
+<p>The first case is the <strong>flange</strong> case from OpenFOAM tutorials, just copy the whole case to your working directory, this can be done using the following command in your terminal (<strong>should be the docker container terminal if you use OpenFOAM in the docker container</strong>).
+It should be noted that you have to change directory to your working directory first.</p>
+<div class="highlight-bash notranslate" id="lst-cpflangetoworkdir"><div class="highlight"><pre><span></span>cp -rf <span class="nv">$FOAM_TUTORIALS</span>/basic/laplacianFoam/flange .
+</pre></div>
+</div>
+<p>The tree structure of flange case is shown in <a class="reference internal" href="../L02/exercise.html#lst-flange-tree"><span class="std std-numref">Listing 3</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="lst-flange-tree">
+<div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-tree" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span>.
+├── <span class="m">0</span>
+│   └── T
+├── Allclean
+├── Allrun
+├── constant
+│   └── transportProperties
+<span class="hll">├── flange.ans
+</span>└── system
+    ├── controlDict
+    ├── fvSchemes
+    └── fvSolution
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="mesh-generation">
+<h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline">¶</a></h2>
+<p>The mesh of flange case is prepared as <a class="reference external" href="https://www.ansys.com">Ansys</a> format (see line 8 of <a class="reference internal" href="../L02/exercise.html#lst-flange-tree"><span class="std std-numref">Listing 3</span></a>), you can use OpenFOAM mesh convert utility of <code class="code docutils literal notranslate"><span class="pre">ansysToFoam</span></code> to convert the ansys format to OpenFOAM format, the command is shown below,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansysToFoam flange.ans -scale <span class="m">0</span>.001
+</pre></div>
+</div>
+<p>The <code class="code docutils literal notranslate"><span class="pre">-scale</span></code> option is used to set scale factor of the whole mesh.
+Again, you can use command of <code class="code docutils literal notranslate"><span class="pre">tree</span></code> to explore what changes in the case folder, you can get something like <a class="reference internal" href="../L02/exercise.html#lst-flange-mesh-tree"><span class="std std-numref">Listing 4</span></a>, please notice the new files emphasized in the lines 7-13.</p>
+<div class="literal-block-wrapper docutils container" id="lst-flange-mesh-tree">
+<div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-tree" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span>.
+├── <span class="m">0</span>
+│   └── T
+├── Allclean
+├── Allrun
+├── constant
+<span class="hll">│   ├── polyMesh
+</span><span class="hll">│   │   ├── boundary
+</span><span class="hll">│   │   ├── faceZones
+</span><span class="hll">│   │   ├── faces
+</span><span class="hll">│   │   ├── neighbour
+</span><span class="hll">│   │   ├── owner
+</span><span class="hll">│   │   └── points
+</span>│   └── transportProperties
+├── flange.ans
+└── system
+    ├── controlDict
+    ├── fvSchemes
+    └── fvSolution
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>After converting the mesh, you can use <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize the mesh,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch a.foam
+paraview a.foam
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="code docutils literal notranslate"><span class="pre">touch</span> <span class="pre">a.foam</span></code> means create a empty file named <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code>, this could not work in windows system.</p>
+</div>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-0-0 docutils container">
+<div class="docutils container">
+<p>Mesh of flange</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-0-1 docutils container">
+<div class="docutils container">
+<p>Interactive</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-0 active docutils container">
+<div class="figure align-center" id="id1">
+<img alt="../../_images/flange_mesh.png" src="../../_images/flange_mesh.png" />
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Mesh of the first case - flange.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-1 docutils container">
+<p>Mesh and boundary condions of the 3D pipe model.</p>
+<iframe src="../../_static/vtk_js/index.html?fileURL=flange_mesh.vtkjs" width="100%" height="500px"></iframe></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../L02/intro.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="OpenFoam.html" class="btn btn-neutral float-left" title="Getting started with OpenFoam" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Lars Ruepke
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
