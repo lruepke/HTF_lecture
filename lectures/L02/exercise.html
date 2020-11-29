@@ -353,7 +353,7 @@ paraview a.foam
 <h3>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h3>
 <div class="literal-block-wrapper docutils container" id="lst-flange-0-t">
 <div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text"><code class="code docutils literal notranslate"><span class="pre">0/T</span></code>.</span><a class="headerlink" href="#lst-flange-0-t" title="Permalink to this code">¶</a></div>
-<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -391,45 +391,45 @@ paraview a.foam
 36
 37
 38
-39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">FoamFile</span>
-<span class="p">{</span>
-    <span class="n">version</span>     <span class="mf">2.0</span><span class="p">;</span>
-    <span class="n">format</span>      <span class="n">ascii</span><span class="p">;</span>
-    <span class="k">class</span>       <span class="nc">volScalarField</span><span class="p">;</span>
-    <span class="n">object</span>      <span class="n">T</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+39</pre></div></td><td class="code"><div class="highlight"><pre><span></span>FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-<span class="hll"><span class="n">dimensions</span>      <span class="p">[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
+<span class="hll">dimensions      [0 0 0 1 0 0 0];
 </span>
-<span class="hll"><span class="n">internalField</span>   <span class="n">uniform</span> <span class="mi">273</span><span class="p">;</span>
+<span class="hll">internalField   uniform 273;
 </span>
-<span class="n">boundaryField</span>
-<span class="p">{</span>
-    <span class="n">patch1</span>
-    <span class="p">{</span>
-        <span class="n">type</span>            <span class="n">zeroGradient</span><span class="p">;</span>
-    <span class="p">}</span>
+boundaryField
+{
+    patch1
+    {
+        type            zeroGradient;
+    }
 
-    <span class="n">patch2</span>
-    <span class="p">{</span>
-        <span class="n">type</span>            <span class="n">fixedValue</span><span class="p">;</span>
-        <span class="n">value</span>           <span class="n">uniform</span> <span class="mi">273</span><span class="p">;</span>
-    <span class="p">}</span>
+    patch2
+    {
+        type            fixedValue;
+        value           uniform 273;
+    }
 
-    <span class="n">patch3</span>
-    <span class="p">{</span>
-        <span class="n">type</span>            <span class="n">zeroGradient</span><span class="p">;</span>
-    <span class="p">}</span>
+    patch3
+    {
+        type            zeroGradient;
+    }
 
-    <span class="n">patch4</span>
-    <span class="p">{</span>
-        <span class="n">type</span>            <span class="n">fixedValue</span><span class="p">;</span>
-        <span class="n">value</span>           <span class="n">uniform</span> <span class="mi">573</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+    patch4
+    {
+        type            fixedValue;
+        value           uniform 573;
+    }
+}
 
-<span class="c1">// ************************************************************************* //</span>
+// ************************************************************************* //
 </pre></div>
 </td></tr></table></div>
 </div>
