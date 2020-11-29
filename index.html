@@ -87,8 +87,12 @@
 </ul>
 <p class="caption"><span class="caption-text">Lecture 1</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L01/intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L01/exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L01/Installation.html">Installation guide</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L02/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L02/exercise.html">Exercises</a></li>
 </ul>
 
             
@@ -142,7 +146,7 @@
         
             
             
-              <a href="https://github.com/lruepke/HTF_lecture/blob/master//source/index.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/index.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -183,8 +187,7 @@
 <div class="section" id="course-format">
 <h2>Course format<a class="headerlink" href="#course-format" title="Permalink to this headline">¶</a></h2>
 <p>The majority of this course will be spent in front of a computer working on exercises related to (porous) flow problems in marine geodynamics.</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir test</span>
-<span class="go">cd !$</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ln -s <span class="nv">$FOAM_USER_LIBBIN</span>/libHydroThermoPhysicalModels.dylib <span class="nv">$FOAM_USER_LIBBIN</span>/libHydroThermoPhysicalModels.so
 </pre></div>
 </div>
 <div class="admonition-open-access admonition">
@@ -206,12 +209,23 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Lecture 1</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L01/intro.html">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lectures/L01/intro.html#why-use-openfoam">Why use OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L01/Installation.html">Installation guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L01/Installation.html#docker">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L01/Installation.html#visual-studio-code">Visual Studio Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L01/Installation.html#paraview">Paraview</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L01/exercise.html">Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lectures/L01/exercise.html#what-to-do">What to do</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L02/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L02/intro.html#why-use-openfoam">Why use OpenFoam</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L02/exercise.html">Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L02/exercise.html#what-to-do">What to do</a></li>
 </ul>
 </li>
 </ul>

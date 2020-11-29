@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation guide &mdash; HydrothermalFoam Lecture  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Introduction" href="../L02/intro.html" />
+    <link rel="prev" title="Course details" href="../../general-info/course-details.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> HydrothermalFoam Lecture
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 1</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#docker">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visual-studio-code">Visual Studio Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#paraview">Paraview</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L02/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/exercise.html">Exercises</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydrothermalFoam Lecture</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Installation guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L01/Installation.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-guide">
+<h1>Installation guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h1>
+<p>We will be using the Foundation version of <a class="reference external" href="http://www.openfoam.org">OpenFoam</a> and our own hydrothermal flow solver <a class="reference external" href="http://www.hydrothermalfoam.info">HydrothermalFoam</a>, which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don’t like virtual environments, you will need to go through the “install from source” instructions of HydrothermalFoam and read the installation instructions of OpenFoam.</p>
+<div class="section" id="docker">
+<span id="sec-install-docker"></span><h2>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h2>
+<p>We will rely on <a class="reference external" href="https://www.docker.com">docker</a> and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. For this purpose we have modified the official OpenFoam docker image, so that it also contains all components of HydrothermalFoam. The way docker works is that a so-called docker image is downloaded and from this image a so-called docker container is built, which is the actual virtual environment. These are the necessary steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Install</strong> <a class="reference external" href="https://www.docker.com/products/docker-desktop">docker desktop</a> and keep it running.</p></li>
+<li><p><strong>Register</strong> an account with <a class="reference external" href="https://hub.docker.com/">docker hub</a>, a marketplace for docker images.</p></li>
+<li><p><strong>Log-into</strong> your newly created account from your docker desktop application.</p></li>
+</ol>
+<p>Now we are ready to pull the provided docker image, which can be found here <a class="reference external" href="https://hub.docker.com/repository/docker/zguo/hydrothermalfoam">zguo/hydrothermalfoam</a>.</p>
+<p>Open a shell (powershell under windows or a terminal under MacOS) and pull the image by typing this command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull zguo/hydrothermalfoam
+</pre></div>
+</div>
+<p>This can take a while. After the download is finished, you can build the docker container. Use this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -it -d --name hydrothermalfoam --workdir<span class="o">=</span><span class="s2">&quot;/home/openfoam&quot;</span> - <span class="nv">v</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/HydrothermalFoam_runs&quot;</span>:<span class="s2">&quot;/home/openfoam/HydrothermalFoam_runs&quot;</span> zguo/hydrothermalfoam
+</pre></div>
+</div>
+<p>This complicated looking command builds the docker container and creates a “shared” folder called HydrothermalFoam_runs in your home directory (this is what the -v option does). If you want it somewhere else, you can change this “$HOME/HydrothermalFoam_runs” part of the above statement. Please do not uses path and directory names with spaces or special characters in it (if you are on windows).</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<dl class="simple">
+<dt>Just in case you do not like to type statement that you don’t fully understand – this is what the other options do:</dt><dd><ul class="simple">
+<li><p>-it allocate a pseudo-TTY connected to the container’s stdin; creating an interactive bash shell in the container (plain language, this allows you to interact with (type inside) the container)</p></li>
+<li><p>– name hydrothermalfoam give the container its name</p></li>
+<li><p>–workdir is the path to the working/home directory inside the container (don’t change it!)</p></li>
+<li><p>-v makes a shared file system</p></li>
+<li><p>-d run container in background (detached)</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="visual-studio-code">
+<span id="sec-install-vscode"></span><h2>Visual Studio Code<a class="headerlink" href="#visual-studio-code" title="Permalink to this headline">¶</a></h2>
+<p>Working with OpenFoam involves a lot of editing of text files and you can use your favorite text editor for this. However, we strongly recommend to use <a class="reference external" href="https://code.visualstudio.com/">Microsoft’s Visual Studio Code</a>.</p>
+<p>Open Visual Studio Code and open two shells side-by-side at the bottom (powershell on Windows and terminal on Mac). We will use the convention that we use the terminal to the right-hand side as our “virtual machine (docker) shell” and the terminal to the left as our local shell.</p>
+<p>Start and attach the docker container to the right-hand-side shell by typing</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker start hydrothermalfoam
+docker attach hydrothermalfoam
+</pre></div>
+</div>
+<p>If you want things to be pretty, try starting a z-shell (instead of the default bash):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zsh
+</pre></div>
+</div>
+<p>You can stop the container whenever you want and your files will remain intact, just like in any other virtual machine. To stop the container type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker stop hydrothermalfoam
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It really helps to have syntax highlighting when manipulating OpenFoam files. To get it search for openfoam in the Extensions Tab of Visual Studio Code and you will find an extension provided by Zhikui Guo.</p>
+</div>
+</div>
+<div class="section" id="paraview">
+<span id="sec-install-paraview"></span><h2>Paraview<a class="headerlink" href="#paraview" title="Permalink to this headline">¶</a></h2>
+<p>We will use Kiteware’s <a class="reference external" href="paraview.org">Paraview</a> to visualize the modeling results. Download and install the latest version. It also really helps to add paraview to the system path, so that it can be called from the command line.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../L02/intro.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../../general-info/course-details.html" class="btn btn-neutral float-left" title="Course details" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Lars Ruepke
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
