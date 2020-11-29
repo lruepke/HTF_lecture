@@ -2,7 +2,7 @@
    sphinx-quickstart on Sat Nov 28 21:47:26 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
-.. include:: /include.rst_
+.. highlight:: console
 
 Introduction to OpenFOAM and HydrothermalFoam
 =============================================
@@ -35,9 +35,11 @@ Course format
 
 The majority of this course will be spent in front of a computer working on exercises related to (porous) flow problems in marine geodynamics.
 
-.. code-block:: bash
+.. code-block:: bash 
+    :name: lst:createCaseDir
 
-      ln -s $FOAM_USER_LIBBIN/libHydroThermoPhysicalModels.dylib $FOAM_USER_LIBBIN/libHydroThermoPhysicalModels.so
+    mkdir test
+    cd !$  
 
 
 
@@ -55,12 +57,5 @@ The majority of this course will be spent in front of a computer working on exer
     :maxdepth: 2
     :caption: Lecture 1
 
-    lectures/L01/Installation
-    lectures/L01/OpenFoam
-
-.. toctree::
-    :maxdepth: 2
-    :caption: Lecture 1
-
-    lectures/L02/intro
-    lectures/L02/exercise
+    lectures/L01/intro
+    lectures/L01/exercise

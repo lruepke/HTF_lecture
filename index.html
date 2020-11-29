@@ -30,6 +30,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -87,13 +88,8 @@
 </ul>
 <p class="caption"><span class="caption-text">Lecture 1</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L01/Installation.html">Installation guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L01/OpenFoam.html">Getting started with OpenFoam</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Lecture 1</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L02/intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L02/exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L01/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L01/exercise.html">Exercises</a></li>
 </ul>
 
             
@@ -147,7 +143,7 @@
         
             
             
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/index.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/master//source/index.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -188,7 +184,8 @@
 <div class="section" id="course-format">
 <h2>Course format<a class="headerlink" href="#course-format" title="Permalink to this headline">¶</a></h2>
 <p>The majority of this course will be spent in front of a computer working on exercises related to (porous) flow problems in marine geodynamics.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ln -s <span class="nv">$FOAM_USER_LIBBIN</span>/libHydroThermoPhysicalModels.dylib <span class="nv">$FOAM_USER_LIBBIN</span>/libHydroThermoPhysicalModels.so
+<div class="highlight-bash notranslate" id="lst-createcasedir"><div class="highlight"><pre><span></span>mkdir <span class="nb">test</span>
+<span class="nb">cd</span> !$
 </pre></div>
 </div>
 <div class="admonition-open-access admonition">
@@ -210,27 +207,13 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Lecture 1</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L01/Installation.html">Installation guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lectures/L01/Installation.html#docker">Docker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lectures/L01/Installation.html#visual-studio-code">Visual Studio Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lectures/L01/Installation.html#paraview">Paraview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L01/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L01/intro.html#why-use-openfoam">Why use OpenFoam</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L01/OpenFoam.html">Getting started with OpenFoam</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lectures/L01/OpenFoam.html#why-use-openfoam">Why use OpenFoam</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Lecture 1</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L02/intro.html">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lectures/L02/intro.html#why-use-openfoam">Why use OpenFoam</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L02/exercise.html">Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lectures/L02/exercise.html#what-to-do">What to do</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L01/exercise.html">Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L01/exercise.html#what-to-do">What to do</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L01/exercise.html#a-first-test-case-heat-diffusion">A first test case - heat diffusion</a></li>
 </ul>
 </li>
 </ul>
