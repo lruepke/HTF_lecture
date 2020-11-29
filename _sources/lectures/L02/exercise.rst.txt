@@ -62,6 +62,34 @@ The mesh of flange case is prepared as Ansys_ format (see line 8 of :numref:`lst
     ansysToFoam flange.ans -scale 0.001
 
 The :code:`-scale` option is used to set scale factor of the whole mesh. 
+Again, you can use command of :code:`tree` to explore what changes in the case folder, you can get something like :numref:`lst:flange_mesh:tree`, please notice the new files emphasized in the lines 7-13.
+
+.. code-block:: bash 
+    :linenos:
+    :emphasize-lines: 7-13
+    :name: lst:flange_mesh:tree
+    :caption: File tree structure of the flange case.
+
+    .
+    ├── 0
+    │   └── T
+    ├── Allclean
+    ├── Allrun
+    ├── constant
+    │   ├── polyMesh
+    │   │   ├── boundary
+    │   │   ├── faceZones
+    │   │   ├── faces
+    │   │   ├── neighbour
+    │   │   ├── owner
+    │   │   └── points
+    │   └── transportProperties
+    ├── flange.ans
+    └── system
+        ├── controlDict
+        ├── fvSchemes
+        └── fvSolution
+
 After converting the mesh, you can use Paraview_ to visualize the mesh,
 
 .. code-block:: bash
@@ -90,5 +118,5 @@ After converting the mesh, you can use Paraview_ to visualize the mesh,
 
             .. raw:: html
                 
-                <iframe src="../../_static/vtk_js/index.html?fileURL=pipe_3D_mesh.vtkjs" width="100%" height="500px"></iframe>
+                <iframe src="../../_static/vtk_js/index.html?fileURL=flange_mesh.vtkjs" width="100%" height="500px"></iframe>
         

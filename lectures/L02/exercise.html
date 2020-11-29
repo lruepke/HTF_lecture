@@ -238,7 +238,50 @@ It should be noted that you have to change directory to your working directory f
 </pre></div>
 </div>
 <p>The <code class="code docutils literal notranslate"><span class="pre">-scale</span></code> option is used to set scale factor of the whole mesh.
-After converting the mesh, you can use <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize the mesh,</p>
+Again, you can use command of <code class="code docutils literal notranslate"><span class="pre">tree</span></code> to explore what changes in the case folder, you can get something like <a class="reference internal" href="#lst-flange-mesh-tree"><span class="std std-numref">Listing 2</span></a>, please notice the new files emphasized in the lines 7-13.</p>
+<div class="literal-block-wrapper docutils container" id="lst-flange-mesh-tree">
+<div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-tree" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span>.
+├── <span class="m">0</span>
+│   └── T
+├── Allclean
+├── Allrun
+├── constant
+<span class="hll">│   ├── polyMesh
+</span><span class="hll">│   │   ├── boundary
+</span><span class="hll">│   │   ├── faceZones
+</span><span class="hll">│   │   ├── faces
+</span><span class="hll">│   │   ├── neighbour
+</span><span class="hll">│   │   ├── owner
+</span><span class="hll">│   │   └── points
+</span>│   └── transportProperties
+├── flange.ans
+└── system
+    ├── controlDict
+    ├── fvSchemes
+    └── fvSolution
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>After converting the mesh, you can use <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize the mesh,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch a.foam
 paraview a.foam
 </pre></div>
@@ -268,7 +311,7 @@ paraview a.foam
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-1 docutils container">
 <p>Mesh and boundary condions of the 3D pipe model.</p>
-<iframe src="../../_static/vtk_js/index.html?fileURL=pipe_3D_mesh.vtkjs" width="100%" height="500px"></iframe></div>
+<iframe src="../../_static/vtk_js/index.html?fileURL=flange_mesh.vtkjs" width="100%" height="500px"></iframe></div>
 </div>
 </div>
 </div>
