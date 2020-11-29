@@ -59,12 +59,14 @@ The majority of this course will be spent in front of a computer working on exer
     :maxdepth: 2
     :caption: Lecture 2
 
+    lectures/L02/Overview
     lectures/L02/intro
 
 .. toctree::
     :maxdepth: 2
     :caption: Lecture 3
 
+    lectures/L02/Overview
     lectures/L03/intro  
 
 
