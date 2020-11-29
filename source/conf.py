@@ -121,3 +121,14 @@ numfig_secnum_depth = 1
 imgmath_latex = 'dvilualatex'
 imgmath_image_format = 'svg'
 imgmath_dvipng_args = ['-gamma', '1.5', '-bg', 'Transparent']
+
+# -- Options for LaTeX output ---------------------------------------------
+latex_engine = 'xelatex'
+latex_elements = {
+    'papersize': 'a4paper',
+    'utf8extra': '',
+    'inputenc': '',
+    'babel': r'''\usepackage[english]{babel}''',
+    'preamble': r'''\setmainfont{Arial}
+    ''',
+}

@@ -45,24 +45,21 @@ The majority of this course will be spent in front of a computer working on exer
 
     Note that the materials for this course are **open to everyone**; the course is, however, taught as an on-site class for registered students at Kiel University. 
 
+
 .. toctree::
     :maxdepth: 2
     :caption: Course information
 
     general-info/course-details
 
-.. toctree::
-    :maxdepth: 2
-    :caption: Lecture 1
-
-    lectures/L01/slice
-    lectures/L01/Installation
-    lectures/L01/OpenFoam
-    lectures/L01/FirstCase
+Lectures
+-------------
 
 .. toctree::
     :maxdepth: 2
-    :caption: Lecture 2
 
-    lectures/L02/intro
-    lectures/L02/exercise
+    lectures/L01/index
+    lectures/L02/index
+
+
+    
