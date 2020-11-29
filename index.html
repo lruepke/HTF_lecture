@@ -88,8 +88,14 @@
 </ul>
 <p class="caption"><span class="caption-text">Lecture 1</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L01/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L01/OpenFoam.html">Getting started with OpenFoam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lectures/L01/exercise.html">Exercises</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L02/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L02/exercise.html">Exercises</a></li>
 </ul>
 
             
@@ -143,7 +149,7 @@
         
             
             
-              <a href="https://github.com/lruepke/HTF_lecture/blob/master//source/index.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/index.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -159,7 +165,7 @@
             
   <div class="section" id="introduction-to-openfoam-and-hydrothermalfoam">
 <h1>Introduction to OpenFOAM and HydrothermalFoam<a class="headerlink" href="#introduction-to-openfoam-and-hydrothermalfoam" title="Permalink to this headline">¶</a></h1>
-<p>Welcome to the website for the course Numerical Fluid Dynamics I (flow in porous media) taught at Kiel University within the Geophysics master.  The course introduces methods and tools in geophysical fluid dynamics. The goal is to learn about the complete workflow from formulating a geoscientific hypothesis to testing it using numerical techniques. For this we will use the popular Computational Fluid Dynamics (CFD) package <a class="reference external" href="http://openfoam.org">OpenFOAM</a>. In terms of numerical methods, we will learn about finite-differences and finite-volumes including their respective strengths and limitations. Topic-wise, we will focus on porous flow processes with a special emphasis on hydrothermal flow problems like submarine black smoker systems and hydrothermal cooling of magmatic intrusions. For these topics we will use the 3-D hydrothermal flow model <a class="reference external" href="http://hydrothermalfoam.info">HydrothermalFoam</a>, which is also based on OpenFOAM.</p>
+<p>Welcome to the website for the course Numerical Fluid Dynamics I (flow in porous media) taught at Kiel University within the Geophysics master.  The course introduces methods and tools in geophysical fluid dynamics. The goal is to learn about the complete workflow from formulating a geoscientific hypothesis to testing it using numerical techniques. For this we will use the popular Computational Fluid Dynamics (CFD) package <a class="reference external" href="https://openfoam.org">OpenFOAM</a> . In terms of numerical methods, we will learn about finite-differences and finite-volumes including their respective strengths and limitations. Topic-wise, we will focus on porous flow processes with a special emphasis on hydrothermal flow problems like submarine black smoker systems and hydrothermal cooling of magmatic intrusions. For these topics we will use the 3-D hydrothermal flow model <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a>, which is also based on OpenFOAM.</p>
 <div class="section" id="course-content">
 <h2>Course content<a class="headerlink" href="#course-content" title="Permalink to this headline">¶</a></h2>
 <p>These are the main topics:</p>
@@ -184,8 +190,7 @@
 <div class="section" id="course-format">
 <h2>Course format<a class="headerlink" href="#course-format" title="Permalink to this headline">¶</a></h2>
 <p>The majority of this course will be spent in front of a computer working on exercises related to (porous) flow problems in marine geodynamics.</p>
-<div class="highlight-bash notranslate" id="lst-createcasedir"><div class="highlight"><pre><span></span>mkdir <span class="nb">test</span>
-<span class="nb">cd</span> !$
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ln -s <span class="nv">$FOAM_USER_LIBBIN</span>/libHydroThermoPhysicalModels.dylib <span class="nv">$FOAM_USER_LIBBIN</span>/libHydroThermoPhysicalModels.so
 </pre></div>
 </div>
 <div class="admonition-open-access admonition">
@@ -207,13 +212,33 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Lecture 1</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="lectures/L01/intro.html">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lectures/L01/intro.html#why-use-openfoam">Why use OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L01/Installation.html">Installation guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L01/Installation.html#docker">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L01/Installation.html#visual-studio-code">Visual Studio Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L01/Installation.html#sec-install-paraview">Paraview</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L01/OpenFoam.html">Getting started with OpenFoam</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L01/OpenFoam.html#why-use-openfoam">Why use OpenFoam</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lectures/L01/exercise.html">Exercises</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="lectures/L01/exercise.html#what-to-do">What to do</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lectures/L01/exercise.html#a-first-test-case-heat-diffusion">A first test case - heat diffusion</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L02/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L02/intro.html#why-use-openfoam">Why use OpenFoam</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/L02/exercise.html">Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L02/exercise.html#what-to-do">What to do</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/L02/exercise.html#a-first-test-case-heat-diffusion">A first test case - heat diffusion</a></li>
 </ul>
 </li>
 </ul>

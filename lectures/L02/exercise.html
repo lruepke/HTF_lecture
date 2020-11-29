@@ -30,6 +30,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -89,12 +90,18 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/exercise.html">Exercises</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Lecture 1</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Exercises</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#what-to-do">What to do</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-first-test-case-heat-diffusion">A first test case - heat diffusion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prepare-case-files">Prepare case files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mesh-generation">Mesh generation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -165,9 +172,67 @@
            <div itemprop="articleBody">
             
   <div class="section" id="exercises">
-<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<span id="sec-exercises"></span><h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-to-do">
 <h2>What to do<a class="headerlink" href="#what-to-do" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="a-first-test-case-heat-diffusion">
+<h2>A first test case - heat diffusion<a class="headerlink" href="#a-first-test-case-heat-diffusion" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-what-do-we-need admonition">
+<p class="admonition-title">What do we need?</p>
+<ul class="simple">
+<li><p>case files</p></li>
+<li><p>a mesh</p></li>
+<li><p>boundary/initial conditions</p></li>
+<li><p>a solver</p></li>
+<li><p>simulations controls (time step, run time, etc.)</p></li>
+<li><p>post-processing</p></li>
+</ul>
+</div>
+<div class="section" id="prepare-case-files">
+<h3>Prepare case files<a class="headerlink" href="#prepare-case-files" title="Permalink to this headline">¶</a></h3>
+<p>The first case is the <strong>flange</strong> case from OpenFOAM tutorials, just copy the whole case to your working directory, this can be done using the following command in your terminal (<strong>should be the docker container terminal if you use OpenFOAM in the docker container</strong>).
+It should be noted that you have to change directory to your working directory first.</p>
+<div class="highlight-bash notranslate" id="lst-cpflangetoworkdir"><div class="highlight"><pre><span></span>cp -rf <span class="nv">$FOAM_TUTORIALS</span>/basic/laplacianFoam/flange .
+</pre></div>
+</div>
+<p>The tree structure of flange case is shown in <a class="reference internal" href="#lst-flange-tree"><span class="std std-numref">Listing 2</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="lst-flange-tree">
+<div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-tree" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span>.
+├── <span class="m">0</span>
+│   └── T
+├── Allclean
+├── Allrun
+├── constant
+│   └── transportProperties
+├── flange.ans
+└── system
+    ├── controlDict
+    ├── fvSchemes
+    └── fvSolution
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="mesh-generation">
+<h3>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline">¶</a></h3>
+<p>The mesh of flange case is prepared as <a class="reference external" href="https://www.ansys.com">Ansys</a> format, you can use OpenFOAM mesh convert utility of <code class="code docutils literal notranslate"><span class="pre">ansysToFoam</span></code> to convert the ansys format to OpenFOAM format, the command is shown below,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansysToFoam flange.ans -scale <span class="m">0</span>.001
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 

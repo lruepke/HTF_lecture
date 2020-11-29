@@ -30,6 +30,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -91,10 +92,11 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#docker">Docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#visual-studio-code">Visual Studio Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#paraview">Paraview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sec-install-paraview">Paraview</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exercise.html">Exercises</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Lecture 1</span></p>
 <ul>
@@ -169,10 +171,10 @@
             
   <div class="section" id="installation-guide">
 <h1>Installation guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h1>
-<p>We will be using the Foundation version of <a class="reference external" href="http://www.openfoam.org">OpenFoam</a> and our own hydrothermal flow solver <a class="reference external" href="http://www.hydrothermalfoam.info">HydrothermalFoam</a>, which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don’t like virtual environments, you will need to go through the “install from source” instructions of HydrothermalFoam and read the installation instructions of OpenFoam.</p>
+<p>We will be using the Foundation version of <a class="reference external" href="https://openfoam.org">OpenFOAM</a> and our own hydrothermal flow solver <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don’t like virtual environments, you will need to go through the “install from source” instructions of HydrothermalFoam and read the installation instructions of OpenFoam.</p>
 <div class="section" id="docker">
 <span id="sec-install-docker"></span><h2>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h2>
-<p>We will rely on <a class="reference external" href="https://www.docker.com">docker</a> and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. For this purpose we have modified the official OpenFoam docker image, so that it also contains all components of HydrothermalFoam. The way docker works is that a so-called docker image is downloaded and from this image a so-called docker container is built, which is the actual virtual environment. These are the necessary steps:</p>
+<p>We will rely on <a class="reference internal" href="#docker">docker</a> and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. For this purpose we have modified the official OpenFoam docker image, so that it also contains all components of HydrothermalFoam. The way docker works is that a so-called docker image is downloaded and from this image a so-called docker container is built, which is the actual virtual environment. These are the necessary steps:</p>
 <ol class="arabic simple">
 <li><p><strong>Install</strong> <a class="reference external" href="https://www.docker.com/products/docker-desktop">docker desktop</a> and keep it running.</p></li>
 <li><p><strong>Register</strong> an account with <a class="reference external" href="https://hub.docker.com/">docker hub</a>, a marketplace for docker images.</p></li>
@@ -224,8 +226,8 @@ docker attach hydrothermalfoam
 <p>It really helps to have syntax highlighting when manipulating OpenFoam files. To get it search for openfoam in the Extensions Tab of Visual Studio Code and you will find an extension provided by Zhikui Guo. Install the plug-in and copy the file associations into the settings.json file. To do so, type CMD/CTRL + SHIFT + P and search for “Open Settings (JSON)”.</p>
 </div>
 </div>
-<div class="section" id="paraview">
-<span id="sec-install-paraview"></span><h2>Paraview<a class="headerlink" href="#paraview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sec-install-paraview">
+<span id="id1"></span><h2>Paraview<a class="headerlink" href="#sec-install-paraview" title="Permalink to this headline">¶</a></h2>
 <p>We will use Kiteware’s <a class="reference external" href="paraview.org">Paraview</a> to visualize the modeling results. Download and install the latest version. It also really helps to add paraview to the system path, so that it can be called from the command line.</p>
 </div>
 </div>

@@ -1,13 +1,15 @@
+.. include:: /include.rst_
+
 Installation guide
 ==================
 
-We will be using the Foundation version of `OpenFoam <http://www.openfoam.org>`_ and our own hydrothermal flow solver `HydrothermalFoam <http://www.hydrothermalfoam.info>`_, which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don't like virtual environments, you will need to go through the "install from source" instructions of HydrothermalFoam and read the installation instructions of OpenFoam. 
+We will be using the Foundation version of OpenFOAM_ and our own hydrothermal flow solver HydrothermalFoam_ , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don't like virtual environments, you will need to go through the "install from source" instructions of HydrothermalFoam and read the installation instructions of OpenFoam. 
 
 .. _sec:install_docker:
 
 Docker
 ------
-We will rely on `docker <https://www.docker.com>`_ and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. For this purpose we have modified the official OpenFoam docker image, so that it also contains all components of HydrothermalFoam. The way docker works is that a so-called docker image is downloaded and from this image a so-called docker container is built, which is the actual virtual environment. These are the necessary steps:
+We will rely on docker_ and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. For this purpose we have modified the official OpenFoam docker image, so that it also contains all components of HydrothermalFoam. The way docker works is that a so-called docker image is downloaded and from this image a so-called docker container is built, which is the actual virtual environment. These are the necessary steps:
 
 1. **Install** `docker desktop <https://www.docker.com/products/docker-desktop>`_ and keep it running.
 2. **Register** an account with `docker hub <https://hub.docker.com/>`_, a marketplace for docker images.
