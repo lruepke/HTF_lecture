@@ -110,7 +110,7 @@ from pygments_OpenFOAM.foam import OpenFOAMLexer
 lexers['foam'] = OpenFOAMLexer(startinline=True)
 # default language to highlight source code
 highlight_language = 'foam'
-pygments_style = 'emacs' # xcode,monokai,emacs,autumn,vs,solarized-dark
+pygments_style = 'autumn' # xcode,monokai,emacs,autumn,vs,solarized-dark
 # numbering of cross reference
 numfig = True 
 math_numfig = True

@@ -150,7 +150,7 @@ Next we need to set boundary conditions. Open the file T inside the 0 directory 
 
     code 0/T
 
-.. code-block:: bash 
+.. code-block:: foam 
     :linenos:
     :emphasize-lines: 17,30,31
     :name: lst:flange_mesh:bc
@@ -216,7 +216,7 @@ Next we need to set the value of the thermal diffusivity.
 
     code constant/transportProperties
 
-.. code-block:: bash 
+.. code-block:: foam 
     :linenos:
     :emphasize-lines: 18
     :name: lst:flange_mesh:tp
@@ -255,7 +255,7 @@ Finally, we need to set some control parameters like the time step, run time, ou
 
     code system/controlDict
 
-.. code-block:: bash 
+.. code-block:: foam 
     :linenos:
     :emphasize-lines: 18
     :name: lst:flange_mesh:cd
