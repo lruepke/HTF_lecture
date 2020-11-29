@@ -391,45 +391,45 @@ paraview a.foam
 36
 37
 38
-39</pre></div></td><td class="code"><div class="highlight"><pre><span></span>FoamFile
-{
-    version     2.0;
-    format      ascii;
-    class       volScalarField;
-    object      T;
-}
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">FoamFile</span>
+<span class="p">{</span>
+    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+    <span class="kt">class</span>       <span class="n">volScalarField</span><span class="p">;</span>
+    <span class="kt">object</span>      <span class="k">T</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
 
-<span class="hll">dimensions      [0 0 0 1 0 0 0];
+<span class="hll"><span class="kt">dimensions</span>      <span class="p">[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
 </span>
-<span class="hll">internalField   uniform 273;
+<span class="hll"><span class="kt">internalField</span>   <span class="k">uniform</span> <span class="mi">273</span><span class="p">;</span>
 </span>
-boundaryField
-{
-    patch1
-    {
-        type            zeroGradient;
-    }
+<span class="k">boundaryField</span>
+<span class="p">{</span>
+    <span class="n">patch1</span>
+    <span class="p">{</span>
+        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    patch2
-    {
-        type            fixedValue;
-        value           uniform 273;
-    }
+    <span class="n">patch2</span>
+    <span class="p">{</span>
+        <span class="kt">type</span>            <span class="k">fixedValue</span><span class="p">;</span>
+        <span class="kt">value</span>           <span class="k">uniform</span> <span class="mi">273</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    patch3
-    {
-        type            zeroGradient;
-    }
+    <span class="n">patch3</span>
+    <span class="p">{</span>
+        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    patch4
-    {
-        type            fixedValue;
-        value           uniform 573;
-    }
-}
+    <span class="n">patch4</span>
+    <span class="p">{</span>
+        <span class="kt">type</span>            <span class="k">fixedValue</span><span class="p">;</span>
+        <span class="kt">value</span>           <span class="k">uniform</span> <span class="mi">573</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-// ************************************************************************* //
+<span class="c1">// ************************************************************************* //</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -448,7 +448,7 @@ boundaryField
 <h3>Transport properties<a class="headerlink" href="#transport-properties" title="Permalink to this headline">¶</a></h3>
 <div class="literal-block-wrapper docutils container" id="lst-flange-constant-transportproperties">
 <div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text"><code class="code docutils literal notranslate"><span class="pre">constant/transportProperties</span></code>.</span><a class="headerlink" href="#lst-flange-constant-transportproperties" title="Permalink to this code">¶</a></div>
-<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -461,17 +461,17 @@ boundaryField
 11
 12
 13
-14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">FoamFile</span>
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">FoamFile</span>
 <span class="p">{</span>
-    <span class="n">version</span>     <span class="mf">2.0</span><span class="p">;</span>
-    <span class="n">format</span>      <span class="n">ascii</span><span class="p">;</span>
-    <span class="k">class</span>       <span class="nc">dictionary</span><span class="p">;</span>
-    <span class="n">location</span>    <span class="s">&quot;constant&quot;</span><span class="p">;</span>
-    <span class="n">object</span>      <span class="n">transportProperties</span><span class="p">;</span>
+    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+    <span class="kt">location</span>    <span class="s">&quot;constant&quot;</span><span class="p">;</span>
+    <span class="kt">object</span>      <span class="k">transportProperties</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
 
-<span class="n">DT</span>              <span class="n">DT</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">2</span> <span class="mi">-1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span> <span class="mf">4e-05</span><span class="p">;</span>
+<span class="n">DT</span>              <span class="n">DT</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">2</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span> <span class="mf">4e-05</span><span class="p">;</span>
 
 
 <span class="c1">// ************************************************************************* //</span>
@@ -484,7 +484,7 @@ boundaryField
 <h3>Solver and controlDict<a class="headerlink" href="#solver-and-controldict" title="Permalink to this headline">¶</a></h3>
 <div class="literal-block-wrapper docutils container" id="lst-flange-system-controldict">
 <div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text"><code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>.</span><a class="headerlink" href="#lst-flange-system-controldict" title="Permalink to this code">¶</a></div>
-<div class="highlight-c++ notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -525,45 +525,45 @@ boundaryField
 39
 40
 41
-42</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">FoamFile</span>
+42</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">FoamFile</span>
 <span class="p">{</span>
-    <span class="n">version</span>     <span class="mf">2.0</span><span class="p">;</span>
-    <span class="n">format</span>      <span class="n">ascii</span><span class="p">;</span>
-    <span class="k">class</span>       <span class="nc">dictionary</span><span class="p">;</span>
-    <span class="n">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
-    <span class="n">object</span>      <span class="n">controlDict</span><span class="p">;</span>
+    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+    <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
+    <span class="kt">object</span>      <span class="k">controlDict</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
 
-<span class="hll"><span class="n">application</span>     <span class="n">laplacianFoam</span><span class="p">;</span>
+<span class="hll"><span class="kt">application</span>     <span class="n">laplacianFoam</span><span class="p">;</span>
 </span>
-<span class="hll"><span class="n">startFrom</span>       <span class="n">latestTime</span><span class="p">;</span>
+<span class="hll"><span class="kt">startFrom</span>       <span class="k">latestTime</span><span class="p">;</span>
 </span>
-<span class="hll"><span class="n">startTime</span>       <span class="mi">0</span><span class="p">;</span>
+<span class="hll"><span class="kt">startTime</span>       <span class="mi">0</span><span class="p">;</span>
 </span>
-<span class="hll"><span class="n">stopAt</span>          <span class="n">endTime</span><span class="p">;</span>
+<span class="hll"><span class="kt">stopAt</span>          <span class="kt">endTime</span><span class="p">;</span>
 </span>
-<span class="hll"><span class="n">endTime</span>         <span class="mi">3</span><span class="p">;</span>
+<span class="hll"><span class="kt">endTime</span>         <span class="mi">3</span><span class="p">;</span>
 </span>
-<span class="hll"><span class="n">deltaT</span>          <span class="mf">0.005</span><span class="p">;</span>
+<span class="hll"><span class="kt">deltaT</span>          <span class="mf">0.005</span><span class="p">;</span>
 </span>
-<span class="n">writeControl</span>    <span class="n">runTime</span><span class="p">;</span>
+<span class="kt">writeControl</span>    <span class="k">runTime</span><span class="p">;</span>
 
-<span class="hll"><span class="n">writeInterval</span>   <span class="mf">0.1</span><span class="p">;</span>
+<span class="hll"><span class="kt">writeInterval</span>   <span class="mf">0.1</span><span class="p">;</span>
 </span>
-<span class="n">purgeWrite</span>      <span class="mi">0</span><span class="p">;</span>
+<span class="kt">purgeWrite</span>      <span class="mi">0</span><span class="p">;</span>
 
-<span class="n">writeFormat</span>     <span class="n">ascii</span><span class="p">;</span>
+<span class="kt">writeFormat</span>     <span class="k">ascii</span><span class="p">;</span>
 
-<span class="n">writePrecision</span>  <span class="mi">6</span><span class="p">;</span>
+<span class="kt">writePrecision</span>  <span class="mi">6</span><span class="p">;</span>
 
-<span class="n">writeCompression</span> <span class="n">off</span><span class="p">;</span>
+<span class="kt">writeCompression</span> <span class="k">off</span><span class="p">;</span>
 
-<span class="n">timeFormat</span>      <span class="n">general</span><span class="p">;</span>
+<span class="kt">timeFormat</span>      <span class="k">general</span><span class="p">;</span>
 
-<span class="n">timePrecision</span>   <span class="mi">6</span><span class="p">;</span>
+<span class="kt">timePrecision</span>   <span class="mi">6</span><span class="p">;</span>
 
-<span class="n">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
+<span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
 
 
 <span class="c1">// ************************************************************************* //</span>
@@ -612,6 +612,11 @@ boundaryField
 <source src="../../_static/video/flange_T.mp4" type="video/mp4">
 Your browser does not support HTML video.
 </video></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;dss.h&quot;</span><span class="cp"></span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">a</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</pre></div>
 </div>
 </div>
 </div>

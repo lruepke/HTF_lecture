@@ -119,13 +119,13 @@ After converting the mesh, you can use Paraview_ to visualize the mesh,
                 
                 <iframe src="../../_static/vtk_js/index.html?fileURL=flange_mesh.vtkjs" width="100%" height="500px"></iframe>
         
-Boundary conditions
+Boundary conditions 
 ^^^^^^^^^^^^^^^^^^^^^^^
-
+    
 .. literalinclude:: /_static/cases/flange/0/T
-   :language: foam
-   :linenos:
-   :lines: 8- 
+   :language: foam 
+   :linenos: 
+   :lines: 8-  
    :emphasize-lines: 10,12
    :caption: :code:`0/T`.
    :name: lst:flange:0:T
@@ -138,11 +138,11 @@ Boundary conditions
     - patch2 and patch4 have the boundary conditions
     - Units! **[Kg m s K mol A cd]**, unit in the line 10 of :numref:`lst:flange:0:T` is read as :math:`kg^0 \cdot m^0 \cdot s^0 \cdot K^1 \cdot mol^0 \cdot A^0 \cdot cd^0 = K`, it is the unit of temperature.
 
-Transport properties
+Transport properties 
 ^^^^^^^^^^^^^^^^^^^^^^^
-
+ 
 .. literalinclude:: /_static/cases/flange/constant/transportProperties
-   :language: c++
+   :language: foam   
    :linenos:
    :lines: 8- 
    :emphasize-lines: 0
@@ -155,8 +155,8 @@ Solver and controlDict
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: /_static/cases/flange/system/controlDict
-   :language: c++
-   :linenos:
+   :language: foam
+   :linenos:  
    :lines: 8- 
    :emphasize-lines: 11, 13, 15, 17, 19, 21, 25
    :caption: :code:`system/controlDict`.
@@ -198,10 +198,15 @@ Results and post-processing
         .. tab:: Animation of T evolution
 
             .. raw:: html
-
+   
                 <video width=100% autoplay loop>
                 <source src="../../_static/video/flange_T.mp4" type="video/mp4">
                 Your browser does not support HTML video.
                 </video>
 
 
+.. code-block:: cpp
+   
+    #include "dss.h"
+    using namespace std;
+    int a =0;      
