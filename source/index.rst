@@ -6,7 +6,6 @@
 
 Introduction to OpenFOAM and HydrothermalFoam
 =============================================
-
 Welcome to the website for the course Numerical Fluid Dynamics I (flow in porous media) taught at Kiel University within the Geophysics master.  The course introduces methods and tools in geophysical fluid dynamics. The goal is to learn about the complete workflow from formulating a geoscientific hypothesis to testing it using numerical techniques. For this we will use the popular Computational Fluid Dynamics (CFD) package OpenFOAM_ . In terms of numerical methods, we will learn about finite-differences and finite-volumes including their respective strengths and limitations. Topic-wise, we will focus on porous flow processes with a special emphasis on hydrothermal flow problems like submarine black smoker systems and hydrothermal cooling of magmatic intrusions. For these topics we will use the 3-D hydrothermal flow model HydrothermalFoam_, which is also based on OpenFOAM.
 
 
@@ -34,12 +33,6 @@ Course format
 -------------
 
 The majority of this course will be spent in front of a computer working on exercises related to (porous) flow problems in marine geodynamics.
-
-.. code-block:: bash
-
-      ln -s $FOAM_USER_LIBBIN/libHydroThermoPhysicalModels.dylib $FOAM_USER_LIBBIN/libHydroThermoPhysicalModels.so
-
-
 
 .. admonition:: Open access!
 
