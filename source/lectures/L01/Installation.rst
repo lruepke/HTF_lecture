@@ -74,4 +74,4 @@ You can stop the container whenever you want and your files will remain intact, 
 
 Paraview
 --------
-We will use Kiteware's `Paraview <paraview.org>`_ to visualize the modeling results. Download and install the latest version. It also really helps to add paraview to the system path, so that it can be called from the command line.
+We will use Kiteware's Paraview_ to visualize the modeling results. Download and install the latest version. It also really helps to add paraview to the system path, so that it can be called from the command line.
