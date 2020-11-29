@@ -55,6 +55,7 @@ The majority of this course will be spent in front of a computer working on exer
     :maxdepth: 2
     :caption: Lecture 1
 
+    lectures/L01/slice
     lectures/L01/Installation
     lectures/L01/OpenFoam
     lectures/L01/FirstCase
