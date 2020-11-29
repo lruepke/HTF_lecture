@@ -46,7 +46,7 @@ The majority of this course will be spent in front of a computer working on exer
     general-info/course-details
 
 Lectures
--------------
+========
 
 .. toctree::
     :maxdepth: 2
