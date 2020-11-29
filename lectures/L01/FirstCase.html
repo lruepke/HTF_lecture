@@ -105,8 +105,13 @@
 <li class="toctree-l2"><a class="reference internal" href="Installation.html">Installation guide</a></li>
 <li class="toctree-l2"><a class="reference internal" href="OpenFoam.html">Getting started with OpenFoam</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">A first test case - heat diffusion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#theory">Theory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#prepare-case-files">Prepare case files</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mesh-generation">Mesh generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transport-properties">Transport properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#case-control">Case control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-case">Running the case</a></li>
 </ul>
 </li>
 </ul>
@@ -216,14 +221,30 @@
 <li><p>post-processing</p></li>
 </ul>
 </div>
+<div class="section" id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h2>
+<p>The first case is the <strong>flange</strong> case from OpenFOAM tutorials, which illustrates how to solve for 3-D heat conduction in a complex-shaped solid. The equation we will be solving is the transient heat diffusion, a laplacian partial differential equation (PDE) that is here written for the simplfied case of constant properties (Eqn. <a class="reference internal" href="#equation-eq-laplacian-dif">(3)</a>). The equation is based on plugging Fourier’s law (Eqn. <a class="reference internal" href="#equation-eq-fourier-law">(1)</a>) into a general energy conservation equation (Eqn. <a class="reference internal" href="#equation-eq-simple-energy-dif">(2)</a>)</p>
+<div class="math notranslate nohighlight" id="equation-eq-fourier-law">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-fourier-law" title="Permalink to this equation">¶</a></span>\[\vec{q} = -\lambda_r \nabla T\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-simple-energy-dif">
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-simple-energy-dif" title="Permalink to this equation">¶</a></span>\[\rho C_{cp} \frac{\partial T}{\partial t}= -\nabla \cdot \vec{q}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-laplacian-dif">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-laplacian-dif" title="Permalink to this equation">¶</a></span>\[\frac{\partial T}{\partial t} = D \nabla^2 T\]</div>
+<p>Here  <span class="math notranslate nohighlight">\(\rho\)</span> is density, <span class="math notranslate nohighlight">\(C_{cp}\)</span> the specific heat,  <span class="math notranslate nohighlight">\(\lambda_r\)</span> the heat conduction coefficient, and <span class="math notranslate nohighlight">\(D=\frac{\lambda_r}{\rho C_{cp}}\)</span> the thermal diffusivity.</p>
+</div>
 <div class="section" id="prepare-case-files">
 <h2>Prepare case files<a class="headerlink" href="#prepare-case-files" title="Permalink to this headline">¶</a></h2>
-<p>The first case is the <strong>flange</strong> case from OpenFOAM tutorials, just copy the whole case to your working directory, this can be done using the following command in your terminal (<strong>should be the docker container terminal if you use OpenFOAM in the docker container</strong>).
-It should be noted that you have to change directory to your working directory first.</p>
-<div class="highlight-bash notranslate" id="lst-cpflangetoworkdir"><div class="highlight"><pre><span></span>cp -rf <span class="nv">$FOAM_TUTORIALS</span>/basic/laplacianFoam/flange .
+<p>Our first case is the <strong>flange</strong> case from the <a class="reference external" href="https://cfd.direct/openfoam/user-guide/">OpenFoam tutorials</a>, which illustrates how to solve for 3-D heat conduction in a complex-shaped solid.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It is good practice to never change the original tutorials, which reside in $FOAM_TUTORIALS but to always make a copy to your working directory.</p>
+</div>
+<p>To get started, just copy the whole case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:</p>
+<div class="highlight-bash notranslate" id="lst-cpflangetoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp -rf <span class="nv">$FOAM_TUTORIALS</span>/basic/laplacianFoam/flange .
 </pre></div>
 </div>
-<p>The tree structure of flange case is shown in <a class="reference internal" href="../L02/exercise.html#lst-flange-tree"><span class="std std-numref">Listing 3</span></a>.</p>
+<p>An OpenFoam case consist of a certain directory structure, which contains text files that control the case. The tree structure of flange case is shown in <a class="reference internal" href="../L02/exercise.html#lst-flange-tree"><span class="std std-numref">Listing 6</span></a>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-flange-tree">
 <div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-tree" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -252,15 +273,16 @@ It should be noted that you have to change directory to your working directory f
 </pre></div>
 </td></tr></table></div>
 </div>
+<p>The 0 directory contains all initial and boundary conditions, the system folder contains all controlling parameter files, and the constant folder contains constant properties like the mesh - which we will create next.</p>
 </div>
 <div class="section" id="mesh-generation">
 <h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline">¶</a></h2>
-<p>The mesh of flange case is prepared as <a class="reference external" href="https://www.ansys.com">Ansys</a> format (see line 8 of <a class="reference internal" href="../L02/exercise.html#lst-flange-tree"><span class="std std-numref">Listing 3</span></a>), you can use OpenFOAM mesh convert utility of <code class="code docutils literal notranslate"><span class="pre">ansysToFoam</span></code> to convert the ansys format to OpenFOAM format, the command is shown below,</p>
+<p>The mesh of flange case is prepared as <a class="reference external" href="https://www.ansys.com">Ansys</a> format (see line 8 of <a class="reference internal" href="../L02/exercise.html#lst-flange-tree"><span class="std std-numref">Listing 6</span></a>), you can use OpenFOAM mesh convert utility of <code class="code docutils literal notranslate"><span class="pre">ansysToFoam</span></code> to convert the ansys format to OpenFOAM format, the command is shown below,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansysToFoam flange.ans -scale <span class="m">0</span>.001
 </pre></div>
 </div>
 <p>The <code class="code docutils literal notranslate"><span class="pre">-scale</span></code> option is used to set scale factor of the whole mesh.
-Again, you can use command of <code class="code docutils literal notranslate"><span class="pre">tree</span></code> to explore what changes in the case folder, you can get something like <a class="reference internal" href="../L02/exercise.html#lst-flange-mesh-tree"><span class="std std-numref">Listing 4</span></a>, please notice the new files emphasized in the lines 7-13.</p>
+Again, you can use command of <code class="code docutils literal notranslate"><span class="pre">tree</span></code> to explore what changes in the case folder, you can get something like <a class="reference internal" href="../L02/exercise.html#lst-flange-mesh-tree"><span class="std std-numref">Listing 7</span></a>, please notice the new files emphasized in the lines 7-13.</p>
 <div class="literal-block-wrapper docutils container" id="lst-flange-mesh-tree">
 <div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-tree" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -310,7 +332,7 @@ paraview a.foam
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><code class="code docutils literal notranslate"><span class="pre">touch</span> <span class="pre">a.foam</span></code> means create a empty file named <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code>, this could not work in windows system.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">touch</span> <span class="pre">a.foam</span></code> means create a empty file named <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code>. You might might have the <code class="code docutils literal notranslate"><span class="pre">touch</span></code> command in windows; then create the empty file inside the docker shell.</p>
 </div>
 <div class="sphinx-tabs docutils container">
 <div class="ui top attached tabular menu sphinx-menu docutils container">
@@ -335,6 +357,277 @@ paraview a.foam
 <p>Mesh and boundary condions of the 3D pipe model.</p>
 <iframe src="../../_static/vtk_js/index.html?fileURL=flange_mesh.vtkjs" width="100%" height="500px"></iframe></div>
 </div>
+</div>
+<div class="section" id="boundary-conditions">
+<h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h2>
+<p>Next we need to set boundary conditions. Open the file T inside the 0 directory from your local left-hand shell.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code <span class="m">0</span>/T
+</pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="lst-flange-mesh-bc">
+<div class="code-block-caption"><span class="caption-number">Listing 3 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-flange-mesh-bc" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre></div></td><td class="code"><div class="highlight"><pre><span></span>/*--------------------------------*- C++ -*----------------------------------*<span class="se">\</span>
+<span class="o">=========</span>                 <span class="p">|</span>
+<span class="se">\\</span>      /  F ield         <span class="p">|</span> OpenFOAM: The Open Source CFD Toolbox
+ <span class="se">\\</span>    /   O peration     <span class="p">|</span> Website:  https://openfoam.org
+  <span class="se">\\</span>  /    A nd           <span class="p">|</span> Version:  <span class="m">7</span>
+   <span class="se">\\</span>/     M anipulation  <span class="p">|</span>
+<span class="se">\*</span>---------------------------------------------------------------------------*/
+FoamFile
+<span class="o">{</span>
+    version     <span class="m">2</span>.0<span class="p">;</span>
+    format      ascii<span class="p">;</span>
+    class       volScalarField<span class="p">;</span>
+    object      T<span class="p">;</span>
+<span class="o">}</span>
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+<span class="hll">dimensions      <span class="o">[</span><span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">1</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span><span class="o">]</span><span class="p">;</span>
+</span>
+internalField   uniform <span class="m">273</span><span class="p">;</span>
+
+boundaryField
+<span class="o">{</span>
+    patch1
+    <span class="o">{</span>
+        <span class="nb">type</span>            zeroGradient<span class="p">;</span>
+    <span class="o">}</span>
+
+    patch2
+    <span class="o">{</span>
+<span class="hll">        <span class="nb">type</span>            fixedValue<span class="p">;</span>
+</span><span class="hll">        value           uniform <span class="m">273</span><span class="p">;</span>
+</span>    <span class="o">}</span>
+
+    patch3
+    <span class="o">{</span>
+        <span class="nb">type</span>            zeroGradient<span class="p">;</span>
+    <span class="o">}</span>
+
+    patch4
+    <span class="o">{</span>
+        <span class="nb">type</span>            fixedValue<span class="p">;</span>
+        value           uniform <span class="m">573</span><span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+// ************************************************************************* //
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Notice how boundary conditions are set to parts of the mesh that have an identifier like patch2. Those identifiers are defined during the meshing procedure. Here they were defined in the ansys file.</p>
+<p>Units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a one in the fourth columns, the units of the defined properties has units of Kelvin.</p>
+</div>
+<div class="section" id="transport-properties">
+<h2>Transport properties<a class="headerlink" href="#transport-properties" title="Permalink to this headline">¶</a></h2>
+<p>Next we need to set the value of the thermal diffusivity.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code constant/transportProperties
+</pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="lst-flange-mesh-tp">
+<div class="code-block-caption"><span class="caption-number">Listing 4 </span><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-flange-mesh-tp" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span>/*--------------------------------*- C++ -*----------------------------------*<span class="se">\</span>
+<span class="o">=========</span>                 <span class="p">|</span>
+<span class="se">\\</span>      /  F ield         <span class="p">|</span> OpenFOAM: The Open Source CFD Toolbox
+ <span class="se">\\</span>    /   O peration     <span class="p">|</span> Website:  https://openfoam.org
+  <span class="se">\\</span>  /    A nd           <span class="p">|</span> Version:  <span class="m">7</span>
+   <span class="se">\\</span>/     M anipulation  <span class="p">|</span>
+<span class="se">\*</span>---------------------------------------------------------------------------*/
+FoamFile
+<span class="o">{</span>
+    version     <span class="m">2</span>.0<span class="p">;</span>
+    format      ascii<span class="p">;</span>
+    class       dictionary<span class="p">;</span>
+    location    <span class="s2">&quot;constant&quot;</span><span class="p">;</span>
+    object      transportProperties<span class="p">;</span>
+<span class="o">}</span>
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+<span class="hll">DT              DT <span class="o">[</span><span class="m">0</span> <span class="m">2</span> -1 <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span><span class="o">]</span> 4e-05<span class="p">;</span>
+</span>
+
+// ************************************************************************* //
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>Again, check that you understand the units, which here add up to m^2/s.</p>
+</div>
+<div class="section" id="case-control">
+<h2>Case control<a class="headerlink" href="#case-control" title="Permalink to this headline">¶</a></h2>
+<p>Finally, we need to set some control parameters like the time step, run time, output writing. These kind of parameters are set in system/controlDict. Open it and explore the values</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code system/controlDict
+</pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="lst-flange-mesh-cd">
+<div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text">controlDict of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-cd" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre></div></td><td class="code"><div class="highlight"><pre><span></span>/*--------------------------------*- C++ -*----------------------------------*<span class="se">\</span>
+<span class="o">=========</span>                 <span class="p">|</span>
+<span class="se">\\</span>      /  F ield         <span class="p">|</span> OpenFOAM: The Open Source CFD Toolbox
+ <span class="se">\\</span>    /   O peration     <span class="p">|</span> Website:  https://openfoam.org
+  <span class="se">\\</span>  /    A nd           <span class="p">|</span> Version:  <span class="m">7</span>
+   <span class="se">\\</span>/     M anipulation  <span class="p">|</span>
+<span class="se">\*</span>---------------------------------------------------------------------------*/
+FoamFile
+<span class="o">{</span>
+    version     <span class="m">2</span>.0<span class="p">;</span>
+    format      ascii<span class="p">;</span>
+    class       dictionary<span class="p">;</span>
+    location    <span class="s2">&quot;system&quot;</span><span class="p">;</span>
+    object      controlDict<span class="p">;</span>
+<span class="o">}</span>
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+<span class="hll">application     laplacianFoam<span class="p">;</span>
+</span>
+startFrom       latestTime<span class="p">;</span>
+
+startTime       <span class="m">0</span><span class="p">;</span>
+
+stopAt          endTime<span class="p">;</span>
+
+endTime         <span class="m">3</span><span class="p">;</span>
+
+deltaT          <span class="m">0</span>.005<span class="p">;</span>
+
+writeControl    runTime<span class="p">;</span>
+
+writeInterval   <span class="m">0</span>.1<span class="p">;</span>
+
+purgeWrite      <span class="m">0</span><span class="p">;</span>
+
+writeFormat     ascii<span class="p">;</span>
+
+writePrecision  <span class="m">6</span><span class="p">;</span>
+
+writeCompression off<span class="p">;</span>
+
+timeFormat      general<span class="p">;</span>
+
+timePrecision   <span class="m">6</span><span class="p">;</span>
+
+runTimeModifiable true<span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<p>You can find detailed descriptions of the different parameters in the <a class="reference external" href="https://cfd.direct/openfoam/user-guide/">OpenFoam User Guide</a>. Note that the solver we are using is called laplacianFoam.</p>
+</div>
+<div class="section" id="running-the-case">
+<h2>Running the case<a class="headerlink" href="#running-the-case" title="Permalink to this headline">¶</a></h2>
+<p>Now we are finally ready to run our first test case. Just type this into your docker shell:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>laplacianFoam
+</pre></div>
+</div>
+<p>Notice how several directories are appearing, which contain the intermediate results. You can postprocess the case by simply opening the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> file from paraview.</p>
 </div>
 </div>
 
