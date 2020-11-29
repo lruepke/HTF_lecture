@@ -198,15 +198,9 @@ Results and post-processing
         .. tab:: Animation of T evolution
 
             .. raw:: html
-   
+
                 <video width=100% autoplay loop>
                 <source src="../../_static/video/flange_T.mp4" type="video/mp4">
                 Your browser does not support HTML video.
                 </video>
 
-
-.. code-block:: cpp
-   
-    #include "dss.h"
-    using namespace std;
-    int a =0;      
