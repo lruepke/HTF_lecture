@@ -53,6 +53,7 @@ Lectures
 
     lectures/L01/index
     lectures/L02/index
+    lectures/L03/index
 
 
     
