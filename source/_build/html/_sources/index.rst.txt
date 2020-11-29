@@ -2,6 +2,7 @@
    sphinx-quickstart on Sat Nov 28 21:47:26 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
+.. highlight:: console
 
 Introduction to OpenFOAM and HydrothermalFoam
 =============================================
@@ -33,6 +34,10 @@ Course format
 -------------
 
 The majority of this course will be spent in front of a computer working on exercises related to (porous) flow problems in marine geodynamics.
+::
+   mkdir test
+   cd !$  
+
 
 
 .. admonition:: Open access!
