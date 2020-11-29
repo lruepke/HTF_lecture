@@ -104,9 +104,13 @@ html_context = {
 html_logo="_static/logo/geomar.svg"
 # some customized css style
 html_css_files = ["style.css"]
+# customize OpenFOAM syntax highlight
+from sphinx.highlighting import lexers
+from pygments_OpenFOAM.foam import OpenFOAMLexer
+lexers['foam'] = OpenFOAMLexer(startinline=True)
 # default language to highlight source code
-highlight_language = 'cpp'
-pygments_style = 'xcode' # monokai
+highlight_language = 'foam'
+pygments_style = 'emacs' # xcode,monokai,emacs,autumn,vs,solarized-dark
 # numbering of cross reference
 numfig = True 
 math_numfig = True
