@@ -204,14 +204,4 @@ Results and post-processing
                 Your browser does not support HTML video.
                 </video>
 
-        .. tab:: Initial
 
-            .. raw:: html
-                
-                <iframe src="../../_static/vtk_js/index.html?fileURL=flange_initial.vtkjs" width="100%" height="500px"></iframe>
-
-        .. tab:: Final
-
-            .. raw:: html
-                
-                <iframe src="../../_static/vtk_js/index.html?fileURL=flange_3s.vtkjs" width="100%" height="500px"></iframe>
