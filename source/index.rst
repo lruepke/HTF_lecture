@@ -56,9 +56,7 @@ The majority of this course will be spent in front of a computer working on exer
     :caption: Lecture 1
 
     lectures/L01/Installation
-    lectures/L01/Docker
-    lectures/L01/VS_Code
-    lectures/L01/Paraview
+    lectures/L01/OpenFoam
 
 .. toctree::
     :maxdepth: 2

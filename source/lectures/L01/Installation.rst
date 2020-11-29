@@ -66,7 +66,7 @@ You can stop the container whenever you want and your files will remain intact, 
     docker stop hydrothermalfoam
 
 .. tip::
-    It really helps to have syntax highlighting when manipulating OpenFoam files. To get it search for openfoam in the Extensions Tab of Visual Studio Code and you will find an extension provided by Zhikui Guo. 
+    It really helps to have syntax highlighting when manipulating OpenFoam files. To get it search for openfoam in the Extensions Tab of Visual Studio Code and you will find an extension provided by Zhikui Guo. Install the plug-in and copy the file associations into the settings.json file. To do so, type CMD/CTRL + SHIFT + P and search for "Open Settings (JSON)".
 
 .. _sec:install_paraview:
 
