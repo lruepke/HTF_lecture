@@ -123,7 +123,7 @@ Boundary conditions
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 .. literalinclude:: /_static/cases/flange/0/T
-   :language: c++
+   :language: foam
    :linenos:
    :lines: 8- 
    :emphasize-lines: 10,12
