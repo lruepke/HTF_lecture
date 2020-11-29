@@ -57,10 +57,11 @@ The majority of this course will be spent in front of a computer working on exer
 
     lectures/L01/Installation
     lectures/L01/OpenFoam
+    lectures/L01/FirstCase
 
 .. toctree::
     :maxdepth: 2
-    :caption: Lecture 1
+    :caption: Lecture 2
 
     lectures/L02/intro
     lectures/L02/exercise
