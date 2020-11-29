@@ -1,6 +1,6 @@
-.. _L02:
+.. _L03:
 
-Lecture 2
+Lecture 3
 --------------
 
 .. toctree::

@@ -244,7 +244,7 @@
 cp -rf <span class="nv">$FOAM_TUTORIALS</span>/basic/laplacianFoam/flange .
 </pre></div>
 </div>
-<p>An OpenFoam case consist of a certain directory structure, which contains text files that control the case. The tree structure of flange case is shown in <a class="reference internal" href="../L02/exercise.html#lst-flange-tree"><span class="std std-numref">Listing 6</span></a>.</p>
+<p>An OpenFoam case consist of a certain directory structure, which contains text files that control the case. The tree structure of flange case is shown in <a class="reference internal" href="#lst-flange-tree"><span class="std std-numref">Listing 1</span></a>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-flange-tree">
 <div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-tree" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -277,12 +277,12 @@ cp -rf <span class="nv">$FOAM_TUTORIALS</span>/basic/laplacianFoam/flange .
 </div>
 <div class="section" id="mesh-generation">
 <h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline">¶</a></h2>
-<p>The mesh of flange case is prepared as <a class="reference external" href="https://www.ansys.com">Ansys</a> format (see line 8 of <a class="reference internal" href="../L02/exercise.html#lst-flange-tree"><span class="std std-numref">Listing 6</span></a>), you can use OpenFOAM mesh convert utility of <code class="code docutils literal notranslate"><span class="pre">ansysToFoam</span></code> to convert the ansys format to OpenFOAM format, the command is shown below,</p>
+<p>The mesh of flange case is prepared as <a class="reference external" href="https://www.ansys.com">Ansys</a> format (see line 8 of <a class="reference internal" href="#lst-flange-tree"><span class="std std-numref">Listing 1</span></a>), you can use OpenFOAM mesh convert utility of <code class="code docutils literal notranslate"><span class="pre">ansysToFoam</span></code> to convert the ansys format to OpenFOAM format, the command is shown below,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansysToFoam flange.ans -scale <span class="m">0</span>.001
 </pre></div>
 </div>
 <p>The <code class="code docutils literal notranslate"><span class="pre">-scale</span></code> option is used to set scale factor of the whole mesh.
-Again, you can use command of <code class="code docutils literal notranslate"><span class="pre">tree</span></code> to explore what changes in the case folder, you can get something like <a class="reference internal" href="../L02/exercise.html#lst-flange-mesh-tree"><span class="std std-numref">Listing 7</span></a>, please notice the new files emphasized in the lines 7-13.</p>
+Again, you can use command of <code class="code docutils literal notranslate"><span class="pre">tree</span></code> to explore what changes in the case folder, you can get something like <a class="reference internal" href="#lst-flange-mesh-tree"><span class="std std-numref">Listing 2</span></a>, please notice the new files emphasized in the lines 7-13.</p>
 <div class="literal-block-wrapper docutils container" id="lst-flange-mesh-tree">
 <div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-tree" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
