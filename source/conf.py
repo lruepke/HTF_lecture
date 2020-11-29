@@ -71,9 +71,13 @@ html_context = {
     'github_version': 'main/',
     'conf_py_path': '/source/'
 }
+html_logo="_static/logo/geomar.svg"
 # some customized css style
 html_css_files = ["style.css"]
-
+# default language to highlight source code
+highlight_language = 'cpp'
+pygments_style = 'xcode' # monokai
+# numbering of cross reference
 numfig = True 
 math_numfig = True
 math_eqref_format = '({number})'
