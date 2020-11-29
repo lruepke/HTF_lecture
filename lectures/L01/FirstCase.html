@@ -44,7 +44,9 @@
 
     
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Navier-Stokes flow with OpenFoam" href="../L02/intro.html" />
+    <link rel="prev" title="Getting started with OpenFoam" href="OpenFoam.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -96,6 +98,31 @@
               <p class="caption"><span class="caption-text">Course information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 1</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slice.html">Slice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">A first test case - heat diffusion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#theory">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-case-files">Prepare case files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mesh-generation">Mesh generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transport-properties">Transport properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#case-control">Case control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-case">Running the case</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L02/intro.html">Navier-Stokes flow with OpenFoam</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
 </ul>
 
             
@@ -200,13 +227,13 @@
 </div>
 <div class="section" id="theory">
 <h2>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h2>
-<p>The first case is the <strong>flange</strong> case from OpenFOAM tutorials, which illustrates how to solve for 3-D heat conduction in a complex-shaped solid. The equation we will be solving is the transient heat diffusion, a laplacian partial differential equation (PDE) that is here written for the simplfied case of constant properties (Eqn. <a class="reference internal" href="#equation-eq-laplacian-dif">()</a>). The equation is based on plugging Fourier’s law (Eqn. <a class="reference internal" href="#equation-eq-fourier-law">()</a>) into a general energy conservation equation (Eqn. <a class="reference internal" href="#equation-eq-simple-energy-dif">()</a>)</p>
+<p>The first case is the <strong>flange</strong> case from OpenFOAM tutorials, which illustrates how to solve for 3-D heat conduction in a complex-shaped solid. The equation we will be solving is the transient heat diffusion, a laplacian partial differential equation (PDE) that is here written for the simplfied case of constant properties (Eqn. <a class="reference internal" href="#equation-eq-laplacian-dif">(3)</a>). The equation is based on plugging Fourier’s law (Eqn. <a class="reference internal" href="#equation-eq-fourier-law">(1)</a>) into a general energy conservation equation (Eqn. <a class="reference internal" href="#equation-eq-simple-energy-dif">(2)</a>)</p>
 <div class="math notranslate nohighlight" id="equation-eq-fourier-law">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-fourier-law" title="Permalink to this equation">¶</a></span>\[\vec{q} = -\lambda_r \nabla T\]</div>
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-fourier-law" title="Permalink to this equation">¶</a></span>\[\vec{q} = -\lambda_r \nabla T\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-simple-energy-dif">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-simple-energy-dif" title="Permalink to this equation">¶</a></span>\[\rho C_{cp} \frac{\partial T}{\partial t}= -\nabla \cdot \vec{q}\]</div>
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-simple-energy-dif" title="Permalink to this equation">¶</a></span>\[\rho C_{cp} \frac{\partial T}{\partial t}= -\nabla \cdot \vec{q}\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-laplacian-dif">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-laplacian-dif" title="Permalink to this equation">¶</a></span>\[\frac{\partial T}{\partial t} = D \nabla^2 T\]</div>
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-laplacian-dif" title="Permalink to this equation">¶</a></span>\[\frac{\partial T}{\partial t} = D \nabla^2 T\]</div>
 <p>Here  <span class="math notranslate nohighlight">\(\rho\)</span> is density, <span class="math notranslate nohighlight">\(C_{cp}\)</span> the specific heat,  <span class="math notranslate nohighlight">\(\lambda_r\)</span> the heat conduction coefficient, and <span class="math notranslate nohighlight">\(D=\frac{\lambda_r}{\rho C_{cp}}\)</span> the thermal diffusivity.</p>
 </div>
 <div class="section" id="prepare-case-files">
@@ -221,9 +248,9 @@
 cp -rf <span class="nv">$FOAM_TUTORIALS</span>/basic/laplacianFoam/flange .
 </pre></div>
 </div>
-<p>An OpenFoam case consist of a certain directory structure, which contains text files that control the case. The tree structure of flange case is shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:flange:tree</span></code>.</p>
+<p>An OpenFoam case consist of a certain directory structure, which contains text files that control the case. The tree structure of flange case is shown in <a class="reference internal" href="#lst-flange-tree"><span class="std std-numref">Listing 1</span></a>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-flange-tree">
-<div class="code-block-caption"><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-tree" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-tree" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -254,14 +281,14 @@ cp -rf <span class="nv">$FOAM_TUTORIALS</span>/basic/laplacianFoam/flange .
 </div>
 <div class="section" id="mesh-generation">
 <h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline">¶</a></h2>
-<p>The mesh of flange case is prepared as <a class="reference external" href="https://www.ansys.com">Ansys</a> format (see line 8 of <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:flange:tree</span></code>), you can use OpenFOAM mesh convert utility of <code class="code docutils literal notranslate"><span class="pre">ansysToFoam</span></code> to convert the ansys format to OpenFOAM format, the command is shown below,</p>
+<p>The mesh of flange case is prepared as <a class="reference external" href="https://www.ansys.com">Ansys</a> format (see line 8 of <a class="reference internal" href="#lst-flange-tree"><span class="std std-numref">Listing 1</span></a>), you can use OpenFOAM mesh convert utility of <code class="code docutils literal notranslate"><span class="pre">ansysToFoam</span></code> to convert the ansys format to OpenFOAM format, the command is shown below,</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansysToFoam flange.ans -scale <span class="m">0</span>.001
 </pre></div>
 </div>
 <p>The <code class="code docutils literal notranslate"><span class="pre">-scale</span></code> option is used to set scale factor of the whole mesh.
-Again, you can use command of <code class="code docutils literal notranslate"><span class="pre">tree</span></code> to explore what changes in the case folder, you can get something like <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:flange_mesh:tree</span></code>, please notice the new files emphasized in the lines 7-13.</p>
+Again, you can use command of <code class="code docutils literal notranslate"><span class="pre">tree</span></code> to explore what changes in the case folder, you can get something like <a class="reference internal" href="#lst-flange-mesh-tree"><span class="std std-numref">Listing 2</span></a>, please notice the new files emphasized in the lines 7-13.</p>
 <div class="literal-block-wrapper docutils container" id="lst-flange-mesh-tree">
-<div class="code-block-caption"><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-tree" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-tree" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -327,7 +354,7 @@ paraview a.foam
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-0 active docutils container">
 <div class="figure align-center" id="id1">
 <img alt="../../_images/flange_mesh.png" src="../../_images/flange_mesh.png" />
-<p class="caption"><span class="caption-text">Mesh of the first case - flange.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Mesh of the first case - flange.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-1 docutils container">
@@ -342,7 +369,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-flange-mesh-bc">
-<div class="code-block-caption"><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-flange-mesh-bc" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 3 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-flange-mesh-bc" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -447,7 +474,7 @@ boundaryField
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-flange-mesh-tp">
-<div class="code-block-caption"><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-flange-mesh-tp" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 4 </span><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-flange-mesh-tp" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -501,7 +528,7 @@ FoamFile
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-flange-mesh-cd">
-<div class="code-block-caption"><span class="caption-text">controlDict of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-cd" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text">controlDict of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-cd" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -613,6 +640,15 @@ runTimeModifiable true<span class="p">;</span>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../L02/intro.html" class="btn btn-neutral float-right" title="Navier-Stokes flow with OpenFoam" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="OpenFoam.html" class="btn btn-neutral float-left" title="Getting started with OpenFoam" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
