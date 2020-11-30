@@ -1,6 +1,0 @@
-*.pvsm
-*.vtkjs
-*.foam
-results/
-log*
-*/

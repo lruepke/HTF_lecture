@@ -11,11 +11,35 @@ FoamFile
     format      ascii;
     class       dictionary;
     location    "constant";
-    object      transportProperties;
+    object      thermophysicalProperties;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-DT              DT [0 2 -1 0 0 0 0] 4e-05;
+thermoType
+{
+    type            htHydroThermo;
+    mixture         pureMixture;
+    transport       IAPWS;
+    thermo          IAPWS; 
+    equationOfState IAPWS;
+    specie          specie;
+    energy          temperature; 
+}
+
+mixture
+{
+    specie
+    {
+        molWeight       18;
+    }
+    porousMedia
+    {
+        porosity porosity [0 0 0 0 0 0 0] 0.1;
+        kr kr [1 1 -3 -1 0 0 0] 1.5;
+        cp_rock cp_rock [0 2 -2 -1 0 0 0] 880;
+        rho_rock rho_rock [1 -3 0 0 0 0 0] 3000;
+    }
+}
 
 
 // ************************************************************************* //
