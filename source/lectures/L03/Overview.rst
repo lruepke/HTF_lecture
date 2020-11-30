@@ -19,7 +19,7 @@ We will learn how the water equation-of-state controls flow dynamics and vent te
 
    .. raw:: html
 
-      <video width=100% autoplay loop controls>
+      <video width=100% autoplay muted loop>
          <source src="../../_static/video/Hasenclever_EPR_small.mp4" type="video/mp4">
          Your browser does not support HTML video.
       </video>
