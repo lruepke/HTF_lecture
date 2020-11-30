@@ -2,7 +2,7 @@ language: python
 python:
   - 3.7
 install:
-  - pip install sphinx sphinx_rtd_theme sphinxcontrib-bibtex
+  - pip install sphinx sphinx_rtd_theme sphinxcontrib-bibtex matplotlib pandas numpy
 script: make html
 # script: make html && make latex && cd build/latex && make && cd ../../
 after_success:
