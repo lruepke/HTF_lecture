@@ -23,7 +23,7 @@ fi
 
 # Copy in the HTML.  You may want to change this with your documentation path.
 cp -R ../$REPO/build/html/* ./
-cp ../$REPO/build/latex/hydrothermalfoamlecture.pdf ./
+# cp ../$REPO/build/latex/hydrothermalfoamlecture.pdf ./
 
 # Add and commit changes.
 git add -A .
