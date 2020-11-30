@@ -2,4 +2,133 @@ Example
 ================================
 
 2D cavity flow
--------------------------------------
+------------------------
+Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a kinematic boundary condition at one side, while all other sides are walls with zero velocity. The model setup is shown in :numref:`fig:2dcavity_setup`.
+
+.. figure:: /_figures/2d_cavity_setup.*
+   :align: center
+   :name: fig:2dcavity_setup
+
+The general workflow is the following
+
+.. figure:: /_figures/2d_cavity_wf.*
+   :align: center
+   :name: fig:2d_cavity_wf
+
+
+with icoFoam being the built-in OpenFoam Navier-Stokes solver.
+
+Preparing the case
+^^^^^^^^^^^^^^^^^^
+
+Two-dimensional cavity flow is included in the official tutorials of OpenFoam. We get started by copying the tutorial case into our work directory. You need to do this from your docker shell.
+
+.. code-block:: bash 
+    :name: lst:cp2dCavityToWorkDir
+
+    cd $HOME/HydrothermalFoam_runs
+    cp $FOAM_TUTORIALS/incompressible/icoFoam/cavity/cavity ./cavity2D
+
+Check the directory structure:
+
+.. figure:: /_figures/cavity2d_dir.*
+   :align: center
+   :name: fig:cavity2d_dir
+
+The two files :code:`run.sh` and :code:`clean.sh` are actually not included and we need to create them. These files are usually part of every OpenFoam case; :code:`run.sh` includes all commands that need to executed to run the case and :code:`clean.sh` cleans the case (removes mesh and output directories).
+
+.. code-block:: bash 
+    :linenos:
+    :name: lst:2dcav_run:tree
+    :caption: The run.sh file.
+
+    #!/bin/sh
+    cd ${0%/*} 
+
+.. code-block:: bash 
+    :linenos:
+    :name: lst:2dcav_clean:tree
+    :caption: The clean.sh file.
+
+    #!/bin/sh
+    cd ${0%/*} 
+
+.. code-block:: bash 
+    :name: lst:2dCavitychmod
+
+    chmod u+x clean.sh run.sh
+
+Making the mesh
+^^^^^^^^^^^^^^^
+We will use OpenFoam's blockMesh utility to make a simple 2D mesh. The corresponding :code:`blockMeshDict`file that has all the meshing information is located in the system folder.
+
+.. figure:: /_figures/cavity2d_bm.*
+   :align: center
+   :name: fig:cavity2d_bm
+
+   Structure of the blockMeshDict
+
+First we need to define the vertices of the mesh, the nodes.
+
+.. figure:: /_figures/cavity2d_vertices.*
+   :align: center
+   :name: fig:cavity2d_bm
+
+   Numbering of the vertices.
+
+The next step is define the connectivity between the vertices in order to describe the modeling domain.
+
+.. figure:: /_figures/cavity2d_vorder.*
+   :align: center
+   :name: fig:cavity2d_vorder
+
+   The order by which the vertices are passed to the hex command matters!
+
+.. admonition:: Order of vertices
+
+    The OpenFoam documentation provides a nice description of the vertices ordering.
+    
+    * the axis origin is the first entry in the block definition, vertex 0 in our example
+    * the x direction is described by moving from vertex 0 to vertex 1
+    * the y direction is described by moving from vertex 1 to vertex 2
+    * vertices 0, 1, 2, 3 define the plane z = 0
+    * vertex 4 is found by moving from vertex 0 in the z direction
+    * vertices 5,6 and 7 are similarly found by moving in the z direction from vertices 1,2 and 3 respectively.
+
+Next boundary patches are defined and labeled in the blockMeshDict.
+
+.. figure:: /_figures/cavity2d_bounds.*
+   :align: center
+   :name: fig:cavity2d_bounds
+
+   Assigning boundary labels and types.
+
+Now we are ready to run the :code:`blockMesh` utility and create the mesh
+
+.. code-block:: bash 
+    :name: lst:2dCavityrbm
+
+    blockMesh
+
+You can visualize the mesh using paraview
+
+.. code-block:: bash 
+    :name: lst:2dCavity_vizm
+
+    touch a.foam 
+    paraview a.foam 
+
+Boundary conditions
+^^^^^^^^^^^^^^^^^^^
+
+asdf
+
+Run controls
+^^^^^^^^^^^^^^^^^^^
+
+asdf
+
+Visualization
+^^^^^^^^^^^^^^^^^^^
+
+asdf
