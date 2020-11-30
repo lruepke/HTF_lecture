@@ -1,0 +1,399 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Excercises &mdash; HydrothermalFoam Lecture  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="References" href="../../refs.html" />
+    <link rel="prev" title="Hydrothermal convection test case" href="FirstCase.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> HydrothermalFoam Lecture
+          
+
+          
+            
+            <img src="../../_static/geomar.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/slide.html">Accompanying slide deck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/slide.html">Accompanying slide deck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/intro.html">Navier-Stokes flow with OpenFoam</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Lecture 3</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="slide.html">Accompanying slide deck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Excercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#constant-temperature-1-layer-system">Constant temperature 1-layer system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#constant-temperature-2-layer-system">Constant temperature 2-layer system</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#change-the-mesh">Change the mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#assign-properties">Assign properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Assign properties</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../refs.html">References</a></li>
+</ul>
+
+            
+          
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydrothermalFoam Lecture</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Excercises</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L03/Exercise.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="excercises">
+<span id="l03-exercise"></span><h1>Excercises<a class="headerlink" href="#excercises" title="Permalink to this headline">¶</a></h1>
+<p>In this exercise we will investigate how permeability contrast affect hydrothermal flow and vent temperatures. We will first modify the Regular2DBox case to have constant temperature boundary condition and afterwards add a second layer to our mesh, so that we can explore permeability constrasts.</p>
+<div class="section" id="constant-temperature-1-layer-system">
+<h2>Constant temperature 1-layer system<a class="headerlink" href="#constant-temperature-1-layer-system" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-what-s-needed-for-the-constant-temperature-case admonition">
+<p class="admonition-title">What’s needed for the constant temperature case?</p>
+<ul class="simple">
+<li><p>make a copy of the case directory</p></li>
+<li><p>change the temperature boundary condition.</p></li>
+</ul>
+</div>
+<div class="figure align-center" id="fig-regularbox2d-constantt-fig">
+<img alt="../../_images/RegularBox2D_constantT.png" src="../../_images/RegularBox2D_constantT.png" />
+<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Constant temperature boundary condition.</span><a class="headerlink" href="#fig-regularbox2d-constantt-fig" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="constant-temperature-2-layer-system">
+<h2>Constant temperature 2-layer system<a class="headerlink" href="#constant-temperature-2-layer-system" title="Permalink to this headline">¶</a></h2>
+<p>Now we will explore permeability contrasts!</p>
+<div class="admonition-what-s-needed-for-the-two-layer-case admonition">
+<p class="admonition-title">What’s needed for the two-layer case?</p>
+<ul class="simple">
+<li><p>make a copy of the 1-layer case directory</p></li>
+<li><p>change the mesh to have two layers</p></li>
+<li><p>assign different permeabilities to the two layers</p></li>
+</ul>
+</div>
+<div class="section" id="change-the-mesh">
+<h3>Change the mesh<a class="headerlink" href="#change-the-mesh" title="Permalink to this headline">¶</a></h3>
+<p>Remember how the vertice counting is done! If you don’t, check last weeks lecture.</p>
+<div class="figure align-center" id="fig-exercise-2layer-fig">
+<img alt="../../_images/exercise_2layer.png" src="../../_images/exercise_2layer.png" />
+<p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">Starting point for the two layer system.</span><a class="headerlink" href="#fig-exercise-2layer-fig" title="Permalink to this image">¶</a></p>
+</div>
+<p>The easiest way is start with the blockMeshDict file of the 1-layer case and then add a second layer on top. A good way of getting this right, is to draw the node numbering and then add the vertices to the blockMeshDict file. Notice how we give labels layer_bot and layer_top to the two blocks.</p>
+</div>
+<div class="section" id="assign-properties">
+<h3>Assign properties<a class="headerlink" href="#assign-properties" title="Permalink to this headline">¶</a></h3>
+<p>Next we need to set the permeability for the different zones. This can be achieved with <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> tool. The <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> tool requires a dictionary file <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> that tells it what to do. This file resides in the system folder. Here is a possible listing, just copy it and save it to your system folder.</p>
+<div class="literal-block-wrapper docutils container" id="lst-2dbox-setfdict">
+<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">Use the setFieldsDict to assign different permeabilities.</span><a class="headerlink" href="#lst-2dbox-setfdict" title="Permalink to this code">¶</a></div>
+<div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="cm">| =========                 |                                                 |</span>
+<span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
+<span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
+<span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
+<span class="cm">|    \\/     M anipulation  |                                                 |</span>
+<span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="k">FoamFile</span>
+<span class="p">{</span>
+    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+    <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
+    <span class="kt">object</span>      <span class="n">setFieldsDict</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+
+
+<span class="k">defaultFieldValues</span>
+<span class="p">(</span>
+    <span class="n">volScalarFieldValue</span> <span class="n">permeability</span> <span class="mf">1e-14</span>
+<span class="p">);</span>
+
+<span class="hll"><span class="k">regions</span>
+</span><span class="hll"><span class="p">(</span>
+</span><span class="hll">    <span class="k">zoneToCell</span>
+</span><span class="hll">    <span class="p">{</span>
+</span><span class="hll">        <span class="n">name</span> <span class="s">&quot;layer_top&quot;</span><span class="p">;</span>
+</span><span class="hll">        <span class="k">fieldValues</span>
+</span><span class="hll">        <span class="p">(</span>
+</span><span class="hll">            <span class="n">volScalarFieldValue</span> <span class="n">permeability</span> <span class="mf">1e-13</span>
+</span><span class="hll">        <span class="p">);</span>
+</span><span class="hll">    <span class="p">}</span>
+</span><span class="hll"><span class="p">);</span>
+</span>
+<span class="c1">// ************************************************************************* //</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>Assign properties<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Check all other settings, run the case, and hope for the best!</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../refs.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="FirstCase.html" class="btn btn-neutral float-left" title="Hydrothermal convection test case" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Lars Ruepke
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
