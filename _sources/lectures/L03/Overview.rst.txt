@@ -11,11 +11,11 @@ We will learn how the water equation-of-state controls flow dynamics and vent te
    :align: center
    :name: fig:hts_cartoon
 
-   Cartoon illustrating flow in a submarine hydrothermal circulation system.
+   Cartoon illustrating flow in a submarine hydrothermal circulation system :cite:`ingebritsen2010numerical`.
 
 .. only:: html
 
-   A numerical of hydrothermal flow at the East Pacific Rise at 9N by Hasenclever et al. 2014.
+   A numerical of hydrothermal flow at the East Pacific Rise at 9N by :cite:`hasenclever2014hybrid`.
 
    .. raw:: html
 
