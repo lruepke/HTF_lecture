@@ -74,6 +74,14 @@ The majority of this course will be spent in front of a computer working on exer
     lectures/L03/Exercise  
 
 .. toctree::
+    :maxdepth: 2
+    :caption: Lecture 4
+
+    lectures/L04/Overview
+    lectures/L04/slide
+    lectures/L04/intro
+
+.. toctree::
    :maxdepth: 2
    :caption: References
    
