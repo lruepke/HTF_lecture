@@ -5,8 +5,6 @@ Lecture overview
 
 In this lecture we will explore flow in porous media and use the |foam| solvers to solve for flow in submarine hydrothermal systems.
 
-We will learn how the water equation-of-state controls flow dynamics and vent temperatures in natural submarine hydrothermal systems. 
-
 .. figure:: /_figures/hts_cartoon.*
    :align: center
    :name: fig:hts_cartoon
