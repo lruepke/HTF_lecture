@@ -107,7 +107,14 @@
 <li class="toctree-l1"><a class="reference internal" href="slide.html">Accompanying slide deck</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Navier-Stokes flow with OpenFoam</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Example</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#d-cavity-flow">2D cavity flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#d-cavity-flow">2D cavity flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preparing-the-case">Preparing the case</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#making-the-mesh">Making the mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-controls">Run controls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualization">Visualization</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -221,6 +228,103 @@
 <h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="d-cavity-flow">
 <h2>2D cavity flow<a class="headerlink" href="#d-cavity-flow" title="Permalink to this headline">¶</a></h2>
+<p>Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a kinematic boundary condition at one side, while all other sides are walls with zero velocity. The model setup is shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:2dcavity_setup</span></code>.</p>
+<div class="figure align-center" id="fig-2dcavity-setup">
+<img alt="../../_images/2d_cavity_setup.png" src="../../_images/2d_cavity_setup.png" />
+</div>
+<p>The general workflow is the following</p>
+<div class="figure align-center" id="fig-2d-cavity-wf">
+<img alt="../../_images/2d_cavity_wf.png" src="../../_images/2d_cavity_wf.png" />
+</div>
+<p>with icoFoam being the built-in OpenFoam Navier-Stokes solver.</p>
+<div class="section" id="preparing-the-case">
+<h3>Preparing the case<a class="headerlink" href="#preparing-the-case" title="Permalink to this headline">¶</a></h3>
+<p>Two-dimensional cavity flow is included in the official tutorials of OpenFoam. We get started by copying the tutorial case into our work directory. You need to do this from your docker shell.</p>
+<div class="highlight-bash notranslate" id="lst-cp2dcavitytoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp <span class="nv">$FOAM_TUTORIALS</span>/incompressible/icoFoam/cavity/cavity ./cavity2D
+</pre></div>
+</div>
+<p>Check the directory structure:</p>
+<div class="figure align-center" id="fig-cavity2d-dir">
+<img alt="../../_images/cavity2d_dir.png" src="../../_images/cavity2d_dir.png" />
+</div>
+<p>The two files <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> and <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code> are actually not included and we need to create them. These files are usually part of every OpenFoam case; <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> includes all commands that need to executed to run the case and <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code> cleans the case (removes mesh and output directories).</p>
+<div class="literal-block-wrapper docutils container" id="lst-2dcav-run-tree">
+<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">The run.sh file.</span><a class="headerlink" href="#lst-2dcav-run-tree" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="lst-2dcav-clean-tree">
+<div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">The clean.sh file.</span><a class="headerlink" href="#lst-2dcav-clean-tree" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<span class="nb">cd</span> <span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="highlight-bash notranslate" id="lst-2dcavitychmod"><div class="highlight"><pre><span></span>chmod u+x clean.sh run.sh
+</pre></div>
+</div>
+</div>
+<div class="section" id="making-the-mesh">
+<h3>Making the mesh<a class="headerlink" href="#making-the-mesh" title="Permalink to this headline">¶</a></h3>
+<p>We will use OpenFoam’s blockMesh utility to make a simple 2D mesh. The corresponding :code:<a href="#id1"><span class="problematic" id="id2">`</span></a>blockMeshDict`file that has all the meshing information is located in the system folder.</p>
+<div class="figure align-center" id="fig-cavity2d-bm">
+<img alt="../../_images/cavity2d_bm.png" src="../../_images/cavity2d_bm.png" />
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Structure of the blockMeshDict</span><a class="headerlink" href="#fig-cavity2d-bm" title="Permalink to this image">¶</a></p>
+</div>
+<p>First we need to define the vertices of the mesh, the nodes.</p>
+<div class="figure align-center" id="id3">
+<img alt="../../_images/cavity2d_vertices.png" src="../../_images/cavity2d_vertices.png" />
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Numbering of the vertices.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>The next step is define the connectivity between the vertices in order to describe the modeling domain.</p>
+<div class="figure align-center" id="fig-cavity2d-vorder">
+<img alt="../../_images/cavity2d_vorder.png" src="../../_images/cavity2d_vorder.png" />
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">The order by which the vertices are passed to the hex command matters!</span><a class="headerlink" href="#fig-cavity2d-vorder" title="Permalink to this image">¶</a></p>
+</div>
+<div class="admonition-order-of-vertices admonition">
+<p class="admonition-title">Order of vertices</p>
+<p>The OpenFoam documentation provides a nice description of the vertices ordering.</p>
+<ul class="simple">
+<li><p>the axis origin is the first entry in the block definition, vertex 0 in our example</p></li>
+<li><p>the x direction is described by moving from vertex 0 to vertex 1</p></li>
+<li><p>the y direction is described by moving from vertex 1 to vertex 2</p></li>
+<li><p>vertices 0, 1, 2, 3 define the plane z = 0</p></li>
+<li><p>vertex 4 is found by moving from vertex 0 in the z direction</p></li>
+<li><p>vertices 5,6 and 7 are similarly found by moving in the z direction from vertices 1,2 and 3 respectively.</p></li>
+</ul>
+</div>
+<p>Next boundary patches are defined and labeled in the blockMeshDict.</p>
+<div class="figure align-center" id="fig-cavity2d-bounds">
+<img alt="../../_images/cavity2d_bounds.png" src="../../_images/cavity2d_bounds.png" />
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Assigning boundary labels and types.</span><a class="headerlink" href="#fig-cavity2d-bounds" title="Permalink to this image">¶</a></p>
+</div>
+<p>Now we are ready to run the <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> utility and create the mesh</p>
+<div class="highlight-bash notranslate" id="lst-2dcavityrbm"><div class="highlight"><pre><span></span>blockMesh
+</pre></div>
+</div>
+<p>You can visualize the mesh using paraview</p>
+<div class="highlight-bash notranslate" id="lst-2dcavity-vizm"><div class="highlight"><pre><span></span>touch a.foam
+paraview a.foam
+</pre></div>
+</div>
+</div>
+<div class="section" id="boundary-conditions">
+<h3>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h3>
+<p>asdf</p>
+</div>
+<div class="section" id="run-controls">
+<h3>Run controls<a class="headerlink" href="#run-controls" title="Permalink to this headline">¶</a></h3>
+<p>asdf</p>
+</div>
+<div class="section" id="visualization">
+<h3>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h3>
+<p>asdf</p>
+</div>
 </div>
 </div>
 

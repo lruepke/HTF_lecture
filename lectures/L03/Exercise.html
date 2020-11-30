@@ -237,7 +237,7 @@
 </div>
 <div class="figure align-center" id="fig-regularbox2d-constantt-fig">
 <img alt="../../_images/RegularBox2D_constantT.png" src="../../_images/RegularBox2D_constantT.png" />
-<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Constant temperature boundary condition.</span><a class="headerlink" href="#fig-regularbox2d-constantt-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">Constant temperature boundary condition.</span><a class="headerlink" href="#fig-regularbox2d-constantt-fig" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="constant-temperature-2-layer-system">
@@ -256,7 +256,7 @@
 <p>Remember how the vertice counting is done! If you don’t, check last weeks lecture.</p>
 <div class="figure align-center" id="fig-exercise-2layer-fig">
 <img alt="../../_images/exercise_2layer.png" src="../../_images/exercise_2layer.png" />
-<p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">Starting point for the two layer system.</span><a class="headerlink" href="#fig-exercise-2layer-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 11 </span><span class="caption-text">Starting point for the two layer system.</span><a class="headerlink" href="#fig-exercise-2layer-fig" title="Permalink to this image">¶</a></p>
 </div>
 <p>The easiest way is start with the blockMeshDict file of the 1-layer case and then add a second layer on top. A good way of getting this right, is to draw the node numbering and then add the vertices to the blockMeshDict file. Notice how we give labels layer_bot and layer_top to the two blocks.</p>
 </div>
@@ -264,7 +264,7 @@
 <h3>Assign properties<a class="headerlink" href="#assign-properties" title="Permalink to this headline">¶</a></h3>
 <p>Next we need to set the permeability for the different zones. This can be achieved with <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> tool. The <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> tool requires a dictionary file <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> that tells it what to do. This file resides in the system folder. Here is a possible listing, just copy it and save it to your system folder.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-setfdict">
-<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">Use the setFieldsDict to assign different permeabilities.</span><a class="headerlink" href="#lst-2dbox-setfdict" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">Use the setFieldsDict to assign different permeabilities.</span><a class="headerlink" href="#lst-2dbox-setfdict" title="Permalink to this code">¶</a></div>
 <div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
