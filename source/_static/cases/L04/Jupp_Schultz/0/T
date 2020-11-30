@@ -41,7 +41,7 @@ boundaryField
         name            gaussShapeT;
         code            #{
                             scalarField x(this->patch().Cf().component(0)); 
-                            double wGauss=20;
+                            double wGauss=300;
                             double x0=0;
                             double Tmin=283.15;
                             double Tmax=1273.15;

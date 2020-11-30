@@ -1,4 +1,7 @@
-*/
+*0/
+constant/polyMesh
+dynamicCode/
+!.gitignore
 log.*
 pid*
 log*
@@ -9,3 +12,4 @@ log*
 !*.sh
 !gmsh
 gmsh/*.msh
+!jupyter/*.ipynb
