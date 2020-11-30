@@ -73,6 +73,7 @@ The majority of this course will be spent in front of a computer working on exer
 
 .. toctree::
    :maxdepth: 2
+   :caption: References
    
    refs
 
