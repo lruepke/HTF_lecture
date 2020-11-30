@@ -1,0 +1,81 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1;
+Lx 2000;    //variable definition
+ymin -3000;
+ymax -2000;
+Lz 1;
+vertices    //vertices definition
+(
+    (0      $ymin   0)  //coordinate of vertex 0
+    ($Lx    $ymin   0)  //coordinate of vertex 1
+    ($Lx    $ymax   0)  //coordinate of vertex 2
+    (0      $ymax   0)  //coordinate of vertex 3
+    (0      $ymin   $Lz)//coordinate of vertex 4
+    ($Lx    $ymin   $Lz)//coordinate of vertex 5
+    ($Lx    $ymax   $Lz)//coordinate of vertex 6
+    (0      $ymax   $Lz)//coordinate of vertex 7
+);
+blocks
+(
+    hex (0 1 2 3 4 5 6 7) (100 50 1) simpleGrading (1 1 1)
+);
+boundary
+(
+    left    //patch name
+    {
+        type patch ;
+        faces   //face list
+        (
+            (0 4 7 3)
+        );
+    }
+    right
+    {
+        type patch;
+        faces
+        (
+            (2 6 5 1)
+        );
+    }
+    top
+    {
+        type patch;
+        faces
+        (
+            (3 7 6 2)
+        );
+    }
+    bottom
+    {
+        type patch;
+        faces
+        (
+            (1 5 4 0)
+        );
+    }
+    frontAndBack    //patch name
+    {
+        type empty; 
+        faces //face list
+        (
+            (0 3 2 1)   //back face
+            (4 5 6 7)   //front face
+        );
+    }
+);
+// ************************************************************************* //

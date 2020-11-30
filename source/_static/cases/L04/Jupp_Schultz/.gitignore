@@ -1,0 +1,11 @@
+*/
+log.*
+pid*
+log*
+
+!0
+!constant
+!system
+!*.sh
+!gmsh
+gmsh/*.msh
