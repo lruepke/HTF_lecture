@@ -11,7 +11,7 @@ We will learn how the water equation-of-state controls flow dynamics and vent te
    :align: center
    :name: fig:hts_cartoon
 
-   Cartoon illustrating flow in a submarine hydrothermal system.
+   Cartoon illustrating flow in a submarine hydrothermal circulation system.
 
 .. only:: html
 
