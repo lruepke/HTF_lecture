@@ -70,6 +70,7 @@ The majority of this course will be spent in front of a computer working on exer
     lectures/L03/Overview
     lectures/L03/slide
     lectures/L03/intro  
+    lectures/L03/FirstCase  
 
 .. toctree::
    :maxdepth: 2
