@@ -29,7 +29,8 @@ author = 'Lars Ruepke'
 extensions = [
     'sphinx.ext.mathjax',
     'sphinx_tabs.tabs',
-    'sphinxcontrib.bibtex'
+    'sphinxcontrib.bibtex',
+    'matplotlib.sphinxext.plot_directive',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -40,6 +41,20 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# config plot 
+plot_html_show_source_link=True
+plot_include_source=False
+plot_formats=['svg','pdf']
+plot_pre_code="""
+import numpy as np
+from matplotlib import pyplot as plt
+import pandas as pd
+import numpy as np
+from matplotlib.ticker import MultipleLocator
+import matplotlib as mpl
+mpl.rcParams["font.family"] = 'Arial' 
+mpl.rcParams["mathtext.fontset"] = 'cm'
+"""
 
 # -- Options for HTML output -------------------------------------------------
 
