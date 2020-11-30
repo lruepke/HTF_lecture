@@ -1,4 +1,4 @@
-.. _L01_slice:
+.. _L01_slide:
 
 Accompanying slide deck
 =======================
