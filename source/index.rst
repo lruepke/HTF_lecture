@@ -62,6 +62,7 @@ The majority of this course will be spent in front of a computer working on exer
     lectures/L02/Overview
     lectures/L02/slide
     lectures/L02/intro
+    lectures/L02/Example
 
 .. toctree::
     :maxdepth: 2
