@@ -2,7 +2,7 @@ language: python
 python:
   - 3.7
 install:
-  - pip install sphinx sphinx_rtd_theme sphinxcontrib.bibtex pybtex unicodedata
+  - pip install sphinx sphinx_rtd_theme sphinxcontrib-bibtex
 script: make html
 after_success:
   - ./push.sh
