@@ -17,7 +17,7 @@ application HydrothermalSinglePhaseDarcyFoam;
 startFrom latestTime;
 startTime 0;
 stopAt endTime;
-endTime 6912000000; //86400000000
+endTime 15768000000;
 deltaT 864000;
 adjustTimeStep yes;
 maxCo           0.8; 
@@ -33,7 +33,6 @@ timePrecision 14;
 runTimeModifiable true;
 libs 
 ( 
-    
     "libHydrothermalBoundaryConditions.so"
     "libHydroThermoPhysicalModels.so"
 );
