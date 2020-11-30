@@ -75,3 +75,8 @@ You can stop the container whenever you want and your files will remain intact, 
 Paraview
 --------
 We will use Kiteware's Paraview_ to visualize the modeling results. Download and install the latest version. It also really helps to add paraview to the system path, so that it can be called from the command line.
+
+
+Python
+--------
+We will use python to analyze some of the numerical results and to dive deeper in to the details of the numerical methods use. In case you are already having a working python environment, read no further. If not, we recommend `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose "no". It's usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.
