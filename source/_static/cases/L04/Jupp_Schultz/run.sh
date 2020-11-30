@@ -6,6 +6,13 @@ cd ${0%/*} || exit 1    # Run from this directory
 
 application=`getApplication`
 
+# 1. clean old results
 ./clean.sh
-runApplication blockMesh
+# 2. generate mesh using gmsh
+gmsh gmsh/mesh.geo -3 -o gmsh/mesh.msh -format msh22
+# 3. convert gmsh format to OpenFOAM format
+gmshToFoam gmsh/mesh.msh 
+# 4. set empty patch for 2D case
+changeDictionary
+# 4. run 
 runApplication $application
