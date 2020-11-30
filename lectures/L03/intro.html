@@ -39,7 +39,7 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="References" href="../../refs.html" />
+    <link rel="next" title="Hydrothermal convection test case" href="FirstCase.html" />
     <link rel="prev" title="Accompanying slide deck" href="slide.html" /> 
 </head>
 
@@ -113,8 +113,11 @@
 <li class="toctree-l1"><a class="reference internal" href="slide.html">Accompanying slide deck</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Porous Flow - Submarine Hydrothermal Systems</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#theoretical-background">Theoretical background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#equation-of-state">Equation-of-state</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="FirstCase.html">Hydrothermal convection test case</a></li>
 </ul>
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
@@ -229,6 +232,22 @@ mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti">(5
 <span class="eqno">(7)<a class="headerlink" href="#equation-eq-temperature" title="Permalink to this equation">¶</a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{pr})\frac{\partial T}{\partial t} = \nabla \cdot (\lambda_r \nabla T) - \rho_f C_{pf} \vec{U}\cdot \nabla T + \frac{\mu_f}{k} \parallel \vec{U} \parallel ^2 - \left( \frac{\partial ln \rho_f}{\partial ln T} \right)_p \frac{Dp}{Dt}\]</div>
 <p>where the pressure equation <a class="reference internal" href="#equation-eq-pressure">(6)</a> is derived from continuity equation <a class="reference internal" href="#equation-eq-conti">(5)</a> and Darcy’s law <a class="reference internal" href="#equation-eq-darcy">(4)</a>.</p>
 </div>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>The details of the OpenFoam implementation can be found in the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> documentation. Here we only show a brief summarry. <a class="reference internal" href="#fig-htf-solution"><span class="std std-numref">Fig. 3</span></a> shows how the energy equation is solved within the OpenFoam framework.</p>
+<div class="figure align-center" id="fig-htf-solution">
+<img alt="../../_images/solution_algorithm.png" src="../../_images/solution_algorithm.png" />
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Implementation of the energy conservation equation.</span><a class="headerlink" href="#fig-htf-solution" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="equation-of-state">
+<h2>Equation-of-state<a class="headerlink" href="#equation-of-state" title="Permalink to this headline">¶</a></h2>
+<p>The fluid properties like density, viscosity, specific heat are determined from the equaion-of-state of pure water. <a class="reference internal" href="#fig-phase-diagram"><span class="std std-numref">Fig. 4</span></a> shows the phase diagram of pure water. At sub-critical conditions (P&lt; 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems.</p>
+<div class="figure align-center" id="fig-phase-diagram">
+<img alt="../../_images/PhaseDiagram.png" src="../../_images/PhaseDiagram.png" />
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Phase diagram of pure water.</span><a class="headerlink" href="#fig-phase-diagram" title="Permalink to this image">¶</a></p>
+</div>
+</div>
 </div>
 
 
@@ -239,7 +258,7 @@ mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti">(5
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../refs.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="FirstCase.html" class="btn btn-neutral float-right" title="Hydrothermal convection test case" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="slide.html" class="btn btn-neutral float-left" title="Accompanying slide deck" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
