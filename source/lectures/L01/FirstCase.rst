@@ -135,8 +135,6 @@ After converting the mesh, you can use Paraview_ to visualize the mesh,
 
         .. tab:: Interactive
 
-            Mesh and boundary condions of the 3D pipe model.
-
             .. raw:: html
                 
                 <iframe src="../../_static/vtk_js/index.html?fileURL=flange_mesh.vtkjs" width="100%" height="500px"></iframe>
