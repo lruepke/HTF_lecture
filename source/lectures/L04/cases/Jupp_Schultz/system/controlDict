@@ -24,7 +24,7 @@ maxCo           0.8;
 maxDeltaT       86400000; 
 writeControl adjustableRunTime;
 writeInterval 86400000;
-purgeWrite 50;
+purgeWrite 0;
 writeFormat ascii;
 writePrecision 6;
 writeCompression off;
