@@ -55,7 +55,6 @@ The two files :code:`run.sh` and :code:`clean.sh` are actually not included and 
 
 .. code-block:: bash 
     :linenos:
-    :name: lst:2dcav_run:tree
     :caption: The run.sh file.
 
     #!/bin/sh
