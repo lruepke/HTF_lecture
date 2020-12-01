@@ -117,7 +117,7 @@ Now we are using the :code:`setFields` utility to set the permeability. Therefor
 
 .. code-block:: bash 
     :linenos:
-    :emphasize-lines: 24-34
+    :emphasize-lines: 0
     :name: lst:2dbox:setrun
     :caption: Modified run.sh file that also includes the setFields command.
 
