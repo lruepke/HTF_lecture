@@ -14,5 +14,5 @@ gmsh gmsh/mesh.geo -3 -o gmsh/mesh.msh -format msh22
 gmshToFoam gmsh/mesh.msh 
 # 4. set empty patch for 2D case
 changeDictionary
-# 4. run 
+# 5. run 
 runApplication $application
