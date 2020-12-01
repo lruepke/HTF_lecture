@@ -203,7 +203,7 @@ Next we need to set boundary conditions. Open the file T inside the 0 directory 
 
 Notice how boundary conditions are set to parts of the mesh that have an identifier like patch2. Those identifiers are defined during the meshing procedure. Here they were defined in the ansys file. 
 
-Units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a one in the fourth columns, the units of the defined properties has units of Kelvin.
+Units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a "1" in the fourth columns, the units of the defined properties has units of Kelvin.
 
 Transport properties
 --------------------
