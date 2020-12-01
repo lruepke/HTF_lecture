@@ -60,7 +60,7 @@ The two files :code:`run.sh` and :code:`clean.sh` are actually not included and 
 
 Making the mesh
 ^^^^^^^^^^^^^^^
-We will use OpenFoam's blockMesh utility to make a simple 2D mesh. The corresponding :code:`blockMeshDict`file that has all the meshing information is located in the system folder.
+We will use OpenFoam's blockMesh utility to make a simple 2D mesh. The corresponding :code:`blockMeshDict` file that has all the meshing information is located in the system folder.
 
 .. figure:: /_figures/cavity2d_bm.*
    :align: center
@@ -72,7 +72,7 @@ First we need to define the vertices of the mesh, the nodes.
 
 .. figure:: /_figures/cavity2d_vertices.*
    :align: center
-   :name: fig:cavity2d_bm
+   :name: fig:cavity2d_vertices
 
    Numbering of the vertices.
 
