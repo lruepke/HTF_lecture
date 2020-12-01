@@ -11,6 +11,6 @@ We have prepared jupyter notebooks that let's you explore the thermodynamic prop
    :align: center
    :name: fig:Properties_Water
 
-   Water properties as a function of temperature and pressure, using python package of iapws_.
+   Water properties as a function of temperature and pressure, using python package of iapws_. Properties calculation details can be found in the `Jupyter-notebook <cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb>`_
 
 
