@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-Lx 3400;  
+Lx 3000;  
 ymin -1000;
 ymax 0;
 Lz 1;
@@ -31,7 +31,7 @@ vertices
 );
 blocks
 (
-    hex (0 1 2 3 4 5 6 7) (850 250 1) simpleGrading (1 1 1)
+    hex (0 1 2 3 4 5 6 7) (600 200 1) simpleGrading (1 1 1)
 );
 boundary
 (
