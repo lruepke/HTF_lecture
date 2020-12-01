@@ -290,8 +290,8 @@ cp <span class="nv">$FOAM_TUTORIALS</span>/incompressible/icoFoam/cavity/cavity 
 </div>
 <p>The 0 directory now contains the boundary and initial conditions for pressure and velocity (our primary variables), the constant directory has the transport properties (here viscosity), and the system directory contains information on the mesh, time steps, numerical schemes etc.</p>
 <p>The two files <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> and <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code> are actually not included and we need to create them. These files are usually part of every OpenFoam case; <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> includes all commands that need to executed to run the case and <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code> cleans the case (removes mesh and output directories).</p>
-<div class="literal-block-wrapper docutils container" id="lst-2dcav-run-tree">
-<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">The run.sh file.</span><a class="headerlink" href="#lst-2dcav-run-tree" title="Permalink to this code">¶</a></div>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">The run.sh file.</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
