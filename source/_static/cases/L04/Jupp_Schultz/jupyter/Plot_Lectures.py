@@ -178,9 +178,11 @@ def plotFluxibility():
     CSf,TT,PP,Prop=plot_F('data_iapws',ax,nlevel=50,cmap='seismic')
     # profile of constant pressure
     l1,=ax.plot(PP[250,:]/1E5,TT[250,:],color='orange',ls='dashed')
-    l2,=ax.plot(PP[500,:]/1E5,TT[500,:],color='cyan',ls='dashed')
+    l2,=ax.plot(PP[350,:]/1E5,TT[350,:],color='green',ls='dashed')
+    l3,=ax.plot(PP[500,:]/1E5,TT[500,:],color='cyan',ls='dashed')
     axbig.plot(TT[250,:], Prop[250,:],color=l1.get_color(),label='%.0f MPa'%(PP[250][0]/1E6))
-    axbig.plot(TT[500,:], Prop[500,:],color=l2.get_color(),label='%.0f MPa'%(PP[500][0]/1E6))
+    axbig.plot(TT[350,:], Prop[350,:],color=l2.get_color(),label='%.0f MPa'%(PP[350][0]/1E6))
+    axbig.plot(TT[500,:], Prop[500,:],color=l3.get_color(),label='%.0f MPa'%(PP[500][0]/1E6))
     axbig.set_xlabel('Temperature ($^{\circ}$C)')
     axbig.set_ylabel('Normalized Fluxibility ($\\rho_0 - \\rho$)$\\rho h /\mu$')
     axbig.set_yticks([0,0.5,1])
