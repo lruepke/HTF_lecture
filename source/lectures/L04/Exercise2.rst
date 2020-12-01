@@ -33,7 +33,42 @@ We will now try to reproduce the results presented by :cite:`jupp2000thermodynam
    :align: center
    :name: fig:T_Jupp_Schultz_steady
 
-   The steady-state temperature distribution. See `Jupyter-notebook <cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb>`_
+   The steady-state temperature distribution. See :ref:`/lectures/L04/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb#Temperature-+-velocity-field-(quiver)` in the notebook.
+
+.. admonition::  todo
+
+    Replace the fig (a) of :numref:`fig:Jupp_Schultz_early` by local Rayleigh number soon!
+
+.. figure:: /_figures/Jupp_Schultz_early.*
+   :align: center
+   :name: fig:Jupp_Schultz_early
+
+   Early stages of the simulation. See :ref:`/lectures/L04/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb#Early-stage` in the notebook.
+   
+
+
+
+Effect of cell size (**CS**) and full width at half maximum (**FWHM**),
+
+.. only:: html
+
+    .. tabs:: 
+
+        .. tab:: CS=10,FWHM=300
+
+            .. figure:: /_figures/T_Jupp_Schultz300_steady.*
+                :align: center
+
+                Cell size = 10 m, FWHM = 300 m.
+
+        .. tab:: CS=10,FWHM=300
+
+            .. figure:: /_figures/T_Jupp_Schultz400_steady.*
+                :align: center
+
+                Cell size = 10 m, FWHM = 400 m.
+
+
 
 .. toctree::
     :maxdepth: 2
