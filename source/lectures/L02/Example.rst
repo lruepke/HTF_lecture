@@ -16,7 +16,7 @@ The general workflow is the following
    :name: fig:2d_cavity_wf
 
 
-with icoFoam being the built-in OpenFoam Navier-Stokes solver.
+with icoFoam being the built-in OpenFoam Navier-Stokes solver that we are using in this example.
 
 Preparing the case
 ^^^^^^^^^^^^^^^^^^
@@ -31,9 +31,25 @@ Two-dimensional cavity flow is included in the official tutorials of OpenFoam. W
 
 Check the directory structure:
 
-.. figure:: /_figures/cavity2d_dir.*
-   :align: center
-   :name: fig:cavity2d_dir
+.. code-block:: bash 
+    :name: lst:2dcavity_dir
+    :emphasize-lines: 2,7,9
+
+    .
+    ├── 0
+    │   ├── U
+    │   └── p
+    ├── a.foam
+    ├── clean.sh
+    ├── constant
+    │   └── transportProperties
+    └── system
+        ├── blockMeshDict
+        ├── controlDict
+        ├── fvSchemes
+        └── fvSolution
+
+The 0 directory now contains the boundary and initial conditions for pressure and velocity (our primary variables), the constant directory has the transport properties (here viscosity), and the system directory contains information on the mesh, time steps, numerical schemes etc.
 
 The two files :code:`run.sh` and :code:`clean.sh` are actually not included and we need to create them. These files are usually part of every OpenFoam case; :code:`run.sh` includes all commands that need to executed to run the case and :code:`clean.sh` cleans the case (removes mesh and output directories).
 
@@ -43,7 +59,17 @@ The two files :code:`run.sh` and :code:`clean.sh` are actually not included and 
     :caption: The run.sh file.
 
     #!/bin/sh
-    cd ${0%/*} 
+    cd ${0%/*} || exit 1    # Run from this directory
+
+    # Source tutorial run functions
+    . $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+    application=`getApplication`
+
+    ./clean.sh
+    runApplication blockMesh
+    runApplication $application
+
 
 .. code-block:: bash 
     :linenos:
@@ -51,7 +77,12 @@ The two files :code:`run.sh` and :code:`clean.sh` are actually not included and 
     :caption: The clean.sh file.
 
     #!/bin/sh
-    cd ${0%/*} 
+    cd ${0%/*} || exit 1 # run from this directory
+
+    # Source tutorial run functions
+    . $WM_PROJECT_DIR/bin/tools/CleanFunctions
+
+Make the scripts executable.
 
 .. code-block:: bash 
     :name: lst:2dCavitychmod
@@ -121,14 +152,97 @@ You can visualize the mesh using paraview
 Boundary conditions
 ^^^^^^^^^^^^^^^^^^^
 
-asdf
+We now have velocity and pressure as primary variables and need to set initial and boundary conditions for them. First we look at the velocity boundary conditions:
+
+.. code-block:: bash 
+
+    code 0/u 
+
+
+.. figure:: /_figures/cavity2d_u.*
+   :align: center
+   :name: fig:cavity2d_u_fig
+
+   Velocity boundary conditions. The front and back sides are set to empty because we are doing a 2D calculation.
+
+Next we look into the pressure boundary conditions.
+
+.. code-block:: bash 
+
+    code 0/p 
+
+.. code-block:: foam 
+    :name: lst:2dcavity_p
+    :emphasize-lines: 17
+    :linenos:
+    :caption: Pressure boundary conditions. Front and back are of type "emtpy" for 2-D runs. 
+
+    /*--------------------------------*- C++ -*----------------------------------*\
+    =========                 |
+    \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+     \\    /   O peration     | Website:  https://openfoam.org
+      \\  /    A nd           | Version:  7
+       \\/     M anipulation  |
+    \*---------------------------------------------------------------------------*/
+    FoamFile
+    {
+        version     2.0;
+        format      ascii;
+        class       volScalarField;
+        object      p;
+    }
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    dimensions      [0 2 -2 0 0 0 0];
+
+    internalField   uniform 0;
+
+    boundaryField
+    {
+        movingWall
+        {
+            type            zeroGradient;
+        }
+
+        fixedWalls
+        {
+            type            zeroGradient;
+        }
+
+        frontAndBack
+        {
+            type            empty;
+        }
+    }
+
+    // ************************************************************************* //
+
+.. tip::
+    One has to be careful about the dimensions of pressure in OpenFoam. In incompressible runs, like we are doing here, the pressure is usually the relative pressure :math:`\frac{p}{\rho}` and has units :math:`\frac{m^2}{s^2}` 
+
 
 Run controls
 ^^^^^^^^^^^^^^^^^^^
 
-asdf
+The time stepping, run time, and output frequency are again set in :code:`system/controlDict`. Open it and check that you understand the entires. 
+
+In case you wondered how OpenFoam is solving the equations. We will cover the details later in the course, but you can have a preview by opening the :code:`system/fvSchemes` file. In this dictionary, the various discretization schemes can be set. :numref:`fig:cavity2d_num_fig` gives some further explanations.
+
+
+.. figure:: /_figures/cavity2_num.*
+   :align: center
+   :name: fig:cavity2d_num_fig
+
+   The exact discretization schemes can be set in :code:`system/fvSchemes`.
+
+
+Time to run the case! Just start the solver
+
+.. code-block:: bash 
+
+    icoFoam
+
 
 Visualization
 ^^^^^^^^^^^^^^^^^^^
-
-asdf
+Open paraview and look at the results.

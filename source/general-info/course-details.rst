@@ -8,7 +8,7 @@ Course schedule
 
 - Class sessions
 
-  - Wednesdays (04.11.2020 - 10.02.2021), zoom link available from instructors
+  - Wednesdays at 14:00 CET (04.11.2020 - 10.02.2021), zoom link available from instructors
 
 - Semester breaks
 
@@ -20,6 +20,7 @@ Instructors
 **Prof. Lars Ruepke**
 
 - Email: lruepke@geomar.de
+- `Institute webpage <https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings>`_
 
 **Dr. Zhikui Guo**
 
