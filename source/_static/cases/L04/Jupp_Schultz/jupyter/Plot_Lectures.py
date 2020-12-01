@@ -175,7 +175,7 @@ def plotFluxibility():
 
     # Density of pure water
     ax=axs[0][0]
-    CSf,TT,PP,Prop=plot_F('data',ax,nlevel=50,cmap='seismic')
+    CSf,TT,PP,Prop=plot_F('data_iapws',ax,nlevel=50,cmap='seismic')
     # profile of constant pressure
     l1,=ax.plot(PP[250,:]/1E5,TT[250,:],color='orange',ls='dashed')
     l2,=ax.plot(PP[500,:]/1E5,TT[500,:],color='cyan',ls='dashed')
