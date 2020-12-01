@@ -3,20 +3,12 @@ Example
 
 2D cavity flow
 ------------------------
-Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a kinematic boundary condition at one side, while all other sides are walls with zero velocity. The model setup is shown in :numref:`fig:2dcavity_setup`.
+Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a kinematic boundary condition at one side, while all other sides are walls with zero velocity. The model setup is shown in :numref:`fig:2dcavity_setup` .
 
 .. figure:: /_figures/2d_cavity_setup.*
    :align: center
    :name: fig:2dcavity_setup
 
-The general workflow is the following
-
-.. figure:: /_figures/2d_cavity_wf.*
-   :align: center
-   :name: fig:2d_cavity_wf
-
-
-with icoFoam being the built-in OpenFoam Navier-Stokes solver that we are using in this example.
 
 Preparing the case
 ^^^^^^^^^^^^^^^^^^
