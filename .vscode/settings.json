@@ -12,7 +12,8 @@
         "T": "OpenFOAM",
         "*.pyx": "python",
         "*.pxd": "python",
-        "HydrothermalSinglePhaseDarcyFoam.C": "cpp"
+        "HydrothermalSinglePhaseDarcyFoam.C": "cpp",
+        "functionObjectTemplate.C": "cpp"
     },
     "jupyter.jupyterServerType": "local"
 }
