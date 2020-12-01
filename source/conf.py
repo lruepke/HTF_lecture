@@ -17,7 +17,7 @@ sys.path.append(os.path.abspath('_extensions'))
 # -- Project information -----------------------------------------------------
 
 project = 'HydrothermalFoam Lecture'
-copyright = '2020, Lars Ruepke'
+copyright = '2020, Lars Ruepke and Zhikui Guo'
 author = 'Lars Ruepke'
 
 
