@@ -6,9 +6,9 @@ addons:
   apt:
     packages:
       - pandoc
-      
+
 install:
-  - pip install sphinx sphinx_rtd_theme sphinxcontrib-bibtex matplotlib pandas numpy nbsphinx pandoc ipykernel
+  - pip install sphinx sphinx_rtd_theme sphinxcontrib-bibtex matplotlib pandas numpy nbsphinx ipykernel
 script: make html
 # script: make html && make latex && cd build/latex && make && cd ../../
 after_success:
