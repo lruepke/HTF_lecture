@@ -14,7 +14,7 @@ help:
 
 .PHONY: help Makefile
 
-# make cases as archieve files
+# make cases as archive files
 casesPackage = bash source/lectures/$1/cases/casePackage.sh \
 
 # Catch-all target: route all unknown targets to Sphinx using the new
