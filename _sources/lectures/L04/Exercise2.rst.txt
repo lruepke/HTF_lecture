@@ -4,9 +4,8 @@
 
 Excercise 2
 ===========
-We will no try to reproduce the results presented by :cite:`jupp2000thermodynamic`
 
-
+We will now try to reproduce the results presented by :cite:`jupp2000thermodynamic`
 
 .. plot::
 
