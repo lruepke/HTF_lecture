@@ -23,18 +23,21 @@ gradSchemes
     default         none;
     grad(p)         Gauss linear;
     grad(T)         Gauss linear;
+    grad(enthalpy) Gauss linear;
 }
 divSchemes
 {
     default         none;
     div(phi,T)      Gauss upwind;
     div((phi*interpolate(Cp)),T) Gauss vanLeer;
+    div(phi,enthalpy) Gauss vanLeer;
 }
 laplacianSchemes
 {
     default         none;
     laplacian(kr,T) Gauss linear corrected;
     laplacian(rhorAUf,p) Gauss linear corrected;
+    laplacian(T) Gauss linear corrected;
 }
 interpolationSchemes
 {
