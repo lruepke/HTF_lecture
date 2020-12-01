@@ -19,12 +19,24 @@ Mechanism to limit black smoker temperature
 -----------------------------------------------
 We recommend reading the original papers by :cite:`jupp2000thermodynamic` and :cite:`Jupp2004`; here we only provide a very short summarry. The underlying idea is to determine from the pure water equation-of-state the optimum temperature for buoyant upwelling. Within the energy conservation equation, advective heat transport is described by a divergence term:
 
+<<<<<<< HEAD
 .. math::
     :label: eq:div_e
     
     \nabla \cdot (\rho h \vec{U})
 
 Following :cite:`jupp2000thermodynamic`, we can assume that the pressure gradient, driving upflow, can be approximated as cold hydrostatic so that we can express the upflow velocity as:
+=======
+Download the case files :download:`Jupp_Schultz <cases/Jupp_Schultz.zip>`
+
+
+
+Properties calculation details can be found in the
+ 
+.. figure:: /_figures/Properties_Water.*
+   :align: center
+   :name: fig:Properties_Water
+>>>>>>> ce4c101ae593e57f9e860d4bfc40367fcd912abe
 
 .. math::
     :label: eq:upflow_js

@@ -1,3 +1,18 @@
 {
-    "restructuredtext.confPath": "${workspaceFolder}/source"
+    "restructuredtext.confPath": "${workspaceFolder}/source",
+    "files.associations": {
+        "*Dict": "OpenFOAM",
+        "*Properties": "OpenFOAM",
+        "fvSchemes": "OpenFOAM",
+        "fvSolution": "OpenFOAM",
+        "*.mcr": "shellscript",
+        "boundary": "OpenFOAM",
+        "U": "OpenFOAM",
+        "p": "OpenFOAM",
+        "T": "OpenFOAM",
+        "*.pyx": "python",
+        "*.pxd": "python",
+        "HydrothermalSinglePhaseDarcyFoam.C": "cpp"
+    },
+    "jupyter.jupyterServerType": "local"
 }
