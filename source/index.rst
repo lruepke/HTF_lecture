@@ -80,9 +80,9 @@ The majority of this course will be spent in front of a computer working on exer
 
     lectures/L04/Overview
     lectures/L04/intro
+    lectures/L04/cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb
     lectures/L04/Exercise1
     lectures/L04/Exercise2
-    lectures/L04/cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb
 
 .. toctree::
    :maxdepth: 2
