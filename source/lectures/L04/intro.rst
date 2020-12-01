@@ -9,6 +9,7 @@ Porous Flow - Submarine Hydrothermal Systems
 Mechanism to limit black smoker temperature 
 -----------------------------------------------
 
+Download the case files :download:`Jupp_Schultz <cases/Jupp_Schultz.zip>`
 
 
 .. figure:: /_figures/Properties_Water.*
