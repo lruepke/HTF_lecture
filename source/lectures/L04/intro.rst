@@ -17,6 +17,7 @@ Maybe you have already noticed in our convection experiments in the previous ses
 
 Mechanism to limit black smoker temperature 
 -----------------------------------------------
+
 We recommend reading the original papers by :cite:`jupp2000thermodynamic` and :cite:`Jupp2004`; here we only provide a very short summarry. The underlying idea is to determine from the pure water equation-of-state the optimum temperature for buoyant upwelling. Within the energy conservation equation, advective heat transport is described by a divergence term:
 
 .. math::
