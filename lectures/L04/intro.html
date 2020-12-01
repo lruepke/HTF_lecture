@@ -125,7 +125,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#mechanism-to-limit-black-smoker-temperature">Mechanism to limit black smoker temperature</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#following-jupp2000thermodynamic-we-can-assume-that-the-pressure-gradient-driving-upflow-can-be-approximated-as-cold-hydrostatic-so-that-we-can-express-the-upflow-velocity-as">Following <span>[jupp2000thermodynamic]</span>, we can assume that the pressure gradient, driving upflow, can be approximated as cold hydrostatic so that we can express the upflow velocity as:</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Excercise 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise2.html">Excercise 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html">Jupyter Notebook of the case</a></li>
@@ -257,31 +256,19 @@
 <div class="section" id="mechanism-to-limit-black-smoker-temperature">
 <h2>Mechanism to limit black smoker temperature<a class="headerlink" href="#mechanism-to-limit-black-smoker-temperature" title="Permalink to this headline">¶</a></h2>
 <p>We recommend reading the original papers by <a class="bibtex reference internal" href="../../refs.html#jupp2000thermodynamic" id="id3">[Jupp &amp; Schultz, 2000]</a> and <a class="bibtex reference internal" href="../../refs.html#jupp2004" id="id4">[Jupp &amp; Schultz, 2004]</a>; here we only provide a very short summarry. The underlying idea is to determine from the pure water equation-of-state the optimum temperature for buoyant upwelling. Within the energy conservation equation, advective heat transport is described by a divergence term:</p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-.. math:</p>
-<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="o">:</span><span class="nl">label</span><span class="p">:</span> <span class="nl">eq</span><span class="p">:</span><span class="n">div_e</span>
-
-<span class="err">\</span><span class="n">nabla</span> <span class="err">\</span><span class="n">cdot</span> <span class="p">(</span><span class="err">\</span><span class="n">rho</span> <span class="n">h</span> <span class="err">\</span><span class="n">vec</span><span class="p">{</span><span class="n">U</span><span class="p">})</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="following-jupp2000thermodynamic-we-can-assume-that-the-pressure-gradient-driving-upflow-can-be-approximated-as-cold-hydrostatic-so-that-we-can-express-the-upflow-velocity-as">
-<h1>Following <a class="bibtex reference internal" href="../../refs.html#jupp2000thermodynamic" id="id5">[Jupp &amp; Schultz, 2000]</a>, we can assume that the pressure gradient, driving upflow, can be approximated as cold hydrostatic so that we can express the upflow velocity as:<a class="headerlink" href="#following-jupp2000thermodynamic-we-can-assume-that-the-pressure-gradient-driving-upflow-can-be-approximated-as-cold-hydrostatic-so-that-we-can-express-the-upflow-velocity-as" title="Permalink to this headline">¶</a></h1>
-<p>Download the case files <a class="reference download internal" download="" href="../../_downloads/048bba973a7a2271dcec03612292cb06/Jupp_Schultz.zip"><code class="xref download docutils literal notranslate"><span class="pre">Jupp_Schultz</span></code></a></p>
-<p>Properties calculation details can be found in the</p>
-<div class="figure align-center" id="fig-properties-water">
-<img alt="../../_images/Properties_Water.svg" src="../../_images/Properties_Water.svg" /></div>
-<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; ce4c101ae593e57f9e860d4bfc40367fcd912abe</p>
+<div class="math notranslate nohighlight" id="equation-eq-div-e">
+<span class="eqno">(23)<a class="headerlink" href="#equation-eq-div-e" title="Permalink to this equation">¶</a></span>\[\nabla \cdot (\rho h \vec{U})\]</div>
+<p>Following <a class="bibtex reference internal" href="../../refs.html#jupp2000thermodynamic" id="id5">[Jupp &amp; Schultz, 2000]</a>, we can assume that the pressure gradient, driving upflow, can be approximated as cold hydrostatic so that we can express the upflow velocity as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-upflow-js">
-<span class="eqno">(23)<a class="headerlink" href="#equation-eq-upflow-js" title="Permalink to this equation">¶</a></span>\[U_z = \frac{k}{\mu} \left( \nabla P - \rho g_z \right) \approx \frac{k}{\mu}(\rho_0 g_z - \rho g_z) = g_z \frac{k}{\mu} (\rho_0 - \rho)\]</div>
-<p>Now we plug this expression into <code class="xref eq docutils literal notranslate"><span class="pre">eq:div_e</span></code> to get:</p>
+<span class="eqno">(24)<a class="headerlink" href="#equation-eq-upflow-js" title="Permalink to this equation">¶</a></span>\[U_z = \frac{k}{\mu} \left( \nabla P - \rho g_z \right) \approx \frac{k}{\mu}(\rho_0 g_z - \rho g_z) = g_z \frac{k}{\mu} (\rho_0 - \rho)\]</div>
+<p>Now we plug this expression into <a class="reference internal" href="#equation-eq-div-e">(23)</a> to get:</p>
 <div class="math notranslate nohighlight" id="equation-eq-udiv-e2">
-<span class="eqno">(24)<a class="headerlink" href="#equation-eq-udiv-e2" title="Permalink to this equation">¶</a></span>\[\nabla \cdot (\rho h \vec{U}) = \frac{\partial}{\partial z} \left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right) g_z k\]</div>
+<span class="eqno">(25)<a class="headerlink" href="#equation-eq-udiv-e2" title="Permalink to this equation">¶</a></span>\[\nabla \cdot (\rho h \vec{U}) = \frac{\partial}{\partial z} \left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right) g_z k\]</div>
 <p><a class="bibtex reference internal" href="../../refs.html#jupp2000thermodynamic" id="id6">[Jupp &amp; Schultz, 2000]</a> called the term wihtin the large brackets, <span class="math notranslate nohighlight">\(F=\left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right)\)</span> , fluxibility. Fluxibility is a function of fluid properties only and those properties are pressure and temperature dependent. To first order, advective heat transport is maximized, where <span class="math notranslate nohighlight">\(\nabla \cdot F\)</span> is maximum and this divergence can be approximated within the basal boundary as <span class="math notranslate nohighlight">\(\nabla \cdot F \approx \frac{\partial}{\partial z} F \approx \frac{\partial}{\partial T} F\)</span> .</p>
 <p><a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 13</span></a> a shows fluxibility as a function of pressure and temperature. It is clear that this function has a distinct peak at temperature of approximately 400°C. <a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 13</span></a> b shows sections of constant pressure and also the derivative of F with temperature. The peaks in these functions mark the temperature for which buoyant heat transport is most efficient for a given pressure. Later we will explore this further in numerical convection experiments.</p>
 <div class="figure align-center" id="fig-fluxibility-water">
 <img alt="../../_images/Fluxibility_Water.svg" src="../../_images/Fluxibility_Water.svg" /><p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Fluxibility F as a function of temperature and pressure (a), profile of F along temperature with constant pressure (b).</span><a class="headerlink" href="#fig-fluxibility-water" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 </div>
 
