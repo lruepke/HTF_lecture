@@ -18,3 +18,6 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	# compress cases
+	mkdir -p ${BUILDDIR}/$@/cases
+	zip -r ${BUILDDIR}/$@/cases/Jupp_Schultz.zip source/lectures/L04/cases/Jupp_Schultz
