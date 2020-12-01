@@ -32,14 +32,16 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="References" href="../../refs.html" />
+    <link rel="next" title="How use iapws calculate water properties" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" />
     <link rel="prev" title="Lecture overview" href="Overview.html" /> 
 </head>
 
@@ -123,6 +125,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#mechanism-to-limit-black-smoker-temperature">Mechanism to limit black smoker temperature</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html">How use iapws calculate water properties</a></li>
 </ul>
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
@@ -216,10 +219,36 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="porous-flow-submarine-hydrothermal-systems">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="porous-flow-submarine-hydrothermal-systems">
 <h1>Porous Flow - Submarine Hydrothermal Systems<a class="headerlink" href="#porous-flow-submarine-hydrothermal-systems" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mechanism-to-limit-black-smoker-temperature">
 <span id="jupp-schultz"></span><h2>Mechanism to limit black smoker temperature<a class="headerlink" href="#mechanism-to-limit-black-smoker-temperature" title="Permalink to this headline">¶</a></h2>
+<p>Download the case files <a class="reference download internal" download="" href="../../_downloads/048bba973a7a2271dcec03612292cb06/Jupp_Schultz.zip"><code class="xref download docutils literal notranslate"><span class="pre">Jupp_Schultz</span></code></a></p>
+<p>Properties calculation details can be found in the</p>
 <div class="figure align-center" id="fig-properties-water">
 <img alt="../../_images/Properties_Water.svg" src="../../_images/Properties_Water.svg" /><p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Water properties as a function of temperature and pressure, using python package of <a class="reference external" href="https://iapws.readthedocs.io/en/latest/#">iapws</a>.</span><a class="headerlink" href="#fig-properties-water" title="Permalink to this image">¶</a></p>
 </div>
@@ -240,7 +269,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../refs.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" class="btn btn-neutral float-right" title="How use iapws calculate water properties" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="Overview.html" class="btn btn-neutral float-left" title="Lecture overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
