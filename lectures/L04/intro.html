@@ -109,6 +109,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../L02/slide.html">Accompanying slide deck</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/intro.html">Navier-Stokes flow with OpenFoam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Lecture 3</span></p>
 <ul>
@@ -247,10 +248,10 @@
 </style>
 <div class="section" id="upflow-temperatures-in-submarine-hydrothermal-systems">
 <h1>Upflow temperatures in submarine hydrothermal systems<a class="headerlink" href="#upflow-temperatures-in-submarine-hydrothermal-systems" title="Permalink to this headline">¶</a></h1>
-<p>A striking observations from global vent fluid measurements is that fluid exit temperatures apparently never exceed 400°C (<a class="reference internal" href="#fig-vent-t-fig"><span class="std std-numref">Fig. 12</span></a> ).</p>
+<p>A striking observations from global vent fluid measurements is that fluid exit temperatures apparently never exceed 400°C (<a class="reference internal" href="#fig-vent-t-fig"><span class="std std-numref">Fig. 15</span></a> ).</p>
 <div class="figure align-center" id="fig-vent-t-fig">
 <img alt="../../_images/vent_T_deoth.jpg" src="../../_images/vent_T_deoth.jpg" />
-<p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Figure taken from <a class="bibtex reference internal" href="../../refs.html#nakamura2014" id="id1">[Nakamura &amp; Takai, 2014]</a> showing measured vent fluid temperatures.</span><a class="headerlink" href="#fig-vent-t-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 15 </span><span class="caption-text">Figure taken from <a class="bibtex reference internal" href="../../refs.html#nakamura2014" id="id1">[Nakamura &amp; Takai, 2014]</a> showing measured vent fluid temperatures.</span><a class="headerlink" href="#fig-vent-t-fig" title="Permalink to this image">¶</a></p>
 </div>
 <p>Maybe you have already noticed in our convection experiments in the previous session that the upflow temperatures are always much lower than the bottom boundary condition implying that the hottest fluids are actually stagnant and do not rise towards the seafloor. <a class="bibtex reference internal" href="../../refs.html#jupp2000thermodynamic" id="id2">[Jupp &amp; Schultz, 2000]</a> published a landmark paper in which they showed that the thermodynamic properties of water control the upflow temperature and can explain the observed upper limit of vent fluid temperatures. In this lecture we will have a detailed look into the proposed mechanisms.</p>
 <div class="section" id="mechanism-to-limit-black-smoker-temperature">
@@ -265,9 +266,9 @@
 <div class="math notranslate nohighlight" id="equation-eq-udiv-e2">
 <span class="eqno">(25)<a class="headerlink" href="#equation-eq-udiv-e2" title="Permalink to this equation">¶</a></span>\[\nabla \cdot (\rho h \vec{U}) = \frac{\partial}{\partial z} \left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right) g_z k\]</div>
 <p><a class="bibtex reference internal" href="../../refs.html#jupp2000thermodynamic" id="id6">[Jupp &amp; Schultz, 2000]</a> called the term wihtin the large brackets, <span class="math notranslate nohighlight">\(F=\left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right)\)</span> , fluxibility. Fluxibility is a function of fluid properties only and those properties are pressure and temperature dependent. To first order, advective heat transport is maximized, where <span class="math notranslate nohighlight">\(\nabla \cdot F\)</span> is maximum and this divergence can be approximated within the basal boundary as <span class="math notranslate nohighlight">\(\nabla \cdot F \approx \frac{\partial}{\partial z} F \approx \frac{\partial}{\partial T} F\)</span> .</p>
-<p><a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 13</span></a> a shows fluxibility as a function of pressure and temperature. It is clear that this function has a distinct peak at temperature of approximately 400°C. <a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 13</span></a> b shows sections of constant pressure and also the derivative of F with temperature. The peaks in these functions mark the temperature for which buoyant heat transport is most efficient for a given pressure. Later we will explore this further in numerical convection experiments.</p>
+<p><a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 16</span></a> a shows fluxibility as a function of pressure and temperature. It is clear that this function has a distinct peak at temperature of approximately 400°C. <a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 16</span></a> b shows sections of constant pressure and also the derivative of F with temperature. The peaks in these functions mark the temperature for which buoyant heat transport is most efficient for a given pressure. Later we will explore this further in numerical convection experiments.</p>
 <div class="figure align-center" id="fig-fluxibility-water">
-<img alt="../../_images/Fluxibility_Water.svg" src="../../_images/Fluxibility_Water.svg" /><p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Fluxibility F as a function of temperature and pressure (a), profile of F along temperature with constant pressure (b).</span><a class="headerlink" href="#fig-fluxibility-water" title="Permalink to this image">¶</a></p>
+<img alt="../../_images/Fluxibility_Water.svg" src="../../_images/Fluxibility_Water.svg" /><p class="caption"><span class="caption-number">Fig. 16 </span><span class="caption-text">Fluxibility F as a function of temperature and pressure (a), profile of F along temperature with constant pressure (b).</span><a class="headerlink" href="#fig-fluxibility-water" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
