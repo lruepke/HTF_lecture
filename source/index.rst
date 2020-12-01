@@ -79,7 +79,6 @@ The majority of this course will be spent in front of a computer working on exer
     :caption: Lecture 4
 
     lectures/L04/Overview
-    lectures/L04/slide
     lectures/L04/intro
     lectures/L04/cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb
 
