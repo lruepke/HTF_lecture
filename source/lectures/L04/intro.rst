@@ -1,3 +1,5 @@
+.. include:: /include.rst_
+
 Porous Flow - Submarine Hydrothermal Systems
 ============================================
 
@@ -6,6 +8,18 @@ Porous Flow - Submarine Hydrothermal Systems
 
 Mechanism to limit black smoker temperature 
 -----------------------------------------------
+
+.. figure:: /_figures/Properties_Water.*
+   :align: center
+   :name: fig:Properties_Water
+
+   Water properties as a function of temperature and pressure, using python package of iapws_.
+
+.. figure:: /_figures/Fluxibility_Water.*
+   :align: center
+   :name: fig:Fluxibility_Water
+
+   Fluxibility F as a function of temperature and pressure (a), profile of F along temperature with constant pressure (b).
 
 .. plot::
 

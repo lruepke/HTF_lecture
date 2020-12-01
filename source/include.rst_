@@ -26,6 +26,8 @@
 
 .. _IAPWS-IF97: http://www.iapws.org/relguide/IF97-Rev.html
 
+.. _iapws: https://iapws.readthedocs.io/en/latest/#
+
 .. _Ansys: https://www.ansys.com
 
 .. _execrises/flange: https://gitlab.com/gmdpapers/hydrothermalfoam/-/tree/master/cookbooks/helloworld
