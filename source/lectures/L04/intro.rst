@@ -11,7 +11,8 @@ Mechanism to limit black smoker temperature
 
 Download the case files :download:`Jupp_Schultz <cases/Jupp_Schultz.zip>`
 
-
+Properties calculation details can be found in the :ref:`Jupyter-notebook of water properties <cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb#dsa>`
+ 
 .. figure:: /_figures/Properties_Water.*
    :align: center
    :name: fig:Properties_Water
