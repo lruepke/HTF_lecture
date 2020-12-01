@@ -11,9 +11,6 @@ Mechanism to limit black smoker temperature
 
 Download the case files :download:`Jupp_Schultz <cases/Jupp_Schultz.zip>`
 
-.. _link: cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb
-
-__ cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb
 
 
 Properties calculation details can be found in the
