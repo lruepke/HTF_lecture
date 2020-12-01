@@ -93,21 +93,22 @@ to get
 
 Equations :eq:`eq:mom_matrix` and :eq:`eq:mom_matrix6` form a set of equations that are solved in sequence.
 
-First solve the momentum balance using an initial guess:
+
+The actual solution sequence in the SIMPLE algorithm is this. First, we solve the momentum balance using an initial guess for pressure:
 
 .. math::
     :label: eq:mom_matrix8 
 
     M \vec{U} = - \nabla p
 
-Now update pressure by solving the pressure equation :eq:`eq:mom_matrix6`
+The we update pressure by solving the pressure equation :eq:`eq:mom_matrix6`
 
 .. math::
     :label: eq:mom_matrix9
 
         \nabla \cdot A^{-1} \nabla p = \nabla \cdot(A^{-1}H)
 
-Use the pressure to "correct" the velocity solution, so that it fulfills the continuity equation :eq:`eq:continuity2`.
+Finally, the pressure is used to "correct" the velocity solution, so that it fulfills the continuity equation :eq:`eq:continuity2`.
 
 .. math::
     :label: eq:u_cor
