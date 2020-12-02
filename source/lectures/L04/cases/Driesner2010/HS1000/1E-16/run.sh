@@ -7,7 +7,7 @@ cd ${0%/*} || exit 1    # Run from this directory
 application=`getApplication`
 
 # 1. clean old results
-# ./clean.sh
+./clean.sh
 # 2. mesh
 blockMesh
 # 5. run 

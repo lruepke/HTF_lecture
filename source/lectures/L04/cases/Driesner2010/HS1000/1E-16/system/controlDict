@@ -51,6 +51,7 @@ functions
         #{
             //get maximum tempeature on the top boundary
             label patchID = mesh().boundaryMesh().findPatchID("top"); 
+            const volScalarField& T = mesh().lookupObject<volScalarField>("T");
             // write vent temperature
             std::ofstream fout("ventT.txt",std::ofstream::app);
             // Info<<"Plume Temperature: "<<mesh().time().value()/31536000<<"\t"<<Foam::gMax(T.boundaryField()[patchID])-273.15<<" C"<<endl;
