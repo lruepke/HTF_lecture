@@ -363,7 +363,13 @@ runApplication <span class="nv">$application</span>
 <li><p>vertices 5,6 and 7 are similarly found by moving in the z direction from vertices 1,2 and 3 respectively.</p></li>
 </ul>
 </div>
-<p>Next boundary patches are defined and labeled in the blockMeshDict.</p>
+<p>Next boundary patches are defined and labeled in the blockMeshDict. Also here care must be take to provide the vertices in a consistent order (right-hand coordinate system). Two easy ways to remember this is to:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>apply the right-hand rule, which means if the thumb of your right hand points to the outside of a face, the numbering has to follow your fingers.</p></li>
+<li><p>or, looking onto a face and starting from any vertex, the numbering has to be counter-clockwise.</p></li>
+</ul>
+</div></blockquote>
 <div class="figure align-center" id="fig-cavity2d-bounds">
 <img alt="../../_images/cavity2d_bounds.png" src="../../_images/cavity2d_bounds.png" />
 <p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Assigning boundary labels and types.</span><a class="headerlink" href="#fig-cavity2d-bounds" title="Permalink to this image">¶</a></p>
