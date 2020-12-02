@@ -9,6 +9,8 @@ Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. F
    :align: center
    :name: fig:2dcavity_setup
 
+   Two-dimensional cavity model geometry and boundary conditions.
+
 
 Preparing the case
 ^^^^^^^^^^^^^^^^^^
