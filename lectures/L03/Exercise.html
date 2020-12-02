@@ -386,12 +386,46 @@
 </pre></div>
 </td></tr></table></div>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Alternately, one can also set permeability of two layers by using <code class="code docutils literal notranslate"><span class="pre">boxToCell</span></code> based on one layer mesh (see <a class="reference internal" href="#lst-2dbox-boxtocell"><span class="std std-numref">Listing 17</span></a>), which is similar to <code class="code docutils literal notranslate"><span class="pre">zoneToCell</span></code> shown in <a class="reference internal" href="#lst-2dbox-setfdict"><span class="std std-numref">Listing 16</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="lst-2dbox-boxtocell">
+<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">Use boxToCell to simply set permeability for two-layer model.</span><a class="headerlink" href="#lst-2dbox-boxtocell" title="Permalink to this code">¶</a></div>
+<div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">regions</span>
+<span class="p">(</span>
+<span class="hll">    <span class="n">boxToCell</span>
+</span>    <span class="p">{</span>
+<span class="hll">        <span class="n">box</span> <span class="p">(</span><span class="mi">0</span> <span class="o">-</span><span class="mi">500</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="mi">1000</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">//(xmin,ymin,zmin) (xmax,ymax,zmax)</span>
+</span>        <span class="k">fieldValues</span>
+        <span class="p">(</span>
+            <span class="n">volScalarFieldValue</span> <span class="n">permeability</span> <span class="mf">1e-13</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">);</span>
+
+<span class="c1">// ************************************************************************* //</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
 </div>
 <div class="section" id="run-the-case">
 <h3>Run the case<a class="headerlink" href="#run-the-case" title="Permalink to this headline">¶</a></h3>
 <p>Now we are using the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility to set the permeability. Therefore we need to change the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script to also include the setFields command.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-setrun">
-<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">Modified run.sh file that also includes the setFields command.</span><a class="headerlink" href="#lst-2dbox-setrun" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">Modified run.sh file that also includes the setFields command.</span><a class="headerlink" href="#lst-2dbox-setrun" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
