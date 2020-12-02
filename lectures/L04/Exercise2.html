@@ -259,10 +259,6 @@
 <div class="figure align-center" id="fig-t-jupp-schultz-steady">
 <img alt="../../_images/T_Jupp_Schultz_steady.svg" src="../../_images/T_Jupp_Schultz_steady.svg" /><p class="caption"><span class="caption-number">Fig. 18 </span><span class="caption-text">The steady-state temperature distribution. See <span class="xref std std-ref">/lectures/L04/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb#Temperature-+-velocity-field-(quiver)</span> in the notebook.</span><a class="headerlink" href="#fig-t-jupp-schultz-steady" title="Permalink to this image">¶</a></p>
 </div>
-<div class="admonition-todo admonition">
-<p class="admonition-title">todo</p>
-<p>Replace the fig (a) of <a class="reference internal" href="#fig-jupp-schultz-early"><span class="std std-numref">Fig. 19</span></a> by local Rayleigh number soon!</p>
-</div>
 <div class="figure align-center" id="fig-jupp-schultz-early">
 <img alt="../../_images/Jupp_Schultz_early.svg" src="../../_images/Jupp_Schultz_early.svg" /><p class="caption"><span class="caption-number">Fig. 19 </span><span class="caption-text">Early stages of the simulation. See <span class="xref std std-ref">/lectures/L04/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb#Early-stage</span> in the notebook.</span><a class="headerlink" href="#fig-jupp-schultz-early" title="Permalink to this image">¶</a></p>
 </div>
@@ -276,7 +272,12 @@
 </div>
 <div class="item sphinx-data-tab-0-1 docutils container">
 <div class="docutils container">
-<p>CS=10,FWHM=300</p>
+<p>CS=10,FWHM=400</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-0-2 docutils container">
+<div class="docutils container">
+<p>CS=2.5,FWHM=300</p>
 </div>
 </div>
 </div>
@@ -290,6 +291,81 @@
 <img alt="../../_images/T_Jupp_Schultz400_steady.svg" src="../../_images/T_Jupp_Schultz400_steady.svg" /><p class="caption"><span class="caption-number">Fig. 21 </span><span class="caption-text">Cell size = 10 m, FWHM = 400 m.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 </div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-0-2 docutils container">
+<div class="figure align-center" id="id4">
+<img alt="../../_images/T_Jupp_Schultz300_2.5_steady.svg" src="../../_images/T_Jupp_Schultz300_2.5_steady.svg" /><p class="caption"><span class="caption-number">Fig. 22 </span><span class="caption-text">Cell size = 2.5 m, FWHM = 300 m.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="lst-controldict-functions-props-ral">
+<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">Post-processing function in controlDict to output properties and calculate local Rayleigh number.</span><a class="headerlink" href="#lst-controldict-functions-props-ral" title="Permalink to this code">¶</a></div>
+<div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">functions</span>
+<span class="p">{</span>
+    <span class="n">calPlumeT</span>
+    <span class="p">{</span>
+        <span class="kt">libs</span>                <span class="p">(</span><span class="s">&quot;libutilityFunctionObjects.so&quot;</span><span class="p">);</span>
+        <span class="kt">type</span>                <span class="n">coded</span><span class="p">;</span>
+        <span class="n">enabled</span>             <span class="nb">true</span><span class="p">;</span>
+        <span class="kt">writeControl</span>        <span class="n">adjustableRunTime</span><span class="p">;</span>
+        <span class="kt">writeInterval</span>       <span class="k">$</span><span class="kt">writeInterval</span><span class="p">;</span>
+        <span class="n">name</span>                <span class="n">plumeTemperature</span><span class="p">;</span>
+        <span class="n">codeWrite</span>
+        <span class="cp">#{</span>
+            <span class="c1">//get maximum tempeature on the top boundary</span>
+            <span class="n">label</span> <span class="n">patchID</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">boundaryMesh</span><span class="p">().</span><span class="n">findPatchID</span><span class="p">(</span><span class="s">&quot;top&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="k">T</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;T&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mu&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">Cp</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Cp&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">rho</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;rho&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">surfaceScalarField</span><span class="o">&amp;</span> <span class="k">phi</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">surfaceScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;phi&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;enthalpy&quot;</span><span class="p">);</span>
+            <span class="kt">double</span> <span class="n">kr</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>
+            <span class="c1">// calculate local Rayleigh number</span>
+            <span class="n">volScalarField</span> <span class="nf">Ra_L</span><span class="p">(</span><span class="s">&quot;LocalRayleigh&quot;</span><span class="p">,</span><span class="n">mag</span><span class="p">(</span><span class="n">fvc</span><span class="o">::</span><span class="n">div</span><span class="p">(</span><span class="k">phi</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">kr</span><span class="o">*</span><span class="n">fvc</span><span class="o">::</span><span class="n">laplacian</span><span class="p">(</span><span class="k">T</span><span class="p">))));</span>
+            <span class="c1">// write properties to output files</span>
+            <span class="n">mu</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">Cp</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">h</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">Ra_L</span><span class="p">.</span><span class="n">write</span><span class="p">();</span>
+            <span class="c1">// write vent temperature</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">fout</span><span class="p">(</span><span class="s">&quot;ventT.txt&quot;</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">ofstream</span><span class="o">::</span><span class="n">app</span><span class="p">);</span>
+            <span class="c1">// Info&lt;&lt;&quot;Plume Temperature: &quot;&lt;&lt;mesh().time().value()/31536000&lt;&lt;&quot;\t&quot;&lt;&lt;Foam::gMax(T.boundaryField()[patchID])-273.15&lt;&lt;&quot; C&quot;&lt;&lt;endl;</span>
+            <span class="n">fout</span><span class="o">&lt;&lt;</span><span class="n">mesh</span><span class="p">().</span><span class="n">time</span><span class="p">().</span><span class="kt">value</span><span class="p">()</span><span class="o">/</span><span class="mi">31536000</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">Foam</span><span class="o">::</span><span class="n">gMax</span><span class="p">(</span><span class="k">T</span><span class="p">.</span><span class="k">boundaryField</span><span class="p">()[</span><span class="n">patchID</span><span class="p">])</span><span class="o">-</span><span class="mf">273.15</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+            <span class="n">fout</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+        <span class="cp">#};</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
 </div>
 <div class="toctree-wrapper compound">
 </div>
