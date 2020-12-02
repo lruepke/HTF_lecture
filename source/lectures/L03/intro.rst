@@ -41,7 +41,7 @@ Implementation
 The details of the OpenFoam implementation can be found in the |foam| documentation. Here we only show a brief summarry. :numref:`fig:htf_solution` shows how the energy equation is solved within the OpenFoam framework.
 
 
-.. figure:: /_figures/solution_algorithm.*
+.. figure:: /_figures/solution_algorithm.* 
    :align: center
    :name: fig:htf_solution
 
