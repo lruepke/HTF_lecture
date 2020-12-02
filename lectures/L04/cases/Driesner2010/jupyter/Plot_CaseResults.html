@@ -130,6 +130,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../../../Exercise3.html">Excercise 3</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Jupyter Notebook of case results</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Read-results">Read results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Maximum-vent-temperature-changes-with-time">Maximum vent temperature changes with time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Vent-temperature-as-a-function-of-permeability">Vent temperature as a function of permeability</a></li>
 </ul>
 </li>
 </ul>
@@ -502,7 +504,7 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="Jupyter-Notebook-of-case-results">
 <h1>Jupyter Notebook of case results<a class="headerlink" href="#Jupyter-Notebook-of-case-results" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -542,7 +544,7 @@ div.rendered_html tbody tr:hover {
 <li><p>Triangulate the unstructured data using <code class="docutils literal notranslate"><span class="pre">`mpl.tri.Triangulation</span></code> &lt;<a class="reference external" href="https://matplotlib.org/3.1.0/api/tri_api.html#matplotlib.tri.Triangulation">https://matplotlib.org/3.1.0/api/tri_api.html#matplotlib.tri.Triangulation</a>&gt;`__ function</p></li>
 </ol>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -566,6 +568,96 @@ div.rendered_html tbody tr:hover {
         <span class="n">trimesh</span><span class="o">=</span><span class="n">mpl</span><span class="o">.</span><span class="n">tri</span><span class="o">.</span><span class="n">Triangulation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">triangles</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">trimesh</span><span class="p">,</span> <span class="n">point_data</span><span class="p">,</span><span class="n">cell_data</span>
 </pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Maximum-vent-temperature-changes-with-time">
+<h2>Maximum vent temperature changes with time<a class="headerlink" href="#Maximum-vent-temperature-changes-with-time" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path_results</span><span class="o">=</span><span class="s1">&#39;../HS1000/results&#39;</span>
+<span class="n">permeabilities</span><span class="o">=</span><span class="p">[</span><span class="mf">1E-16</span><span class="p">,</span><span class="mf">3E-16</span><span class="p">,</span><span class="mf">5E-16</span><span class="p">,</span><span class="mf">8E-16</span><span class="p">,</span><span class="mf">1E-15</span><span class="p">,</span><span class="mf">2E-15</span><span class="p">,</span><span class="mf">3E-15</span><span class="p">,</span><span class="mf">4E-15</span><span class="p">,</span><span class="mf">6E-15</span><span class="p">,</span><span class="mf">8E-15</span><span class="p">,</span><span class="mf">1E-14</span><span class="p">,</span><span class="mf">3E-14</span><span class="p">,</span><span class="mf">6E-14</span><span class="p">,</span><span class="mf">8E-14</span><span class="p">,</span><span class="mf">1E-13</span><span class="p">,</span><span class="mf">2E-13</span><span class="p">,</span><span class="mf">3E-13</span><span class="p">,</span><span class="mf">4E-13</span><span class="p">,</span><span class="mf">1E-12</span><span class="p">]</span>
+<span class="n">ventT</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">permeabilities</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">8.5</span><span class="p">,</span><span class="mf">4.95</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ls</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">permeabilities</span><span class="p">)):</span>
+    <span class="n">perm</span><span class="o">=</span><span class="n">permeabilities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">fname_ventT</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/ventT_</span><span class="si">%.0E</span><span class="s1">.txt&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_results</span><span class="p">,</span><span class="n">perm</span><span class="p">))</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">fname_ventT</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">T</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ventT</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">T</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># will be used in the next cell</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">//</span><span class="mi">10</span> <span class="o">==</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span>
+    <span class="k">elif</span><span class="p">(</span><span class="n">i</span><span class="o">//</span><span class="mi">10</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.0E</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">perm</span><span class="p">),</span><span class="n">ls</span><span class="o">=</span><span class="n">ls</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mf">0.02</span><span class="p">),</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Permeability (m$^{\mathregular</span><span class="si">{2}</span><span class="s1">}$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time (kyrs)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Maximum vent temperature ($^{\circ}$C)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5000</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">400</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/ventT_time_perm.pdf&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/ventT_time_perm.svg&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../../../_images/lectures_L04_cases_Driesner2010_jupyter_Plot_CaseResults_6_0.png" src="../../../../../_images/lectures_L04_cases_Driesner2010_jupyter_Plot_CaseResults_6_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Vent-temperature-as-a-function-of-permeability">
+<h2>Vent temperature as a function of permeability<a class="headerlink" href="#Vent-temperature-as-a-function-of-permeability" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">permeabilities</span><span class="p">,</span><span class="n">ventT</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Permeability (m$^{\mathregular</span><span class="si">{2}</span><span class="s1">}$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Maximum vent temperature ($^{\circ}$C)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,),</span><span class="n">numticks</span><span class="o">=</span><span class="mi">20</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span><span class="n">numticks</span><span class="o">=</span><span class="mi">20</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">420</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/ventT_perm.pdf&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/ventT_perm.svg&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../../../_images/lectures_L04_cases_Driesner2010_jupyter_Plot_CaseResults_8_0.png" src="../../../../../_images/lectures_L04_cases_Driesner2010_jupyter_Plot_CaseResults_8_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
