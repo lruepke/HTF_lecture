@@ -542,7 +542,7 @@ div.rendered_html tbody tr:hover {
 <li><p>Triangulate the unstructured data using <code class="docutils literal notranslate"><span class="pre">`mpl.tri.Triangulation</span></code> &lt;<a class="reference external" href="https://matplotlib.org/3.1.0/api/tri_api.html#matplotlib.tri.Triangulation">https://matplotlib.org/3.1.0/api/tri_api.html#matplotlib.tri.Triangulation</a>&gt;`__ function</p></li>
 </ol>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -720,7 +720,7 @@ div.rendered_html tbody tr:hover {
 <h2>Early stage<a class="headerlink" href="#Early-stage" title="Permalink to this headline">¶</a></h2>
 <p>see Fig. 2 of Juppy &amp; Schultz (2000)</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[169]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -745,7 +745,7 @@ div.rendered_html tbody tr:hover {
 <span class="c1"># caxis.set_xlim(Ral.min(),Ral.max())</span>
 <span class="c1"># caxis.xaxis.set_major_locator(MultipleLocator(3))</span>
 <span class="n">caxis</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
-<span class="n">caxis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Local Rayleigh number&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">caxis</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Local Rayleigh number&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
 
 <span class="c1"># quiver</span>
 <span class="n">U</span><span class="o">=</span><span class="n">pointData</span><span class="p">[</span><span class="s1">&#39;U&#39;</span><span class="p">]</span>
@@ -811,49 +811,11 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------</span>
-<span class="ansi-red-fg">AttributeError</span>Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-169-06c64e6de96f&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span class="ansi-red-fg"># caxis.xaxis.set_major_locator(MultipleLocator(3))</span>
-<span class="ansi-green-intense-fg ansi-bold">     21</span> caxis<span class="ansi-blue-fg">.</span>xaxis<span class="ansi-blue-fg">.</span>set_ticks_position<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;top&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">---&gt; 22</span><span class="ansi-red-fg"> </span>caxis<span class="ansi-blue-fg">.</span>set_xlabel<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;Local Rayleigh number&#39;</span><span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">&#39;w&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     23</span>
-<span class="ansi-green-intense-fg ansi-bold">     24</span> <span class="ansi-red-fg"># quiver</span>
-
-<span class="ansi-green-fg">~/.pyenv/versions/anaconda3-2019.10/lib/python3.7/site-packages/matplotlib/axes/_axes.py</span> in <span class="ansi-cyan-fg">set_xlabel</span><span class="ansi-blue-fg">(self, xlabel, fontdict, labelpad, loc, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    245</span>         <span class="ansi-green-fg">elif</span> loc <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">&#39;right&#39;</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    246</span>             kwargs<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> horizontalalignment<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;right&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">--&gt; 247</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>xaxis<span class="ansi-blue-fg">.</span>set_label_text<span class="ansi-blue-fg">(</span>xlabel<span class="ansi-blue-fg">,</span> fontdict<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    248</span>
-<span class="ansi-green-intense-fg ansi-bold">    249</span>     <span class="ansi-green-fg">def</span> get_ylabel<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/.pyenv/versions/anaconda3-2019.10/lib/python3.7/site-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">set_label_text</span><span class="ansi-blue-fg">(self, label, fontdict, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1560</span>         self<span class="ansi-blue-fg">.</span>label<span class="ansi-blue-fg">.</span>set_text<span class="ansi-blue-fg">(</span>label<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1561</span>         <span class="ansi-green-fg">if</span> fontdict <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">-&gt; 1562</span><span class="ansi-red-fg">             </span>self<span class="ansi-blue-fg">.</span>label<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span>fontdict<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1563</span>         self<span class="ansi-blue-fg">.</span>label<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1564</span>         self<span class="ansi-blue-fg">.</span>stale <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span>
-
-<span class="ansi-green-fg">~/.pyenv/versions/anaconda3-2019.10/lib/python3.7/site-packages/matplotlib/text.py</span> in <span class="ansi-cyan-fg">update</span><span class="ansi-blue-fg">(self, kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    170</span>         sentinel <span class="ansi-blue-fg">=</span> object<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>  <span class="ansi-red-fg"># bbox can be None, so use another sentinel.</span>
-<span class="ansi-green-intense-fg ansi-bold">    171</span>         <span class="ansi-red-fg"># Update fontproperties first, as it has lowest priority.</span>
-<span class="ansi-green-fg">--&gt; 172</span><span class="ansi-red-fg">         </span>fontproperties <span class="ansi-blue-fg">=</span> kwargs<span class="ansi-blue-fg">.</span>pop<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;fontproperties&#34;</span><span class="ansi-blue-fg">,</span> sentinel<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    173</span>         <span class="ansi-green-fg">if</span> fontproperties <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> sentinel<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    174</span>             self<span class="ansi-blue-fg">.</span>set_fontproperties<span class="ansi-blue-fg">(</span>fontproperties<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-red-fg">AttributeError</span>: &#39;str&#39; object has no attribute &#39;pop&#39;
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../../../_images/lectures_L04_cases_Jupp_Schultz_jupyter_Plot_CaseResults_9_1.png" src="../../../../../_images/lectures_L04_cases_Jupp_Schultz_jupyter_Plot_CaseResults_9_1.png" />
+<img alt="../../../../../_images/lectures_L04_cases_Jupp_Schultz_jupyter_Plot_CaseResults_9_0.png" src="../../../../../_images/lectures_L04_cases_Jupp_Schultz_jupyter_Plot_CaseResults_9_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
