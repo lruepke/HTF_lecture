@@ -1,4 +1,4 @@
-*0/
+*00/
 processor*/
 constant/polyMesh
 dynamicCode/
@@ -14,3 +14,5 @@ log*
 !gmsh
 gmsh/*.msh
 !jupyter/*.ipynb
+ventT.txt
+VTK/
