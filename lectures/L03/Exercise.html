@@ -310,6 +310,8 @@
 <div class="section" id="assign-properties">
 <h3>Assign properties<a class="headerlink" href="#assign-properties" title="Permalink to this headline">¶</a></h3>
 <p>Next we need to set the permeability for the different zones. This can be achieved with <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> tool. The <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> tool requires a dictionary file <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> that tells it what to do. This file resides in the system folder. Here is a possible listing, just copy it and save it to your system folder.</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">zoneToCell</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-setfdict">
 <div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">Use the setFieldsDict to assign different permeabilities.</span><a class="headerlink" href="#lst-2dbox-setfdict" title="Permalink to this code">¶</a></div>
 <div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -386,9 +388,8 @@
 </pre></div>
 </td></tr></table></div>
 </div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Alternately, one can also set permeability of two layers by using <code class="code docutils literal notranslate"><span class="pre">boxToCell</span></code> based on one layer mesh (see <a class="reference internal" href="#lst-2dbox-boxtocell"><span class="std std-numref">Listing 17</span></a>), which is similar to <code class="code docutils literal notranslate"><span class="pre">zoneToCell</span></code> shown in <a class="reference internal" href="#lst-2dbox-setfdict"><span class="std std-numref">Listing 16</span></a>.</p>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">boxToCell</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-boxtocell">
 <div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">Use boxToCell to simply set permeability for two-layer model.</span><a class="headerlink" href="#lst-2dbox-boxtocell" title="Permalink to this code">¶</a></div>
 <div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -403,22 +404,73 @@
 10
 11
 12
-13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">regions</span>
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="cm">| =========                 |                                                 |</span>
+<span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
+<span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
+<span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
+<span class="cm">|    \\/     M anipulation  |                                                 |</span>
+<span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="k">FoamFile</span>
+<span class="p">{</span>
+    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+    <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
+    <span class="kt">object</span>      <span class="n">setFieldsDict</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+
+
+<span class="k">defaultFieldValues</span>
 <span class="p">(</span>
-<span class="hll">    <span class="n">boxToCell</span>
-</span>    <span class="p">{</span>
-<span class="hll">        <span class="n">box</span> <span class="p">(</span><span class="mi">0</span> <span class="o">-</span><span class="mi">500</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="mi">1000</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">//(xmin,ymin,zmin) (xmax,ymax,zmax)</span>
-</span>        <span class="k">fieldValues</span>
-        <span class="p">(</span>
-            <span class="n">volScalarFieldValue</span> <span class="n">permeability</span> <span class="mf">1e-13</span>
-        <span class="p">);</span>
-    <span class="p">}</span>
+    <span class="n">volScalarFieldValue</span> <span class="n">permeability</span> <span class="mf">1e-14</span>
 <span class="p">);</span>
 
+<span class="hll"><span class="k">regions</span>
+</span><span class="hll"><span class="p">(</span>
+</span><span class="hll">    <span class="n">boxToCell</span>
+</span><span class="hll">    <span class="p">{</span>
+</span><span class="hll">        <span class="n">box</span> <span class="p">(</span><span class="mi">0</span> <span class="o">-</span><span class="mi">500</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="mi">1000</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">//(xmin,ymin,zmin) (xmax,ymax,zmax)</span>
+</span><span class="hll">        <span class="k">fieldValues</span>
+</span><span class="hll">        <span class="p">(</span>
+</span><span class="hll">            <span class="n">volScalarFieldValue</span> <span class="n">permeability</span> <span class="mf">1e-13</span>
+</span><span class="hll">        <span class="p">);</span>
+</span><span class="hll">    <span class="p">}</span>
+</span><span class="hll"><span class="p">);</span>
+</span>
 <span class="c1">// ************************************************************************* //</span>
 </pre></div>
 </td></tr></table></div>
 </div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Alternately, one can also set permeability of two layers by using <code class="code docutils literal notranslate"><span class="pre">boxToCell</span></code> based on one layer mesh (see <a class="reference internal" href="#lst-2dbox-boxtocell"><span class="std std-numref">Listing 17</span></a>), which is similar to <code class="code docutils literal notranslate"><span class="pre">zoneToCell</span></code> shown in <a class="reference internal" href="#lst-2dbox-setfdict"><span class="std std-numref">Listing 16</span></a>.</p>
 </div>
 </div>
 <div class="section" id="run-the-case">

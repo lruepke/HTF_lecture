@@ -68,58 +68,81 @@ Assign properties
 
 Next we need to set the permeability for the different zones. This can be achieved with :code:`setFields` tool. The :code:`setFields` tool requires a dictionary file :code:`setFieldsDict` that tells it what to do. This file resides in the system folder. Here is a possible listing, just copy it and save it to your system folder.
 
-.. code-block:: foam 
-    :linenos:
-    :emphasize-lines: 24-34
-    :name: lst:2dbox:setfdict
-    :caption: Use the setFieldsDict to assign different permeabilities.
-
-    /*--------------------------------*- C++ -*----------------------------------*\
-    | =========                 |                                                 |
-    | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-    |  \\    /   O peration     | Version:  5                                     |
-    |   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
-    |    \\/     M anipulation  |                                                 |
-    \*---------------------------------------------------------------------------*/
-    FoamFile
-    {
-        version     2.0;
-        format      ascii;
-        class       dictionary;
-        location    "system";
-        object      setFieldsDict;
-    }
-    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
-
-
-    defaultFieldValues
-    (
-        volScalarFieldValue permeability 1e-14
-    );
-
-    regions
-    (
-        zoneToCell
-        {
-            name "layer_top";
-            fieldValues
-            (
-                volScalarFieldValue permeability 1e-13
-            );
-        }
-    );
-
-    // ************************************************************************* //
-
-.. tip::
-
-    Alternately, one can also set permeability of two layers by using :code:`boxToCell` based on one layer mesh (see :numref:`lst:2dbox:boxToCell`), which is similar to :code:`zoneToCell` shown in :numref:`lst:2dbox:setfdict`.
+.. tab:: zoneToCell 
 
     .. code-block:: foam 
         :linenos:
-        :emphasize-lines: 3,5
+        :emphasize-lines: 24-34
+        :name: lst:2dbox:setfdict
+        :caption: Use the setFieldsDict to assign different permeabilities.
+
+        /*--------------------------------*- C++ -*----------------------------------*\
+        | =========                 |                                                 |
+        | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+        |  \\    /   O peration     | Version:  5                                     |
+        |   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+        |    \\/     M anipulation  |                                                 |
+        \*---------------------------------------------------------------------------*/
+        FoamFile
+        {
+            version     2.0;
+            format      ascii;
+            class       dictionary;
+            location    "system";
+            object      setFieldsDict;
+        }
+        // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+        defaultFieldValues
+        (
+            volScalarFieldValue permeability 1e-14
+        );
+
+        regions
+        (
+            zoneToCell
+            {
+                name "layer_top";
+                fieldValues
+                (
+                    volScalarFieldValue permeability 1e-13
+                );
+            }
+        );
+
+        // ************************************************************************* //
+
+.. tab:: boxToCell 
+
+    .. code-block:: foam 
+        :linenos:
+        :emphasize-lines: 24-34
         :name: lst:2dbox:boxToCell
         :caption: Use boxToCell to simply set permeability for two-layer model.
+
+        /*--------------------------------*- C++ -*----------------------------------*\
+        | =========                 |                                                 |
+        | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+        |  \\    /   O peration     | Version:  5                                     |
+        |   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+        |    \\/     M anipulation  |                                                 |
+        \*---------------------------------------------------------------------------*/
+        FoamFile
+        {
+            version     2.0;
+            format      ascii;
+            class       dictionary;
+            location    "system";
+            object      setFieldsDict;
+        }
+        // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+        defaultFieldValues
+        (
+            volScalarFieldValue permeability 1e-14
+        );
 
         regions
         (
@@ -134,6 +157,12 @@ Next we need to set the permeability for the different zones. This can be achiev
         );
 
         // ************************************************************************* //
+
+
+
+.. tip::
+
+    Alternately, one can also set permeability of two layers by using :code:`boxToCell` based on one layer mesh (see :numref:`lst:2dbox:boxToCell`), which is similar to :code:`zoneToCell` shown in :numref:`lst:2dbox:setfdict`.
 
 Run the case
 ^^^^^^^^^^^^^^^^^
