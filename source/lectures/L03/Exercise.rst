@@ -59,8 +59,11 @@ The easiest way is start with the blockMeshDict file of the 1-layer case and the
     * vertex 4 is found by moving from vertex 0 in the z direction
     * vertices 5,6 and 7 are similarly found by moving in the z direction from vertices 1,2 and 3 respectively.
 
-Next boundary patches are defined and labeled in the blockMeshDict.
+Next boundary patches are defined and labeled in the blockMeshDict. Also here care must be take to provide the vertices in a consistent order (right-hand coordinate system). Two easy ways to remember this is to:
 
+    * apply the right-hand rule, which means if the thumb of your right hand points to the outside of a face, the numbering has to follow your fingers.
+
+    * or, looking onto a face and starting from any vertex, the numbering has to be counter-clockwise.
 
 
 Assign properties
