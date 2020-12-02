@@ -187,13 +187,13 @@ Now we are using the :code:`setFields` utility to set the permeability. Therefor
 
     ./clean.sh
     runApplication blockMesh
-    cp 0/permeability 0/permeability.orig
+    cp 0/permeability.orig 0/permeability
     runApplication setFields
     runApplication $application
 
 
 .. tip::
-    Notice that we have also included the statement :code:`cp 0/permeability 0/permeability.orig` into the :code:`run.sh` script. The :code:`setFields` command writes mesh-dependent information into the :code:`permeability` file, which causes problems when we want to change the mesh. Compare the :code:`permeability` file before and after running the :code:`setFields` command. To preserve the old file, we make a copy.
+    Notice that we have also included the statement :code:`cp 0/permeability.orig 0/permeability` into the :code:`run.sh` script. The :code:`setFields` command writes mesh-dependent information into the :code:`permeability` file, which causes problems when we want to change the mesh. Compare the :code:`permeability` file before and after running the :code:`setFields` command. To preserve the original file, it is a good idea to name the original file :code:`permeability.orig` and only edit that one. When :code:`run.sh` is executed, this file is then copied to :code:`permeability` and mesh-dependent information is added to this file when :code:`setFields` is executed.
 
 .. only:: html
 

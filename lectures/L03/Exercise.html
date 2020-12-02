@@ -506,7 +506,7 @@
 
 ./clean.sh
 runApplication blockMesh
-cp <span class="m">0</span>/permeability <span class="m">0</span>/permeability.orig
+cp <span class="m">0</span>/permeability.orig <span class="m">0</span>/permeability
 runApplication setFields
 runApplication <span class="nv">$application</span>
 </pre></div>
@@ -514,7 +514,7 @@ runApplication <span class="nv">$application</span>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Notice that we have also included the statement <code class="code docutils literal notranslate"><span class="pre">cp</span> <span class="pre">0/permeability</span> <span class="pre">0/permeability.orig</span></code> into the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script. The <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> command writes mesh-dependent information into the <code class="code docutils literal notranslate"><span class="pre">permeability</span></code> file, which causes problems when we want to change the mesh. Compare the <code class="code docutils literal notranslate"><span class="pre">permeability</span></code> file before and after running the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> command. To preserve the old file, we make a copy.</p>
+<p>Notice that we have also included the statement <code class="code docutils literal notranslate"><span class="pre">cp</span> <span class="pre">0/permeability.orig</span> <span class="pre">0/permeability</span></code> into the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script. The <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> command writes mesh-dependent information into the <code class="code docutils literal notranslate"><span class="pre">permeability</span></code> file, which causes problems when we want to change the mesh. Compare the <code class="code docutils literal notranslate"><span class="pre">permeability</span></code> file before and after running the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> command. To preserve the original file, it is a good idea to name the original file <code class="code docutils literal notranslate"><span class="pre">permeability.orig</span></code> and only edit that one. When <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> is executed, this file is then copied to <code class="code docutils literal notranslate"><span class="pre">permeability</span></code> and mesh-dependent information is added to this file when <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> is executed.</p>
 </div>
 <p>Results of the two layer model. The highly permeable upper layer results in cold fluid entrainment and cooling due to mixing.</p>
 <video width=100% autoplay muted controls loop>
