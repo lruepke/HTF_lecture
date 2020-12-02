@@ -124,21 +124,19 @@ After converting the mesh, you can use Paraview_ to visualize the mesh,
 
 .. only:: html
 
-    .. tabs::
+    .. tab:: Mesh of flange
 
-        .. tab:: Mesh of flange
+        .. figure:: /_figures/flange_mesh.png
+            :align: center
 
-            .. figure:: /_figures/flange_mesh.png
-                :align: center
+            Mesh of the first case - flange.
 
-                Mesh of the first case - flange.
+    .. tab:: Interactive
 
-        .. tab:: Interactive
-
-            .. raw:: html
-                
-                <iframe src="../../_static/vtk_js/index.html?fileURL=flange_mesh.vtkjs" width="100%" height="500px"></iframe>
-        
+        .. raw:: html
+            
+            <iframe src="../../_static/vtk_js/index.html?fileURL=flange_mesh.vtkjs" width="100%" height="500px"></iframe>
+    
 Boundary conditions
 -------------------
 
