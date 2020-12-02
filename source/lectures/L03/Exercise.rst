@@ -111,6 +111,30 @@ Next we need to set the permeability for the different zones. This can be achiev
 
     // ************************************************************************* //
 
+.. tip::
+
+    Alternately, one can also set permeability of two layers by using :code:`boxToCell` based on one layer mesh (see :numref:`lst:2dbox:boxToCell`), which is similar to :code:`zoneToCell` shown in :numref:`lst:2dbox:setfdict`.
+
+    .. code-block:: foam 
+        :linenos:
+        :emphasize-lines: 3,5
+        :name: lst:2dbox:boxToCell
+        :caption: Use boxToCell to simply set permeability for two-layer model.
+
+        regions
+        (
+            boxToCell
+            {
+                box (0 -500 0) (1000 0 1); //(xmin,ymin,zmin) (xmax,ymax,zmax)
+                fieldValues
+                (
+                    volScalarFieldValue permeability 1e-13
+                );
+            }
+        );
+
+        // ************************************************************************* //
+
 Run the case
 ^^^^^^^^^^^^^^^^^
 Now we are using the :code:`setFields` utility to set the permeability. Therefore we need to change the :code:`run.sh` script to also include the setFields command.
