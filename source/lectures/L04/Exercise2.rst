@@ -48,28 +48,26 @@ Effect of cell size (**CS**) and full width at half maximum (**FWHM**),
 
 .. only:: html
 
-    .. tabs:: 
+    .. tab:: CS=10,FWHM=300
 
-        .. tab:: CS=10,FWHM=300
+        .. figure:: /_figures/T_Jupp_Schultz300_steady.*
+            :align: center
 
-            .. figure:: /_figures/T_Jupp_Schultz300_steady.*
-                :align: center
+            Cell size = 10 m, FWHM = 300 m.
 
-                Cell size = 10 m, FWHM = 300 m.
+    .. tab:: CS=10,FWHM=400
 
-        .. tab:: CS=10,FWHM=400
+        .. figure:: /_figures/T_Jupp_Schultz400_steady.*
+            :align: center
 
-            .. figure:: /_figures/T_Jupp_Schultz400_steady.*
-                :align: center
+            Cell size = 10 m, FWHM = 400 m.
 
-                Cell size = 10 m, FWHM = 400 m.
+    .. tab:: CS=2.5,FWHM=300
 
-        .. tab:: CS=2.5,FWHM=300
+        .. figure:: /_figures/T_Jupp_Schultz300_2.5_steady.*
+            :align: center
 
-            .. figure:: /_figures/T_Jupp_Schultz300_2.5_steady.*
-                :align: center
-
-                Cell size = 2.5 m, FWHM = 300 m.
+            Cell size = 2.5 m, FWHM = 300 m.
 
 .. code-block:: foam
     :linenos:

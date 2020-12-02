@@ -29,8 +29,8 @@ author = 'Lars Ruepke'
 extensions = [
     'nbsphinx',
     'sphinx.ext.mathjax',
-    'sphinx_tabs.tabs',
     'sphinxcontrib.bibtex',
+    'sphinx_inline_tabs',
     'matplotlib.sphinxext.plot_directive',
 ]
 

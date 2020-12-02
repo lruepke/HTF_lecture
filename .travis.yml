@@ -8,7 +8,7 @@ addons:
       - pandoc
 
 install:
-  - pip install sphinx sphinx_rtd_theme sphinxcontrib-bibtex matplotlib pandas numpy nbsphinx ipykernel
+  - pip install sphinx sphinx_rtd_theme sphinxcontrib-bibtex matplotlib pandas numpy nbsphinx ipykernel sphinx_inline_tabs
 script: make html
 # script: make html && make latex && cd build/latex && make && cd ../../
 after_success:
