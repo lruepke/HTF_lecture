@@ -255,6 +255,31 @@
 <p>This section is under construction!</p>
 </div>
 <p>We will now try to reproduce the results presented by <a class="bibtex reference internal" href="../../refs.html#driesner2010interplay" id="id1">[Driesner, 2010]</a>, the case files <a class="reference download internal" download="" href="../../_downloads/56d9caacbbf5c0552bb59bc1d560c8a6/Driesner2010.zip"><code class="xref download docutils literal notranslate"><span class="pre">Driesner2010</span></code></a>.</p>
+<p>The magma heat source is simulated by a heat flux boundary condition, which can be set by customized boundary condition type of <code class="code docutils literal notranslate"><span class="pre">hydrothermalHeatFlux</span></code> (see <a class="reference external" href="https://www.hydrothermalfoam.info/manual/en/Models_Equations/index.html#heat-flux-bc-hydrothermalheatflux">doc</a> ).
+The model in <a class="bibtex reference internal" href="../../refs.html#driesner2010interplay" id="id2">[Driesner, 2010]</a> is 1 m thick, 3 km wide, 1 km height, the heat source is simulated by a Gaussian-shaped heat flux profile with total heat input 86 km, half-width 500 m and center 1500 m.</p>
+<p>Let’s see how to set this boundary condition in HydrothermalFoam.
+<code class="code docutils literal notranslate"><span class="pre">hydrothermalHeatFlux</span></code> supports Gaussian-shape (<code class="code docutils literal notranslate"><span class="pre">shape</span> <span class="pre">gaussian2d;</span></code>) distribution and the shape is defined by four parameters <code class="code docutils literal notranslate"><span class="pre">x0,</span> <span class="pre">qmax,</span> <span class="pre">qmin,</span> <span class="pre">c</span></code>, the equation of the shape is</p>
+<div class="math notranslate nohighlight" id="equation-eq-gauss-hf">
+<span class="eqno">(26)<a class="headerlink" href="#equation-eq-gauss-hf" title="Permalink to this equation">¶</a></span>\[q_h(x) = q_{min} + (q_{max}-q_{min})e^{-\frac{(x-x_0)^2 + (y-z_0)^2}{2c^2}}\]</div>
+<p>for a normal Gaussian-shape profile in this model, <code class="code docutils literal notranslate"><span class="pre">qmin</span></code> is set to zero and <code class="code docutils literal notranslate"><span class="pre">x0</span></code> is set to 1500.
+From equation <a class="reference internal" href="#equation-eq-gauss-hf">(26)</a>, we can get the half-width and total heat flux (approximately) are <span class="math notranslate nohighlight">\(c\sqrt{2ln2}\)</span> and <span class="math notranslate nohighlight">\((q_{max}-q_{min})\sqrt{2\pi}c\)</span>, respectively. According to the model setup, it’s easy to get <span class="math notranslate nohighlight">\(c = \frac{500}{\sqrt{2ln2}} = 424.661\)</span> and <span class="math notranslate nohighlight">\(q_{max} = \frac{86}{c\sqrt{2\pi}} = 0.0808\ kw\)</span>.
+There the temperature boundary condition at the bottom patch can be set as,</p>
+<div class="literal-block-wrapper docutils container" id="lst-bc-hydrothermalheatflux">
+<div class="code-block-caption"><span class="caption-number">Listing 20 </span><span class="caption-text">Temperature boundary condition of bottom patch</span><a class="headerlink" href="#lst-bc-hydrothermalheatflux" title="Permalink to this code">¶</a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="n">bottom</span>
+<span class="p">{</span>
+    <span class="kt">type</span>        <span class="n">hydrothermalHeatFlux</span><span class="p">;</span>
+    <span class="k">q</span>           <span class="k">uniform</span> <span class="mf">0.05</span><span class="p">;</span> <span class="c1">//placeholder</span>
+    <span class="kt">value</span>       <span class="k">uniform</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">//placeholder</span>
+    <span class="k">shape</span>       <span class="n">gaussian2d</span><span class="p">;</span>
+    <span class="k">x0</span>          <span class="mi">1500</span><span class="p">;</span>
+    <span class="k">qmax</span>        <span class="mf">80.8</span><span class="p">;</span>
+    <span class="k">qmin</span>        <span class="mi">0</span><span class="p">;</span>
+    <span class="k">c</span>           <span class="mf">424.661</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 <div class="figure align-center" id="fig-ventt-time-perm">
 <img alt="../../_images/ventT_time_perm.jpg" src="../../_images/ventT_time_perm.jpg" />
 <p class="caption"><span class="caption-number">Fig. 24 </span><span class="caption-text"><a class="reference internal" href="cases/Driesner2010/jupyter/Plot_CaseResults.html#Maximum-vent-temperature-changes-with-time"><span class="std std-ref">Maximum vent temperature changes with time</span></a>.</span><a class="headerlink" href="#fig-ventt-time-perm" title="Permalink to this image">¶</a></p>
