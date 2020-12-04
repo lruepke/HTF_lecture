@@ -264,6 +264,8 @@ The model in <a class="bibtex reference internal" href="../../refs.html#driesner
 <p>for a normal Gaussian-shape profile in this model, <code class="code docutils literal notranslate"><span class="pre">qmin</span></code> is set to zero and <code class="code docutils literal notranslate"><span class="pre">x0</span></code> is set to 1500.
 From equation <a class="reference internal" href="#equation-eq-gauss-hf">(26)</a>, we can get the half-width and total heat flux (approximately) are <span class="math notranslate nohighlight">\(c\sqrt{2ln2}\)</span> and <span class="math notranslate nohighlight">\((q_{max}-q_{min})\sqrt{2\pi}c\)</span>, respectively. According to the model setup, it’s easy to get <span class="math notranslate nohighlight">\(c = \frac{500}{\sqrt{2ln2}} = 424.661\)</span> and <span class="math notranslate nohighlight">\(q_{max} = \frac{86}{c\sqrt{2\pi}} = 0.0808\ kw/m^2\)</span>.
 There the temperature boundary condition at the bottom patch can be set as,</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Code snippet</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-bc-hydrothermalheatflux">
 <div class="code-block-caption"><span class="caption-number">Listing 20 </span><span class="caption-text">Temperature boundary condition of bottom patch</span><a class="headerlink" href="#lst-bc-hydrothermalheatflux" title="Permalink to this code">¶</a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="n">bottom</span>
@@ -278,6 +280,13 @@ There the temperature boundary condition at the bottom patch can be set as,</p>
     <span class="k">c</span>           <span class="mf">424.661</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Heat flux profile</label><div class="tab-content docutils container">
+<p>(<a class="reference external" href="../../lectures/L04/Exercise3-1.py">Source code</a>, <a class="reference external" href="../../lectures/L04/Exercise3-1.svg">svg</a>, <a class="reference external" href="../../lectures/L04/Exercise3-1.pdf">pdf</a>)</p>
+<div class="figure align-default">
+<img alt="../../_images/Exercise3-1.svg" src="../../_images/Exercise3-1.svg" /></div>
 </div>
 </div>
 <div class="figure align-center" id="fig-ventt-time-perm">
