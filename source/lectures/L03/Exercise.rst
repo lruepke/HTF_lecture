@@ -59,8 +59,11 @@ The easiest way is start with the blockMeshDict file of the 1-layer case and the
     * vertex 4 is found by moving from vertex 0 in the z direction
     * vertices 5,6 and 7 are similarly found by moving in the z direction from vertices 1,2 and 3 respectively.
 
-Next boundary patches are defined and labeled in the blockMeshDict.
+Next boundary patches are defined and labeled in the blockMeshDict. Also here care must be take to provide the vertices in a consistent order (right-hand coordinate system). Two easy ways to remember this is to:
 
+    * apply the right-hand rule, which means if the thumb of your right hand points to the outside of a face, the numbering has to follow your fingers.
+
+    * or, looking onto a face and starting from any vertex, the numbering has to be counter-clockwise.
 
 
 Assign properties
@@ -184,13 +187,13 @@ Now we are using the :code:`setFields` utility to set the permeability. Therefor
 
     ./clean.sh
     runApplication blockMesh
-    cp 0/permeability 0/permeability.orig
+    cp 0/permeability.orig 0/permeability
     runApplication setFields
     runApplication $application
 
 
 .. tip::
-    Notice that we have also included the statement :code:`cp 0/permeability 0/permeability.orig` into the :code:`run.sh` script. The :code:`setFields` command writes mesh-dependent information into the :code:`permeability` file, which causes problems when we want to change the mesh. Compare the :code:`permeability` file before and after running the :code:`setFields` command. To preserve the old file, we make a copy.
+    Notice that we have also included the statement :code:`cp 0/permeability.orig 0/permeability` into the :code:`run.sh` script. The :code:`setFields` command writes mesh-dependent information into the :code:`permeability` file, which causes problems when we want to change the mesh. Compare the :code:`permeability` file before and after running the :code:`setFields` command. To preserve the original file, it is a good idea to name the original file :code:`permeability.orig` and only edit that one. When :code:`run.sh` is executed, this file is then copied to :code:`permeability` and mesh-dependent information is added to this file when :code:`setFields` is executed.
 
 .. only:: html
 
