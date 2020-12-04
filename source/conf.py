@@ -118,7 +118,7 @@ html_context = {
 }
 
 
-html_logo="_static/logo/htf_picto.svg"
+html_logo="_static/logo/htf_picto2.png"
 # some customized css style
 html_css_files = ["style.css"]
 # customize OpenFOAM syntax highlight
