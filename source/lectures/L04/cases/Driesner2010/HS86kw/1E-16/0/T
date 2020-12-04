@@ -43,7 +43,7 @@ boundaryField
         x0          1500;
         qmax        80.8;
         qmin        0;
-        c           500;
+        c           424.661;
     }
     frontAndBack
     {

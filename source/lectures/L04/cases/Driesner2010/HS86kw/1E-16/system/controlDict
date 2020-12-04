@@ -23,7 +23,7 @@ adjustTimeStep yes;
 maxCo           0.8; 
 maxDeltaT       86400000; 
 writeControl adjustableRunTime;
-writeInterval 86400000;
+writeInterval 864000000;
 purgeWrite 2;
 writeFormat ascii;
 writePrecision 6;
