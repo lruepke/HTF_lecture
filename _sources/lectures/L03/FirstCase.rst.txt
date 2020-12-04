@@ -142,7 +142,7 @@ Next we need to set boundary conditions. Open the file T inside the 0 directory 
 
     // ************************************************************************* //
 
-The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the side are insulating (zeroGradient). The top has a  boundary condition called inletOutlet; it sets a constant inflow temperature (recharge of cold seawater) and assumes zeroGradient for the outflow (mimicing free fluid venting). The bottom boundary condition is special, it is set to codedFixedValue. The codedFixedValue BC allows "programming" a boundary condition on the fly. Here a gaussian-shapes constant temperature boundary condition is programmed. Note that :code:`x(this->patch().Cf().component(0))` is the x-coordinate of each of the FV of the patch "bottom". 
+The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the side are insulating (zeroGradient). The top has a  boundary condition called inletOutlet; it sets a constant inflow temperature (recharge of cold seawater) and assumes zeroGradient for the outflow (mimicing free fluid venting). The bottom boundary condition is special, it is set to codedFixedValue. The codedFixedValue BC allows "programming" a boundary condition on the fly. Here a gaussian-shapes constant temperature boundary condition is programmed. Note that :code:`x(this->patch().Cf().component(0))` is the x-coordinate of each FV face of the patch "bottom". 
 
 Units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a one in the fourth columns, the units of the defined properties has units of Kelvin.
 
