@@ -22,7 +22,7 @@ Let's see how to set this boundary condition in HydrothermalFoam.
     q_h(x) = q_{min} + (q_{max}-q_{min})e^{-\frac{(x-x_0)^2 + (y-z_0)^2}{2c^2}}
 
 for a normal Gaussian-shape profile in this model, :code:`qmin` is set to zero and :code:`x0` is set to 1500. 
-From equation :eq:`eq:gauss_hf`, we can get the half-width and total heat flux (approximately) are :math:`c\sqrt{2ln2}` and :math:`(q_{max}-q_{min})\sqrt{2\pi}c`, respectively. According to the model setup, it's easy to get :math:`c = \frac{500}{\sqrt{2ln2}} = 424.661` and :math:`q_{max} = \frac{86}{c\sqrt{2\pi}} = 0.0808\ kw`.
+From equation :eq:`eq:gauss_hf`, we can get the half-width and total heat flux (approximately) are :math:`c\sqrt{2ln2}` and :math:`(q_{max}-q_{min})\sqrt{2\pi}c`, respectively. According to the model setup, it's easy to get :math:`c = \frac{500}{\sqrt{2ln2}} = 424.661` and :math:`q_{max} = \frac{86}{c\sqrt{2\pi}} = 0.0808\ kw/m^2`.
 There the temperature boundary condition at the bottom patch can be set as,
 
 .. code-block:: foam
