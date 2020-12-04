@@ -36,19 +36,14 @@ boundaryField
     }
     bottom
     {
-        type            codedFixedValue;
-        value           uniform 873.15; 
-        name            gaussShapeT;
-        code            #{
-                            scalarField x(this->patch().Cf().component(0)); 
-                            double wGauss=500;
-                            double xigma = wGauss/2.355;
-                            double x0=0;
-                            double Tmin=283.15;
-                            double Tmax=1273.15;
-                            scalarField T(Tmin+(Tmax-Tmin)*exp(-(x-x0)*(x-x0)/(2*xigma*xigma)));
-                            operator==(T);
-                        #};
+        type        hydrothermalHeatFlux;
+        q           uniform 0.05; //placeholder
+        value       uniform 0; //placeholder
+        shape       gaussian2d;
+        x0          1500;
+        qmax        80.8;
+        qmin        0;
+        c           500;
     }
     frontAndBack
     {
