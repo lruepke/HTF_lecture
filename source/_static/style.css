@@ -6,3 +6,6 @@ span.eqno {
 /* span.hll{
     border: 1px solid rgb(240, 238, 238);
 } */
+.headerlink{
+    color: transparent;
+}
