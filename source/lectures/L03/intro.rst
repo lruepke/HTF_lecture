@@ -18,7 +18,7 @@ mass continuity (Eqn. :eq:`eq:conti`) and energy conservation (Eqn. :eq:`eq:temp
     :label: eq:darcy 
 
     \vec{U} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})
-     
+      
 .. math::
     :label: eq:conti
     
