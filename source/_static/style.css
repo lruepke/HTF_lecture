@@ -6,6 +6,10 @@ span.eqno {
 /* span.hll{
     border: 1px solid rgb(240, 238, 238);
 } */
+/* remove blue signs after equations */
 .headerlink{
     color: transparent;
+}
+.headerlink:hover{
+    color: red;
 }
