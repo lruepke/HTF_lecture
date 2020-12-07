@@ -9,6 +9,7 @@ A striking observations from global vent fluid measurements is that fluid exit t
 .. figure:: /_figures/vent_T_deoth.*
    :align: center
    :name: fig:vent_T_fig
+   :figwidth: 70%
 
    Figure taken from :cite:`Nakamura2014` showing measured vent fluid temperatures.
 
