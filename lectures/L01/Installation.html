@@ -105,7 +105,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#docker">Docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#visual-studio-code">Visual Studio Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#sec-install-paraview">Paraview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#python">Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#download-and-install-miniconda">Download and install miniconda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-virtual-environment">Create a virtual environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#switching-between-environments">Switching between environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integration-with-visual-studio-code">Integration with Visual Studio Code</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="OpenFoam.html">Getting started with OpenFoam</a></li>
@@ -315,6 +321,53 @@ docker attach hydrothermalfoam
 <div class="section" id="python">
 <h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
 <p>We will use python to analyze some of the numerical results and to dive deeper in to the details of the numerical methods use. In case you are already having a working python environment, read no further. If not, we recommend <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose “no”. It’s usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.</p>
+<div class="section" id="download-and-install-miniconda">
+<h3>Download and install miniconda<a class="headerlink" href="#download-and-install-miniconda" title="Permalink to this headline">¶</a></h3>
+<p>Just follow the installation instructions and keep the default options. We recommend to install python 3. During the installation, choose to <strong>not</strong> add it to your path (that’s the default). Adding miniconda/anaconda to your <code class="code docutils literal notranslate"><span class="pre">$PATH</span></code> may seem convinent but there are several reason to not do it.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Python is used by many different tools on your computer, which probably expect that just calling python will use the Python (and additional packages) installed by the operating system. None of these will be available to Miniconda’s Python.</p></li>
+<li><p>The conda environment we will create contains several binary dependencies and we not want to interfer with defaults on your system when, e.g. compiling software unrealted to our lecture.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="create-a-virtual-environment">
+<h3>Create a virtual environment<a class="headerlink" href="#create-a-virtual-environment" title="Permalink to this headline">¶</a></h3>
+<p>We will create a so-called virtual environment with all the python packages we will use during this class. To not infer with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation.</p>
+<div class="admonition-starting-python admonition">
+<p class="admonition-title">Starting python</p>
+<p>If you are on Windows, start an Anaconda Powershell Prompt from the start menu.</p>
+<p>On MacOS / Linux, open a terminal and type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate base
+</pre></div>
+</div>
+</div>
+<p>Now we are ready to create a virtual environment. We can create it with this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n py37_htf_class <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 numpy pandas matplotlib vtk h5py ipython scipy ipykernel
+</pre></div>
+</div>
+<p>We are using python 3.7 here (instead of the newest 3.8) because of an incompatibility with vtk. Activate the new environment</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_htf_class
+</pre></div>
+</div>
+<p>And add a few more packages that are not directly available form the anaconda using pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install meshio
+pip install iapws
+</pre></div>
+</div>
+</div>
+<div class="section" id="switching-between-environments">
+<h3>Switching between environments<a class="headerlink" href="#switching-between-environments" title="Permalink to this headline">¶</a></h3>
+<p>You can activate and deactivate environments like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_htf_class
+conda deactivate
+</pre></div>
+</div>
+</div>
+<div class="section" id="integration-with-visual-studio-code">
+<h3>Integration with Visual Studio Code<a class="headerlink" href="#integration-with-visual-studio-code" title="Permalink to this headline">¶</a></h3>
+<p>You will need to install Microsoft’s Python extension. Just search for Python under Extensions and chose the one from Microsoft (usually the first option). Finally, you will have to set the Python interpreter. Do this pushing CMD+SHIFT+P under MacOS or CTRL+SHIFT+P under Windows. Type Python: Select Interpretor and selct our newly created anaconda enviroment. If it doesn’t show up, close and re-open Visual Studio Code.</p>
+</div>
 </div>
 </div>
 
