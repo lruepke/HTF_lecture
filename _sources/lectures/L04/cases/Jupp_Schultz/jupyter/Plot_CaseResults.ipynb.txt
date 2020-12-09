@@ -368,7 +368,12 @@
  "metadata": {
   "kernelspec": {
    "name": "python3",
-   "display_name": "Python 3"
+   "display_name": "Python 3.7.9 64-bit ('py37_htf_class': conda)",
+   "metadata": {
+    "interpreter": {
+     "hash": "e6a4dce1bdc43df5b045d4a6a6e789e7ae6dbc2f086a4d28d17b73c81651f196"
+    }
+   }
   },
   "language_info": {
    "codemirror_mode": {

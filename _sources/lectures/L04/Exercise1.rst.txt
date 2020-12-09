@@ -17,3 +17,10 @@ We have prepared jupyter notebooks that let's you explore the thermodynamic prop
     :maxdepth: 2
 
     cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb
+
+Try to get these notebooks to work and play a little bit with them. Explore how the values change under different P-T conditions and change the line plot to also show enthalpy. One way of doing this is to create a new notebook and to copy the code from above into them
+
+.. code-block:: bash 
+
+   code plot_iapws_class.ipynb
+
