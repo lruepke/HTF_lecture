@@ -137,6 +137,19 @@ Integration with Visual Studio Code
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 You will need to install Microsoft's Python extension. Just search for Python under Extensions and chose the one from Microsoft (usually the first option). Finally, you will have to set the Python interpreter. Do this pushing CMD+SHIFT+P under MacOS or CTRL+SHIFT+P under Windows. Type Python: Select Interpretor and selct our newly created anaconda enviroment. If it doesn't show up, close and re-open Visual Studio Code.
 
+.. tip::
+
+    Test your installation by doing this:
+
+    - choose the right python interpretor STRG/CMD+SHIFT+P 
+    - :code:`code hello.ipynb`
+    - type in the example code from the figure below 
+    - execute the cell with SHIFT+RETURN
+
+    .. figure:: /_figures/python_install.*
+        :align: center
+
+
     
 
 
