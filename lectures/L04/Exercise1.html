@@ -263,9 +263,27 @@
 </li>
 </ul>
 </div>
+<div class="admonition-assignment admonition">
+<p class="admonition-title">Assignment</p>
 <p>Try to get these notebooks to work and play a little bit with them. Explore how the values change under different P-T conditions and change the line plot to also show enthalpy. One way of doing this is to create a new notebook and to copy the code from above into them</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code plot_iapws_class.ipynb
 </pre></div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Dangers and Annoyances</p>
+<p>Sometimes Visual Studio’s way of setting the python interpretor is not that “intuitive”. In principle, you set the the interpretor (your python environment) using CMD/CTRL+SHIFT+P and typing Python: Select Interpretor. Then you can chose the python environment of the class that has all the necessarry packages installed.</p>
+<p>Problem is, .ipynb files also contain information on the interpretor that should be used with a notbook and Visual Studio uses that information. Therefore, if you download the scripts from us, there is a non-zero chance that your Visual Studio will chose the “wrong” interpretor and that you get an error message that certain packages are not installed.</p>
+<p>In that case you need to follow a workaround. Rename your .ipynb file to .ipynb.json and open that file. Find the section on kernelspec:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;kernelspec&quot;</span>: <span class="o">{</span>
+<span class="s2">&quot;display_name&quot;</span>: <span class="s2">&quot;Python 3&quot;</span>,
+<span class="s2">&quot;language&quot;</span>: <span class="s2">&quot;python&quot;</span>,
+<span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;python3&quot;</span>
+<span class="o">}</span>,
+</pre></div>
+</div>
+<p>and delete that entire section. Save the file again as a .ipynb file and re-open it in Visual Studio - and hope for the best…</p>
 </div>
 </div>
 
