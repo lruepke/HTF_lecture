@@ -1,9 +1,11 @@
 .. include:: /include.rst_
 
+.. _Installation guide:
+
 Installation guide
 ==================
 
-We will be using the Foundation version of OpenFOAM_ and our own hydrothermal flow solver HydrothermalFoam_ , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don't like virtual environments, you will need to go through the "install from source" instructions of HydrothermalFoam and read the installation instructions of OpenFoam. 
+We will be using the Foundation version of OpenFOAM_ and our own hydrothermal flow solver HydrothermalFoam_ , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don't like virtual environments, you will need to go through the `"install from source" <https://www.hydrothermalfoam.info/manual/en/Installation/index.html#build-from-source>`_ instructions of HydrothermalFoam and read the installation instructions of OpenFoam. 
 
 .. _sec:install_docker:
 
