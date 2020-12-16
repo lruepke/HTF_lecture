@@ -274,6 +274,48 @@
 <div class="figure align-default">
 <img alt="../../_images/Exercise2-1.svg" src="../../_images/Exercise2-1.svg" /></div>
 <p>Download the case file, unzip it and copy it into your shared folder that is accessible both from your local system and from the docker container. Check out the usual files like <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>, <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code>, <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>. Make sure you understand the setup!</p>
+<p>There is a dynamic code section within <code class="code docutils literal notranslate"><span class="pre">system/conrolDict</span></code> that allows outputting more variables including the thermodynamic properties of water.</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="n">functions</span>
+<span class="p">{</span>
+    <span class="n">calPlumeT</span>
+    <span class="p">{</span>
+        <span class="kt">libs</span>                <span class="p">(</span><span class="s">&quot;libutilityFunctionObjects.so&quot;</span><span class="p">);</span>
+        <span class="kt">type</span>                <span class="n">coded</span><span class="p">;</span>
+        <span class="n">enabled</span>             <span class="nb">true</span><span class="p">;</span>
+        <span class="kt">writeControl</span>        <span class="n">adjustableRunTime</span><span class="p">;</span>
+        <span class="kt">writeInterval</span>       <span class="k">$</span><span class="kt">writeInterval</span><span class="p">;</span>
+        <span class="n">name</span>                <span class="n">plumeTemperature</span><span class="p">;</span>
+        <span class="n">codeWrite</span>
+        <span class="cp">#{</span>
+            <span class="c1">//get maximum tempeature on the top boundary</span>
+            <span class="n">label</span> <span class="n">patchID</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">boundaryMesh</span><span class="p">().</span><span class="n">findPatchID</span><span class="p">(</span><span class="s">&quot;top&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="k">T</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;T&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mu&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">Cp</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Cp&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">rho</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;rho&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">surfaceScalarField</span><span class="o">&amp;</span> <span class="k">phi</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">surfaceScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;phi&quot;</span><span class="p">);</span>
+            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;enthalpy&quot;</span><span class="p">);</span>
+            <span class="kt">double</span> <span class="n">kr</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>
+            <span class="c1">// calculate local Rayleigh number</span>
+            <span class="n">volScalarField</span> <span class="nf">Ra_L</span><span class="p">(</span><span class="s">&quot;LocalRayleigh&quot;</span><span class="p">,</span><span class="n">mag</span><span class="p">(</span><span class="n">fvc</span><span class="o">::</span><span class="n">div</span><span class="p">(</span><span class="k">phi</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">kr</span><span class="o">*</span><span class="n">fvc</span><span class="o">::</span><span class="n">laplacian</span><span class="p">(</span><span class="k">T</span><span class="p">))));</span>
+            <span class="c1">// write properties to output files</span>
+            <span class="n">mu</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">Cp</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">h</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">Ra_L</span><span class="p">.</span><span class="n">write</span><span class="p">();</span>
+            <span class="c1">// write vent temperature</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">fout</span><span class="p">(</span><span class="s">&quot;ventT.txt&quot;</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">ofstream</span><span class="o">::</span><span class="n">app</span><span class="p">);</span>
+            <span class="c1">// Info&lt;&lt;&quot;Plume Temperature: &quot;&lt;&lt;mesh().time().value()/31536000&lt;&lt;&quot;\t&quot;&lt;&lt;Foam::gMax(T.boundaryField()[patchID])-273.15&lt;&lt;&quot; C&quot;&lt;&lt;endl;</span>
+            <span class="n">fout</span><span class="o">&lt;&lt;</span><span class="n">mesh</span><span class="p">().</span><span class="n">time</span><span class="p">().</span><span class="kt">value</span><span class="p">()</span><span class="o">/</span><span class="mi">31536000</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">Foam</span><span class="o">::</span><span class="n">gMax</span><span class="p">(</span><span class="k">T</span><span class="p">.</span><span class="k">boundaryField</span><span class="p">()[</span><span class="n">patchID</span><span class="p">])</span><span class="o">-</span><span class="mf">273.15</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+            <span class="n">fout</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+        <span class="cp">#};</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>That code block requires the specific enthalpy to be accessible by the code. The version of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> we are using does not have that activated. Therefore we need to update it to the newest version. Thankfully that’s easy to do; go into the docker container shell and</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>
+./getHydrothermalFoam_latest.sh
+</pre></div>
+</div>
+<p>This will update the source code of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and recompile it. Just wait for it to complete. Now you can run the case!</p>
 <p>It’s possible that we have been a bit overambitious in our chosen numerical resolution. In case the run-time is too long, just reduce the horizontal and vertical resolution. Make the mesh with <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> and call the solver; or execute the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script. If you are feeling courages today, you can also try our running it in parallel! Check out the <code class="code docutils literal notranslate"><span class="pre">run_par.sh</span></code> script for that.</p>
 </div>
 <div class="section" id="post-processing">
