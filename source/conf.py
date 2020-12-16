@@ -34,6 +34,7 @@ extensions = [
     'matplotlib.sphinxext.plot_directive',
 ]
 bibtex_bibfiles = ['refs.bib']
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -222,5 +223,5 @@ class APAStyle(UnsrtStyle):
     default_label_style = APALabelStyle
 
 register_plugin('pybtex.style.formatting', 'apa', APAStyle)
-# ====================================================================
+# # ====================================================================
 

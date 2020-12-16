@@ -1,0 +1,22 @@
+{
+    "cited": {
+        "lectures/L03/Overview": [
+            "ingebritsen2010numerical",
+            "hasenclever2014hybrid"
+        ],
+        "lectures/L04/Exercise2": [
+            "jupp2000thermodynamic",
+            "driesner2010",
+            "coumou2008",
+            "andersen2015"
+        ],
+        "lectures/L04/Exercise3": [
+            "driesner2010interplay"
+        ],
+        "lectures/L04/intro": [
+            "Nakamura2014",
+            "jupp2000thermodynamic",
+            "Jupp2004"
+        ]
+    }
+}
