@@ -33,7 +33,7 @@ extensions = [
     'sphinx_inline_tabs',
     'matplotlib.sphinxext.plot_directive',
 ]
-
+bibtex_bibfiles = ['refs.bib']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
