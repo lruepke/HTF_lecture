@@ -42,6 +42,54 @@ We are simulating a 3700 x 1000m sized box with a gaussian constant temperature 
 
 Download the case file, unzip it and copy it into your shared folder that is accessible both from your local system and from the docker container. Check out the usual files like :code:`system/blockMeshDict`, :code:`run.sh`, :code:`0/T`. Make sure you understand the setup!
 
+There is a dynamic code section within :code:`system/conrolDict` that allows outputting more variables including the thermodynamic properties of water.
+
+.. code-block:: foam
+
+    functions
+    {
+        calPlumeT
+        {
+            libs                ("libutilityFunctionObjects.so");
+            type                coded;
+            enabled             true;
+            writeControl        adjustableRunTime;
+            writeInterval       $writeInterval;
+            name                plumeTemperature;
+            codeWrite
+            #{
+                //get maximum tempeature on the top boundary
+                label patchID = mesh().boundaryMesh().findPatchID("top"); 
+                const volScalarField& T = mesh().lookupObject<volScalarField>("T");
+                const volScalarField& mu = mesh().lookupObject<volScalarField>("mu");
+                const volScalarField& Cp = mesh().lookupObject<volScalarField>("Cp");
+                const volScalarField& rho = mesh().lookupObject<volScalarField>("rho");
+                const surfaceScalarField& phi = mesh().lookupObject<surfaceScalarField>("phi");
+                const volScalarField& h = mesh().lookupObject<volScalarField>("enthalpy");
+                double kr = 2.0;
+                // calculate local Rayleigh number 
+                volScalarField Ra_L("LocalRayleigh",mag(fvc::div(phi, h) / (kr*fvc::laplacian(T))));
+                // write properties to output files
+                mu.write(); Cp.write(); h.write(); Ra_L.write();
+                // write vent temperature
+                std::ofstream fout("ventT.txt",std::ofstream::app);
+                // Info<<"Plume Temperature: "<<mesh().time().value()/31536000<<"\t"<<Foam::gMax(T.boundaryField()[patchID])-273.15<<" C"<<endl;
+                fout<<mesh().time().value()/31536000<<"\t"<<Foam::gMax(T.boundaryField()[patchID])-273.15<<std::endl;
+                fout.close();
+            #};
+        }
+    }
+
+
+That code block requires the specific enthalpy to be accessible by the code. The version of |foam| we are using does not have that activated. Therefore we need to update it to the newest version. Thankfully that's easy to do; go into the docker container shell and
+
+.. code-block:: bash
+
+    cd $HOME
+    ./getHydrothermalFoam_latest.sh
+
+This will update the source code of |foam| and recompile it. Just wait for it to complete. Now you can run the case!
+
 It's possible that we have been a bit overambitious in our chosen numerical resolution. In case the run-time is too long, just reduce the horizontal and vertical resolution. Make the mesh with :code:`blockMesh` and call the solver; or execute the :code:`run.sh` script. If you are feeling courages today, you can also try our running it in parallel! Check out the :code:`run_par.sh` script for that.
 
 
