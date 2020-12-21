@@ -1,9 +1,11 @@
 .. include:: /include.rst_
 
+.. _Installation guide:
+
 Installation guide
 ==================
 
-We will be using the Foundation version of OpenFOAM_ and our own hydrothermal flow solver HydrothermalFoam_ , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don't like virtual environments, you will need to go through the "install from source" instructions of HydrothermalFoam and read the installation instructions of OpenFoam. 
+We will be using the Foundation version of OpenFOAM_ and our own hydrothermal flow solver HydrothermalFoam_ , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don't like virtual environments, you will need to go through the `"install from source" <https://www.hydrothermalfoam.info/manual/en/Installation/index.html#build-from-source>`_ instructions of HydrothermalFoam and read the installation instructions of OpenFoam. 
 
 .. _sec:install_docker:
 
@@ -87,7 +89,7 @@ Just follow the installation instructions and keep the default options. We recom
 
     * Python is used by many different tools on your computer, which probably expect that just calling python will use the Python (and additional packages) installed by the operating system. None of these will be available to Miniconda's Python.
 
-    * The conda environment we will create contains several binary dependencies and we not want to interfer with defaults on your system when, e.g. compiling software unrealted to our lecture.
+    * The conda environment we will create contains several binary dependencies and we do not want to interfer with defaults on your system when, e.g. compiling software unrelated to our lecture.
 
 Create a virtual environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -103,6 +105,8 @@ We will create a so-called virtual environment with all the python packages we w
 
         conda activate base
 
+    You can also do that in the terminal within Visual Studio Code (on MacOS).
+
 Now we are ready to create a virtual environment. We can create it with this command:
 
 .. code-block:: bash
@@ -115,7 +119,7 @@ We are using python 3.7 here (instead of the newest 3.8) because of an incompati
 
     conda activate py37_htf_class
 
-And add a few more packages that are not directly available form the anaconda using pip:
+And add a few more packages that are not directly available form anaconda using pip:
 
 .. code-block:: bash
 
@@ -135,7 +139,7 @@ You can activate and deactivate environments like this:
 
 Integration with Visual Studio Code
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You will need to install Microsoft's Python extension. Just search for Python under Extensions and chose the one from Microsoft (usually the first option). Finally, you will have to set the Python interpreter. Do this pushing CMD+SHIFT+P under MacOS or CTRL+SHIFT+P under Windows. Type Python: Select Interpretor and selct our newly created anaconda enviroment. If it doesn't show up, close and re-open Visual Studio Code.
+You will need to install Microsoft's Python extension. Just search for Python under Extensions and chose the one from Microsoft (usually the first option). Finally, you will have to set the Python interpreter. Do this by pushing CMD/CTRL+SHIFT+P. Type Python: Select Interpretor and select our newly created anaconda environment. If it doesn't show up, close and re-open Visual Studio Code.
 
 .. tip::
 

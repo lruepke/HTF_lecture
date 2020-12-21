@@ -1,3 +1,4 @@
 {
-    "restructuredtext.confPath": "${workspaceFolder}"
+    "restructuredtext.confPath": "${workspaceFolder}",
+    "python.pythonPath": "/Users/lruepke/miniconda2/envs/py3_sphinx/bin/python"
 }
