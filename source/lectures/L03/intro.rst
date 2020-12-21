@@ -38,7 +38,7 @@ where the pressure equation :eq:`eq:pressure` is derived from continuity equatio
 
 Implementation
 --------------
-The details of the OpenFoam implementation can be found in the |foam| documentation. Here we only show a brief summarry. :numref:`fig:htf_solution` shows how the energy equation is solved within the OpenFoam framework.
+The details of the OpenFoam implementation can be found in the |foam| documentation. Here we only show a brief summary. :numref:`fig:htf_solution` shows how the energy equation is solved within the OpenFoam framework.
 
 
 .. figure:: /_figures/solution_algorithm.* 
@@ -49,7 +49,7 @@ The details of the OpenFoam implementation can be found in the |foam| documentat
 
 Equation-of-state
 -----------------
-The fluid properties like density, viscosity, specific heat are determined from the equaion-of-state of pure water. :numref:`fig:phase_diagram` shows the phase diagram of pure water. At sub-critical conditions (P< 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. |foam| is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems. 
+The fluid properties like density, viscosity, specific heat are determined from the equation-of-state of pure water. :numref:`fig:phase_diagram` shows the phase diagram of pure water. At sub-critical conditions (P< 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. |foam| is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems. 
 
 
 .. figure:: /_figures/PhaseDiagram.*
