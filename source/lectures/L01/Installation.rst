@@ -148,7 +148,7 @@ You will need to install Microsoft's Python extension. Just search for Python un
 
     .. figure:: /_figures/python_install.*
         :align: center
-
+        :figwidth: 70%
 
     
 
