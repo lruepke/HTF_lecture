@@ -91,9 +91,7 @@ The majority of this course will be spent in front of a computer working on exer
 
     lectures/L05/Overview
     lectures/L05/intro
-    lectures/L05/Exercise1
-    lectures/L05/Exercise2
-    lectures/L05/Exercise3
+
 
 .. toctree::
    :maxdepth: 2

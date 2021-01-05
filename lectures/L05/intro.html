@@ -134,10 +134,7 @@
 <p class="caption"><span class="caption-text">Lecture 5</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Structural controls on hydrothermal flow</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#mechanism-to-limit-black-smoker-temperature">Mechanism to limit black smoker temperature</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Structural controls on hydrothermal flow</a></li>
 </ul>
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
@@ -259,28 +256,16 @@
 </style>
 <div class="section" id="structural-controls-on-hydrothermal-flow">
 <h1>Structural controls on hydrothermal flow<a class="headerlink" href="#structural-controls-on-hydrothermal-flow" title="Permalink to this headline">¶</a></h1>
-<p>A striking observations from global vent fluid measurements is that fluid exit temperatures apparently never exceed 400°C (<a class="reference internal" href="#fig-vent-t-fig"><span class="std std-numref">Fig. 26</span></a> ).</p>
-<div class="figure align-center" id="fig-vent-t-fig" style="width: 70%">
-<img alt="../../_images/vent_T_deoth.jpg" src="../../_images/vent_T_deoth.jpg" />
-<p class="caption"><span class="caption-number">Fig. 26 </span><span class="caption-text">Figure taken from <span id="id1">[<a class="reference internal" href="../../refs.html#id6"><span>Nakamura &amp; Takai, 2014</span></a>]</span> showing measured vent fluid temperatures.</span><a class="headerlink" href="#fig-vent-t-fig" title="Permalink to this image">¶</a></p>
+<p>Hydrothermal systems on slow-spreading ridges differe to their counterparts on fast-spreading ridges, in that they are often associated with tectonic faults (<code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:mar_vent_fig</span></code> ).</p>
+<div class="figure align-center" id="fig-mar-vent-fig" style="width: 80%">
+<img alt="../../_images/Vent_fields.png" src="../../_images/Vent_fields.png" />
+<p class="caption"><span class="caption-number">Fig. 26 </span><span class="caption-text">Figure taken from <span id="id1">[<a class="reference internal" href="../../refs.html#id11"><span>German et al., 2016</span></a>]</span> showing various vent fields on the Mid-Atlantic Ridge with their tectonic setting.</span><a class="headerlink" href="#fig-mar-vent-fig" title="Permalink to this image">¶</a></p>
 </div>
-<p>Maybe you have already noticed in our convection experiments in the previous session that the upflow temperatures are always much lower than the bottom boundary condition implying that the hottest fluids are actually stagnant and do not rise towards the seafloor. <span id="id2">[<a class="reference internal" href="../../refs.html#id3"><span>Jupp &amp; Schultz, 2000</span></a>]</span> published a landmark paper in which they showed that the thermodynamic properties of water control the upflow temperature and can explain the observed upper limit of vent fluid temperatures. In this lecture we will have a detailed look into the proposed mechanisms.</p>
-<div class="section" id="mechanism-to-limit-black-smoker-temperature">
-<h2>Mechanism to limit black smoker temperature<a class="headerlink" href="#mechanism-to-limit-black-smoker-temperature" title="Permalink to this headline">¶</a></h2>
-<p>We recommend reading the original papers by <span id="id3">[<a class="reference internal" href="../../refs.html#id3"><span>Jupp &amp; Schultz, 2000</span></a>]</span> and <span id="id4">[<a class="reference internal" href="../../refs.html#id7"><span>Jupp &amp; Schultz, 2004</span></a>]</span>; here we only provide a very short summarry. The underlying idea is to determine from the pure water equation-of-state the optimum temperature for buoyant upwelling. Within the energy conservation equation, advective heat transport is described by a divergence term:</p>
-<div class="math notranslate nohighlight" id="equation-eq-div-e">
-<span class="eqno">(27)<a class="headerlink" href="#equation-eq-div-e" title="Permalink to this equation">¶</a></span>\[\nabla \cdot (\rho h \vec{U})\]</div>
-<p>Following <span id="id5">[<a class="reference internal" href="../../refs.html#id3"><span>Jupp &amp; Schultz, 2000</span></a>]</span>, we can assume that the pressure gradient, driving upflow, can be approximated as cold hydrostatic so that we can express the upflow velocity as:</p>
-<div class="math notranslate nohighlight" id="equation-eq-upflow-js">
-<span class="eqno">(28)<a class="headerlink" href="#equation-eq-upflow-js" title="Permalink to this equation">¶</a></span>\[U_z = \frac{k}{\mu} \left( \nabla P - \rho g_z \right) \approx \frac{k}{\mu}(\rho_0 g_z - \rho g_z) = g_z \frac{k}{\mu} (\rho_0 - \rho)\]</div>
-<p>Now we plug this expression into <a class="reference internal" href="#equation-eq-div-e">(27)</a> to get:</p>
-<div class="math notranslate nohighlight" id="equation-eq-udiv-e2">
-<span class="eqno">(29)<a class="headerlink" href="#equation-eq-udiv-e2" title="Permalink to this equation">¶</a></span>\[\nabla \cdot (\rho h \vec{U}) = \frac{\partial}{\partial z} \left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right) g_z k\]</div>
-<p><span id="id6">[<a class="reference internal" href="../../refs.html#id3"><span>Jupp &amp; Schultz, 2000</span></a>]</span> called the term wihtin the large brackets, <span class="math notranslate nohighlight">\(F=\left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right)\)</span> , fluxibility. Fluxibility is a function of fluid properties only and those properties are pressure and temperature dependent. To first order, advective heat transport is maximized, where <span class="math notranslate nohighlight">\(\nabla \cdot F\)</span> is maximum and this divergence can be approximated within the basal boundary as <span class="math notranslate nohighlight">\(\nabla \cdot F \approx \frac{\partial}{\partial z} F \approx \frac{\partial}{\partial T} F\)</span> .</p>
-<p><a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 27</span></a> a shows fluxibility as a function of pressure and temperature. It is clear that this function has a distinct peak at temperature of approximately 400°C. <a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 27</span></a> b shows sections of constant pressure and also the derivative of F with temperature. The peaks in these functions mark the temperature for which buoyant heat transport is most efficient for a given pressure. Later we will explore this further in numerical convection experiments.</p>
-<div class="figure align-center" id="fig-fluxibility-water">
-<img alt="../../_images/Fluxibility_Water.svg" src="../../_images/Fluxibility_Water.svg" /><p class="caption"><span class="caption-number">Fig. 27 </span><span class="caption-text">Fluxibility F as a function of temperature and pressure (a), profile of F along temperature with constant pressure (b).</span><a class="headerlink" href="#fig-fluxibility-water" title="Permalink to this image">¶</a></p>
-</div>
+<p>It remains a questions of ongoing research how exactly tectonic faults affect hydrothermal flow. It is, however likely, that the permeability of faults is different, most likely higher. One popular model is therefore that major tectonic faults, such as detachment faults, channelize hot hydrothermal upflow towards an off-axis vent site. This conceptual model was for example presented for the TAG <span id="id2">[<a class="reference internal" href="../../refs.html#id12"><span>deMartin et al., 2007</span></a>]</span> and Logatchev <span id="id3">[<a class="reference internal" href="../../refs.html#id10"><span>Andersen et al., 2015</span></a>]</span> vent fiels on the Mid-Atlantic Ridge (MAR).</p>
+<p><code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:mar_vent_fig</span></code>  shows micro-seismicity and p-wave speeds for the TAG segment undergoing detachment faulting. One plausible scenario is that a magmatic intrusion at depth is driving hydrothermal flow and that upflow is channalized along a low-angle detachment fault. Venting occurs at the TAG mount, located on the hanging wall of the detachment.</p>
+<div class="figure align-center" id="id5" style="width: 80%">
+<img alt="../../_images/demartin_2007.png" src="../../_images/demartin_2007.png" />
+<p class="caption"><span class="caption-number">Fig. 27 </span><span class="caption-text">Figure taken from <span id="id4">[<a class="reference internal" href="../../refs.html#id12"><span>deMartin et al., 2007</span></a>]</span> illustrating a possible circulation pattern for the TAG hydrothermal field.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 
