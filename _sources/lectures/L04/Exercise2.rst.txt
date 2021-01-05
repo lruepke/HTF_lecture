@@ -2,7 +2,7 @@
 
 .. _L04_Exercise2:
 
-Excercise 2
+Exercise 2
 ===========
 
 :cite:`jupp2000thermodynamic` published a landmark paper on how A landmark paper on how the thermodynamic properties of water determine temperatures in hydrothermal upflow zones. Their concept of "fluxibility" was later extended to explore interrelations between permeability on vent temperatures :cite:`driesner2010`, the structure of hydrothermal flow zone :cite:`coumou2008`, and fault-controlled off-axis hydrothermal system :cite:`andersen2015`. Some of these papers are available in the e-learning site of this course for registered CAU students.
