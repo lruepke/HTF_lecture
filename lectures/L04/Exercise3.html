@@ -4,9 +4,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Excercise 3 &mdash; HydrothermalFoam Lecture  documentation</title>
   
@@ -19,7 +19,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -57,7 +60,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> HydrothermalFoam Lecture
+            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
           
 
           
@@ -131,6 +134,11 @@
 </ul>
 </li>
 </ul>
+<p class="caption"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Structural controls on hydrothermal flow</a></li>
+</ul>
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../refs.html">References</a></li>
@@ -196,6 +204,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -207,7 +217,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L04/Exercise3.rst" class="fa fa-github"> Edit on GitHub</a>
             
@@ -253,9 +263,9 @@
 <p class="admonition-title">Warning</p>
 <p>This section is under construction!</p>
 </div>
-<p>We will now try to reproduce the results presented by <a class="bibtex reference internal" href="../../refs.html#driesner2010interplay" id="id1">[Driesner, 2010b]</a>, the case files <a class="reference download internal" download="" href="../../_downloads/56d9caacbbf5c0552bb59bc1d560c8a6/Driesner2010.zip"><code class="xref download docutils literal notranslate"><span class="pre">Driesner2010</span></code></a>.</p>
+<p>We will now try to reproduce the results presented by <span id="id1">[<a class="reference internal" href="../../refs.html#id2"><span>Driesner, 2010b</span></a>]</span>, the case files <a class="reference download internal" download="" href="../../_downloads/56d9caacbbf5c0552bb59bc1d560c8a6/Driesner2010.zip"><code class="xref download docutils literal notranslate"><span class="pre">Driesner2010</span></code></a>.</p>
 <p>The magma heat source is simulated by a heat flux boundary condition, which can be set by customized boundary condition type of <code class="code docutils literal notranslate"><span class="pre">hydrothermalHeatFlux</span></code> (see <a class="reference external" href="https://www.hydrothermalfoam.info/manual/en/Models_Equations/index.html#heat-flux-bc-hydrothermalheatflux">doc</a> ).
-The model in <a class="bibtex reference internal" href="../../refs.html#driesner2010interplay" id="id2">[Driesner, 2010b]</a> is 1 m thick, 3 km wide, 1 km height, the heat source is simulated by a Gaussian-shaped heat flux profile with total heat input 86 km, half-width 500 m and center 1500 m.</p>
+The model in <span id="id2">[<a class="reference internal" href="../../refs.html#id2"><span>Driesner, 2010b</span></a>]</span> is 1 m thick, 3 km wide, 1 km height, the heat source is simulated by a Gaussian-shaped heat flux profile with total heat input 86 km, half-width 500 m and center 1500 m.</p>
 <p>Let’s see how to set this boundary condition in HydrothermalFoam.
 <code class="code docutils literal notranslate"><span class="pre">hydrothermalHeatFlux</span></code> supports Gaussian-shape (<code class="code docutils literal notranslate"><span class="pre">shape</span> <span class="pre">gaussian2d;</span></code>) distribution and the shape is defined by four parameters <code class="code docutils literal notranslate"><span class="pre">x0,</span> <span class="pre">qmax,</span> <span class="pre">qmin,</span> <span class="pre">c</span></code>, the equation of the shape is</p>
 <div class="math notranslate nohighlight" id="equation-eq-gauss-hf">
@@ -283,9 +293,7 @@ There the temperature boundary condition at the bottom patch can be set as,</p>
 </div>
 </div>
 <input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Heat flux profile</label><div class="tab-content docutils container">
-<p>(<a class="reference external" href="../../lectures/L04/Exercise3-1.py">Source code</a>, <a class="reference external" href="../../lectures/L04/Exercise3-1.svg">svg</a>, <a class="reference external" href="../../lectures/L04/Exercise3-1.pdf">pdf</a>)</p>
-<div class="figure align-default">
-<img alt="../../_images/Exercise3-1.svg" src="../../_images/Exercise3-1.svg" /></div>
+<p>(<a class="reference external" href="../../lectures/L04/Exercise3-1.py">Source code</a>)</p>
 </div>
 </div>
 <div class="figure align-center" id="fig-ventt-time-perm">
@@ -312,37 +320,29 @@ There the temperature boundary condition at the bottom patch can be set as,</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="cases/Driesner2010/jupyter/Plot_CaseResults.html" class="btn btn-neutral float-right" title="Jupyter Notebook of case results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html" class="btn btn-neutral float-left" title="Jupyter Notebook of case results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="cases/Driesner2010/jupyter/Plot_CaseResults.html" class="btn btn-neutral float-right" title="Jupyter Notebook of case results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html" class="btn btn-neutral float-left" title="Jupyter Notebook of case results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Lars Ruepke and Zhikui Guo
+        &#169; Copyright 2020, Lars Ruepke and Zhikui Guo.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

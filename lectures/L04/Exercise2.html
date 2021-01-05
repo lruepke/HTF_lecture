@@ -4,9 +4,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Excercise 2 &mdash; HydrothermalFoam Lecture  documentation</title>
   
@@ -19,7 +19,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -57,7 +60,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> HydrothermalFoam Lecture
+            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
           
 
           
@@ -139,6 +142,11 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise3.html">Excercise 3</a></li>
 </ul>
+<p class="caption"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Structural controls on hydrothermal flow</a></li>
+</ul>
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../refs.html">References</a></li>
@@ -204,6 +212,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -215,7 +225,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L04/Exercise2.rst" class="fa fa-github"> Edit on GitHub</a>
             
@@ -257,7 +267,7 @@
 </style>
 <div class="section" id="excercise-2">
 <span id="l04-exercise2"></span><h1>Excercise 2<a class="headerlink" href="#excercise-2" title="Permalink to this headline">¶</a></h1>
-<p><a class="bibtex reference internal" href="../../refs.html#jupp2000thermodynamic" id="id1">[Jupp &amp; Schultz, 2000]</a> published a landmark paper on how A landmark paper on how the thermodynamic properties of water determine temperatures in hydrothermal upflow zones. Their concept of “fluxibility” was later extended to explore interrelations between permeability on vent temperatures <a class="bibtex reference internal" href="../../refs.html#driesner2010" id="id2">[Driesner, 2010a]</a>, the structure of hydrothermal flow zone <a class="bibtex reference internal" href="../../refs.html#coumou2008" id="id3">[Coumou et al., 2008]</a>, and fault-controlled off-axis hydrothermal system <a class="bibtex reference internal" href="../../refs.html#andersen2015" id="id4">[Andersen et al., 2015]</a>. Some of these papers are available in the e-learning site of this course for registered CAU students.</p>
+<p><span id="id1">[<a class="reference internal" href="../../refs.html#id3"><span>Jupp &amp; Schultz, 2000</span></a>]</span> published a landmark paper on how A landmark paper on how the thermodynamic properties of water determine temperatures in hydrothermal upflow zones. Their concept of “fluxibility” was later extended to explore interrelations between permeability on vent temperatures <span id="id2">[<a class="reference internal" href="../../refs.html#id8"><span>Driesner, 2010a</span></a>]</span>, the structure of hydrothermal flow zone <span id="id3">[<a class="reference internal" href="../../refs.html#id9"><span>Coumou et al., 2008</span></a>]</span>, and fault-controlled off-axis hydrothermal system <span id="id4">[<a class="reference internal" href="../../refs.html#id10"><span>Andersen et al., 2015</span></a>]</span>. Some of these papers are available in the e-learning site of this course for registered CAU students.</p>
 <div class="admonition-objectives-of-this-exercise admonition">
 <p class="admonition-title">Objectives of this exercise</p>
 <ul class="simple">
@@ -265,13 +275,11 @@
 <li><p>learn how to use python to post-process OpenFoam cases</p></li>
 </ul>
 </div>
-<p>We will now try to reproduce the results presented by <a class="bibtex reference internal" href="../../refs.html#jupp2000thermodynamic" id="id5">[Jupp &amp; Schultz, 2000]</a>. The setup is very similar to the simple single plume driven by a gaussian heat source we had simulated previously.</p>
+<p>We will now try to reproduce the results presented by <span id="id5">[<a class="reference internal" href="../../refs.html#id3"><span>Jupp &amp; Schultz, 2000</span></a>]</span>. The setup is very similar to the simple single plume driven by a gaussian heat source we had simulated previously.</p>
 <div class="section" id="model-setup-and-running-the-case">
 <h2>Model setup and running the case<a class="headerlink" href="#model-setup-and-running-the-case" title="Permalink to this headline">¶</a></h2>
 <p>We are simulating a 3700 x 1000m sized box with a gaussian constant temperature boundary condition at the bottom. The general model setup is shown in the Figure below. The OpenFoam case can be downloaded from here: <a class="reference download internal" download="" href="../../_downloads/048bba973a7a2271dcec03612292cb06/Jupp_Schultz.zip"><code class="xref download docutils literal notranslate"><span class="pre">Jupp_Schultz</span></code></a>.</p>
-<p>(<a class="reference external" href="../../lectures/L04/Exercise2-1.py">Source code</a>, <a class="reference external" href="../../lectures/L04/Exercise2-1.svg">svg</a>, <a class="reference external" href="../../lectures/L04/Exercise2-1.pdf">pdf</a>)</p>
-<div class="figure align-default">
-<img alt="../../_images/Exercise2-1.svg" src="../../_images/Exercise2-1.svg" /></div>
+<p>(<a class="reference external" href="../../lectures/L04/Exercise2-1.py">Source code</a>)</p>
 <p>Download the case file, unzip it and copy it into your shared folder that is accessible both from your local system and from the docker container. Check out the usual files like <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>, <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code>, <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>. Make sure you understand the setup!</p>
 <p>There is a dynamic code section within <code class="code docutils literal notranslate"><span class="pre">system/conrolDict</span></code> that allows outputting more variables including the thermodynamic properties of water.</p>
 <div class="highlight-foam notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -411,37 +419,29 @@
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html" class="btn btn-neutral float-right" title="Jupyter Notebook of case results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" class="btn btn-neutral float-left" title="Jupyter Notebook of water properties" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html" class="btn btn-neutral float-right" title="Jupyter Notebook of case results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" class="btn btn-neutral float-left" title="Jupyter Notebook of water properties" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Lars Ruepke and Zhikui Guo
+        &#169; Copyright 2020, Lars Ruepke and Zhikui Guo.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
