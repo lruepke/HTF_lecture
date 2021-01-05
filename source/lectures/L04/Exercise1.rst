@@ -2,7 +2,7 @@
 
 .. _L04_Exercise1:
 
-Excercise 1
+Exercise 1
 ===========
 
 We have prepared jupyter notebooks that let's you explore the thermodynamic properties of pure water. Play with them!

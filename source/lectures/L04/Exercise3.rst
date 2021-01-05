@@ -2,7 +2,7 @@
 
 .. _L04_Exercise3:
 
-Excercise 3
+Exercise 3
 ===========
 
 .. warning::
