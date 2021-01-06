@@ -47,6 +47,7 @@ Now we need to modify the case. These are the necessary steps:
    - update boundary conditions for pressure and temperature (and permeability)
    - use :code:`setFields` utility and system/setFieldsDict to modify the permeability structure
    - the exact of dimensions of the permeability blocks don't matter
+   - modify :code:`system\controlDict` so that we only make one time step. Easiest way is to set endTime to 864000.
 
 
 .. tip::
