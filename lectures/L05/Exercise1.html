@@ -135,7 +135,11 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Structural controls on hydrothermal flow</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 1</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#step-1">Step 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2">Step 2</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
@@ -258,6 +262,61 @@
 <div class="section" id="exercise-1">
 <span id="l05-exercise1"></span><h1>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h1>
 <p>We will first explore a simple setup of 2-D flow along a pressure gradient in the presence of permeability contrasts.</p>
+<div class="admonition-goals admonition">
+<p class="admonition-title">Goals</p>
+<ul class="simple">
+<li><p>explore porous flow along prescribed pressure gradient</p></li>
+<li><p>use <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility to modify the permeability structure</p></li>
+<li><p>Understand how permeability contrasts affect flow</p></li>
+</ul>
+</div>
+<div class="section" id="step-1">
+<h2>Step 1<a class="headerlink" href="#step-1" title="Permalink to this headline">¶</a></h2>
+<p>We will explore the following case: A 2-D box of dimensions 1500 m by 1000 m. Flow is driven by a prescribed pressure gradient. Within the box, variations in permeability affect the flow field.</p>
+<div class="figure align-center" id="setup-l5-1-fig" style="width: 80%">
+<img alt="../../_images/lecture_plot.png" src="../../_images/lecture_plot.png" />
+<p class="caption"><span class="caption-number">Fig. 29 </span><span class="caption-text">Setup of our 2D test case for flow in a porous medium with variable permeability.</span><a class="headerlink" href="#setup-l5-1-fig" title="Permalink to this image">¶</a></p>
+</div>
+<p>A good starting point for setting up new case is always to take an existing similar case. Here we can use one of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> benchmark cases. It’s located in <code class="code docutils literal notranslate"><span class="pre">$HOME/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1</span></code>.</p>
+<p>Copy the case into your working directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp -r /home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1 ./h1_class
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-2">
+<h2>Step 2<a class="headerlink" href="#step-2" title="Permalink to this headline">¶</a></h2>
+<p>Now we need to modify the case. These are the necessary steps:</p>
+<div class="admonition-goals admonition">
+<p class="admonition-title">Goals</p>
+<ul class="simple">
+<li><p>modify the mesh (blockMeshDict)</p></li>
+<li><p>check that gravity is zero (constant/g)</p></li>
+<li><p>update boundary conditions for pressure and temperature (and permeability)</p></li>
+<li><p>use <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility and system/setFieldsDict to modify the permeability structure</p></li>
+<li><p>the exact of dimensions of the permeability blocks don’t matter</p></li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Remember the two-layered convection exercise from lecture 3? There we used the boxToCell function as an alternative to making two mesh zones. Now we can do the same here, just that we need several boxes.</p>
+<p>This is how the code snippit looked like in lecture 3; take it as a starting point!</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>regions
+<span class="o">(</span>
+    boxToCell
+    <span class="o">{</span>
+        box <span class="o">(</span><span class="m">0</span> -500 <span class="m">0</span><span class="o">)</span> <span class="o">(</span><span class="m">1000</span> <span class="m">0</span> <span class="m">1</span><span class="o">)</span><span class="p">;</span> //<span class="o">(</span>xmin,ymin,zmin<span class="o">)</span> <span class="o">(</span>xmax,ymax,zmax<span class="o">)</span>
+        fieldValues
+        <span class="o">(</span>
+            volScalarFieldValue permeability 1e-13
+        <span class="o">)</span><span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">)</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>You can also play with different shapes, like cylinder or rotated box. Check the documentation!</p>
+</div>
+</div>
 </div>
 
 
