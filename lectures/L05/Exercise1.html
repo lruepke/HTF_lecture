@@ -297,6 +297,7 @@ cp -r /home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1 .
 <li><p>update boundary conditions for pressure and temperature (and permeability)</p></li>
 <li><p>use <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility and system/setFieldsDict to modify the permeability structure</p></li>
 <li><p>the exact of dimensions of the permeability blocks don’t matter</p></li>
+<li><p>modify <code class="code docutils literal notranslate"><span class="pre">system\controlDict</span></code> so that we only make one time step. Easiest way is to set endTime to 864000.</p></li>
 </ul>
 </div>
 <div class="admonition tip">
