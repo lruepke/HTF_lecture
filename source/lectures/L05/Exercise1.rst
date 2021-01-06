@@ -70,3 +70,16 @@ Now we need to modify the case. These are the necessary steps:
         );
 
     You can also play with different shapes, like cylinder or rotated box. Check the documentation!
+
+Step 3
+------
+
+Explore the results in paraview!
+
+.. figure:: /_figures/hetero_perm_flow.*
+   :align: center
+   :name: flow_l5_1_fig
+   :figwidth: 80%
+
+   Porous flow in the presence of permeability variations.
+
