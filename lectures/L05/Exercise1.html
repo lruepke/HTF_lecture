@@ -292,17 +292,21 @@ cp -r /home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1 .
 <div class="admonition-goals admonition">
 <p class="admonition-title">Goals</p>
 <ul class="simple">
-<li><p>modify the mesh (blockMeshDict)</p></li>
-<li><p>check that gravity is zero (constant/g)</p></li>
+<li><p>modify the mesh by chnanging <code class="code docutils literal notranslate"><span class="pre">blockMeshDict</span></code></p></li>
+<li><p>check that gravity is zero in <code class="code docutils literal notranslate"><span class="pre">constant/g</span></code></p></li>
 <li><p>update boundary conditions for pressure and temperature (and permeability)</p></li>
-<li><p>use <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility and system/setFieldsDict to modify the permeability structure</p></li>
+<li><p>use the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility and the controlling <code class="code docutils literal notranslate"><span class="pre">system/setFieldsDict</span></code> to modify the permeability structure</p></li>
 <li><p>the exact of dimensions of the permeability blocks don’t matter</p></li>
-<li><p>modify <code class="code docutils literal notranslate"><span class="pre">system\controlDict</span></code> so that we only make one time step. Easiest way is to set endTime to 864000.</p></li>
+<li><p>modify <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code> so that we only make one time step. Easiest way is to set endTime, deltaT and writeInterval all to 864000.</p></li>
 </ul>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Remember the two-layered convection exercise from lecture 3? There we used the boxToCell function as an alternative to making two mesh zones. Now we can do the same here, just that we need several boxes.</p>
+<p>You might have noticed that the <code class="code docutils literal notranslate"><span class="pre">benchmarks/HydrothermalFoam/1d/h1</span></code> case does not contain a <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code>. This is common “problem” that a dictionary file is missing when starting from an existing case file. You can easily fix this by copying the respective dictionary from another case and then modify it. If you don’t know which case has the missing dictionary, you can just search for it (inside the docker container). For example like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find <span class="nv">$HOME</span> -type f -name <span class="s2">&quot;setFieldsDict&quot;</span>
+</pre></div>
+</div>
+<p>Now that we have the setFieldsDict, we need to modify it. Do you remember <a class="reference internal" href="../L03/Exercise.html#l03-properties"><span class="std std-ref">Assign properties</span></a> part the two-layered convection <a class="reference internal" href="../L03/Exercise.html#l03-exercise"><span class="std std-ref">Excercises</span></a> in lecture 3? There we used the boxToCell function within <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> as an alternative way of making a layerd permeability structure. Now we can do the same here, just that we need several boxes.</p>
 <p>This is how the code snippit looked like in lecture 3; take it as a starting point!</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>regions
 <span class="o">(</span>

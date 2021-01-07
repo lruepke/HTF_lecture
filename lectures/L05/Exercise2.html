@@ -268,9 +268,9 @@
 <p class="admonition-title">Steps</p>
 <ul class="simple">
 <li><p>check all settings and modify model run time so that the plume arrives at the surface</p></li>
-<li><p>modify (or create) a setFieldsDict to create the permeability structure.</p></li>
-<li><p>best use a function called  <code class="code docutils literal notranslate"><span class="pre">rotatedBoxToCell</span></code> to set the permeability structure</p></li>
-<li><p>Run the case and explore how the results change for different fault widths and permeability contrasts.</p></li>
+<li><p>modify (or create) a <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> to create the permeability structure.</p></li>
+<li><p>use a function called <code class="code docutils literal notranslate"><span class="pre">rotatedBoxToCell</span></code> to set the permeability structure</p></li>
+<li><p>run the case and explore how the results change for different fault widths and permeability contrasts.</p></li>
 </ul>
 </div>
 <div class="section" id="step-1">
@@ -291,7 +291,7 @@ cp -r /home/openfoam/hydrothermalfoam-master/cookbooks/2d/Regular2DBox/ ./Fault_
 <p>We can use the <code class="code docutils literal notranslate"><span class="pre">rotatedBoxToCell</span></code> function in the <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> for this. Check the <a class="reference external" href="https://cpp.openfoam.org/v3/a02202.html">openfoam documentation</a> !</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>It’s all about rotating the coordinate system!</p>
+<p>It’s all about rotating the coordinate system to figure out the origin and i,j,k vectors for <code class="code docutils literal notranslate"><span class="pre">rotatedBoxToCell</span></code>!</p>
 <div class="figure align-center" id="coord-sys-fig" style="width: 40%">
 <img alt="../../_images/coord_sys.png" src="../../_images/coord_sys.png" />
 </div>

@@ -10,9 +10,9 @@ Ok, time to put our new knowledge to work! Let's explore a more realistic case a
 .. admonition:: Steps
 
    - check all settings and modify model run time so that the plume arrives at the surface
-   - modify (or create) a setFieldsDict to create the permeability structure. 
-   - best use a function called  :code:`rotatedBoxToCell` to set the permeability structure
-   - Run the case and explore how the results change for different fault widths and permeability contrasts.
+   - modify (or create) a :code:`setFieldsDict` to create the permeability structure. 
+   - use a function called :code:`rotatedBoxToCell` to set the permeability structure
+   - run the case and explore how the results change for different fault widths and permeability contrasts.
 
 
 Step 1
@@ -43,7 +43,7 @@ We can use the :code:`rotatedBoxToCell` function in the :code:`setFieldsDict` fo
 
 .. tip::
 
-    It's all about rotating the coordinate system!
+    It's all about rotating the coordinate system to figure out the origin and i,j,k vectors for :code:`rotatedBoxToCell`!
 
     .. figure:: /_figures/coord_sys.*
         :align: center
