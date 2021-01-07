@@ -66,6 +66,8 @@ Next boundary patches are defined and labeled in the blockMeshDict. Also here ca
     * or, looking onto a face and starting from any vertex, the numbering has to be counter-clockwise.
 
 
+.. _L03_properties:
+
 Assign properties
 ^^^^^^^^^^^^^^^^^
 
