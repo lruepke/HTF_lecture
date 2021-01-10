@@ -9,3 +9,5 @@ log*
 !*.sh
 !gmsh
 gmsh/*.msh
+VTK/
+!jupyter

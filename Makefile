@@ -22,6 +22,7 @@ casesPackage = bash source/lectures/$1/cases/casePackage.sh \
 %: Makefile
 	@if [ $@ = "html" ]; then\
 		$(call casesPackage,L04,Jupp_Schultz) ;\
+		$(call casesPackage,L_FVM,regularBox) ;\
 	fi
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	

@@ -17,8 +17,8 @@ FoamFile
 convertToMeters 1;
 xmin -0.05;    //variable definition
 xmax 0.05;
-ymin -0.02;
-ymax 0.02;
+ymin -0.025;
+ymax 0.025;
 Lz 0.01;
 vertices    //vertices definition
 (
@@ -33,7 +33,7 @@ vertices    //vertices definition
 );
 blocks
 (
-    hex (0 1 2 3 4 5 6 7) (10 4 1) simpleGrading (1 1 1)
+    hex (0 1 2 3 4 5 6 7) (10 5 1) simpleGrading (1 1 1)
 );
 boundary
 (
@@ -69,13 +69,20 @@ boundary
             (1 5 4 0)
         );
     }
-    frontAndBack    //patch name
+    front    //patch name
+    {
+        type empty; 
+        faces //face list
+        (
+            (4 5 6 7)   //front face
+        );
+    }
+    back    //patch name
     {
         type empty; 
         faces //face list
         (
             (0 3 2 1)   //back face
-            (4 5 6 7)   //front face
         );
     }
 );
