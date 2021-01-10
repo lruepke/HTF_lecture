@@ -94,6 +94,14 @@ The majority of this course will be spent in front of a computer working on exer
     lectures/L05/Exercise1
     lectures/L05/Exercise2
 
+.. toctree::
+    :maxdepth: 2
+    :caption: Lecture 6
+
+    lectures/L_FVM/Overview
+    lectures/L_FVM/intro
+    lectures/L_FVM/Exercise1
+
 
 .. toctree::
    :maxdepth: 2
