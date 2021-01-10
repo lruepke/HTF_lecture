@@ -9,3 +9,4 @@ application=`getApplication`
 ./clean.sh
 runApplication blockMesh
 runApplication $application
+foamToVTK -useTimeName
