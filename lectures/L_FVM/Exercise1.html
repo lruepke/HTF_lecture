@@ -45,7 +45,7 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="References" href="../../refs.html" />
+    <link rel="next" title="1. Read and plot mesh information" href="cases/regularBox/jupyter/VisualizeResults.html" />
     <link rel="prev" title="FVM and OpenFoam" href="intro.html" /> 
 </head>
 
@@ -142,7 +142,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">FVM and OpenFoam</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 1</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#step-1">Step 1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
@@ -264,6 +270,26 @@
 </style>
 <div class="section" id="exercise-1">
 <span id="l-fvm-exercise1"></span><h1>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-goals admonition">
+<p class="admonition-title">Goals</p>
+<ul class="simple">
+<li><p>explore FVM theory</p></li>
+<li><p>link FVM theory and OpenFOAM solver implementation</p></li>
+<li><p>step by step exploring details of the solver and solving process</p></li>
+</ul>
+</div>
+<div class="section" id="step-1">
+<h2>Step 1<a class="headerlink" href="#step-1" title="Permalink to this headline">¶</a></h2>
+<p>Create a 2D regular box mesh using <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> utility (<a class="reference download internal" download="" href="../../_downloads/182fc0c7918b295146e8ff66ee704105/regularBox.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</p>
+<div class="figure align-center" id="setup-l5-1-fig" style="width: 100%">
+<img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" /><p class="caption"><span class="caption-number">Fig. 33 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#setup-l5-1-fig" title="Permalink to this image">¶</a></p>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -272,7 +298,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../../refs.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cases/regularBox/jupyter/VisualizeResults.html" class="btn btn-neutral float-right" title="1. Read and plot mesh information" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="intro.html" class="btn btn-neutral float-left" title="FVM and OpenFoam" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
