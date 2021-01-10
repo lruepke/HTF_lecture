@@ -69,20 +69,13 @@ boundary
             (1 5 4 0)
         );
     }
-    front    //patch name
-    {
-        type empty; 
-        faces //face list
-        (
-            (4 5 6 7)   //front face
-        );
-    }
-    back    //patch name
+    frontAndBack    //patch name
     {
         type empty; 
         faces //face list
         (
             (0 3 2 1)   //back face
+            (4 5 6 7)   //front face
         );
     }
 );
