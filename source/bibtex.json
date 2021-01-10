@@ -17,6 +17,14 @@
             "Nakamura2014",
             "jupp2000thermodynamic",
             "Jupp2004"
+        ],
+        "lectures/L05/Exercise2": [
+            "andersen2015"
+        ],
+        "lectures/L05/intro": [
+            "german2016",
+            "deMartin2007",
+            "andersen2015"
         ]
     }
 }
