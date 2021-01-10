@@ -543,13 +543,7 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="1.-Read-and-plot-mesh-information">
 <h1>1. Read and plot mesh information<a class="headerlink" href="#1.-Read-and-plot-mesh-information" title="Permalink to this headline">¶</a></h1>
 <p>Please use command <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">sciPyFoam</span></code> to install a usefull python package to read polyMesh and plot mesh topology.</p>
-<ol class="arabic simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">cells_rect=mesh2d.readInternal('case/VTK/case_0.vtk')</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">faces</span> <span class="pre">=</span> <span class="pre">readFaces(caseDir)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">owners</span> <span class="pre">=</span> <span class="pre">readOwner(caseDir)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">neighbours</span> <span class="pre">=</span> <span class="pre">readNeighbour(caseDir)</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">boundaries,</span> <span class="pre">index_internalFaces,</span> <span class="pre">name_faces</span> <span class="pre">=</span> <span class="pre">readBoundary(caseDir,nFaces)</span></code></p></li>
-</ol>
+<p>There are 5 functions are available in <code class="docutils literal notranslate"><span class="pre">sciPyFoam.polyMesh</span></code> 1. <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">cells_rect=mesh2d.readInternal('case/VTK/case_0.vtk')</span></code> 2. <code class="docutils literal notranslate"><span class="pre">faces</span> <span class="pre">=</span> <span class="pre">readFaces(caseDir)</span></code> 3. <code class="docutils literal notranslate"><span class="pre">owners</span> <span class="pre">=</span> <span class="pre">readOwner(caseDir)</span></code> 4. <code class="docutils literal notranslate"><span class="pre">neighbours</span> <span class="pre">=</span> <span class="pre">readNeighbour(caseDir)</span></code> 5. <code class="docutils literal notranslate"><span class="pre">boundaries,</span> <span class="pre">index_internalFaces,</span> <span class="pre">name_faces</span> <span class="pre">=</span> <span class="pre">readBoundary(caseDir,nFaces)</span></code></p>
 <p><strong>Interesting and smart design! the internal face index is consecutive and from zero.</strong></p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -560,16 +554,17 @@ div.rendered_html tbody tr:hover {
 <span class="n">caseDir</span><span class="o">=</span><span class="s1">&#39;../&#39;</span>
 
 <span class="c1"># plot</span>
-<span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-
-<span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">cells_rect</span><span class="p">,</span><span class="n">faces</span><span class="p">,</span><span class="n">boundaries</span><span class="p">,</span><span class="n">owners</span><span class="p">,</span><span class="n">neighbours</span><span class="o">=</span><span class="n">mesh2d</span><span class="o">.</span><span class="n">plotMeshTopology</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">caseDir</span><span class="p">,</span><span class="n">ind_cell</span><span class="o">=</span><span class="mi">23</span><span class="p">,</span><span class="n">index_intFace</span><span class="o">=</span><span class="mi">52</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">cells_rect</span><span class="p">,</span><span class="n">faces</span><span class="p">,</span><span class="n">boundaries</span><span class="p">,</span><span class="n">owners</span><span class="p">,</span><span class="n">neighbours</span><span class="o">=</span><span class="n">mesh2d</span><span class="o">.</span><span class="n">plotMeshTopology</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">caseDir</span><span class="p">,</span><span class="n">ind_cell</span><span class="o">=</span><span class="mi">23</span><span class="p">,</span><span class="n">index_intFace</span><span class="o">=</span><span class="mi">52</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="c1"># set axis</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X (mm)&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y (mm)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">leg</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">leg</span><span class="o">.</span><span class="n">legendHandles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_legmarker</span><span class="o">.</span><span class="n">set_markersize</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">fname_fig</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/mesh_FVM_</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">,</span><span class="n">caseName</span><span class="p">,</span><span class="n">fmt</span><span class="p">))</span>
@@ -598,11 +593,15 @@ nInternalFaces: 85
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
+<span></span><span class="c1"># x, y, z, cells_rect=mesh2d.readInternal(caseDir)</span>
+<span class="c1"># faces = mesh2d.readFaces(caseDir)</span>
+<span class="c1"># owners = mesh2d.readOwner(caseDir)</span>
+<span class="c1"># neighbours = mesh2d.readNeighbour(caseDir)</span>
+<span class="c1"># boundaries, index_internalFaces, name_faces = mesh2d.readBoundary(caseDir,len(faces[&#39;nNodes&#39;]))</span>
 </pre></div>
 </div>
 </div>
