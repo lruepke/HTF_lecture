@@ -20,7 +20,7 @@ Create a 2D regular box mesh using :code:`blockMesh` utility (:download:`Regular
 
 .. figure:: /_figures/mesh_FVM_regularBox.*
    :align: center
-   :name: setup_l5_1_fig
+   :name: polyMesh_regularBox
    :figwidth: 100%
 
    2D regular mesh structure and topology information of OpenFOAM polyMesh (See :ref:`/lectures/L_FVM/cases/regularBox/jupyter/VisualizeResults.ipynb#1.-Read-and-plot-mesh-information` in the notebook).
