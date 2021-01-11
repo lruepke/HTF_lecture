@@ -14,6 +14,8 @@ A first test case - heat diffusion
     - simulations controls (time step, run time, etc.)
     - post-processing
 
+.. _theory_heat_diffusion:
+
 Theory
 ------
 The first case is the **flange** case from OpenFOAM tutorials, which illustrates how to solve for 3-D heat conduction in a complex-shaped solid. The equation we will be solving is the transient heat diffusion, a laplacian partial differential equation (PDE) that is here written for the simplfied case of constant properties (Eqn. :eq:`eq:laplacian_dif`). The equation is based on plugging Fourier's law (Eqn. :eq:`eq:fourier_law`) into a general energy conservation equation (Eqn. :eq:`eq:simple_energy_dif`)
