@@ -153,8 +153,15 @@
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">FVM and OpenFoam</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 1</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#step-1">Step 1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#step-1-geometric-and-physical-modeling">Step 1: Geometric and physical modeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2-domain-discretization">Step 2: Domain discretization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mesh-structure-and-topology">Mesh structure and topology</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#step-3-equation-discretization">Step 3: Equation discretization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jupyter-notebook">Jupyter notebook</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
 </ul>
 </li>
 </ul>
@@ -288,15 +295,50 @@
 <li><p>step by step exploring details of the solver and solving process</p></li>
 </ul>
 </div>
-<div class="section" id="step-1">
-<h2>Step 1<a class="headerlink" href="#step-1" title="Permalink to this headline">¶</a></h2>
-<p>Create a 2D regular box mesh using <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> utility (<a class="reference download internal" download="" href="../../_downloads/182fc0c7918b295146e8ff66ee704105/regularBox.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</p>
-<div class="figure align-center" id="polymesh-regularbox" style="width: 100%">
-<img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" /><p class="caption"><span class="caption-number">Fig. 33 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#polymesh-regularbox" title="Permalink to this image">¶</a></p>
+<div class="section" id="step-1-geometric-and-physical-modeling">
+<h2>Step 1: Geometric and physical modeling<a class="headerlink" href="#step-1-geometric-and-physical-modeling" title="Permalink to this headline">¶</a></h2>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-laplacian-dif">
+<span class="eqno">(27)<a class="headerlink" href="#equation-eq-fvm-laplacian-dif" title="Permalink to this equation">¶</a></span>\[\frac{\partial T}{\partial t} = D \nabla^2 T\]</div>
+<p>Here <span class="math notranslate nohighlight">\(D\)</span> is the thermal diffusivity, can be a constant value.
+see also <a class="reference internal" href="../L01/FirstCase.html#theory-heat-diffusion"><span class="std std-ref">Theory</span></a></p>
+<div class="figure align-center" id="fvm-geometry-bcs-regularbox" style="width: 100%">
+<img alt="../../_images/boundaryConditions_FVM_regularBox.svg" src="../../_images/boundaryConditions_FVM_regularBox.svg" /><p class="caption"><span class="caption-number">Fig. 33 </span><span class="caption-text">Model geometry, boundary conditions and initial condition.</span><a class="headerlink" href="#fvm-geometry-bcs-regularbox" title="Permalink to this image">¶</a></p>
 </div>
+<div class="admonition-what-we-need-to-solve admonition">
+<p class="admonition-title">What we need to solve ?</p>
+<p>Temperature field <span class="math notranslate nohighlight">\(T\)</span> of the model region at time <span class="math notranslate nohighlight">\(t\)</span>,
+therefore <span class="math notranslate nohighlight">\(T\)</span> is the only unknown variable of our problem.</p>
+</div>
+</div>
+<div class="section" id="step-2-domain-discretization">
+<h2>Step 2: Domain discretization<a class="headerlink" href="#step-2-domain-discretization" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mesh-structure-and-topology">
+<h3>Mesh structure and topology<a class="headerlink" href="#mesh-structure-and-topology" title="Permalink to this headline">¶</a></h3>
+<p>Create a 2D regular box mesh using <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> utility (<a class="reference download internal" download="" href="../../_downloads/182fc0c7918b295146e8ff66ee704105/regularBox.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</p>
+<div class="figure align-center" id="fig-polymesh-regularbox" style="width: 100%">
+<img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" /><p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#fig-polymesh-regularbox" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="step-3-equation-discretization">
+<h2>Step 3: Equation discretization<a class="headerlink" href="#step-3-equation-discretization" title="Permalink to this headline">¶</a></h2>
+<p>The equation discretization step is performed over each element of the computational domain to yield an algebraic relation that connects the value of a variable in an element to the values of the variable in the neighboring elements <span id="id1">[<a class="reference internal" href="../../refs.html#id2"><span>Moukalled et al., 2016</span></a>]</span>.</p>
+<div class="admonition-goal admonition">
+<p class="admonition-title">Goal</p>
+<p>Transform partial differential equation <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">(27)</a> into a set of algebraic equations: <span class="math notranslate nohighlight">\(\mathbf{A}[T] = \mathbf{b}\)</span>.</p>
+</div>
+<ol class="arabic simple">
+<li><p>Integrate equation <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">(27)</a> over element <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>) that enables recovering its integral balance form as,</p></li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-volume-int">
+<span class="eqno">(28)<a class="headerlink" href="#equation-eq-fvm-volume-int" title="Permalink to this equation">¶</a></span>\[\iint\limits_{V_C} dV = \iint\limits_{V_C} D\nabla^2 T dV\]</div>
+</div>
+<div class="section" id="jupyter-notebook">
+<h2>Jupyter notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
 </ul>
 </div>
 </div>
