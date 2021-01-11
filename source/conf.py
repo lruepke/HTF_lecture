@@ -132,7 +132,7 @@ pygments_style = 'autumn' # xcode,monokai,emacs,autumn,vs,solarized-dark
 # numbering of cross reference
 numfig = True 
 math_numfig = True
-math_eqref_format = '({number})'
+math_eqref_format = 'equation ({number})'
 # only valid for latex
 # numfig_format = 'Figure. %s'
 numfig_secnum_depth = 1
