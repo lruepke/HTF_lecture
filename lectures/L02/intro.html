@@ -323,14 +323,14 @@
 <p>to get</p>
 <div class="math notranslate nohighlight" id="equation-eq-mom-matrix7">
 <span class="eqno">(15)<a class="headerlink" href="#equation-eq-mom-matrix7" title="Permalink to this equation">¶</a></span>\[    \nabla \cdot A^{-1} \nabla p = \nabla \cdot(A^{-1}H)\]</div>
-<p>Equations <a class="reference internal" href="#equation-eq-mom-matrix">(9)</a> and <a class="reference internal" href="#equation-eq-mom-matrix6">(14)</a> form a set of equations that are solved in sequence.</p>
+<p>Equations <a class="reference internal" href="#equation-eq-mom-matrix">equation (9)</a> and <a class="reference internal" href="#equation-eq-mom-matrix6">equation (14)</a> form a set of equations that are solved in sequence.</p>
 <p>The actual solution sequence in the SIMPLE algorithm is this. First, we solve the momentum balance using an initial guess for pressure:</p>
 <div class="math notranslate nohighlight" id="equation-eq-mom-matrix8">
 <span class="eqno">(16)<a class="headerlink" href="#equation-eq-mom-matrix8" title="Permalink to this equation">¶</a></span>\[M \vec{U} = - \nabla p\]</div>
-<p>The we update pressure by solving the pressure equation <a class="reference internal" href="#equation-eq-mom-matrix6">(14)</a></p>
+<p>The we update pressure by solving the pressure equation <a class="reference internal" href="#equation-eq-mom-matrix6">equation (14)</a></p>
 <div class="math notranslate nohighlight" id="equation-eq-mom-matrix9">
 <span class="eqno">(17)<a class="headerlink" href="#equation-eq-mom-matrix9" title="Permalink to this equation">¶</a></span>\[    \nabla \cdot A^{-1} \nabla p = \nabla \cdot(A^{-1}H)\]</div>
-<p>Finally, the pressure is used to “correct” the velocity solution, so that it fulfills the continuity equation <a class="reference internal" href="#equation-eq-continuity2">(6)</a>.</p>
+<p>Finally, the pressure is used to “correct” the velocity solution, so that it fulfills the continuity equation <a class="reference internal" href="#equation-eq-continuity2">equation (6)</a>.</p>
 <div class="math notranslate nohighlight" id="equation-eq-u-cor">
 <span class="eqno">(18)<a class="headerlink" href="#equation-eq-u-cor" title="Permalink to this equation">¶</a></span>\[    \vec{U} = A^{-1} H - A^{-1}A \nabla p\]</div>
 <p>This is the SIMPLE algorithm for the steady-state incompressible Navier-Stokes equation. Later we will also learn about other algorithms for more general forms of the N-S stokes like the PISO and PIMPLE algorithms.</p>

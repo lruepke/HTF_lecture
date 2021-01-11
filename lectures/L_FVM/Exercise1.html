@@ -298,7 +298,7 @@
 <div class="section" id="step-1-geometric-and-physical-modeling">
 <h2>Step 1: Geometric and physical modeling<a class="headerlink" href="#step-1-geometric-and-physical-modeling" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-laplacian-dif">
-<span class="eqno">(27)<a class="headerlink" href="#equation-eq-fvm-laplacian-dif" title="Permalink to this equation">¶</a></span>\[\frac{\partial T}{\partial t} = D \nabla^2 T\]</div>
+<span class="eqno">(27)<a class="headerlink" href="#equation-eq-fvm-laplacian-dif" title="Permalink to this equation">¶</a></span>\[\frac{\partial T}{\partial t} = \nabla \cdot D \nabla T\]</div>
 <p>Here <span class="math notranslate nohighlight">\(D\)</span> is the thermal diffusivity, can be a constant value.
 see also <a class="reference internal" href="../L01/FirstCase.html#theory-heat-diffusion"><span class="std std-ref">Theory</span></a></p>
 <div class="figure align-center" id="fvm-geometry-bcs-regularbox" style="width: 100%">
@@ -325,13 +325,66 @@ therefore <span class="math notranslate nohighlight">\(T\)</span> is the only un
 <p>The equation discretization step is performed over each element of the computational domain to yield an algebraic relation that connects the value of a variable in an element to the values of the variable in the neighboring elements <span id="id1">[<a class="reference internal" href="../../refs.html#id2"><span>Moukalled et al., 2016</span></a>]</span>.</p>
 <div class="admonition-goal admonition">
 <p class="admonition-title">Goal</p>
-<p>Transform partial differential equation <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">(27)</a> into a set of algebraic equations: <span class="math notranslate nohighlight">\(\mathbf{A}[T] = \mathbf{b}\)</span>.</p>
+<p>Transform partial differential <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">equation (27)</a> into a set of algebraic equations: <span class="math notranslate nohighlight">\(\mathbf{A}[T] = \mathbf{b}\)</span>.</p>
 </div>
 <ol class="arabic simple">
-<li><p>Integrate equation <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">(27)</a> over element <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>) that enables recovering its integral balance form as,</p></li>
+<li><p>Integrate <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">equation (27)</a> over element <span class="math notranslate nohighlight">\(C\)</span> (the green cell in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>) that enables recovering its integral balance form as,</p></li>
 </ol>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-volume-int">
-<span class="eqno">(28)<a class="headerlink" href="#equation-eq-fvm-volume-int" title="Permalink to this equation">¶</a></span>\[\iint\limits_{V_C} dV = \iint\limits_{V_C} D\nabla^2 T dV\]</div>
+<span class="eqno">(28)<a class="headerlink" href="#equation-eq-fvm-volume-int" title="Permalink to this equation">¶</a></span>\[\iiint\limits_{V_C} \frac{\partial T}{\partial t} dV \equiv b_C  = \iiint\limits_{V_C} \nabla \cdot D\nabla T dV\]</div>
+<p><strong>Note</strong> that the transient term <span class="math notranslate nohighlight">\(\iiint\limits_{V_C} \frac{\partial T}{\partial t} dV \equiv b_C\)</span> will be processed in the later section</p>
+<ol class="arabic simple" start="2">
+<li><p>Transform the volume integral on the right hand side of <a class="reference internal" href="#equation-eq-fvm-volume-int">equation (28)</a> into a surface integral by applying the divergence theorem,</p></li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-surface-int">
+<span class="eqno">(29)<a class="headerlink" href="#equation-eq-fvm-surface-int" title="Permalink to this equation">¶</a></span>\[b_C = \iint\limits_{S_C} (D\nabla T)\cdot d\vec{S}\]</div>
+<p>The <a class="reference internal" href="#equation-eq-fvm-surface-int">equation (29)</a> is actually a heat balance over cell <span class="math notranslate nohighlight">\(C\)</span>.
+It is basically the integral form of the original partial differential equation and involves <strong>no approximation</strong>.</p>
+<ol class="arabic simple" start="3">
+<li><p>Transform the surface integral in <a class="reference internal" href="#equation-eq-fvm-surface-int">equation (29)</a> as a summation over the control volume faces (<strong>here introduce the first approximation</strong>),</p></li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-surface-sum">
+<span class="eqno">(30)<a class="headerlink" href="#equation-eq-fvm-surface-sum" title="Permalink to this equation">¶</a></span>\[b_C = \sum\limits_{f\sim nb(C)} (D\nabla T)_f\cdot \vec{S}_f\]</div>
+<p>Here <span class="math notranslate nohighlight">\(f\)</span> denotes the integration point at the centroid of the bounding face.
+For a specific cell <span class="math notranslate nohighlight">\(C\)</span> shown in <a class="reference internal" href="#fvm-geometry-bcs-regularbox"><span class="std std-numref">Fig. 33</span></a>,
+the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (30)</a> can be expanded as,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-surface-sum-expand">
+<span class="eqno">(31)<a class="headerlink" href="#equation-eq-fvm-surface-sum-expand" title="Permalink to this equation">¶</a></span>\[b_C = \color{red}{(D\nabla T)_{f_1} \cdot \vec{S}_{f_1}} + (D\nabla T)_{f_2} \cdot \vec{S}_{f_2} + (D\nabla T)_{f_3} \cdot \vec{S}_{f_3}+ (D\nabla T)_{f_4} \cdot \vec{S}_{f_4}\]</div>
+<ol class="arabic" start="4">
+<li><p>Evaluating gradient at centroid of faces</p>
+<p>4.1 Considering face <span class="math notranslate nohighlight">\(f_1\)</span>, calculate the first term on the right hand side of the <a class="reference internal" href="#equation-eq-fvm-surface-sum-expand">equation (31)</a>,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-surface-term-f1">
+<span class="eqno">(32)<a class="headerlink" href="#equation-eq-fvm-surface-term-f1" title="Permalink to this equation">¶</a></span>\[\color{red}{(D\nabla T)_{f_1} \cdot \vec{S}_{f_1}} = \left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_1} \cdot \Delta y_{f_1} \vec{i} = \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_1} \Delta y_{f_1}}\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(S_{f_1} = \Delta y_{f_1}\)</span>  is the area of face  <span class="math notranslate nohighlight">\(f_1\)</span> by assuming <span class="math notranslate nohighlight">\(\Delta z = 1\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{S}_{f_1} = S_{f_1} \vec{n}_{f_1}\)</span> is the surface vector of face <span class="math notranslate nohighlight">\(f_1\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{n}_{f_1} = \vec{i}\)</span> is the normal vector of the face <span class="math notranslate nohighlight">\(f_1\)</span> directed out of the cell <span class="math notranslate nohighlight">\(C\)</span> (see <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>).</p></li>
+</ul>
+<p>4.2 Calculate gradient of <span class="math notranslate nohighlight">\(T\)</span> at face centroid, here introduce <strong>the second approximation</strong>, e.g. assuming linear variation of T and then the gradient term in the <a class="reference internal" href="#equation-eq-fvm-surface-term-f1">equation (32)</a> can be approximated as,</p>
+<div class="math notranslate nohighlight">
+\[\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_1} \Delta y_{f_1}} = D\frac{T_{F_1} - T_{C}}{x_{F_1} - x_C}\Delta y_{f_1} = D\frac{T_{F_1} - T_{C}}{\delta x_{f_1}}\Delta y_{f_1} = \color{green}{a_{F_1}} (T_{F_1} - T_C)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta x_{f_1}\)</span> represents the distance between cell <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(F_1\)</span>.</p>
+<p>4.3 Do the same thing for the remain faces (<span class="math notranslate nohighlight">\(f_2, f_3, f_4\)</span>) and get their coefficients <span class="math notranslate nohighlight">\(\color{green}{a_{F_2}, a_{F_3}, a_{F_4}}\)</span> respectively,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-afac">
+<span class="eqno">(33)<a class="headerlink" href="#equation-eq-fvm-afac" title="Permalink to this equation">¶</a></span>\[\color{green}{a_{F_1}} = \frac{\Delta y_{f_1}}{\delta x_{f_1}},
+\color{green}{a_{F_2}} = \frac{\Delta x_{f_2}}{\delta y_{f_2}},
+\color{green}{a_{F_3}} = \frac{\Delta x_{f_3}}{\delta y_{f_3}},
+\color{green}{a_{F_4}} = \frac{\Delta y_{f_4}}{\delta x_{f_4}}\]</div>
+</li>
+<li><p>Construct matrix form of the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (30)</a> by substituting the above relations,</p></li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-matrix-form0">
+<span class="eqno">(34)<a class="headerlink" href="#equation-eq-fvm-matrix-form0" title="Permalink to this equation">¶</a></span>\[\begin{split}\begin{eqnarray}
+\sum\limits_{f\sim nb(C)} (D\nabla T)_f\cdot \vec{S}_f &amp; = &amp; \sum\limits_{F\sim NB(C)} a_F(T_F - T_C) = \sum\limits_{F\sim NB(C)} a_F T_F - T_C\sum\limits_{F\sim NB(C)} a_F \\
+&amp; = &amp; a_CT_C + \sum\limits_{F\sim NB(C)} a_F T_F
+\end{eqnarray}\end{split}\]</div>
+<p>Considering <span class="math notranslate nohighlight">\(b_C\)</span> matrix form of the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (30)</a> can be written as,</p>
+<div class="math notranslate nohighlight" id="equation-fvm-matrix-form">
+<span class="eqno">(35)<a class="headerlink" href="#equation-fvm-matrix-form" title="Permalink to this equation">¶</a></span>\[\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\]</div>
+<p>here <span class="math notranslate nohighlight">\(N\)</span> is the number of cell, <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a sparse matrix of coefficients,
+<span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is cell-centered temperature field and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> is the transient term which will explained in the later section.
+For the steady state problem, <span class="math notranslate nohighlight">\(\mathbf{b} \equiv 0\)</span>.</p>
 </div>
 <div class="section" id="jupyter-notebook">
 <h2>Jupyter notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">¶</a></h2>
