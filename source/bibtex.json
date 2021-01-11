@@ -25,6 +25,9 @@
             "german2016",
             "deMartin2007",
             "andersen2015"
+        ],
+        "lectures/L_FVM/Exercise1": [
+            "moukalled2016finite"
         ]
     }
 }
