@@ -159,6 +159,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../../../Exercise1.html#jupyter-notebook">Jupyter notebook</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">1. Read and plot mesh information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#2.-Boundary-conditions">2. Boundary conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Plot-coefficients-matrix">Plot coefficients matrix</a></li>
 </ul>
 </li>
 </ul>
@@ -531,7 +532,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -540,6 +541,7 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">meshio</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">MultipleLocator</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">linecache</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -566,12 +568,17 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">caseName</span><span class="o">=</span><span class="s1">&#39;regularBox&#39;</span>
 <span class="n">caseDir</span><span class="o">=</span><span class="s1">&#39;../&#39;</span>
+<span class="n">mesh</span><span class="o">=</span><span class="n">mesh2d</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">caseDir</span><span class="p">)</span>
+<span class="n">nCells</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;faces&#39;</span><span class="p">])</span>
+<span class="n">index_cellC</span><span class="o">=</span><span class="mi">12</span>
+<span class="k">if</span><span class="p">(</span><span class="n">index_cellC</span><span class="o">&gt;=</span><span class="n">nCells</span><span class="p">):</span>
+    <span class="n">index_cellC</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">nCells</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># plot</span>
 <span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
-<span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">cells_rect</span><span class="p">,</span><span class="n">faces</span><span class="p">,</span><span class="n">boundaries</span><span class="p">,</span><span class="n">owners</span><span class="p">,</span><span class="n">neighbours</span><span class="o">=</span><span class="n">mesh2d</span><span class="o">.</span><span class="n">plotMeshTopology</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">caseDir</span><span class="p">,</span><span class="n">ind_cell</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span><span class="n">index_intFace</span><span class="o">=</span><span class="mi">17</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">cells_rect</span><span class="p">,</span><span class="n">faces</span><span class="p">,</span><span class="n">boundaries</span><span class="p">,</span><span class="n">owners</span><span class="p">,</span><span class="n">neighbours</span><span class="o">=</span><span class="n">mesh2d</span><span class="o">.</span><span class="n">plotMeshTopology</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">caseDir</span><span class="p">,</span><span class="n">ind_cell</span><span class="o">=</span><span class="n">index_cellC</span><span class="p">,</span><span class="n">index_intFace</span><span class="o">=</span><span class="mi">17</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="c1"># set axis</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
@@ -594,7 +601,8 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-nPoints: 88, nPoints_2D: 44, nCells: 30
+nBoundaries: 5,  [&#39;left&#39;, &#39;right&#39;, &#39;top&#39;, &#39;bottom&#39;, &#39;frontAndBack&#39;]
+nInternalFaces: 47
 nBoundaries: 5,  [&#39;left&#39;, &#39;right&#39;, &#39;top&#39;, &#39;bottom&#39;, &#39;frontAndBack&#39;]
 nInternalFaces: 47
 </pre></div></div>
@@ -606,34 +614,11 @@ nInternalFaces: 47
 <img alt="../../../../../_images/lectures_L_FVM_cases_regularBox_jupyter_VisualizeResults_3_1.png" src="../../../../../_images/lectures_L_FVM_cases_regularBox_jupyter_VisualizeResults_3_1.png" />
 </div>
 </div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">cells_rect</span><span class="o">=</span><span class="n">mesh2d</span><span class="o">.</span><span class="n">readInternal</span><span class="p">(</span><span class="n">caseDir</span><span class="p">)</span>
-<span class="n">faces</span> <span class="o">=</span> <span class="n">mesh2d</span><span class="o">.</span><span class="n">readFaces</span><span class="p">(</span><span class="n">caseDir</span><span class="p">)</span>
-<span class="n">owners</span> <span class="o">=</span> <span class="n">mesh2d</span><span class="o">.</span><span class="n">readOwner</span><span class="p">(</span><span class="n">caseDir</span><span class="p">)</span>
-<span class="n">neighbours</span> <span class="o">=</span> <span class="n">mesh2d</span><span class="o">.</span><span class="n">readNeighbour</span><span class="p">(</span><span class="n">caseDir</span><span class="p">)</span>
-<span class="n">boundaries</span><span class="p">,</span> <span class="n">index_internalFaces</span><span class="p">,</span> <span class="n">name_faces</span> <span class="o">=</span> <span class="n">mesh2d</span><span class="o">.</span><span class="n">readBoundary</span><span class="p">(</span><span class="n">caseDir</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;nNodes&#39;</span><span class="p">]))</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-nPoints: 88, nPoints_2D: 44, nCells: 30
-nBoundaries: 5,  [&#39;left&#39;, &#39;right&#39;, &#39;top&#39;, &#39;bottom&#39;, &#39;frontAndBack&#39;]
-nInternalFaces: 47
-</pre></div></div>
-</div>
 </div>
 <div class="section" id="2.-Boundary-conditions">
 <h1>2. Boundary conditions<a class="headerlink" href="#2.-Boundary-conditions" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[84]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -687,7 +672,111 @@ nInternalFaces: 47
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../../../../_images/lectures_L_FVM_cases_regularBox_jupyter_VisualizeResults_6_0.png" src="../../../../../_images/lectures_L_FVM_cases_regularBox_jupyter_VisualizeResults_6_0.png" />
+<img alt="../../../../../_images/lectures_L_FVM_cases_regularBox_jupyter_VisualizeResults_5_0.png" src="../../../../../_images/lectures_L_FVM_cases_regularBox_jupyter_VisualizeResults_5_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Plot-coefficients-matrix">
+<h1>Plot coefficients matrix<a class="headerlink" href="#Plot-coefficients-matrix" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[142]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># plot</span>
+<span class="n">figwidth</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">figwidth</span><span class="p">,</span> <span class="n">figwidth</span><span class="o">/</span><span class="p">(</span><span class="n">nCells</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span><span class="o">*</span><span class="n">nCells</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
+<span class="n">xmin</span><span class="p">,</span><span class="n">xmax</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">nCells</span><span class="o">+</span><span class="mf">6.5</span>
+<span class="n">ymin</span><span class="p">,</span><span class="n">ymax</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">nCells</span><span class="o">-</span><span class="mf">0.5</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ymin</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+
+<span class="c1"># 1. plot matrix A</span>
+<span class="c1"># ax.axvspan(xmin,xmin+nCells, fc=&#39;lightgray&#39;,alpha=0.5)</span>
+<span class="n">w_bracket</span><span class="o">=</span><span class="mf">0.2</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">xmin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">xmin</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">l_brack</span><span class="p">,</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">-</span><span class="n">w_bracket</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">x0</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="c1"># 2. plot vector T</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mf">1.5</span>
+<span class="n">x_T</span><span class="o">=</span><span class="n">x0</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">w_bracket</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">x0</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">x0</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">l_brack</span><span class="p">,</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mi">3</span><span class="o">-</span><span class="n">w_bracket</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">x0</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+
+<span class="c1"># 3. plot vector b</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mf">4.5</span>
+<span class="n">x_b</span><span class="o">=</span><span class="n">x0</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">fc</span><span class="o">=</span><span class="s1">&#39;pink&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mi">4</span><span class="o">+</span><span class="n">w_bracket</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">x0</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">x0</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">l_brack</span><span class="p">,</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mi">6</span><span class="o">-</span><span class="n">w_bracket</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">x0</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="c1"># plot matrix value</span>
+<span class="n">ms</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">label_C</span><span class="o">=</span><span class="s1">&#39;a$_</span><span class="si">{C}</span><span class="s1">$&#39;</span>
+<span class="n">label_F_owner</span><span class="o">=</span><span class="s1">&#39;$a_</span><span class="si">{F}</span><span class="s1">$ (owner cell)&#39;</span>
+<span class="n">label_F_neigh</span><span class="o">=</span><span class="s1">&#39;$a_</span><span class="si">{F}</span><span class="s1">$ (neighbour cell)&#39;</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span><span class="n">neighbour</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nCells</span><span class="p">),</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;owner&#39;</span><span class="p">],</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;neighbour&#39;</span><span class="p">]):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span><span class="n">mfc</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">),</span><span class="n">mec</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label_C</span><span class="p">)</span>
+    <span class="n">label_C</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;$a_{\mathregular{</span><span class="si">%d</span><span class="s1">}}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="n">owner</span><span class="p">,</span><span class="n">neighbour</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">owner</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">neighbour</span><span class="p">)</span>
+    <span class="c1"># woner cell</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">owner</span><span class="p">,</span><span class="n">owner</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span><span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span><span class="n">mec</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label_F_owner</span><span class="p">)</span>
+    <span class="n">label_F_owner</span><span class="o">=</span><span class="kc">None</span>
+    <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">owner</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;a$_{\mathregular{</span><span class="si">%d</span><span class="s1">}}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">o</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="c1"># neighbour cell</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">neighbour</span><span class="p">,</span><span class="n">neighbour</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span><span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span><span class="n">mec</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label_F_neigh</span><span class="p">)</span>
+    <span class="n">label_F_neigh</span><span class="o">=</span><span class="kc">None</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">neighbour</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;a$_{\mathregular{</span><span class="si">%d</span><span class="s1">}}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="c1"># T</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_T</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;$T_{\mathregular{</span><span class="si">%d</span><span class="s1">}}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="c1"># b</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_b</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;$b_{\mathregular{</span><span class="si">%d</span><span class="s1">}}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="c1"># marker the selected cell coefficents</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhspan</span><span class="p">(</span><span class="n">index_cellC</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">index_cellC</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="mf">0.985</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;limegreen&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Coefficients of the selected cell $C$&#39;</span><span class="p">)</span>
+
+<span class="c1"># dot</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nCells</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span><span class="n">nCells</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">mec</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">)</span>
+<span class="c1"># =</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">nCells</span><span class="o">+</span><span class="mf">3.5</span><span class="p">,</span><span class="n">nCells</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="c1"># ax.grid(axis=&#39;y&#39;,which=&#39;major&#39;,lw=1, color=&#39;gray&#39;)</span>
+<span class="c1"># ax.yaxis.set_ticklabels([])</span>
+<span class="c1"># plt.tight_layout()</span>
+<span class="n">leg</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">handletextpad</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">leg</span><span class="o">.</span><span class="n">legendHandles</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">_legmarker</span><span class="o">.</span><span class="n">set_markersize</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">fname_fig</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/matrix_FVM_</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">,</span><span class="n">caseName</span><span class="p">,</span><span class="n">fmt</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">fig_fmt</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname_fig</span><span class="p">(</span><span class="n">fmt</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span><span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../../../_images/lectures_L_FVM_cases_regularBox_jupyter_VisualizeResults_7_0.png" src="../../../../../_images/lectures_L_FVM_cases_regularBox_jupyter_VisualizeResults_7_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">

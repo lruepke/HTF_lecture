@@ -162,6 +162,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#jupyter-notebook">Jupyter notebook</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#Plot-coefficients-matrix">Plot coefficients matrix</a></li>
 </ul>
 </li>
 </ul>
@@ -384,7 +385,12 @@ the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (
 <span class="eqno">(35)<a class="headerlink" href="#equation-fvm-matrix-form" title="Permalink to this equation">¶</a></span>\[\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\]</div>
 <p>here <span class="math notranslate nohighlight">\(N\)</span> is the number of cell, <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a sparse matrix of coefficients,
 <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is cell-centered temperature field and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> is the transient term which will explained in the later section.
-For the steady state problem, <span class="math notranslate nohighlight">\(\mathbf{b} \equiv 0\)</span>.</p>
+For the steady state problem, <span class="math notranslate nohighlight">\(\mathbf{b} \equiv 0\)</span>.
+The matrix is visualized as <a class="reference internal" href="#fig-fvm-matrix"><span class="std std-numref">Fig. 35</span></a>.</p>
+<div class="figure align-center" id="fig-fvm-matrix" style="width: 100%">
+<img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" /><p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
+The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>) are marked by green rectangle</span><a class="headerlink" href="#fig-fvm-matrix" title="Permalink to this image">¶</a></p>
+</div>
 </div>
 <div class="section" id="jupyter-notebook">
 <h2>Jupyter notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">¶</a></h2>
@@ -392,6 +398,7 @@ For the steady state problem, <span class="math notranslate nohighlight">\(\math
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#Plot-coefficients-matrix">Plot coefficients matrix</a></li>
 </ul>
 </div>
 </div>
