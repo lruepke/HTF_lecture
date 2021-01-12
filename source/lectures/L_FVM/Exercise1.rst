@@ -45,12 +45,23 @@ Mesh structure and topology
 
 Create a 2D regular box mesh using :code:`blockMesh` utility (:download:`Regular box case <cases/regularBox.zip>`).
 
-.. figure:: /_figures/mesh_FVM_regularBox.*
-   :align: center
-   :name: fig:polyMesh_regularBox
-   :figwidth: 100%
+.. tab:: Regular mesh
 
-   2D regular mesh structure and topology information of OpenFOAM polyMesh (See :ref:`/lectures/L_FVM/cases/regularBox/jupyter/VisualizeResults.ipynb#1.-Read-and-plot-mesh-information` in the notebook).
+   .. figure:: /_figures/mesh_FVM_regularBox.*
+      :align: center
+      :name: fig:polyMesh_regularBox
+      :figwidth: 100%
+
+      2D regular mesh structure and topology information of OpenFOAM polyMesh (See :ref:`/lectures/L_FVM/cases/jupyter/VisualizeResults.ipynb#1.-Read-and-plot-mesh-information` in the notebook).
+
+.. tab:: Unstructured mesh
+
+   .. figure:: /_figures/mesh_FVM_unstructured.*
+         :align: center
+         :name: fig:polyMesh_unstructured
+         :figwidth: 100%
+
+         2D unstructured mesh topology information (:download:`Regular box case <cases/unstructured.zip>`).
 
 Step 3: Equation discretization
 ---------------------------------------------------
@@ -151,14 +162,25 @@ here :math:`N` is the number of cell, :math:`\mathbf{A}` is a sparse matrix of c
 For the steady state problem, :math:`\mathbf{b} \equiv 0`. 
 The matrix is visualized as :numref:`fig:fvm_matrix`.
 
-.. figure:: /_figures/matrix_FVM_regularBox.*
-   :align: center
-   :name: fig:fvm_matrix
-   :figwidth: 100%
+.. tab:: Regular mesh 
 
-   Visualization of :math:`\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}`. 
-   The coefficients of the selected cell :math:`C` (:numref:`fig:polyMesh_regularBox`) are marked by green rectangle
+   .. figure:: /_figures/matrix_FVM_regularBox.*
+      :align: center
+      :name: fig:fvm_matrix
+      :figwidth: 100%
 
+      Visualization of :math:`\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}`. 
+      The coefficients of the selected cell :math:`C` (:numref:`fig:polyMesh_regularBox`) are marked by green rectangle.
+
+.. tab:: unstructured mesh 
+
+   .. figure:: /_figures/matrix_FVM_unstructured.*
+      :align: center
+      :name: fig:fvm_matrix_unstructured
+      :figwidth: 100%
+
+      Visualization of :math:`\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}`. 
+      The coefficients of the selected cell :math:`C` (:numref:`fig:polyMesh_regularBox`) are marked by green rectangle.
 
 Jupyter notebook
 -------------------
@@ -166,6 +188,6 @@ Jupyter notebook
 .. toctree::
     :maxdepth: 2
 
-    cases/regularBox/jupyter/VisualizeResults.ipynb
+    cases/jupyter/VisualizeResults.ipynb
 
 

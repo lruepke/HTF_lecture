@@ -9,4 +9,5 @@ function zipCase()
 }
 
 zipCase regularBox
+zipCase unstructured
 zipCase test_laplacianFoam
