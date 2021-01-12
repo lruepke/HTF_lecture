@@ -45,7 +45,7 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="1. Read and plot mesh information" href="cases/regularBox/jupyter/VisualizeResults.html" />
+    <link rel="next" title="1. Read and plot mesh information" href="cases/jupyter/VisualizeResults.html" />
     <link rel="prev" title="FVM and OpenFoam" href="intro.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
@@ -160,9 +160,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#step-3-equation-discretization">Step 3: Equation discretization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#jupyter-notebook">Jupyter notebook</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#Plot-coefficients-matrix">Plot coefficients matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cases/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#Plot-coefficients-matrix">Plot coefficients matrix</a></li>
 </ul>
 </li>
 </ul>
@@ -316,8 +316,17 @@ therefore <span class="math notranslate nohighlight">\(T\)</span> is the only un
 <div class="section" id="mesh-structure-and-topology">
 <h3>Mesh structure and topology<a class="headerlink" href="#mesh-structure-and-topology" title="Permalink to this headline">¶</a></h3>
 <p>Create a 2D regular box mesh using <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> utility (<a class="reference download internal" download="" href="../../_downloads/182fc0c7918b295146e8ff66ee704105/regularBox.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Regular mesh</label><div class="tab-content docutils container">
 <div class="figure align-center" id="fig-polymesh-regularbox" style="width: 100%">
-<img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" /><p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#fig-polymesh-regularbox" title="Permalink to this image">¶</a></p>
+<img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" /><p class="caption"><span class="caption-number">Fig. 34 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#fig-polymesh-regularbox" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Unstructured mesh</label><div class="tab-content docutils container">
+<div class="figure align-center" id="fig-polymesh-unstructured" style="width: 100%">
+<img alt="../../_images/mesh_FVM_unstructured.svg" src="../../_images/mesh_FVM_unstructured.svg" /><p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">2D unstructured mesh topology information (<a class="reference download internal" download="" href="../../_downloads/511a4a1fe2a54b529f96db7ce8318cd3/unstructured.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</span><a class="headerlink" href="#fig-polymesh-unstructured" title="Permalink to this image">¶</a></p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -386,19 +395,29 @@ the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (
 <p>here <span class="math notranslate nohighlight">\(N\)</span> is the number of cell, <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a sparse matrix of coefficients,
 <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is cell-centered temperature field and <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> is the transient term which will explained in the later section.
 For the steady state problem, <span class="math notranslate nohighlight">\(\mathbf{b} \equiv 0\)</span>.
-The matrix is visualized as <a class="reference internal" href="#fig-fvm-matrix"><span class="std std-numref">Fig. 35</span></a>.</p>
+The matrix is visualized as <a class="reference internal" href="#fig-fvm-matrix"><span class="std std-numref">Fig. 36</span></a>.</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--1">Regular mesh</label><div class="tab-content docutils container">
 <div class="figure align-center" id="fig-fvm-matrix" style="width: 100%">
-<img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" /><p class="caption"><span class="caption-number">Fig. 35 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
-The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>) are marked by green rectangle</span><a class="headerlink" href="#fig-fvm-matrix" title="Permalink to this image">¶</a></p>
+<img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" /><p class="caption"><span class="caption-number">Fig. 36 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
+The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--2">unstructured mesh</label><div class="tab-content docutils container">
+<div class="figure align-center" id="fig-fvm-matrix-unstructured" style="width: 100%">
+<img alt="../../_images/matrix_FVM_unstructured.svg" src="../../_images/matrix_FVM_unstructured.svg" /><p class="caption"><span class="caption-number">Fig. 37 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
+The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix-unstructured" title="Permalink to this image">¶</a></p>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="jupyter-notebook">
 <h2>Jupyter notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cases/regularBox/jupyter/VisualizeResults.html#Plot-coefficients-matrix">Plot coefficients matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cases/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#Plot-coefficients-matrix">Plot coefficients matrix</a></li>
 </ul>
 </div>
 </div>
@@ -410,7 +429,7 @@ The coefficients of the selected cell <span class="math notranslate nohighlight"
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="cases/regularBox/jupyter/VisualizeResults.html" class="btn btn-neutral float-right" title="1. Read and plot mesh information" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cases/jupyter/VisualizeResults.html" class="btn btn-neutral float-right" title="1. Read and plot mesh information" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="intro.html" class="btn btn-neutral float-left" title="FVM and OpenFoam" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
