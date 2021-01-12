@@ -148,7 +148,17 @@ Considering :math:`b_C` matrix form of the :eq:`eq:fvm_surface_sum` can be writt
 
 here :math:`N` is the number of cell, :math:`\mathbf{A}` is a sparse matrix of coefficients, 
 :math:`\mathbf{T}` is cell-centered temperature field and :math:`\mathbf{b}` is the transient term which will explained in the later section.
-For the steady state problem, :math:`\mathbf{b} \equiv 0`.
+For the steady state problem, :math:`\mathbf{b} \equiv 0`. 
+The matrix is visualized as :numref:`fig:fvm_matrix`.
+
+.. figure:: /_figures/matrix_FVM_regularBox.*
+   :align: center
+   :name: fig:fvm_matrix
+   :figwidth: 100%
+
+   Visualization of :math:`\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}`. 
+   The coefficients of the selected cell :math:`C` (:numref:`fig:polyMesh_regularBox`) are marked by green rectangle
+
 
 Jupyter notebook
 -------------------
