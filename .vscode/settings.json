@@ -24,5 +24,6 @@
     },
     "jupyter.jupyterServerType": "local",
     "python.pythonPath": "/Users/lruepke/miniconda3/envs/py37_htf_class/bin/python",
-    "restructuredtext.linter.disabled": true
+    "restructuredtext.linter.disabled": true,
+    "C_Cpp.errorSquiggles": "Disabled"
 }
