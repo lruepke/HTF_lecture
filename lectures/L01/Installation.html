@@ -301,7 +301,7 @@
 </pre></div>
 </div>
 <p>This can take a while. After the download is finished, you can build the docker container. Use this command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -it -d --name hydrothermalfoam --workdir<span class="o">=</span><span class="s2">&quot;/home/openfoam&quot;</span> - <span class="nv">v</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/HydrothermalFoam_runs&quot;</span>:<span class="s2">&quot;/home/openfoam/HydrothermalFoam_runs&quot;</span> zguo/hydrothermalfoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -it -d --name hydrothermalfoam --workdir<span class="o">=</span><span class="s2">&quot;/home/openfoam&quot;</span> -v<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/HydrothermalFoam_runs&quot;</span>:<span class="s2">&quot;/home/openfoam/HydrothermalFoam_runs&quot;</span> zguo/hydrothermalfoam
 </pre></div>
 </div>
 <p>This complicated looking command builds the docker container and creates a “shared” folder called HydrothermalFoam_runs in your home directory (this is what the -v option does). If you want it somewhere else, you can change this “$HOME/HydrothermalFoam_runs” part of the above statement. Please do not uses path and directory names with spaces or special characters in it (if you are on windows).</p>
