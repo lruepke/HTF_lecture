@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${FOAM_SRC}/**",
+                "/Users/zguo/OpenFOAM/OpenFOAM-7/src/OpenFOAM/lnInclude",
                 "/Users/zguo/OpenFOAM/OpenFOAM-7/src/finiteVolume/cfdTools/compressible",
                 "/Users/zguo/OpenFOAM/OpenFOAM-7/src/finiteVolume/cfdTools/compressible",
                 "/Users/zguo/OpenFOAM/OpenFOAM-7/src/finiteVolume/cfdTools/general/include"
