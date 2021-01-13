@@ -153,19 +153,30 @@
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">FVM and OpenFoam</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 1</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#step-1-geometric-and-physical-modeling">Step 1: Geometric and physical modeling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-2-domain-discretization">Step 2: Domain discretization</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#mesh-structure-and-topology">Mesh structure and topology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#theory">Theory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-geometric-and-physical-modeling">Step 1: Geometric and physical modeling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-domain-discretization">Step 2: Domain discretization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mesh-structure-and-topology">Mesh structure and topology</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#step-3-equation-discretization">Step 3: Equation discretization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-4-apply-boundary-conditions">Step 4: Apply boundary conditions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-5-transient-discretization">Step 5: Transient discretization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-6-solution-of-the-discretized-equations">Step 6: Solution of the discretized equations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#jupyter-notebook">Jupyter notebook</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cases/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#Plot-coefficients-matrix">Plot coefficients matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-equation-discretization">Step 3: Equation discretization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-apply-boundary-conditions">Step 4: Apply boundary conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-5-transient-discretization">Step 5: Transient discretization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-6-solution-of-the-discretized-equations">Step 6: Solution of the discretized equations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#openfoam-implementation">OpenFOAM implementation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-read-data">Step 1: Read data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#read-mesh">Read mesh</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#jupyter-notebook">Jupyter notebook</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cases/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#3.-Plot-coefficients-matrix">3. Plot coefficients matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Plot-centroids-of-faces">1. Plot centroids of faces</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -296,6 +307,8 @@ Then put it in the shared folder and compile (<code class="code docutils literal
 </div>
 <div class="section" id="exercise-1">
 <h1>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="theory">
+<h2>Theory<a class="headerlink" href="#theory" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-goals admonition">
 <p class="admonition-title">Goals</p>
 <ul class="simple">
@@ -305,7 +318,7 @@ Then put it in the shared folder and compile (<code class="code docutils literal
 </ul>
 </div>
 <div class="section" id="step-1-geometric-and-physical-modeling">
-<h2>Step 1: Geometric and physical modeling<a class="headerlink" href="#step-1-geometric-and-physical-modeling" title="Permalink to this headline">¶</a></h2>
+<h3>Step 1: Geometric and physical modeling<a class="headerlink" href="#step-1-geometric-and-physical-modeling" title="Permalink to this headline">¶</a></h3>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-laplacian-dif">
 <span class="eqno">(27)<a class="headerlink" href="#equation-eq-fvm-laplacian-dif" title="Permalink to this equation">¶</a></span>\[\frac{\partial T}{\partial t} = \nabla \cdot D \nabla T\]</div>
 <p>Here <span class="math notranslate nohighlight">\(D\)</span> is the thermal diffusivity, can be a constant value.
@@ -320,9 +333,9 @@ therefore <span class="math notranslate nohighlight">\(T\)</span> is the only un
 </div>
 </div>
 <div class="section" id="step-2-domain-discretization">
-<h2>Step 2: Domain discretization<a class="headerlink" href="#step-2-domain-discretization" title="Permalink to this headline">¶</a></h2>
+<h3>Step 2: Domain discretization<a class="headerlink" href="#step-2-domain-discretization" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="mesh-structure-and-topology">
-<h3>Mesh structure and topology<a class="headerlink" href="#mesh-structure-and-topology" title="Permalink to this headline">¶</a></h3>
+<h4>Mesh structure and topology<a class="headerlink" href="#mesh-structure-and-topology" title="Permalink to this headline">¶</a></h4>
 <p>Create a 2D regular box mesh using <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> utility (<a class="reference download internal" download="" href="../../_downloads/182fc0c7918b295146e8ff66ee704105/regularBox.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).
 Therefore, the mesh topology shown below is the same as OpenFOAM polyMesh.</p>
 <div class="tab-set docutils container">
@@ -347,7 +360,7 @@ The normal vector of face always points from the <strong>owner</strong> cell to 
 </div>
 </div>
 <div class="section" id="step-3-equation-discretization">
-<h2>Step 3: Equation discretization<a class="headerlink" href="#step-3-equation-discretization" title="Permalink to this headline">¶</a></h2>
+<h3>Step 3: Equation discretization<a class="headerlink" href="#step-3-equation-discretization" title="Permalink to this headline">¶</a></h3>
 <p>The equation discretization step is performed over each element of the computational domain to yield an algebraic relation that connects the value of a variable in an element to the values of the variable in the neighboring elements <span id="id1">[<a class="reference internal" href="../../refs.html#id2"><span>Moukalled et al., 2016</span></a>]</span>.</p>
 <div class="admonition-goal admonition">
 <p class="admonition-title">Goal</p>
@@ -437,33 +450,71 @@ The coefficients of the selected cell <span class="math notranslate nohighlight"
 </div>
 </div>
 <div class="section" id="step-4-apply-boundary-conditions">
-<h2>Step 4: Apply boundary conditions<a class="headerlink" href="#step-4-apply-boundary-conditions" title="Permalink to this headline">¶</a></h2>
+<h3>Step 4: Apply boundary conditions<a class="headerlink" href="#step-4-apply-boundary-conditions" title="Permalink to this headline">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>working on this</p>
 </div>
 </div>
 <div class="section" id="step-5-transient-discretization">
-<h2>Step 5: Transient discretization<a class="headerlink" href="#step-5-transient-discretization" title="Permalink to this headline">¶</a></h2>
+<h3>Step 5: Transient discretization<a class="headerlink" href="#step-5-transient-discretization" title="Permalink to this headline">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>working on this</p>
 </div>
 </div>
 <div class="section" id="step-6-solution-of-the-discretized-equations">
-<h2>Step 6: Solution of the discretized equations<a class="headerlink" href="#step-6-solution-of-the-discretized-equations" title="Permalink to this headline">¶</a></h2>
+<h3>Step 6: Solution of the discretized equations<a class="headerlink" href="#step-6-solution-of-the-discretized-equations" title="Permalink to this headline">¶</a></h3>
 <p>The discretization of the differential equation results in a set of discrete algebraic equations, which must be solved to obtain the discrete values of T. The coefficients of these equations may be independent of T (i.e., linear) or dependent on T (i.e. non-linear). The techniques to solve this algebraic system of equations are independent of the discretization method.
 The solution methods for solving systems of algebraic equations may be broadly
 classified as direct or iterative.</p>
 </div>
+</div>
+<div class="section" id="openfoam-implementation">
+<h2>OpenFOAM implementation<a class="headerlink" href="#openfoam-implementation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-1-read-data">
+<h3>Step 1: Read data<a class="headerlink" href="#step-1-read-data" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="read-mesh">
+<h4>Read mesh<a class="headerlink" href="#read-mesh" title="Permalink to this headline">¶</a></h4>
+<div class="admonition-seconds-thinking admonition">
+<p class="admonition-title">10 seconds thinking</p>
+<p>What information do we need in the mesh object ?</p>
+</div>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">FVM mesh</label><div class="tab-content docutils container">
+<ol class="arabic simple">
+<li><p>Centroid of face</p></li>
+<li><p>Area of face</p></li>
+<li><p>Vector of face</p></li>
+<li><p>Centroid of cell</p></li>
+<li><p>Volume of cell</p></li>
+</ol>
+</div>
+<input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">OpenFOAM code snippit</label><div class="tab-content docutils container">
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">surfaceVectorField</span> <span class="n">Cf</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">.</span><span class="n">Cf</span><span class="p">();</span>
+<span class="n">forAll</span><span class="p">(</span><span class="n">Cf</span><span class="p">,</span> <span class="n">iface</span><span class="p">)</span>
+<span class="p">{</span>
+   <span class="n">Info</span><span class="o">&lt;&lt;</span><span class="n">Cf</span><span class="p">[</span><span class="n">iface</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">Cf</span><span class="p">[</span><span class="n">iface</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="s">&quot; &quot;</span><span class="o">&lt;&lt;</span><span class="n">Cf</span><span class="p">[</span><span class="n">iface</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="jupyter-notebook">
-<h2>Jupyter notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">¶</a></h2>
+<h3>Jupyter notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">¶</a></h3>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="cases/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#Plot-coefficients-matrix">Plot coefficients matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#3.-Plot-coefficients-matrix">3. Plot coefficients matrix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#Implementation-in-OpenFOAM">Implementation in OpenFOAM</a></li>
 </ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Plot-centroids-of-faces">1. Plot centroids of faces</a></li>
+</ul>
+</div>
 </div>
 </div>
 </div>

@@ -7,7 +7,12 @@
    Before we start the exercise 1, please download (:download:`test_laplacianFoam <cases/test_laplacianFoam.zip>`) the modified Laplacian solver first.
    Then put it in the shared folder and compile (:code:`wmake`) it in the docker container.
 
+==============
 Exercise 1
+==============
+
+
+Theory
 ===========
 
 
@@ -241,6 +246,44 @@ Step 6: Solution of the discretized equations
 The discretization of the differential equation results in a set of discrete algebraic equations, which must be solved to obtain the discrete values of T. The coefficients of these equations may be independent of T (i.e., linear) or dependent on T (i.e. non-linear). The techniques to solve this algebraic system of equations are independent of the discretization method.
 The solution methods for solving systems of algebraic equations may be broadly
 classified as direct or iterative.
+
+OpenFOAM implementation
+===========================
+
+Step 1: Read data
+--------------------------
+
+Read mesh 
+^^^^^^^^^^^^^
+
+.. admonition:: 10 seconds thinking
+
+   What information do we need in the mesh object ?
+
+.. #. Surface centroids
+
+.. .. math::
+..    :label: fvm_mesh_C
+
+..    (\mathbf{X}_{Centorid})_f = \frac{\sum\limits_{t \sim Sub-triangles(f)} (\mathbf{X}_{centroid})_t S_t}{S_f}
+   
+.. tab:: FVM mesh
+
+   #. Centroid of face
+   #. Area of face
+   #. Vector of face
+   #. Centroid of cell
+   #. Volume of cell
+
+.. tab:: OpenFOAM code snippit
+
+   .. code-block:: cpp
+
+      surfaceVectorField Cf = mesh.Cf();
+      forAll(Cf, iface)
+      {
+         Info<<Cf[iface][0]<<" "<<Cf[iface][1]<<" "<<Cf[iface][2]<<endl;
+      }
 
 Jupyter notebook
 -------------------
