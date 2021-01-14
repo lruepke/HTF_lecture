@@ -16,5 +16,5 @@ changeDictionary
 # try to comment renumberMesh and see the matrix 
 renumberMesh -overwrite
 
-# runApplication $application
+runApplication $application
 # foamToVTK -useTimeName

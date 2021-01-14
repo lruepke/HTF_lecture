@@ -81,13 +81,20 @@ int main(int argc, char *argv[])
 
         while (simple.correctNonOrthogonal())
         {
+            // Info<<"ddt"<<endl;
+            // Info<<fvm::ddt(T)<<endl;
+            // Info<<"laplacian"<<endl;
+            // Info<<fvm::laplacian(DT, T)<<endl;
+            // Info<<"fvOptions(T)"<<endl;
+            // Info<<fvOptions(T)<<endl;
             fvScalarMatrix TEqn
             (
                 fvm::ddt(T) - fvm::laplacian(DT, T)
              ==
                 fvOptions(T)
             );
-
+            Info<<"TEqn"<<endl;
+            Info<<TEqn<<endl;
             fvOptions.constrain(TEqn);
             TEqn.solve();
             fvOptions.correct(T);
