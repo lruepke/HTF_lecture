@@ -44,28 +44,28 @@ int main(int argc, char *argv[])
     // 1. read mesh
     #include "createMesh.H"
     // test output
-    surfaceVectorField Cf = mesh.Cf();
-    Info<<"====Cf start"<<endl;
-    forAll(Cf, iface)
-    {
-        Info<<Cf[iface][0]<<" "<<Cf[iface][1]<<" "<<Cf[iface][2]<<endl;
-    }
+    // surfaceVectorField Cf = mesh.Cf();
+    // Info<<"====Cf start"<<endl;
+    // forAll(Cf, iface)
+    // {
+    //     Info<<Cf[iface][0]<<" "<<Cf[iface][1]<<" "<<Cf[iface][2]<<endl;
+    // }
     // faceCentres();
-    Info<<"====Cf end"<<endl;
+    // Info<<"====Cf end"<<endl;
 
-    const fvBoundaryMesh& boundaryMesh = mesh.boundary(); 
-    forAll(boundaryMesh, patchI)
-    {
-        const fvPatch& patch = boundaryMesh[patchI];
-        forAll(patch, faceI)
-        {
-            vector faceNormal = patch.Sf()[faceI]; 
-            scalar faceArea = patch.magSf()[faceI]; 
-            vector unitFaceNormal = patch.nf()()[faceI]; 
-            vector faceCenter = patch.Cf()[faceI]; 
-            label owner = patch.faceCells()[faceI];
-        } 
-    }
+    // const fvBoundaryMesh& boundaryMesh = mesh.boundary(); 
+    // forAll(boundaryMesh, patchI)
+    // {
+    //     const fvPatch& patch = boundaryMesh[patchI];
+    //     forAll(patch, faceI)
+    //     {
+    //         vector faceNormal = patch.Sf()[faceI]; 
+    //         scalar faceArea = patch.magSf()[faceI]; 
+    //         vector unitFaceNormal = patch.nf()()[faceI]; 
+    //         vector faceCenter = patch.Cf()[faceI]; 
+    //         label owner = patch.faceCells()[faceI];
+    //     } 
+    // }
     
     simpleControl simple(mesh);
 
@@ -93,8 +93,8 @@ int main(int argc, char *argv[])
              ==
                 fvOptions(T)
             );
-            Info<<"TEqn"<<endl;
-            Info<<TEqn<<endl;
+            // Info<<"TEqn"<<endl;
+            // Info<<TEqn<<endl;
             fvOptions.constrain(TEqn);
             TEqn.solve();
             fvOptions.correct(T);
