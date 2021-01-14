@@ -553,7 +553,7 @@ div.rendered_html tbody tr:hover {
 <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
 <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;mathtext.fontset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cm&#39;</span>
 <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span>
-<span class="n">fig_fmt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;svg&#39;</span><span class="p">]</span>
+<span class="n">fig_fmt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;svg&#39;</span><span class="p">,</span><span class="s1">&#39;pdf&#39;</span><span class="p">]</span>
 <span class="c1"># path----------</span>
 <span class="n">path_figures</span><span class="o">=</span><span class="s1">&#39;../../../../_figures&#39;</span>
 </pre></div>
@@ -565,7 +565,7 @@ div.rendered_html tbody tr:hover {
 <p>There are 5 functions are available in <code class="docutils literal notranslate"><span class="pre">sciPyFoam.polyMesh</span></code> 1. <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">cells_rect=mesh2d.readInternal('case/VTK/case_0.vtk')</span></code> 2. <code class="docutils literal notranslate"><span class="pre">faces</span> <span class="pre">=</span> <span class="pre">readFaces(caseDir)</span></code> 3. <code class="docutils literal notranslate"><span class="pre">owners</span> <span class="pre">=</span> <span class="pre">readOwner(caseDir)</span></code> 4. <code class="docutils literal notranslate"><span class="pre">neighbours</span> <span class="pre">=</span> <span class="pre">readNeighbour(caseDir)</span></code> 5. <code class="docutils literal notranslate"><span class="pre">boundaries,</span> <span class="pre">index_internalFaces,</span> <span class="pre">name_faces</span> <span class="pre">=</span> <span class="pre">readBoundary(caseDir,nFaces)</span></code></p>
 <p><strong>Interesting and smart design! the internal face index is consecutive and from zero.</strong></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -623,7 +623,7 @@ nInternalFaces: 47
 <div class="section" id="2.-Boundary-conditions">
 <h1>2. Boundary conditions<a class="headerlink" href="#2.-Boundary-conditions" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -684,7 +684,7 @@ nInternalFaces: 47
 <div class="section" id="3.-Plot-coefficients-matrix">
 <h1>3. Plot coefficients matrix<a class="headerlink" href="#3.-Plot-coefficients-matrix" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
