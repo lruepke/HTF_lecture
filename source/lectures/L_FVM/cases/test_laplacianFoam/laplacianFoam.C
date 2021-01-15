@@ -43,16 +43,24 @@ int main(int argc, char *argv[])
 
     // 1. read mesh
     #include "createMesh.H"
-    // test output
-    // surfaceVectorField Cf = mesh.Cf();
-    // Info<<"====Cf start"<<endl;
-    // forAll(Cf, iface)
-    // {
-    //     Info<<Cf[iface][0]<<" "<<Cf[iface][1]<<" "<<Cf[iface][2]<<endl;
-    // }
+    #include "createFields.H"
+    // access internal faces
+    surfaceVectorField Cf = mesh.Cf();
+    surfaceVectorField Sf = mesh.Sf();
+    surfaceScalarField S = mesh.magSf();
+    Info<<"====Cf start"<<endl;
+    forAll(Cf, iface)
+    {
+        Info<<iface<<": face center "<<Cf[iface]<<endl;
+        Info<<iface<<": face area vector "<<Sf[iface]<<endl;
+        Info<<iface<<": face area "<<S[iface]<<endl;
+        Info<<iface<<": face delta coeff "<<mesh.deltaCoeffs()[iface]<<endl;
+        Info<<iface<<": coeff(D*magSf*deltacoeff) "<<mesh.deltaCoeffs()[iface]*DT*S[iface]<<endl;
+    }
     // faceCentres();
     // Info<<"====Cf end"<<endl;
 
+    // 2. access boundary mesh
     // const fvBoundaryMesh& boundaryMesh = mesh.boundary(); 
     // forAll(boundaryMesh, patchI)
     // {
@@ -67,9 +75,25 @@ int main(int argc, char *argv[])
     //     } 
     // }
     
+    // 3. access boundary field, boundary field coefficients, 
+    forAll(T.boundaryField(), patchI)
+    {
+        Info<<"Boundary patch: "<<mesh.boundary()[patchI].name()<<endl;
+        Info<<"Is coupled ? "<<mesh.boundary()[patchI].coupled()<<endl;
+        Info<<"gradientInternalCoeffs of field T "<<endl;
+        Info<<T.boundaryField()[patchI].gradientInternalCoeffs()<<endl; //Diagonal coeff [A]
+        Info<<"gradientBoundaryCoeffs of field T "<<endl;
+        Info<<T.boundaryField()[patchI].gradientBoundaryCoeffs()<<"\n"<<endl; //source coeff, [B]
+        forAll(T.boundaryField()[patchI], faceI)
+        {
+            // fvm.internalCoeffs()[patchi] = pGamma*pvf.gradientInternalCoeffs();
+            // T.boundaryField()[patchI][faceI].gradientInternalCoeffs();
+        }
+    }
+
     simpleControl simple(mesh);
 
-    #include "createFields.H"
+    
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -78,7 +102,7 @@ int main(int argc, char *argv[])
     while (simple.loop(runTime))
     {
         Info<< "Time = " << runTime.timeName() << nl << endl;
-
+        Info<<"fvm::laplacian(DT, T): "<<fvm::laplacian(DT, T)<<endl;
         while (simple.correctNonOrthogonal())
         {
             // Info<<"ddt"<<endl;
