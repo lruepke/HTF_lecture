@@ -32,7 +32,8 @@
         "laplacianScheme.C": "cpp",
         "fixedValueFvsPatchField.C": "cpp",
         "fvMeshGeometry.C": "cpp",
-        "fvMatrixSolve.C": "cpp"
+        "fvMatrixSolve.C": "cpp",
+        "ostream": "cpp"
     },
     "jupyter.jupyterServerType": "local",
     "python.pythonPath": "/Users/lruepke/miniconda3/envs/py37_htf_class/bin/python",

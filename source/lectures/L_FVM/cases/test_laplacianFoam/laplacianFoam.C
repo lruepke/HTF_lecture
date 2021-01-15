@@ -115,8 +115,18 @@ int main(int argc, char *argv[])
         // assembly of BCs related source will happed in the .solve() function, in the solve function, the addBoundarySource function will be called to do this.
         // so if you print the Laplacian.source(), you will find it is a zero array.
         // Laplacian.addBoundarySource(Laplacian.source(), false); // addBoundarySource is a protected function in fvMatrix Class
-        Info<<"fvm::laplacian: "<<Laplacian<<endl;
         
+        fvScalarMatrix ddt(fvm::ddt(T));
+        // Info<<"fvm::ddt: "<<ddt<<endl;
+        // Euler only affects diag and source
+        Info<<"fvm::ddt(T): "<<"\n"
+            <<"\tLower"<<ddt.lower()<<"\n"
+            <<"\tDiagonal"<<ddt.diag()<<"\n"
+            <<"\tUpper"<<ddt.upper()<<"\n"
+            <<"\tinternalCoeffs"<<ddt.internalCoeffs()<<"\n"
+            <<"\tboundaryCoeffs"<<ddt.boundaryCoeffs()<<"\n"
+            <<"\tSource"<<ddt.source()<<"\n"
+            <<endl;
         while (simple.correctNonOrthogonal())
         {
             // Info<<"ddt"<<endl;
