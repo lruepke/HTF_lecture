@@ -27,7 +27,11 @@
         "lduMatrix.C": "cpp",
         "fvScalarMatrix.C": "cpp",
         "fvMatrices.C": "cpp",
-        "pointFields.C": "cpp"
+        "pointFields.C": "cpp",
+        "laplacianSchemes.C": "cpp",
+        "laplacianScheme.C": "cpp",
+        "fixedValueFvsPatchField.C": "cpp",
+        "fvMeshGeometry.C": "cpp"
     },
     "jupyter.jupyterServerType": "local",
     "python.pythonPath": "/Users/lruepke/miniconda3/envs/py37_htf_class/bin/python",

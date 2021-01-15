@@ -34,7 +34,7 @@ divSchemes
 laplacianSchemes
 {
     default         none;
-    laplacian(DT,T) Gauss linear corrected;
+    laplacian(DT,T) Gauss linear corrected; //Gauss(only choice, one point Gaussian quadrature) <interpolationScheme>(interpolation of diffusion coefficient) <snGradScheme>(surface normal gradient scheme $\nabla T$ on face)
 }
 
 interpolationSchemes
