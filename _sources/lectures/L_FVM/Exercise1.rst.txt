@@ -312,7 +312,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    & = & a_CT_C + \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{F_f} + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{f}}
    \end{eqnarray}
 
-Considering :math:`b_C` matrix form of the :eq:`eq:fvm_surface_sum` can be written as,
+Matrix form of the :eq:`eq:fvm_surface_sum` can be written as,
 
 .. math::
    :label: fvm_matrix_form
@@ -320,10 +320,9 @@ Considering :math:`b_C` matrix form of the :eq:`eq:fvm_surface_sum` can be writt
    \mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{B}_{N\times1}
 
 here :math:`N` is the number of cell, :math:`\mathbf{A}` is a sparse matrix of coefficients, 
-:math:`\mathbf{T}` is cell-centered temperature field, :math:`\mathbf{B} = \mathbf{b} - \mathbf{c}}` and :math:`b` denotes the transient term which will explained in the later section, :math:`\mathbf{c}` is the boundary conditions related term.
-For the steady state problem, :math:`\mathbf{b} \equiv 0`. 
+:math:`\mathbf{T}` is cell-centered temperature field.
 The matrix is visualized as :numref:`fig:fvm_matrix`.
-It should be noted that **the coefficients matrix of Laplacian term is a symmetric matrix and the boundary conditions only affect diagonal entry of the coefficients matrix**. Further, only the fixed value boundary condition affect the matrix.
+It should be noted that **the coefficients matrix of Laplacian term is a symmetric matrix and the boundary conditions only affect diagonal entry of the coefficients matrix**. Further, only the fixed value boundary condition affects the matrix and the fixed flux boundary condition affects the RHS :math:`B`.
 
 .. tab:: Regular mesh 
 

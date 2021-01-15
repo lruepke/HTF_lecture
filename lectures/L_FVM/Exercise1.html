@@ -491,14 +491,13 @@ b_{C_{19}} &amp; =  &amp; a_{F_{18}} (T_{F_{18}} - T_C) + a_{F_{35}} (T_{F_{35}}
 \sum\limits_{f\sim nb(C)} (D\nabla T)_{F_f}\cdot \vec{S}_{F_f} &amp; = &amp;  \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{F_f} + \left(-\sum\limits_{f\sim nb(C)} a_{F_f} \right)T_C + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{F_f}} \\
 &amp; = &amp; a_CT_C + \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{F_f} + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{f}}
 \end{eqnarray}\end{split}\]</div>
-<p>Considering <span class="math notranslate nohighlight">\(b_C\)</span> matrix form of the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (31)</a> can be written as,</p>
+<p>Matrix form of the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (31)</a> can be written as,</p>
 <div class="math notranslate nohighlight" id="equation-fvm-matrix-form">
 <span class="eqno">(49)<a class="headerlink" href="#equation-fvm-matrix-form" title="Permalink to this equation">¶</a></span>\[\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{B}_{N\times1}\]</div>
 <p>here <span class="math notranslate nohighlight">\(N\)</span> is the number of cell, <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a sparse matrix of coefficients,
-<span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is cell-centered temperature field, <span class="math notranslate nohighlight">\(\mathbf{B} = \mathbf{b} - \mathbf{c}}\)</span> and <span class="math notranslate nohighlight">\(b\)</span> denotes the transient term which will explained in the later section, <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> is the boundary conditions related term.
-For the steady state problem, <span class="math notranslate nohighlight">\(\mathbf{b} \equiv 0\)</span>.
+<span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is cell-centered temperature field.
 The matrix is visualized as <a class="reference internal" href="#fig-fvm-matrix"><span class="std std-numref">Fig. 36</span></a>.
-It should be noted that <strong>the coefficients matrix of Laplacian term is a symmetric matrix and the boundary conditions only affect diagonal entry of the coefficients matrix</strong>. Further, only the fixed value boundary condition affect the matrix.</p>
+It should be noted that <strong>the coefficients matrix of Laplacian term is a symmetric matrix and the boundary conditions only affect diagonal entry of the coefficients matrix</strong>. Further, only the fixed value boundary condition affects the matrix and the fixed flux boundary condition affects the RHS <span class="math notranslate nohighlight">\(B\)</span>.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">Regular mesh</label><div class="tab-content docutils container">
 <div class="figure align-center" id="fig-fvm-matrix" style="width: 100%">
