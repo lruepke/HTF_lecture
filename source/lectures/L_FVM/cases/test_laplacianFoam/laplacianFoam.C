@@ -102,7 +102,21 @@ int main(int argc, char *argv[])
     while (simple.loop(runTime))
     {
         Info<< "Time = " << runTime.timeName() << nl << endl;
-        Info<<"fvm::laplacian(DT, T): "<<fvm::laplacian(DT, T)<<endl;
+        fvScalarMatrix Laplacian(fvm::laplacian(DT, T));
+        // Info<<"fvm::laplacian(DT, T): "<<"\n"
+        //     <<"\tLower"<<Laplacian.lower()<<"\n"
+        //     <<"\tDiagonal"<<Laplacian.diag()<<"\n"
+        //     <<"\tUpper"<<Laplacian.upper()<<"\n"
+        //     <<"\tinternalCoeffs"<<Laplacian.internalCoeffs()<<"\n"
+        //     <<"\tboundaryCoeffs"<<Laplacian.boundaryCoeffs()<<"\n"
+        //     <<"\tSource"<<Laplacian.source()<<"\n"
+        //     <<endl;
+        // Note that the boundary conditions related source is not assembled into the Laplacian after calling  fvm::laplacian(DT, T)
+        // assembly of BCs related source will happed in the .solve() function, in the solve function, the addBoundarySource function will be called to do this.
+        // so if you print the Laplacian.source(), you will find it is a zero array.
+        // Laplacian.addBoundarySource(Laplacian.source(), false); // addBoundarySource is a protected function in fvMatrix Class
+        Info<<"fvm::laplacian: "<<Laplacian<<endl;
+        
         while (simple.correctNonOrthogonal())
         {
             // Info<<"ddt"<<endl;
@@ -114,14 +128,16 @@ int main(int argc, char *argv[])
             fvScalarMatrix TEqn
             (
                 fvm::ddt(T) - fvm::laplacian(DT, T)
-             ==
-                fvOptions(T)
+            //  ==
+            //     fvOptions(T)
             );
+
+            // Info<<"TEqn source: \n"<<TEqn<<endl;
             // Info<<"TEqn"<<endl;
             // Info<<TEqn<<endl;
-            fvOptions.constrain(TEqn);
+            // fvOptions.constrain(TEqn);
             TEqn.solve();
-            fvOptions.correct(T);
+            // fvOptions.correct(T);
         }
 
         #include "write.H"
