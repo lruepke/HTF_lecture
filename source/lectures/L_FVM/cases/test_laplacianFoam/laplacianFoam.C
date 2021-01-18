@@ -41,14 +41,14 @@ int main(int argc, char *argv[])
 
     #include "createTime.H"
 
-    // 1. read mesh
+    // (1). read data
     #include "createMesh.H"
     #include "createFields.H"
-    // access internal faces
+    // 1.1 access internal faces
+    Info<<"\n\nAccess internal mesh"<<endl;
     surfaceVectorField Cf = mesh.Cf();
     surfaceVectorField Sf = mesh.Sf();
     surfaceScalarField S = mesh.magSf();
-    Info<<"====Cf start"<<endl;
     forAll(Cf, iface)
     {
         Info<<iface<<": face center "<<Cf[iface]<<endl;
@@ -57,25 +57,22 @@ int main(int argc, char *argv[])
         Info<<iface<<": face delta coeff "<<mesh.deltaCoeffs()[iface]<<endl;
         Info<<iface<<": coeff(D*magSf*deltacoeff) "<<mesh.deltaCoeffs()[iface]*DT*S[iface]<<endl;
     }
-    // faceCentres();
-    // Info<<"====Cf end"<<endl;
-
-    // 2. access boundary mesh
-    // const fvBoundaryMesh& boundaryMesh = mesh.boundary(); 
-    // forAll(boundaryMesh, patchI)
-    // {
-    //     const fvPatch& patch = boundaryMesh[patchI];
-    //     forAll(patch, faceI)
-    //     {
-    //         vector faceNormal = patch.Sf()[faceI]; 
-    //         scalar faceArea = patch.magSf()[faceI]; 
-    //         vector unitFaceNormal = patch.nf()()[faceI]; 
-    //         vector faceCenter = patch.Cf()[faceI]; 
-    //         label owner = patch.faceCells()[faceI];
-    //     } 
-    // }
-    
-    // 3. access boundary field, boundary field coefficients, 
+    // 1.2. access boundary mesh
+    Info<<"\n\nAccess boundary mesh"<<endl;
+    const fvBoundaryMesh& boundaryMesh = mesh.boundary(); 
+    forAll(boundaryMesh, patchI)
+    {
+        const fvPatch& patch = boundaryMesh[patchI];
+        forAll(patch, faceI)
+        {
+            Info<<"Patch "<<patch.name()<<" face "<<faceI<<": face center "<<patch.Cf()[faceI]<<endl;
+            Info<<"Patch "<<patch.name()<<" face "<<faceI<<": face area vector "<<patch.Sf()[faceI]<<endl;
+            Info<<"Patch "<<patch.name()<<" face "<<faceI<<": face area "<<patch.magSf()[faceI]<<endl;
+            Info<<"Patch "<<patch.name()<<" face "<<faceI<<": face delta coeff "<<patch.deltaCoeffs()[faceI]<<endl;
+            Info<<"Patch "<<patch.name()<<" face "<<faceI<<": owner cell "<<patch.faceCells()[faceI]<<endl;
+        } 
+    }
+    // 1.3. access boundary field, boundary field coefficients, 
     forAll(T.boundaryField(), patchI)
     {
         Info<<"Boundary patch: "<<mesh.boundary()[patchI].name()<<endl;
@@ -84,11 +81,6 @@ int main(int argc, char *argv[])
         Info<<T.boundaryField()[patchI].gradientInternalCoeffs()<<endl; //Diagonal coeff [A]
         Info<<"gradientBoundaryCoeffs of field T "<<endl;
         Info<<T.boundaryField()[patchI].gradientBoundaryCoeffs()<<"\n"<<endl; //source coeff, [B]
-        forAll(T.boundaryField()[patchI], faceI)
-        {
-            // fvm.internalCoeffs()[patchi] = pGamma*pvf.gradientInternalCoeffs();
-            // T.boundaryField()[patchI][faceI].gradientInternalCoeffs();
-        }
     }
 
     simpleControl simple(mesh);
@@ -103,14 +95,14 @@ int main(int argc, char *argv[])
     {
         Info<< "Time = " << runTime.timeName() << nl << endl;
         fvScalarMatrix Laplacian(fvm::laplacian(DT, T));
-        // Info<<"fvm::laplacian(DT, T): "<<"\n"
-        //     <<"\tLower"<<Laplacian.lower()<<"\n"
-        //     <<"\tDiagonal"<<Laplacian.diag()<<"\n"
-        //     <<"\tUpper"<<Laplacian.upper()<<"\n"
-        //     <<"\tinternalCoeffs"<<Laplacian.internalCoeffs()<<"\n"
-        //     <<"\tboundaryCoeffs"<<Laplacian.boundaryCoeffs()<<"\n"
-        //     <<"\tSource"<<Laplacian.source()<<"\n"
-        //     <<endl;
+        Info<<"fvm::laplacian(DT, T): "<<"\n"
+            <<"\tLower"<<Laplacian.lower()<<"\n"
+            <<"\tDiagonal"<<Laplacian.diag()<<"\n"
+            <<"\tUpper"<<Laplacian.upper()<<"\n"
+            <<"\tinternalCoeffs"<<Laplacian.internalCoeffs()<<"\n"
+            <<"\tboundaryCoeffs"<<Laplacian.boundaryCoeffs()<<"\n"
+            <<"\tSource"<<Laplacian.source()<<"\n"
+            <<endl;
         // Note that the boundary conditions related source is not assembled into the Laplacian after calling  fvm::laplacian(DT, T)
         // assembly of BCs related source will happed in the .solve() function, in the solve function, the addBoundarySource function will be called to do this.
         // so if you print the Laplacian.source(), you will find it is a zero array.
