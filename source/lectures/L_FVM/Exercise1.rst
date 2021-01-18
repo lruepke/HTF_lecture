@@ -815,7 +815,7 @@ Step 2, discretize Laplacian term
 
    Because discretization coefficients matrix of Laplacian term is a symmetric matrix, so :code:`fvm::Laplacian(DT, T)` will return a fvMatrix object only has diagonal and upper. 
    What :code:`fvm::Laplacian` actually did is evaluate (1) :math:`a_F` (see :eq:`eq:fvm_aFaC`) for each internal faces, (2) :math:`a_C` for each cells, which is the negative summation of :math:`a_F`, (3) store the field BCs-related coefficients as :code:`internalCoeffs` and :code:`boundaryCoeffs`, respectively.
-   All of these are implemented in `gaussLaplacianScheme.H <https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047>`_ . **Note that** the :code:`Gaussian` scheme is the only choice for Laplacian discretization in OF. 
+   All of these are implemented in gaussLaplacianScheme.H_ . **Note that** the :code:`Gaussian` scheme is the only choice for Laplacian discretization in OF. 
 
 .. tab:: Access Laplacian coeff
 
@@ -835,12 +835,19 @@ Step 2, discretize Laplacian term
          <<"\tSource"<<Laplacian.source()<<"\n"
          <<endl;
 
+   .. tip::
+
+      The source coefficients come from BCs are not stored in the :code:`.source()`, but in :code:`boundaryCoeffs`.
+      So if you print :code:`Laplacian.source()`, it will display zero.
+      The BCs-related source will be added into the :code:`TEqn.source` when :code:`TEqn.solve()` is calling. 
+      There is a protected member function named :code:`addBoundarySource` will be called in :code:`solve()` function.
+
 .. tab:: Source code of Laplacian
 
    .. code-block::  cpp
       :linenos:
       :emphasize-lines: 15, 20, 39, 40
-      :caption: Key source code of Laplacian discretization (before nonOrthogonal correcting)
+      :caption: Key source code of fvm::Laplacian (gaussLaplacianScheme.H_ before nonOrthogonal correcting)
       :name: lst:source_fvm_Laplacian
 
       template<class Type, class GType>
