@@ -1993,10 +1993,17 @@ All of these are implemented in <a class="reference external" href="https://cpp.
 </pre></div>
 </td></tr></table></div>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The source coefficients come from BCs are not stored in the <code class="code docutils literal notranslate"><span class="pre">.source()</span></code>, but in <code class="code docutils literal notranslate"><span class="pre">boundaryCoeffs</span></code>.
+So if you print <code class="code docutils literal notranslate"><span class="pre">Laplacian.source()</span></code>, it will display zero.
+The BCs-related source will be added into the <code class="code docutils literal notranslate"><span class="pre">TEqn.source</span></code> when <code class="code docutils literal notranslate"><span class="pre">TEqn.solve()</span></code> is calling.
+There is a protected member function named <code class="code docutils literal notranslate"><span class="pre">addBoundarySource</span></code> will be called in <code class="code docutils literal notranslate"><span class="pre">solve()</span></code> function.</p>
+</div>
 </div>
 <input class="tab-input" id="tab-set--6-input--3" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--3">Source code of Laplacian</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-source-fvm-laplacian">
-<div class="code-block-caption"><span class="caption-number">Listing 30 </span><span class="caption-text">Key source code of Laplacian discretization (before nonOrthogonal correcting)</span><a class="headerlink" href="#lst-source-fvm-laplacian" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 30 </span><span class="caption-text">Key source code of fvm::Laplacian (<a class="reference external" href="https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047">gaussLaplacianScheme.H</a> before nonOrthogonal correcting)</span><a class="headerlink" href="#lst-source-fvm-laplacian" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
