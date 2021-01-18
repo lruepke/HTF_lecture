@@ -162,7 +162,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#step-3-spatial-discretization-the-diffusion-term">Step 3, Spatial discretization: The diffusion term</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-4-temporal-discretization-the-transient-term">Step 4, Temporal Discretization: The Transient Term</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#first-order-implicit-euler-scheme">First order implicit Euler scheme</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">First order implicit Euler scheme</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">First order implicit Euler scheme</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#step-6-solution-of-the-discretized-equations">Step 6: Solution of the discretized equations</a></li>
@@ -180,7 +180,8 @@
 <li class="toctree-l4"><a class="reference internal" href="cases/jupyter/VisualizeResults.html">1. Read and plot mesh information</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#2.-Boundary-conditions">2. Boundary conditions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#3.-Plot-coefficients-matrix">3. Plot coefficients matrix</a></li>
-<li class="toctree-l4"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Plot-centroids-of-faces">1. Plot centroids of faces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Coordinates-and-delta-coefficients-of-internal-cell">1. Coordinates and delta coefficients of internal cell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#2.-Coordinates-and-delta-coefficients-of-boundary-cell">2. Coordinates and delta coefficients of boundary cell</a></li>
 </ul>
 </li>
 </ul>
@@ -410,8 +411,17 @@ the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (
 <div class="math notranslate nohighlight" id="equation-fvm-flux-gaussian-integral">
 <span class="eqno">(33)<a class="headerlink" href="#equation-fvm-flux-gaussian-integral" title="Permalink to this equation">¶</a></span>\[\color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} = \iint_{f_{23}} (\vec{J}^{T,D}_{f_{23}} \cdot \vec{n}_{f_{23}}) dS_{f_{23}} \approx \color{orange}{\sum\limits_{ip\sim ip(f_{23})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega_{ip} S_{f_{23}}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(S_f\)</span> is the area of face <span class="math notranslate nohighlight">\(f_{23}\)</span>, <span class="math notranslate nohighlight">\(ip\)</span> refers to a integration point and <span class="math notranslate nohighlight">\(ip(f_{23})\)</span> the number of integration points along surface <span class="math notranslate nohighlight">\(f_{23}\)</span>, <span class="math notranslate nohighlight">\(\omega_{ip}\)</span> is the integral weights.</p>
+<div class="figure align-center" id="fig-fig5-2">
+<a class="reference internal image-reference" href="../../_images/Fig5.2_RedBook.svg"><img alt="../../_images/Fig5.2_RedBook.svg" src="../../_images/Fig5.2_RedBook.svg" width="100%" /></a>
+<p class="caption"><span class="caption-number">Fig. 36 </span><span class="caption-text">Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points <span id="id2">[<a class="reference internal" href="../../refs.html#id2"><span>Moukalled et al., 2016</span></a>]</span>.</span><a class="headerlink" href="#fig-fig5-2" title="Permalink to this image">¶</a></p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Only <strong>one integration point scheme</strong>, i.e. <a class="reference internal" href="#fig-fig5-2"><span class="std std-numref">Fig. 36</span></a> (a), is implemented in OpenFOAM (at lease before version 8).
+Therefore the first keyword of Laplacian scheme in <code class="code docutils literal notranslate"><span class="pre">system/fvScheme</span></code> dictionary file of a case only has one option, it is <code class="code docutils literal notranslate"><span class="pre">Gauss</span></code>.</p>
+</div>
 <p>4.2 Choose integral scheme or integral points</p>
-<p>To simply explain the calculation process and logic, here we adopt an <strong>one integration point</strong> scheme with weight <span class="math notranslate nohighlight">\(\omega = 1\)</span>, thus <a class="reference internal" href="#equation-fvm-flux-gaussian-integral">equation (33)</a> becomes,</p>
+<p>To simply explain the calculation process/logic and also keep consistent with OpenFOAM, here we adopt an <strong>one integration point</strong> scheme with weight <span class="math notranslate nohighlight">\(\omega = 1\)</span>, thus <a class="reference internal" href="#equation-fvm-flux-gaussian-integral">equation (33)</a> becomes,</p>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-surface-term-f1">
 <span class="eqno">(34)<a class="headerlink" href="#equation-eq-fvm-surface-term-f1" title="Permalink to this equation">¶</a></span>\[\color{orange}{\sum\limits_{ip\sim ip(f_{23})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = \left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{23}} \cdot \Delta y_{f_{23}} \vec{i} = \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}}\]</div>
 <p>where</p>
@@ -504,18 +514,18 @@ b_{C_{19}} &amp; =  &amp; a_{F_{18}} (T_{F_{18}} - T_C) + a_{F_{35}} (T_{F_{35}}
 <span class="eqno">(49)<a class="headerlink" href="#equation-fvm-matrix-form" title="Permalink to this equation">¶</a></span>\[\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{B}_{N\times1}\]</div>
 <p>here <span class="math notranslate nohighlight">\(N\)</span> is the number of cell, <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a sparse matrix of coefficients,
 <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is cell-centered temperature field.
-The matrix is visualized as <a class="reference internal" href="#fig-fvm-matrix"><span class="std std-numref">Fig. 36</span></a>.
+The matrix is visualized as <a class="reference internal" href="#fig-fvm-matrix"><span class="std std-numref">Fig. 37</span></a>.
 It should be noted that <strong>the coefficients matrix of Laplacian term is a symmetric matrix and the boundary conditions only affect diagonal entry of the coefficients matrix</strong>. Further, only the fixed value boundary condition affects the matrix and the fixed flux boundary condition affects the RHS(Right hand of side) <span class="math notranslate nohighlight">\(B\)</span>.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">Regular mesh</label><div class="tab-content docutils container">
 <div class="figure align-center" id="fig-fvm-matrix" style="width: 100%">
-<img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" /><p class="caption"><span class="caption-number">Fig. 36 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
+<img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" /><p class="caption"><span class="caption-number">Fig. 37 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
 The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">Unstructured mesh</label><div class="tab-content docutils container">
 <div class="figure align-center" id="fig-fvm-matrix-unstructured" style="width: 100%">
-<img alt="../../_images/matrix_FVM_unstructured.svg" src="../../_images/matrix_FVM_unstructured.svg" /><p class="caption"><span class="caption-number">Fig. 37 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
+<img alt="../../_images/matrix_FVM_unstructured.svg" src="../../_images/matrix_FVM_unstructured.svg" /><p class="caption"><span class="caption-number">Fig. 38 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
 The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix-unstructured" title="Permalink to this image">¶</a></p>
 </div>
 </div>
@@ -555,8 +565,8 @@ the coefficient <span class="math notranslate nohighlight">\(FluxC\)</span> will
 <div class="math notranslate nohighlight">
 \[FluxC = \frac{V_C}{\Delta t}, ~ FluxC^o = - \frac{V_C}{\Delta t}, ~ FluxV =0\]</div>
 </div>
-<div class="section" id="id2">
-<h4>First order implicit Euler scheme<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id3">
+<h4>First order implicit Euler scheme<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-firstorder-euler-exp">
 <span class="eqno">(54)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-exp" title="Permalink to this equation">¶</a></span>\[\frac{T^{t+\Delta t} - T^t}{\Delta t} V_C - L(T^{t}) = 0\]</div>
 <p>Note that now the new time is at <span class="math notranslate nohighlight">\(t+\Delta t\)</span> and that the spatial operator (<span class="math notranslate nohighlight">\(L\)</span>) of <a class="reference internal" href="#equation-eq-fvm-firstorder-euler-exp">equation (54)</a> has to be evaluated at time <span class="math notranslate nohighlight">\(eq:fvm_firstOrder_Euler_exp\)</span>.
@@ -657,8 +667,8 @@ classified as direct or iterative.</p>
 </pre></div>
 </td></tr></table></div>
 </div>
-<table class="docutils align-default" id="id3">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Comparison between equation and code</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Comparison between equation and code</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 20%" />
@@ -1021,8 +1031,8 @@ Please download (<a class="reference download internal" download="" href="../../
 <p>The basic properties of cells and faces, e.g. area, volume, face normal vector, will be evaluated after mesh reading, all these processes are happened in the mesh object.
 It means that after calling <code class="code docutils literal notranslate"><span class="pre">creatFields.H</span></code> all these properties are evaluated and stored in the <code class="code docutils literal notranslate"><span class="pre">mesh</span></code> object. Of course the temperature field object <code class="code docutils literal notranslate"><span class="pre">T</span></code> (volScalarField) with BCs and ICs, and thermal diffusivity <code class="code docutils literal notranslate"><span class="pre">DT</span></code> are also initialized from input data after calling <code class="code docutils literal notranslate"><span class="pre">creatFields.H</span></code>.
 <strong>It should be noted</strong> that the part of Laplacian discretization coefficients are also calculated in this step. If the mesh is not changed during simulation time, the mesh related coefficients just need to be calculated one time.</p>
-<table class="docutils align-default" id="id4">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text">Mesh- and Field-related coefficients</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Mesh- and Field-related coefficients</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 20%" />
@@ -1040,13 +1050,13 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 <tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">mesh</span></code></p></td>
 <td><p><span class="math notranslate nohighlight">\(1/\delta_{C\leftrightarrow F}\)</span></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">mesh.deltaCoeffs()</span></code></p></td>
-<td><p>Internal</p></td>
-<td><p><a class="reference internal" href="#equation-eq-fvm-afac">equation (35)</a></p></td>
+<td><p>All faces</p></td>
+<td><p><a class="reference internal" href="#equation-eq-fvm-afac">equation (35)</a>, <a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (43)</a>, <a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (45)</a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">T</span></code></p></td>
 <td><p>Dependents on BCs type</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">gradientInternalCoeffs</span></code> (diagonal), <code class="code docutils literal notranslate"><span class="pre">gradientBoundaryCoeffs</span></code> (source)</p></td>
-<td><p>Boundary patch</p></td>
+<td><p>Boundary patch/faces</p></td>
 <td><p><a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (43)</a>, <a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (45)</a></p></td>
 </tr>
 </tbody>
@@ -1961,16 +1971,30 @@ gradientBoundaryCoeffs of field T
 </div>
 </div>
 </div>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--6-input--1" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--1">Internal cell</label><div class="tab-content docutils container">
+<div class="figure align-center" id="fig-deltacoeff-internalcell">
+<a class="reference internal image-reference" href="../../_images/Coordinate_delta_internalcell_regularBox.svg"><img alt="../../_images/Coordinate_delta_internalcell_regularBox.svg" src="../../_images/Coordinate_delta_internalcell_regularBox.svg" width="100%" /></a>
+<p class="caption"><span class="caption-number">Fig. 39 </span><span class="caption-text">Information of internal cell (<span class="math notranslate nohighlight">\(C_{12}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-internalcell" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<input class="tab-input" id="tab-set--6-input--2" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--2">Boundary cell</label><div class="tab-content docutils container">
+<div class="figure align-center" id="fig-deltacoeff-boundarycell">
+<a class="reference internal image-reference" href="../../_images/Coordinate_delta_boundary_regularBox.svg"><img alt="../../_images/Coordinate_delta_boundary_regularBox.svg" src="../../_images/Coordinate_delta_boundary_regularBox.svg" width="100%" /></a>
+<p class="caption"><span class="caption-number">Fig. 40 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{19}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-boundarycell" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="step-2-discretize-laplacian-term">
 <h3>Step 2, discretize Laplacian term<a class="headerlink" href="#step-2-discretize-laplacian-term" title="Permalink to this headline">¶</a></h3>
 <div class="tab-set docutils container">
-<input checked="True" class="tab-input" id="tab-set--6-input--1" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--1">discretize Laplacian term</label><div class="tab-content docutils container">
+<input checked="True" class="tab-input" id="tab-set--7-input--1" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--1">discretize Laplacian term</label><div class="tab-content docutils container">
 <p>Because discretization coefficients matrix of Laplacian term is a symmetric matrix, so <code class="code docutils literal notranslate"><span class="pre">fvm::Laplacian(DT,</span> <span class="pre">T)</span></code> will return a fvMatrix object only has diagonal and upper.
 What <code class="code docutils literal notranslate"><span class="pre">fvm::Laplacian</span></code> actually did is evaluate (1) <span class="math notranslate nohighlight">\(a_F\)</span> (see <a class="reference internal" href="#equation-eq-fvm-afac">equation (35)</a>) for each internal faces, (2) <span class="math notranslate nohighlight">\(a_C\)</span> for each cells, which is the negative summation of <span class="math notranslate nohighlight">\(a_F\)</span>, (3) store the field BCs-related coefficients as <code class="code docutils literal notranslate"><span class="pre">internalCoeffs</span></code> and <code class="code docutils literal notranslate"><span class="pre">boundaryCoeffs</span></code>, respectively.
 All of these are implemented in <a class="reference external" href="https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047">gaussLaplacianScheme.H</a> . <strong>Note that</strong> the <code class="code docutils literal notranslate"><span class="pre">Gaussian</span></code> scheme is the only choice for Laplacian discretization in OF.</p>
 </div>
-<input class="tab-input" id="tab-set--6-input--2" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--2">Access Laplacian coeff</label><div class="tab-content docutils container">
+<input class="tab-input" id="tab-set--7-input--2" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--2">Access Laplacian coeff</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-access-laplacian">
 <div class="code-block-caption"><span class="caption-number">Listing 29 </span><span class="caption-text">Access fvm::Laplacian discretization</span><a class="headerlink" href="#lst-access-laplacian" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -2001,7 +2025,7 @@ The BCs-related source will be added into the <code class="code docutils literal
 There is a protected member function named <code class="code docutils literal notranslate"><span class="pre">addBoundarySource</span></code> will be called in <code class="code docutils literal notranslate"><span class="pre">solve()</span></code> function.</p>
 </div>
 </div>
-<input class="tab-input" id="tab-set--6-input--3" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--3">Source code of Laplacian</label><div class="tab-content docutils container">
+<input class="tab-input" id="tab-set--7-input--3" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--3">Source code of Laplacian</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-source-fvm-laplacian">
 <div class="code-block-caption"><span class="caption-number">Listing 30 </span><span class="caption-text">Key source code of fvm::Laplacian (<a class="reference external" href="https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047">gaussLaplacianScheme.H</a> before nonOrthogonal correcting)</span><a class="headerlink" href="#lst-source-fvm-laplacian" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
@@ -2097,7 +2121,7 @@ There is a protected member function named <code class="code docutils literal no
 </td></tr></table></div>
 </div>
 </div>
-<input class="tab-input" id="tab-set--6-input--4" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--4">Laplacian coefficients</label><div class="tab-content docutils container">
+<input class="tab-input" id="tab-set--7-input--4" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--4">Laplacian coefficients</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-fvm-laplacian">
 <div class="code-block-caption"><span class="caption-number">Listing 31 </span><span class="caption-text">fvm::Laplacian Coefficients  of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>.</span><a class="headerlink" href="#lst-log-fvm-laplacian" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -2533,7 +2557,8 @@ fvm::laplacian<span class="o">(</span>DT, T<span class="o">)</span>:
 <li class="toctree-l2"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#Implementation-in-OpenFOAM">Implementation in OpenFOAM</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Plot-centroids-of-faces">1. Plot centroids of faces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Coordinates-and-delta-coefficients-of-internal-cell">1. Coordinates and delta coefficients of internal cell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cases/jupyter/VisualizeResults.html#2.-Coordinates-and-delta-coefficients-of-boundary-cell">2. Coordinates and delta coefficients of boundary cell</a></li>
 </ul>
 </div>
 </div>
