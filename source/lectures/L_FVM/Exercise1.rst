@@ -157,9 +157,21 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
 
    where :math:`S_f` is the area of face :math:`f_{23}`, :math:`ip` refers to a integration point and :math:`ip(f_{23})` the number of integration points along surface :math:`f_{23}`, :math:`\omega_{ip}` is the integral weights. 
 
+   .. figure:: /_figures/Fig5.2_RedBook.*
+      :align: center
+      :width: 100 %
+      :name: fig:Fig5.2
+   
+      Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points :cite:`moukalled2016finite`.
+   
+   .. important:: 
+
+      Only **one integration point scheme**, i.e. :numref:`fig:Fig5.2` (a), is implemented in OpenFOAM (at lease before version 8).
+      Therefore the first keyword of Laplacian scheme in :code:`system/fvScheme` dictionary file of a case only has one option, it is :code:`Gauss`.
+
    4.2 Choose integral scheme or integral points
 
-   To simply explain the calculation process and logic, here we adopt an **one integration point** scheme with weight :math:`\omega = 1`, thus :eq:`fvm_flux_Gaussian_integral` becomes,
+   To simply explain the calculation process/logic and also keep consistent with OpenFOAM, here we adopt an **one integration point** scheme with weight :math:`\omega = 1`, thus :eq:`fvm_flux_Gaussian_integral` becomes,
 
    .. math::
       :label: eq:fvm_surface_term_f1
@@ -720,12 +732,12 @@ Step 1, Read mesh and input field
       *  - :code:`mesh`
          - :math:`1/\delta_{C\leftrightarrow F}`
          - :code:`mesh.deltaCoeffs()`
-         - Internal
-         - :eq:`eq:fvm_aFaC`
+         - All faces
+         - :eq:`eq:fvm_aFaC`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`
       *  - :code:`T`
          - Dependents on BCs type
          - :code:`gradientInternalCoeffs` (diagonal), :code:`gradientBoundaryCoeffs` (source)
-         - Boundary patch
+         - Boundary patch/faces
          - :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`
 
 .. tab:: Access mesh and field properties
@@ -807,6 +819,25 @@ Step 1, Read mesh and input field
       :emphasize-lines: 0
       :caption: Boundary properties of field T of the regular mesh shown in :numref:`fig:polyMesh_regularBox`.
       :name: lst:log_boundaryT
+
+.. tab:: Internal cell
+   :new-set:
+
+   .. figure:: /_figures/Coordinate_delta_internalcell_regularBox.*
+      :align: center
+      :width: 100 %
+      :name: fig:deltaCoeff_InternalCell
+
+      Information of internal cell (:math:`C_{12}`)
+
+.. tab:: Boundary cell
+
+   .. figure:: /_figures/Coordinate_delta_boundary_regularBox.*
+      :align: center
+      :width: 100 %
+      :name: fig:deltaCoeff_BoundaryCell
+
+      Information of boundary cell (:math:`C_{19}`)
 
 Step 2, discretize Laplacian term
 -------------------------------------
