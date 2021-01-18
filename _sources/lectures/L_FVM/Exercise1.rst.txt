@@ -23,7 +23,7 @@ Theory
    - step by step exploring details of the solver and solving process
 
 
-Step 1: Geometric and physical modeling
+Step 1, Geometric and physical modeling
 ---------------------------------------------------
 
 .. math::
@@ -47,7 +47,7 @@ see also :ref:`theory_heat_diffusion`
    therefore :math:`T` is the only unknown variable of our problem.
 
 
-Step 2: Domain discretization
+Step 2, Domain discretization
 ---------------------------------------------------
 
 Mesh structure and topology
@@ -81,7 +81,7 @@ Therefore, the mesh topology shown below is the same as OpenFOAM polyMesh.
    While the boundary faces only have **owner** attribute.
    The normal vector of face always points from the **owner** cell to the **neighbour** cell.
 
-Step 3: Equation discretization
+Step 3, Spatial discretization: The diffusion term
 ---------------------------------------------------
 
 The equation discretization step is performed over each element of the computational domain to yield an algebraic relation that connects the value of a variable in an element to the values of the variable in the neighboring elements :cite:`moukalled2016finite`. 
@@ -176,19 +176,19 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
 
    .. math::
 
-      \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}} = D\frac{T_{f_{23}} - T_{C}}{x_{f_{23}} - x_C}\Delta y_{f_{23}} = D\frac{T_{f_{23}} - T_{C}}{\delta x_{f_{23}}}\Delta y_{f_{23}} = \color{green}{a_{f_{23}}} (T_{f_{23}} - T_C)
+      \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}} = D\frac{T_{f_{23}} - T_{C}}{x_{f_{23}} - x_C}\Delta y_{f_{23}} = D\frac{T_{f_{23}} - T_{C}}{\delta x_{f_{23}}}\Delta y_{f_{23}} = \color{green}{a_{F_{23}}} (T_{f_{23}} - T_C)
 
-   where :math:`\delta x_{f_{23}}` represents the distance between cell :math:`C` and :math:`f_{23}`.
+   where :math:`\delta x_{f_{23}}` represents the distance between center of cells who share face :math:`f_{23}`, they are cell 12 and cell 13.
 
-   Do the same thing for the remain faces (:math:`f_2, f_3, f_4`) and get their coefficients :math:`\color{green}{a_{F_2}, a_{F_3}, a_{F_4}}` respectively,
+   Do the same thing for the remain faces (:math:`f_{21}, f_5, f_{24}`) and get their coefficients :math:`\color{green}{a_{F_2}, a_{F_3}, a_{F_4}}` respectively,
 
    .. math::
       :label: eq:fvm_aFaC
 
-      \color{green}{a_{f_{23}}} = D\frac{\Delta y_{f_{23}}}{\delta x_{f_{23}}},
-      \color{green}{a_{F_2}} = D\frac{\Delta x_{f_2}}{\delta y_{f_2}},
-      \color{green}{a_{F_3}} = D\frac{\Delta x_{f_3}}{\delta y_{f_3}},
-      \color{green}{a_{F_4}} = D\frac{\Delta y_{f_4}}{\delta x_{f_4}}
+      \color{green}{a_{F_{23}}} = D\frac{\Delta y_{f_{23}}}{\delta x_{f_{23}}},
+      \color{green}{a_{F_5}} = D\frac{\Delta x_{f_5}}{\delta y_{f_5}},
+      \color{green}{a_{F_{24}}} = D\frac{\Delta x_{f_{24}}}{\delta y_{f_{24}}},
+      \color{green}{a_{F_{21}}} = D\frac{\Delta y_{f_{21}}}{\delta x_{f_{21}}}
    
    4.3 Construct coefficients of a specific cell :math:`C_{12}` 
 
@@ -200,7 +200,8 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
       \begin{eqnarray}
       b_{C_{12}} & =  & a_{F_{23}} (T_{F_{23}} - T_C) + a_{F_{24}} (T_{F_{24}} - T_C) + a_{F_{21}} (T_{F_{21}} - T_C) + a_{F_{5}} (T_{F_{5}} - T_C)\\
          & = & \sum\limits_{f\in[23, 24, 21, 5]} a_{F_f} T_{F_f} + \left(-\sum\limits_{f\in[23, 24, 21, 5]} a_{F_f} \right) T_C \\
-         & = & \sum\limits_{f\sim nb(\text{internal face})} a_{F_f} T_{F_f} + \left(-\sum\limits_{f\sim nb(\text{all face})} a_{F_f} \right) T_C  \\
+         & = & \sum\limits_{f\sim NF(C)} a_{F_f} T_{F_f} + \left(-\sum\limits_{f\sim NF(C)} a_{F_f} \right) T_C  \\
+         & = & a_C T_C + \sum\limits_{f\sim NF(C)} a_{F_f} T_{F_f}  \\
       \end{eqnarray}
    
    .. math:: 
@@ -301,7 +302,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
       \mathbf{A}_{N\times N}[19,:] \mathbf{T}_{N\times 1} =  B_{19}
 
    where :math:`B_{12} = b_{C_{12}} - \sum\limits_{f\sim nb(\text{boundary face})} c_{F_f}`.
-      
+
 5. Construct general matrix form of the :eq:`eq:fvm_surface_sum`
 
 .. math::
@@ -322,7 +323,7 @@ Matrix form of the :eq:`eq:fvm_surface_sum` can be written as,
 here :math:`N` is the number of cell, :math:`\mathbf{A}` is a sparse matrix of coefficients, 
 :math:`\mathbf{T}` is cell-centered temperature field.
 The matrix is visualized as :numref:`fig:fvm_matrix`.
-It should be noted that **the coefficients matrix of Laplacian term is a symmetric matrix and the boundary conditions only affect diagonal entry of the coefficients matrix**. Further, only the fixed value boundary condition affects the matrix and the fixed flux boundary condition affects the RHS :math:`B`.
+It should be noted that **the coefficients matrix of Laplacian term is a symmetric matrix and the boundary conditions only affect diagonal entry of the coefficients matrix**. Further, only the fixed value boundary condition affects the matrix and the fixed flux boundary condition affects the RHS(Right hand of side) :math:`B`.
 
 .. tab:: Regular mesh 
 
@@ -345,12 +346,80 @@ It should be noted that **the coefficients matrix of Laplacian term is a symmetr
       The coefficients of the selected cell :math:`C` (:numref:`fig:polyMesh_regularBox`) are marked by green rectangle.
 
 
-Step 5: Transient discretization 
----------------------------------------------------
+Step 4, Temporal Discretization: The Transient Term
+------------------------------------------------------
 
-.. warning::
+After spatial discretization, the :eq:`eq:fvm_volume_int` can be expressed as,
 
-   working on this
+.. math::
+   :label: eq:fvm_diffusionEq_spatial_dis
+
+   \frac{\partial T}{\partial t} V_C - L(T_C^t) =0
+
+where :math:`V_C` is the volume of the discretization cell and :math:`L(T_C^t)` is the spatial discretization operator expressed at some reference time :math:`t`, which can be written as algebraic form (see also :eq:`eq:fvm_matrix_form0`),
+
+.. math::
+   :label: eq:fvm_spatial_dis_algebraic
+
+   L(T_C^t) = a_C T_C^t + \sum\limits_{F\sim NB(C)} a_F T_F^t + \sum\limits_{F\sim NB(C)} c_F
+
+where :math:`a_C` is the diagonal coefficients of the matrix, :math:`a_F` is the off-diagonal coefficients, and the :math:`c_F` is the source coefficients as right hand side of matrix of system. 
+
+.. Tip::
+
+   For specific cell :math:`C`, 
+
+   * :math:`a_F` is only contributed from internal faces, see :eq:`eq:fvm_aFaC`. 
+
+   * :math:`a_C` is the negative summation of :math:`a_F`, contributed from all faces, but equation of the :math:`a_F` for a boundary faces (:eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue` and :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`) is a little bit different from internal face. 
+   
+   * :math:`c_F` only comes from boundary faces of cell :math:`C` if it has boundary face, see also :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue` and :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`. :math:`c_F` will contribute to RHS (:math:`\mathbf{B}`) of the algebraic :eq:`fvm_matrix_form`.
+   
+Let's do the temporal discretization for the first term of :eq:`eq:fvm_diffusionEq_spatial_dis`,
+
+.. math:: 
+
+   \frac{T^{t+\Delta t/2} - T^{t - \Delta t/2}}{\Delta t} V_C + L(T_C^t) = 0
+
+To derive the full discretized equation, an interpolation profile expressing the face values at (:math:`t-\Delta t/2`) and (:math:`t+\Delta t`) in terms of the element values at (:math:`t`), (:math:`t-\Delta t`), etc., is needed.Independent of the profile used, the flux will be linearized based on old and new values as,
+
+.. math::
+   :label: eq:fvm_temporal_linear
+
+   b_C = FluxC T_C + FluxC^o T_C^o + FluxV
+
+where the superscript :math:`^{o}` refers to old values. With the format of the linearization, 
+the coefficient :math:`FluxC` will be **added to diagonal element** and the coefficient :math:`FluxC^o T_C^o + FluxV` will be **added to the source or RHS** (:math:`B`).
+
+First order implicit Euler scheme
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. math::
+   :label: eq:fvm_firstOrder_Euler_imp
+
+   \frac{T^t - T^{t-\Delta t}}{\Delta t} V_C - L(T^{t}) = 0
+
+Therefore the coefficients will be 
+
+.. math::
+
+   FluxC = \frac{V_C}{\Delta t}, ~ FluxC^o = - \frac{V_C}{\Delta t}, ~ FluxV =0
+
+First order implicit Euler scheme
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. math:: 
+   :label: eq:fvm_firstOrder_Euler_exp
+
+   \frac{T^{t+\Delta t} - T^t}{\Delta t} V_C - L(T^{t}) = 0
+
+Note that now the new time is at :math:`t+\Delta t` and that the spatial operator (:math:`L`) of :eq:`eq:fvm_firstOrder_Euler_exp` has to be evaluated at time :math:`eq:fvm_firstOrder_Euler_exp`. 
+Therefore, in order to find the value of :math:`T` at time :math:`t+\Delta t`, we don't need to solve a set of linear algebraic equations,
+
+.. math::
+   :label: eq:fvm_firstOrder_Euler_exp_coef
+
+   T^{t+\Delta t} = \frac{\Delta t}{V_C} L(T^{t}) + T^t
 
 
 Step 6: Solution of the discretized equations
@@ -363,40 +432,501 @@ classified as direct or iterative.
 OpenFOAM implementation
 ===========================
 
-Step 1: Read data
---------------------------
+Ok, now let's do some practical tings, 
+(0) **generate mesh**; 
+(1) **read mesh and do some useful calculation**, e.g. cell volume, face area, ..., etc; 
+(2) **discretize Laplacian term and get coefficients**; 
+(3) **discretize transient term and get additional coefficients**; 
+(4) **construct the final coefficient matrix and RHS**; 
+(5) **solve the system of algebraic equations**; 
+(6) **write solution to file**.
 
-Read mesh 
-^^^^^^^^^^^^^
+.. admonition:: Goal
 
-.. admonition:: 10 seconds thinking
+   Deeply look into OpenFOAM and understand how it works!
 
-   What information do we need in the mesh object ?
+In order to better OpenFOAM's logic and its work flow, we have to look at the basic structure of the `source code <https://cpp.openfoam.org/v6/laplacianFoam_8C_source.html>`_ of a basic solver, :code:`laplacianFoam`.
 
-.. #. Surface centroids
+.. tab:: laplacianFoam.C
 
-.. .. math::
-..    :label: fvm_mesh_C
+   .. code-block::  cpp
+      :linenos: 
+      :emphasize-lines: 7, 9, 17, 19, 21, 23
+      :caption: Source code of laplacianFoam
+      :name: lst:source_laplacianFoam
 
-..    (\mathbf{X}_{Centorid})_f = \frac{\sum\limits_{t \sim Sub-triangles(f)} (\mathbf{X}_{centroid})_t S_t}{S_f}
-   
-.. tab:: FVM mesh
+      #include "fvCFD.H"               // Basic head file of OF
+      #include "simpleControl.H"       // Basic head file of OF
+      int main(int argc, char *argv[]) // Typical c++ main control function
+      {
+         #include "setRootCaseLists.H" // Do some case/file path-related thing
+         #include "createTime.H"       // Create a time object: read controlDict, ...
+         #include "createMesh.H"       // (2) Create mesh object: read mesh and do some useful calculation
+         simpleControl simple(mesh);   // Time loop control object
+         #include "createFields.H"     // (3) Read input data: T and D in the PDE 
 
-   #. Centroid of face
-   #. Area of face
-   #. Vector of face
-   #. Centroid of cell
-   #. Volume of cell
+         Info<< "\nCalculating temperature distribution\n" << endl;
+         while (simple.loop(runTime)) // do time loop
+         {
+            Info<< "Time = " << runTime.timeName() << nl << endl;
+            while (simple.correctNonOrthogonal())  // Non-orthogonal correction loop for the unstructured/non-orthogonal mesh
+            {
+               fvScalarMatrix TEqn                 // (5) construct the final coefficient matrix, include RHS (.source)
+                  (
+                     fvm::ddt(T)                   // (4) Discretization of the transient term, return a fvMatrix object
+                     - 
+                     fvm::laplacian(DT, T)         // (3) Discretization of the Laplacian, return a fvMatrix object
+                  );
+                  TEqn.solve();                    // (6) Solve the system of algebraic equations
+            }
+            #include "write.H"                     // (7) Save solution to file.
+            Info<< "ExecutionTime = " << runTime.elapsedCpuTime() << " s"
+                  << "  ClockTime = " << runTime.elapsedClockTime() << " s"
+                  << nl << endl;
+         }
+         Info<< "End\n" << endl;
+         return 0;
+      }
 
-.. tab:: OpenFOAM code snippit
+   .. list-table:: Comparison between equation and code
+      :header-rows: 0
 
-   .. code-block:: cpp
+      *  - Term
+         - Equation
+         - Code
+         - Coefficients(ldu:b)
+         - Reference
+      *  - Transient
+         - :math:`\frac{\partial T}{\partial t}`
+         - :code:`fvm::ddt(T)`
+         - d(:math:`FluxC`), b(:math:`FluxC^o`)
+         - :eq:`eq:fvm_firstOrder_Euler_exp_coef`
+      *  - Laplacian
+         - :math:`\nabla \cdot D \nabla T`
+         - :code:`fvm::laplacian(DT, T)`
+         - d(:math:`\sum\limits_{F\sim NB(C)}a_F`), u(:math:`a_F` only internal faces)
+         - :eq:`eq:fvm_aFaC`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`
 
+.. tab:: createFields.H
+
+   .. code-block::  cpp
+      :linenos:
+      :emphasize-lines: 0
+      :caption: createFields.H
+      :name: lst:createFields
+
+      volScalarField T //Read input data of T, include ICs and BCs
+      (
+         IOobject
+         (
+            "T",
+            runTime.timeName(),
+            mesh,
+            IOobject::MUST_READ,
+            IOobject::AUTO_WRITE
+         ),
+         mesh
+      );
+
+      IOdictionary transportProperties // Read dictionary file of transportProperties
+      (
+         IOobject
+         (
+            "transportProperties",
+            runTime.constant(),
+            mesh,
+            IOobject::MUST_READ_IF_MODIFIED,
+            IOobject::NO_WRITE
+         )
+      );
+      dimensionedScalar DT // Read the diffusivity D (constant) from transportProperties object
+      (
+         transportProperties.lookup("DT")
+      );
+
+.. tab:: Input data 1
+
+   .. code-block::  foam
+      :linenos:
+      :emphasize-lines: 0
+      :caption: constant/transportProperties
+      :name: lst:transportProperties
+
+      FoamFile
+      {
+         version     2.0;
+         format      ascii;
+         class       dictionary;
+         location    "constant";
+         object      transportProperties;
+      }
+      DT              DT [0 2 -1 0 0 0 0] 4e-05;
+
+.. tab:: Input data 2
+
+   .. code-block::  foam
+      :linenos:
+      :emphasize-lines: 0
+      :caption: 0/T
+      :name: lst:0_T
+
+      FoamFile
+      {
+         version     2.0;
+         format      ascii;
+         class       volScalarField;
+         object      T;
+      }
+      dimensions      [0 0 0 1 0 0 0];
+      internalField   uniform 273;
+      boundaryField
+      {
+         left
+         {
+            type            fixedValue;
+            value           uniform 273;
+         }
+         right
+         {
+            type            fixedValue;
+            value           uniform 573;
+         }
+         "(top|bottom)"
+         {
+            type            zeroGradient;
+         }
+      }
+
+
+Step0, Generate mesh
+---------------------------
+
+.. tab:: Generate mesh
+
+   Nothing special, just a meshing process. 
+   Here we use the OpenFOAM utility :code:`blockMesh` to generate a regular mesh (:download:`Regular box case <cases/regularBox.zip>`) same as :numref:`fig:polyMesh_regularBox`.
+
+.. tab:: OpenFOAM script
+
+   .. code-block::  foam
+      :linenos:
+      :emphasize-lines: 0
+      :caption: blockMeshDict of a regular box mesh we shown above
+      :name: lst:blockMesh_regularBox
+
+      /*--------------------------------*- C++ -*----------------------------------*\
+      | =========                 |                                                 |
+      | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+      |  \\    /   O peration     | Version:  5                                     |
+      |   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+      |    \\/     M anipulation  |                                                 |
+      \*---------------------------------------------------------------------------*/
+      FoamFile
+      {
+         version     2.0;
+         format      ascii;
+         class       dictionary;
+         object      blockMeshDict;
+      }
+      // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+      convertToMeters 1;
+      xmin -0.05;    //variable definition
+      xmax 0.05;
+      ymin -0.015;
+      ymax 0.015;
+      Lz 0.01;
+      vertices    //vertices definition
+      (
+         ($xmin      $ymin   0)  //coordinate of vertex 0
+         ($xmax    $ymin   0)  //coordinate of vertex 1
+         ($xmax    $ymax   0)  //coordinate of vertex 2
+         ($xmin      $ymax   0)  //coordinate of vertex 3
+         ($xmin      $ymin   $Lz)//coordinate of vertex 4
+         ($xmax    $ymin   $Lz)//coordinate of vertex 5
+         ($xmax    $ymax   $Lz)//coordinate of vertex 6
+         ($xmin      $ymax   $Lz)//coordinate of vertex 7
+      );
+      blocks
+      (
+         hex (0 1 2 3 4 5 6 7) (10 3 1) simpleGrading (1 1 1)
+      );
+      boundary
+      (
+         left    //patch name
+         {
+            type patch ;
+            faces   //face list
+            (
+                  (0 4 7 3)
+            );
+         }
+         right
+         {
+            type patch;
+            faces
+            (
+                  (2 6 5 1)
+            );
+         }
+         top
+         {
+            type patch;
+            faces
+            (
+                  (3 7 6 2)
+            );
+         }
+         bottom
+         {
+            type patch;
+            faces
+            (
+                  (1 5 4 0)
+            );
+         }
+         frontAndBack    //patch name
+         {
+            type empty; 
+            faces //face list
+            (
+                  (0 3 2 1)   //back face
+                  (4 5 6 7)   //front face
+            );
+         }
+      );
+      // ************************************************************************* //
+
+Ok, let's exploring the main steps of the :code:`laplacianFoam`.
+Please download (:download:`test_laplacianFoam <cases/test_laplacianFoam.zip>`) and do the following practice/debug steps in :code:`test_laplacianFoam.C`.
+
+Step 1, Read mesh and input field
+-------------------------------------
+
+.. tab:: Read data
+
+   The basic properties of cells and faces, e.g. area, volume, face normal vector, will be evaluated after mesh reading, all these processes are happened in the mesh object. 
+   It means that after calling :code:`creatFields.H` all these properties are evaluated and stored in the :code:`mesh` object. Of course the temperature field object :code:`T` (volScalarField) with BCs and ICs, and thermal diffusivity :code:`DT` are also initialized from input data after calling :code:`creatFields.H`.
+   **It should be noted** that the part of Laplacian discretization coefficients are also calculated in this step. If the mesh is not changed during simulation time, the mesh related coefficients just need to be calculated one time.
+
+   .. list-table:: Mesh- and Field-related coefficients
+      :header-rows: 0
+
+      *  - Object
+         - Equation
+         - Code
+         - Faces
+         - Reference
+      *  - :code:`mesh`
+         - :math:`1/\delta_{C\leftrightarrow F}`
+         - :code:`mesh.deltaCoeffs()`
+         - Internal
+         - :eq:`eq:fvm_aFaC`
+      *  - :code:`T`
+         - Dependents on BCs type
+         - :code:`gradientInternalCoeffs` (diagonal), :code:`gradientBoundaryCoeffs` (source)
+         - Boundary patch
+         - :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`
+
+.. tab:: Access mesh and field properties
+
+   .. code-block::  cpp
+      :linenos:
+      :emphasize-lines: 0
+      :caption: Access mesh properties and field boundary properties
+      :name: lst:access_mesh
+
+      // (1). read data
+      #include "createMesh.H"
+      #include "createFields.H"
+      // 1.1 access internal faces
+      Info<<"\n\nAccess internal mesh"<<endl;
       surfaceVectorField Cf = mesh.Cf();
+      surfaceVectorField Sf = mesh.Sf();
+      surfaceScalarField S = mesh.magSf();
       forAll(Cf, iface)
       {
-         Info<<Cf[iface][0]<<" "<<Cf[iface][1]<<" "<<Cf[iface][2]<<endl;
+         Info<<iface<<": face center "<<Cf[iface]<<endl;
+         Info<<iface<<": face area vector "<<Sf[iface]<<endl;
+         Info<<iface<<": face area "<<S[iface]<<endl;
+         Info<<iface<<": face delta coeff "<<mesh.deltaCoeffs()[iface]<<endl;
+         Info<<iface<<": coeff(D*magSf*deltacoeff) "<<mesh.deltaCoeffs()[iface]*DT*S[iface]<<endl;
       }
+      // 1.2. access boundary mesh
+      Info<<"\n\nAccess boundary mesh"<<endl;
+      const fvBoundaryMesh& boundaryMesh = mesh.boundary(); 
+      forAll(boundaryMesh, patchI)
+      {
+         const fvPatch& patch = boundaryMesh[patchI];
+         forAll(patch, faceI)
+         {
+            Info<<"Patch "<<patch.name()<<" face "<<faceI<<": face center "<<patch.Cf()[faceI]<<endl;
+            Info<<"Patch "<<patch.name()<<" face "<<faceI<<": face area vector "<<patch.Sf()[faceI]<<endl;
+            Info<<"Patch "<<patch.name()<<" face "<<faceI<<": face area "<<patch.magSf()[faceI]<<endl;
+            Info<<"Patch "<<patch.name()<<" face "<<faceI<<": face delta coeff "<<patch.deltaCoeffs()[faceI]<<endl;
+            Info<<"Patch "<<patch.name()<<" face "<<faceI<<": owner cell "<<patch.faceCells()[faceI]<<endl;
+         } 
+      }
+      // 1.3. access boundary field, boundary field coefficients, 
+      forAll(T.boundaryField(), patchI)
+      {
+         Info<<"Boundary patch: "<<mesh.boundary()[patchI].name()<<endl;
+         Info<<"Is coupled ? "<<mesh.boundary()[patchI].coupled()<<endl;
+         Info<<"gradientInternalCoeffs of field T "<<endl;
+         Info<<T.boundaryField()[patchI].gradientInternalCoeffs()<<endl; //Diagonal coeff [A]
+         Info<<"gradientBoundaryCoeffs of field T "<<endl;
+         Info<<T.boundaryField()[patchI].gradientBoundaryCoeffs()<<"\n"<<endl; //source coeff, [B]
+      }
+
+.. tab:: Internal mesh
+
+   .. literalinclude::  /_static/log_case/L_FVM/regularMesh_internal.txt
+      :language: bash
+      :linenos:
+      :lines: 0-
+      :emphasize-lines: 0
+      :caption: Internal mesh properties of the regular mesh shown in :numref:`fig:polyMesh_regularBox`.
+      :name: lst:log_internalMesh
+
+.. tab:: Boundary mesh
+
+   .. literalinclude::  /_static/log_case/L_FVM/regularMesh_boundary.txt
+      :language: bash
+      :linenos:
+      :lines: 0-
+      :emphasize-lines: 0
+      :caption: Boundary mesh properties of the regular mesh shown in :numref:`fig:polyMesh_regularBox`.
+      :name: lst:log_boundaryMesh
+
+.. tab:: Boundary T
+
+   .. literalinclude::  /_static/log_case/L_FVM/regularMesh_T_boundary.txt
+      :language: bash
+      :linenos:
+      :lines: 0-
+      :emphasize-lines: 0
+      :caption: Boundary properties of field T of the regular mesh shown in :numref:`fig:polyMesh_regularBox`.
+      :name: lst:log_boundaryT
+
+Step 2, discretize Laplacian term
+-------------------------------------
+
+.. tab:: discretize Laplacian term
+
+   Because discretization coefficients matrix of Laplacian term is a symmetric matrix, so :code:`fvm::Laplacian(DT, T)` will return a fvMatrix object only has diagonal and upper. 
+   What :code:`fvm::Laplacian` actually did is evaluate (1) :math:`a_F` (see :eq:`eq:fvm_aFaC`) for each internal faces, (2) :math:`a_C` for each cells, which is the negative summation of :math:`a_F`, (3) store the field BCs-related coefficients as :code:`internalCoeffs` and :code:`boundaryCoeffs`, respectively.
+   All of these are implemented in `gaussLaplacianScheme.H <https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047>`_ . **Note that** the :code:`Gaussian` scheme is the only choice for Laplacian discretization in OF. 
+
+.. tab:: Access Laplacian coeff
+
+   .. code-block::  cpp
+      :linenos:
+      :emphasize-lines: 0
+      :caption: Access fvm::Laplacian discretization
+      :name: lst:access_Laplacian
+
+      fvScalarMatrix Laplacian(fvm::laplacian(DT, T));
+      Info<<"fvm::laplacian(DT, T): "<<"\n"
+         <<"\tLower"<<Laplacian.lower()<<"\n"
+         <<"\tDiagonal"<<Laplacian.diag()<<"\n"
+         <<"\tUpper"<<Laplacian.upper()<<"\n"
+         <<"\tinternalCoeffs"<<Laplacian.internalCoeffs()<<"\n"
+         <<"\tboundaryCoeffs"<<Laplacian.boundaryCoeffs()<<"\n"
+         <<"\tSource"<<Laplacian.source()<<"\n"
+         <<endl;
+
+.. tab:: Source code of Laplacian
+
+   .. code-block::  cpp
+      :linenos:
+      :emphasize-lines: 15, 20, 39, 40
+      :caption: Key source code of Laplacian discretization (before nonOrthogonal correcting)
+      :name: lst:source_fvm_Laplacian
+
+      template<class Type, class GType>
+      tmp<fvMatrix<Type>>
+      gaussLaplacianScheme<Type, GType>::fvmLaplacianUncorrected
+      (
+         const surfaceScalarField& gammaMagSf,
+         const surfaceScalarField& deltaCoeffs,
+         const GeometricField<Type, fvPatchField, volMesh>& vf
+      )
+      {
+         tmp<fvMatrix<Type>> tfvm
+         (
+            new fvMatrix<Type>
+            (
+                  vf,
+                  deltaCoeffs.dimensions()*gammaMagSf.dimensions()*vf.dimensions()
+            )
+         );
+         fvMatrix<Type>& fvm = tfvm.ref();
+
+         fvm.upper() = deltaCoeffs.primitiveField()*gammaMagSf.primitiveField();
+         fvm.negSumDiag();
+
+         forAll(vf.boundaryField(), patchi)
+         {
+            const fvPatchField<Type>& pvf = vf.boundaryField()[patchi];
+            const fvsPatchScalarField& pGamma = gammaMagSf.boundaryField()[patchi];
+            const fvsPatchScalarField& pDeltaCoeffs =
+                  deltaCoeffs.boundaryField()[patchi];
+
+            if (pvf.coupled())
+            {
+                  fvm.internalCoeffs()[patchi] =
+                     pGamma*pvf.gradientInternalCoeffs(pDeltaCoeffs);
+                  fvm.boundaryCoeffs()[patchi] =
+                     -pGamma*pvf.gradientBoundaryCoeffs(pDeltaCoeffs);
+            }
+            else
+            {
+                  fvm.internalCoeffs()[patchi] = pGamma*pvf.gradientInternalCoeffs();
+                  fvm.boundaryCoeffs()[patchi] = -pGamma*pvf.gradientBoundaryCoeffs();
+            }
+         }
+
+         return tfvm;
+      }
+
+.. tab:: Laplacian coefficients
+
+   .. literalinclude::  /_static/log_case/L_FVM/regularMesh_fvm_Laplacian.txt
+      :language: bash
+      :linenos:
+      :lines: 0-
+      :emphasize-lines: 0
+      :caption: fvm::Laplacian Coefficients  of the regular mesh shown in :numref:`fig:polyMesh_regularBox`.
+      :name: lst:log_fvm_Laplacian
+
+Step 3, discretize transient term
+-------------------------------------
+
+.. warning::
+
+   working on this.
+
+Step 4, construct the final coefficient matrix and RHS
+-----------------------------------------------------------
+
+.. warning::
+
+   working on this.
+
+Step 5, solve
+-------------------------------------
+
+.. warning::
+
+   working on this.
+
+Step 6, write
+-------------------------------------
+
+.. warning::
+
+   working on this.
+
 
 Jupyter notebook
 -------------------
