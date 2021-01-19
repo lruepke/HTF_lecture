@@ -941,6 +941,57 @@ Step 2, discretize Laplacian term
       :caption: fvm::Laplacian Coefficients  of the regular mesh shown in :numref:`fig:polyMesh_regularBox`.
       :name: lst:log_fvm_Laplacian
 
+.. tab:: Internal cell
+   :new-set:
+
+   .. figure:: /_figures/Coordinate_Laplacian_internalcell_regularBox.*
+      :align: center
+      :width: 100 %
+      :name: fig:LaplacianCoeff_InternalCell
+
+      Information of internal cell (:math:`C_{12}`)
+
+.. tab:: Boundary cell 19
+
+   .. figure:: /_figures/Coordinate_Laplacian_boundary_C19_regularBox.*
+      :align: center
+      :width: 100 %
+      :name: fig:LaplacianCoeff_BoundaryCell
+
+      Information of boundary cell (:math:`C_{19}`)
+
+.. tab:: Boundary cell 9
+
+   .. figure:: /_figures/Coordinate_Laplacian_boundary_C9_regularBox.*
+      :align: center
+      :width: 100 %
+
+      Information of boundary cell (:math:`C_{9}`)
+
+.. tab:: Boundary cell 0
+
+   .. figure:: /_figures/Coordinate_Laplacian_boundary_C0_regularBox.*
+      :align: center
+      :width: 100 %
+
+      Information of boundary cell (:math:`C_{0}`)
+
+.. tab:: Boundary cell 10
+
+   .. figure:: /_figures/Coordinate_Laplacian_boundary_C10_regularBox.*
+      :align: center
+      :width: 100 %
+
+      Information of boundary cell (:math:`C_{10}`)
+
+.. tab:: Boundary cell 5
+
+   .. figure:: /_figures/Coordinate_Laplacian_boundary_C5_regularBox.*
+      :align: center
+      :width: 100 %
+
+      Information of boundary cell (:math:`C_{5}`)
+
 Step 3, discretize transient term
 -------------------------------------
 
