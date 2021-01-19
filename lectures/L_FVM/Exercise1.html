@@ -422,7 +422,7 @@ the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (
 Therefore the first keyword of Laplacian scheme in <code class="code docutils literal notranslate"><span class="pre">system/fvScheme</span></code> dictionary file of a case has only one option, it is <code class="code docutils literal notranslate"><span class="pre">Gauss</span></code>.</p>
 </div>
 <p>4.2 Choose integral scheme or integral points</p>
-<p>To simply explain the calculation process/logic and also keep consistent with OpenFOAM, here we adopt an <strong>one integration point</strong> scheme with weight <span class="math notranslate nohighlight">\(\omega = 1\)</span>, thus <a class="reference internal" href="#equation-fvm-flux-gaussian-integral">equation (33)</a> becomes,</p>
+<p>To simply explain the calculation process/logic and to also be consistent with OpenFOAM, we here adopt an <strong>one integration point</strong> scheme with weight <span class="math notranslate nohighlight">\(\omega = 1\)</span>, thus <a class="reference internal" href="#equation-fvm-flux-gaussian-integral">equation (33)</a> becomes,</p>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-surface-term-f1">
 <span class="eqno">(34)<a class="headerlink" href="#equation-eq-fvm-surface-term-f1" title="Permalink to this equation">¶</a></span>\[\color{orange}{\sum\limits_{ip\sim ip(f_{23})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = \left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{23}} \cdot \Delta y_{f_{23}} \vec{i} = \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}}\]</div>
 <p>where</p>
@@ -597,7 +597,7 @@ classified as direct or iterative.</p>
 <p class="admonition-title">Goal</p>
 <p>Deeply look into OpenFOAM and understand how it works!</p>
 </div>
-<p>In order to better OpenFOAM’s logic and its work flow, we have to look at the basic structure of the <a class="reference external" href="https://cpp.openfoam.org/v6/laplacianFoam_8C_source.html">source code</a> of a basic solver, <code class="code docutils literal notranslate"><span class="pre">laplacianFoam</span></code>.</p>
+<p>In order to better understand OpenFOAM’s logic and its work flow, we have to look at the basic structure of the <a class="reference external" href="https://cpp.openfoam.org/v6/laplacianFoam_8C_source.html">source code</a> of a basic solver, <code class="code docutils literal notranslate"><span class="pre">laplacianFoam</span></code>.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--3-input--1" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--1">laplacianFoam.C</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-source-laplacianfoam">
