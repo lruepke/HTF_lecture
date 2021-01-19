@@ -400,7 +400,7 @@ Let's do the temporal discretization for the first term of :eq:`eq:fvm_diffusion
 To derive the full discretized equation, an interpolation profile expressing the face values at (:math:`t-\Delta t/2`) and (:math:`t+\Delta t`) in terms of the element values at (:math:`t`), (:math:`t-\Delta t`), etc., is needed.Independent of the profile used, the flux will be linearized based on old and new values as,
 
 .. math::
-   :label: eq:fvm_temporal_linear
+   :label: eq:fvm_temporal_linear 
 
    b_C = FluxC T_C + FluxC^o T_C^o + FluxV
 
@@ -418,6 +418,7 @@ First order implicit Euler scheme
 Therefore the coefficients will be 
 
 .. math::
+   :label: eq:fvm_firstOrder_Euler_imp_coeff
 
    FluxC = \frac{V_C}{\Delta t}, ~ FluxC^o = - \frac{V_C}{\Delta t}, ~ FluxV =0
 
@@ -843,6 +844,8 @@ Step 1, Read mesh and input field
 
       Information of boundary cell (:math:`C_{19}`)
 
+.. _OF_fvmLaplacian:
+
 Step 2, discretize Laplacian term
 -------------------------------------
 
@@ -850,9 +853,9 @@ Step 2, discretize Laplacian term
 
    Because discretization coefficients matrix of Laplacian term is a symmetric matrix, so :code:`fvm::Laplacian(DT, T)` will return a fvMatrix object only has diagonal and upper. 
    What :code:`fvm::Laplacian` actually did is evaluate (1) :math:`a_F` (see :eq:`eq:fvm_aFaC`) for each internal faces, (2) :math:`a_C` for each cells, which is the negative summation of :math:`a_F`, (3) store the field BCs-related coefficients as :code:`internalCoeffs` and :code:`boundaryCoeffs`, respectively.
-   All of these are implemented in gaussLaplacianScheme.H_ . **Note that** the :code:`Gaussian` scheme is the only choice for Laplacian discretization in OF. 
+   All of these are implemented in gaussLaplacianScheme.C_ . **Note that** the :code:`Gaussian` scheme is the only choice for Laplacian discretization in OF. 
 
-.. tab:: Access Laplacian coeff
+.. tab:: Access Laplacian coeffs
 
    .. code-block::  cpp
       :linenos:
@@ -882,7 +885,7 @@ Step 2, discretize Laplacian term
    .. code-block::  cpp
       :linenos:
       :emphasize-lines: 15, 20, 39, 40
-      :caption: Key source code of fvm::Laplacian (gaussLaplacianScheme.H_ before nonOrthogonal correcting)
+      :caption: Key source code of fvm::Laplacian (gaussLaplacianScheme.C_ before nonOrthogonal correcting)
       :name: lst:source_fvm_Laplacian
 
       template<class Type, class GType>
@@ -937,7 +940,7 @@ Step 2, discretize Laplacian term
       :language: bash
       :linenos:
       :lines: 0-
-      :emphasize-lines: 0
+      :emphasize-lines: 58, 63, 67, 68, 77, 70
       :caption: fvm::Laplacian Coefficients  of the regular mesh shown in :numref:`fig:polyMesh_regularBox`.
       :name: lst:log_fvm_Laplacian
 
@@ -992,33 +995,163 @@ Step 2, discretize Laplacian term
 
       Information of boundary cell (:math:`C_{5}`)
 
+.. _OF_fvmDdt:
+
 Step 3, discretize transient term
 -------------------------------------
 
-.. warning::
 
-   working on this.
+
+.. tab:: discretize Laplacian term
+
+   For implicit discretization, :code:`fvm::ddt(T)` will return a fvMatrix object contains diagonal coefficients and source.
+   The coefficients depend on discretization scheme.
+   For example Euler scheme, the diagonal coefficients are calculated from :eq:`eq:fvm_temporal_linear` and :eq:`eq:fvm_firstOrder_Euler_imp_coeff`.
+   All these are implemented in EulerDdtScheme.C_. 
+
+   .. tip::
+
+      There are 8 schemes for transient discretization in OpenFOAM
+
+      #. CoEuler
+      #. CrankNicolson
+      #. Euler
+      #. SLTS
+      #. backward
+      #. bounded
+      #. localEuler
+      #. steadyState
+
+.. tab:: Access fvm::ddt coeffs
+
+   .. code-block::  cpp
+      :linenos:
+      :emphasize-lines: 0
+      :caption: Access fvm::ddt discretization
+      :name: lst:access_ddt
+
+      Info<<"fvm::ddt(T): "<<"\n"
+         <<"\tLower"<<ddt.lower()<<"\n"
+         <<"\tDiagonal"<<ddt.diag()<<"\n"
+         <<"\tUpper"<<ddt.upper()<<"\n"
+         <<"\tinternalCoeffs"<<ddt.internalCoeffs()<<"\n" //actually this is not necessary for fvm::ddt, this is definitely equal to zero
+         <<"\tboundaryCoeffs"<<ddt.boundaryCoeffs()<<"\n"
+         <<"\tSource"<<ddt.source()<<"\n"
+         <<endl;
+
+.. tab:: Source code of fvm::ddt
+
+   .. code-block::  cpp
+      :linenos:
+      :emphasize-lines: 19, 21, 29
+      :caption: Key source code of fvm::ddt (EulerDdtScheme.C_ )
+      :name: lst:source_fvm_ddt
+
+      template<class Type>
+      tmp<fvMatrix<Type>>
+      EulerDdtScheme<Type>::fvmDdt
+      (
+         const GeometricField<Type, fvPatchField, volMesh>& vf
+      )
+      {
+         tmp<fvMatrix<Type>> tfvm
+         (
+            new fvMatrix<Type>
+            (
+                  vf,
+                  vf.dimensions()*dimVol/dimTime
+            )
+         );
+
+         fvMatrix<Type>& fvm = tfvm.ref();
+
+         scalar rDeltaT = 1.0/mesh().time().deltaTValue(); // 1/dt
+
+         fvm.diag() = rDeltaT*mesh().Vsc(); // Vc/dt (FluxC)
+
+         if (mesh().moving())
+         {
+            fvm.source() = rDeltaT*vf.oldTime().primitiveField()*mesh().Vsc0();
+         }
+         else
+         {
+            fvm.source() = rDeltaT*vf.oldTime().primitiveField()*mesh().Vsc(); // -T_old*Vc/dt
+         }
+
+         return tfvm;
+      }
+
+.. tab:: fvm::ddt coefficients
+
+   :math:`\Delta t = 0.05\ s`
+
+   .. literalinclude::  /_static/log_case/L_FVM/regularMesh_fvm_ddt.txt
+      :language: bash
+      :linenos:
+      :lines: 0-
+      :emphasize-lines: 0
+      :caption: fvm::ddt Coefficients  of the regular mesh shown in :numref:`fig:polyMesh_regularBox`.
+      :name: lst:log_fvm_ddt
+
 
 Step 4, construct the final coefficient matrix and RHS
 -----------------------------------------------------------
 
-.. warning::
+.. tab:: Final matrix
 
-   working on this.
+   The final coefficient matrix is constructed by simply adding the matrix of :ref:`OF_fvmLaplacian` and :ref:`OF_fvmDdt`.
+   
+   * The diagonal coefficients come from :math:`a_C` of Laplacian term and :math:`FluxC` of transient term
+   * The off-diagonal coefficients only come from :math:`a_F (internal\ face)` of Laplacian term
+   * The RHS comes from :math:`c_F` of Laplacian term when at boundary faces and :math:`FluxC^oT_C^o` of transient term.
+
+.. tab:: Coefficients at the first time step
+
+   .. literalinclude::  /_static/log_case/L_FVM/regularMesh_fvm_TEqn.txt
+      :language: bash
+      :linenos:
+      :lines: 0-
+      :emphasize-lines: 69, 76, 57, 66, 62, 67
+      :caption: Final matrix coefficients of the regular mesh shown in :numref:`fig:polyMesh_regularBox` at the first time step.
+      :name: lst:log_fvm_TEqn
 
 Step 5, solve
 -------------------------------------
 
-.. warning::
+For the :download:`Regular box case <cases/regularBox.zip>` case, we can use **PBiCG** solver and **DILU** preconditioner.
 
-   working on this.
+.. admonition:: Available preconditioner in OpenFOAM
+
+   * **diagonal** : for symmetric & nonsymmetric matrices (not very effective)
+   * **DIC** : Diagonal Incomplete Cholesky preconditioner for symmetric matrices
+   * **DILU** : Diagonal Incomplete LU preconditioner for nonsymmetric matrices
+   * **FDIC** : Fast Diagonal Incomplete Cholesky preconditioner
+   * **GAMG** : Geometric Agglomerated algebraic MultiGrid preconditioner
+
+
+.. admonition:: Available solver in OpenFOAM
+
+   * **BICCG**: Diagonal incomplete LU preconditioned BiCG solver
+   * **diagonalSolver**: Solver for symmetric and nonsymmetric matrices
+   * **GAMG**: Geometric Agglomerated algebraic Multi-Grid solver
+   * **ICC**: Incomplete Cholesky Conjugate Gradient solver
+   * **PBiCG**: Bi-Conjugate Gradient solver with preconditioner
+   * **PCG**: Conjugate Gradient solver with preconditioner
+   * **smoothSolver**: Iterative solver with run-time selectable smoother
+
+.. admonition:: Krylov-subspace solvers
+
+   * **CG**: The Conjugate Gradient algorithm applies to systems where A is symmetric positive definite (SPD)
+   * **GMRES**: The Generalized Minimal RESidual algorithm is the first method to try if A is not SPD.
+   * **BiCG**: The BiConjugate Gradient algorithm applies to general linear systems, but the convergence can be quite erratic.
+   * **BiCGstab**: The stabilized version of the BiConjugate Gradient algorithm.
+
+
 
 Step 6, write
 -------------------------------------
 
-.. warning::
 
-   working on this.
 
 
 Jupyter notebook

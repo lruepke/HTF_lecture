@@ -563,17 +563,17 @@ the coefficient <span class="math notranslate nohighlight">\(FluxC\)</span> will
 <div class="math notranslate nohighlight" id="equation-eq-fvm-firstorder-euler-imp">
 <span class="eqno">(53)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-imp" title="Permalink to this equation">¶</a></span>\[\frac{T^t - T^{t-\Delta t}}{\Delta t} V_C - L(T^{t}) = 0\]</div>
 <p>Therefore the coefficients will be</p>
-<div class="math notranslate nohighlight">
-\[FluxC = \frac{V_C}{\Delta t}, ~ FluxC^o = - \frac{V_C}{\Delta t}, ~ FluxV =0\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-firstorder-euler-imp-coeff">
+<span class="eqno">(54)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-imp-coeff" title="Permalink to this equation">¶</a></span>\[FluxC = \frac{V_C}{\Delta t}, ~ FluxC^o = - \frac{V_C}{\Delta t}, ~ FluxV =0\]</div>
 </div>
 <div class="section" id="id3">
 <h4>First order implicit Euler scheme<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-firstorder-euler-exp">
-<span class="eqno">(54)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-exp" title="Permalink to this equation">¶</a></span>\[\frac{T^{t+\Delta t} - T^t}{\Delta t} V_C - L(T^{t}) = 0\]</div>
-<p>Note that now the new time is at <span class="math notranslate nohighlight">\(t+\Delta t\)</span> and that the spatial operator (<span class="math notranslate nohighlight">\(L\)</span>) of <a class="reference internal" href="#equation-eq-fvm-firstorder-euler-exp">equation (54)</a> has to be evaluated at time <span class="math notranslate nohighlight">\(eq:fvm_firstOrder_Euler_exp\)</span>.
+<span class="eqno">(55)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-exp" title="Permalink to this equation">¶</a></span>\[\frac{T^{t+\Delta t} - T^t}{\Delta t} V_C - L(T^{t}) = 0\]</div>
+<p>Note that now the new time is at <span class="math notranslate nohighlight">\(t+\Delta t\)</span> and that the spatial operator (<span class="math notranslate nohighlight">\(L\)</span>) of <a class="reference internal" href="#equation-eq-fvm-firstorder-euler-exp">equation (55)</a> has to be evaluated at time <span class="math notranslate nohighlight">\(eq:fvm_firstOrder_Euler_exp\)</span>.
 Therefore, in order to find the value of <span class="math notranslate nohighlight">\(T\)</span> at time <span class="math notranslate nohighlight">\(t+\Delta t\)</span>, we don’t need to solve a set of linear algebraic equations,</p>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-firstorder-euler-exp-coef">
-<span class="eqno">(55)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-exp-coef" title="Permalink to this equation">¶</a></span>\[T^{t+\Delta t} = \frac{\Delta t}{V_C} L(T^{t}) + T^t\]</div>
+<span class="eqno">(56)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-exp-coef" title="Permalink to this equation">¶</a></span>\[T^{t+\Delta t} = \frac{\Delta t}{V_C} L(T^{t}) + T^t\]</div>
 </div>
 </div>
 <div class="section" id="step-6-solution-of-the-discretized-equations">
@@ -688,7 +688,7 @@ classified as direct or iterative.</p>
 <td><p><span class="math notranslate nohighlight">\(\frac{\partial T}{\partial t}\)</span></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">fvm::ddt(T)</span></code></p></td>
 <td><p>d(<span class="math notranslate nohighlight">\(FluxC\)</span>), b(<span class="math notranslate nohighlight">\(FluxC^o\)</span>)</p></td>
-<td><p><a class="reference internal" href="#equation-eq-fvm-firstorder-euler-exp-coef">equation (55)</a></p></td>
+<td><p><a class="reference internal" href="#equation-eq-fvm-firstorder-euler-exp-coef">equation (56)</a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Laplacian</p></td>
 <td><p><span class="math notranslate nohighlight">\(\nabla \cdot D \nabla T\)</span></p></td>
@@ -1988,14 +1988,14 @@ gradientBoundaryCoeffs of field T
 </div>
 </div>
 <div class="section" id="step-2-discretize-laplacian-term">
-<h3>Step 2, discretize Laplacian term<a class="headerlink" href="#step-2-discretize-laplacian-term" title="Permalink to this headline">¶</a></h3>
+<span id="of-fvmlaplacian"></span><h3>Step 2, discretize Laplacian term<a class="headerlink" href="#step-2-discretize-laplacian-term" title="Permalink to this headline">¶</a></h3>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--7-input--1" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--1">discretize Laplacian term</label><div class="tab-content docutils container">
 <p>Because discretization coefficients matrix of Laplacian term is a symmetric matrix, so <code class="code docutils literal notranslate"><span class="pre">fvm::Laplacian(DT,</span> <span class="pre">T)</span></code> will return a fvMatrix object only has diagonal and upper.
 What <code class="code docutils literal notranslate"><span class="pre">fvm::Laplacian</span></code> actually did is evaluate (1) <span class="math notranslate nohighlight">\(a_F\)</span> (see <a class="reference internal" href="#equation-eq-fvm-afac">equation (35)</a>) for each internal faces, (2) <span class="math notranslate nohighlight">\(a_C\)</span> for each cells, which is the negative summation of <span class="math notranslate nohighlight">\(a_F\)</span>, (3) store the field BCs-related coefficients as <code class="code docutils literal notranslate"><span class="pre">internalCoeffs</span></code> and <code class="code docutils literal notranslate"><span class="pre">boundaryCoeffs</span></code>, respectively.
-All of these are implemented in <a class="reference external" href="https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047">gaussLaplacianScheme.H</a> . <strong>Note that</strong> the <code class="code docutils literal notranslate"><span class="pre">Gaussian</span></code> scheme is the only choice for Laplacian discretization in OF.</p>
+All of these are implemented in <a class="reference external" href="https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047">gaussLaplacianScheme.C</a> . <strong>Note that</strong> the <code class="code docutils literal notranslate"><span class="pre">Gaussian</span></code> scheme is the only choice for Laplacian discretization in OF.</p>
 </div>
-<input class="tab-input" id="tab-set--7-input--2" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--2">Access Laplacian coeff</label><div class="tab-content docutils container">
+<input class="tab-input" id="tab-set--7-input--2" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--2">Access Laplacian coeffs</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-access-laplacian">
 <div class="code-block-caption"><span class="caption-number">Listing 29 </span><span class="caption-text">Access fvm::Laplacian discretization</span><a class="headerlink" href="#lst-access-laplacian" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -2028,7 +2028,7 @@ There is a protected member function named <code class="code docutils literal no
 </div>
 <input class="tab-input" id="tab-set--7-input--3" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--3">Source code of Laplacian</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-source-fvm-laplacian">
-<div class="code-block-caption"><span class="caption-number">Listing 30 </span><span class="caption-text">Key source code of fvm::Laplacian (<a class="reference external" href="https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047">gaussLaplacianScheme.H</a> before nonOrthogonal correcting)</span><a class="headerlink" href="#lst-source-fvm-laplacian" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 30 </span><span class="caption-text">Key source code of fvm::Laplacian (<a class="reference external" href="https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047">gaussLaplacianScheme.C</a> before nonOrthogonal correcting)</span><a class="headerlink" href="#lst-source-fvm-laplacian" title="Permalink to this code">¶</a></div>
 <div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -2376,27 +2376,27 @@ fvm::laplacian<span class="o">(</span>DT, T<span class="o">)</span>:
 	Diagonal
 <span class="m">30</span>
 <span class="o">(</span>
--8e-07
+<span class="hll">-8e-07			//0
+</span>-1.2e-06
 -1.2e-06
 -1.2e-06
 -1.2e-06
+<span class="hll">-1.2e-06		//5
+</span>-1.2e-06
 -1.2e-06
 -1.2e-06
--1.2e-06
--1.2e-06
--1.2e-06
--8e-07
--1.2e-06
+<span class="hll">-8e-07			//9
+</span><span class="hll">-1.2e-06		//10
+</span>-1.6e-06
+<span class="hll">-1.6e-06		//12
+</span>-1.6e-06
 -1.6e-06
 -1.6e-06
 -1.6e-06
 -1.6e-06
 -1.6e-06
--1.6e-06
--1.6e-06
--1.6e-06
--1.2e-06
--8e-07
+<span class="hll">-1.2e-06		//19
+</span>-8e-07
 -1.2e-06
 -1.2e-06
 -1.2e-06
@@ -2559,32 +2559,759 @@ fvm::laplacian<span class="o">(</span>DT, T<span class="o">)</span>:
 </div>
 </div>
 <div class="section" id="step-3-discretize-transient-term">
-<h3>Step 3, discretize transient term<a class="headerlink" href="#step-3-discretize-transient-term" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>working on this.</p>
+<span id="of-fvmddt"></span><h3>Step 3, discretize transient term<a class="headerlink" href="#step-3-discretize-transient-term" title="Permalink to this headline">¶</a></h3>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--9-input--1" name="tab-set--9" type="radio"><label class="tab-label" for="tab-set--9-input--1">discretize Laplacian term</label><div class="tab-content docutils container">
+<p>For implicit discretization, <code class="code docutils literal notranslate"><span class="pre">fvm::ddt(T)</span></code> will return a fvMatrix object contains diagonal coefficients and source.
+The coefficients depend on discretization scheme.
+For example Euler scheme, the diagonal coefficients are calculated from <a class="reference internal" href="#equation-eq-fvm-temporal-linear">equation (52)</a> and <a class="reference internal" href="#equation-eq-fvm-firstorder-euler-imp-coeff">equation (54)</a>.
+All these are implemented in <a class="reference external" href="https://cpp.openfoam.org/v6/EulerDdtScheme_8C_source.html#l00350">EulerDdtScheme.C</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>There are 8 schemes for transient discretization in OpenFOAM</p>
+<ol class="arabic simple">
+<li><p>CoEuler</p></li>
+<li><p>CrankNicolson</p></li>
+<li><p>Euler</p></li>
+<li><p>SLTS</p></li>
+<li><p>backward</p></li>
+<li><p>bounded</p></li>
+<li><p>localEuler</p></li>
+<li><p>steadyState</p></li>
+</ol>
+</div>
+</div>
+<input class="tab-input" id="tab-set--9-input--2" name="tab-set--9" type="radio"><label class="tab-label" for="tab-set--9-input--2">Access fvm::ddt coeffs</label><div class="tab-content docutils container">
+<div class="literal-block-wrapper docutils container" id="lst-access-ddt">
+<div class="code-block-caption"><span class="caption-number">Listing 32 </span><span class="caption-text">Access fvm::ddt discretization</span><a class="headerlink" href="#lst-access-ddt" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Info</span><span class="o">&lt;&lt;</span><span class="s">&quot;fvm::ddt(T): &quot;</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+   <span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">Lower&quot;</span><span class="o">&lt;&lt;</span><span class="n">ddt</span><span class="p">.</span><span class="n">lower</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+   <span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">Diagonal&quot;</span><span class="o">&lt;&lt;</span><span class="n">ddt</span><span class="p">.</span><span class="n">diag</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+   <span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">Upper&quot;</span><span class="o">&lt;&lt;</span><span class="n">ddt</span><span class="p">.</span><span class="n">upper</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+   <span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">internalCoeffs&quot;</span><span class="o">&lt;&lt;</span><span class="n">ddt</span><span class="p">.</span><span class="n">internalCoeffs</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span> <span class="c1">//actually this is not necessary for fvm::ddt, this is definitely equal to zero</span>
+   <span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">boundaryCoeffs&quot;</span><span class="o">&lt;&lt;</span><span class="n">ddt</span><span class="p">.</span><span class="n">boundaryCoeffs</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+   <span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">Source&quot;</span><span class="o">&lt;&lt;</span><span class="n">ddt</span><span class="p">.</span><span class="n">source</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+   <span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--9-input--3" name="tab-set--9" type="radio"><label class="tab-label" for="tab-set--9-input--3">Source code of fvm::ddt</label><div class="tab-content docutils container">
+<div class="literal-block-wrapper docutils container" id="lst-source-fvm-ddt">
+<div class="code-block-caption"><span class="caption-number">Listing 33 </span><span class="caption-text">Key source code of fvm::ddt (<a class="reference external" href="https://cpp.openfoam.org/v6/EulerDdtScheme_8C_source.html#l00350">EulerDdtScheme.C</a> )</span><a class="headerlink" href="#lst-source-fvm-ddt" title="Permalink to this code">¶</a></div>
+<div class="highlight-cpp notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">Type</span><span class="o">&gt;</span>
+<span class="n">tmp</span><span class="o">&lt;</span><span class="n">fvMatrix</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;&gt;</span>
+<span class="n">EulerDdtScheme</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;::</span><span class="n">fvmDdt</span>
+<span class="p">(</span>
+   <span class="k">const</span> <span class="n">GeometricField</span><span class="o">&lt;</span><span class="n">Type</span><span class="p">,</span> <span class="n">fvPatchField</span><span class="p">,</span> <span class="n">volMesh</span><span class="o">&gt;&amp;</span> <span class="n">vf</span>
+<span class="p">)</span>
+<span class="p">{</span>
+   <span class="n">tmp</span><span class="o">&lt;</span><span class="n">fvMatrix</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;&gt;</span> <span class="n">tfvm</span>
+   <span class="p">(</span>
+      <span class="k">new</span> <span class="n">fvMatrix</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;</span>
+      <span class="p">(</span>
+            <span class="n">vf</span><span class="p">,</span>
+            <span class="n">vf</span><span class="p">.</span><span class="n">dimensions</span><span class="p">()</span><span class="o">*</span><span class="n">dimVol</span><span class="o">/</span><span class="n">dimTime</span>
+      <span class="p">)</span>
+   <span class="p">);</span>
+
+   <span class="n">fvMatrix</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;&amp;</span> <span class="n">fvm</span> <span class="o">=</span> <span class="n">tfvm</span><span class="p">.</span><span class="n">ref</span><span class="p">();</span>
+
+<span class="hll">   <span class="n">scalar</span> <span class="n">rDeltaT</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">mesh</span><span class="p">().</span><span class="n">time</span><span class="p">().</span><span class="n">deltaTValue</span><span class="p">();</span> <span class="c1">// 1/dt</span>
+</span>
+<span class="hll">   <span class="n">fvm</span><span class="p">.</span><span class="n">diag</span><span class="p">()</span> <span class="o">=</span> <span class="n">rDeltaT</span><span class="o">*</span><span class="n">mesh</span><span class="p">().</span><span class="n">Vsc</span><span class="p">();</span> <span class="c1">// Vc/dt (FluxC)</span>
+</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">mesh</span><span class="p">().</span><span class="n">moving</span><span class="p">())</span>
+   <span class="p">{</span>
+      <span class="n">fvm</span><span class="p">.</span><span class="n">source</span><span class="p">()</span> <span class="o">=</span> <span class="n">rDeltaT</span><span class="o">*</span><span class="n">vf</span><span class="p">.</span><span class="n">oldTime</span><span class="p">().</span><span class="n">primitiveField</span><span class="p">()</span><span class="o">*</span><span class="n">mesh</span><span class="p">().</span><span class="n">Vsc0</span><span class="p">();</span>
+   <span class="p">}</span>
+   <span class="k">else</span>
+   <span class="p">{</span>
+<span class="hll">      <span class="n">fvm</span><span class="p">.</span><span class="n">source</span><span class="p">()</span> <span class="o">=</span> <span class="n">rDeltaT</span><span class="o">*</span><span class="n">vf</span><span class="p">.</span><span class="n">oldTime</span><span class="p">().</span><span class="n">primitiveField</span><span class="p">()</span><span class="o">*</span><span class="n">mesh</span><span class="p">().</span><span class="n">Vsc</span><span class="p">();</span> <span class="c1">// -T_old*Vc/dt</span>
+</span>   <span class="p">}</span>
+
+   <span class="k">return</span> <span class="n">tfvm</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<input class="tab-input" id="tab-set--9-input--4" name="tab-set--9" type="radio"><label class="tab-label" for="tab-set--9-input--4">fvm::ddt coefficients</label><div class="tab-content docutils container">
+<p><span class="math notranslate nohighlight">\(\Delta t = 0.05\ s\)</span></p>
+<div class="literal-block-wrapper docutils container" id="lst-log-fvm-ddt">
+<div class="code-block-caption"><span class="caption-number">Listing 34 </span><span class="caption-text">fvm::ddt Coefficients  of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a>.</span><a class="headerlink" href="#lst-log-fvm-ddt" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">)</span>fvm::ddt<span class="o">(</span>T<span class="o">)</span>: 
+	Lower47<span class="o">{</span><span class="m">0</span><span class="o">}</span>
+	Diagonal
+<span class="m">30</span>
+<span class="o">(</span>
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+2e-05
+<span class="o">)</span>
+
+	Upper47<span class="o">{</span><span class="m">0</span><span class="o">}</span>
+	internalCoeffs
+<span class="m">5</span>
+<span class="o">(</span>
+<span class="m">3</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">3</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">10</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">10</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">0</span><span class="o">()</span>
+<span class="o">)</span>
+
+	boundaryCoeffs
+<span class="m">5</span>
+<span class="o">(</span>
+<span class="m">3</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">3</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">10</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">10</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">0</span><span class="o">()</span>
+<span class="o">)</span>
+
+	Source
+<span class="m">30</span>
+<span class="o">(</span>
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="o">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="step-4-construct-the-final-coefficient-matrix-and-rhs">
 <h3>Step 4, construct the final coefficient matrix and RHS<a class="headerlink" href="#step-4-construct-the-final-coefficient-matrix-and-rhs" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>working on this.</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--10-input--1" name="tab-set--10" type="radio"><label class="tab-label" for="tab-set--10-input--1">Final matrix</label><div class="tab-content docutils container">
+<p>The final coefficient matrix is constructed by simply adding the matrix of <a class="reference internal" href="#of-fvmlaplacian"><span class="std std-ref">Step 2, discretize Laplacian term</span></a> and <a class="reference internal" href="#of-fvmddt"><span class="std std-ref">Step 3, discretize transient term</span></a>.</p>
+<ul class="simple">
+<li><p>The diagonal coefficients come from <span class="math notranslate nohighlight">\(a_C\)</span> of Laplacian term and <span class="math notranslate nohighlight">\(FluxC\)</span> of transient term</p></li>
+<li><p>The off-diagonal coefficients only come from <span class="math notranslate nohighlight">\(a_F (internal\ face)\)</span> of Laplacian term</p></li>
+<li><p>The RHS comes from <span class="math notranslate nohighlight">\(c_F\)</span> of Laplacian term when at boundary faces and <span class="math notranslate nohighlight">\(FluxC^oT_C^o\)</span> of transient term.</p></li>
+</ul>
+</div>
+<input class="tab-input" id="tab-set--10-input--2" name="tab-set--10" type="radio"><label class="tab-label" for="tab-set--10-input--2">Coefficients at the first time step</label><div class="tab-content docutils container">
+<div class="literal-block-wrapper docutils container" id="lst-log-fvm-teqn">
+<div class="code-block-caption"><span class="caption-number">Listing 35 </span><span class="caption-text">Final matrix coefficients of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 34</span></a> at the first time step.</span><a class="headerlink" href="#lst-log-fvm-teqn" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="o">)</span>TEqn: 
+	Lower
+<span class="m">47</span>
+<span class="o">(</span>
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+<span class="o">)</span>
+
+	Diagonal
+<span class="m">30</span>
+<span class="o">(</span>
+<span class="hll"><span class="m">2</span>.08e-05        //0
+</span><span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="hll"><span class="m">2</span>.12e-05        //5
+</span><span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="hll"><span class="m">2</span>.08e-05        //9
+</span><span class="hll"><span class="m">2</span>.12e-05        //10
+</span><span class="m">2</span>.16e-05
+<span class="hll"><span class="m">2</span>.16e-05        //12
+</span><span class="m">2</span>.16e-05
+<span class="m">2</span>.16e-05
+<span class="m">2</span>.16e-05
+<span class="m">2</span>.16e-05
+<span class="m">2</span>.16e-05
+<span class="m">2</span>.16e-05
+<span class="hll"><span class="m">2</span>.12e-05        //19
+</span><span class="m">2</span>.08e-05
+<span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="m">2</span>.12e-05
+<span class="m">2</span>.08e-05
+<span class="o">)</span>
+
+	Upper
+<span class="m">47</span>
+<span class="o">(</span>
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+-4e-07
+<span class="o">)</span>
+
+	internalCoeffs
+<span class="m">5</span>
+<span class="o">(</span>
+<span class="m">3</span><span class="o">(</span>8e-07 8e-07 8e-07<span class="o">)</span>
+<span class="m">3</span><span class="o">(</span>8e-07 8e-07 8e-07<span class="o">)</span>
+<span class="m">10</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">10</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">0</span><span class="o">()</span>
+<span class="o">)</span>
+
+	boundaryCoeffs
+<span class="m">5</span>
+<span class="o">(</span>
+<span class="m">3</span><span class="o">(</span><span class="m">0</span>.0002184 <span class="m">0</span>.0002184 <span class="m">0</span>.0002184<span class="o">)</span>
+<span class="m">3</span><span class="o">(</span><span class="m">0</span>.0004584 <span class="m">0</span>.0004584 <span class="m">0</span>.0004584<span class="o">)</span>
+<span class="m">10</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">10</span><span class="o">{</span><span class="m">0</span><span class="o">}</span>
+<span class="m">0</span><span class="o">()</span>
+<span class="o">)</span>
+
+	Source
+<span class="m">30</span>
+<span class="o">(</span>
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="m">0</span>.00546
+<span class="o">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="step-5-solve">
 <h3>Step 5, solve<a class="headerlink" href="#step-5-solve" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>working on this.</p>
+<p>For the <a class="reference download internal" download="" href="../../_downloads/182fc0c7918b295146e8ff66ee704105/regularBox.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a> case, we can use <strong>PBiCG</strong> solver and <strong>DILU</strong> preconditioner.</p>
+<div class="admonition-available-preconditioner-in-openfoam admonition">
+<p class="admonition-title">Available preconditioner in OpenFOAM</p>
+<ul class="simple">
+<li><p><strong>diagonal</strong> : for symmetric &amp; nonsymmetric matrices (not very effective)</p></li>
+<li><p><strong>DIC</strong> : Diagonal Incomplete Cholesky preconditioner for symmetric matrices</p></li>
+<li><p><strong>DILU</strong> : Diagonal Incomplete LU preconditioner for nonsymmetric matrices</p></li>
+<li><p><strong>FDIC</strong> : Fast Diagonal Incomplete Cholesky preconditioner</p></li>
+<li><p><strong>GAMG</strong> : Geometric Agglomerated algebraic MultiGrid preconditioner</p></li>
+</ul>
+</div>
+<div class="admonition-available-solver-in-openfoam admonition">
+<p class="admonition-title">Available solver in OpenFOAM</p>
+<ul class="simple">
+<li><p><strong>BICCG</strong>: Diagonal incomplete LU preconditioned BiCG solver</p></li>
+<li><p><strong>diagonalSolver</strong>: Solver for symmetric and nonsymmetric matrices</p></li>
+<li><p><strong>GAMG</strong>: Geometric Agglomerated algebraic Multi-Grid solver</p></li>
+<li><p><strong>ICC</strong>: Incomplete Cholesky Conjugate Gradient solver</p></li>
+<li><p><strong>PBiCG</strong>: Bi-Conjugate Gradient solver with preconditioner</p></li>
+<li><p><strong>PCG</strong>: Conjugate Gradient solver with preconditioner</p></li>
+<li><p><strong>smoothSolver</strong>: Iterative solver with run-time selectable smoother</p></li>
+</ul>
+</div>
+<div class="admonition-krylov-subspace-solvers admonition">
+<p class="admonition-title">Krylov-subspace solvers</p>
+<ul class="simple">
+<li><p><strong>CG</strong>: The Conjugate Gradient algorithm applies to systems where A is symmetric positive definite (SPD)</p></li>
+<li><p><strong>GMRES</strong>: The Generalized Minimal RESidual algorithm is the first method to try if A is not SPD.</p></li>
+<li><p><strong>BiCG</strong>: The BiConjugate Gradient algorithm applies to general linear systems, but the convergence can be quite erratic.</p></li>
+<li><p><strong>BiCGstab</strong>: The stabilized version of the BiConjugate Gradient algorithm.</p></li>
+</ul>
 </div>
 </div>
 <div class="section" id="step-6-write">
 <h3>Step 6, write<a class="headerlink" href="#step-6-write" title="Permalink to this headline">¶</a></h3>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>working on this.</p>
-</div>
 </div>
 <div class="section" id="jupyter-notebook">
 <h3>Jupyter notebook<a class="headerlink" href="#jupyter-notebook" title="Permalink to this headline">¶</a></h3>
