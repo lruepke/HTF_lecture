@@ -79,7 +79,7 @@ Therefore, the mesh topology shown below is the same as OpenFOAM polyMesh.
    All internal faces have and only have two attributes, **owner** and **neighbour**, 
    denote the cell indices who share the face. 
    While the boundary faces only have **owner** attribute.
-   The normal vector of face always points from the **owner** cell to the **neighbour** cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with with lower index to the cell with the larger index.
+   The normal vector of face always points from the **owner** cell to the **neighbour** cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with the lower index to the cell with the larger index.
 
    You can find details on the mesh description in the `OpenFoam manual <https://cfd.direct/openfoam/user-guide/v8-mesh-description/>`_. Have a look at it and check the structure of the files in :code:`constant\polymesh`. 
 
@@ -118,7 +118,7 @@ Here we can introduce definition of **heat diffusion flux**,
 .. math::
    :label: eq:fvm_flux_D
 
-   \vec{J}^{T,D} \equiv D\nabla T 
+   \vec{J}^{T,D} \equiv -D\nabla T 
 
 3. Transform the surface integral in :eq:`eq:fvm_surface_int` as a summation over the control volume faces (**still no approximation**),
 
@@ -170,8 +170,8 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    
    .. important:: 
 
-      Only **one integration point scheme**, i.e. :numref:`fig:Fig5.2` (a), is implemented in OpenFOAM (at lease before version 8).
-      Therefore the first keyword of Laplacian scheme in :code:`system/fvScheme` dictionary file of a case only has one option, it is :code:`Gauss`.
+      Only the **one integration point scheme**, i.e. :numref:`fig:Fig5.2` (a), is implemented in OpenFOAM (at least before version 8).
+      Therefore the first keyword of Laplacian scheme in :code:`system/fvScheme` dictionary file of a case has only one option, it is :code:`Gauss`.
 
    4.2 Choose integral scheme or integral points
 
