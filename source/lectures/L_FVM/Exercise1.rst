@@ -175,7 +175,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
 
    4.2 Choose integral scheme or integral points
 
-   To simply explain the calculation process/logic and also keep consistent with OpenFOAM, here we adopt an **one integration point** scheme with weight :math:`\omega = 1`, thus :eq:`fvm_flux_Gaussian_integral` becomes,
+   To simply explain the calculation process/logic and to also be consistent with OpenFOAM, we here adopt an **one integration point** scheme with weight :math:`\omega = 1`, thus :eq:`fvm_flux_Gaussian_integral` becomes,
 
    .. math::
       :label: eq:fvm_surface_term_f1
@@ -461,7 +461,7 @@ Ok, now let's do some practical tings,
 
    Deeply look into OpenFOAM and understand how it works!
 
-In order to better OpenFOAM's logic and its work flow, we have to look at the basic structure of the `source code <https://cpp.openfoam.org/v6/laplacianFoam_8C_source.html>`_ of a basic solver, :code:`laplacianFoam`.
+In order to better understand OpenFOAM's logic and its work flow, we have to look at the basic structure of the `source code <https://cpp.openfoam.org/v6/laplacianFoam_8C_source.html>`_ of a basic solver, :code:`laplacianFoam`.
 
 .. tab:: laplacianFoam.C
 
