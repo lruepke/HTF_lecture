@@ -362,7 +362,8 @@ Therefore, the mesh topology shown below is the same as OpenFOAM polyMesh.</p>
 <p>All internal faces have and only have two attributes, <strong>owner</strong> and <strong>neighbour</strong>,
 denote the cell indices who share the face.
 While the boundary faces only have <strong>owner</strong> attribute.
-The normal vector of face always points from the <strong>owner</strong> cell to the <strong>neighbour</strong> cell.</p>
+The normal vector of face always points from the <strong>owner</strong> cell to the <strong>neighbour</strong> cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with with lower index to the cell with the larger index.</p>
+<p>You can find details on the mesh description in the <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v8-mesh-description/">OpenFoam manual</a>. Have a look at it and check the structure of the files in <code class="code docutils literal notranslate"><span class="pre">constant\polymesh</span></code>.</p>
 </div>
 </div>
 </div>
