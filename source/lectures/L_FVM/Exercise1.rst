@@ -79,7 +79,11 @@ Therefore, the mesh topology shown below is the same as OpenFOAM polyMesh.
    All internal faces have and only have two attributes, **owner** and **neighbour**, 
    denote the cell indices who share the face. 
    While the boundary faces only have **owner** attribute.
-   The normal vector of face always points from the **owner** cell to the **neighbour** cell.
+   The normal vector of face always points from the **owner** cell to the **neighbour** cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with the lower index to the cell with the larger index.
+
+   You can find details on the mesh description in the `OpenFoam manual <https://cfd.direct/openfoam/user-guide/v8-mesh-description/>`_. Have a look at it and check the structure of the files in :code:`constant\polymesh`. 
+
+
 
 Step 3, Spatial discretization: The diffusion term
 ---------------------------------------------------
@@ -114,7 +118,7 @@ Here we can introduce definition of **heat diffusion flux**,
 .. math::
    :label: eq:fvm_flux_D
 
-   \vec{J}^{T,D} \equiv D\nabla T 
+   \vec{J}^{T,D} \equiv -D\nabla T 
 
 3. Transform the surface integral in :eq:`eq:fvm_surface_int` as a summation over the control volume faces (**still no approximation**),
 
@@ -166,12 +170,12 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    
    .. important:: 
 
-      Only **one integration point scheme**, i.e. :numref:`fig:Fig5.2` (a), is implemented in OpenFOAM (at lease before version 8).
-      Therefore the first keyword of Laplacian scheme in :code:`system/fvScheme` dictionary file of a case only has one option, it is :code:`Gauss`.
+      Only the **one integration point scheme**, i.e. :numref:`fig:Fig5.2` (a), is implemented in OpenFOAM (at least before version 8).
+      Therefore the first keyword of Laplacian scheme in :code:`system/fvScheme` dictionary file of a case has only one option, it is :code:`Gauss`.
 
    4.2 Choose integral scheme or integral points
 
-   To simply explain the calculation process/logic and also keep consistent with OpenFOAM, here we adopt an **one integration point** scheme with weight :math:`\omega = 1`, thus :eq:`fvm_flux_Gaussian_integral` becomes,
+   To simply explain the calculation process/logic and to also be consistent with OpenFOAM, we here adopt an **one integration point** scheme with weight :math:`\omega = 1`, thus :eq:`fvm_flux_Gaussian_integral` becomes,
 
    .. math::
       :label: eq:fvm_surface_term_f1
@@ -457,7 +461,7 @@ Ok, now let's do some practical tings,
 
    Deeply look into OpenFOAM and understand how it works!
 
-In order to better OpenFOAM's logic and its work flow, we have to look at the basic structure of the `source code <https://cpp.openfoam.org/v6/laplacianFoam_8C_source.html>`_ of a basic solver, :code:`laplacianFoam`.
+In order to better understand OpenFOAM's logic and its work flow, we have to look at the basic structure of the `source code <https://cpp.openfoam.org/v6/laplacianFoam_8C_source.html>`_ of a basic solver, :code:`laplacianFoam`.
 
 .. tab:: laplacianFoam.C
 
