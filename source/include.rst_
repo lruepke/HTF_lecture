@@ -2,8 +2,9 @@
 
 .. _OpenFOAM: https://openfoam.org
 
-.. _gaussLaplacianScheme.H: https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047
+.. _gaussLaplacianScheme.C: https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047
 
+.. _EulerDdtScheme.C: https://cpp.openfoam.org/v6/EulerDdtScheme_8C_source.html#l00350
 .. docker: https://www.docker.com
 
 .. _Gmsh: http://gmsh.info
