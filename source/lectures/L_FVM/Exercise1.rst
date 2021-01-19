@@ -79,7 +79,11 @@ Therefore, the mesh topology shown below is the same as OpenFOAM polyMesh.
    All internal faces have and only have two attributes, **owner** and **neighbour**, 
    denote the cell indices who share the face. 
    While the boundary faces only have **owner** attribute.
-   The normal vector of face always points from the **owner** cell to the **neighbour** cell.
+   The normal vector of face always points from the **owner** cell to the **neighbour** cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with with lower index to the cell with the larger index.
+
+   You can find details on the mesh description in the `OpenFoam manual <https://cfd.direct/openfoam/user-guide/v8-mesh-description/>`_. Have a look at it and check the structure of the files in :code:`constant\polymesh`. 
+
+
 
 Step 3, Spatial discretization: The diffusion term
 ---------------------------------------------------
