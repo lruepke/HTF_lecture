@@ -362,7 +362,7 @@ Therefore, the mesh topology shown below is the same as OpenFOAM polyMesh.</p>
 <p>All internal faces have and only have two attributes, <strong>owner</strong> and <strong>neighbour</strong>,
 denote the cell indices who share the face.
 While the boundary faces only have <strong>owner</strong> attribute.
-The normal vector of face always points from the <strong>owner</strong> cell to the <strong>neighbour</strong> cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with with lower index to the cell with the larger index.</p>
+The normal vector of face always points from the <strong>owner</strong> cell to the <strong>neighbour</strong> cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with the lower index to the cell with the larger index.</p>
 <p>You can find details on the mesh description in the <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v8-mesh-description/">OpenFoam manual</a>. Have a look at it and check the structure of the files in <code class="code docutils literal notranslate"><span class="pre">constant\polymesh</span></code>.</p>
 </div>
 </div>
@@ -389,7 +389,7 @@ The normal vector of face always points from the <strong>owner</strong> cell to 
 It is basically the integral form of the original partial differential equation and involves <strong>no approximation</strong>.</p>
 <p>Here we can introduce definition of <strong>heat diffusion flux</strong>,</p>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-flux-d">
-<span class="eqno">(30)<a class="headerlink" href="#equation-eq-fvm-flux-d" title="Permalink to this equation">¶</a></span>\[\vec{J}^{T,D} \equiv D\nabla T\]</div>
+<span class="eqno">(30)<a class="headerlink" href="#equation-eq-fvm-flux-d" title="Permalink to this equation">¶</a></span>\[\vec{J}^{T,D} \equiv -D\nabla T\]</div>
 <ol class="arabic simple" start="3">
 <li><p>Transform the surface integral in <a class="reference internal" href="#equation-eq-fvm-surface-int">equation (29)</a> as a summation over the control volume faces (<strong>still no approximation</strong>),</p></li>
 </ol>
@@ -418,8 +418,8 @@ the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Only <strong>one integration point scheme</strong>, i.e. <a class="reference internal" href="#fig-fig5-2"><span class="std std-numref">Fig. 36</span></a> (a), is implemented in OpenFOAM (at lease before version 8).
-Therefore the first keyword of Laplacian scheme in <code class="code docutils literal notranslate"><span class="pre">system/fvScheme</span></code> dictionary file of a case only has one option, it is <code class="code docutils literal notranslate"><span class="pre">Gauss</span></code>.</p>
+<p>Only the <strong>one integration point scheme</strong>, i.e. <a class="reference internal" href="#fig-fig5-2"><span class="std std-numref">Fig. 36</span></a> (a), is implemented in OpenFOAM (at least before version 8).
+Therefore the first keyword of Laplacian scheme in <code class="code docutils literal notranslate"><span class="pre">system/fvScheme</span></code> dictionary file of a case has only one option, it is <code class="code docutils literal notranslate"><span class="pre">Gauss</span></code>.</p>
 </div>
 <p>4.2 Choose integral scheme or integral points</p>
 <p>To simply explain the calculation process/logic and also keep consistent with OpenFOAM, here we adopt an <strong>one integration point</strong> scheme with weight <span class="math notranslate nohighlight">\(\omega = 1\)</span>, thus <a class="reference internal" href="#equation-fvm-flux-gaussian-integral">equation (33)</a> becomes,</p>
