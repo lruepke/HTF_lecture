@@ -30,7 +30,6 @@ Description
 \*---------------------------------------------------------------------------*/
 
 #include "fvCFD.H"
-#include "fvOptions.H"
 #include "simpleControl.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -115,31 +114,26 @@ int main(int argc, char *argv[])
             <<"\tLower"<<ddt.lower()<<"\n"
             <<"\tDiagonal"<<ddt.diag()<<"\n"
             <<"\tUpper"<<ddt.upper()<<"\n"
-            <<"\tinternalCoeffs"<<ddt.internalCoeffs()<<"\n"
+            <<"\tinternalCoeffs"<<ddt.internalCoeffs()<<"\n" //actually this is not necessary for fvm::ddt, this is definitely equal to zero
             <<"\tboundaryCoeffs"<<ddt.boundaryCoeffs()<<"\n"
             <<"\tSource"<<ddt.source()<<"\n"
             <<endl;
         while (simple.correctNonOrthogonal())
         {
-            // Info<<"ddt"<<endl;
-            // Info<<fvm::ddt(T)<<endl;
-            // Info<<"laplacian"<<endl;
-            // Info<<fvm::laplacian(DT, T)<<endl;
-            // Info<<"fvOptions(T)"<<endl;
-            // Info<<fvOptions(T)<<endl;
             fvScalarMatrix TEqn
             (
-                fvm::ddt(T) - fvm::laplacian(DT, T)
-            //  ==
-            //     fvOptions(T)
+                fvm::ddt(T) == fvm::laplacian(DT, T)
             );
+            Info<<"TEqn: "<<endl;
+            Info<<"\tLower"<<TEqn.lower()<<"\n"
+            <<"\tDiagonal"<<TEqn.diag()<<"\n"
+            <<"\tUpper"<<TEqn.upper()<<"\n"
+            <<"\tinternalCoeffs"<<TEqn.internalCoeffs()<<"\n"
+            <<"\tboundaryCoeffs"<<TEqn.boundaryCoeffs()<<"\n"
+            <<"\tSource"<<TEqn.source()<<"\n"
+            <<endl;
 
-            // Info<<"TEqn source: \n"<<TEqn<<endl;
-            // Info<<"TEqn"<<endl;
-            // Info<<TEqn<<endl;
-            // fvOptions.constrain(TEqn);
             TEqn.solve();
-            // fvOptions.correct(T);
         }
 
         #include "write.H"
