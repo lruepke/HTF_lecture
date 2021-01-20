@@ -175,7 +175,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
       :width: 100 %
       :name: fig:Fig5.2
    
-      Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points :cite:`moukalled2016finite`. Here the special case of non-orthogonal faces is considered in that the total flux across a face :math:`FluxT_f` is made up of different component.
+      Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points :cite:`moukalled2016finite`. The total flux :math:`FluxT_f` is computed as linear combinations of the two cell values plus a source term.
    
    .. important:: 
 
