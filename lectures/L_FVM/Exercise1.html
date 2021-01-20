@@ -162,7 +162,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#step-3-spatial-discretization-the-diffusion-term">Step 3, Spatial discretization: The diffusion term</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-4-temporal-discretization-the-transient-term">Step 4, Temporal Discretization: The Transient Term</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#first-order-implicit-euler-scheme">First order implicit Euler scheme</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">First order implicit Euler scheme</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#first-order-explicit-euler-scheme">First order explicit Euler scheme</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#step-6-solution-of-the-discretized-equations">Step 6: Solution of the discretized equations</a></li>
@@ -577,8 +577,8 @@ the coefficient <span class="math notranslate nohighlight">\(FluxC\)</span> will
 <div class="math notranslate nohighlight" id="equation-eq-fvm-firstorder-euler-imp-coeff">
 <span class="eqno">(55)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-imp-coeff" title="Permalink to this equation">¶</a></span>\[FluxC = \frac{V_C}{\Delta t}, ~ FluxC^o = - \frac{V_C}{\Delta t}, ~ FluxV =0\]</div>
 </div>
-<div class="section" id="id3">
-<h4>First order implicit Euler scheme<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="first-order-explicit-euler-scheme">
+<h4>First order explicit Euler scheme<a class="headerlink" href="#first-order-explicit-euler-scheme" title="Permalink to this headline">¶</a></h4>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-firstorder-euler-exp">
 <span class="eqno">(56)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-exp" title="Permalink to this equation">¶</a></span>\[\frac{T^{t+\Delta t} - T^t}{\Delta t} V_C - L(T^{t}) = 0\]</div>
 <p>Note that now the new time is at <span class="math notranslate nohighlight">\(t+\Delta t\)</span> and that the spatial operator (<span class="math notranslate nohighlight">\(L\)</span>) of <a class="reference internal" href="#equation-eq-fvm-firstorder-euler-exp">equation (56)</a> has to be evaluated at time <span class="math notranslate nohighlight">\(eq:fvm_firstOrder_Euler_exp\)</span>.
@@ -679,8 +679,8 @@ classified as direct or iterative.</p>
 </pre></div>
 </td></tr></table></div>
 </div>
-<table class="docutils align-default" id="id4">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Comparison between equation and code</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Comparison between equation and code</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 20%" />
@@ -1043,8 +1043,8 @@ Please download (<a class="reference download internal" download="" href="../../
 <p>The basic properties of cells and faces, e.g. area, volume, face normal vector, will be evaluated after mesh reading, all these processes are happened in the mesh object.
 It means that after calling <code class="code docutils literal notranslate"><span class="pre">creatFields.H</span></code> all these properties are evaluated and stored in the <code class="code docutils literal notranslate"><span class="pre">mesh</span></code> object. Of course the temperature field object <code class="code docutils literal notranslate"><span class="pre">T</span></code> (volScalarField) with BCs and ICs, and thermal diffusivity <code class="code docutils literal notranslate"><span class="pre">DT</span></code> are also initialized from input data after calling <code class="code docutils literal notranslate"><span class="pre">creatFields.H</span></code>.
 <strong>It should be noted</strong> that the part of Laplacian discretization coefficients are also calculated in this step. If the mesh is not changed during simulation time, the mesh related coefficients just need to be calculated one time.</p>
-<table class="docutils align-default" id="id5">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text">Mesh- and Field-related coefficients</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Mesh- and Field-related coefficients</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 20%" />
@@ -2544,27 +2544,27 @@ fvm::laplacian<span class="o">(</span>DT, T<span class="o">)</span>:
 </div>
 </div>
 <input class="tab-input" id="tab-set--8-input--3" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--3">Boundary cell 9</label><div class="tab-content docutils container">
-<div class="figure align-center" id="id6">
+<div class="figure align-center" id="id5">
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg" width="100%" /></a>
-<p class="caption"><span class="caption-number">Fig. 43 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{9}\)</span>)</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 43 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{9}\)</span>)</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <input class="tab-input" id="tab-set--8-input--4" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--4">Boundary cell 0</label><div class="tab-content docutils container">
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id6">
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg" width="100%" /></a>
-<p class="caption"><span class="caption-number">Fig. 44 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{0}\)</span>)</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 44 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{0}\)</span>)</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <input class="tab-input" id="tab-set--8-input--5" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--5">Boundary cell 10</label><div class="tab-content docutils container">
-<div class="figure align-center" id="id8">
+<div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg" width="100%" /></a>
-<p class="caption"><span class="caption-number">Fig. 45 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{10}\)</span>)</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 45 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{10}\)</span>)</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <input class="tab-input" id="tab-set--8-input--6" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--6">Boundary cell 5</label><div class="tab-content docutils container">
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id8">
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg" width="100%" /></a>
-<p class="caption"><span class="caption-number">Fig. 46 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{5}\)</span>)</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 46 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{5}\)</span>)</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
