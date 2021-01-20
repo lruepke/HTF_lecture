@@ -209,7 +209,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_surface_term_f1_west
       
-      \color{orange}{\sum\limits_{ip\sim ip(f_{21})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = -\left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{21}} \cdot \Delta y_{f_{21}} -\vec{i} = \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{21}} \Delta y_{f_{21}}}
+      \color{orange}{\sum\limits_{ip\sim ip(f_{21})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = -\left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{21}} \cdot \Delta y_{f_{21}} \cdot-\vec{i} = \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{21}} \Delta y_{f_{21}}}
 
    Notice how the surface normal now has the opposite sign!
 
@@ -217,7 +217,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
 
     .. math::
 
-      \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{21}} \Delta y_{f_{21}}} = D\frac{T_{C} - T_{11}}{x_{11} - x_C}\Delta y_{f_{21}} = D\frac{T_{C} - T_{11}}{\delta x_{f_{21}}}\Delta y_{f_{21}}
+      \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{21}} \Delta y_{f_{21}}} = D\frac{T_{C} - T_{11}}{x_{11} - x_C}\Delta y_{f_{21}} = -\frac{D \Delta y_{f_{21}}}   {\delta x_{f_{21}}}   (T_{11} - T_{C})
 
 
    Do the same thing for the remain faces (:math:`f_5, f_{24}`).
@@ -231,7 +231,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_matrix_form_internalCell
       
-      0  =  a_{C} T_C + a_{F_{23}} T_{F_{23}} + a_{F_{24}} T_{F_{24}} + a_{F_{21}} T_{F_{21}} + a_{F_{5}} T_{F_{5}}
+      a_{C} T_C + a_{F_{23}} T_{F_{23}} + a_{F_{24}} T_{F_{24}} + a_{F_{21}} T_{F_{21}} + a_{F_{5}} T_{F_{5}} = 0
 
 
    with
@@ -258,11 +258,11 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_surface_sum_expand_boundary
 
-      b_{C_{19}} = \iint_{f_{18}}\vec{J}^{T,D}_{f_{18}} \cdot \vec{S}_{f_{18}} + \iint_{f_{35}}\vec{J}^{T,D}_{f_{35}} \cdot \vec{S}_{f_{35}} +\iint_{f_{37}}\vec{J}^{T,D}_{f_{37}} \cdot \vec{S}_{f_{37}} + \color{red}{\iint_{f_{51}}\vec{J}^{T,D}_{f_{51}} \cdot \vec{S}_{f_{51}}} = 0
+      \iint_{f_{18}}\vec{J}^{T,D}_{f_{18}} \cdot \vec{S}_{f_{18}} + \iint_{f_{35}}\vec{J}^{T,D}_{f_{35}} \cdot \vec{S}_{f_{35}} +\iint_{f_{37}}\vec{J}^{T,D}_{f_{37}} \cdot \vec{S}_{f_{37}} + \color{red}{\iint_{f_{51}}\vec{J}^{T,D}_{f_{51}} \cdot \vec{S}_{f_{51}}} = 0
    
-   The first and second terms on the right hand side are flux of internal face, so there is nothing special and just calculate them following steps for internal faces we did before. The special thing is the boundary face :math:`f_{17}`, we can call it :math:`f_b` for a general case. **Now the problem is how to evaluate flux on the boundary face** :math:`f_b`.
+   The first three terms are normal fluxes across internal faces, so there is nothing special and we can just calculate them following steps for internal faces as before. The special thing is the boundary face :math:`f_{52}`, we can call it :math:`f_b` for a general case. **Now the problem is how to evaluate flux on the boundary face** :math:`f_b`.
 
-   The The fluxes on the interior faces are discretized as before, while **the boundary flux is discretized with the aim of constructing a linearization with respect to** the cell field :math:`T_C`, e.g. :math:`T_{C_{19}}` of cell :math:`C_{19}` shown in :numref:`fig:polyMesh_regularBox`, thus 
+   The fluxes on the interior faces are discretized as before, while **the boundary flux is discretized with the aim of constructing a linearization with respect to** the cell field :math:`T_C`, e.g. :math:`T_{C_{19}}` of cell :math:`C_{19}` shown in :numref:`fig:polyMesh_regularBox`, thus 
 
    .. math::
       :label: eq:fvm_surface_flux_boundary
@@ -292,7 +292,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_gradient_boundary
 
-      -\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{51}} \Delta y_{f_{51}}} = -D\frac{\color{purple}{T_{f_{51}}} - T_{C}}{x_{f_{51}} - x_C}\Delta y_{f_{51}} = -D\frac{\color{purple}{T_{f_{51}}} - T_{C}}{\delta x_{f_{51}}}\Delta y_{f_{51}} = \color{green}{a_{F_{51}}} (T_{C} - T_{f_{51}})
+      -\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{51}} \Delta y_{f_{51}}} = -D\frac{\color{purple}{T_{f_{51}}} - T_{C}}{x_{f_{51}} - x_C}\Delta y_{f_{51}} = -\frac{D \Delta y_{f_{51}}}{\delta x_{f_{51}}}(\color{purple}{T_{f_{51}}} - T_{C}) = a_{f_{51}}(-T_{C}) +  c_{f_{51}}
 
    Substituting :eq:`eq:fvm_gradient_boundary` back to  :eq:`eq:fvm_flux_Gaussian_integral_boundary`, :eq:`eq:fvm_flux_boundary` and  :eq:`eq:fvm_surface_flux_boundary`, we can get Laplacian discretization coefficients :math:`a_{f_{51}}` and :math:`c_{f_{51}}`,
 
@@ -300,9 +300,11 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
       :label: eq:fvm_laplacian_coeff_boundary_fixedvalue
 
       \begin{eqnarray}
-      a_{F_{51}} &=& D\frac{\Delta y_{f_{51}}}{\delta x_{f_{51}}}\\
-      c_{F_{51}} &=& -a_{F_{51}}\color{purple}{T_{f_{51}}}
+      a_{F_{51}} &=& -D\frac{\Delta y_{f_{51}}}{\delta x_{f_{51}}}\\
+      c_{F_{51}} &=& a_{F_{51}}\color{purple}{T_{f_{51}}}
       \end{eqnarray}
+
+   Notice how :math:`\color{purple}{T_{f_{51}}}` is known (a boundary condition), so that the term :math:`-a_{F_{51}}\color{purple}{T_{f_{51}}}` will end up on the right-hand side and not in the coefficient matrix.
 
    4.2 Fixed flux boundary condition
 
@@ -330,8 +332,8 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_matrix_form_boundaryCell
       
-      \begin{eqnarray}
-      b_{C_{19}} & =  & a_{F_{18}} (T_{F_{18}} - T_C) + a_{F_{35}} (T_{F_{35}} - T_C) + a_{F_{37}} (T_{F_{37}} - T_C) + a_{F_{51}} T_C +c_{F_{51}} \\
+        \begin{eqnarray}
+      b_{C_{19}} & =  & a_{F_{18}} (T_{F_{18}} - T_C) + a_{F_{35}} (T_{F_{35}} - T_C) + a_{F_{37}} (T_{F_{37}} - T_C) + a_{F_{51}} (-T_C) +c_{F_{51}} \\
          & = & \sum\limits_{f\in[18, 35, 37]} a_{F_f} T_{F_f} + \left(-\sum\limits_{f\in[18, 35, 37, 51]} a_{F_f} \right) T_C + \sum\limits_{f\in[51]} c_{F_f} \\
          & = & \sum\limits_{f\sim nb(\text{internal face})} a_{F_f} T_{F_f} + \left(-\sum\limits_{f\sim nb(\text{all face})} a_{F_f} \right) T_C + \sum\limits_{f\sim nb(\text{boundary face})} c_{F_f}
       \end{eqnarray}
@@ -341,7 +343,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
 
       \mathbf{A}_{N\times N}[19,:] \mathbf{T}_{N\times 1} =  B_{19}
 
-   where :math:`B_{12} = b_{C_{12}} - \sum\limits_{f\sim nb(\text{boundary face})} c_{F_f}`.
+   where :math:`B_{19} = b_{C_{19}} - \sum\limits_{f\sim nb(\text{boundary face})} c_{F_f}`.
 
 5. Construct general matrix form of the :eq:`eq:fvm_surface_sum`
 
@@ -409,7 +411,7 @@ where :math:`a_C` is the diagonal coefficients of the matrix, :math:`a_F` is the
 
    For specific cell :math:`C`, 
 
-   * :math:`a_F` is only contributed from internal faces, see :eq:`eq:fvm_aFaC`. 
+   * :math:`a_F` is only contributed from internal faces. 
 
    * :math:`a_C` is the negative summation of :math:`a_F`, contributed from all faces, but equation of the :math:`a_F` for a boundary faces (:eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue` and :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`) is a little bit different from internal face. 
    
@@ -454,7 +456,7 @@ First order explicit Euler scheme
 
    \frac{T^{t+\Delta t} - T^t}{\Delta t} V_C - L(T^{t}) = 0
 
-Note that now the new time is at :math:`t+\Delta t` and that the spatial operator (:math:`L`) of :eq:`eq:fvm_firstOrder_Euler_exp` has to be evaluated at time :math:`eq:fvm_firstOrder_Euler_exp`. 
+Note that now the new time is at :math:`t+\Delta t` and that the spatial operator (:math:`L`) of :eq:`eq:fvm_firstOrder_Euler_exp` has to be evaluated at time :math:`t`. 
 Therefore, in order to find the value of :math:`T` at time :math:`t+\Delta t`, we don't need to solve a set of linear algebraic equations,
 
 .. math::
@@ -546,7 +548,7 @@ In order to better understand OpenFOAM's logic and its work flow, we have to loo
          - :math:`\nabla \cdot D \nabla T`
          - :code:`fvm::laplacian(DT, T)`
          - d(:math:`\sum\limits_{F\sim NB(C)}a_F`), u(:math:`a_F` only internal faces)
-         - :eq:`eq:fvm_aFaC`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`
+         - :eq:`eq:fvm_matrix_form_internalCell`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`
 
 .. tab:: createFields.H
 
@@ -762,7 +764,7 @@ Step 1, Read mesh and input field
          - :math:`1/\delta_{C\leftrightarrow F}`
          - :code:`mesh.deltaCoeffs()`
          - All faces
-         - :eq:`eq:fvm_aFaC`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`
+         - :eq:`eq:fvm_matrix_form_internalCell`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue`, :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`
       *  - :code:`T`
          - Dependents on BCs type
          - :code:`gradientInternalCoeffs` (diagonal), :code:`gradientBoundaryCoeffs` (source)
@@ -876,10 +878,10 @@ Step 2, discretize Laplacian term
 .. tab:: discretize Laplacian term
 
    Because discretization coefficients matrix of Laplacian term is a symmetric matrix, so :code:`fvm::Laplacian(DT, T)` will return a fvMatrix object only has diagonal and upper. 
-   What :code:`fvm::Laplacian` actually did is evaluate (1) :math:`a_F` (see :eq:`eq:fvm_aFaC`) for each internal faces, (2) :math:`a_C` for each cells, which is the negative summation of :math:`a_F`, (3) store the field BCs-related coefficients as :code:`internalCoeffs` and :code:`boundaryCoeffs`, respectively.
+   What :code:`fvm::Laplacian` actually did is evaluate (1) :math:`a_F` (see :eq:`eq:fvm_matrix_form_internalCell`) for each internal faces, (2) :math:`a_C` for each cells, which is the negative summation of :math:`a_F`, (3) store the field BCs-related coefficients as :code:`internalCoeffs` and :code:`boundaryCoeffs`, respectively.
    All of these are implemented in gaussLaplacianScheme.C_ . **Note that** the :code:`Gaussian` scheme is the only choice for Laplacian discretization in OF. 
 
-.. tab:: Access Laplacian coeffs
+.. tab:: Access Laplacian coeffs 
 
    .. code-block::  cpp
       :linenos:
