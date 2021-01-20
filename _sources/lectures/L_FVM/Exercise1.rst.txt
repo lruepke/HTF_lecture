@@ -6,6 +6,7 @@
 
    Before we start the exercise 1, please download (:download:`test_laplacianFoam <cases/test_laplacianFoam.zip>`) the modified Laplacian solver first.
    Then put it in the shared folder and compile (:code:`wmake`) it in the docker container.
+   This modified solver writes out detailed information on matrix coefficients into the log file, so that it is possible to check the derived values against the computed values. 
 
 ==============
 Exercise 1
