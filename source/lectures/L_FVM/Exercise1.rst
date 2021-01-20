@@ -36,8 +36,10 @@ Step 1, Geometric and physical modeling
     
     \frac{\partial T}{\partial t} - \nabla \cdot D \nabla T =0
 
-Here :math:`k` is the thermal conductivity and :math:`D` is the thermal diffusivity :math:`\frac{k}{\rho c_p}` . We here assume that :math:`D` is a constant value.
+:math:`k` is the thermal conductivity and :math:`D` is the thermal diffusivity :math:`\frac{k}{\rho c_p}` . We here assume that :math:`D` is a constant value.
 see also :ref:`theory_heat_diffusion`. 
+
+Below is a simple 2D setup for a heat diffusion test case. We will use it to learn about the details of how openFOAM's FV method works.
 
 .. figure:: /_figures/boundaryConditions_FVM_regularBox.*
    :align: center
@@ -154,7 +156,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_surface_sum_expand
 
-      b_{C_{12}} = \color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} + \iint_{f_{24}}\vec{J}^{T,D}_{f_{24}} \cdot \vec{S}_{f_{24}} + \iint_{f_{21}}\vec{J}^{T,D}_{f_{21}} \cdot \vec{S}_{f_{21}}  + \iint_{f_{5}}\vec{J}^{T,D}_{f_{5}} \cdot \vec{S}_{f_{5}} = 0
+      \color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} + \iint_{f_{24}}\vec{J}^{T,D}_{f_{24}} \cdot \vec{S}_{f_{24}} + \iint_{f_{21}}\vec{J}^{T,D}_{f_{21}} \cdot \vec{S}_{f_{21}}  + \iint_{f_{5}}\vec{J}^{T,D}_{f_{5}} \cdot \vec{S}_{f_{5}} = 0
 
    Note that the surface normals :math:`\vec{S}` always point out of the cell; for example, :math:`\vec{S}_{f_{23}}` would have a positive and :math:`\vec{S}_{f_{21}}` a negative sign.
 
@@ -198,7 +200,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
 
    .. math::
 
-      -\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}} = -D\frac{T_{13} - T_{C}}{x_{13} - x_C}\Delta y_{f_{23}} = -D\frac{T_{13} - T_{C}}{\delta x_{f_{23}}}\Delta y_{f_{23}} = \color{green}{a_{F_{23}}} (T_C - T_{13})
+      -\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}} = -D\frac{T_{13} - T_{C}}{x_{13} - x_C}\Delta y_{f_{23}} = -\frac{D \Delta y_{f_{23}}}   {\delta x_{f_{23}}}   (T_{13} - T_{C})
 
    where :math:`\delta x_{f_{23}}` represents the distance between center of cells who share face :math:`f_{23}`, they are cell 12 and cell 13.
 
@@ -215,21 +217,13 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
 
     .. math::
 
-      \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{21}} \Delta y_{f_{21}}} = D\frac{T_{C} - T_{11}}{x_{11} - x_C}\Delta y_{f_{21}} = D\frac{T_{C} - T_{11}}{\delta x_{f_{21}}}\Delta y_{f_{21}} = \color{green}{a_{F_{21}}} (T_C - T_{11})  
+      \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{21}} \Delta y_{f_{21}}} = D\frac{T_{C} - T_{11}}{x_{11} - x_C}\Delta y_{f_{21}} = D\frac{T_{C} - T_{11}}{\delta x_{f_{21}}}\Delta y_{f_{21}}
 
 
-
-
-   Do the same thing for the remain faces (:math:`f_5, f_{24}`) and get their coefficients :math:`\color{green}{a_{F_5}, a_{F_24}}` respectively,
-
-   .. math::
-      :label: eq:fvm_aFaC
-
-      \color{green}{a_{F_{23}}} = D\frac{\Delta y_{f_{23}}}{\delta x_{f_{23}}},
-      \color{green}{a_{F_5}} = D\frac{\Delta x_{f_5}}{\delta y_{f_5}},
-      \color{green}{a_{F_{24}}} = D\frac{\Delta x_{f_{24}}}{\delta y_{f_{24}}},
-      \color{green}{a_{F_{21}}} = D\frac{\Delta y_{f_{21}}}{\delta x_{f_{21}}}
+   Do the same thing for the remain faces (:math:`f_5, f_{24}`).
    
+
+
    4.3 Construct coefficients of a specific cell :math:`C_{12}` 
 
    Now we get all the coefficients, thus the :eq:`eq:fvm_surface_sum_expand` can be discretized and expressed as a matrix form,
@@ -237,19 +231,25 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_matrix_form_internalCell
       
-      \begin{eqnarray}
-      b_{C_{12}} & =  & a_{F_{23}} (T_C - T_{F_{23}}) + a_{F_{24}} (T_C - T_{F_{24}}) + a_{F_{21}} (T_C - T_{F_{21}}) + a_{F_{5}} (T_C - T_{F_{5}})\\
-         & = & \sum\limits_{f\in[23, 24, 21, 5]} a_{F_f} T_{C} + \left(-\sum\limits_{f\in[23, 24, 21, 5]} a_{F_f} \right) T_{F_f} \\
-         & = & \sum\limits_{f\sim NF(C)} a_{F_f} T_{C} + \left(-\sum\limits_{f\sim NF(C)} a_{F_f} \right) T_{F_f}  \\
-         & = & a_C T_C - \sum\limits_{f\sim NF(C)} a_{F_f} T_{F_f}  \\
+      0  =  a_{C} T_C + a_{F_{23}} T_{F_{23}} + a_{F_{24}} T_{F_{24}} + a_{F_{21}} T_{F_{21}} + a_{F_{5}} T_{F_{5}}
+
+
+   with
+
+   .. math::
+
+      \begin{eqnarray}   
+      a_{23} & = &  -\frac{D \Delta y_{f_{23}}}   {\delta x_{f_{23}}} \\
+      a_{24} & = &  -\frac{D \Delta y_{f_{24}}}   {\delta x_{f_{24}}} \\
+      a_{21} & = &  -\frac{D \Delta y_{f_{21}}}   {\delta x_{f_{21}}} \\
+      a_{5} & = &  -\frac{D \Delta y_{f_{5}}}   {\delta x_{f_{5}}} \\
+      a_{C} & = & -(a_{23} + a_{24} + a_{21}  + a_{5}) \\
       \end{eqnarray}
    
    .. math:: 
       :label: eq:fvm_matrix_form_internalCell12
 
-      \mathbf{A}_{N\times N}[12,:] \mathbf{T}_{N\times 1} =  B_{12}
-
-   where :math:`B_{12} = b_{12}`.
+      \mathbf{A}_{N\times N}[12,:] \mathbf{T}_{N\times 1} =  0
    
 .. tab:: Boundary cell
 
