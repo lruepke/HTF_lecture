@@ -238,10 +238,10 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
       :label: eq:fvm_matrix_form_internalCell
       
       \begin{eqnarray}
-      b_{C_{12}} & =  & a_{F_{23}} (T_{F_{23}} - T_C) + a_{F_{24}} (T_{F_{24}} - T_C) + a_{F_{21}} (T_{F_{21}} - T_C) + a_{F_{5}} (T_{F_{5}} - T_C)\\
-         & = & \sum\limits_{f\in[23, 24, 21, 5]} a_{F_f} T_{F_f} + \left(-\sum\limits_{f\in[23, 24, 21, 5]} a_{F_f} \right) T_C \\
-         & = & \sum\limits_{f\sim NF(C)} a_{F_f} T_{F_f} + \left(-\sum\limits_{f\sim NF(C)} a_{F_f} \right) T_C  \\
-         & = & a_C T_C + \sum\limits_{f\sim NF(C)} a_{F_f} T_{F_f}  \\
+      b_{C_{12}} & =  & a_{F_{23}} (T_C - T_{F_{23}}) + a_{F_{24}} (T_C - T_{F_{24}}) + a_{F_{21}} (T_C - T_{F_{21}}) + a_{F_{5}} (T_C - T_{F_{5}})\\
+         & = & \sum\limits_{f\in[23, 24, 21, 5]} a_{F_f} T_{C} + \left(-\sum\limits_{f\in[23, 24, 21, 5]} a_{F_f} \right) T_{F_f} \\
+         & = & \sum\limits_{f\sim NF(C)} a_{F_f} T_{C} + \left(-\sum\limits_{f\sim NF(C)} a_{F_f} \right) T_{F_f}  \\
+         & = & a_C T_C - \sum\limits_{f\sim NF(C)} a_{F_f} T_{F_f}  \\
       \end{eqnarray}
    
    .. math:: 
@@ -258,7 +258,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_surface_sum_expand_boundary
 
-      b_{C_{19}} = \iint_{f_{18}}\vec{J}^{T,D}_{f_{18}} \cdot \vec{S}_{f_{18}} + \iint_{f_{35}}\vec{J}^{T,D}_{f_{35}} \cdot \vec{S}_{f_{35}} +\iint_{f_{37}}\vec{J}^{T,D}_{f_{37}} \cdot \vec{S}_{f_{37}} + \color{red}{\iint_{f_{51}}\vec{J}^{T,D}_{f_{51}} \cdot \vec{S}_{f_{51}}}
+      b_{C_{19}} = \iint_{f_{18}}\vec{J}^{T,D}_{f_{18}} \cdot \vec{S}_{f_{18}} + \iint_{f_{35}}\vec{J}^{T,D}_{f_{35}} \cdot \vec{S}_{f_{35}} +\iint_{f_{37}}\vec{J}^{T,D}_{f_{37}} \cdot \vec{S}_{f_{37}} + \color{red}{\iint_{f_{51}}\vec{J}^{T,D}_{f_{51}} \cdot \vec{S}_{f_{51}}} = 0
    
    The first and second terms on the right hand side are flux of internal face, so there is nothing special and just calculate them following steps for internal faces we did before. The special thing is the boundary face :math:`f_{17}`, we can call it :math:`f_b` for a general case. **Now the problem is how to evaluate flux on the boundary face** :math:`f_b`.
 
@@ -267,7 +267,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_surface_flux_boundary
 
-      \color{red}{\iint_{f_{b}}\vec{J}^{T,D}_{f_{b}} \cdot \vec{S}_{f_{b}}} = -a_{F_b} T_C + c_{F_b}
+      \color{red}{\iint_{f_{b}}\vec{J}^{T,D}_{f_{b}} \cdot d\vec{S}_{f_{b}}} = a_{F_b} T_C + c_{F_b}
 
    All right, **now out goal is to determine the coefficients of** :math:`a_{F_b}` and :math:`c_{F_b}` according to the boundary conditions. Generally there are two basic kinds of boundary conditions, they are **Dirichlet boundary condition** (also called the first type or fixed value boundary condition) and **Von Neumann boundary condition** (all called the second type or fixed flux boundary condition), respectively.
 
@@ -285,14 +285,14 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_flux_Gaussian_integral_boundary
 
-      \color{orange}{\sum\limits_{ip\sim ip(f_{51})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = \left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{51}} \cdot \Delta y_{f_{51}} \vec{i} = \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{51}} \Delta y_{f_{51}}}
+      \color{orange}{\sum\limits_{ip\sim ip(f_{51})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = -\left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{51}} \cdot \Delta y_{f_{51}} \vec{i} = -\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{51}} \Delta y_{f_{51}}}
 
    Now let's calculate the gradient on the boundary face,
 
    .. math::
       :label: eq:fvm_gradient_boundary
 
-      \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{51}} \Delta y_{f_{51}}} = D\frac{\color{purple}{T_{f_{51}}} - T_{C}}{x_{f_{51}} - x_C}\Delta y_{f_{51}} = D\frac{\color{purple}{T_{f_{51}}} - T_{C}}{\delta x_{f_{51}}}\Delta y_{f_{51}} = \color{green}{a_{F_{51}}} (T_{f_{51}} - T_C)
+      -\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{51}} \Delta y_{f_{51}}} = -D\frac{\color{purple}{T_{f_{51}}} - T_{C}}{x_{f_{51}} - x_C}\Delta y_{f_{51}} = -D\frac{\color{purple}{T_{f_{51}}} - T_{C}}{\delta x_{f_{51}}}\Delta y_{f_{51}} = \color{green}{a_{F_{51}}} (T_{C} - T_{f_{51}})
 
    Substituting :eq:`eq:fvm_gradient_boundary` back to  :eq:`eq:fvm_flux_Gaussian_integral_boundary`, :eq:`eq:fvm_flux_boundary` and  :eq:`eq:fvm_surface_flux_boundary`, we can get Laplacian discretization coefficients :math:`a_{f_{51}}` and :math:`c_{f_{51}}`,
 
@@ -301,7 +301,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
 
       \begin{eqnarray}
       a_{F_{51}} &=& D\frac{\Delta y_{f_{51}}}{\delta x_{f_{51}}}\\
-      c_{F_{51}} &=& a_{F_{51}}\color{purple}{T_{f_{51}}}
+      c_{F_{51}} &=& -a_{F_{51}}\color{purple}{T_{f_{51}}}
       \end{eqnarray}
 
    4.2 Fixed flux boundary condition
@@ -349,8 +349,8 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    :label: eq:fvm_matrix_form0
 
    \begin{eqnarray}
-   \sum\limits_{f\sim nb(C)} (D\nabla T)_{F_f}\cdot \vec{S}_{F_f} & = &  \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{F_f} + \left(-\sum\limits_{f\sim nb(C)} a_{F_f} \right)T_C + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{F_f}} \\
-   & = & a_CT_C + \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{F_f} + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{f}}
+   -\sum\limits_{f\sim nb(C)} (D\nabla T)_{F_f}\cdot \vec{S}_{F_f} & = &  \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{C} + \left(-\sum\limits_{f\sim nb(C)} a_{F_f} \right)T_{F_f} + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{F_f}} \\
+   & = & a_CT_C - \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{F_f} + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{f}}
    \end{eqnarray}
 
 Matrix form of the :eq:`eq:fvm_surface_sum` can be written as,
