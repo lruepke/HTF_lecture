@@ -27,12 +27,17 @@ Step 1, Geometric and physical modeling
 ---------------------------------------------------
 
 .. math::
+    :label: eq:fvm_laplacian_con
+    
+    \rho c_p\frac{\partial T}{\partial t} - \nabla \cdot k \nabla T = 0 
+
+.. math::
     :label: eq:fvm_laplacian_dif
     
-    \frac{\partial T}{\partial t} = \nabla \cdot D \nabla T 
+    \frac{\partial T}{\partial t} - \nabla \cdot D \nabla T =0
 
-Here :math:`D` is the thermal diffusivity, can be a constant value.
-see also :ref:`theory_heat_diffusion`
+Here :math:`k` is the thermal conductivity and :math:`D` is the thermal diffusivity :math:`\frac{k}{\rho c_p}` . We here assume that :math:`D` is a constant value.
+see also :ref:`theory_heat_diffusion`. 
 
 .. figure:: /_figures/boundaryConditions_FVM_regularBox.*
    :align: center
@@ -99,21 +104,21 @@ The equation discretization step is performed over each element of the computati
 .. math::
     :label: eq:fvm_volume_int
     
-    \iiint\limits_{V_C} \frac{\partial T}{\partial t} dV \equiv b_C  = \iiint\limits_{V_C} \nabla \cdot D\nabla T dV
+    \iiint\limits_{V_C} \frac{\partial T}{\partial t} dV - \iiint\limits_{V_C} \nabla \cdot D\nabla T dV = 0
 
-**Note** that the transient term :math:`\iiint\limits_{V_C} \frac{\partial T}{\partial t} dV \equiv b_C` will be processed in the later section
+**Note** that the transient term :math:`\iiint\limits_{V_C} \frac{\partial T}{\partial t} dV` will be processed in the later section. Let's set it to zero for the moment and assume steady-state.
 
-2. Transform the volume integral on the right hand side of :eq:`eq:fvm_volume_int` into a surface integral by applying the divergence theorem, 
+2. Transform the volume integral of the heat flux into a surface integral by applying the divergence theorem, 
 
 .. math::
     :label: eq:fvm_surface_int
     
-    b_C = \oint\limits_{\partial V_C} (D\nabla T)\cdot d\vec{S}
+    - \iiint\limits_{V_C} \nabla \cdot D\nabla T dV = -\oint\limits_{\partial V_C} (D\nabla T)\cdot d\vec{S} = 0
 
 The :eq:`eq:fvm_surface_int` is actually a heat balance over cell :math:`C`. 
 It is basically the integral form of the original partial differential equation and involves **no approximation**.
 
-Here we can introduce definition of **heat diffusion flux**, 
+The integrant is the **diffusive heat flux**, 
 
 .. math::
    :label: eq:fvm_flux_D
@@ -125,7 +130,7 @@ Here we can introduce definition of **heat diffusion flux**,
 .. math::
     :label: eq:fvm_surface_sum
     
-    b_C = \sum\limits_{f\sim faces(V_C)} \iint\limits_{f}\vec{J}^{T,D}_f \cdot \vec{S}_f 
+    \sum\limits_{f\sim faces(V_C)} \iint\limits_{f}\vec{J}^{T,D}_f \cdot d\vec{S}_f =0
 
 Here :math:`f` denotes the boundary face of cell :math:`V_C`.
 
@@ -151,6 +156,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
 
       b_{C_{12}} = \color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} + \iint_{f_{24}}\vec{J}^{T,D}_{f_{24}} \cdot \vec{S}_{f_{24}} + \iint_{f_{21}}\vec{J}^{T,D}_{f_{21}} \cdot \vec{S}_{f_{21}}  + \iint_{f_{5}}\vec{J}^{T,D}_{f_{5}} \cdot \vec{S}_{f_{5}} 
 
+   Whether these fluxes add or remove energy from the control volume depends on the directions of the surface normals, which by convention all point out of the control volue.
 
    4.1 Considering face :math:`f_{23}`, calculate the first term on the right hand side of the :eq:`eq:fvm_surface_sum_expand` (we have to introduce the **first approximation** at this step). Using a Gaussian quadrature the integral at the face :math:`f_{23}`, for example, becomes,
 
@@ -192,7 +198,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
 
    .. math::
 
-      \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}} = D\frac{T_{f_{23}} - T_{C}}{x_{f_{23}} - x_C}\Delta y_{f_{23}} = D\frac{T_{f_{23}} - T_{C}}{\delta x_{f_{23}}}\Delta y_{f_{23}} = \color{green}{a_{F_{23}}} (T_{f_{23}} - T_C)
+      \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}} = D\frac{T_{F_{23}} - T_{C}}{x_{F_{23}} - x_C}\Delta y_{f_{23}} = D\frac{T_{F_{23}} - T_{C}}{\delta x_{f_{23}}}\Delta y_{f_{23}} = \color{green}{a_{F_{23}}} (T_{F_{23}} - T_C)
 
    where :math:`\delta x_{f_{23}}` represents the distance between center of cells who share face :math:`f_{23}`, they are cell 12 and cell 13.
 
