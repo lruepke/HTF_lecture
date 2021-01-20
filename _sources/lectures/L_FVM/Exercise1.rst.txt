@@ -154,9 +154,9 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_surface_sum_expand
 
-      b_{C_{12}} = \color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} + \iint_{f_{24}}\vec{J}^{T,D}_{f_{24}} \cdot \vec{S}_{f_{24}} + \iint_{f_{21}}\vec{J}^{T,D}_{f_{21}} \cdot \vec{S}_{f_{21}}  + \iint_{f_{5}}\vec{J}^{T,D}_{f_{5}} \cdot \vec{S}_{f_{5}} 
+      b_{C_{12}} = \color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} + \iint_{f_{24}}\vec{J}^{T,D}_{f_{24}} \cdot \vec{S}_{f_{24}} + \iint_{f_{21}}\vec{J}^{T,D}_{f_{21}} \cdot \vec{S}_{f_{21}}  + \iint_{f_{5}}\vec{J}^{T,D}_{f_{5}} \cdot \vec{S}_{f_{5}} = 0
 
-   Whether these fluxes add or remove energy from the control volume depends on the directions of the surface normals, which by convention all point out of the control volue.
+   Note that the surface normals :math:`\vec{S}` always point out of the cell; for example, :math:`\vec{S}_{f_{23}}` would have a positive and :math:`\vec{S}_{f_{21}}` a negative sign.
 
    4.1 Considering face :math:`f_{23}`, calculate the first term on the right hand side of the :eq:`eq:fvm_surface_sum_expand` (we have to introduce the **first approximation** at this step). Using a Gaussian quadrature the integral at the face :math:`f_{23}`, for example, becomes,
 
@@ -172,7 +172,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
       :width: 100 %
       :name: fig:Fig5.2
    
-      Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points :cite:`moukalled2016finite`.
+      Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points :cite:`moukalled2016finite`. Here the special case of non-orthogonal faces is considered in that the total flux across a face :math:`FluxT_f` is made up of different component.
    
    .. important:: 
 
@@ -186,7 +186,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    .. math::
       :label: eq:fvm_surface_term_f1
       
-      \color{orange}{\sum\limits_{ip\sim ip(f_{23})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = \left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{23}} \cdot \Delta y_{f_{23}} \vec{i} = \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}}
+      \color{orange}{\sum\limits_{ip\sim ip(f_{23})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = -\left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{23}} \cdot \Delta y_{f_{23}} \vec{i} = -\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}}
 
    where 
 
@@ -198,11 +198,29 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
 
    .. math::
 
-      \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}} = D\frac{T_{F_{23}} - T_{C}}{x_{F_{23}} - x_C}\Delta y_{f_{23}} = D\frac{T_{F_{23}} - T_{C}}{\delta x_{f_{23}}}\Delta y_{f_{23}} = \color{green}{a_{F_{23}}} (T_{F_{23}} - T_C)
+      -\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}} = -D\frac{T_{13} - T_{C}}{x_{13} - x_C}\Delta y_{f_{23}} = -D\frac{T_{13} - T_{C}}{\delta x_{f_{23}}}\Delta y_{f_{23}} = \color{green}{a_{F_{23}}} (T_C - T_{13})
 
    where :math:`\delta x_{f_{23}}` represents the distance between center of cells who share face :math:`f_{23}`, they are cell 12 and cell 13.
 
-   Do the same thing for the remain faces (:math:`f_{21}, f_5, f_{24}`) and get their coefficients :math:`\color{green}{a_{F_2}, a_{F_3}, a_{F_4}}` respectively,
+   Now let's look at the western face :math:`f_{21}` . Using a single integration point, we can again write:
+ 
+   .. math::
+      :label: eq:fvm_surface_term_f1_west
+      
+      \color{orange}{\sum\limits_{ip\sim ip(f_{21})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = -\left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{21}} \cdot \Delta y_{f_{21}} -\vec{i} = \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{21}} \Delta y_{f_{21}}}
+
+   Notice how the surface normal now has the opposite sign!
+
+   We continue to spell out the flux across face :math:`f_{21}` as:
+
+    .. math::
+
+      \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{21}} \Delta y_{f_{21}}} = D\frac{T_{C} - T_{11}}{x_{11} - x_C}\Delta y_{f_{21}} = D\frac{T_{C} - T_{11}}{\delta x_{f_{21}}}\Delta y_{f_{21}} = \color{green}{a_{F_{21}}} (T_C - T_{11})  
+
+
+
+
+   Do the same thing for the remain faces (:math:`f_5, f_{24}`) and get their coefficients :math:`\color{green}{a_{F_5}, a_{F_24}}` respectively,
 
    .. math::
       :label: eq:fvm_aFaC
