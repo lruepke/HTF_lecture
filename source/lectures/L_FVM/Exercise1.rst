@@ -446,7 +446,7 @@ Therefore the coefficients will be
 
    FluxC = \frac{V_C}{\Delta t}, ~ FluxC^o = - \frac{V_C}{\Delta t}, ~ FluxV =0
 
-First order implicit Euler scheme
+First order explicit Euler scheme
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. math:: 
