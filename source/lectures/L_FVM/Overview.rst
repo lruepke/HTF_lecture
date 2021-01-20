@@ -1,8 +1,5 @@
 .. include:: /include.rst_
-
-.. warning::
-   This section is under construction!
-   
+  
 Lecture overview
 ================
 
