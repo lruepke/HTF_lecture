@@ -1,5 +1,7 @@
 .. include:: /include.rst_
 
+.. _fault_controlled_systems:
+
 Structural controls on hydrothermal flow
 =====================================================
 
