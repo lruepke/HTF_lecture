@@ -1,5 +1,7 @@
 .. include:: /include.rst_
 
+.. _L04_PostProcess:
+
 Upflow temperatures in submarine hydrothermal systems
 =====================================================
 

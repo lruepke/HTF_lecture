@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Accompanying slide deck &mdash; HydrothermalFoam Lecture  documentation</title>
+  <title>Project 1: Flow along a detachment fault &mdash; HydrothermalFoam Lecture  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Navier-Stokes flow with OpenFoam" href="intro.html" />
-    <link rel="prev" title="Lecture overview" href="Overview.html" /> 
+    <link rel="next" title="References" href="../../refs.html" />
+    <link rel="prev" title="1. Read and plot mesh information" href="../L_FVM/cases/jupyter/VisualizeResults.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -118,12 +118,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Lecture 2</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Accompanying slide deck</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Example.html">Example</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Exercise.html">Excercise</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/slide.html">Accompanying slide deck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/intro.html">Navier-Stokes flow with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Lecture 3</span></p>
 <ul>
@@ -155,8 +155,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/Exercise1.html">Exercise 1</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Projects</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project1.html">Project 1: Flow along a detachment fault</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Project 1: Flow along a detachment fault</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#deliverables">Deliverables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-point">Starting point</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#case-file">Case file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#meshing-software">Meshing software</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#post-processing">Post-processing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#background-reading">Background reading</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
@@ -231,14 +241,14 @@
     
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Accompanying slide deck</li>
+      <li>Project 1: Flow along a detachment fault</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
             
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L02/slide.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L_PROJECTS/Project1.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -276,9 +286,64 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="accompanying-slide-deck">
-<span id="l02-slide"></span><h1>Accompanying slide deck<a class="headerlink" href="#accompanying-slide-deck" title="Permalink to this headline">¶</a></h1>
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQE8d_w0p6fu-BERQsD_Wa_EvMj-1FtLgAhWje31fO9evP9qN7mmQ1Ezi9zs6S8kmcc_WyjUgwfHSHn/embed?start=true&loop=false&delayms=3000" frameborder="0" width="100%" height="430" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></div>
+<div class="section" id="project-1-flow-along-a-detachment-fault">
+<span id="l-projects-project1"></span><h1>Project 1: Flow along a detachment fault<a class="headerlink" href="#project-1-flow-along-a-detachment-fault" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-project-objectives admonition">
+<p class="admonition-title">Project objectives</p>
+<ul class="simple">
+<li><p>Explore hydrothermal flow along fault zones</p></li>
+<li><p>Find which faults capture a rising plume and which do not</p></li>
+<li><p>Understand how fault zone properties affect vent temperature</p></li>
+</ul>
+</div>
+<p>The first project builds upon lecture 3 on <a class="reference internal" href="../L05/intro.html#fault-controlled-systems"><span class="std std-ref">Structural controls on hydrothermal flow</span></a>. We will explore under which conditions hydrothermal upflow can be “captured” by an inclined fault zone of enhanced permeability.</p>
+<div class="section" id="deliverables">
+<h2>Deliverables<a class="headerlink" href="#deliverables" title="Permalink to this headline">¶</a></h2>
+<p>The goal of this project is to provide work on these topics</p>
+<ol class="arabic simple">
+<li><p><strong>Plume captureing</strong>, provide a sequence of 2D simulations that illustrate what can “happen” for different fault widths and fault permeabilities (check <a class="reference internal" href="../L05/intro.html#andersen-fig"><span class="std std-numref">Fig. 28</span></a>)</p></li>
+<li><p><strong>Systematics</strong>, provide a “phase diagram” for fault width and fault permeability that illustrates the regime when the pume is captured by the fault zone.</p></li>
+<li><p><strong>Vent temperature</strong>, provide information on the relationship between the fault’s ability to capture a plume and the resulting vent temperature.</p></li>
+</ol>
+<p>The results showed be delivered in a short powerpoint presentation.</p>
+</div>
+<div class="section" id="starting-point">
+<h2>Starting point<a class="headerlink" href="#starting-point" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="case-file">
+<h3>Case file<a class="headerlink" href="#case-file" title="Permalink to this headline">¶</a></h3>
+<p>Download the basic case file from (<a class="reference download internal" download="" href="../../_downloads/0475e4f952a3b299ce1b1c0ae2a6f799/fault_flow.zip"><code class="xref download docutils literal notranslate"><span class="pre">Fault</span> <span class="pre">Flow</span> <span class="pre">Model</span></code></a>).. It includes a basic setup for a fault-controlled hydrothermal system.</p>
+</div>
+<div class="section" id="meshing-software">
+<h3>Meshing software<a class="headerlink" href="#meshing-software" title="Permalink to this headline">¶</a></h3>
+<p>The example case uses a meshing software called <a class="reference external" href="https://gmsh.info">gmsh</a> to create a mesh that resolves the fault zone. Gmsh is already installed within your docker containers, so there should be no need for installing additional software. The gmsh input file is in <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code>.</p>
+<div class="figure align-center" id="fig-gmsh-screen-fig">
+<img alt="../../_images/gmsh_screen.png" src="../../_images/gmsh_screen.png" />
+<p class="caption"><span class="caption-number">Fig. 47 </span><span class="caption-text">Mesh created with gmsh.</span><a class="headerlink" href="#fig-gmsh-screen-fig" title="Permalink to this image">¶</a></p>
+</div>
+<p>Have a look at <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code> and the <a class="reference external" href="https://gmsh.info">gmsh documentation</a> . Check that you (more or less) understand what’s happening and try to change things like fault width and and angle.</p>
+</div>
+<div class="section" id="post-processing">
+<h3>Post-processing<a class="headerlink" href="#post-processing" title="Permalink to this headline">¶</a></h3>
+<p>There are many ways of extracting information from a completed run. For this project, you will want to know how high the vent temperature is and where the venting occurs, so that you can evaluate if the plume was “captured” by the fault. You can either do this in paraview by using, for example, the “Plot Over Line” filter in Paraview. An alternative is to use the built-in postprocessing function of OpenFoam.</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="n">postProcess</span> <span class="o">-</span><span class="n">func</span> <span class="n">sampleDict</span> <span class="o">-</span><span class="k">latestTime</span>
+</pre></div>
+</div>
+<p>It will read the <code class="code docutils literal notranslate"><span class="pre">system/sampleDict</span></code> file (have a look!) and extract T along a line.</p>
+<p>More powerful is, of course, to use python, like in <a class="reference internal" href="../L04/intro.html#l04-postprocess"><span class="std std-ref">Upflow temperatures in submarine hydrothermal systems</span></a>.</p>
+</div>
+</div>
+<div class="section" id="background-reading">
+<h2>Background reading<a class="headerlink" href="#background-reading" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><span id="id2">[<a class="reference internal" href="../../refs.html#id11"><span>Andersen et al., 2015</span></a>]</span> illustrates the problem for the Logatchev field</p></li>
+<li><p><span id="id3">[<a class="reference internal" href="../../refs.html#id9"><span>Driesner, 2010a</span></a>]</span> explains relationship between vent temperature and permeability</p></li>
+<li><p><span id="id4">[<a class="reference internal" href="../../refs.html#id13"><span>deMartin et al., 2007</span></a>]</span> background paper on detachment faulting at the TAG vent field</p></li>
+<li><p><span id="id5">[<a class="reference internal" href="../../refs.html#id14"><span>McCaig et al., 2007</span></a>]</span> <span id="id6">[<a class="reference internal" href="../../refs.html#id15"><span>McCaig et al., 2010</span></a>]</span> more paper on fluid flow along detachments</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
 
 
            </div>
@@ -286,8 +351,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="intro.html" class="btn btn-neutral float-right" title="Navier-Stokes flow with OpenFoam" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="Overview.html" class="btn btn-neutral float-left" title="Lecture overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../refs.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../L_FVM/cases/jupyter/VisualizeResults.html" class="btn btn-neutral float-left" title="1. Read and plot mesh information" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
