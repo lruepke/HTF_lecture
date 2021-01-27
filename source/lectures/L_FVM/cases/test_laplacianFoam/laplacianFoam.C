@@ -39,7 +39,6 @@ int main(int argc, char *argv[])
     #include "setRootCaseLists.H"
 
     #include "createTime.H"
-
     // (1). read data
     #include "createMesh.H"
     #include "createFields.H"
