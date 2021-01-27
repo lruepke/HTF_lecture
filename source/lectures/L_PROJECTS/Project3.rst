@@ -48,7 +48,7 @@ In addition, we need to implement a pressure-dependent permeability. Here the id
 .. math::
     :label: eq:k_eqn_1
     
-    k_{eff}  = k_0 \left( \frac{p_f}{p_l} \right) \text{ for } (p_f > p_l)   
+    k_{eff}  = k_0 \left( \frac{p_f}{p_l} \right)^2 \text{ for } (p_f > p_l)   
 
 Here :math:`p_l` is the lithostatic pressure, the weight of the overburden.
 
