@@ -14,6 +14,15 @@ Project 1: Flow along a detachment fault
 
 The first project builds upon lecture 3 on :ref:`fault_controlled_systems`. We will explore under which conditions hydrothermal upflow can be "captured" by an inclined fault zone of enhanced permeability. 
 
+.. figure:: /_figures/andersen_fault_2017.*
+   :align: center
+   :name: fig:fault_2017_fig
+   :figwidth: 70%
+
+   Figure taken from :cite:`Andersen2017` ; preferential fluid flow along a fault zone.
+
+
+
 Deliverables
 -----------------------
 
@@ -66,13 +75,3 @@ Background reading
     * :cite:`driesner2010` explains relationship between vent temperature and permeability
     * :cite:`deMartin2007` background paper on detachment faulting at the TAG vent field
     * :cite:`McCaig2007` :cite:`McCaig2010` more paper on fluid flow along detachments
-
-
-
-.. warning::
-
-    Move this to a proper section latter.
-    
-    Download source code of the modified solver for temperature dependent :math:`C_{pr}`.
-
-    :download:`HydrothermalSinglePhaseDarcyFoam_Cpr <cases/HydrothermalSinglePhaseDarcyFoam_Cpr.zip>`
