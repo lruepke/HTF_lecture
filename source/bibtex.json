@@ -30,11 +30,26 @@
             "moukalled2016finite"
         ],
         "lectures/L_PROJECTS/Project1": [
+            "Andersen2017",
             "andersen2015",
             "driesner2010",
             "deMartin2007",
             "McCaig2007",
             "McCaig2010"
+        ],
+        "lectures/L_PROJECTS/Project2": [
+            "Galerne2019",
+            "Aarnes2010",
+            "Andersen2017",
+            "Iyer2017",
+            "Svensen2004"
+        ],
+        "lectures/L_PROJECTS/Project3": [
+            "Aarnes2010",
+            "Iyer2017",
+            "Weis2012",
+            "Galerne2019",
+            "Svensen2004"
         ]
     }
 }
