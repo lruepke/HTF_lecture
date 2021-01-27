@@ -325,12 +325,12 @@
 <div class="math notranslate nohighlight" id="equation-eq-e-eqn-cp2">
 <span class="eqno">(60)<a class="headerlink" href="#equation-eq-e-eqn-cp2" title="Permalink to this equation">¶</a></span>\[C_{eff}  = C_P \text{ for } (T &lt; T_S)\]</div>
 <p>These changes are implemented in a modified solver of HydrothermalFoam, which you can download from here (<a class="reference download internal" download="" href="../../_downloads/4244f629c23d2f901c5ad654af2abead/HydrothermalSinglePhaseDarcyFoam_Cpr.zip"><code class="xref download docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam_Cpr</span></code></a>).</p>
-<p>Check the :code:<a href="#id4"><span class="problematic" id="id5">`</span></a>updateProps.H`and :code:<a href="#id6"><span class="problematic" id="id7">`</span></a>createFields.H`files, how these changes are implemented.</p>
+<p>Check the <code class="code docutils literal notranslate"><span class="pre">updateProps.H</span></code> and <code class="code docutils literal notranslate"><span class="pre">createFields.H</span></code> files, how these changes are implemented.</p>
 </div>
 <div class="section" id="setup-fields">
 <h3>Setup fields<a class="headerlink" href="#setup-fields" title="Permalink to this headline">¶</a></h3>
 <p>In addition to the solver changes, we have to take extra care of the initial conditions. The temperature field is not uniform anymore but we need to set the initial intrusion temperature to a high value according to its cellzone and apply a background temperature gradient (if we think that’s useful).</p>
-<p>These changes are implemented as codestream statements in <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>. Have a look!</p>
+<p>These changes are implemented as codestream statements in <code class="code docutils literal notranslate"><span class="pre">0/T</span></code> . Have a look!</p>
 </div>
 </div>
 <div class="section" id="deliverables">
@@ -347,7 +347,7 @@
 <h2>Starting point<a class="headerlink" href="#starting-point" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="case-file">
 <h3>Case file<a class="headerlink" href="#case-file" title="Permalink to this headline">¶</a></h3>
-<p>Download the basic case file from (<a class="reference download internal" download="" href="../../_downloads/0475e4f952a3b299ce1b1c0ae2a6f799/fault_flow.zip"><code class="xref download docutils literal notranslate"><span class="pre">Fault</span> <span class="pre">Flow</span> <span class="pre">Model</span></code></a>).. It includes a basic setup for hydrothermal system drive.</p>
+<p>Download the basic case file from (<a class="reference download internal" download="" href="../../_downloads/2d3a4057b2ec514e8f4ca4ff13017f19/cooling_intrusion.zip"><code class="xref download docutils literal notranslate"><span class="pre">Intrusion</span> <span class="pre">Flow</span> <span class="pre">Model</span></code></a>).. It includes a basic setup for hydrothermal system drive.</p>
 </div>
 <div class="section" id="meshing-software">
 <h3>Meshing software<a class="headerlink" href="#meshing-software" title="Permalink to this headline">¶</a></h3>
@@ -361,7 +361,7 @@
 <div class="section" id="post-processing">
 <h3>Post-processing<a class="headerlink" href="#post-processing" title="Permalink to this headline">¶</a></h3>
 <p>There are many ways of extracting information from a completed run. For this project, you will want to know how high the vent temperature is and where the venting occurs, so that you can evaluate if the plume was “captured” by the fault. You can either do this in paraview by using, for example, the “Plot Over Line” filter in Paraview. An alternative is to use the built-in postprocessing function of OpenFoam.</p>
-<p>Also check the <code class="code docutils literal notranslate"><span class="pre">system/controlDict.orig`file;</span> <span class="pre">there</span> <span class="pre">is</span> <span class="pre">codestream</span> <span class="pre">section</span> <span class="pre">at</span> <span class="pre">the</span> <span class="pre">bottom</span> <span class="pre">that</span> <span class="pre">writes</span> <span class="pre">out</span> <span class="pre">maximum</span> <span class="pre">vent</span> <span class="pre">temperature</span> <span class="pre">to</span> <span class="pre">a</span> <span class="pre">file</span> <span class="pre">names</span> <span class="pre">:code:`ventT.txt</span></code>. Modify according to your needs.</p>
+<p>Also check the <code class="code docutils literal notranslate"><span class="pre">system/controlDict.orig</span></code> file; there is codestream section at the bottom that writes out maximum vent temperature to a file names <code class="code docutils literal notranslate"><span class="pre">ventT.txt</span></code> . Modify according to your needs.</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="n">postProcess</span> <span class="o">-</span><span class="n">func</span> <span class="n">sampleDict</span> <span class="o">-</span><span class="k">latestTime</span>
 </pre></div>
 </div>
@@ -373,10 +373,10 @@
 <h2>Background reading<a class="headerlink" href="#background-reading" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li><p><span id="id9">[<a class="reference internal" href="../../refs.html#id11"><span>Andersen et al., 2015</span></a>]</span> illustrates the problem for the Logatchev field</p></li>
-<li><p><span id="id10">[<a class="reference internal" href="../../refs.html#id9"><span>Driesner, 2010a</span></a>]</span> explains relationship between vent temperature and permeability</p></li>
-<li><p><span id="id11">[<a class="reference internal" href="../../refs.html#id13"><span>deMartin et al., 2007</span></a>]</span> background paper on detachment faulting at the TAG vent field</p></li>
-<li><p><span id="id12">[<a class="reference internal" href="../../refs.html#id14"><span>McCaig et al., 2007</span></a>]</span> <span id="id13">[<a class="reference internal" href="../../refs.html#id15"><span>McCaig et al., 2010</span></a>]</span> more paper on fluid flow along detachments</p></li>
+<li><p><span id="id5">[<a class="reference internal" href="../../refs.html#id11"><span>Andersen et al., 2015</span></a>]</span> illustrates the problem for the Logatchev field</p></li>
+<li><p><span id="id6">[<a class="reference internal" href="../../refs.html#id9"><span>Driesner, 2010a</span></a>]</span> explains relationship between vent temperature and permeability</p></li>
+<li><p><span id="id7">[<a class="reference internal" href="../../refs.html#id13"><span>deMartin et al., 2007</span></a>]</span> background paper on detachment faulting at the TAG vent field</p></li>
+<li><p><span id="id8">[<a class="reference internal" href="../../refs.html#id14"><span>McCaig et al., 2007</span></a>]</span> <span id="id9">[<a class="reference internal" href="../../refs.html#id15"><span>McCaig et al., 2010</span></a>]</span> more paper on fluid flow along detachments</p></li>
 </ul>
 </div></blockquote>
 </div>
