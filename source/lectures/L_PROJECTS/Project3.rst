@@ -1,5 +1,12 @@
 .. include:: /include.rst_
 
+.. warning::
+
+    Example case for project 3.
+
+    :download:`pressure_perm <cases/pressure_perm.zip>`
+
+
 .. _L_PROJECTS_Project3:
 
 Project 3: Hydrofracturing and localized venting above sill intrusion?
