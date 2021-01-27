@@ -5,7 +5,7 @@
 Project 2: How long can a magmatic intrusion sustain high temperature venting?
 ==============================================================================
 
-. admonition:: Project objectives
+.. admonition:: Project objectives
 
     - Explore how long magmatic intrusions can sustain a hydrothermal circulation system
     - Constrain the break-through time of the hydrothermal plume
@@ -116,8 +116,6 @@ More powerful is, of course, to use python, like in :ref:`L04_PostProcess`.
 Background reading
 ------------------
 
-    * :cite:`andersen2015` illustrates the problem for the Logatchev field
-    * :cite:`driesner2010` explains relationship between vent temperature and permeability
-    * :cite:`deMartin2007` background paper on detachment faulting at the TAG vent field
-    * :cite:`McCaig2007` :cite:`McCaig2010` more paper on fluid flow along detachments
-
+    * :cite:`Andersen2017` flow modeling of a cooling intrusion for the Logatchev field
+    * :cite:`Aarnes2010` :cite:`Iyer2017` :cite:`Galerne2019` paper on modeling sill intrusion into sedimentary basins
+    * :cite:`Svensen2004` landmark paper on the relationship between sill intrusion into organic sediments, greenhouse gas relase, and climate change as well as mass extinctions.
