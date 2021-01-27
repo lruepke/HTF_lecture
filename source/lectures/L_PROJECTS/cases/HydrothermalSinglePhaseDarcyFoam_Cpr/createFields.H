@@ -86,6 +86,7 @@ volScalarField cp_rock
     mesh,
     cp0_rock
 );
+#include "updateCp_rock.H"
 
 // Fluid density
 volScalarField rho

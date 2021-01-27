@@ -1,0 +1,88 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+
+application HydrothermalSinglePhaseDarcyFoam_Cpr;
+startFrom latestTime;
+startTime 0;
+stopAt endTime;
+endTime 6912000000; //86400000000
+deltaT 864000;
+adjustTimeStep yes;
+maxCo           0.8; 
+maxDeltaT       86400000; 
+writeControl adjustableRunTime;
+writeInterval 86400000;
+purgeWrite 0;
+writeFormat ascii;
+writePrecision 6;
+writeCompression off;
+timeFormat general;
+timePrecision 14;
+runTimeModifiable true;
+libs 
+( 
+    
+    "libHydrothermalBoundaryConditions.so"
+    "libHydroThermoPhysicalModels.so"
+);
+
+functions
+{
+    updateCp_r
+    {
+        libs                ("libutilityFunctionObjects.so");
+        type                coded;
+        enabled             true;
+        writeControl        adjustableRunTime;
+        writeInterval       #calc "$writeInterval/10"; //$writeInterval;
+        name                updateCp_r;
+        codeWrite
+        #{
+            //get maximum tempeature on the top boundary
+            label patchID = mesh().boundaryMesh().findPatchID("seafloor"); 
+            const volScalarField& T = mesh().lookupObject<volScalarField>("T");
+            const surfaceScalarField& phi = mesh().lookupObject<surfaceScalarField>("phi");
+            const volScalarField& h = mesh().lookupObject<volScalarField>("enthalpy");
+            bool exist = Foam::exists("ventT.csv");
+            std::ofstream fout("ventT.csv",std::ofstream::app);
+            if(!exist)fout<<"Time(year),\tMaximum vent T (deg. C),\tTotal recharge (kg/s),\tTotal discharge (kg/s),\tTotal heat output"<<std::endl;
+            // 1. maximum vent temperature
+            scalar maxVentT=Foam::gMax(T.boundaryField()[patchID])-273.15; //deg. C
+            // 2. total discharge mass flow rate and recharge mass flow rate on seafloor
+            scalar Q_dis=0, Q_re=0; //kg/s
+            // 3. total heat output on seafloor
+            scalar E_dis=0; //J/s
+            forAll(phi.boundaryField(), patchID)
+            {
+                forAll(phi.boundaryField()[patchID], faceI)
+                {
+                    scalar phi0=phi.boundaryField()[patchID][faceI];
+                    scalar h0=h.boundaryField()[patchID][faceI];
+                    if(phi0>0)
+                    {
+                        Q_dis += phi0;
+                        E_dis += phi0*h0;
+                    }else
+                    {
+                        Q_re += phi0;
+                    }
+                }
+            }
+            // 
+            fout<<mesh().time().value()/31536000.0<<",\t"<<maxVentT<<",\t"<<Q_re<<",\t"<<Q_dis<<",\t"<<E_dis<<std::endl;
+            fout.close();
+        #};
+    }
+}
