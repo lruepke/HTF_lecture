@@ -86,15 +86,15 @@ Download the basic case file from (:download:`Sill intrusion Flow Model <cases/s
 Meshing software
 ^^^^^^^^^^^^^^^^
 
-The example case uses a meshing software called `gmsh  <https://gmsh.info>`_ to create a mesh that resolves the fault zone. Gmsh is already installed within your docker containers, so there should be no need for installing additional software. The gmsh input file is in :code:`gmsh/make_mesh.geo`. 
+The example case uses a meshing software called Gmsh_ to create a mesh that resolves the fault zone. Gmsh is already installed within your docker containers, so there should be no need for installing additional software. The gmsh input file is in :code:`gmsh/make_mesh.geo`. 
 
-.. figure:: /_figures/sill_mesh.*
+.. figure:: /_figures/sill_mesh_proj3.*
    :align: center
-   :name: fig:gmsh_sill_fig
+   :name: fig:gmsh_sill_fig_proj3
 
    Mesh created with gmsh.
 
-Have a look at :code:`gmsh/make_mesh.geo` and the `gmsh documentation  <https://gmsh.info>`_ . Check that you (more or less) understand what's happening and try to change things like fault width and and angle.
+Have a look at :code:`gmsh/make_mesh.geo` and the Gmsh_ . Check that you (more or less) understand what's happening and try to change things like fault width and and angle.
 
 Post-processing
 ^^^^^^^^^^^^^^^
