@@ -52,7 +52,7 @@ In addition, we need to implement a pressure-dependent permeability. Here the id
 
 Here :math:`p_l` is the lithostatic pressure, the weight of the overburden.
 
-These changes are implemented in a modified solver of HydrothermalFoam, which you can download from here (:download:`HydrothermalSinglePhaseDarcyFoam_Cpr <cases/HydrothermalSinglePhaseDarcyFoam_Cpr.zip>`).
+These changes are implemented in a modified solver of HydrothermalFoam, which you can download from here (:download:`HydrothermalSinglePhaseDarcyFoam_p_k <cases/HydrothermalSinglePhaseDarcyFoam_p_k.zip>`).
 
 Check the :code:`updateProps.H` and :code:`createFields.H` files, how these changes are implemented.
 
