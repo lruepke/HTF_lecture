@@ -10,3 +10,5 @@ heatFlux = -kr*fvc::grad(T);
 
 // update cp or rock according to temperature field
 #include "updateCp_rock.H"
+
+// Info<<cp_rock<<endl;
