@@ -28,6 +28,13 @@
         ],
         "lectures/L_FVM/Exercise1": [
             "moukalled2016finite"
+        ],
+        "lectures/L_PROJECTS/Project1": [
+            "andersen2015",
+            "driesner2010",
+            "deMartin2007",
+            "McCaig2007",
+            "McCaig2010"
         ]
     }
 }

@@ -3,7 +3,7 @@
 .. _L_PROJECTS_Project1:
 
 Project 1: Flow along a detachment fault
-========================================
+===========================================
 
 .. admonition:: Project objectives
 
@@ -35,7 +35,7 @@ Download the basic case file from (:download:`Fault Flow Model <cases/fault_flow
 Meshing software
 ^^^^^^^^^^^^^^^^
 
-The example case uses a meshing software called `gmsh  <https://gmsh.info>`_ to create a mesh that resolves the fault zone. Gmsh is already installed within your docker containers, so there should be no need for installing additional software. The gmsh input file is in :code:`gmsh/make_mesh.geo`. 
+The example case uses a meshing software called Gmsh_ to create a mesh that resolves the fault zone. Gmsh is already installed within your docker containers, so there should be no need for installing additional software. The gmsh input file is in :code:`gmsh/make_mesh.geo`. 
 
 .. figure:: /_figures/gmsh_screen.*
    :align: center
@@ -43,7 +43,7 @@ The example case uses a meshing software called `gmsh  <https://gmsh.info>`_ to 
 
    Mesh created with gmsh.
 
-Have a look at :code:`gmsh/make_mesh.geo` and the `gmsh documentation  <https://gmsh.info>`_ . Check that you (more or less) understand what's happening and try to change things like fault width and and angle.
+Have a look at :code:`gmsh/make_mesh.geo` and the Gmsh_ . Check that you (more or less) understand what's happening and try to change things like fault width and and angle.
 
 Post-processing
 ^^^^^^^^^^^^^^^
@@ -67,3 +67,12 @@ Background reading
     * :cite:`deMartin2007` background paper on detachment faulting at the TAG vent field
     * :cite:`McCaig2007` :cite:`McCaig2010` more paper on fluid flow along detachments
 
+
+
+.. warning::
+
+    Move this to a proper section latter.
+    
+    Download source code of the modified solver for temperature dependent :math:`C_{pr}`.
+
+    :download:`HydrothermalSinglePhaseDarcyFoam_Cpr <cases/HydrothermalSinglePhaseDarcyFoam_Cpr.zip>`

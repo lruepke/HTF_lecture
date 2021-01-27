@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "HydrothermalSinglePhaseDarcyFoam.C": "cpp",
+        "waterThermos.C": "cpp",
+        "rhoThermos.C": "cpp",
+        "psiThermos.C": "cpp"
+    }
+}
