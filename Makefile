@@ -23,6 +23,7 @@ casesPackage = bash source/lectures/$1/cases/casePackage.sh \
 	@if [ $@ = "html" ]; then\
 		$(call casesPackage,L04,Jupp_Schultz) ;\
 		$(call casesPackage,L_FVM,regularBox) ;\
+		$(call casesPackage,L_PROJECTS,fault_flow) ;\
 	fi
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	
