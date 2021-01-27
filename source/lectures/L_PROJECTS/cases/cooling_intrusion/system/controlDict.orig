@@ -14,7 +14,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application HydrothermalSinglePhaseDarcyFoam; //SinglePhaseDarcyAnhydriteFoam
+application HydrothermalSinglePhaseDarcyFoam_Cpr; 
 
 startFrom startTime;
 
@@ -23,7 +23,7 @@ startTime 0;
 stopAt endTime;
 // -------------commonly changed parameters ----------- 
 endTime_year 40000;   //year
-writeInterval_year 200; //year
+writeInterval_year 10; //year
 purgeWrite 0;
 deltaT 864000;
 // ----------------------------------------------------
@@ -83,7 +83,7 @@ functions
         codeWrite
         #{
             //get maximum tempeature on the top boundary
-            label patchID = mesh().boundaryMesh().findPatchID("top"); 
+            label patchID = mesh().boundaryMesh().findPatchID("seafloor"); 
             const volScalarField& T = mesh().lookupObject<volScalarField>("T");
             
             // write vent temperature
