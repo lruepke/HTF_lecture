@@ -54,14 +54,14 @@ We can do this by modifying the transient term of the energy equation:
 
 These changes are implemented in a modified solver of HydrothermalFoam, which you can download from here (:download:`HydrothermalSinglePhaseDarcyFoam_Cpr <cases/HydrothermalSinglePhaseDarcyFoam_Cpr.zip>`).
 
-Check the :code:`updateProps.H`and :code:`createFields.H`files, how these changes are implemented.
+Check the :code:`updateProps.H` and :code:`createFields.H` files, how these changes are implemented.
 
 Setup fields
 ^^^^^^^^^^^^^^^
 
 In addition to the solver changes, we have to take extra care of the initial conditions. The temperature field is not uniform anymore but we need to set the initial intrusion temperature to a high value according to its cellzone and apply a background temperature gradient (if we think that's useful).
 
-These changes are implemented as codestream statements in :code:`0/T`. Have a look!
+These changes are implemented as codestream statements in :code:`0/T` . Have a look!
 
 
 Deliverables
@@ -81,7 +81,7 @@ Starting point
 
 Case file
 ^^^^^^^^^^
-Download the basic case file from (:download:`Fault Flow Model <cases/fault_flow.zip>`).. It includes a basic setup for hydrothermal system drive.
+Download the basic case file from (:download:`Intrusion Flow Model <cases/cooling_intrusion.zip>`).. It includes a basic setup for hydrothermal system drive.
 
 Meshing software
 ^^^^^^^^^^^^^^^^
@@ -101,7 +101,7 @@ Post-processing
 
 There are many ways of extracting information from a completed run. For this project, you will want to know how high the vent temperature is and where the venting occurs, so that you can evaluate if the plume was "captured" by the fault. You can either do this in paraview by using, for example, the "Plot Over Line" filter in Paraview. An alternative is to use the built-in postprocessing function of OpenFoam. 
 
-Also check the :code:`system/controlDict.orig`file; there is codestream section at the bottom that writes out maximum vent temperature to a file names :code:`ventT.txt`. Modify according to your needs.
+Also check the :code:`system/controlDict.orig` file; there is codestream section at the bottom that writes out maximum vent temperature to a file names :code:`ventT.txt` . Modify according to your needs.
 
 
 .. code::
