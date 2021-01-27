@@ -9,7 +9,7 @@ enthalpy=thermo.enthalpy();
 heatFlux = -kr*fvc::grad(T);
 
 // update cp or rock according to temperature field
-// #include "updateCp_rock.H"
+#include "updateCp_rock.H"
 #include "update_permeability.H"
 
 // Info<<cp_rock<<endl;

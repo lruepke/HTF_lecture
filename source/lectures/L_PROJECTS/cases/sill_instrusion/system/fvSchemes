@@ -13,54 +13,41 @@ FoamFile
     location    "system";
     object      fvSchemes;
 }
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 ddtSchemes
 {
     default         Euler;
 }
-
 gradSchemes
 {
     default         none;
     grad(p)         Gauss linear;
     grad(T)         Gauss linear;
-    grad(Cca)       Gauss linear;
-    grad(Cso4)       Gauss linear;
+    grad(pl)         Gauss linear;
 }
-
 divSchemes
 {
     default         none;
-    div(phi,T)      Gauss vanLeer;
+    div(phi,T)      Gauss upwind;
     div((phi*interpolate(Cp)),T) Gauss vanLeer;
-    div(phiChemical,Cca) Gauss vanLeer;
-    div(phiChemical,Cso4) Gauss vanLeer;
 }
-
 laplacianSchemes
 {
     default         none;
     laplacian(kr,T) Gauss linear corrected;
     laplacian(rhorAUf,p) Gauss linear corrected;
-    laplacian(Dc_,Cca) Gauss linear corrected;
-    laplacian(Dc_,Cso4) Gauss linear corrected;
+    laplacian(rhorAUf,pl) Gauss linear corrected;
 }
-
 interpolationSchemes
 {
     default         linear;
 }
-
 snGradSchemes
 {
     default         corrected;
 }
-
 fluxRequired
 {
     default no;
     p;
 }
-
-// ************************************************************************* //
