@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Project 1: Flow along a detachment fault &mdash; HydrothermalFoam Lecture  documentation</title>
+  <title>Project 2: How long can a magmatic intrusion sustain high temperature venting? &mdash; HydrothermalFoam Lecture  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Project 2: How long can a magmatic intrusion sustain high temperature venting?" href="Project2.html" />
-    <link rel="prev" title="1. Read and plot mesh information" href="../L_FVM/cases/jupyter/VisualizeResults.html" /> 
+    <link rel="next" title="References" href="../../refs.html" />
+    <link rel="prev" title="Project 1: Flow along a detachment fault" href="Project1.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -156,7 +156,13 @@
 </ul>
 <p class="caption"><span class="caption-text">Projects</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Project 1: Flow along a detachment fault</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="Project1.html">Project 1: Flow along a detachment fault</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#technicalities">Technicalities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#solver-changes">Solver changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup-fields">Setup fields</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#deliverables">Deliverables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#starting-point">Starting point</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#case-file">Case file</a></li>
@@ -167,7 +173,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#background-reading">Background reading</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
@@ -242,14 +247,14 @@
     
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Project 1: Flow along a detachment fault</li>
+      <li>Project 2: How long can a magmatic intrusion sustain high temperature venting?</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
             
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L_PROJECTS/Project1.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L_PROJECTS/Project2.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -287,24 +292,54 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="project-1-flow-along-a-detachment-fault">
-<span id="l-projects-project1"></span><h1>Project 1: Flow along a detachment fault<a class="headerlink" href="#project-1-flow-along-a-detachment-fault" title="Permalink to this headline">¶</a></h1>
-<div class="admonition-project-objectives admonition">
-<p class="admonition-title">Project objectives</p>
-<ul class="simple">
-<li><p>Explore hydrothermal flow along fault zones</p></li>
-<li><p>Find which faults capture a rising plume and which do not</p></li>
-<li><p>Understand how fault zone properties affect vent temperature</p></li>
+<div class="section" id="project-2-how-long-can-a-magmatic-intrusion-sustain-high-temperature-venting">
+<span id="l-projects-project2"></span><h1>Project 2: How long can a magmatic intrusion sustain high temperature venting?<a class="headerlink" href="#project-2-how-long-can-a-magmatic-intrusion-sustain-high-temperature-venting" title="Permalink to this headline">¶</a></h1>
+<p>. admonition:: Project objectives</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Explore how long magmatic intrusions can sustain a hydrothermal circulation system</p></li>
+<li><p>Constrain the break-through time of the hydrothermal plume</p></li>
+<li><p>Interpret the results in the context of mineral systems</p></li>
 </ul>
+</div></blockquote>
+<p>The second exercise explores how long a magmatic intrusion can sustain a high-temperature hydrothermal system and how much of a time lag exists between the magmatic event and the formation of a vent site. These king of insights are highly relevant to large number of research questions.</p>
+<p>Lifetimes of hydrothermal systems and associated mineral systems</p>
+<p>For example, sill intrusions into sedimentary basins are thought to be related to the release of large volumes of greenhouse and toxic gases into the atmosphere.</p>
+<div class="figure align-center" id="fig-3d-sill-fig">
+<img alt="../../_images/3d_sill.png" src="../../_images/3d_sill.png" />
+<p class="caption"><span class="caption-number">Fig. 48 </span><span class="caption-text">Figure taken from :cite:<a href="#id1"><span class="problematic" id="id2">`</span></a>Galerne2019`on sill intrusions and hydrothermal venting in sedimentary basins.</span><a class="headerlink" href="#fig-3d-sill-fig" title="Permalink to this image">¶</a></p>
+<div class="legend">
 </div>
-<p>The first project builds upon lecture 3 on <a class="reference internal" href="../L05/intro.html#fault-controlled-systems"><span class="std std-ref">Structural controls on hydrothermal flow</span></a>. We will explore under which conditions hydrothermal upflow can be “captured” by an inclined fault zone of enhanced permeability.</p>
+</div>
+<p>something on hydrothermal systems and sealeve…</p>
+<div class="section" id="technicalities">
+<h2>Technicalities<a class="headerlink" href="#technicalities" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="solver-changes">
+<h3>Solver changes<a class="headerlink" href="#solver-changes" title="Permalink to this headline">¶</a></h3>
+<p>The cooling of magmatic intrusions is associated with a latent effect of the crystallization process. A convenient way of accounting for this effect is to use an effective specific heat for the solid phase in the energy equation (see e.g. <span id="id3">[<a class="reference internal" href="../../refs.html#id16"><span>Aarnes et al., 2010</span></a>]</span>).</p>
+<p>We can do this by modifying the transient term of the energy equation:</p>
+<div class="math notranslate nohighlight" id="equation-eq-e-eqn-eff">
+<span class="eqno">(58)<a class="headerlink" href="#equation-eq-e-eqn-eff" title="Permalink to this equation">¶</a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{eff})\frac{\partial T}{\partial t}  = ...\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-e-eqn-cp1">
+<span class="eqno">(59)<a class="headerlink" href="#equation-eq-e-eqn-cp1" title="Permalink to this equation">¶</a></span>\[C_{eff}  = C_p \left( 1+ \frac{L_c}{(T_L -T_S) C_p)}\right) \text{ for } (T_S &lt; T &lt; T_L)\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-e-eqn-cp2">
+<span class="eqno">(60)<a class="headerlink" href="#equation-eq-e-eqn-cp2" title="Permalink to this equation">¶</a></span>\[C_{eff}  = C_P \text{ for } (T &lt; T_S)\]</div>
+<p>These changes are implemented in a modified solver of HydrothermalFoam, which you can download from here (<a class="reference download internal" download="" href="../../_downloads/4244f629c23d2f901c5ad654af2abead/HydrothermalSinglePhaseDarcyFoam_Cpr.zip"><code class="xref download docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam_Cpr</span></code></a>).</p>
+<p>Check the :code:<a href="#id4"><span class="problematic" id="id5">`</span></a>updateProps.H`and :code:<a href="#id6"><span class="problematic" id="id7">`</span></a>createFields.H`files, how these changes are implemented.</p>
+</div>
+<div class="section" id="setup-fields">
+<h3>Setup fields<a class="headerlink" href="#setup-fields" title="Permalink to this headline">¶</a></h3>
+<p>In addition to the solver changes, we have to take extra care of the initial conditions. The temperature field is not uniform anymore but we need to set the initial intrusion temperature to a high value according to its cellzone and apply a background temperature gradient (if we think that’s useful).</p>
+<p>These changes are implemented as codestream statements in <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>. Have a look!</p>
+</div>
+</div>
 <div class="section" id="deliverables">
 <h2>Deliverables<a class="headerlink" href="#deliverables" title="Permalink to this headline">¶</a></h2>
 <p>The goal of this project is to provide work on these topics</p>
 <ol class="arabic simple">
-<li><p><strong>Plume captureing</strong>, provide a sequence of 2D simulations that illustrate what can “happen” for different fault widths and fault permeabilities (check <a class="reference internal" href="../L05/intro.html#andersen-fig"><span class="std std-numref">Fig. 28</span></a>)</p></li>
-<li><p><strong>Systematics</strong>, provide a “phase diagram” for fault width and fault permeability that illustrates the regime when the pume is captured by the fault zone.</p></li>
-<li><p><strong>Vent temperature</strong>, provide information on the relationship between the fault’s ability to capture a plume and the resulting vent temperature.</p></li>
+<li><p><strong>Intrusion driven circulation</strong>, provide a sequence of 2D simulations that illustrate what can “happen” for different intrusion geometries and host rock permeabilities.</p></li>
+<li><p><strong>Systematics</strong>, provide “phase diagrams” on breakthrough times, the time to vent, and vent durations, the time high-T venting is sustained, for different model parameters like intrusion volume, depth, permeability..</p></li>
+<li><p><strong>Vent temperature</strong>, provide information on the relationship between the host rock permeability and maximum vent temperature.</p></li>
 </ol>
 <p>The results showed be delivered in a short powerpoint presentation.</p>
 </div>
@@ -312,20 +347,21 @@
 <h2>Starting point<a class="headerlink" href="#starting-point" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="case-file">
 <h3>Case file<a class="headerlink" href="#case-file" title="Permalink to this headline">¶</a></h3>
-<p>Download the basic case file from (<a class="reference download internal" download="" href="../../_downloads/0475e4f952a3b299ce1b1c0ae2a6f799/fault_flow.zip"><code class="xref download docutils literal notranslate"><span class="pre">Fault</span> <span class="pre">Flow</span> <span class="pre">Model</span></code></a>).. It includes a basic setup for a fault-controlled hydrothermal system.</p>
+<p>Download the basic case file from (<a class="reference download internal" download="" href="../../_downloads/0475e4f952a3b299ce1b1c0ae2a6f799/fault_flow.zip"><code class="xref download docutils literal notranslate"><span class="pre">Fault</span> <span class="pre">Flow</span> <span class="pre">Model</span></code></a>).. It includes a basic setup for hydrothermal system drive.</p>
 </div>
 <div class="section" id="meshing-software">
 <h3>Meshing software<a class="headerlink" href="#meshing-software" title="Permalink to this headline">¶</a></h3>
-<p>The example case uses a meshing software called <a class="reference external" href="http://gmsh.info">Gmsh</a> to create a mesh that resolves the fault zone. Gmsh is already installed within your docker containers, so there should be no need for installing additional software. The gmsh input file is in <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code>.</p>
-<div class="figure align-center" id="fig-gmsh-screen-fig">
-<img alt="../../_images/gmsh_screen.png" src="../../_images/gmsh_screen.png" />
-<p class="caption"><span class="caption-number">Fig. 47 </span><span class="caption-text">Mesh created with gmsh.</span><a class="headerlink" href="#fig-gmsh-screen-fig" title="Permalink to this image">¶</a></p>
+<p>The example case uses a meshing software called <a class="reference external" href="https://gmsh.info">gmsh</a> to create a mesh that resolves the fault zone. Gmsh is already installed within your docker containers, so there should be no need for installing additional software. The gmsh input file is in <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code>.</p>
+<div class="figure align-center" id="fig-gmsh-sill-fig">
+<img alt="../../_images/sill_mesh.png" src="../../_images/sill_mesh.png" />
+<p class="caption"><span class="caption-number">Fig. 49 </span><span class="caption-text">Mesh created with gmsh.</span><a class="headerlink" href="#fig-gmsh-sill-fig" title="Permalink to this image">¶</a></p>
 </div>
-<p>Have a look at <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code> and the <a class="reference external" href="http://gmsh.info">Gmsh</a> . Check that you (more or less) understand what’s happening and try to change things like fault width and and angle.</p>
+<p>Have a look at <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code> and the <a class="reference external" href="https://gmsh.info">gmsh documentation</a> . Check that you (more or less) understand what’s happening and try to change things like fault width and and angle.</p>
 </div>
 <div class="section" id="post-processing">
 <h3>Post-processing<a class="headerlink" href="#post-processing" title="Permalink to this headline">¶</a></h3>
 <p>There are many ways of extracting information from a completed run. For this project, you will want to know how high the vent temperature is and where the venting occurs, so that you can evaluate if the plume was “captured” by the fault. You can either do this in paraview by using, for example, the “Plot Over Line” filter in Paraview. An alternative is to use the built-in postprocessing function of OpenFoam.</p>
+<p>Also check the <code class="code docutils literal notranslate"><span class="pre">system/controlDict.orig`file;</span> <span class="pre">there</span> <span class="pre">is</span> <span class="pre">codestream</span> <span class="pre">section</span> <span class="pre">at</span> <span class="pre">the</span> <span class="pre">bottom</span> <span class="pre">that</span> <span class="pre">writes</span> <span class="pre">out</span> <span class="pre">maximum</span> <span class="pre">vent</span> <span class="pre">temperature</span> <span class="pre">to</span> <span class="pre">a</span> <span class="pre">file</span> <span class="pre">names</span> <span class="pre">:code:`ventT.txt</span></code>. Modify according to your needs.</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="n">postProcess</span> <span class="o">-</span><span class="n">func</span> <span class="n">sampleDict</span> <span class="o">-</span><span class="k">latestTime</span>
 </pre></div>
 </div>
@@ -337,18 +373,12 @@
 <h2>Background reading<a class="headerlink" href="#background-reading" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li><p><span id="id1">[<a class="reference internal" href="../../refs.html#id11"><span>Andersen et al., 2015</span></a>]</span> illustrates the problem for the Logatchev field</p></li>
-<li><p><span id="id2">[<a class="reference internal" href="../../refs.html#id9"><span>Driesner, 2010a</span></a>]</span> explains relationship between vent temperature and permeability</p></li>
-<li><p><span id="id3">[<a class="reference internal" href="../../refs.html#id13"><span>deMartin et al., 2007</span></a>]</span> background paper on detachment faulting at the TAG vent field</p></li>
-<li><p><span id="id4">[<a class="reference internal" href="../../refs.html#id14"><span>McCaig et al., 2007</span></a>]</span> <span id="id5">[<a class="reference internal" href="../../refs.html#id15"><span>McCaig et al., 2010</span></a>]</span> more paper on fluid flow along detachments</p></li>
+<li><p><span id="id9">[<a class="reference internal" href="../../refs.html#id11"><span>Andersen et al., 2015</span></a>]</span> illustrates the problem for the Logatchev field</p></li>
+<li><p><span id="id10">[<a class="reference internal" href="../../refs.html#id9"><span>Driesner, 2010a</span></a>]</span> explains relationship between vent temperature and permeability</p></li>
+<li><p><span id="id11">[<a class="reference internal" href="../../refs.html#id13"><span>deMartin et al., 2007</span></a>]</span> background paper on detachment faulting at the TAG vent field</p></li>
+<li><p><span id="id12">[<a class="reference internal" href="../../refs.html#id14"><span>McCaig et al., 2007</span></a>]</span> <span id="id13">[<a class="reference internal" href="../../refs.html#id15"><span>McCaig et al., 2010</span></a>]</span> more paper on fluid flow along detachments</p></li>
 </ul>
 </div></blockquote>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Move this to a proper section latter.</p>
-<p>Download source code of the modified solver for temperature dependent <span class="math notranslate nohighlight">\(C_{pr}\)</span>.</p>
-<p><a class="reference download internal" download="" href="../../_downloads/4244f629c23d2f901c5ad654af2abead/HydrothermalSinglePhaseDarcyFoam_Cpr.zip"><code class="xref download docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam_Cpr</span></code></a></p>
-</div>
 </div>
 </div>
 
@@ -358,8 +388,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="Project2.html" class="btn btn-neutral float-right" title="Project 2: How long can a magmatic intrusion sustain high temperature venting?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="../L_FVM/cases/jupyter/VisualizeResults.html" class="btn btn-neutral float-left" title="1. Read and plot mesh information" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../refs.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Project1.html" class="btn btn-neutral float-left" title="Project 1: Flow along a detachment fault" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

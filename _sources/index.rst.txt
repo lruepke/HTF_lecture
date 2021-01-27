@@ -107,6 +107,7 @@ The majority of this course will be spent in front of a computer working on exer
     :caption: Projects
 
     lectures/L_PROJECTS/Project1
+    lectures/L_PROJECTS/Project2
 
 .. toctree::
    :maxdepth: 2
