@@ -8,4 +8,5 @@ function zipCase()
     zip -r ${caseDir}.zip $caseDir -x ${caseDir}/*00\* ${caseDir}/jupyter/data*\* ${caseDir}/ventT.* ${caseDir}/VTK\*
 }
 zipCase fault_flow
+zipCase cooling_intrusion
 zipCase HydrothermalSinglePhaseDarcyFoam_Cpr
