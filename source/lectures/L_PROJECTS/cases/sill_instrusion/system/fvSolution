@@ -13,7 +13,6 @@ FoamFile
     location    "system";
     object      fvSolution;
 }
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 solvers
 {
@@ -29,51 +28,25 @@ solvers
         $p;
         relTol          0;
     }
+    plFinal
+    {
+        $p;
+        relTol          0;
+    }
     T
     {
         solver          PBiCG;
         preconditioner  DILU;
-        tolerance       1e-12;
+        tolerance       1e-06;
         relTol          0;
     }
-    "(T)Final"
+    TFinal
     {
         $T;
         relTol          0;
     }
-    Cca
-    {
-        solver          PBiCG;
-        preconditioner  DILU;
-        tolerance       1e-15;
-        relTol          0;
-    }
-    CcaFinal
-    {
-        $Cca;
-        relTol          0;
-    }
-    Cso4
-    {
-        solver          PBiCG;
-        preconditioner  DILU;
-        tolerance       1e-15;
-        relTol          0;
-    }
-    Cso4Final
-    {
-        $Cso4;
-        relTol          0;
-    }
 }
-
 PIMPLE
 {
-    momentumPredictor no;
-    nOuterCorrectors 1;
-    nCorrectors     2;
     nNonOrthogonalCorrectors 0;
 }
-
-
-// ************************************************************************* //

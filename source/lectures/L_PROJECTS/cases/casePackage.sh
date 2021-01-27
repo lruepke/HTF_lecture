@@ -11,4 +11,4 @@ zipCase fault_flow
 zipCase cooling_intrusion
 zipCase HydrothermalSinglePhaseDarcyFoam_Cpr
 zipCase HydrothermalSinglePhaseDarcyFoam_p_k
-zipCase pressure_perm
+zipCase sill_instrusion

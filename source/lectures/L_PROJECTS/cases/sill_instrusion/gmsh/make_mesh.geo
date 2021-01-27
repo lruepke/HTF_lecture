@@ -64,22 +64,22 @@ Characteristic Length{p()} = lc_df;
 
 Physical Surface("front") = {s_front[]};
 Physical Surface("back") = {s_back[]};
-Physical Surface("sidewalls") = {s_left, s_right};
+Physical Surface("sidewalls") = {s_left[], s_right};
 Physical Surface("seafloor") = {s_seafloor[]};
 Physical Surface("bottom") = {s_bottom[]};
 
 Color Grey{Surface{s_back[],s_front[]};}
 Color Pink{Surface{s_bottom[]};}
-Color Green{Surface{s_left,s_right};}
+Color Green{Surface{s_left[],s_right};}
 Color Blue{Surface{s_seafloor[]};}
 
-Color Yellow{Volume{v_box[]};}
-Color Purple{Volume{v_df};}//+
-Hide "*";
-//+
-Show {
-Point{5,6,7,8,13,14,15,16};
-Curve{5,7,17,19,20,21,23,24};
-Surface{11,13};
-}
+// Color Yellow{Volume{v_box[]};}
+// Color Purple{Volume{v_df};}//+
+// Hide "*";
+// //+
+// Show {
+// Point{5,6,7,8,13,14,15,16};
+// Curve{5,7,17,19,20,21,23,24};
+// Surface{11,13};
+// }
 

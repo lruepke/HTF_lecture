@@ -1,12 +1,5 @@
 .. include:: /include.rst_
 
-.. warning::
-
-    Example case for project 3.
-
-    :download:`pressure_perm <cases/pressure_perm.zip>`
-
-
 .. _L_PROJECTS_Project3:
 
 Project 3: Hydrofracturing and localized venting above sill intrusion?
@@ -88,7 +81,7 @@ Starting point
 
 Case file
 ^^^^^^^^^^
-Download the basic case file from (:download:`Intrusion Flow Model <cases/cooling_intrusion.zip>`).. It includes a basic setup for hydrothermal system drive.
+Download the basic case file from (:download:`Sill intrusion Flow Model <cases/sill_instrusion.zip>`).. It includes a basic setup for hydrothermal system drive.
 
 Meshing software
 ^^^^^^^^^^^^^^^^
