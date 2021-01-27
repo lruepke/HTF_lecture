@@ -168,6 +168,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project3.html">Project 3: Hydrofracturing and localized venting above sill intrusion?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
@@ -298,6 +299,10 @@
 </ul>
 </div>
 <p>The first project builds upon lecture 3 on <a class="reference internal" href="../L05/intro.html#fault-controlled-systems"><span class="std std-ref">Structural controls on hydrothermal flow</span></a>. We will explore under which conditions hydrothermal upflow can be “captured” by an inclined fault zone of enhanced permeability.</p>
+<div class="figure align-center" id="fig-fault-2017-fig" style="width: 70%">
+<img alt="../../_images/andersen_fault_2017.png" src="../../_images/andersen_fault_2017.png" />
+<p class="caption"><span class="caption-number">Fig. 47 </span><span class="caption-text">Figure taken from <span id="id1">[<a class="reference internal" href="../../refs.html#id18"><span>Andersen et al., 2017</span></a>]</span> ; preferential fluid flow along a fault zone.</span><a class="headerlink" href="#fig-fault-2017-fig" title="Permalink to this image">¶</a></p>
+</div>
 <div class="section" id="deliverables">
 <h2>Deliverables<a class="headerlink" href="#deliverables" title="Permalink to this headline">¶</a></h2>
 <p>The goal of this project is to provide work on these topics</p>
@@ -319,7 +324,7 @@
 <p>The example case uses a meshing software called <a class="reference external" href="http://gmsh.info">Gmsh</a> to create a mesh that resolves the fault zone. Gmsh is already installed within your docker containers, so there should be no need for installing additional software. The gmsh input file is in <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code>.</p>
 <div class="figure align-center" id="fig-gmsh-screen-fig">
 <img alt="../../_images/gmsh_screen.png" src="../../_images/gmsh_screen.png" />
-<p class="caption"><span class="caption-number">Fig. 47 </span><span class="caption-text">Mesh created with gmsh.</span><a class="headerlink" href="#fig-gmsh-screen-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 48 </span><span class="caption-text">Mesh created with gmsh.</span><a class="headerlink" href="#fig-gmsh-screen-fig" title="Permalink to this image">¶</a></p>
 </div>
 <p>Have a look at <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code> and the <a class="reference external" href="http://gmsh.info">Gmsh</a> . Check that you (more or less) understand what’s happening and try to change things like fault width and and angle.</p>
 </div>
@@ -337,18 +342,12 @@
 <h2>Background reading<a class="headerlink" href="#background-reading" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li><p><span id="id1">[<a class="reference internal" href="../../refs.html#id11"><span>Andersen et al., 2015</span></a>]</span> illustrates the problem for the Logatchev field</p></li>
-<li><p><span id="id2">[<a class="reference internal" href="../../refs.html#id9"><span>Driesner, 2010a</span></a>]</span> explains relationship between vent temperature and permeability</p></li>
-<li><p><span id="id3">[<a class="reference internal" href="../../refs.html#id13"><span>deMartin et al., 2007</span></a>]</span> background paper on detachment faulting at the TAG vent field</p></li>
-<li><p><span id="id4">[<a class="reference internal" href="../../refs.html#id14"><span>McCaig et al., 2007</span></a>]</span> <span id="id5">[<a class="reference internal" href="../../refs.html#id15"><span>McCaig et al., 2010</span></a>]</span> more paper on fluid flow along detachments</p></li>
+<li><p><span id="id2">[<a class="reference internal" href="../../refs.html#id11"><span>Andersen et al., 2015</span></a>]</span> illustrates the problem for the Logatchev field</p></li>
+<li><p><span id="id3">[<a class="reference internal" href="../../refs.html#id9"><span>Driesner, 2010a</span></a>]</span> explains relationship between vent temperature and permeability</p></li>
+<li><p><span id="id4">[<a class="reference internal" href="../../refs.html#id13"><span>deMartin et al., 2007</span></a>]</span> background paper on detachment faulting at the TAG vent field</p></li>
+<li><p><span id="id5">[<a class="reference internal" href="../../refs.html#id14"><span>McCaig et al., 2007</span></a>]</span> <span id="id6">[<a class="reference internal" href="../../refs.html#id15"><span>McCaig et al., 2010</span></a>]</span> more paper on fluid flow along detachments</p></li>
 </ul>
 </div></blockquote>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Move this to a proper section latter.</p>
-<p>Download source code of the modified solver for temperature dependent <span class="math notranslate nohighlight">\(C_{pr}\)</span>.</p>
-<p><a class="reference download internal" download="" href="../../_downloads/4244f629c23d2f901c5ad654af2abead/HydrothermalSinglePhaseDarcyFoam_Cpr.zip"><code class="xref download docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam_Cpr</span></code></a></p>
-</div>
 </div>
 </div>
 

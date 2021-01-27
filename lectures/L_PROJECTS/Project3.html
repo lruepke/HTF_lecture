@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Project 2: How long can a magmatic intrusion sustain high temperature venting? &mdash; HydrothermalFoam Lecture  documentation</title>
+  <title>Project 3: Hydrofracturing and localized venting above sill intrusion? &mdash; HydrothermalFoam Lecture  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Project 3: Hydrofracturing and localized venting above sill intrusion?" href="Project3.html" />
-    <link rel="prev" title="Project 1: Flow along a detachment fault" href="Project1.html" /> 
+    <link rel="next" title="References" href="../../refs.html" />
+    <link rel="prev" title="Project 2: How long can a magmatic intrusion sustain high temperature venting?" href="Project2.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -157,7 +157,8 @@
 <p class="caption"><span class="caption-text">Projects</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Project1.html">Project 1: Flow along a detachment fault</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Project 3: Hydrofracturing and localized venting above sill intrusion?</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#technicalities">Technicalities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#solver-changes">Solver changes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setup-fields">Setup fields</a></li>
@@ -173,7 +174,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#background-reading">Background reading</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Project3.html">Project 3: Hydrofracturing and localized venting above sill intrusion?</a></li>
 </ul>
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
@@ -248,14 +248,14 @@
     
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Project 2: How long can a magmatic intrusion sustain high temperature venting?</li>
+      <li>Project 3: Hydrofracturing and localized venting above sill intrusion?</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
             
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L_PROJECTS/Project2.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L_PROJECTS/Project3.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -293,36 +293,36 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="project-2-how-long-can-a-magmatic-intrusion-sustain-high-temperature-venting">
-<span id="l-projects-project2"></span><h1>Project 2: How long can a magmatic intrusion sustain high temperature venting?<a class="headerlink" href="#project-2-how-long-can-a-magmatic-intrusion-sustain-high-temperature-venting" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="project-3-hydrofracturing-and-localized-venting-above-sill-intrusion">
+<span id="l-projects-project3"></span><h1>Project 3: Hydrofracturing and localized venting above sill intrusion?<a class="headerlink" href="#project-3-hydrofracturing-and-localized-venting-above-sill-intrusion" title="Permalink to this headline">¶</a></h1>
 <div class="admonition-project-objectives admonition">
 <p class="admonition-title">Project objectives</p>
 <ul class="simple">
-<li><p>Explore how long magmatic intrusions can sustain a hydrothermal circulation system</p></li>
-<li><p>Constrain the break-through time of the hydrothermal plume</p></li>
-<li><p>Interpret the results in the context of mineral systems</p></li>
+<li><p>Explore under which conditions hydrofracturing leads to localized venting</p></li>
+<li><p>Implement a pressure-dependent permeability</p></li>
+<li><p>Interpret the results in the context recent papers.</p></li>
 </ul>
 </div>
-<p>The second exercise explores how long a magmatic intrusion can sustain a high-temperature hydrothermal system and how much of a time lag exists between the magmatic event and the formation of a vent site. These king of insights are highly relevant to large number of research questions.</p>
-<p>Lifetimes of hydrothermal systems and associated mineral systems</p>
-<p>For example, sill intrusions into sedimentary basins are thought to be related to the release of large volumes of greenhouse and toxic gases into the atmosphere.</p>
-<div class="figure align-center" id="fig-3d-sill-fig">
-<img alt="../../_images/3d_sill.png" src="../../_images/3d_sill.png" />
-<p class="caption"><span class="caption-number">Fig. 49 </span><span class="caption-text">Figure taken from <span id="id1">[<a class="reference internal" href="../../refs.html#id17"><span>Galerne &amp; Hasenclever, 2019</span></a>]</span> on sill intrusions and hydrothermal venting in sedimentary basins.</span><a class="headerlink" href="#fig-3d-sill-fig" title="Permalink to this image">¶</a></p>
+<p>The third exercise is very similar to the second exercise in that we will explore hydrothermal circulation systems driven by a magmatic heat source. Seismic data has revealed pipe-like structures leading up from the tips of sheet-like magmatic intrusion towards the paleo-seafloor. It remains, however, poorly understood how these pipe-like strutures form. Recent modeling papers have used a pressure-dependent permeability to mimic hydrofracturing <span id="id1">[<a class="reference internal" href="../../refs.html#id16"><span>Aarnes et al., 2010</span></a>]</span> <span id="id2">[<a class="reference internal" href="../../refs.html#id19"><span>Iyer et al., 2017</span></a>]</span> <span id="id3">[<a class="reference internal" href="../../refs.html#id21"><span>Weis et al., 2012</span></a>]</span>. The underlying idea is that heating of pore fluids results in fluid expansion, which increases the fluid pressure, which is eventually released by hydrofracturing. Here we will explore these processes!</p>
+<div class="figure align-center" id="fig-iyer-fig">
+<img alt="../../_images/Iyer_fig.png" src="../../_images/Iyer_fig.png" />
+<p class="caption"><span class="caption-number">Fig. 51 </span><span class="caption-text">Figure taken from <span id="id4">[<a class="reference internal" href="../../refs.html#id19"><span>Iyer et al., 2017</span></a>]</span> on sill intrusions and hydrothermal venting in sedimentary basins.</span><a class="headerlink" href="#fig-iyer-fig" title="Permalink to this image">¶</a></p>
 </div>
-<p>something on hydrothermal systems and sealeve…</p>
 <div class="section" id="technicalities">
 <h2>Technicalities<a class="headerlink" href="#technicalities" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="solver-changes">
 <h3>Solver changes<a class="headerlink" href="#solver-changes" title="Permalink to this headline">¶</a></h3>
-<p>The cooling of magmatic intrusions is associated with a latent effect of the crystallization process. A convenient way of accounting for this effect is to use an effective specific heat for the solid phase in the energy equation (see e.g. <span id="id2">[<a class="reference internal" href="../../refs.html#id16"><span>Aarnes et al., 2010</span></a>]</span>).</p>
-<p>We can do this by modifying the transient term of the energy equation:</p>
-<div class="math notranslate nohighlight" id="equation-eq-e-eqn-eff">
-<span class="eqno">(58)<a class="headerlink" href="#equation-eq-e-eqn-eff" title="Permalink to this equation">¶</a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{eff})\frac{\partial T}{\partial t}  = ...\]</div>
-<div class="math notranslate nohighlight" id="equation-eq-e-eqn-cp1">
-<span class="eqno">(59)<a class="headerlink" href="#equation-eq-e-eqn-cp1" title="Permalink to this equation">¶</a></span>\[C_{eff}  = C_p \left( 1+ \frac{L_c}{(T_L -T_S) C_p)}\right) \text{ for } (T_S &lt; T &lt; T_L)\]</div>
-<div class="math notranslate nohighlight" id="equation-eq-e-eqn-cp2">
-<span class="eqno">(60)<a class="headerlink" href="#equation-eq-e-eqn-cp2" title="Permalink to this equation">¶</a></span>\[C_{eff}  = C_P \text{ for } (T &lt; T_S)\]</div>
+<p>We have to make the same modifications as in project 2 in that we need to account for the latent heat of crystallization. We again do this by using an effective specific heat for the solid phase in the energy equation (see e.g. <span id="id5">[<a class="reference internal" href="../../refs.html#id16"><span>Aarnes et al., 2010</span></a>]</span>):</p>
+<div class="math notranslate nohighlight" id="equation-eq-e-eqn-eff-s">
+<span class="eqno">(61)<a class="headerlink" href="#equation-eq-e-eqn-eff-s" title="Permalink to this equation">¶</a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{eff})\frac{\partial T}{\partial t}  = ...\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-e-eqn-cp1-s">
+<span class="eqno">(62)<a class="headerlink" href="#equation-eq-e-eqn-cp1-s" title="Permalink to this equation">¶</a></span>\[C_{eff}  = C_p \left( 1+ \frac{L_c}{(T_L -T_S) C_p)}\right) \text{ for } (T_S &lt; T &lt; T_L)\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-e-eqn-cp2-s">
+<span class="eqno">(63)<a class="headerlink" href="#equation-eq-e-eqn-cp2-s" title="Permalink to this equation">¶</a></span>\[C_{eff}  = C_P \text{ for } (T &lt; T_S)\]</div>
+<p>In addition, we need to implement a pressure-dependent permeability. Here the idea is that permeability is increased when the fluid pressure exceeds the lithostatic pressure (a very simple fracture criterion). This permeability model is described in <span id="id6">[<a class="reference internal" href="../../refs.html#id19"><span>Iyer et al., 2017</span></a>]</span> and in <span id="id7">[<a class="reference internal" href="../../refs.html#id17"><span>Galerne &amp; Hasenclever, 2019</span></a>]</span>.</p>
+<div class="math notranslate nohighlight" id="equation-eq-k-eqn-1">
+<span class="eqno">(64)<a class="headerlink" href="#equation-eq-k-eqn-1" title="Permalink to this equation">¶</a></span>\[k_{eff}  = k_0 \left( \frac{p_f}{p_l} \right) \text{ for } (p_f &gt; p_l)\]</div>
+<p>Here <span class="math notranslate nohighlight">\(p_l\)</span> is the lithostatic pressure, the weight of the overburden.</p>
 <p>These changes are implemented in a modified solver of HydrothermalFoam, which you can download from here (<a class="reference download internal" download="" href="../../_downloads/4244f629c23d2f901c5ad654af2abead/HydrothermalSinglePhaseDarcyFoam_Cpr.zip"><code class="xref download docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam_Cpr</span></code></a>).</p>
 <p>Check the <code class="code docutils literal notranslate"><span class="pre">updateProps.H</span></code> and <code class="code docutils literal notranslate"><span class="pre">createFields.H</span></code> files, how these changes are implemented.</p>
 </div>
@@ -336,9 +336,9 @@
 <h2>Deliverables<a class="headerlink" href="#deliverables" title="Permalink to this headline">¶</a></h2>
 <p>The goal of this project is to provide work on these topics</p>
 <ol class="arabic simple">
-<li><p><strong>Intrusion driven circulation</strong>, provide a sequence of 2D simulations that illustrate what can “happen” for different intrusion geometries and host rock permeabilities.</p></li>
-<li><p><strong>Systematics</strong>, provide “phase diagrams” on breakthrough times, the time to vent, and vent durations, the time high-T venting is sustained, for different model parameters like intrusion volume, depth, permeability..</p></li>
-<li><p><strong>Vent temperature</strong>, provide information on the relationship between the host rock permeability and maximum vent temperature.</p></li>
+<li><p><strong>Conditions for localized venting</strong>, provide a sequence of 2D simulations that illustrate what can “happen” for host rock permeabilities.</p></li>
+<li><p><strong>Mechanism</strong>, investigate the driven mechanism in that you visualize the pressure field and how it affects permeability.</p></li>
+<li><p><strong>Systematics</strong>, explore the parameter space.</p></li>
 </ol>
 <p>The results showed be delivered in a short powerpoint presentation.</p>
 </div>
@@ -353,7 +353,7 @@
 <p>The example case uses a meshing software called <a class="reference external" href="https://gmsh.info">gmsh</a> to create a mesh that resolves the fault zone. Gmsh is already installed within your docker containers, so there should be no need for installing additional software. The gmsh input file is in <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code>.</p>
 <div class="figure align-center" id="fig-gmsh-sill-fig">
 <img alt="../../_images/sill_mesh.png" src="../../_images/sill_mesh.png" />
-<p class="caption"><span class="caption-number">Fig. 50 </span><span class="caption-text">Mesh created with gmsh.</span><a class="headerlink" href="#fig-gmsh-sill-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 52 </span><span class="caption-text">Mesh created with gmsh.</span><a class="headerlink" href="#fig-gmsh-sill-fig" title="Permalink to this image">¶</a></p>
 </div>
 <p>Have a look at <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code> and the <a class="reference external" href="https://gmsh.info">gmsh documentation</a> . Check that you (more or less) understand what’s happening and try to change things like fault width and and angle.</p>
 </div>
@@ -372,9 +372,9 @@
 <h2>Background reading<a class="headerlink" href="#background-reading" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li><p><span id="id4">[<a class="reference internal" href="../../refs.html#id18"><span>Andersen et al., 2017</span></a>]</span> flow modeling of a cooling intrusion for the Logatchev field</p></li>
-<li><p><span id="id5">[<a class="reference internal" href="../../refs.html#id16"><span>Aarnes et al., 2010</span></a>]</span> <span id="id6">[<a class="reference internal" href="../../refs.html#id19"><span>Iyer et al., 2017</span></a>]</span> <span id="id7">[<a class="reference internal" href="../../refs.html#id17"><span>Galerne &amp; Hasenclever, 2019</span></a>]</span> paper on modeling sill intrusion into sedimentary basins</p></li>
-<li><p><span id="id8">[<a class="reference internal" href="../../refs.html#id20"><span>Svensen et al., 2004</span></a>]</span> landmark paper on the relationship between sill intrusion into organic sediments, greenhouse gas relase, and climate change as well as mass extinctions.</p></li>
+<li><p><span id="id9">[<a class="reference internal" href="../../refs.html#id21"><span>Weis et al., 2012</span></a>]</span> paper on the pressure dependent permeability</p></li>
+<li><p><span id="id10">[<a class="reference internal" href="../../refs.html#id16"><span>Aarnes et al., 2010</span></a>]</span> <span id="id11">[<a class="reference internal" href="../../refs.html#id19"><span>Iyer et al., 2017</span></a>]</span> <span id="id12">[<a class="reference internal" href="../../refs.html#id17"><span>Galerne &amp; Hasenclever, 2019</span></a>]</span> paper on modeling sill intrusion into sedimentary basins</p></li>
+<li><p><span id="id13">[<a class="reference internal" href="../../refs.html#id20"><span>Svensen et al., 2004</span></a>]</span> landmark paper on the relationship between sill intrusion into organic sediments, greenhouse gas relase, and climate change as well as mass extinctions.</p></li>
 </ul>
 </div></blockquote>
 </div>
@@ -386,8 +386,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="Project3.html" class="btn btn-neutral float-right" title="Project 3: Hydrofracturing and localized venting above sill intrusion?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="Project1.html" class="btn btn-neutral float-left" title="Project 1: Flow along a detachment fault" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../refs.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Project2.html" class="btn btn-neutral float-left" title="Project 2: How long can a magmatic intrusion sustain high temperature venting?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
