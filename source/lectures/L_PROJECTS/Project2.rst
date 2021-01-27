@@ -1,5 +1,12 @@
 .. include:: /include.rst_
 
+.. warning::
+
+    Move it to the right place later.
+    Solver of project 3.
+
+    :download:`HydrothermalSinglePhaseDarcyFoam_p_k <cases/HydrothermalSinglePhaseDarcyFoam_p_k.zip>`)
+
 .. _L_PROJECTS_Project2:
 
 Project 2: How long can a magmatic intrusion sustain high temperature venting?
