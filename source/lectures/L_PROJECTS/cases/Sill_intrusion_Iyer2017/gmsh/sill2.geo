@@ -1,0 +1,14 @@
+pts_sill2={}; lines_sill2={};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={2592.47,-3214.84,zmin,lc};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={2758.06,-3218.13,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={2941.14,-3236.22,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={3112.47,-3227.39,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={3298.56,-3189.94,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={3487.77,-3169.88,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={3652.54,-3154.23,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={3841.75,-3138.54,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={3992.1,-3137.11,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={4187.22,-3113.31,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={4361.18,-3099.03,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={4552.44,-3079.5,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
+pts_sill2[#pts_sill2[]]=newp;Point(pts_sill2[#pts_sill2[]-1])={4697.91,-3071.4,zmin,lc}; lines_sill2[#lines_sill2[]]=newl; Line(lines_sill2[#lines_sill2[]-1])={pts_sill2[#pts_sill2[]-2], pts_sill2[#pts_sill2[]-1]};
