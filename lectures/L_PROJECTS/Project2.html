@@ -304,18 +304,18 @@
 </ul>
 </div>
 <p>The second exercise explores how long a magmatic intrusion can sustain a high-temperature hydrothermal system and how much of a time lag exists between the magmatic event and the formation of a vent site. These king of insights are highly relevant to large number of research questions.</p>
-<p>Lifetimes of hydrothermal systems and associated mineral systems</p>
-<p>For example, sill intrusions into sedimentary basins are thought to be related to the release of large volumes of greenhouse and toxic gases into the atmosphere.</p>
+<p>For example, it remains notoriously difficult to explain the discharge fluxes inferred for mid-ocean ridge vent fields <span id="id1">[<a class="reference internal" href="../../refs.html#id23"><span>Baker, 2007</span></a>]</span> <span id="id2">[<a class="reference internal" href="../../refs.html#id24"><span>Germanovich et al., 2015</span></a>]</span> . In this context, it is very interesting to know what kind of discharge fluxes a magmatic intrusion can sustain and over which time scales.</p>
+<p>Another examples are sill complexes in sedimentary basins, which are thought to release of large volumes of greenhouse and toxic gases into the atmosphere thereby playing a role in global change <span id="id3">[<a class="reference internal" href="../../refs.html#id20"><span>Svensen et al., 2004</span></a>]</span> <span id="id4">[<a class="reference internal" href="../../refs.html#id16"><span>Aarnes et al., 2010</span></a>]</span> <span id="id5">[<a class="reference internal" href="../../refs.html#id19"><span>Iyer et al., 2017</span></a>]</span>. Also here is is important to understand the time lags between sill emplacement and the onset of hydrothermal venting.</p>
+<p>Finally, there has been an interesting discussion over the past years on whether glacial sealevel changes can affect crustal production at mid-ocean ridges <span id="id6">[<a class="reference internal" href="../../refs.html#id25"><span>Lund &amp; Asimow, 2011</span></a>]</span>, sparked by the discovery of Milanchovitch frequencies in abyssal hill spacing <span id="id7">[<a class="reference internal" href="../../refs.html#id27"><span>Crowley et al., 2015</span></a>]</span>. Some studies tried to progress on this question by looking at hydrothermal deposits and the time lag between deposit formation and sealevel forcing <span id="id8">[<a class="reference internal" href="../../refs.html#id26"><span>Lund et al., 2016</span></a>]</span>. While these topics are out of the scope of this lecture, they do illustrate the necessity to link magma emplacement to vent formation.</p>
 <div class="figure align-center" id="fig-3d-sill-fig">
 <img alt="../../_images/3d_sill.png" src="../../_images/3d_sill.png" />
-<p class="caption"><span class="caption-number">Fig. 49 </span><span class="caption-text">Figure taken from <span id="id1">[<a class="reference internal" href="../../refs.html#id17"><span>Galerne &amp; Hasenclever, 2019</span></a>]</span> on sill intrusions and hydrothermal venting in sedimentary basins.</span><a class="headerlink" href="#fig-3d-sill-fig" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 49 </span><span class="caption-text">Figure taken from <span id="id9">[<a class="reference internal" href="../../refs.html#id17"><span>Galerne &amp; Hasenclever, 2019</span></a>]</span> on sill intrusions and hydrothermal venting in sedimentary basins.</span><a class="headerlink" href="#fig-3d-sill-fig" title="Permalink to this image">¶</a></p>
 </div>
-<p>something on hydrothermal systems and sealeve…</p>
 <div class="section" id="technicalities">
 <h2>Technicalities<a class="headerlink" href="#technicalities" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="solver-changes">
 <h3>Solver changes<a class="headerlink" href="#solver-changes" title="Permalink to this headline">¶</a></h3>
-<p>The cooling of magmatic intrusions is associated with a latent effect of the crystallization process. A convenient way of accounting for this effect is to use an effective specific heat for the solid phase in the energy equation (see e.g. <span id="id2">[<a class="reference internal" href="../../refs.html#id16"><span>Aarnes et al., 2010</span></a>]</span>).</p>
+<p>The cooling of magmatic intrusions is associated with a latent effect of the crystallization process. A convenient way of accounting for this effect is to use an effective specific heat for the solid phase in the energy equation (see e.g. <span id="id10">[<a class="reference internal" href="../../refs.html#id16"><span>Aarnes et al., 2010</span></a>]</span>).</p>
 <p>We can do this by modifying the transient term of the energy equation:</p>
 <div class="math notranslate nohighlight" id="equation-eq-e-eqn-eff">
 <span class="eqno">(58)<a class="headerlink" href="#equation-eq-e-eqn-eff" title="Permalink to this equation">¶</a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{eff})\frac{\partial T}{\partial t}  = ...\]</div>
@@ -356,6 +356,7 @@
 <p class="caption"><span class="caption-number">Fig. 50 </span><span class="caption-text">Mesh created with gmsh.</span><a class="headerlink" href="#fig-gmsh-sill-fig-proj2" title="Permalink to this image">¶</a></p>
 </div>
 <p>Have a look at <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code> and the <a class="reference external" href="http://gmsh.info">Gmsh</a> . Check that you (more or less) understand what’s happening and try to change things like fault width and and angle.</p>
+<p>It might be helpful to install <a class="reference external" href="http://gmsh.info">Gmsh</a> also on your local system so that you can use the graphical user interface to visualize changes made to the .geo file.</p>
 </div>
 <div class="section" id="post-processing">
 <h3>Post-processing<a class="headerlink" href="#post-processing" title="Permalink to this headline">¶</a></h3>
@@ -372,9 +373,9 @@
 <h2>Background reading<a class="headerlink" href="#background-reading" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
-<li><p><span id="id3">[<a class="reference internal" href="../../refs.html#id18"><span>Andersen et al., 2017</span></a>]</span> flow modeling of a cooling intrusion for the Logatchev field</p></li>
-<li><p><span id="id4">[<a class="reference internal" href="../../refs.html#id16"><span>Aarnes et al., 2010</span></a>]</span> <span id="id5">[<a class="reference internal" href="../../refs.html#id19"><span>Iyer et al., 2017</span></a>]</span> <span id="id6">[<a class="reference internal" href="../../refs.html#id17"><span>Galerne &amp; Hasenclever, 2019</span></a>]</span> paper on modeling sill intrusion into sedimentary basins</p></li>
-<li><p><span id="id7">[<a class="reference internal" href="../../refs.html#id20"><span>Svensen et al., 2004</span></a>]</span> landmark paper on the relationship between sill intrusion into organic sediments, greenhouse gas relase, and climate change as well as mass extinctions.</p></li>
+<li><p><span id="id11">[<a class="reference internal" href="../../refs.html#id18"><span>Andersen et al., 2017</span></a>]</span> flow modeling of a cooling intrusion for the Logatchev field</p></li>
+<li><p><span id="id12">[<a class="reference internal" href="../../refs.html#id16"><span>Aarnes et al., 2010</span></a>]</span> <span id="id13">[<a class="reference internal" href="../../refs.html#id19"><span>Iyer et al., 2017</span></a>]</span> <span id="id14">[<a class="reference internal" href="../../refs.html#id17"><span>Galerne &amp; Hasenclever, 2019</span></a>]</span> paper on modeling sill intrusion into sedimentary basins</p></li>
+<li><p><span id="id15">[<a class="reference internal" href="../../refs.html#id20"><span>Svensen et al., 2004</span></a>]</span> landmark paper on the relationship between sill intrusion into organic sediments, greenhouse gas relase, and climate change as well as mass extinctions.</p></li>
 </ul>
 </div></blockquote>
 </div>

@@ -13,9 +13,11 @@ Project 2: How long can a magmatic intrusion sustain high temperature venting?
 
 The second exercise explores how long a magmatic intrusion can sustain a high-temperature hydrothermal system and how much of a time lag exists between the magmatic event and the formation of a vent site. These king of insights are highly relevant to large number of research questions.
 
-Lifetimes of hydrothermal systems and associated mineral systems
+For example, it remains notoriously difficult to explain the discharge fluxes inferred for mid-ocean ridge vent fields :cite:`Baker2007` :cite:`Germanovich2015` . In this context, it is very interesting to know what kind of discharge fluxes a magmatic intrusion can sustain and over which time scales.
 
-For example, sill intrusions into sedimentary basins are thought to be related to the release of large volumes of greenhouse and toxic gases into the atmosphere. 
+Another examples are sill complexes in sedimentary basins, which are thought to release of large volumes of greenhouse and toxic gases into the atmosphere thereby playing a role in global change :cite:`Svensen2004` :cite:`Aarnes2010` :cite:`Iyer2017`. Also here is is important to understand the time lags between sill emplacement and the onset of hydrothermal venting. 
+
+Finally, there has been an interesting discussion over the past years on whether glacial sealevel changes can affect crustal production at mid-ocean ridges :cite:`Lund2011`, sparked by the discovery of Milanchovitch frequencies in abyssal hill spacing :cite:`Crowley2015`. Some studies tried to progress on this question by looking at hydrothermal deposits and the time lag between deposit formation and sealevel forcing :cite:`Lund2016`. While these topics are out of the scope of this lecture, they do illustrate the necessity to link magma emplacement to vent formation. 
 
 
 .. figure:: /_figures/3d_sill.*
@@ -24,8 +26,6 @@ For example, sill intrusions into sedimentary basins are thought to be related t
 
    Figure taken from :cite:`Galerne2019` on sill intrusions and hydrothermal venting in sedimentary basins.
 
-
-something on hydrothermal systems and sealeve...
 
 Technicalities
 ----------------
@@ -95,6 +95,8 @@ The example case uses a meshing software called Gmsh_ to create a mesh that reso
    Mesh created with gmsh.
 
 Have a look at :code:`gmsh/make_mesh.geo` and the Gmsh_ . Check that you (more or less) understand what's happening and try to change things like fault width and and angle.
+
+It might be helpful to install Gmsh_ also on your local system so that you can use the graphical user interface to visualize changes made to the .geo file.
 
 Post-processing
 ^^^^^^^^^^^^^^^
