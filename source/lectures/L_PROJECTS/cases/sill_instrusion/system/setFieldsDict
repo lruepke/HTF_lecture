@@ -18,7 +18,8 @@ FoamFile
 
 defaultFieldValues
 (
-    volScalarFieldValue permeability 1e-14
+    volScalarFieldValue permeability 5e-17
+
 );
 
 regions
@@ -28,7 +29,7 @@ regions
         name "intrusion";
         fieldValues
         (
-            volScalarFieldValue permeability 1e-18
+            volScalarFieldValue permeability 1e-20
         );
     }
 );

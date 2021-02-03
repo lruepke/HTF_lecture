@@ -17,7 +17,7 @@ gmshToFoam gmsh/intrusion_mesh.msh
 changeDictionary
 
 # 4. set permeability
-runApplication setFields
+#runApplication setFields
 # 5. run
 runApplication $application
 # 6. postprocessing

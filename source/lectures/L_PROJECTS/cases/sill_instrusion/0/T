@@ -67,7 +67,7 @@ internalField #codeStream
                 forAll(cells, iCells)
                 {   
                     const label cellId = cells[iCells];
-                    T[cellId] = 1273.15;
+                    T[cellId] = 1423;
                 }
             }
         }

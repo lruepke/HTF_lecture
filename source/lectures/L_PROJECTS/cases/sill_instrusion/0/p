@@ -16,14 +16,14 @@ FoamFile
 
 dimensions      [1 -1 -2 0 0 0 0];
 
-internalField   uniform 300e5;
+internalField   uniform 220e5;
 
 boundaryField
 {
     seafloor
     {
         type            fixedValue;
-        value           uniform 300e5;
+        value           uniform 220e5;
     }
     bottom
     {
