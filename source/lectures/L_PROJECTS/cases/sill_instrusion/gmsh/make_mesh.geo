@@ -5,13 +5,13 @@ z1=-250;                    // coordinates controlling pseudo-thickness of 2D sl
 z2=250;
 xmin=0;                     // x left
 xmax=5000;                  // x right
-ymin=-8000;                 // y bottom
-ymax=-3000;                     // y top
+ymin=-5000;                 // y bottom
+ymax=0;                     // y top
 
 s_thick=200;
-s_length=3000;
-s_depth=3000;
-s_tilt=20*Pi/180;
+s_length=4000;
+s_depth=4000;
+s_tilt=10*Pi/180;
 
 // modeling domain
 s_box = news;   // next availabe surface tag
