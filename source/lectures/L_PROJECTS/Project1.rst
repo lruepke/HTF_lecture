@@ -32,7 +32,7 @@ The goal of this project is to provide work on these topics
 2. **Systematics**, provide a "phase diagram" for fault width and fault permeability that illustrates the regime when the pume is captured by the fault zone.
 3. **Vent temperature**, provide information on the relationship between the fault's ability to capture a plume and the resulting vent temperature.
 
-The results showed be delivered in a short powerpoint presentation.
+The results should be delivered in a short powerpoint presentation.
 
 Starting point
 --------------
@@ -75,3 +75,5 @@ Background reading
     * :cite:`driesner2010` explains relationship between vent temperature and permeability
     * :cite:`deMartin2007` background paper on detachment faulting at the TAG vent field
     * :cite:`McCaig2007` :cite:`McCaig2010` more paper on fluid flow along detachments
+    * :cite:`Escartin2008` classic paper on oceanic detachments
+

@@ -8,6 +8,17 @@ enthalpy=thermo.enthalpy();
 // update heat flux
 heatFlux = -kr*fvc::grad(T);
 
+// pseudo gas generation
+{
+    forAll(alphaP,i)
+    {
+        if(T[i]>(250+273))
+        {
+            alphaP[i] = alphaP[i]*1.35;
+        }       
+    }
+}
+
 // update cp or rock according to temperature field
 #include "updateCp_rock.H"
 #include "update_permeability.H"

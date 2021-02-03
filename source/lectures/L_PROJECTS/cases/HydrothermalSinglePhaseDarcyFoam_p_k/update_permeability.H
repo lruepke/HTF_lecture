@@ -5,7 +5,34 @@
     {
         if(p[i]>pl[i])
         {
-            permeability[i]=permeability0[i]*pow(p[i]/pl[i], 2); //Eq.(7) of Iyer et al.(2017)
+            permeability[i]=permeability[i]*pow(p[i]/pl[i], 2); //Eq.(7) of Iyer et al.(2017)
+            if(permeability[i]>1E-13)
+            {
+                permeability[i] = 1E-13;
+            }
         }
+        else
+        {
+            permeability[i]=permeability0[i];
+        }
+        
     }
+    forAll(mesh.cellZones(), zoneI)
+        {
+            const cellZone& cz = mesh.cellZones()[zoneI];
+            const labelList& cells = cz;
+
+            if (cz.name() == "intrusion")
+            {
+                forAll(cells, iCells)
+                {   
+                    const label cellId = cells[iCells];
+                    permeability[cellId]=permeability0[cellId];
+                }
+            }
+        }
+
+
+
+
 }
