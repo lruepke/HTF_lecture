@@ -20,6 +20,36 @@ The third exercise is very similar to the second exercise in that we will explor
    Figure taken from :cite:`Iyer2017` on sill intrusions and hydrothermal venting in sedimentary basins.
 
 
+Technical background
+--------------------
+
+The feedbacks between fluid pressure and mechanical deformation is a vast field and way beyond the scope of this lecture. We will here only explore a highly simplied, yet useful and instructive case. More concrete, we will look how fluid pressure can induce hydrofracturing and thereby permeability creation. We will exemplify this for the example of sill intrusions into low permeability sediments.
+
+In a nutshell, coupling between fluid flow and mechanics naturally results in the Terzaghi’s concept of effective stress:
+
+.. math::
+    :label: eq:eff_stress
+    
+    \sigma^{\prime}_{ij} = \sigma_{ij} - p \delta_{ij}
+
+Fluid pressure is deducted from the total stress resulting in effective stress. In terms of pressure, this implies that the effective pressure a rock "feels" can be lowered by fluid overpressure thereby facilitating failure. Think of dehydration reactions and intermediate depth earthquakes in subduction zones. 
+
+Speaking of failure, rocks can fail in two major modes: brittle shear failure or extensional tensile failure (mode I cracks). Those failure modes occur when the differential stress exceeds one of the yield stresses:
+
+.. math::
+    :label: eq:shear_fail
+    
+    \tau - \sigma^{\prime}_{m} (\Phi) = C cos(\Phi)
+
+.. math::
+    :label: eq:tensile_fail
+    
+    \tau - \sigma^{\prime}_{m} = \sigma_{T}
+
+where :math:`\tau` is the differential stress, :math:`\sigma^{\prime}_{m}` is the effective mean stress (pressure), :math:`C` cohesion, :math:`\sigma_{T}` tensile strength. Draw a Mohr circle to check that you understand this!
+
+Things are a bit more complicated than this with feedbacks between fluid pressure and stress state but this gives the basic picture. Have a look at :cite:`Rozhko2007` for more details.
+
 Technicalities
 ----------------
 
@@ -43,14 +73,29 @@ We have to make the same modifications as in project 2 in that we need to accoun
     
     C_{eff}  = C_P \text{ for } (T < T_S)   
 
-In addition, we need to implement a pressure-dependent permeability. Here the idea is that permeability is increased when the fluid pressure exceeds the lithostatic pressure (a very simple fracture criterion). This permeability model is described in :cite:`Iyer2017` and in :cite:`Galerne2019`.
+In addition, we need to implement a pressure-dependent permeability according to the mechanical feedbacks given above. We will make the simplifying assumption that the sedimentary basin is not "pre-stressed", i.e. we do not impose a pre-existing differential stress profile as in :cite:`Weis2012` . We simply assume that permeability is progressively increased when the fluid pressure exceeds the lithostatic pressure (a very simple fracture criterion). This permeability model is described in :cite:`Iyer2017` and in :cite:`Galerne2019`.
 
 .. math::
     :label: eq:k_eqn_1
     
-    k_{eff}  = k_0 \left( \frac{p_f}{p_l} \right)^2 \text{ for } (p_f > p_l)   
+    k_{eff}  = k_{eff} \left( \frac{p_f}{p_l} \right)^2 \text{ for } (p_f > p_l)   
 
-Here :math:`p_l` is the lithostatic pressure, the weight of the overburden.
+Here :math:`p_l` is the lithostatic pressure, the weight of the overburden. :math:`k_{eff}` shows up on both sides of the equation, which mimics progressive crack/vein oppening.
+
+In addition, we will impose depth-dependent porosity and permeability profies according to :cite:`Iyer2017`.
+
+.. math::
+    :label: eq:poro_depth
+     
+    \phi (z)  = 0.4464 exp(0.2353 y)
+
+
+where y is in kilometers.
+
+.. math::
+    :label: eq:perm_depth
+    
+    k(phi) = k_0 \left [ \frac{\phi^{1.5+1}}{1-\phi^{1.5}} \right ]
 
 These changes are implemented in a modified solver of HydrothermalFoam, which you can download from here (:download:`HydrothermalSinglePhaseDarcyFoam_p_k <cases/HydrothermalSinglePhaseDarcyFoam_p_k.zip>`).
 
