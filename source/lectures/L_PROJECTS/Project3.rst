@@ -39,14 +39,14 @@ Speaking of failure, rocks can fail in two major modes: brittle shear failure or
 .. math::
     :label: eq:shear_fail
     
-    \tau - \sigma^{\prime}_{m} (\Phi) = C cos(\Phi)
+    \tau - \sigma^{\prime}_{m} sin(\Phi) = C cos(\Phi)
 
 .. math::
     :label: eq:tensile_fail
     
     \tau - \sigma^{\prime}_{m} = \sigma_{T}
 
-where :math:`\tau` is the differential stress, :math:`\sigma^{\prime}_{m}` is the effective mean stress (pressure), :math:`C` cohesion, :math:`\sigma_{T}` tensile strength. Draw a Mohr circle to check that you understand this!
+where :math:`\tau` is the differential stress, :math:`\sigma^{\prime}_{m}` is the effective mean stress (pressure), :math:`C` cohesion, :math:`\sigma_{T}` tensile strength. Draw a Mohr circle to check that you understand this! There is also a nice paper by :cite:`Cox2010` with more details on this.
 
 Things are a bit more complicated than this with feedbacks between fluid pressure and stress state but this gives the basic picture. Have a look at :cite:`Rozhko2007` for more details.
 
