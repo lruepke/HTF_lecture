@@ -99,7 +99,7 @@ where y is in kilometers.
 
 These changes are implemented in a modified solver of HydrothermalFoam, which you can download from here (:download:`HydrothermalSinglePhaseDarcyFoam_p_k <cases/HydrothermalSinglePhaseDarcyFoam_p_k.zip>`).
 
-Check the :code:`updateProps.H` and :code:`createFields.H` files, how these changes are implemented.
+Check the :code:`updateProps.H` and :code:`0/permeability.org` and :code:`0/porosity` files, how these changes are implemented.
 
 Setup fields
 ^^^^^^^^^^^^^^^
