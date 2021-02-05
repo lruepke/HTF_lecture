@@ -22,8 +22,8 @@ startTime 0;
 
 stopAt endTime;
 // -------------commonly changed parameters ----------- 
-endTime_year 1000;   //year
-writeInterval_year 5; //year
+endTime_year 120;   //year
+writeInterval_year 1; //year
 purgeWrite 0;
 deltaT 864000;
 // ----------------------------------------------------
