@@ -12,9 +12,9 @@ heatFlux = -kr*fvc::grad(T);
 {
     forAll(alphaP,i)
     {
-        if(T[i]>(250+273))
+        if(T[i]>(200+273))
         {
-            alphaP[i] = alphaP[i]*1.35;
+            alphaP[i] = alphaP[i]*1.0;
         }       
     }
 }

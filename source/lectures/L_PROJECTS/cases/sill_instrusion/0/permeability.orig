@@ -42,7 +42,7 @@ internalField #codeStream
             //return (minT-y*(maxT-minT)/(maxY-minY));
             const scalar n = 1.5;
             const scalar poro = 0.4464*exp(0.2353*y/1000);
-            const scalar k0 = 1e-15;
+            const scalar k0 = 5e-16;
             return (k0*(pow(poro,n+1)) / (pow((1-poro),n))); //put geothermal gradient here if you want one
         }
     #};

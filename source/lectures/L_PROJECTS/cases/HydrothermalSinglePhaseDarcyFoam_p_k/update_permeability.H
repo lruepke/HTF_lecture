@@ -6,14 +6,21 @@
         if(p[i]>pl[i])
         {
             permeability[i]=permeability[i]*pow(p[i]/pl[i], 2); //Eq.(7) of Iyer et al.(2017)
-            if(permeability[i]>1E-13)
+            if(permeability[i]>1E-12)
             {
-                permeability[i] = 1E-13;
+                permeability[i] = 1E-12;
             }
         }
         else
         {
-            permeability[i]=permeability0[i];
+            if(permeability[i]>permeability0[i])
+            {
+                permeability[i]=permeability[i]*pow(p[i]/pl[i], 2);
+            }
+            if(permeability[i]<=permeability0[i])
+            {
+                permeability[i]=permeability0[i];
+            }
         }
         
     }
@@ -31,8 +38,4 @@
                 }
             }
         }
-
-
-
-
 }

@@ -1,17 +1,17 @@
 SetFactory("OpenCASCADE");
-lc=200;                     // mesh size control region
-lc_df=25;                   // mesh size control sill
+lc=50;                     // mesh size control region
+lc_df=35;                   // mesh size control sill
 z1=-250;                    // coordinates controlling pseudo-thickness of 2D slice 
 z2=250;
 xmin=0;                     // x left
-xmax=5000;                  // x right
+xmax=6500;                  // x right
 ymin=-5000;                 // y bottom
 ymax=0;                     // y top
 
-s_thick=200;
-s_length=4000;
-s_depth=4000;
-s_tilt=10*Pi/180;
+s_thick=100;
+s_length=5000;
+s_depth=3000;
+s_tilt=13*Pi/180;
 
 // modeling domain
 s_box = news;   // next availabe surface tag
