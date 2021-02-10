@@ -40,9 +40,11 @@ In the next chapter, we will have detailed look at a first example case and solv
     .. figure:: /_static/video/Paraview_saveanimation.png
         :align: center
         :width: 50 %
+        :name: fig:saveanimation_paraview
 
+        Screenshot of Paraview for saving images.
 
-    3. Convert images (e.g. *.png) to animation (*.mp4). Run the following command in the docker container, assuming the images are save in the :code:`~/HydrothermalFoam_runs/animation` folder and the filename is :code:`T`.
+    3. Convert images (e.g. *.png) to animation (*.mp4). Run the following command **in the docker container**, assuming the images are saved in the :code:`~/HydrothermalFoam_runs/animation` folder and the filename is :code:`T` (see :numref:`fig:saveanimation_paraview`).
 
     .. code-block::  python
         
