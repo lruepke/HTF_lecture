@@ -93,6 +93,7 @@ jobs:
             echo "last commit ID of ${lecture} is not stored in pages folder, use the penultimate one"
             lastcommits=(`git log --format="%H" -n 2`)
             lastcommit=${lastcommits[1]}
+            echo "The penultimate one commit is " $lastcommit
           fi
           # 3.2.2 compare source of current commit and that of last build
           if [[ -n $(git diff ${lastcommit} ${lecture}/) ]]
