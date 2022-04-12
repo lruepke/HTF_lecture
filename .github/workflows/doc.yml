@@ -21,22 +21,24 @@ jobs:
           sudo apt-get install pandoc
           sudo apt-get install hugo
 
-      # # debug workflows: you could use ssh to login the github runner and test something
-      # - name: install oh my zsh
-      #   run: |
-      #     sudo apt-get install zsh
-      #     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
+      # debug workflows: you could use ssh to login the github runner and test something
+      - name: install oh my zsh
+        run: |
+          sudo apt-get install zsh
+          sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       
-      - name: Generate sphinx pages and pdf 
+      - name: Generate main pages and sphinx pages
         run: |
-          cd 2020_Winter
+          cd home
+          hugo
+          cd ..
+          cp -rf home/public/ .
+          cd Winter2020
           make html
-          mv build 2020
-          mkdir build
-          mv 2020 build
+          cp -rf build/html/* ../public/winter2020
 
       
       # # uncomment this segment to generate pdf file
