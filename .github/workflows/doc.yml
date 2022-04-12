@@ -87,7 +87,8 @@ jobs:
           lastcommit=""
           commitIDFile=../history/${lectureName_hugo}/${commitIDFile_stored}
           if [ -f ${commitIDFile} ]; then 
-            lastcommit=`awk 'NR==1{$1}' ${commitIDFile}`
+            cat ${commitIDFile}
+            lastcommit=`awk 'NR==1{print $1}' ${commitIDFile}`
             echo "last commit ID of ${lecture}: " $lastcommit
           else
             echo "last commit ID of ${lecture} is not stored in pages folder, use the penultimate one"
