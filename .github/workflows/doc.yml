@@ -21,13 +21,13 @@ jobs:
           sudo apt-get install pandoc
           sudo apt-get install hugo
 
-      # debug workflows: you could use ssh to login the github runner and test something
-      - name: install oh my zsh
-        run: |
-          sudo apt-get install zsh
-          sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # # debug workflows: you could use ssh to login the github runner and test something
+      # - name: install oh my zsh
+      #   run: |
+      #     sudo apt-get install zsh
+      #     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
 
       
       - name: Generate main pages and sphinx pages
@@ -52,4 +52,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./sphinx/build
+          publish_dir: ./public
