@@ -1,10 +1,10 @@
 ---
 title: "Winter 2020"
 date: 2018-12-29T11:02:05+06:00
-icon: "ti-panel"
-logo: "images/research.png"
+icon: "fas fa-graduation-cap"
 description: "FVM, OpenFoam, HydrothermalFoam, Hydrothermal circulation."
 type : "docs"
+color: "229, 36, 35"
 ---
 
 <script type="text/javascript">

@@ -14,9 +14,10 @@
             {{ if .Params.logo}}
                 <image class="social_logo" src="{{ .Params.logo | absURL }}" ></i>
 							{{ else }}
-                <i class="{{ .Params.Icon }} icon text-primary d-block mb-4"></i>
+                {{/*  <i class="{{ .Params.Icon }} icon text-primary d-block mb-4"></i>  */}}
+                <i class="{{ .Params.Icon }}" style="color: rgb({{ .Params.Color }});"></i>
 							{{ end }}
-            <h3 class="mb-3 mt-0">{{ .Title }}</h3>
+            <h3 class="mb-3 mt-0"  style="color: rgb({{ .Params.Color }});">{{ .Title }}</h3>
             <p class="mb-0">{{ .Params.Description }}</p>
           </a>
         </div>
