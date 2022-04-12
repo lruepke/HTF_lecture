@@ -1,0 +1,129 @@
+.fa-weixin {
+    background: rgb(76, 217, 99);
+    color: white;
+}
+.fa-gitlab {
+    background: white;
+    color: orangered;
+}
+
+.fa-github {
+    background: white;
+    color: black;
+}
+
+.fa-qq {
+    background: rgb(255, 149, 0);
+    color: white;
+}
+.fa-orcid {
+    background: rgb(174, 204, 84);
+    color: white;
+}
+
+.fa-envelope {
+    background: rgb(90, 199, 250);
+    color: white;
+}
+
+/* 简书 */
+.fa-book {
+    background: rgb(133, 233, 133);
+    color: rgb(240, 135, 135);
+}
+
+.fa-zhihu {
+    background: rgb(49, 133, 247);
+    color: white;
+}
+
+.fa-youtube {
+    background: rgb(247, 49, 49);
+    color: white;
+}
+
+.fa-docker {
+    background: rgb(64, 155, 203);
+    color: white;
+}
+
+.fa-github-alt {
+    background: rgb(88, 86, 214);
+    color: white;
+}
+
+.fab {
+    position: relative;
+    font-size: 40px;
+    width: 55px;
+    height: 55px;
+    border-radius: 25%;
+}
+.fab:before {
+    position: relative;
+    top: calc(50% - .5em);
+}
+.fas {
+    position: relative;
+    font-size: 40px;
+    width: 55px;
+    height: 55px;
+    border-radius: 25%;
+}
+.fas:before {
+    position: relative;
+    top: calc(50% - .5em);
+}
+
+.social-banner{
+    margin-top: 20px;
+    margin-left: 0px;
+}
+
+.social_logo{
+    width: 55px;
+    height: 55px;
+    border-radius: 25%;
+    background: white;
+    position: relative;
+    top: -.2em;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }

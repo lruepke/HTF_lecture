@@ -1,0 +1,122 @@
+################################# Default configuration ###################
+# provide your domain here
+baseURL = "https://lruepke.github.io/HTF_lecture/"
+# theme
+theme = "dot"
+# site title
+title = "Fluid dynamics lectures"
+# disable language
+disableLanguages = []
+# google analytics
+googleAnalytics = "" # paste your analytics ID here. Ex: UA-123-45
+
+# unsafe html
+[markup.goldmark.renderer]
+unsafe= true
+
+############################# Default Parameters ##########################
+[params]
+# logo is for all page
+logo = "images/logo.png"
+# logo white is for homepage logo, you can use colorful logo too...
+logo_white = ""
+# when logo is empty, it will shown your site title
+
+# customize color
+primary_color = "#02007e"
+body_color = "#f9f9f9"
+text_color = "#636363"
+text_color_dark = "#242738"
+white_color = "#ffffff"
+light_color = "#f8f9fa"
+# customize css: under static directory. do not set path as: static/css/mystyle.css
+css="css/mystyle.css" 
+# font family
+font_family = "lato" # Choose font family from : https://fonts.google.com/
+
+# contact form action
+contact_form_action = "https://formspree.io/xnqgqakz" # contact form works with : https://formspree.io
+
+################################ english version ######################
+[Languages.en]
+languageName = "English"
+languageCode = "en-us"
+weight = 1
+home = "Home"
+copyright = "Copyright 2021 © [Lars Ruepke](https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings/translate-to-english-staff) and [Zhikui Guo](https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings/translate-to-english-staff) 2020-2022."
+
+# navigation
+[[Languages.en.menu.main]]
+name = "Faq"
+url = "faq"
+weight = 1
+
+[[Languages.en.menu.main]]
+name = "contact"
+url = "contact"
+weight = 2
+
+# Dropdown menu
+[[Languages.en.menu.main]]
+weight = 4
+name = "Lectures"
+hasChildren = true
+
+  [[Languages.en.menu.main]]
+  parent = "Lectures"
+  name = "Winter 2020"
+  url = "winter2020"
+  weight = 1
+
+  [[Languages.en.menu.main]]
+  parent = "Lectures"
+  name = "Summer2021"
+  url = "summer2021"
+  weight = 2
+
+  [[Languages.en.menu.main]]
+  parent = "Lectures"
+  name = "Summer 2022"
+  url = "summer2022"
+  weight = 3
+
+# banner
+[Languages.en.params.banner]
+title = "Online lectures of fluid dynamics"
+subtitle = "Welcome to the course Numerical Fluid Dynamics taught at Kiel University"
+bg_image = "images/banner.jpg"
+placeholder = "Have a question? Try to ask here or enter terms"
+
+# social links 
+
+[[Languages.en.params.social]]
+fa="fab fa-gitlab"
+fa_title="Hydrothermalfoam" #show as tooltip
+link = "https://gitlab.com/gmdpapers/hydrothermalfoam"
+  
+[[Languages.en.params.social]]
+fa="fab fa-github"
+fa_title="Lecture source" #show as tooltip
+link = "https://github.com/lruepke/HTF_lecture"
+
+[[Languages.en.params.social]]
+fa="fab fa-docker"
+fa_title="Docker Hub" #show as tooltip
+link = "https://hub.docker.com/r/zguo/hydrothermalfoam"
+
+[[Languages.en.params.social]]
+fa="fab fa-youtube"
+fa_title="YouTube" #show as tooltip
+link = "https://www.youtube.com/playlist?list=PLnufTNcP1C4iiwSZeSQTGvnocA3e08fzv"
+
+
+# call to action
+[Languages.en.params.cta]
+enable = true
+title = "Any further question?"
+content = "Please contact us."
+# call to action button
+[Languages.en.params.cta.button]
+enable = true
+label = "contact us"
+link = "contact"

@@ -1,0 +1,80 @@
+{{ "<!-- footer -->" | safeHTML }}
+<footer class="section pb-4">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-8 text-md-right text-center">
+       <p class="mb-md-0 mb-4">{{ .Site.Params.copyright | markdownify }}</p>
+      </div>
+      <!-- <div class="col-md-4 text-md-right text-center">
+        <ul class="list-inline">
+          {{ range .Site.Params.social }}
+          <li class="list-inline-item"><a class="text-color d-inline-block p-2" href="{{ .link | safeURL }}"><i class="{{ .icon }} {{ .fa }}"></i></a></li>
+          {{ end }}
+        </ul>
+      </div> -->
+    </div>
+  </div>
+</footer>
+{{ "<!-- /footer -->" | safeHTML }}
+
+{{ "<!-- Main Script -->" | safeHTML }}
+{{ $script := resources.Get "js/script.js" | minify}}
+<script src="{{ $script.Permalink }}"></script>
+
+<script type="text/javascript">
+  var myChart_wmap = echarts.init(document.getElementById('wmap'), null,  {renderer: 'svg'});
+  var option_wmap;
+  myChart_wmap.showLoading();
+  $.get("{{ `data_charts/world.json` | absURL }}", function (USAjson) {
+      myChart_wmap.hideLoading();
+      echarts.registerMap('world', {geoJSON: USAjson});
+      option_wmap = {
+        backgroundColor: '#000',
+        title: {
+          text: 'test plot map',
+          left: 'center',
+          textStyle: {
+            color: '#fff'
+          }
+        },
+          tooltip: {},
+          geo: {
+            map: 'world',
+            roam: true,
+            label: {
+              emphasis: {
+                show: false
+              }
+            },
+            itemStyle: {
+              normal: {
+                areaColor: '#323c48',
+                borderColor: '#111'
+              },
+              emphasis: {
+                areaColor: 'yellow'
+              }
+            }
+          },
+          series: {
+              type: 'effectScatter',
+              coordinateSystem: 'geo',
+              geoIndex: 0,
+              polyline: true,
+              symbolSize: function (params) {
+                  return (params[2] / 100) * 5 ;
+              },
+              itemStyle: {
+                  color: 'red'
+              },
+              encode: {
+                  tooltip: 2
+              },
+              data: [
+                [-20, -60, 100]
+              ]
+          }
+      };
+      myChart_wmap.setOption(option_wmap);
+  });
+</script>

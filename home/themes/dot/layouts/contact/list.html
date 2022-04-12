@@ -1,0 +1,41 @@
+{{ define "main" }}
+
+{{ "<!-- contact -->" | safeHTML }}
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="section-title text-primary">{{ .Title }}</h2>
+        <!-- 中文和外文设置不同的联系方式模板 -->
+        {{ if eq .Site.Language.Lang "zh"}}
+          <div class="col-12">
+            <div class="px-3 bg-white shadow text-center">
+            <h2 class="mb-4">{{ .Content }}</h2>
+            <img class="mb-4" src="{{ .Site.Params.QR_weixingongzhong | absURL }}" style="width: 100%; height: 100%;" alt="'SciByte' 微信公众号二维码">
+            </div>
+          </div>
+        {{ else }}
+          {{ .Content }}
+          <form action="{{ .Site.Params.contact_form_action | safeURL }}" method="POST">
+            <input type="text" id="name" name="name" placeholder="Name" class="form-control mb-4 shadow rounded-0">
+            <input type="email" id="mail" name="mail" placeholder="Email" class="form-control mb-4 shadow rounded-0">
+            <input type="text" id="subject" name="subject" placeholder="subject"
+              class="form-control mb-4 shadow rounded-0">
+            <textarea name="message" id="message" placeholder="Message"
+              class="form-control mb-4 shadow rounded-0"></textarea>
+            <button type="submit" value="send" class="btn btn-primary">{{ i18n "send" }}</button>
+          </form>
+          <!-- <form action="https://formspree.io/xnqgqakz" method="POST">
+            <input type="text" name="name">
+            <input type="email" name="_replyto">
+            <input type="submit" value="Send">
+          </form> -->
+        {{ end }}
+        
+      </div>
+    </div>
+  </div>
+</section>
+{{ "<!-- /contact -->" | safeHTML }}
+
+{{ end }}
