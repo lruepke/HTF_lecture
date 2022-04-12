@@ -12,7 +12,7 @@ These are the main topics:
 4. 2D elliptical problems - heat diffusion. 
 5. 2D parabolic problems - transient diffusion.
 6. Stokes flow.
-
+ 
 
 
 Course goals

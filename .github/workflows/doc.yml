@@ -82,6 +82,7 @@ jobs:
           # 3.2 for loop lectures and process it
           for lecture in $lectures
           do
+          lectureName_hugo=`echo "$lecture" | awk '{print tolower($0)}'`
           # 3.2.1 get last commit of the page source stored in the page folder
           lastcommit=""
           commitIDFile=../public/${lecture}/${commitIDFile_stored}
@@ -101,11 +102,10 @@ jobs:
             make html
             # write current commit ID to lecture folder
             echo `git log --format="%H" -n 1` >build/html/${commitIDFile_stored}
-            cp -rf build/html/* ../public/$lecture
+            cp -rf build/html/* ../public/$lectureName_hugo
             cd ..
           else
             echo $lecture " is not updated in this commit, keep the previous pages!"
-            lectureName_hugo=`echo "$lecture" | awk '{print tolower($0)}'`
             cp -rf ../history/${lectureName_hugo}/* public/${lectureName_hugo}
           fi
           done
