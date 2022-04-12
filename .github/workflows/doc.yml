@@ -32,12 +32,12 @@ jobs:
       
       - name: Generate sphinx pages and pdf 
         run: |
-          cd sphinx
+          cd 2020_Winter
           make html
           mv build 2020
           mkdir build
           mv 2020 build
-          
+
       
       # # uncomment this segment to generate pdf file
       # - name: Generate latex and pdf
