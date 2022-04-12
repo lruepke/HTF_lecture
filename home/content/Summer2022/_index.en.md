@@ -8,5 +8,5 @@ type : "docs"
 ---
 
 <script type="text/javascript">
-  window.open("html/index.html", "_self");
+  window.open("[html/index.html](https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings/translate-to-english-staff)", "_self");
 </script>

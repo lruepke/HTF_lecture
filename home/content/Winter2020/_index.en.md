@@ -8,5 +8,5 @@ type : "docs"
 ---
 
 <script type="text/javascript">
-  window.open("https://lruepke.github.io/HTF_lecture/", "_self");
+  window.open("https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings/translate-to-english-staff", "_self");
 </script>

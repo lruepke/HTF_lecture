@@ -17,28 +17,41 @@ jobs:
       # new version (4.0.2) of sphinx has bugs of Jinjia2 when parsing Jupyter notebook, so change to 4.0.1
       - name: Install tools
         run: |
-          pip install sphinx sphinx_rtd_theme sphinxcontrib-bibtex matplotlib pandas numpy nbsphinx ipykernel sphinx_inline_tabs
+          pip install sphinx sphinx_rtd_theme sphinxcontrib-bibtex matplotlib pandas numpy nbconvert nbsphinx ipykernel sphinx_inline_tabs
           sudo apt-get install pandoc
           sudo apt-get install hugo
-
-      # # debug workflows: you could use ssh to login the github runner and test something
-      # - name: install oh my zsh
-      #   run: |
-      #     sudo apt-get install zsh
-      #     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
+          
+      # debug workflows: you could use ssh to login the github runner and test something
+      - name: install oh my zsh
+        run: |
+          sudo apt-get install zsh
+          sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       
       - name: Generate main pages and sphinx pages
         run: |
+          # fetch history lecture pages
+          git fetch origin gh-pages
+          git checkout gh-pages
+          mkdir ../history
+          cp -rf winter2020 ../history
+          cp -rf summer2021 ../history
+          git checkout main
+          # make home page
           cd home
           hugo
           cd ..
           cp -rf home/public/ .
-          cd Winter2020
+          # make new lecture pages
+          cd Summer2022
           make html
-          cp -rf build/html/* ../public/winter2020
+          cp -rf build/html/* ../public/summer2022
+          # copy history lecture pages
+          cd ..
+          cp -rf ../history/winter2020/* public/winter2020
+          cp -rf ../history/summer2021/* public/summer2021
 
       
       # # uncomment this segment to generate pdf file

@@ -1,0 +1,18 @@
+
+  digraph G {
+  
+  	subgraph cluster_0 {
+  		style=box;
+  		color=red;
+          node_T[label="Solve Temperature", shape=record,style=rounded, color=green,href="TEqn_8H.html"];
+          node_prop[label="Update properties", shape=record,style=rounded, color=purple, href="updateProps_8H.html"];
+          node_p[label="Solve pressure", shape=record,style=rounded, color=green, href="pEqn_8H.html"];
+          node_v[label="Reconstruct velocity", shape=record,style=rounded, color=purple];
+  		node_T->node_prop -> node_p -> node_v;
+  		label = < <font color='red'><b>Time loop</b></font> >
+  	}
+      node_v -> node_T;
+      node_initP[label="Initialize hydrostatic pressure",color=black,href="initpEqn_8H.html"]
+      node_initP -> node_T ;
+      label = "Schematic of the algorithm";
+  }
