@@ -12,7 +12,7 @@ googleAnalytics = "" # paste your analytics ID here. Ex: UA-123-45
 
 # unsafe html
 [markup.goldmark.renderer]
-unsafe= true
+unsafe= true  
 
 ############################# Default Parameters ##########################
 [params]
