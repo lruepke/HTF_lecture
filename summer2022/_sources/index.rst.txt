@@ -14,7 +14,7 @@ Course content
 These are the main topics:
 
 1. Introduction to computational fluids dynamics /  Navier-Stokes, Stokes, Darcy
-2. Numerical methods / finite differences and finite volumes (MATLAB/Python)
+2. Numerical methods / finite differences and finite volumes (Python)
 3. Computational Fluid Dynamics with OpenFOAM 
 4. Visualization with Paraview
 5. Hydrothermal systems
