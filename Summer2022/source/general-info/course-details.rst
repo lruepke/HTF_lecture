@@ -4,15 +4,15 @@ Course details
 Course schedule
 ---------------
 
-**Winter Semester 2020**
+**Winter Semester 2022**
 
 - Class sessions
 
-  - Wednesdays at 14:00 CET (04.11.2020 - 10.02.2021), zoom link available from instructors
+  - Wednesdays at 14:00 CET (13.04.2022 - 06.07.2022), zoom link available from instructors
 
 - Semester breaks
 
-  - No class on December 23rd and December 30th 2020
+  - No scheduled breaks yet
 
 Instructors
 -----------
@@ -31,7 +31,8 @@ Course website
 ---------------
 
 - Public site : https://lruepke.github.io/HTF_lecture/
-- University site: https://lms.uni-kiel.de/url/RepositoryEntry/3664576582
+- University site: https://lms.uni-kiel.de/url/RepositoryEntry/4713414672
+
 
 Further readings
 ----------------
