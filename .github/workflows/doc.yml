@@ -85,7 +85,7 @@ jobs:
           lectureName_hugo=`echo "$lecture" | awk '{print tolower($0)}'`
           # 3.2.1 get last commit of the page source stored in the page folder
           lastcommit=""
-          commitIDFile=../public/${lecture}/${commitIDFile_stored}
+          commitIDFile=../public/${lectureName_hugo}/${commitIDFile_stored}
           if [ -f ${commitIDFile} ]; then 
             lastcommit=`awk 'NR==1{$1}' ${commitIDFile}`
             echo "last commit ID of ${lecture}: " $lastcommit
