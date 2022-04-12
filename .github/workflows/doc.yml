@@ -76,7 +76,8 @@ jobs:
           cp -rf home/public/ .
           # 3. make lecture pages
           # check is lecture source folder is updated or not, if updated then sphinx it, otherwise just copy the backup page files
-          # 3.1 get last commit id
+          # 3.1 get last commit id: note that the Github actions default use *** mode, `git log` can only get the latest commit, so need `git pull origin --unshallow` to get full log
+          git pull origin --unshallow
           lastcommit=(`git log --format="%H" -n 2`)
           lastcommit=${lastcommit[1]}
           echo "last commit ID: " $lastcommit
