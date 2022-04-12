@@ -32,28 +32,41 @@ jobs:
       
       - name: Generate main pages and sphinx pages
         run: |
-          # fetch history lecture pages
+          # 1. fetch history lecture pages and copy them to history folder as backup
           git fetch origin gh-pages
           git checkout gh-pages
           mkdir ../history
           cp -rf winter2020 ../history
           cp -rf summer2021 ../history
+          cp -rf summer2022 ../history
           git checkout main
-          # make home page
+          # 2. make home page
           cd home
           hugo
           cd ..
           cp -rf home/public/ .
-          # make new lecture pages
-          cd Summer2022
-          make html
-          cp -rf build/html/* ../public/summer2022
-          # copy history lecture pages
-          cd ..
-          cp -rf ../history/winter2020/* public/winter2020
-          cp -rf ../history/summer2021/* public/summer2021
+          # 3. make lecture pages
+          # check is lecture source folder is updated or not, if updated then sphinx it, otherwise just copy the backup page files
+          # 3.1 get last commit id
+          lastcommit=(`git log --format="%H" -n 2`)
+          lastcommit=${lastcommit[1]}
+          echo "last commit ID: " $lastcommit
+          # 3.2 for loop lectures and process it
+          for lecture in winter2020 summer2021 summer2022
+          do
+          if [[ -n $(git diff ${lastcommit} ${lecture}/) ]]
+          then
+            echo $lecture " is updated in this commit, sphinx it!"
+            cd ${lecture}
+            make html
+            cp -rf build/html/* ../public/$lecture
+            cd ..
+          else
+            echo $lecture " is not updated in this commit, keep the previous pages!"
+            cp -rf ../history/${lecture}/* public/${lecture}
+          fi
+          done
 
-      
       # # uncomment this segment to generate pdf file
       # - name: Generate latex and pdf
       #   run: |
