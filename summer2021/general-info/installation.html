@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation guide &mdash; Finite Element Modeling in Geodynamics  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Overview" href="../lecture1/overview.html" />
+    <link rel="prev" title="Course details" href="course-details.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
+            <img src="../_static/htf_picto2.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="course-details.html">Course details</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#visual-studio-code">Visual Studio Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#download-and-install-miniconda">Download and install miniconda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-virtual-environment">Create a virtual environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#switching-between-environments">Switching between environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#working-with-jupyter-notebooks">Working with jupyter notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integration-with-visual-studio-code">Integration with Visual Studio Code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_intro.html">Introduction: The Finite Differences Method (FDM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_1.html">Example 1: Cooling dike</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_2.html">Example 2: Cooling dike - implicit version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_3.html">Example 3: Periodic variations in seafloor temperature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_advection.html">Transport problems with FDM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_intro.html">Introduction: Method of Weighted Residuals (MWR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_examples.html">MWR solutions of the steady advection-diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/excercises.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html">Introduction Finite Element Method (FEM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html#fem-implementation">FEM implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_advection.html">FEM and advection problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html">2-D FEM - elliptic problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html#implementation">Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html">Triangles: unstructured meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html#excercise">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/transient_problems.html">Transient heat diffusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/turing_coupled_problem.html">Coupled diffusion problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/FEM_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Finite Element Modeling in Geodynamics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Installation guide</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/general-info/installation.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="installation-guide">
+<h1>Installation guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline"></a></h1>
+<p>We will use Python for learning the basics of the finite element method. Later in the course, we will also use <a class="reference external" href="https://fenicsproject.org/">FENICS</a> to explore some more advanced concepts. Most of the work will be done in Jupyter notebooks. Let’s get all of this to work.</p>
+<section id="visual-studio-code">
+<h2>Visual Studio Code<a class="headerlink" href="#visual-studio-code" title="Permalink to this headline"></a></h2>
+<p>We will do a lot of editing of text files and you can use your favorite text editor for this. However, we  recommend to use <a class="reference external" href="https://code.visualstudio.com/">Microsoft’s Visual Studio Code</a>, which also nicely integrates with python.</p>
+</section>
+<section id="python">
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline"></a></h2>
+<p>In case you already have a working python environment, you can adapt it for this course (e.g. by creating a new virtual environment). If not, we recommend <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose “no”. It’s usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.</p>
+<section id="download-and-install-miniconda">
+<h3>Download and install miniconda<a class="headerlink" href="#download-and-install-miniconda" title="Permalink to this headline"></a></h3>
+<p>Just follow the installation instructions and keep the default options. We recommend to install python 3. During the installation, choose to <strong>not</strong> add it to your path (that’s the default). Adding miniconda/anaconda to your <code class="code docutils literal notranslate"><span class="pre">$PATH</span></code> may seem convenient but there are several reason to not do it.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Python is used by many different tools on your computer, which probably expect that just calling python will use the Python (and additional packages) installed by the operating system. None of these will be available to Miniconda’s Python.</p></li>
+<li><p>The conda environment we will create contains several binary dependencies and we do not want to interfer with defaults on your system when, e.g. compiling software unrelated to our lecture.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="create-a-virtual-environment">
+<h3>Create a virtual environment<a class="headerlink" href="#create-a-virtual-environment" title="Permalink to this headline"></a></h3>
+<p>We will create a so-called virtual environment with all the python packages we will use during this class. To not infer with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation.</p>
+<div class="admonition-starting-python admonition">
+<p class="admonition-title">Starting python</p>
+<p>If you are on Windows, start an Anaconda Powershell Prompt from the start menu.</p>
+<p>On MacOS / Linux, open a terminal and type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate base
+</pre></div>
+</div>
+<p>You can also do that in the terminal within Visual Studio Code (on MacOS).</p>
+</div>
+<p>Now we are ready to create a virtual environment. We can create it with this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n py37_fem_class <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 numpy pandas matplotlib vtk h5py ipython scipy ipykernel jupyterlab
+</pre></div>
+</div>
+<p>We are using python 3.7 here (instead of the newest 3.8) because of an incompatibility with vtk. Activate the new environment</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_fem_class
+</pre></div>
+</div>
+</section>
+<section id="switching-between-environments">
+<h3>Switching between environments<a class="headerlink" href="#switching-between-environments" title="Permalink to this headline"></a></h3>
+<p>You can activate and deactivate environments like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_fem_class
+conda deactivate
+</pre></div>
+</div>
+</section>
+<section id="working-with-jupyter-notebooks">
+<h3>Working with jupyter notebooks<a class="headerlink" href="#working-with-jupyter-notebooks" title="Permalink to this headline"></a></h3>
+<p>We will do most excercises using jupyter notebooks. A good workflow is to start jupyter labs in working directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="s2">&quot;your working directory&quot;</span>
+jupyter lab
+</pre></div>
+</div>
+<p>One possible issue is that you need to make sure that your jupyter notebooks use the correct python environment. One way of doing this is to register your virtual environment as a jupyter kernel. This can be done like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_fem_class
+ipython kernel install --user --name<span class="o">=</span>py37_fem_class
+</pre></div>
+</div>
+<p>Restart you jupyter lab and try to select the correct python kernel.</p>
+</section>
+<section id="integration-with-visual-studio-code">
+<h3>Integration with Visual Studio Code<a class="headerlink" href="#integration-with-visual-studio-code" title="Permalink to this headline"></a></h3>
+<p>You will need to install Microsoft’s Python extension. Just search for Python under Extensions and chose the one from Microsoft (usually the first option). Finally, you will have to set the Python interpreter. Do this by pushing CMD/CTRL+SHIFT+P. Type Python: Select Interpretor and select our newly created anaconda environment. If it doesn’t show up, close and re-open Visual Studio Code.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="course-details.html" class="btn btn-neutral float-left" title="Course details" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../lecture1/overview.html" class="btn btn-neutral float-right" title="Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+      
+        <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+          <span class="rst-current-version" data-toggle="rst-current-version">
+            <span class="fa fa-book"> Finite Element Modeling in Geodynamics</span>
+            v: latest
+            <span class="fa fa-caret-down"></span>
+          </span>
+          <div class="rst-other-versions">
+            <dl>
+              
+                
+                <dd><a href="https://lruepke.github.io/FEM_lecture/downloads/LectureNote.pdf">latest</a></dd>
+                
+                <dd><a href="#/LectureNote.pdf">2.0</a></dd>
+                
+              
+          </div>
+        </div>
+      
+    
+
+</body>
+</html>

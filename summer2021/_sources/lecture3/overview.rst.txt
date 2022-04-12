@@ -1,0 +1,4 @@
+Overview 
+===========================
+
+In the last session we have learned to find approximate solutions to partial differential equations using the Method of Weighted Residuals (MWR). The Finite Element Method (FEM) is somewhat of an extension of the (MWR). While *“...finite differences methods replace the problem domain by a grid and produce a vector whose components are approximations to the solution at the grid points”*, *“...finite element methods partition the problem domain into subregions and produce a simple function in each subregion that approximates the solution”*. This is very similar to the MWR: the partition the modeling domain into subregions (finite elements), approximate the solution over those elements by simple interpolation functions (so-called shape functions), and find a best-fitting solution by the Galerkin method.

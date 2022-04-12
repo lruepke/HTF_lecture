@@ -1,292 +1,424 @@
+
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Finite Element Method in geodynamics &mdash; Finite Element Modeling in Geodynamics  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="_static/style.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-57G35L3JB6"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-57G35L3JB6');
-  </script>
-  <meta charset="utf-8">
-  <title>Summer 2021</title>
-
-  <meta name="generator" content="Hugo 0.68.3" />
-
-  <!-- mobile responsive meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-  <!-- ** Plugins Needed for the Project ** -->
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://lruepke.github.io/HTF_lecture/plugins/bootstrap/bootstrap.min.css">
-
-  <!-- themefy-icon -->
-  <link rel="stylesheet" href="https://lruepke.github.io/HTF_lecture/plugins/themify-icons/themify-icons.css">
-
-  <!-- fontawesome-icon -->
-  <link rel="stylesheet" href="https://lruepke.github.io/HTF_lecture/plugins/fontawesome/css/all.css">
-  
-  <link rel="stylesheet" href="https://lruepke.github.io/HTF_lecture/css/mystyle.css">
-
-  <!-- highlight -->
-  <link rel="stylesheet" href="https://lruepke.github.io/HTF_lecture/plugins/highlight/hybrid.css">
-
-  <!--Favicon-->
-  <link rel="icon" href="https://lruepke.github.io/HTF_lecture/images/favicon.png" type="image/x-icon">
-
-  <!-- fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-  
-  <style>
-  :root{
-    --primary-color:#02007e;
-    --body-color:#f9f9f9;
-    --text-color:#636363;
-    --text-color-dark:#242738;
-    --white-color:#ffffff;
-    --light-color:#f8f9fa;
-    --font-family:Lato;
-  }
-  </style>
-
-<!-- Main Stylesheet -->
-
-<link href="https://lruepke.github.io/HTF_lecture/css/style.min.css" rel="stylesheet" media="screen"/>
-
-<!-- 引入echarts -->
-<script src="https://lruepke.github.io/HTF_lecture/echarts/echarts.js"></script>
-
-<!-- jquiry -->
-<script src="https://lruepke.github.io/HTF_lecture/plugins/jquery/jquery-1.12.4.js"></script>
-
-<!-- jquary ui -->
-<script src="https://lruepke.github.io/HTF_lecture/plugins/jquery/jquery-ui.js"></script>
-
-<!-- Bootstrap JS -->
-<script src="https://lruepke.github.io/HTF_lecture/plugins/bootstrap/bootstrap.min.js"></script>
-
-<!-- match-height JS -->
-<script src="https://lruepke.github.io/HTF_lecture/plugins/match-height/jquery.matchHeight-min.js"></script>
-
-<!-- highlight -->
-<script src="https://lruepke.github.io/HTF_lecture/plugins/highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
-
-
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Course details" href="general-info/course-details.html" /> 
 </head>
-  
-  <body>
-    
-    <!-- header -->
-    <header class="shadow-bottom sticky-top bg-white">
-      <nav class="navbar navbar-expand-md navbar-light">
-  <div class="container">
-    <a class="navbar-brand px-2" href="/HTF_lecture">
-      
-      
-      
-      
-      <img class="img-fluid" src="https://lruepke.github.io/HTF_lecture/images/logo.png" alt="Fluid dynamics lectures">
-      
-      
-    </a>
-    <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation"
-      aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse text-center" id="navigation">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="/HTF_lecture">Home</a>
-        </li>
-        
-        
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="/HTF_lecture/faq">Faq</a>
-        </li>
-        
-        
-        
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="/HTF_lecture/contact">contact</a>
-        </li>
-        
-        
-        
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Lectures
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> Finite Element Modeling in Geodynamics
+            <img src="_static/htf_picto2.png" class="logo" alt="Logo"/>
           </a>
-          <div class="dropdown-menu">
-            
-            <a class="dropdown-item" href="/HTF_lecture/winter2020">Winter 2020</a>
-            
-            <a class="dropdown-item" href="/HTF_lecture/summer2021">Summer2021</a>
-            
-            <a class="dropdown-item" href="/HTF_lecture/summer2022">Summer 2022</a>
-            
-          </div>
-        </li>
-        
-        
-      </ul>
-      
-    </div>
-  </div>
-</nav>
-    </header>
-    <header class="shadow-bottom sticky-top bg-white">
-      <link rel="stylesheet" href="static/css/mystyle.css">
-    </header>
-    <!-- /header -->
-    
-    
-
-<!-- details page -->
-<section class="single section-sm pb-0">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-3">
-        <div class="bg-white pl-lg-4 py-4 pr-4 mb-5 mb-lg-0 sticky-top top-100 overflow-hidden">
-          <ul class="list-styled">
-            
-            <a class="d-block h4 back-btn" href="/HTF_lecture"></a>
-            
-              
-            
-               
-              
-
-
-
-
-
-
-
-
-<li data-nav-id="https://lruepke.github.io/HTF_lecture/summer2021/" title="Summer 2021" class="sidelist
-  active">
-  <a href="https://lruepke.github.io/HTF_lecture/summer2021/">
-    Summer 2021
-  </a>
-  
-  
-</li>
-
-
-              
-            
-              
-            
-              
-            
-              
-            
-          </ul>
-        </div>
-      </div>
-      <div class="col-lg-9">
-        <div class="p-lg-5 p-4 bg-white">
-          <h2 class="mb-5">Summer 2021</h2>
-          
-          <div class="content"><script type="text/javascript">
-  window.open("https://lruepke.github.io/FEM_lecture/", "_self");
-</script><blockquote>
-</blockquote>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
 </div>
-          
-          <p class="post-meta border-bottom pb-3 mb-0 mt-3">Updated on 28 Dec 2018</p>
-          
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="general-info/course-details.html">Course details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general-info/installation.html">Installation guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/fdm_intro.html">Introduction: The Finite Differences Method (FDM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/example_1.html">Example 1: Cooling dike</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/example_2.html">Example 2: Cooling dike - implicit version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/example_3.html">Example 3: Periodic variations in seafloor temperature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/fdm_advection.html">Transport problems with FDM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/mwr_intro.html">Introduction: Method of Weighted Residuals (MWR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/mwr_examples.html">MWR solutions of the steady advection-diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/excercises.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/fem_intro.html">Introduction Finite Element Method (FEM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/fem_intro.html#fem-implementation">FEM implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/fem_advection.html">FEM and advection problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture4/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture4/fem_in_2d.html">2-D FEM - elliptic problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture4/fem_in_2d.html#implementation">Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture5/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture5/FEM_triangles.html">Triangles: unstructured meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture5/FEM_triangles.html#excercise">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture6/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture6/transient_problems.html">Transient heat diffusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture6/turing_coupled_problem.html">Coupled diffusion problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/FEM_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
         </div>
       </div>
-    </div>
-  </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Finite Element Modeling in Geodynamics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>The Finite Element Method in geodynamics</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/index.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="the-finite-element-method-in-geodynamics">
+<h1>The Finite Element Method in geodynamics<a class="headerlink" href="#the-finite-element-method-in-geodynamics" title="Permalink to this headline"></a></h1>
+<p>Welcome to the course Numerical Fluid Dynamics II (FEM in earth sciences) taught at Kiel University within the Geophysics master.  The focus of this course is on learning how we can solve partial differential equations using the Finite Element Method (FEM). The Finite Element Method is one of the main numerical methods in mechanics and is also used in the popular geodynamics community code <a class="reference external" href="https://aspect.geodynamics.org">ASPECT</a>. We will first learn about the basics before progressing towards solving several example problems ranging from heat diffusion, over reactive systems, to mantle convection. All examples will be implemented in Python.</p>
+<section id="course-content">
+<h2>Course content<a class="headerlink" href="#course-content" title="Permalink to this headline"></a></h2>
+<p>These are the main topics:</p>
+<ol class="arabic simple">
+<li><p>Getting started</p></li>
+<li><p>1D Finite Differences.</p></li>
+<li><p>Introduction to the finite element method (FEM).</p></li>
+<li><p>2D elliptical problems - heat diffusion.</p></li>
+<li><p>2D parabolic problems - transient diffusion.</p></li>
+<li><p>Stokes flow.</p></li>
+</ol>
 </section>
-<!-- /details page -->
+<section id="course-goals">
+<h2>Course goals<a class="headerlink" href="#course-goals" title="Permalink to this headline"></a></h2>
+<ol class="arabic simple">
+<li><p>Ability to solve geodynamics problems using numerical models.</p></li>
+<li><p>Knowledge of numerical techniques and of how to solve partial differential equations using numerical methods using Python</p></li>
+<li><p>Ability to understand how the popular geodynamics community codes like <a class="reference external" href="https://aspect.geodynamics.org">ASPECT</a> “work”.</p></li>
+<li><p>Preparation to a possible MSc project in geophysical fluid dynamics.</p></li>
+</ol>
+</section>
+<section id="course-format">
+<h2>Course format<a class="headerlink" href="#course-format" title="Permalink to this headline"></a></h2>
+<p>The majority of this course will be spent in front of a computer working on exercises related to FEM and problems in marine geodynamics.</p>
+<div class="admonition-open-access admonition">
+<p class="admonition-title">Open access!</p>
+<p>Note that the materials for this course are <strong>open to everyone</strong>; the course is, however, taught as an on-site class for registered students at Kiel University.</p>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="general-info/course-details.html">Course details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="general-info/course-details.html#course-schedule">Course schedule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-info/course-details.html#instructors">Instructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-info/course-details.html#course-website">Course website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-info/course-details.html#further-readings">Further readings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-info/course-details.html#credits">Credits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="general-info/installation.html">Installation guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="general-info/installation.html#visual-studio-code">Visual Studio Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="general-info/installation.html#python">Python</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/fdm_intro.html">Introduction: The Finite Differences Method (FDM)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/fdm_intro.html#background-on-conductive-heat-transport">Background on conductive heat transport</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/fdm_intro.html#finite-differences-discretization">Finite Differences discretization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/fdm_intro.html#appendix">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/example_1.html">Example 1: Cooling dike</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_1.html#problem-description">Problem description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_1.html#excercises-1-d-cooling-dike-explicit">Excercises - 1-D cooling dike (explicit)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/example_2.html">Example 2: Cooling dike - implicit version</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_2.html#stability-analysis">Stability analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_2.html#radioactive-decay-analog">Radioactive decay analog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_2.html#fdm-notebook">FDM notebook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_2.html#excercise-radioactive-decay">Excercise - radioactive decay</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_2.html#implicit-heat-diffusion">Implicit Heat Diffusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_2.html#id1">FDM notebook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_2.html#excercise-implicit-dike-cooling">Excercise - implicit dike cooling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/example_3.html">Example 3: Periodic variations in seafloor temperature</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_3.html#flux-boundary-conditions">Flux boundary conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_3.html#example-seafloor-temperature-variations">Example: seafloor temperature variations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_3.html#fdm-notebook">FDM notebook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/example_3.html#excercise-periodic-changes-in-seafloor-temperature">Excercise - periodic changes in seafloor temperature</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/fdm_advection.html">Transport problems with FDM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture1/fdm_advection.html#fdm-advection-schemes">FDM advection schemes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/mwr_intro.html">Introduction: Method of Weighted Residuals (MWR)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/mwr_intro.html#collocation-method">Collocation Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/mwr_intro.html#sub-domain-method">Sub-domain Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/mwr_intro.html#least-squares-method">Least Squares Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/mwr_intro.html#galerkin-method">Galerkin Method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/mwr_examples.html">MWR solutions of the steady advection-diffusion equation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/mwr_examples.html#collocation-method">Collocation method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/mwr_examples.html#least-squares-method">Least-squares method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/mwr_examples.html#galerkin-method">Galerkin method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/mwr_examples.html#notebook-derivation-of-constants">Notebook - derivation of constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/mwr_examples.html#discussion">Discussion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/excercises.html">Excercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/excercises.html#notebook-excercises">Notebook - excercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/excercises.html#higher-order-approximations">Higher-order approximations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/excercises.html#notebook-derivation-of-higher-order-constants">Notebook - derivation of higher-order constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture2/excercises.html#outlook">Outlook</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/fem_intro.html">Introduction Finite Element Method (FEM)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture3/fem_intro.html#governing-equation-strong-form">Governing equation - strong form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture3/fem_intro.html#approximate-solution">Approximate solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture3/fem_intro.html#galerkin-method">Galerkin method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture3/fem_intro.html#weak-form">Weak form</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/fem_intro.html#fem-implementation">FEM implementation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture3/fem_intro.html#element-stiffness-matrix-a-el">Element stiffness matrix <span class="math notranslate nohighlight">\(A_{el}\)</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture3/fem_intro.html#excercise-derive-a-el">Excercise: derive <span class="math notranslate nohighlight">\(A_{el}\)</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture3/fem_intro.html#matrix-assembly">Matrix assembly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture3/fem_intro.html#implementation">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/fem_advection.html">FEM and advection problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture3/fem_advection.html#d-finite-differences-solutions">1D Finite Differences Solutions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture3/fem_advection.html#d-finite-element-solutions">1D Finite Element Solutions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture4/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture4/fem_in_2d.html">2-D FEM - elliptic problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture4/fem_in_2d.html#governing-equation-strong-form">Governing equation - strong form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture4/fem_in_2d.html#d-shape-functions">2-D shape functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture4/fem_in_2d.html#weak-form">Weak form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture4/fem_in_2d.html#element-connectivity">Element connectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture4/fem_in_2d.html#numerical-integration">Numerical integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture4/fem_in_2d.html#excercises">Excercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture4/fem_in_2d.html#implementation">Implementation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture4/fem_in_2d.html#python-code">Python code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture4/fem_in_2d.html#jacobian">Jacobian:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture4/fem_in_2d.html#global-derivatives-of-shape-functions">Global derivatives of shape functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture4/fem_in_2d.html#element-stiffness-matrix">Element stiffness matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture4/fem_in_2d.html#boundary-conditions">Boundary conditions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture5/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture5/FEM_triangles.html">Triangles: unstructured meshes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture5/FEM_triangles.html#theoretical-background">Theoretical background</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture5/FEM_triangles.html#excercise">Excercise</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture5/FEM_triangles.html#step-0-getting-ready">Step 0: getting ready</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture5/FEM_triangles.html#step-1-mesh-generation">Step 1: mesh generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture5/FEM_triangles.html#step-2-triangle-shape-functions-and-integration-points">Step 2: triangle shape functions and integration points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture5/FEM_triangles.html#step-3-boundary-conditions">Step 3: Boundary conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture5/FEM_triangles.html#step-4-post-processing-and-plotting">Step 4: Post-processing and plotting</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture6/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture6/transient_problems.html">Transient heat diffusion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture6/transient_problems.html#fem-form">FEM form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture6/transient_problems.html#implementation">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture6/turing_coupled_problem.html">Coupled diffusion problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture6/turing_coupled_problem.html#governing-equations">Governing equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture6/turing_coupled_problem.html#fem-discretization">FEM discretization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture6/turing_coupled_problem.html#non-linear-terms">Non-linear terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture6/turing_coupled_problem.html#python-implementation">Python implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture6/turing_coupled_problem.html#excercise">Excercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture6/turing_coupled_problem.html#is-fem-a-good-idea-for-solving-this-problem">Is FEM a good idea for solving this problem?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="refs.html">References</a></li>
+</ul>
+</div>
+</section>
+</section>
 
 
-
-
-
-    <!-- footer -->
-<footer class="section pb-4">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-8 text-md-right text-center">
-       <p class="mb-md-0 mb-4">Copyright 2021 © <a href="https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings/translate-to-english-staff">Lars Ruepke</a> and <a href="https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings/translate-to-english-staff">Zhikui Guo</a> 2020-2022.</p>
-      </div>
-      
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="general-info/course-details.html" class="btn btn-neutral float-right" title="Course details" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Lars Ruepke and Zhikui Guo.</p>
   </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
 </footer>
-<!-- /footer -->
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+      
+        <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+          <span class="rst-current-version" data-toggle="rst-current-version">
+            <span class="fa fa-book"> Finite Element Modeling in Geodynamics</span>
+            v: latest
+            <span class="fa fa-caret-down"></span>
+          </span>
+          <div class="rst-other-versions">
+            <dl>
+              
+                
+                <dd><a href="https://lruepke.github.io/FEM_lecture/downloads/LectureNote.pdf">latest</a></dd>
+                
+                <dd><a href="#/LectureNote.pdf">2.0</a></dd>
+                
+              
+          </div>
+        </div>
+      
+    
 
-<!-- Main Script -->
-
-<script src="https://lruepke.github.io/HTF_lecture/js/script.min.js"></script>
-
-<script type="text/javascript">
-  var myChart_wmap = echarts.init(document.getElementById('wmap'), null,  {renderer: 'svg'});
-  var option_wmap;
-  myChart_wmap.showLoading();
-  $.get("https:\/\/lruepke.github.io\/HTF_lecture\/data_charts\/world.json", function (USAjson) {
-      myChart_wmap.hideLoading();
-      echarts.registerMap('world', {geoJSON: USAjson});
-      option_wmap = {
-        backgroundColor: '#000',
-        title: {
-          text: 'test plot map',
-          left: 'center',
-          textStyle: {
-            color: '#fff'
-          }
-        },
-          tooltip: {},
-          geo: {
-            map: 'world',
-            roam: true,
-            label: {
-              emphasis: {
-                show: false
-              }
-            },
-            itemStyle: {
-              normal: {
-                areaColor: '#323c48',
-                borderColor: '#111'
-              },
-              emphasis: {
-                areaColor: 'yellow'
-              }
-            }
-          },
-          series: {
-              type: 'effectScatter',
-              coordinateSystem: 'geo',
-              geoIndex: 0,
-              polyline: true,
-              symbolSize: function (params) {
-                  return (params[2] / 100) * 5 ;
-              },
-              itemStyle: {
-                  color: 'red'
-              },
-              encode: {
-                  tooltip: 2
-              },
-              data: [
-                [-20, -60, 100]
-              ]
-          }
-      };
-      myChart_wmap.setOption(option_wmap);
-  });
-</script>
-  </body>
-
+</body>
 </html>
