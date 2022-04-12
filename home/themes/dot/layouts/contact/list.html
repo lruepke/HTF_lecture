@@ -16,7 +16,7 @@
           </div>
         {{ else }}
           {{ .Content }}
-          <form action="{{ .Site.Params.contact_form_action | safeURL }}" method="POST">
+          {{/*  <form action="{{ .Site.Params.contact_form_action | safeURL }}" method="POST">
             <input type="text" id="name" name="name" placeholder="Name" class="form-control mb-4 shadow rounded-0">
             <input type="email" id="mail" name="mail" placeholder="Email" class="form-control mb-4 shadow rounded-0">
             <input type="text" id="subject" name="subject" placeholder="subject"
@@ -24,12 +24,11 @@
             <textarea name="message" id="message" placeholder="Message"
               class="form-control mb-4 shadow rounded-0"></textarea>
             <button type="submit" value="send" class="btn btn-primary">{{ i18n "send" }}</button>
-          </form>
-          <!-- <form action="https://formspree.io/xnqgqakz" method="POST">
-            <input type="text" name="name">
-            <input type="email" name="_replyto">
-            <input type="submit" value="Send">
-          </form> -->
+          </form>  */}}
+          <button class="btn btn-primary shadow text-center match-height" onclick="window.location.href='mailto:lruepke@geomar.de';">Prof. Dr. Lars Ruepke</button>  
+          {{/*  <button class="btn btn-success shadow text-center match-height" onclick="window.location.href='mailto:zguoch@gmail.com';">Zhikui Guo</button>   */}}
+          
+       </form>
         {{ end }}
         
       </div>
