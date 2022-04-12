@@ -216,33 +216,6 @@
 </ul>
 </div></blockquote>
 <p>In the next chapter, we will have detailed look at a first example case and solve our first problem.</p>
-<div class="admonition-tips-for-post-processing admonition">
-<p class="admonition-title">Tips for Post-processing</p>
-<p>Make animation using <code class="code docutils literal notranslate"><span class="pre">ffmpeg</span></code> and Paraview.</p>
-<ol class="arabic simple">
-<li><p>Install <code class="code docutils literal notranslate"><span class="pre">ffmpeg</span></code> in the docker container by running the following command.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ffmpeg</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>Save images in <strong>the shared folder</strong> using Paraview.</p></li>
-</ol>
-<figure class="align-center" id="fig-saveanimation-paraview">
-<a class="reference internal image-reference" href="../../_images/Paraview_saveanimation.png"><img alt="../../_images/Paraview_saveanimation.png" src="../../_images/Paraview_saveanimation.png" style="width: 50%;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Screenshot of Paraview for saving images.</span><a class="headerlink" href="#fig-saveanimation-paraview" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-<ol class="arabic simple" start="3">
-<li><p>Convert images (e.g. <em>.png) to animation (</em>.mp4). Run the following command <strong>in the docker container</strong>, assuming the images are saved in the <code class="code docutils literal notranslate"><span class="pre">~/HydrothermalFoam_runs/animation</span></code> folder and the filename is <code class="code docutils literal notranslate"><span class="pre">T</span></code> (see <a class="reference internal" href="#fig-saveanimation-paraview"><span class="std std-numref">Fig. 1</span></a>).</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">HydrothermalFoam_runs</span><span class="o">/</span><span class="n">animation</span>
-<span class="n">ffmpeg</span> <span class="o">-</span><span class="n">r</span> <span class="mi">10</span> <span class="o">-</span><span class="n">f</span> <span class="n">image2</span> <span class="o">-</span><span class="n">s</span> <span class="mi">3002</span><span class="n">x1526</span>  <span class="o">-</span><span class="n">i</span> <span class="n">T</span><span class="o">.%</span><span class="mi">4</span><span class="n">d</span><span class="o">.</span><span class="n">png</span> <span class="o">-</span><span class="n">vcodec</span> <span class="n">libx264</span> <span class="o">-</span><span class="n">crf</span> <span class="mi">25</span>  <span class="o">-</span><span class="n">pix_fmt</span> <span class="n">yuv420p</span> <span class="n">T</span><span class="o">.</span><span class="n">mp4</span>
-</pre></div>
-</div>
-<p>Please note the filename pattern <code class="code docutils literal notranslate"><span class="pre">T.%4d.png</span></code>, e.g. T.0001.png, T.0098.png, … Make sure you set a correct pattern according to your own case.</p>
-</div>
 </section>
 </section>
 

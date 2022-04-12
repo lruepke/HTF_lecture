@@ -74,6 +74,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#create-a-virtual-environment">Create a virtual environment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#switching-between-environments">Switching between environments</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#integration-with-visual-studio-code">Integration with Visual Studio Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test-your-installation">Test your installation</a></li>
 </ul>
 </li>
 </ul>
@@ -265,17 +266,17 @@ docker attach hydrothermalfoam
 <p>We will use python to analyze some of the numerical results and to dive deeper in to the details of the numerical methods use. In case you are already having a working python environment, read no further. If not, we recommend <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose “no”. It’s usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.</p>
 <section id="download-and-install-miniconda">
 <h3>Download and install miniconda<a class="headerlink" href="#download-and-install-miniconda" title="Permalink to this headline"></a></h3>
-<p>Just follow the installation instructions and keep the default options. We recommend to install python 3. During the installation, choose to <strong>not</strong> add it to your path (that’s the default). Adding miniconda/anaconda to your <code class="code docutils literal notranslate"><span class="pre">$PATH</span></code> may seem convinent but there are several reason to not do it.</p>
+<p>Just follow the installation instructions and keep the default options. We recommend to install python 3. During the installation, choose to <strong>not</strong> add it to your path (that’s the default). Adding miniconda/anaconda to your <code class="code docutils literal notranslate"><span class="pre">$PATH</span></code> may seem convenient but there are several reason to not do it.</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>Python is used by many different tools on your computer, which probably expect that just calling python will use the Python (and additional packages) installed by the operating system. None of these will be available to Miniconda’s Python.</p></li>
-<li><p>The conda environment we will create contains several binary dependencies and we do not want to interfer with defaults on your system when, e.g. compiling software unrelated to our lecture.</p></li>
+<li><p>The conda environment we will create contains several binary dependencies and we do not want to interfere with defaults on your system when, e.g. compiling software unrelated to our lecture.</p></li>
 </ul>
 </div></blockquote>
 </section>
 <section id="create-a-virtual-environment">
 <h3>Create a virtual environment<a class="headerlink" href="#create-a-virtual-environment" title="Permalink to this headline"></a></h3>
-<p>We will create a so-called virtual environment with all the python packages we will use during this class. To not infer with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation.</p>
+<p>We will create a so-called virtual environment with all the python packages we will use during this class. To not interfere with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation.</p>
 <div class="admonition-starting-python admonition">
 <p class="admonition-title">Starting python</p>
 <p>If you are on Windows, start an Anaconda Powershell Prompt from the start menu.</p>
@@ -285,12 +286,22 @@ docker attach hydrothermalfoam
 </div>
 <p>You can also do that in the terminal within Visual Studio Code (on MacOS).</p>
 </div>
-<p>Now we are ready to create a virtual environment. We can create it with this command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n py37_htf_class <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 numpy pandas matplotlib vtk h5py ipython scipy ipykernel
+<p>It can sometimes be a bit irritating to understand which environments are used in for example jupyter notebooks. In addition, conda has various so-called <em>channels</em> from which we can install packages. We will use the conda-forge channel. This is the setup we will be using:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>the base environment will not be used to do any work. It will just be our starting point from where we start jupyter (if you don’t know what jupyter is, no worries, you will know soon)</p></li>
+<li><p>we will create another environment for the actual work. In this environment we will install the package <em>ipykernel</em> to make sure that jupyterlab recognizes the new environment as a kernel.</p></li>
+</ul>
+</div></blockquote>
+<p>Alright, let’s install some basic packages into the base environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install -n base -c conda-forge jupyterlab nb_conda_kernels
 </pre></div>
 </div>
-<p>We are using python 3.7 here (instead of the newest 3.8) because of an incompatibility with vtk. Activate the new environment</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_htf_class
+<p>Now we can proceed and create our working environment.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n py3_htf_class <span class="nv">python</span><span class="o">=</span><span class="m">3</span> numpy pandas matplotlib vtk h5py scipy ipykernel
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py3_htf_class
 </pre></div>
 </div>
 <p>And add a few more packages that are not directly available form anaconda using pip:</p>
@@ -302,7 +313,7 @@ pip install iapws
 <section id="switching-between-environments">
 <h3>Switching between environments<a class="headerlink" href="#switching-between-environments" title="Permalink to this headline"></a></h3>
 <p>You can activate and deactivate environments like this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_htf_class
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py3_htf_class
 conda deactivate
 </pre></div>
 </div>
@@ -310,18 +321,36 @@ conda deactivate
 <section id="integration-with-visual-studio-code">
 <h3>Integration with Visual Studio Code<a class="headerlink" href="#integration-with-visual-studio-code" title="Permalink to this headline"></a></h3>
 <p>You will need to install Microsoft’s Python extension. Just search for Python under Extensions and chose the one from Microsoft (usually the first option). Finally, you will have to set the Python interpreter. Do this by pushing CMD/CTRL+SHIFT+P. Type Python: Select Interpretor and select our newly created anaconda environment. If it doesn’t show up, close and re-open Visual Studio Code.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Test your installation by doing this:</p>
+</section>
+<section id="test-your-installation">
+<h3>Test your installation<a class="headerlink" href="#test-your-installation" title="Permalink to this headline"></a></h3>
+<p>Check that you everything is working by, for example, importing the meshio package and by executing some simple code. Do this in Visual Studio Code and in JupyterLab.</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Visual Studio Code</label><div class="tab-content docutils container">
+<p>First, let’s check that VS Code finds our new kernel:</p>
 <ul class="simple">
-<li><p>choose the right python interpretor STRG/CMD+SHIFT+P</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">code</span> <span class="pre">hello.ipynb</span></code></p></li>
-<li><p>type in the example code from the figure below</p></li>
+<li><p>start VS Code and get a shell (Terminal-&gt;New Terminal)</p></li>
+<li><p>choose the right python interpreter STRG/CMD+SHIFT+P and chose py3_htf_class</p></li>
+<li><p>type <code class="code docutils literal notranslate"><span class="pre">code</span> <span class="pre">hello.ipynb</span></code> into the shell</p></li>
+<li><p>enter the example code from the figure below into the notebook</p></li>
 <li><p>execute the cell with SHIFT+RETURN</p></li>
 </ul>
 <figure class="align-center" style="width: 70%">
 <img alt="../../_images/python_install.png" src="../../_images/python_install.png" />
 </figure>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">JupyterLab</label><div class="tab-content docutils container">
+<p>Now we check the jupyter installation:</p>
+<ul class="simple">
+<li><p>open a terminal (linux/mac) or a miniconda powershell (Windows)</p></li>
+<li><p>make sure you are in the base environment by typing <code class="code docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">base</span></code></p></li>
+<li><p>start jupyterlab with <code class="code docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code></p></li>
+<li><p>check that you can chose your py3_htf_class kernel</p></li>
+</ul>
+<figure class="align-center" style="width: 70%">
+<img alt="../../_images/jupyter_lab.png" src="../../_images/jupyter_lab.png" />
+</figure>
+</div>
 </div>
 </section>
 </section>
