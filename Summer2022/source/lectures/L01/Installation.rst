@@ -85,15 +85,17 @@ We will use python to analyze some of the numerical results and to dive deeper i
 
 Download and install miniconda
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Just follow the installation instructions and keep the default options. We recommend to install python 3. During the installation, choose to **not** add it to your path (that's the default). Adding miniconda/anaconda to your :code:`$PATH` may seem convinent but there are several reason to not do it.
+Just follow the installation instructions and keep the default options. We recommend to install python 3. During the installation, choose to **not** add it to your path (that's the default). Adding miniconda/anaconda to your :code:`$PATH` may seem convenient but there are several reason to not do it.
 
     * Python is used by many different tools on your computer, which probably expect that just calling python will use the Python (and additional packages) installed by the operating system. None of these will be available to Miniconda's Python.
 
-    * The conda environment we will create contains several binary dependencies and we do not want to interfer with defaults on your system when, e.g. compiling software unrelated to our lecture.
+    * The conda environment we will create contains several binary dependencies and we do not want to interfere with defaults on your system when, e.g. compiling software unrelated to our lecture.
+
+
 
 Create a virtual environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-We will create a so-called virtual environment with all the python packages we will use during this class. To not infer with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation. 
+We will create a so-called virtual environment with all the python packages we will use during this class. To not interfere with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation. 
 
 .. admonition:: Starting python
 
@@ -107,17 +109,29 @@ We will create a so-called virtual environment with all the python packages we w
 
     You can also do that in the terminal within Visual Studio Code (on MacOS).
 
-Now we are ready to create a virtual environment. We can create it with this command:
+It can sometimes be a bit irritating to understand which environments are used in for example jupyter notebooks. In addition, conda has various so-called *channels* from which we can install packages. We will use the conda-forge channel. This is the setup we will be using:
+
+    * the base environment will not be used to do any work. It will just be our starting point from where we start jupyter (if you don't know what jupyter is, no worries, you will know soon)
+    * we will create another environment for the actual work. In this environment we will install the package *ipykernel* to make sure that jupyterlab recognizes the new environment as a kernel.
+
+
+Alright, let's install some basic packages into the base environment:
 
 .. code-block:: bash
 
-    conda create -n py37_htf_class python=3.7 numpy pandas matplotlib vtk h5py ipython scipy ipykernel
+    conda install -n base -c conda-forge jupyterlab nb_conda_kernels
 
-We are using python 3.7 here (instead of the newest 3.8) because of an incompatibility with vtk. Activate the new environment
+
+Now we can proceed and create our working environment.
 
 .. code-block:: bash
 
-    conda activate py37_htf_class
+    conda create -n py3_htf_class python=3 numpy pandas matplotlib vtk h5py scipy ipykernel
+
+
+.. code-block:: bash
+
+    conda activate py3_htf_class
 
 And add a few more packages that are not directly available form anaconda using pip:
 
@@ -133,7 +147,7 @@ You can activate and deactivate environments like this:
 
 .. code-block:: bash
 
-    conda activate py37_htf_class
+    conda activate py3_htf_class
     conda deactivate 
 
 
@@ -141,19 +155,39 @@ Integration with Visual Studio Code
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 You will need to install Microsoft's Python extension. Just search for Python under Extensions and chose the one from Microsoft (usually the first option). Finally, you will have to set the Python interpreter. Do this by pushing CMD/CTRL+SHIFT+P. Type Python: Select Interpretor and select our newly created anaconda environment. If it doesn't show up, close and re-open Visual Studio Code.
 
-.. tip::
 
-    Test your installation by doing this:
 
-    - choose the right python interpretor STRG/CMD+SHIFT+P 
-    - :code:`code hello.ipynb`
-    - type in the example code from the figure below 
+Test your installation
+^^^^^^^^^^^^^^^^^^^^^^
+Check that you everything is working by, for example, importing the meshio package and by executing some simple code. Do this in Visual Studio Code and in JupyterLab.
+
+
+.. tab:: Visual Studio Code
+
+    First, let's check that VS Code finds our new kernel:
+
+    - start VS Code and get a shell (Terminal->New Terminal)
+    - choose the right python interpreter STRG/CMD+SHIFT+P and chose py3_htf_class
+    - type :code:`code hello.ipynb` into the shell
+    - enter the example code from the figure below into the notebook
     - execute the cell with SHIFT+RETURN
 
     .. figure:: /_figures/python_install.*
         :align: center
         :figwidth: 70%
 
+.. tab:: JupyterLab
+    
+    Now we check the jupyter installation:
+
+    - open a terminal (linux/mac) or a miniconda powershell (Windows)
+    - make sure you are in the base environment by typing :code:`conda activate base`
+    - start jupyterlab with :code:`jupyter lab`
+    - check that you can chose your py3_htf_class kernel
+
+    .. figure:: /_figures/jupyter_lab.*
+        :align: center
+        :figwidth: 70%
     
 
 
