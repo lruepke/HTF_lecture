@@ -21,13 +21,13 @@ jobs:
           sudo apt-get install pandoc
           sudo apt-get install hugo
           
-      # debug workflows: you could use ssh to login the github runner and test something
-      # - name: install oh my zsh
-      #   run: |
-      #     sudo apt-get install zsh
-      #     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      # # debug workflows: you could use ssh to login the github runner and test something
+      # # - name: install oh my zsh
+      # #   run: |
+      # #     sudo apt-get install zsh
+      # #     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
 
       
       # simple version
@@ -59,6 +59,7 @@ jobs:
         run: |
           # 0. set lectures 
           lectures="Winter2020 Summer2021 Summer2022"
+          commitIDFile_stored=commit.ID
           # 1. fetch history lecture pages and copy them to history folder as backup
           git fetch origin gh-pages
           git checkout gh-pages
@@ -78,17 +79,28 @@ jobs:
           # check is lecture source folder is updated or not, if updated then sphinx it, otherwise just copy the backup page files
           # 3.1 get last commit id: note that the Github actions default use *** mode, `git log` can only get the latest commit, so need `git pull origin --unshallow` to get full log
           git pull origin --unshallow
-          lastcommit=(`git log --format="%H" -n 2`)
-          lastcommit=${lastcommit[1]}
-          echo "last commit ID: " $lastcommit
           # 3.2 for loop lectures and process it
           for lecture in $lectures
           do
+          # 3.2.1 get last commit of the page source stored in the page folder
+          lastcommit=""
+          commitIDFile=../public/${lecture}/${commitIDFile_stored}
+          if [ -f ${commitIDFile} ]; then 
+            lastcommit=`awk 'NR==1{$1}' ${commitIDFile}`
+            echo "last commit ID of ${lecture}: " $lastcommit
+          else
+            echo "last commit ID of ${lecture} is not stored in pages folder, use the penultimate one"
+            lastcommits=(`git log --format="%H" -n 2`)
+            lastcommit=${lastcommits[1]}
+          fi
+          # 3.2.2 compare source of current commit and that of last build
           if [[ -n $(git diff ${lastcommit} ${lecture}/) ]]
           then
-            echo $lecture " is updated in this commit, sphinx it!"
+            echo $lecture " is updated compare to the last sphinx, sphinx it!"
             cd ${lecture}
             make html
+            # write current commit ID to lecture folder
+            echo `git log --format="%H" -n 1` >build/html/${commitIDFile_stored}
             cp -rf build/html/* ../public/$lecture
             cd ..
           else
@@ -98,7 +110,6 @@ jobs:
           fi
           done
 
-      
       # # uncomment this segment to generate pdf file
       # - name: Generate latex and pdf
       #   run: |

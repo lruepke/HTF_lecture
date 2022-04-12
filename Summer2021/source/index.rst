@@ -5,7 +5,7 @@ Welcome to the course Numerical Fluid Dynamics II (FEM in earth sciences) taught
 Course content
 ------------------     
 These are the main topics:
-
+ 
 1. Getting started
 2. 1D Finite Differences.
 3. Introduction to the finite element method (FEM).
