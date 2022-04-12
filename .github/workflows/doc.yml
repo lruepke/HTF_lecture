@@ -1,0 +1,50 @@
+name: website
+
+on: 
+  push:
+    branches: main
+
+jobs:
+  LectureNotePages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      # new version (4.0.2) of sphinx has bugs of Jinjia2 when parsing Jupyter notebook, so change to 4.0.1
+      - name: Install tools
+        run: |
+          pip3 install sphinx==4.0.1
+          pip3 install sphinx_rtd_theme sphinxcontrib-bibtex matplotlib pandas numpy nbconvert ipykernel sphinx_inline_tabs 
+          sudo apt-get install pandoc
+
+      # # debug workflows: you could use ssh to login the github runner and test something
+      # - name: install oh my zsh
+      #   run: |
+      #     sudo apt-get install zsh
+      #     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
+
+      
+      - name: Generate sphinx pages and pdf 
+        run: |
+          cd sphinx
+          make html
+          mkdir build/html/downloads
+      
+      # # uncomment this segment to generate pdf file
+      # - name: Generate latex and pdf
+      #   run: |
+      #     sudo apt-get install texlive-full
+      #     cd sphinx && make latex
+      #     cd build/latex && make && cp LectureNote.pdf ../html/downloads && cd ../..
+          
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./sphinx/build/html
