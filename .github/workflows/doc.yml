@@ -32,13 +32,17 @@ jobs:
       
       - name: Generate main pages and sphinx pages
         run: |
+          # 0. set lectures 
+          lectures="Winter2020 Summer2021 Summer2022"
           # 1. fetch history lecture pages and copy them to history folder as backup
           git fetch origin gh-pages
           git checkout gh-pages
           mkdir ../history
-          cp -rf winter2020 ../history
-          cp -rf summer2021 ../history
-          cp -rf summer2022 ../history
+          for lecture in $lectures
+          do
+            # note that the folder name in Hugo pages is all in lower case
+            cp -rf `echo "$lecture" | awk '{print tolower($0)}'` ../history
+          done
           git checkout main
           # 2. make home page
           cd home
@@ -52,7 +56,7 @@ jobs:
           lastcommit=${lastcommit[1]}
           echo "last commit ID: " $lastcommit
           # 3.2 for loop lectures and process it
-          for lecture in winter2020 summer2021 summer2022
+          for lecture in $lectures
           do
           if [[ -n $(git diff ${lastcommit} ${lecture}/) ]]
           then
@@ -63,7 +67,8 @@ jobs:
             cd ..
           else
             echo $lecture " is not updated in this commit, keep the previous pages!"
-            cp -rf ../history/${lecture}/* public/${lecture}
+            lectureName_hugo=`echo "$lecture" | awk '{print tolower($0)}'`
+            cp -rf ../history/${lectureName_hugo}/* public/${lectureName_hugo}
           fi
           done
 
