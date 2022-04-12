@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project 3: Hydrofracturing and localized venting above sill intrusion? &mdash; HydrothermalFoam Lecture  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="References" href="../../refs.html" />
+    <link rel="prev" title="Project 2: How long can a magmatic intrusion sustain high temperature venting?" href="Project2.html" /> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
+            <img src="../../_static/htf_picto2.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/slide.html">Accompanying slide deck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/slide.html">Accompanying slide deck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/intro.html">Navier-Stokes flow with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/slide.html">Accompanying slide deck</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise2.html">Exercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise3.html">Exercise 3</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Exercise1.html">Exercise 1</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Project1.html">Project 1: Flow along a detachment fault</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Project 3: Hydrofracturing and localized venting above sill intrusion?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#technical-background">Technical background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#technicalities">Technicalities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#solver-changes">Solver changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup-fields">Setup fields</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#deliverables">Deliverables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-point">Starting point</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#case-file">Case file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#meshing-software">Meshing software</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#post-processing">Post-processing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#background-reading">Background reading</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydrothermalFoam Lecture</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Project 3: Hydrofracturing and localized venting above sill intrusion?</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L_PROJECTS/Project3.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="project-3-hydrofracturing-and-localized-venting-above-sill-intrusion">
+<span id="l-projects-project3"></span><h1>Project 3: Hydrofracturing and localized venting above sill intrusion?<a class="headerlink" href="#project-3-hydrofracturing-and-localized-venting-above-sill-intrusion" title="Permalink to this headline"></a></h1>
+<div class="admonition-project-objectives admonition">
+<p class="admonition-title">Project objectives</p>
+<ul class="simple">
+<li><p>Explore under which conditions hydrofracturing leads to localized venting</p></li>
+<li><p>Implement a pressure-dependent permeability</p></li>
+<li><p>Interpret the results in the context recent papers.</p></li>
+</ul>
+</div>
+<p>The third exercise is very similar to the second exercise in that we will explore hydrothermal circulation systems driven by a magmatic heat source. Seismic data has revealed pipe-like structures leading up from the tips of sheet-like magmatic intrusion towards the paleo-seafloor. It remains, however, poorly understood how these pipe-like strutures form. Recent modeling papers have used a pressure-dependent permeability to mimic hydrofracturing <span id="id1">[<a class="reference internal" href="../../refs.html#id16" title="I. Aarnes, H. Svensen, J.A.D Connolly, and Y.Y. Podladchikov. How contact metamorphism can trigger global climate changes: modeling gas generation around igneous sills in sedimentary basins. Geochimica Et Cosmochimica Acta, 2010. doi:10.1016/j.gca.2010.09.011.">Aarnes et al., 2010</a>]</span> <span id="id2">[<a class="reference internal" href="../../refs.html#id19" title="Karthik Iyer, Daniel W. Schmid, Sverre Planke, and John Millett. Modelling hydrothermal venting in volcanic sedimentary basins: impact on hydrocarbon maturation and paleoclimate. Earth and Planetary Science Letters, 467:30-42, 2017. URL: http://www.sciencedirect.com/science/article/pii/S0012821X17301590, doi:https://doi.org/10.1016/j.epsl.2017.03.023.">Iyer et al., 2017</a>]</span> <span id="id3">[<a class="reference internal" href="../../refs.html#id21" title="P. Weis, T. Driesner, and C. A. Heinrich. Porphyry-copper ore shells form at stable pressure-temperature fronts within dynamic fluid plumes. Science, 338(6114):1613-1616, 2012.">Weis et al., 2012</a>]</span>. The underlying idea is that heating of pore fluids results in fluid expansion, which increases the fluid pressure, which is eventually released by hydrofracturing. Here we will explore these processes!</p>
+<figure class="align-center" id="fig-iyer-fig">
+<img alt="../../_images/Iyer_fig.png" src="../../_images/Iyer_fig.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 52 </span><span class="caption-text">Figure taken from <span id="id4">[<a class="reference internal" href="../../refs.html#id19" title="Karthik Iyer, Daniel W. Schmid, Sverre Planke, and John Millett. Modelling hydrothermal venting in volcanic sedimentary basins: impact on hydrocarbon maturation and paleoclimate. Earth and Planetary Science Letters, 467:30-42, 2017. URL: http://www.sciencedirect.com/science/article/pii/S0012821X17301590, doi:https://doi.org/10.1016/j.epsl.2017.03.023.">Iyer et al., 2017</a>]</span> on sill intrusions and hydrothermal venting in sedimentary basins.</span><a class="headerlink" href="#fig-iyer-fig" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<section id="technical-background">
+<h2>Technical background<a class="headerlink" href="#technical-background" title="Permalink to this headline"></a></h2>
+<p>The feedbacks between fluid pressure and mechanical deformation is a vast field and way beyond the scope of this lecture. We will here only explore a highly simplied, yet useful and instructive case. More concrete, we will look how fluid pressure can induce hydrofracturing and thereby permeability creation. We will exemplify this for the example of sill intrusions into low permeability sediments.</p>
+<p>In a nutshell, coupling between fluid flow and mechanics naturally results in the Terzaghi’s concept of effective stress:</p>
+<div class="math notranslate nohighlight" id="equation-eq-eff-stress">
+<span class="eqno">(61)<a class="headerlink" href="#equation-eq-eff-stress" title="Permalink to this equation"></a></span>\[\sigma^{\prime}_{ij} = \sigma_{ij} - p \delta_{ij}\]</div>
+<p>Fluid pressure is deducted from the total stress resulting in effective stress. In terms of pressure, this implies that the effective pressure a rock “feels” can be lowered by fluid overpressure thereby facilitating failure. Think of dehydration reactions and intermediate depth earthquakes in subduction zones.</p>
+<p>Speaking of failure, rocks can fail in two major modes: brittle shear failure or extensional tensile failure (mode I cracks). Those failure modes occur when the differential stress exceeds one of the yield stresses:</p>
+<div class="math notranslate nohighlight" id="equation-eq-shear-fail">
+<span class="eqno">(62)<a class="headerlink" href="#equation-eq-shear-fail" title="Permalink to this equation"></a></span>\[\tau - \sigma^{\prime}_{m} sin(\Phi) = C cos(\Phi)\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-tensile-fail">
+<span class="eqno">(63)<a class="headerlink" href="#equation-eq-tensile-fail" title="Permalink to this equation"></a></span>\[\tau - \sigma^{\prime}_{m} = \sigma_{T}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tau\)</span> is the differential stress, <span class="math notranslate nohighlight">\(\sigma^{\prime}_{m}\)</span> is the effective mean stress (pressure), <span class="math notranslate nohighlight">\(C\)</span> cohesion, <span class="math notranslate nohighlight">\(\sigma_{T}\)</span> tensile strength. Draw a Mohr circle to check that you understand this! There is also a nice paper by <span id="id5">[<a class="reference internal" href="../../refs.html#id29" title="S. F. Cox. The application of failure mode diagrams for exploring the roles of fluid pressure and stress states in controlling styles of fracture-controlled permeability enhancement in faults and shear zones. Geofluids, 2010. doi:10.1111/j.1468-8123.2010.00281.x.">Cox, 2010</a>]</span> with more details on this.</p>
+<p>Things are a bit more complicated than this with feedbacks between fluid pressure and stress state but this gives the basic picture. Have a look at <span id="id6">[<a class="reference internal" href="../../refs.html#id28" title="A. Y. Rozhko, Y. Y. Podladchikov, and F. Renard. Failure patterns caused by localized rise in pore-fluid overpressure and effective strength of rocks. Geophysical Research Letters, 2007. doi:10.1029/2007gl031696.">Rozhko et al., 2007</a>]</span> for more details.</p>
+</section>
+<section id="technicalities">
+<h2>Technicalities<a class="headerlink" href="#technicalities" title="Permalink to this headline"></a></h2>
+<section id="solver-changes">
+<h3>Solver changes<a class="headerlink" href="#solver-changes" title="Permalink to this headline"></a></h3>
+<p>We have to make the same modifications as in project 2 in that we need to account for the latent heat of crystallization. We again do this by using an effective specific heat for the solid phase in the energy equation (see e.g. <span id="id7">[<a class="reference internal" href="../../refs.html#id16" title="I. Aarnes, H. Svensen, J.A.D Connolly, and Y.Y. Podladchikov. How contact metamorphism can trigger global climate changes: modeling gas generation around igneous sills in sedimentary basins. Geochimica Et Cosmochimica Acta, 2010. doi:10.1016/j.gca.2010.09.011.">Aarnes et al., 2010</a>]</span>):</p>
+<div class="math notranslate nohighlight" id="equation-eq-e-eqn-eff-s">
+<span class="eqno">(64)<a class="headerlink" href="#equation-eq-e-eqn-eff-s" title="Permalink to this equation"></a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{eff})\frac{\partial T}{\partial t}  = ...\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-e-eqn-cp1-s">
+<span class="eqno">(65)<a class="headerlink" href="#equation-eq-e-eqn-cp1-s" title="Permalink to this equation"></a></span>\[C_{eff}  = C_p \left( 1+ \frac{L_c}{(T_L -T_S) C_p)}\right) \text{ for } (T_S &lt; T &lt; T_L)\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-e-eqn-cp2-s">
+<span class="eqno">(66)<a class="headerlink" href="#equation-eq-e-eqn-cp2-s" title="Permalink to this equation"></a></span>\[C_{eff}  = C_P \text{ for } (T &lt; T_S)\]</div>
+<p>In addition, we need to implement a pressure-dependent permeability according to the mechanical feedbacks given above. We will make the simplifying assumption that the sedimentary basin is not “pre-stressed”, i.e. we do not impose a pre-existing differential stress profile as in <span id="id8">[<a class="reference internal" href="../../refs.html#id21" title="P. Weis, T. Driesner, and C. A. Heinrich. Porphyry-copper ore shells form at stable pressure-temperature fronts within dynamic fluid plumes. Science, 338(6114):1613-1616, 2012.">Weis et al., 2012</a>]</span> . We simply assume that permeability is progressively increased when the fluid pressure exceeds the lithostatic pressure (a very simple fracture criterion). This permeability model is described in <span id="id9">[<a class="reference internal" href="../../refs.html#id19" title="Karthik Iyer, Daniel W. Schmid, Sverre Planke, and John Millett. Modelling hydrothermal venting in volcanic sedimentary basins: impact on hydrocarbon maturation and paleoclimate. Earth and Planetary Science Letters, 467:30-42, 2017. URL: http://www.sciencedirect.com/science/article/pii/S0012821X17301590, doi:https://doi.org/10.1016/j.epsl.2017.03.023.">Iyer et al., 2017</a>]</span> and in <span id="id10">[<a class="reference internal" href="../../refs.html#id17" title="C. Y. Galerne and J. Hasenclever. Distinct degassing pulses during magma invasion in the stratified karoo basin—new insights from hydrothermal fluid flow modeling. Geochemistry, Geophysics, Geosystems, 20(6):2955-2984, 2019. doi:10.1029/2018gc008120.">Galerne &amp; Hasenclever, 2019</a>]</span>.</p>
+<div class="math notranslate nohighlight" id="equation-eq-k-eqn-1">
+<span class="eqno">(67)<a class="headerlink" href="#equation-eq-k-eqn-1" title="Permalink to this equation"></a></span>\[k_{eff}  = k_{eff} \left( \frac{p_f}{p_l} \right)^2 \text{ for } (p_f &gt; p_l)\]</div>
+<p>Here <span class="math notranslate nohighlight">\(p_l\)</span> is the lithostatic pressure, the weight of the overburden. <span class="math notranslate nohighlight">\(k_{eff}\)</span> shows up on both sides of the equation, which mimics progressive crack/vein oppening.</p>
+<p>In addition, we will impose depth-dependent porosity and permeability profies according to <span id="id11">[<a class="reference internal" href="../../refs.html#id19" title="Karthik Iyer, Daniel W. Schmid, Sverre Planke, and John Millett. Modelling hydrothermal venting in volcanic sedimentary basins: impact on hydrocarbon maturation and paleoclimate. Earth and Planetary Science Letters, 467:30-42, 2017. URL: http://www.sciencedirect.com/science/article/pii/S0012821X17301590, doi:https://doi.org/10.1016/j.epsl.2017.03.023.">Iyer et al., 2017</a>]</span>.</p>
+<div class="math notranslate nohighlight" id="equation-eq-poro-depth">
+<span class="eqno">(68)<a class="headerlink" href="#equation-eq-poro-depth" title="Permalink to this equation"></a></span>\[\phi (z)  = 0.4464 exp(0.2353 y)\]</div>
+<p>where y is in kilometers.</p>
+<div class="math notranslate nohighlight" id="equation-eq-perm-depth">
+<span class="eqno">(69)<a class="headerlink" href="#equation-eq-perm-depth" title="Permalink to this equation"></a></span>\[k(phi) = k_0 \left [ \frac{\phi^{1.5+1}}{1-\phi^{1.5}} \right ]\]</div>
+<p>These changes are implemented in a modified solver of HydrothermalFoam, which you can download from here (<a class="reference download internal" download="" href="../../_downloads/7bf5a3f037264b0a12b4da2a7ff93774/HydrothermalSinglePhaseDarcyFoam_p_k.zip"><code class="xref download docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam_p_k</span></code></a>).</p>
+<p>Check the <code class="code docutils literal notranslate"><span class="pre">updateProps.H</span></code> and <code class="code docutils literal notranslate"><span class="pre">0/permeability.org</span></code> and <code class="code docutils literal notranslate"><span class="pre">0/porosity</span></code> files, how these changes are implemented.</p>
+</section>
+<section id="setup-fields">
+<h3>Setup fields<a class="headerlink" href="#setup-fields" title="Permalink to this headline"></a></h3>
+<p>In addition to the solver changes, we have to take extra care of the initial conditions. The temperature field is not uniform anymore but we need to set the initial intrusion temperature to a high value according to its cellzone and apply a background temperature gradient (if we think that’s useful).</p>
+<p>These changes are implemented as codestream statements in <code class="code docutils literal notranslate"><span class="pre">0/T</span></code> . Have a look!</p>
+</section>
+</section>
+<section id="deliverables">
+<h2>Deliverables<a class="headerlink" href="#deliverables" title="Permalink to this headline"></a></h2>
+<p>The goal of this project is to provide work on these topics</p>
+<ol class="arabic simple">
+<li><p><strong>Conditions for localized venting</strong>, provide a sequence of 2D simulations that illustrate what can “happen” for host rock permeabilities.</p></li>
+<li><p><strong>Mechanism</strong>, investigate the driven mechanism in that you visualize the pressure field and how it affects permeability.</p></li>
+<li><p><strong>Systematics</strong>, explore the parameter space.</p></li>
+</ol>
+<p>The results showed be delivered in a short powerpoint presentation.</p>
+</section>
+<section id="starting-point">
+<h2>Starting point<a class="headerlink" href="#starting-point" title="Permalink to this headline"></a></h2>
+<section id="case-file">
+<h3>Case file<a class="headerlink" href="#case-file" title="Permalink to this headline"></a></h3>
+<p>Download the basic case file from (<a class="reference download internal" download="" href="../../_downloads/792d0ccc2351cf6f168a894493f4e8a8/sill_instrusion.zip"><code class="xref download docutils literal notranslate"><span class="pre">Sill</span> <span class="pre">intrusion</span> <span class="pre">Flow</span> <span class="pre">Model</span></code></a>).. It includes a basic setup for hydrothermal system drive.</p>
+</section>
+<section id="meshing-software">
+<h3>Meshing software<a class="headerlink" href="#meshing-software" title="Permalink to this headline"></a></h3>
+<p>The example case uses a meshing software called <a class="reference external" href="http://gmsh.info">Gmsh</a> to create a mesh that resolves the fault zone. Gmsh is already installed within your docker containers, so there should be no need for installing additional software. The gmsh input file is in <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code>.</p>
+<figure class="align-center" id="fig-gmsh-sill-fig-proj3">
+<img alt="../../_images/sill_mesh_proj3.png" src="../../_images/sill_mesh_proj3.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 53 </span><span class="caption-text">Mesh created with gmsh.</span><a class="headerlink" href="#fig-gmsh-sill-fig-proj3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Have a look at <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code> and the <a class="reference external" href="http://gmsh.info">Gmsh</a> . Check that you (more or less) understand what’s happening and try to change things like fault width and and angle.</p>
+</section>
+<section id="post-processing">
+<h3>Post-processing<a class="headerlink" href="#post-processing" title="Permalink to this headline"></a></h3>
+<p>There are many ways of extracting information from a completed run. For this project, you will want to know how high the vent temperature is and where the venting occurs, so that you can evaluate if the plume was “captured” by the fault. You can either do this in paraview by using, for example, the “Plot Over Line” filter in Paraview. An alternative is to use the built-in postprocessing function of OpenFoam.</p>
+<p>Also check the <code class="code docutils literal notranslate"><span class="pre">system/controlDict.orig</span></code> file; there is codestream section at the bottom that writes out maximum vent temperature to a file names <code class="code docutils literal notranslate"><span class="pre">ventT.txt</span></code> . Modify according to your needs.</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="n">postProcess</span> <span class="o">-</span><span class="n">func</span> <span class="n">sampleDict</span> <span class="o">-</span><span class="k">latestTime</span>
+</pre></div>
+</div>
+<p>It will read the <code class="code docutils literal notranslate"><span class="pre">system/sampleDict</span></code> file (have a look!) and extract T along a line.</p>
+<p>More powerful is, of course, to use python, like in <a class="reference internal" href="../L04/intro.html#l04-postprocess"><span class="std std-ref">Upflow temperatures in submarine hydrothermal systems</span></a>.</p>
+</section>
+</section>
+<section id="background-reading">
+<h2>Background reading<a class="headerlink" href="#background-reading" title="Permalink to this headline"></a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><span id="id12">[<a class="reference internal" href="../../refs.html#id21" title="P. Weis, T. Driesner, and C. A. Heinrich. Porphyry-copper ore shells form at stable pressure-temperature fronts within dynamic fluid plumes. Science, 338(6114):1613-1616, 2012.">Weis et al., 2012</a>]</span> paper on the pressure dependent permeability</p></li>
+<li><p><span id="id13">[<a class="reference internal" href="../../refs.html#id16" title="I. Aarnes, H. Svensen, J.A.D Connolly, and Y.Y. Podladchikov. How contact metamorphism can trigger global climate changes: modeling gas generation around igneous sills in sedimentary basins. Geochimica Et Cosmochimica Acta, 2010. doi:10.1016/j.gca.2010.09.011.">Aarnes et al., 2010</a>]</span> <span id="id14">[<a class="reference internal" href="../../refs.html#id19" title="Karthik Iyer, Daniel W. Schmid, Sverre Planke, and John Millett. Modelling hydrothermal venting in volcanic sedimentary basins: impact on hydrocarbon maturation and paleoclimate. Earth and Planetary Science Letters, 467:30-42, 2017. URL: http://www.sciencedirect.com/science/article/pii/S0012821X17301590, doi:https://doi.org/10.1016/j.epsl.2017.03.023.">Iyer et al., 2017</a>]</span> <span id="id15">[<a class="reference internal" href="../../refs.html#id17" title="C. Y. Galerne and J. Hasenclever. Distinct degassing pulses during magma invasion in the stratified karoo basin—new insights from hydrothermal fluid flow modeling. Geochemistry, Geophysics, Geosystems, 20(6):2955-2984, 2019. doi:10.1029/2018gc008120.">Galerne &amp; Hasenclever, 2019</a>]</span> paper on modeling sill intrusion into sedimentary basins</p></li>
+<li><p><span id="id16">[<a class="reference internal" href="../../refs.html#id20" title="H. Svensen, S. Planke, A. Malthe-Sorenssen, B. Jamtveit, R. Myklebust, T. R. Eidem, and S. S. Rey. Release of methane from a volcanic basin as a mechanism for initial eocene global warming. Nature, 429(6991):542-545, 2004. URL: &lt;Go to ISI&gt;://WOS:000221767700034, doi:10.1038/nature02566.">Svensen et al., 2004</a>]</span> landmark paper on the relationship between sill intrusion into organic sediments, greenhouse gas relase, and climate change as well as mass extinctions.</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Project2.html" class="btn btn-neutral float-left" title="Project 2: How long can a magmatic intrusion sustain high temperature venting?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../refs.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2020, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

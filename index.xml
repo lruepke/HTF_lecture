@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fluid dynamics lectures</title>
+    <link>https://lruepke.github.io/HTF_lecture/</link>
+    <description>Recent content on Fluid dynamics lectures</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright 2021 © [Lars Ruepke](https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings/translate-to-english-staff) and [Zhikui Guo](https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings/translate-to-english-staff) 2020-2022.</copyright>
+    <lastBuildDate>Sat, 29 Dec 2018 11:02:05 +0600</lastBuildDate>
+    
+	<atom:link href="https://lruepke.github.io/HTF_lecture/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+  </channel>
+</rss>

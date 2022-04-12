@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-57G35L3JB6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-57G35L3JB6');
+  </script>
+  <meta charset="utf-8">
+  <title>Fluid dynamics lectures</title>
+
+  <meta name="generator" content="Hugo 0.68.3" />
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://lruepke.github.io/HTF_lecture/plugins/bootstrap/bootstrap.min.css">
+
+  <!-- themefy-icon -->
+  <link rel="stylesheet" href="https://lruepke.github.io/HTF_lecture/plugins/themify-icons/themify-icons.css">
+
+  <!-- fontawesome-icon -->
+  <link rel="stylesheet" href="https://lruepke.github.io/HTF_lecture/plugins/fontawesome/css/all.css">
+  
+  <link rel="stylesheet" href="https://lruepke.github.io/HTF_lecture/css/mystyle.css">
+
+  <!-- highlight -->
+  <link rel="stylesheet" href="https://lruepke.github.io/HTF_lecture/plugins/highlight/hybrid.css">
+
+  <!--Favicon-->
+  <link rel="icon" href="https://lruepke.github.io/HTF_lecture/images/favicon.png" type="image/x-icon">
+
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+  
+  <style>
+  :root{
+    --primary-color:#02007e;
+    --body-color:#f9f9f9;
+    --text-color:#636363;
+    --text-color-dark:#242738;
+    --white-color:#ffffff;
+    --light-color:#f8f9fa;
+    --font-family:Lato;
+  }
+  </style>
+
+<!-- Main Stylesheet -->
+
+<link href="https://lruepke.github.io/HTF_lecture/css/style.min.css" rel="stylesheet" media="screen"/>
+
+<!-- 引入echarts -->
+<script src="https://lruepke.github.io/HTF_lecture/echarts/echarts.js"></script>
+
+<!-- jquiry -->
+<script src="https://lruepke.github.io/HTF_lecture/plugins/jquery/jquery-1.12.4.js"></script>
+
+<!-- jquary ui -->
+<script src="https://lruepke.github.io/HTF_lecture/plugins/jquery/jquery-ui.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://lruepke.github.io/HTF_lecture/plugins/bootstrap/bootstrap.min.js"></script>
+
+<!-- match-height JS -->
+<script src="https://lruepke.github.io/HTF_lecture/plugins/match-height/jquery.matchHeight-min.js"></script>
+
+<!-- highlight -->
+<script src="https://lruepke.github.io/HTF_lecture/plugins/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+</head>
+  
+  <body>
+    
+    <!-- header -->
+    <header class="banner overlay bg-cover" data-background="https://lruepke.github.io/HTF_lecture/images/banner.jpg">
+      <nav class="navbar navbar-expand-md navbar-dark">
+  <div class="container">
+    <a class="navbar-brand px-2" href="/HTF_lecture">
+      
+      
+      
+      
+      <img class="img-fluid" src=" https://lruepke.github.io/HTF_lecture/images/logo.png"
+        alt="Fluid dynamics lectures">
+      
+      
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation"
+      aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse text-center" id="navigation">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="/HTF_lecture">Home</a>
+        </li>
+        
+        
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="/HTF_lecture/faq">Faq</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="/HTF_lecture/contact">contact</a>
+        </li>
+        
+        
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Lectures
+          </a>
+          <div class="dropdown-menu">
+            
+            <a class="dropdown-item" href="/HTF_lecture/winter2020">Winter 2020</a>
+            
+            <a class="dropdown-item" href="/HTF_lecture/summer2021">Summer2021</a>
+            
+            <a class="dropdown-item" href="/HTF_lecture/summer2022">Summer 2022</a>
+            
+          </div>
+        </li>
+        
+        
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+      <!-- banner -->
+<div class="container section">
+	<div class="row">
+		<div class="col-lg-8 text-center mx-auto">
+			<h1 class="text-white mb-3">Online lectures of fluid dynamics</h1>
+			<p class="text-white mb-4">Welcome to the course Numerical Fluid Dynamics taught at Kiel University</p>
+			<div class="position-relative">
+				<input id="search" class="form-control" placeholder="Have a question? Try to ask here or enter terms">
+				<i class="ti-search search-icon"></i>
+				
+				
+				
+				
+				<script>
+					$(function() {
+					var projects = [
+						
+						{
+							value: "Fluid dynamics lectures",
+							label: "<p></p>",
+							url:"https:\/\/lruepke.github.io\/HTF_lecture\/"
+						},
+						
+						{
+							value: "Winter 2020",
+							label: "<p>window.open(\x22https:\/\/lruepke.github.io\/HTF_lecture\/\x22, \x22_self\x22);   </p>",
+							url:"https:\/\/lruepke.github.io\/HTF_lecture\/winter2020\/"
+						},
+						
+						{
+							value: "Summer 2021",
+							label: "<p>window.open(\x22https:\/\/lruepke.github.io\/FEM_lecture\/\x22, \x22_self\x22);   </p>",
+							url:"https:\/\/lruepke.github.io\/HTF_lecture\/summer2021\/"
+						},
+						
+						{
+							value: "Summer 2022",
+							label: "<p>window.open(\x22html\/index.html\x22, \x22_self\x22);   </p>",
+							url:"https:\/\/lruepke.github.io\/HTF_lecture\/summer2022\/"
+						},
+						
+						{
+							value: "Categories",
+							label: "<p></p>",
+							url:"https:\/\/lruepke.github.io\/HTF_lecture\/categories\/"
+						},
+						
+						{
+							value: "Frequently Asked Questions",
+							label: "<p> How to install OpenFOAM ?    We will rely on docker and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. For this purpose we have modified the official OpenFoam docker image, so that it also contains all components of HydrothermalFoam. The way docker works is that a so-called docker image is downloaded and from this image a so-called docker container is built, which is the actual virtual environment, see Download OpenFOAM   </p>",
+							url:"https:\/\/lruepke.github.io\/HTF_lecture\/faq\/"
+						},
+						
+						{
+							value: "Tags",
+							label: "<p></p>",
+							url:"https:\/\/lruepke.github.io\/HTF_lecture\/tags\/"
+						},
+						
+						{
+							value: "Welcome to consult and ask questions",
+							label: "<p>Please fill the form and just send to me.\n</p>",
+							url:"https:\/\/lruepke.github.io\/HTF_lecture\/contact\/"
+						},
+						
+					];
+					$( "#search" ).autocomplete({
+						source: projects
+					})
+					.data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+						return $( "<li>" )
+						.append( "<a href=" + item.url + " + \" &quot;\" +  >" + item.value + "</a>" + item.label )
+						.appendTo( ul );
+					};
+					});
+				</script>
+			</div>
+			<div class="text-center">
+				<ul class="list-inline">
+				  
+				  	<li class="list-inline-item" >
+					  	<a class="text-color d-inline-block p-2 social-banner"  href="https://gitlab.com/gmdpapers/hydrothermalfoam" data-toggle="tooltip" title="Hydrothermalfoam" data-placement="top">
+							
+								<i class="fab fa-gitlab"></i>
+							
+				  		</a>
+					</li>
+				  
+				  	<li class="list-inline-item" >
+					  	<a class="text-color d-inline-block p-2 social-banner"  href="https://github.com/lruepke/HTF_lecture" data-toggle="tooltip" title="Lecture source" data-placement="top">
+							
+								<i class="fab fa-github"></i>
+							
+				  		</a>
+					</li>
+				  
+				  	<li class="list-inline-item" >
+					  	<a class="text-color d-inline-block p-2 social-banner"  href="https://hub.docker.com/r/zguo/hydrothermalfoam" data-toggle="tooltip" title="Docker Hub" data-placement="top">
+							
+								<i class="fab fa-docker"></i>
+							
+				  		</a>
+					</li>
+				  
+				  	<li class="list-inline-item" >
+					  	<a class="text-color d-inline-block p-2 social-banner"  href="https://www.youtube.com/playlist?list=PLnufTNcP1C4iiwSZeSQTGvnocA3e08fzv" data-toggle="tooltip" title="YouTube" data-placement="top">
+							
+								<i class="fab fa-youtube"></i>
+							
+				  		</a>
+					</li>
+				  
+				</ul>
+			  </div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function(){
+	  $('[data-toggle="tooltip"]').tooltip(); 
+	});
+</script>
+<!-- /banner -->
+    </header>
+    <!-- /header -->
+    
+    
+
+  <!-- topics -->
+  <section class="section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 text-center">
+          <h2 class="section-title">Find a lecture you are interested in</h2>
+        </div>
+        <!-- topic-item -->
+        
+        <div class="col-lg-4 col-sm-6 mb-4">
+          <a href="https://lruepke.github.io/HTF_lecture/winter2020/" class="px-4 py-5 bg-white shadow text-center d-block match-height">
+            
+                <image class="social_logo" src="https://lruepke.github.io/HTF_lecture/images/research.png" ></i>
+							
+            <h3 class="mb-3 mt-0">Winter 2020</h3>
+            <p class="mb-0">FVM, OpenFoam, HydrothermalFoam, Hydrothermal circulation.</p>
+          </a>
+        </div>
+        
+        <div class="col-lg-4 col-sm-6 mb-4">
+          <a href="https://lruepke.github.io/HTF_lecture/summer2021/" class="px-4 py-5 bg-white shadow text-center d-block match-height">
+            
+                <image class="social_logo" src="https://lruepke.github.io/HTF_lecture/images/product.png" ></i>
+							
+            <h3 class="mb-3 mt-0">Summer 2021</h3>
+            <p class="mb-0">PDEs, FEM, Python, heat diffusion, reactive systems, mantle convection.</p>
+          </a>
+        </div>
+        
+        <div class="col-lg-4 col-sm-6 mb-4">
+          <a href="https://lruepke.github.io/HTF_lecture/summer2022/" class="px-4 py-5 bg-white shadow text-center d-block match-height">
+            
+                <image class="social_logo" src="https://lruepke.github.io/HTF_lecture/images/skills.png" ></i>
+							
+            <h3 class="mb-3 mt-0">Summer 2022</h3>
+            <p class="mb-0">Advanced OpenFOAM, multi-region heat transfer, pore-scale flow, geomodel building, model &amp; data</p>
+          </a>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  <!-- /topics -->
+
+  
+  
+  <!-- call to action -->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="section px-3 bg-white shadow text-center">
+          <h2 class="mb-4">Any further question?</h2>
+          <p class="mb-4">Please contact us.</p>
+          
+          
+          <a href="/HTF_lecture/contact" class="btn btn-primary">contact us</a>
+          
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /call to action -->
+  
+  
+
+
+    <!-- footer -->
+<footer class="section pb-4">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-8 text-md-right text-center">
+       <p class="mb-md-0 mb-4">Copyright 2021 © <a href="https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings/translate-to-english-staff">Lars Ruepke</a> and <a href="https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings/translate-to-english-staff">Zhikui Guo</a> 2020-2022.</p>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+<!-- /footer -->
+
+<!-- Main Script -->
+
+<script src="https://lruepke.github.io/HTF_lecture/js/script.min.js"></script>
+
+<script type="text/javascript">
+  var myChart_wmap = echarts.init(document.getElementById('wmap'), null,  {renderer: 'svg'});
+  var option_wmap;
+  myChart_wmap.showLoading();
+  $.get("https:\/\/lruepke.github.io\/HTF_lecture\/data_charts\/world.json", function (USAjson) {
+      myChart_wmap.hideLoading();
+      echarts.registerMap('world', {geoJSON: USAjson});
+      option_wmap = {
+        backgroundColor: '#000',
+        title: {
+          text: 'test plot map',
+          left: 'center',
+          textStyle: {
+            color: '#fff'
+          }
+        },
+          tooltip: {},
+          geo: {
+            map: 'world',
+            roam: true,
+            label: {
+              emphasis: {
+                show: false
+              }
+            },
+            itemStyle: {
+              normal: {
+                areaColor: '#323c48',
+                borderColor: '#111'
+              },
+              emphasis: {
+                areaColor: 'yellow'
+              }
+            }
+          },
+          series: {
+              type: 'effectScatter',
+              coordinateSystem: 'geo',
+              geoIndex: 0,
+              polyline: true,
+              symbolSize: function (params) {
+                  return (params[2] / 100) * 5 ;
+              },
+              itemStyle: {
+                  color: 'red'
+              },
+              encode: {
+                  tooltip: 2
+              },
+              data: [
+                [-20, -60, 100]
+              ]
+          }
+      };
+      myChart_wmap.setOption(option_wmap);
+  });
+</script>
+  </body>
+
+</html>
