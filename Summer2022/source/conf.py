@@ -17,7 +17,7 @@ sys.path.append(os.path.abspath('_extensions'))
 # -- Project information -----------------------------------------------------
 
 project = 'HydrothermalFoam Lecture'
-copyright = '2020, Lars Ruepke and Zhikui Guo'
+copyright = '2022, Lars Ruepke and Zhikui Guo'
 author = 'Lars Ruepke'
 
 
@@ -86,8 +86,8 @@ html_context = {
     # Format Template: https://{{ github_host|default("github.com") }}/{{ github_user }}/{{ github_repo }}/blob/{{ github_version }}{{ conf_py_path }}{{ pagename }}{{ suffix }}
     'github_user': 'lruepke',
     'github_repo': 'HTF_lecture',
-    'github_version': 'main/',
-    'conf_py_path': '/source/',
+    'github_version': 'main/Summer2022/',
+    'conf_py_path': 'source/',
     "menu_links": [
         (
             '<i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke',
