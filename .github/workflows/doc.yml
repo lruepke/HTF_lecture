@@ -22,10 +22,10 @@ jobs:
           sudo apt-get install hugo
           
       # debug workflows: you could use ssh to login the github runner and test something
-      - name: install oh my zsh
-        run: |
-          # sudo apt-get install zsh
-          sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      # - name: install oh my zsh
+      #   run: |
+      #     sudo apt-get install zsh
+      #     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
 
