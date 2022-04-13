@@ -17,6 +17,9 @@ We will rely on docker_ and use a virtual Ubuntu Linux installation that has Ope
 2. **Register** an account with `docker hub <https://hub.docker.com/>`_, a marketplace for docker images.
 3. **Log-into** your newly created account from your docker desktop application.
 
+.. tip::
+    Turns out that steps 2 and 3 are actually optional and you should be able to download the docker image also without a docker hub account.
+
 Now we are ready to pull the provided docker image, which can be found here `zguo/hydrothermalfoam <https://hub.docker.com/repository/docker/zguo/hydrothermalfoam>`_.
 
 Open a shell (powershell under windows or a terminal under MacOS) and pull the image by typing this command.
