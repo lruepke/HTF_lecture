@@ -201,11 +201,11 @@
 <h1>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h1>
 <section id="d-cavity-flow">
 <h2>2D cavity flow<a class="headerlink" href="#d-cavity-flow" title="Permalink to this headline"></a></h2>
-<p>Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a kinematic boundary condition at one side, while all other sides are walls with zero velocity. The model setup is shown in <a class="reference internal" href="#fig-2dcavity-setup"><span class="std std-numref">Fig. 2</span></a> .</p>
+<p>Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a kinematic boundary condition at one side, while all other sides are walls with zero velocity. The model setup is shown in <a class="reference internal" href="#fig-2dcavity-setup"><span class="std std-numref">Fig. 3</span></a> .</p>
 <figure class="align-center" id="fig-2dcavity-setup">
 <img alt="../../_images/2d_cavity_setup.png" src="../../_images/2d_cavity_setup.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Two-dimensional cavity model geometry and boundary conditions.</span><a class="headerlink" href="#fig-2dcavity-setup" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Two-dimensional cavity model geometry and boundary conditions.</span><a class="headerlink" href="#fig-2dcavity-setup" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <section id="preparing-the-case">
@@ -270,21 +270,21 @@ cp <span class="nv">$FOAM_TUTORIALS</span>/incompressible/icoFoam/cavity/cavity 
 <figure class="align-center" id="fig-cavity2d-bm">
 <img alt="../../_images/cavity2d_bm.png" src="../../_images/cavity2d_bm.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Structure of the blockMeshDict</span><a class="headerlink" href="#fig-cavity2d-bm" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Structure of the blockMeshDict</span><a class="headerlink" href="#fig-cavity2d-bm" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>First we need to define the vertices of the mesh, the nodes.</p>
 <figure class="align-center" id="fig-cavity2d-vertices">
 <img alt="../../_images/cavity2d_vertices.png" src="../../_images/cavity2d_vertices.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Numbering of the vertices.</span><a class="headerlink" href="#fig-cavity2d-vertices" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Numbering of the vertices.</span><a class="headerlink" href="#fig-cavity2d-vertices" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>The next step is define the connectivity between the vertices in order to describe the modeling domain.</p>
 <figure class="align-center" id="fig-cavity2d-vorder">
 <img alt="../../_images/cavity2d_vorder.png" src="../../_images/cavity2d_vorder.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5 </span><span class="caption-text">The order by which the vertices are passed to the hex command matters!</span><a class="headerlink" href="#fig-cavity2d-vorder" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">The order by which the vertices are passed to the hex command matters!</span><a class="headerlink" href="#fig-cavity2d-vorder" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition-order-of-vertices admonition">
@@ -309,7 +309,7 @@ cp <span class="nv">$FOAM_TUTORIALS</span>/incompressible/icoFoam/cavity/cavity 
 <figure class="align-center" id="fig-cavity2d-bounds">
 <img alt="../../_images/cavity2d_bounds.png" src="../../_images/cavity2d_bounds.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 6 </span><span class="caption-text">Assigning boundary labels and types.</span><a class="headerlink" href="#fig-cavity2d-bounds" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Assigning boundary labels and types.</span><a class="headerlink" href="#fig-cavity2d-bounds" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>Now we are ready to run the <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> utility and create the mesh</p>
@@ -331,7 +331,7 @@ paraview a.foam
 <figure class="align-center" id="fig-cavity2d-u-fig">
 <img alt="../../_images/cavity2d_u.png" src="../../_images/cavity2d_u.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Velocity boundary conditions. The front and back sides are set to empty because we are doing a 2D calculation.</span><a class="headerlink" href="#fig-cavity2d-u-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Velocity boundary conditions. The front and back sides are set to empty because we are doing a 2D calculation.</span><a class="headerlink" href="#fig-cavity2d-u-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>Next we look into the pressure boundary conditions.</p>
@@ -390,11 +390,11 @@ paraview a.foam
 <section id="run-controls">
 <h3>Run controls<a class="headerlink" href="#run-controls" title="Permalink to this headline"></a></h3>
 <p>The time stepping, run time, and output frequency are again set in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>. Open it and check that you understand the entires.</p>
-<p>In case you wondered how OpenFoam is solving the equations. We will cover the details later in the course, but you can have a preview by opening the <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code> file. In this dictionary, the various discretization schemes can be set. <a class="reference internal" href="#fig-cavity2d-num-fig"><span class="std std-numref">Fig. 8</span></a> gives some further explanations.</p>
+<p>In case you wondered how OpenFoam is solving the equations. We will cover the details later in the course, but you can have a preview by opening the <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code> file. In this dictionary, the various discretization schemes can be set. <a class="reference internal" href="#fig-cavity2d-num-fig"><span class="std std-numref">Fig. 9</span></a> gives some further explanations.</p>
 <figure class="align-center" id="fig-cavity2d-num-fig">
 <img alt="../../_images/cavity2_num.png" src="../../_images/cavity2_num.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 8 </span><span class="caption-text">The exact discretization schemes can be set in <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code>.</span><a class="headerlink" href="#fig-cavity2d-num-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">The exact discretization schemes can be set in <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code>.</span><a class="headerlink" href="#fig-cavity2d-num-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>Time to run the case! Just start the solver</p>

@@ -215,19 +215,19 @@ mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti">eq
 </section>
 <section id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline"></a></h2>
-<p>The details of the OpenFoam implementation can be found in the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> documentation. Here we only show a brief summary. <a class="reference internal" href="#fig-htf-solution"><span class="std std-numref">Fig. 11</span></a> shows how the energy equation is solved within the OpenFoam framework.</p>
+<p>The details of the OpenFoam implementation can be found in the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> documentation. Here we only show a brief summary. <a class="reference internal" href="#fig-htf-solution"><span class="std std-numref">Fig. 12</span></a> shows how the energy equation is solved within the OpenFoam framework.</p>
 <figure class="align-center" id="fig-htf-solution">
 <img alt="../../_images/solution_algorithm.svg" src="../../_images/solution_algorithm.svg" /><figcaption>
-<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Implementation of the energy conservation equation.</span><a class="headerlink" href="#fig-htf-solution" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Implementation of the energy conservation equation.</span><a class="headerlink" href="#fig-htf-solution" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="equation-of-state">
 <h2>Equation-of-state<a class="headerlink" href="#equation-of-state" title="Permalink to this headline"></a></h2>
-<p>The fluid properties like density, viscosity, specific heat are determined from the equation-of-state of pure water. <a class="reference internal" href="#fig-phase-diagram"><span class="std std-numref">Fig. 12</span></a> shows the phase diagram of pure water. At sub-critical conditions (P&lt; 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems.</p>
+<p>The fluid properties like density, viscosity, specific heat are determined from the equation-of-state of pure water. <a class="reference internal" href="#fig-phase-diagram"><span class="std std-numref">Fig. 13</span></a> shows the phase diagram of pure water. At sub-critical conditions (P&lt; 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems.</p>
 <figure class="align-center" id="fig-phase-diagram">
 <img alt="../../_images/PhaseDiagram.svg" src="../../_images/PhaseDiagram.svg" /><figcaption>
-<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Phase diagram of pure water.</span><a class="headerlink" href="#fig-phase-diagram" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Phase diagram of pure water.</span><a class="headerlink" href="#fig-phase-diagram" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>

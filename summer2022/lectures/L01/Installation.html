@@ -234,6 +234,20 @@
 </dd>
 </dl>
 </div>
+<p>Now that you have built the docker container you can use these basic docker commands to interact with it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker start hydrothermalfoam
+docker attach hydrothermalfoam
+docker stop hydrothermalfoam
+</pre></div>
+</div>
+<p>The first command starts the container and the second one attaches it to the current shell. As you will see below, you will typically run these two commands from the right-hand side shell in your VS code when you start your work. To stop the container, just run the stop command from another shell.</p>
+<p>While we recommend to use the command line to interact with docker, there is als a GUI that you can use to check on your docker containers and images. Just right-click on the icon in the task bar and chose dashboard.</p>
+<figure class="align-center" id="id3" style="width: 70%">
+<img alt="../../_images/docker_desktop.png" src="../../_images/docker_desktop.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Docker dashboard showing your images and containers.</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </section>
 <section id="visual-studio-code">
 <span id="sec-install-vscode"></span><h2>Visual Studio Code<a class="headerlink" href="#visual-studio-code" title="Permalink to this headline"></a></h2>
