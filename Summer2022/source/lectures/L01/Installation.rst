@@ -42,6 +42,24 @@ This complicated looking command builds the docker container and creates a “sh
         * -d run container in background (detached)
 
 
+Now that you have built the docker container you can use these basic docker commands to interact with it:
+
+.. code-block:: bash
+
+      docker start hydrothermalfoam
+      docker attach hydrothermalfoam
+      docker stop hydrothermalfoam
+
+The first command starts the container and the second one attaches it to the current shell. As you will see below, you will typically run these two commands from the right-hand side shell in your VS code when you start your work. To stop the container, just run the stop command from another shell.
+
+While we recommend to use the command line to interact with docker, there is als a GUI that you can use to check on your docker containers and images. Just right-click on the icon in the task bar and chose dashboard.
+
+.. figure:: /_figures/docker_desktop.png
+    :align: center
+    :figwidth: 70%
+    
+    Docker dashboard showing your images and containers.
+
 .. _sec:install_vscode:
 
 Visual Studio Code
