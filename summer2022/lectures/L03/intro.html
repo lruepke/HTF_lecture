@@ -188,10 +188,13 @@
 </style>
 <section id="digital-rock-physics-effective-permeability-of-rocks">
 <h1>Digital Rock Physics - Effective Permeability of Rocks<a class="headerlink" href="#digital-rock-physics-effective-permeability-of-rocks" title="Permalink to this headline"></a></h1>
+<div class="admonition-further-info admonition">
+<p class="admonition-title">Further info</p>
+<p>Have a look at the <a class="reference external" href="https://www.digitalrocksportal.org">digital rock portal</a> to get a better idea of what Digital Rock Physics is all about!</p>
+</div>
 <section id="theoretical-background">
 <h2>Theoretical background<a class="headerlink" href="#theoretical-background" title="Permalink to this headline"></a></h2>
-<p>Flow in porous media occurs on different scales and differing theoretical frameworks are used to resolve flow on those scales.
-<strong>Direct simulations</strong> are based on solving the Navier-Stokes equation using a discretized representation(mesh) of the pore space. These simulations provide a complete description of how fluids flow through the pore network. Naturally, such simulations are computationally demanding as the nano- to micro-meter sized pores need to be resolved. In its simples incrompressible and stead-state form, it can be written as:</p>
+<p>Flow in porous media occurs on different scales and differing theoretical frameworks are used to resolve flow on those scales. <strong>Direct simulations</strong> are based on solving the Navier-Stokes equation using a discretized representation (mesh) of the pore space. These simulations provide a complete description of how fluids flow through the pore network. Naturally, such simulations are computationally demanding as the nano- to micro-meter sized pores need to be resolved. In the simplified case of incompressible steady-state flow, it can be written as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-continuity">
 <span class="eqno">(4)<a class="headerlink" href="#equation-eq-continuity" title="Permalink to this equation"></a></span>\[\nabla \cdot \vec{U} = 0\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-mom-con">
@@ -201,18 +204,14 @@
 <p class="admonition-title">Tip</p>
 <p>There are many books and resources out there on the derivation of the Navier-Stokes equations, including many in an OpenFOAM context. We really like <a class="reference external" href="https://holzmann-cfd.com/community/publications/mathematics-numerics-derivations-and-openfoam">Tobias Holtzmann’s book</a>. Have a look! There is also the new <a class="reference external" href="https://doc.cfd.direct/notes/cfd-general-principles/contents">book by CFD direct</a>.</p>
 </div>
-<p>An alternative are <strong>Continuum simulation</strong>, which effective properties (permeability) are used for representative control volumes are prescribed and <em>Darcy’s law</em> is used to compute the flow.</p>
+<p>An alternative are <strong>Continuum simulation</strong> . In continuum simulations, effective properties on control volumes are used to describe flow. The two key parameters of such continuum simulations are the porosity and the permeability of the control volumes. Porosity is the void space in each control volume and permeability describes how well fluids are transported along a pressure gradient. Both properties are  correlated but the exact relationship often needs to be emperically determined, or predicted by <em>Digital Rock Physics</em> methods. Flow on the continuum-scale is described by <em>Darcy’s law</em> .</p>
 <div class="math notranslate nohighlight" id="equation-eq-darcy">
-<span class="eqno">(6)<a class="headerlink" href="#equation-eq-darcy" title="Permalink to this equation"></a></span>\[\vec{U} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})\]</div>
-<p>Here <span class="math notranslate nohighlight">\(\vec{U}\)</span> is the so-called Darcy velocity, which is the effective flow through a porous media (we will get to this later but this is actual velocity weighted by the porosity as flow only occurs in the pores). The involved constants are viscosity, <span class="math notranslate nohighlight">\(\mu_f\)</span>, and permeability, <span class="math notranslate nohighlight">\(\k\)</span> . Extensive theoretical work helped to elucidate the relationship between Navier-Stokes flow and Darcy flow, which was first derived as a phenomelogical equation.</p>
+<span class="eqno">(6)<a class="headerlink" href="#equation-eq-darcy" title="Permalink to this equation"></a></span>\[\vec{u} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})\]</div>
+<p>Here <span class="math notranslate nohighlight">\(\vec{U}\)</span> is the so-called Darcy velocity, which is the effective flow through a porous media (we will get to this later but this is pore velocity weighted by the porosity <span class="math notranslate nohighlight">\(\vec{u}=\epsilon \vec{v}\)</span> , with <span class="math notranslate nohighlight">\(\epsilon\)</span> being the porosity and <span class="math notranslate nohighlight">\(\vec{v}\)</span> the fluid’s pore velocity (it’s actual speed). The involved constants are viscosity, <span class="math notranslate nohighlight">\(\mu_f\)</span>, and permeability, <span class="math notranslate nohighlight">\(k\)</span> . Extensive theoretical work helped to elucidate the relationship between Navier-Stokes flow and Darcy flow, which was first derived as a phenomelogical equation.</p>
 <p>Note that <strong>direct</strong> and <strong>continuum</strong> simulatons are not <em>per se</em> related to absolute scales (like mm vs meters) but simply refer to differing relative length scales / processes that are resolved.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>There is a great pdf on the relationship between Navier-Stokes and Darcy flow on the webpages of <a class="reference external" href="https://www.cypriensoulaine.com/publications-copy">Cyprien Soulaine</a>.</p>
-</div>
-<div class="admonition-further-info admonition">
-<p class="admonition-title">Further info</p>
-<p>Have a look at the <a class="reference external" href="https://www.digitalrocksportal.org">digital rock portal</a> to get a better idea of what Digital Rock Physics is all about!</p>
 </div>
 </section>
 </section>

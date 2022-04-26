@@ -82,10 +82,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#objective">Objective</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#mesh-generation">Mesh generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-pre-processing">Python pre-processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openfoam-case">OpenFOAM case</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#case-files">case files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Mesh generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Mesh generation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#transport-properties">Transport properties</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#case-control">Case control</a></li>
@@ -200,7 +201,7 @@
 <span id="l03-firstcase"></span><h1>Computing effective permeability<a class="headerlink" href="#computing-effective-permeability" title="Permalink to this headline"></a></h1>
 <section id="objective">
 <h2>Objective<a class="headerlink" href="#objective" title="Permalink to this headline"></a></h2>
-<p>Starting from an image of a sample’s pore space, we want to compute its effective permeability. Or put differently, we will make a <strong>direct</strong> simulation of flow on the pore level and post-process it for extracting the effective permeability for simplified <strong>continuum</strong> simulations using Darcy’s law.</p>
+<p>Starting from a digital representation of a sample’s pore space (typically an image produced by a cT-scan), we want to compute its effective permeability. Or put differently, we will make a <strong>direct</strong> simulation of flow on the pore level and post-process it for extracting the effective permeability for simplified <strong>continuum</strong> simulations using Darcy’s law.</p>
 <figure class="align-center" id="fig-porousmodel-fig" style="width: 70%">
 <img alt="../../_images/porousModel.png" src="../../_images/porousModel.png" />
 <figcaption>
@@ -216,19 +217,19 @@
 <p>Ok, let’s do it!</p>
 <section id="mesh-generation">
 <h3>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline"></a></h3>
-<p>The first major step is to generate a mesh of the pores space shwon in <a class="reference internal" href="#fig-porousmodel-fig"><span class="std std-numref">Fig. 11</span></a>. For this purpose, we will use <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4">OpenFOAM’s snappyHexMesh tool</a>. It allows meshing arbitrary geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
+<p>The first major step is to generate a mesh of the pores space shown in <a class="reference internal" href="#fig-porousmodel-fig"><span class="std std-numref">Fig. 11</span></a>. For this purpose, we will use <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4">OpenFOAM’s snappyHexMesh tool</a> . It allows meshing arbitrary geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>We will not go into the details of snappyHexMesh (SHM). If you want to use it and/or understand it, a good starting point is the user-guide linked above. Another great resource are the <a class="reference external" href="https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic">Rock Vapor Classic tutorial series</a> .</p>
 </div>
-<p>In a nutshell, SHM is about starting from a blockMesh (as in the previous lecture) and then cutting-out portions according to a surface and then <em>snapping</em> the mesh to this surface. A typical way to desribe this surface is and .stl file - a typical file format for triangulated surface that is also often used for 3D printing.</p>
+<p>In a nutshell, snappyHexMesh (SHM) is about starting from a blockMesh (as in the previous lecture) and then cutting-out the solid grain (described by a triangulated surface), and then <em>snapping</em> the mesh to this surface. A typical way to describe this surface is an .stl file - a typical file format for triangulated surfaces that is also often used for 3D printing.</p>
 <figure class="align-center" id="fig-figure-workflow-fig" style="width: 85%">
 <img alt="../../_images/figure_workflow.jpg" src="../../_images/figure_workflow.jpg" />
 <figcaption>
 <p><span class="caption-number">Fig. 12 </span><span class="caption-text">Workflow illustrating the meshing process.</span><a class="headerlink" href="#fig-figure-workflow-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<p><a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> illustrates the steps involved. Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters.</p>
+<p>The steps involved are shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:figure_workflow_fig</span></code> . Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters.</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li><p>start with an image (A).</p></li>
@@ -238,9 +239,182 @@
 </ol>
 </div></blockquote>
 </section>
+<section id="python-pre-processing">
+<h3>Python pre-processing<a class="headerlink" href="#python-pre-processing" title="Permalink to this headline"></a></h3>
+<p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:figure_workflow_fig</span></code> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it and the first steps are to install porespy into our python virtual environment (we should already have PIL, which is also needed).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate <span class="s2">&quot;your_environment_name&quot;</span>
+conda install -c conda-forge porespy
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If conda install fails, you can also use <code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">porespy</span></code></p>
+</div>
+<p>Now we are good to go and it’s time to download the data. The complete openFOAM case can be downloaded from <code class="xref download docutils literal notranslate"><span class="pre">here</span></code> . Next we import the .png file from the <code class="code docutils literal notranslate"><span class="pre">geometry</span></code> folder and convert it to a .vti file, which is the <a class="reference external" href="https://vtk.org">Visualization Toolkit’s</a> format for storing image data. Note that vti files can also store series of images, which is important when doing this in 3-D.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">porespy</span> <span class="k">as</span> <span class="nn">ps</span>
+
+<span class="n">impath</span> <span class="o">=</span> <span class="s1">&#39;geometry/&#39;</span>         <span class="c1"># image path</span>
+<span class="n">imname</span> <span class="o">=</span> <span class="s1">&#39;porousModel.png&#39;</span>   <span class="c1"># file name</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">impath</span><span class="p">,</span><span class="n">imname</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>                   <span class="c1"># open image</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>                                                    <span class="c1"># convert image to array</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">to_vtk</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)[:,</span> <span class="p">:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="s1">&#39;porous_model&#39;</span><span class="p">)</span>   <span class="c1"># use porespy and save to .vti format</span>
+</pre></div>
+</div>
+<p>You can put this little script into a jupyter notebook, or save it as .py file to be run from the command line. After running it, you should  have a file <code class="code docutils literal notranslate"><span class="pre">porous_model.vti</span></code> in the folder where you executed the script. Now comes the segementation and triangulation part. We can use paraview’s python interface for this (or do everything by hand using the graphical user interface).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># workflow as python code using the paraview.simple module</span>
+<span class="kn">from</span> <span class="nn">paraview.simple</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">OpenDataFile</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.vti&#39;</span><span class="o">%</span><span class="n">vti_file</span><span class="p">)</span>
+    <span class="n">clip1</span> <span class="o">=</span> <span class="n">Clip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ClipType</span> <span class="o">=</span> <span class="s1">&#39;Scalar&#39;</span><span class="p">,</span> <span class="n">Scalars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CELLS&#39;</span><span class="p">,</span> <span class="s1">&#39;im&#39;</span><span class="p">],</span> <span class="n">Value</span> <span class="o">=</span> <span class="mf">127.5</span><span class="p">,</span> <span class="n">Invert</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">extractSurface1</span> <span class="o">=</span> <span class="n">ExtractSurface</span><span class="p">(</span><span class="n">clip1</span><span class="p">)</span>
+    <span class="n">triangulate1</span> <span class="o">=</span> <span class="n">Triangulate</span><span class="p">(</span><span class="n">extractSurface1</span><span class="p">)</span>
+    <span class="n">SaveData</span><span class="p">(</span><span class="n">stl_file</span><span class="p">,</span> <span class="n">proxy</span> <span class="o">=</span> <span class="n">triangulate1</span><span class="p">)</span>
+
+<span class="n">vti_file</span> <span class="o">=</span> <span class="s1">&#39;porous_model&#39;</span>      <span class="c1"># input .vti file</span>
+<span class="n">stl_file</span> <span class="o">=</span> <span class="s1">&#39;porous_model.stl&#39;</span>  <span class="c1"># output .stl file</span>
+
+<span class="n">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Getting the paraview.simple module to work in a virtual environment is a challenge. The easiest workaround is to use paraview’s python shell and execute the script there:</p>
+<figure class="align-center" id="id1" style="width: 85%">
+<img alt="../../_images/paraview_python.png" src="../../_images/paraview_python.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Using the paraview python shell.</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>An easy way to do this is to use these commands:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;your_case_directory&quot;</span><span class="p">)</span>
+<span class="n">exec</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;your_file_name.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>This will create a .stl file, which we will use in the meshing process. Let’s do some clean up and move the vti file into <code class="code docutils literal notranslate"><span class="pre">./geometry</span></code> and the stl file into <code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>, where openFOAM expects it. This assumes that you are in the case directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mv ./porous_model.vti ./geometry/
+mv ./porous_model.stl ./constant/triSurface/
+</pre></div>
+</div>
 </section>
-<section id="case-files">
-<h2>case files<a class="headerlink" href="#case-files" title="Permalink to this headline"></a></h2>
+<section id="openfoam-case">
+<h3>OpenFOAM case<a class="headerlink" href="#openfoam-case" title="Permalink to this headline"></a></h3>
+<p>Great, back to openfoam for the final mesh making! Making the mesh with SHM is a two-step process. First we make a standard blockMesh background mesh. This is, as usual, controlled by <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">blockMeshDict</span><a class="headerlink" href="#id3" title="Permalink to this code"></a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">object</span>      <span class="n">blockMeshDict</span><span class="p">;</span>
+<span class="linenos">14</span><span class="p">}</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="k">convertToMeters</span> <span class="mi">1</span><span class="p">;</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="n">lx0</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">21</span><span class="n">ly0</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">22</span><span class="n">lz0</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">23</span>
+<span class="hll"><span class="linenos">24</span><span class="n">lx1</span> <span class="mi">1196</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">25</span><span class="n">ly1</span> <span class="mi">1494</span><span class="p">;</span>
+</span><span class="linenos">26</span><span class="n">lz1</span> <span class="mi">1</span><span class="p">;</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="k">vertices</span>
+<span class="linenos">29</span><span class="p">(</span>
+<span class="linenos">30</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//0</span>
+<span class="linenos">31</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//1</span>
+<span class="linenos">32</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//2</span>
+<span class="linenos">33</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//3</span>
+<span class="linenos">34</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//4</span>
+<span class="linenos">35</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//5</span>
+<span class="linenos">36</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//6</span>
+<span class="linenos">37</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//7</span>
+<span class="linenos">38</span><span class="p">);</span>
+<span class="linenos">39</span>
+<span class="hll"><span class="linenos">40</span><span class="k">blocks</span>
+</span><span class="linenos">41</span><span class="p">(</span>
+<span class="linenos">42</span>    <span class="k">hex</span> <span class="p">(</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">)</span> <span class="p">(</span><span class="mi">315</span> <span class="mi">390</span> <span class="mi">1</span><span class="p">)</span> <span class="k">simpleGrading</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos">43</span><span class="p">);</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span><span class="k">edges</span>
+<span class="linenos">46</span><span class="p">(</span>
+<span class="linenos">47</span><span class="p">);</span>
+<span class="linenos">48</span>
+<span class="hll"><span class="linenos">49</span><span class="k">boundary</span>
+</span><span class="linenos">50</span><span class="p">(</span>
+<span class="linenos">51</span>    <span class="n">top</span>
+<span class="linenos">52</span>    <span class="p">{</span>
+<span class="linenos">53</span>        <span class="kt">type</span> <span class="n">symmetryPlane</span><span class="p">;</span>
+<span class="linenos">54</span>        <span class="k">faces</span>
+<span class="linenos">55</span>        <span class="p">(</span>
+<span class="linenos">56</span>            <span class="p">(</span><span class="mi">7</span> <span class="mi">6</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">57</span>        <span class="p">);</span>
+<span class="linenos">58</span>    <span class="p">}</span>
+<span class="linenos">59</span>
+<span class="linenos">60</span>    <span class="n">inlet</span>
+<span class="linenos">61</span>    <span class="p">{</span>
+<span class="linenos">62</span>        <span class="kt">type</span> <span class="n">wall</span><span class="p">;</span>
+<span class="linenos">63</span>        <span class="k">faces</span>
+<span class="linenos">64</span>        <span class="p">(</span>
+<span class="linenos">65</span>            <span class="p">(</span><span class="mi">0</span> <span class="mi">4</span> <span class="mi">7</span> <span class="mi">3</span><span class="p">)</span>
+<span class="linenos">66</span>        <span class="p">);</span>
+<span class="linenos">67</span>    <span class="p">}</span>
+<span class="linenos">68</span>
+<span class="linenos">69</span>    <span class="n">bottom</span>
+<span class="linenos">70</span>    <span class="p">{</span>
+<span class="linenos">71</span>        <span class="kt">type</span> <span class="n">symmetryPlane</span><span class="p">;</span>
+<span class="linenos">72</span>        <span class="k">faces</span>
+<span class="linenos">73</span>        <span class="p">(</span>
+<span class="linenos">74</span>            <span class="p">(</span><span class="mi">1</span> <span class="mi">5</span> <span class="mi">4</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">75</span>        <span class="p">);</span>
+<span class="linenos">76</span>    <span class="p">}</span>
+<span class="linenos">77</span>
+<span class="linenos">78</span>    <span class="n">outlet</span>
+<span class="linenos">79</span>    <span class="p">{</span>
+<span class="linenos">80</span>        <span class="kt">type</span> <span class="n">patch</span><span class="p">;</span>
+<span class="linenos">81</span>        <span class="k">faces</span>
+<span class="linenos">82</span>        <span class="p">(</span>
+<span class="linenos">83</span>            <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">6</span> <span class="mi">5</span><span class="p">)</span>
+<span class="linenos">84</span>        <span class="p">);</span>
+<span class="linenos">85</span>    <span class="p">}</span>
+<span class="linenos">86</span>
+<span class="linenos">87</span>
+<span class="linenos">88</span>    <span class="n">frontAndBack</span>
+<span class="linenos">89</span>    <span class="p">{</span>
+<span class="linenos">90</span>        <span class="kt">type</span> <span class="n">empty</span><span class="p">;</span>
+<span class="linenos">91</span>        <span class="k">faces</span>
+<span class="linenos">92</span>        <span class="p">(</span>
+<span class="linenos">93</span>            <span class="p">(</span><span class="mi">0</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos">94</span>            <span class="p">(</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">)</span>
+<span class="linenos">95</span>        <span class="p">);</span>
+<span class="linenos">96</span>    <span class="p">}</span>
+<span class="linenos">97</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions. Notice also how the box is described and how boundary conditions are applied.</p>
+<p>Now have a look at <code class="code docutils literal notranslate"><span class="pre">system/snappyHexMeshDict</span></code>. We will not go into details here, just explore the general structure yourself if you are interested using the resources linked above.</p>
+<p>Now it’s time to make the mesh. Run each of the steps below individually and check out the results in paraview!</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>blockMesh
+snappyHexMesh -overwrite
+checkMesh -allTopology -allGeometry
+transformPoints -scale <span class="s2">&quot;(1e-6 1e-6 1e-6)&quot;</span>
+</pre></div>
+</div>
+<p>The final conversion turns everything in micrometer (<span class="math notranslate nohighlight">\(10^{-6} m\)</span>). Check out the final mesh in paraview, it should look like this:</p>
 <p>To get started we will run the <strong>Regular2DBox</strong> case from the cookbook directory of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a>. This cookbooks describes how we can simulate a simple hydrothermal convection cell. It resolves hydrothermal convection driven by a gaussian-shaped constant temperature boundary condition at the bottom.</p>
 <p>Copy the  case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:</p>
 <div class="highlight-bash notranslate" id="lst-cp2dboxtoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
@@ -249,7 +423,7 @@ cp -r <span class="nv">$HOME</span>/hydrothermalfoam-master/cookbooks/2d/Regular
 </div>
 <p>Check out the directory structure shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:2dbox:tree</span></code>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-tree">
-<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">File tree structure of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-tree" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 12 </span><span class="caption-text">File tree structure of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-tree" title="Permalink to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>.
 <span class="linenos"> 2</span><span class="p">|</span>-- <span class="m">0</span>
 <span class="hll"><span class="linenos"> 3</span><span class="p">|</span>   <span class="p">|</span>-- T
@@ -276,8 +450,9 @@ cp -r <span class="nv">$HOME</span>/hydrothermalfoam-master/cookbooks/2d/Regular
 </div>
 <p>The 0 directory contains all initial and boundary conditions, the system folder contains all controlling parameter files, and the constant folder contains constant properties like the mesh - which we will create next.</p>
 </section>
-<section id="id1">
-<h2>Mesh generation<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
+</section>
+<section id="id2">
+<h2>Mesh generation<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
 <p>The case is run on a simple 2-d-box-like geometry and the mesh is build using <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code>, just like in the previous lecture on cavity flow. Look at <code class="code docutils literal notranslate"><span class="pre">blockMeshDict</span></code> and check that you sill understand the structure. Afterwards, you can create the mesh:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>blockMesh
 </pre></div>
@@ -295,7 +470,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-bc">
-<div class="code-block-caption"><span class="caption-number">Listing 12 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -366,7 +541,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-bc-p">
-<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc-p" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc-p" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -425,7 +600,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-perm">
-<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">Permeability on hydrothermal flow simulations.</span><a class="headerlink" href="#lst-2dbox-perm" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">Permeability on hydrothermal flow simulations.</span><a class="headerlink" href="#lst-2dbox-perm" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -463,7 +638,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-cdict">
-<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">controlDict of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-cdict" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">controlDict of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-cdict" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -518,7 +693,7 @@ paraview a.foam
 <figure class="align-center" id="fig-regular2dbox-fig">
 <img alt="../../_images/RegularBox2D.png" src="../../_images/RegularBox2D.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Results of the Regular2DBox example calculation.</span><a class="headerlink" href="#fig-regular2dbox-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Results of the Regular2DBox example calculation.</span><a class="headerlink" href="#fig-regular2dbox-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
