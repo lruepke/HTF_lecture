@@ -25,9 +25,7 @@
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Lecture overview" href="../L04/Overview.html" />
-    <link rel="prev" title="Computing effective permeability" href="FirstCase.html" /> 
+    <link rel="search" title="Search" href="../../search.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -75,20 +73,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="FirstCase.html">Computing effective permeability</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Excercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#constant-temperature-1-layer-system">Constant temperature 1-layer system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#constant-temperature-2-layer-system">Constant temperature 2-layer system</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#change-the-mesh">Change the mesh</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#assign-properties">Assign properties</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#run-the-case">Run the case</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Computing effective permeability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Excercises</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
 <ul>
@@ -160,7 +149,7 @@
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Excercises</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L03/Exercise.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L03_old/Exercise.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -207,7 +196,7 @@
 <figure class="align-center" id="fig-regularbox2d-constantt-fig">
 <img alt="../../_images/RegularBox2D_constantT.png" src="../../_images/RegularBox2D_constantT.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Constant temperature boundary condition.</span><a class="headerlink" href="#fig-regularbox2d-constantt-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-text">Constant temperature boundary condition.</span><a class="headerlink" href="#fig-regularbox2d-constantt-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -228,7 +217,7 @@
 <figure class="align-center" id="fig-exercise-2layer-fig">
 <img alt="../../_images/exercise_2layer.png" src="../../_images/exercise_2layer.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Starting point for the two layer system.</span><a class="headerlink" href="#fig-exercise-2layer-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-text">Starting point for the two layer system.</span><a class="headerlink" href="#fig-exercise-2layer-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>The easiest way is start with the blockMeshDict file of the 1-layer case and then add a second layer on top. A good way of getting this right, is to draw the node numbering and then add the vertices to the blockMeshDict file. Notice how we give labels layer_bot and layer_top to the two blocks.</p>
@@ -261,7 +250,7 @@
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">zoneToCell</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-setfdict">
-<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">Use the setFieldsDict to assign different permeabilities.</span><a class="headerlink" href="#lst-2dbox-setfdict" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-text">Use the setFieldsDict to assign different permeabilities.</span><a class="headerlink" href="#lst-2dbox-setfdict" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -304,7 +293,7 @@
 </div>
 <input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">boxToCell</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-boxtocell">
-<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">Use boxToCell to simply set permeability for two-layer model.</span><a class="headerlink" href="#lst-2dbox-boxtocell" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-text">Use boxToCell to simply set permeability for two-layer model.</span><a class="headerlink" href="#lst-2dbox-boxtocell" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -355,7 +344,7 @@
 <h3>Run the case<a class="headerlink" href="#run-the-case" title="Permalink to this headline"></a></h3>
 <p>Now we are using the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility to set the permeability. Therefore we need to change the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script to also include the setFields command.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-setrun">
-<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">Modified run.sh file that also includes the setFields command.</span><a class="headerlink" href="#lst-2dbox-setrun" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-text">Modified run.sh file that also includes the setFields command.</span><a class="headerlink" href="#lst-2dbox-setrun" title="Permalink to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/sh</span>
 <span class="linenos"> 2</span><span class="nb">cd</span> <span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>    <span class="c1"># Run from this directory</span>
 <span class="linenos"> 3</span>
@@ -387,10 +376,7 @@
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="FirstCase.html" class="btn btn-neutral float-left" title="Computing effective permeability" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../L04/Overview.html" class="btn btn-neutral float-right" title="Lecture overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

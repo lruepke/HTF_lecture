@@ -64,7 +64,6 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L01/slide.html">Accompanying slide deck</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
@@ -72,17 +71,14 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/slide.html">Accompanying slide deck</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/intro.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L03/slide.html">Accompanying slide deck</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Computing effective permeability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Excercises</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -218,7 +214,7 @@ cp -r /home/openfoam/hydrothermalfoam-master/cookbooks/2d/Regular2DBox/ ./Fault_
 <figure class="align-center" id="setup-l5-2-fig" style="width: 80%">
 <img alt="../../_images/perm_fault.png" src="../../_images/perm_fault.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 32 </span><span class="caption-text">Permeability structure of our detachment fault example cause.</span><a class="headerlink" href="#setup-l5-2-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 31 </span><span class="caption-text">Permeability structure of our detachment fault example cause.</span><a class="headerlink" href="#setup-l5-2-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>We can use the <code class="code docutils literal notranslate"><span class="pre">rotatedBoxToCell</span></code> function in the <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> for this. Check the <a class="reference external" href="https://cpp.openfoam.org/v3/a02202.html">openfoam documentation</a> !</p>
@@ -253,7 +249,7 @@ cp -r /home/openfoam/hydrothermalfoam-master/cookbooks/2d/Regular2DBox/ ./Fault_
 <figure class="align-center" id="flow-fault-fig" style="width: 80%">
 <img alt="../../_images/flow_fault.png" src="../../_images/flow_fault.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 33 </span><span class="caption-text">Hydrothermal flow along a preferential pathway.</span><a class="headerlink" href="#flow-fault-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 32 </span><span class="caption-text">Hydrothermal flow along a preferential pathway.</span><a class="headerlink" href="#flow-fault-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition tip">

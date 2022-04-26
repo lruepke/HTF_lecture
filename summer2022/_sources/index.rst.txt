@@ -50,7 +50,7 @@ The majority of this course will be spent in front of a computer working on exer
     :caption: Lecture 1
 
     lectures/L01/Overview
-    lectures/L01/slide
+    
     lectures/L01/Installation
     lectures/L01/OpenFoam
     lectures/L01/FirstCase
@@ -60,8 +60,6 @@ The majority of this course will be spent in front of a computer working on exer
     :caption: Lecture 2
 
     lectures/L02/Overview
-    lectures/L02/slide
-    lectures/L02/intro
     lectures/L02/Example
     lectures/L02/Exercise  
 
@@ -70,7 +68,6 @@ The majority of this course will be spent in front of a computer working on exer
     :caption: Lecture 3
 
     lectures/L03/Overview
-    lectures/L03/slide
     lectures/L03/intro  
     lectures/L03/FirstCase  
     lectures/L03/Exercise  

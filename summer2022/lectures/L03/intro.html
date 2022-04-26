@@ -5,7 +5,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Porous Flow - Submarine Hydrothermal Systems &mdash; HydrothermalFoam Lecture  documentation</title>
+  <title>Digital Rock Physics - Effective Permeability of Rocks &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Hydrothermal convection test case" href="FirstCase.html" />
-    <link rel="prev" title="Accompanying slide deck" href="slide.html" /> 
+    <link rel="next" title="Computing effective permeability" href="FirstCase.html" />
+    <link rel="prev" title="Lecture overview" href="Overview.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -64,7 +64,6 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L01/slide.html">Accompanying slide deck</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
@@ -72,22 +71,17 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/slide.html">Accompanying slide deck</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/intro.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="slide.html">Accompanying slide deck</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Porous Flow - Submarine Hydrothermal Systems</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Digital Rock Physics - Effective Permeability of Rocks</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#theoretical-background">Theoretical background</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#equation-of-state">Equation-of-state</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FirstCase.html">Computing effective permeability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise.html">Excercises</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -158,7 +152,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Porous Flow - Submarine Hydrothermal Systems</li>
+      <li>Digital Rock Physics - Effective Permeability of Rocks</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L03/intro.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -192,44 +186,34 @@
     text-align: unset;
 }
 </style>
-<section id="porous-flow-submarine-hydrothermal-systems">
-<h1>Porous Flow - Submarine Hydrothermal Systems<a class="headerlink" href="#porous-flow-submarine-hydrothermal-systems" title="Permalink to this headline"></a></h1>
+<section id="digital-rock-physics-effective-permeability-of-rocks">
+<h1>Digital Rock Physics - Effective Permeability of Rocks<a class="headerlink" href="#digital-rock-physics-effective-permeability-of-rocks" title="Permalink to this headline"></a></h1>
 <section id="theoretical-background">
 <h2>Theoretical background<a class="headerlink" href="#theoretical-background" title="Permalink to this headline"></a></h2>
-<p>In the last lecture, we had made our first Navier-Stokes simulations, which resolved the full dynamics of fluid flow. When studying porous media, flow is often approximated by Darcy’s law that states that flow is proportional to the pressure gradient. The invovled constants are viscosity and permeability. Extensive theoretical work helped to elucidate the relationship between Navier-Stokes flow and Darcy flow, which was first derived as a phenomelogical equation.</p>
+<p>Flow in porous media occurs on different scales and differing theoretical frameworks are used to resolve flow on those scales.
+<strong>Direct simulations</strong> are based on solving the Navier-Stokes equation using a discretized representation(mesh) of the pore space. These simulations provide a complete description of how fluids flow through the pore network. Naturally, such simulations are computationally demanding as the nano- to micro-meter sized pores need to be resolved. In its simples incrompressible and stead-state form, it can be written as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-continuity">
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-continuity" title="Permalink to this equation"></a></span>\[\nabla \cdot \vec{U} = 0\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-mom-con">
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-mom-con" title="Permalink to this equation"></a></span>\[\nabla \cdot (\vec{U} \vec{U}) = \nabla \cdot (\nu \nabla \vec{U}) - \nabla p\]</div>
+<p>Where <a class="reference internal" href="#equation-eq-continuity">equation (4)</a> is the continuity equation (based on mass conservation) and <a class="reference internal" href="#equation-eq-mom-con">equation (5)</a> is the momentum balance equation. <span class="math notranslate nohighlight">\(\nu\)</span> is the kinematic viscosity and <span class="math notranslate nohighlight">\(p\)</span> the kinematic pressure.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>There are many books and resources out there on the derivation of the Navier-Stokes equations, including many in an OpenFOAM context. We really like <a class="reference external" href="https://holzmann-cfd.com/community/publications/mathematics-numerics-derivations-and-openfoam">Tobias Holtzmann’s book</a>. Have a look! There is also the new <a class="reference external" href="https://doc.cfd.direct/notes/cfd-general-principles/contents">book by CFD direct</a>.</p>
+</div>
+<p>An alternative are <strong>Continuum simulation</strong>, which effective properties (permeability) are used for representative control volumes are prescribed and <em>Darcy’s law</em> is used to compute the flow.</p>
+<div class="math notranslate nohighlight" id="equation-eq-darcy">
+<span class="eqno">(6)<a class="headerlink" href="#equation-eq-darcy" title="Permalink to this equation"></a></span>\[\vec{U} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})\]</div>
+<p>Here <span class="math notranslate nohighlight">\(\vec{U}\)</span> is the so-called Darcy velocity, which is the effective flow through a porous media (we will get to this later but this is actual velocity weighted by the porosity as flow only occurs in the pores). The involved constants are viscosity, <span class="math notranslate nohighlight">\(\mu_f\)</span>, and permeability, <span class="math notranslate nohighlight">\(\k\)</span> . Extensive theoretical work helped to elucidate the relationship between Navier-Stokes flow and Darcy flow, which was first derived as a phenomelogical equation.</p>
+<p>Note that <strong>direct</strong> and <strong>continuum</strong> simulatons are not <em>per se</em> related to absolute scales (like mm vs meters) but simply refer to differing relative length scales / processes that are resolved.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>There is a great pdf on the relationship between Navier-Stokes and Darcy flow on the webpages of <a class="reference external" href="https://www.cypriensoulaine.com/publications-copy">Cyprien Soulaine</a>.</p>
 </div>
-<p>During this lecture we will study single-phase hydrothermal flow in submarine hydrothermal systems. The respective solver is named <code class="code docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam</span></code>. The hydrothermal fluid flow is governed by Darcy’s law (Eqn. <a class="reference internal" href="#equation-eq-darcy">equation (19)</a>),
-mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti">equation (20)</a>) and energy conservation (Eqn. <a class="reference internal" href="#equation-eq-temperature">equation (22)</a>) equations shown below,</p>
-<div class="math notranslate nohighlight" id="equation-eq-darcy">
-<span class="eqno">(19)<a class="headerlink" href="#equation-eq-darcy" title="Permalink to this equation"></a></span>\[\vec{U} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})\]</div>
-<div class="math notranslate nohighlight" id="equation-eq-conti">
-<span class="eqno">(20)<a class="headerlink" href="#equation-eq-conti" title="Permalink to this equation"></a></span>\[\varepsilon \frac{\partial \rho_f}{\partial t} + \nabla \cdot (\vec{U} \rho_f)\]</div>
-<div class="math notranslate nohighlight" id="equation-eq-pressure">
-<span class="eqno">(21)<a class="headerlink" href="#equation-eq-pressure" title="Permalink to this equation"></a></span>\[\varepsilon \rho_f \left( \beta_f \frac{\partial p}{\partial t} - \alpha_f \frac{\partial T}{\partial t} \right) = \nabla \cdot \left( \rho_f \frac{k}{\mu_f} (\nabla p - \rho_f \vec{g}) \right)\]</div>
-<div class="math notranslate nohighlight" id="equation-eq-temperature">
-<span class="eqno">(22)<a class="headerlink" href="#equation-eq-temperature" title="Permalink to this equation"></a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{pr})\frac{\partial T}{\partial t} = \nabla \cdot (\lambda_r \nabla T) - \rho_f C_{pf} \vec{U}\cdot \nabla T + \frac{\mu_f}{k} \parallel \vec{U} \parallel ^2 - \left( \frac{\partial ln \rho_f}{\partial ln T} \right)_p \frac{Dp}{Dt}\]</div>
-<p>where the pressure equation <a class="reference internal" href="#equation-eq-pressure">equation (21)</a> is derived from continuity equation <a class="reference internal" href="#equation-eq-conti">equation (20)</a> and Darcy’s law <a class="reference internal" href="#equation-eq-darcy">equation (19)</a>.</p>
-</section>
-<section id="implementation">
-<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline"></a></h2>
-<p>The details of the OpenFoam implementation can be found in the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> documentation. Here we only show a brief summary. <a class="reference internal" href="#fig-htf-solution"><span class="std std-numref">Fig. 12</span></a> shows how the energy equation is solved within the OpenFoam framework.</p>
-<figure class="align-center" id="fig-htf-solution">
-<img alt="../../_images/solution_algorithm.svg" src="../../_images/solution_algorithm.svg" /><figcaption>
-<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Implementation of the energy conservation equation.</span><a class="headerlink" href="#fig-htf-solution" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-</section>
-<section id="equation-of-state">
-<h2>Equation-of-state<a class="headerlink" href="#equation-of-state" title="Permalink to this headline"></a></h2>
-<p>The fluid properties like density, viscosity, specific heat are determined from the equation-of-state of pure water. <a class="reference internal" href="#fig-phase-diagram"><span class="std std-numref">Fig. 13</span></a> shows the phase diagram of pure water. At sub-critical conditions (P&lt; 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems.</p>
-<figure class="align-center" id="fig-phase-diagram">
-<img alt="../../_images/PhaseDiagram.svg" src="../../_images/PhaseDiagram.svg" /><figcaption>
-<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Phase diagram of pure water.</span><a class="headerlink" href="#fig-phase-diagram" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
+<div class="admonition-further-info admonition">
+<p class="admonition-title">Further info</p>
+<p>Have a look at the <a class="reference external" href="https://www.digitalrocksportal.org">digital rock portal</a> to get a better idea of what Digital Rock Physics is all about!</p>
+</div>
 </section>
 </section>
 
@@ -237,8 +221,8 @@ mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti">eq
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="slide.html" class="btn btn-neutral float-left" title="Accompanying slide deck" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="FirstCase.html" class="btn btn-neutral float-right" title="Hydrothermal convection test case" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Overview.html" class="btn btn-neutral float-left" title="Lecture overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="FirstCase.html" class="btn btn-neutral float-right" title="Computing effective permeability" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

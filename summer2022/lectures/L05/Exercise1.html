@@ -64,7 +64,6 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L01/slide.html">Accompanying slide deck</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
@@ -72,17 +71,14 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/slide.html">Accompanying slide deck</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/intro.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L03/slide.html">Accompanying slide deck</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Computing effective permeability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Excercises</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -209,7 +205,7 @@
 <figure class="align-center" id="setup-l5-1-fig" style="width: 80%">
 <img alt="../../_images/lecture_plot.png" src="../../_images/lecture_plot.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 30 </span><span class="caption-text">Setup of our 2D test case for flow in a porous medium with variable permeability.</span><a class="headerlink" href="#setup-l5-1-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 29 </span><span class="caption-text">Setup of our 2D test case for flow in a porous medium with variable permeability.</span><a class="headerlink" href="#setup-l5-1-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <p>A good starting point for setting up new case is always to take an existing similar case. Here we can use one of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> benchmark cases. It’s located in <code class="code docutils literal notranslate"><span class="pre">$HOME/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1</span></code>.</p>
@@ -239,7 +235,7 @@ cp -r /home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1 .
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find <span class="nv">$HOME</span> -type f -name <span class="s2">&quot;setFieldsDict&quot;</span>
 </pre></div>
 </div>
-<p>Now that we have the setFieldsDict, we need to modify it. Do you remember <a class="reference internal" href="../L03/Exercise.html#l03-properties"><span class="std std-ref">Assign properties</span></a> part the two-layered convection <a class="reference internal" href="../L03/Exercise.html#l03-exercise"><span class="std std-ref">Excercises</span></a> in lecture 3? There we used the boxToCell function within <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> as an alternative way of making a layerd permeability structure. Now we can do the same here, just that we need several boxes.</p>
+<p>Now that we have the setFieldsDict, we need to modify it. Do you remember <a class="reference internal" href="../L03_old/Exercise.html#l03-properties"><span class="std std-ref">Assign properties</span></a> part the two-layered convection <a class="reference internal" href="../L03_old/Exercise.html#l03-exercise"><span class="std std-ref">Excercises</span></a> in lecture 3? There we used the boxToCell function within <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> as an alternative way of making a layerd permeability structure. Now we can do the same here, just that we need several boxes.</p>
 <p>This is how the code snippit looked like in lecture 3; take it as a starting point!</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>regions
 <span class="o">(</span>
@@ -263,7 +259,7 @@ cp -r /home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1 .
 <figure class="align-center" id="flow-l5-1-fig" style="width: 80%">
 <img alt="../../_images/hetero_perm_flow.png" src="../../_images/hetero_perm_flow.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 31 </span><span class="caption-text">Porous flow in the presence of permeability variations.</span><a class="headerlink" href="#flow-l5-1-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 30 </span><span class="caption-text">Porous flow in the presence of permeability variations.</span><a class="headerlink" href="#flow-l5-1-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>

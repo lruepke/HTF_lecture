@@ -5,7 +5,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Computing effective permeability &mdash; HydrothermalFoam Lecture  documentation</title>
+  <title>Hydrothermal convection test case &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
@@ -25,9 +25,7 @@
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Excercises" href="Exercise.html" />
-    <link rel="prev" title="Digital Rock Physics - Effective Permeability of Rocks" href="intro.html" /> 
+    <link rel="search" title="Search" href="../../search.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -75,24 +73,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Computing effective permeability</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#objective">Objective</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#mesh-generation">Mesh generation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#case-files">case files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Mesh generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#transport-properties">Transport properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#case-control">Case control</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-the-case">Running the case</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Exercise.html">Excercises</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Computing effective permeability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Excercises</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
 <ul>
@@ -162,9 +147,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Computing effective permeability</li>
+      <li>Hydrothermal convection test case</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L03/FirstCase.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L03_old/FirstCase.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -196,51 +181,10 @@
     text-align: unset;
 }
 </style>
-<section id="computing-effective-permeability">
-<span id="l03-firstcase"></span><h1>Computing effective permeability<a class="headerlink" href="#computing-effective-permeability" title="Permalink to this headline"></a></h1>
-<section id="objective">
-<h2>Objective<a class="headerlink" href="#objective" title="Permalink to this headline"></a></h2>
-<p>Starting from an image of a sample’s pore space, we want to compute its effective permeability. Or put differently, we will make a <strong>direct</strong> simulation of flow on the pore level and post-process it for extracting the effective permeability for simplified <strong>continuum</strong> simulations using Darcy’s law.</p>
-<figure class="align-center" id="fig-porousmodel-fig" style="width: 70%">
-<img alt="../../_images/porousModel.png" src="../../_images/porousModel.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Synthetic image of the pore geometry. Pores are white; solid is black.</span><a class="headerlink" href="#fig-porousmodel-fig" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-<p>To compute the effective permeability, we will apply constant pressure boundary conditions and evaluate the flow rate through the sample. Once we have that, we can re-arrange Darcy’s law to solve for permeability:</p>
-<div class="math notranslate nohighlight" id="equation-eq-darcy-perm">
-<span class="eqno">(7)<a class="headerlink" href="#equation-eq-darcy-perm" title="Permalink to this equation"></a></span>\[    K_{i,j} \, = \, \mu \Biggl( \frac{ \Delta P}{ \Delta x_j} \Biggr)^{-1} \, \Biggl( \frac{1}{V} \int_V u_i \, dV \Biggr) \; .\]</div>
-</section>
-<section id="workflow">
-<h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline"></a></h2>
-<p>Ok, let’s do it!</p>
-<section id="mesh-generation">
-<h3>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline"></a></h3>
-<p>The first major step is to generate a mesh of the pores space shwon in <a class="reference internal" href="#fig-porousmodel-fig"><span class="std std-numref">Fig. 11</span></a>. For this purpose, we will use <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4">OpenFOAM’s snappyHexMesh tool</a>. It allows meshing arbitrary geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>We will not go into the details of snappyHexMesh (SHM). If you want to use it and/or understand it, a good starting point is the user-guide linked above. Another great resource are the <a class="reference external" href="https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic">Rock Vapor Classic tutorial series</a> .</p>
-</div>
-<p>In a nutshell, SHM is about starting from a blockMesh (as in the previous lecture) and then cutting-out portions according to a surface and then <em>snapping</em> the mesh to this surface. A typical way to desribe this surface is and .stl file - a typical file format for triangulated surface that is also often used for 3D printing.</p>
-<figure class="align-center" id="fig-figure-workflow-fig" style="width: 85%">
-<img alt="../../_images/figure_workflow.jpg" src="../../_images/figure_workflow.jpg" />
-<figcaption>
-<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Workflow illustrating the meshing process.</span><a class="headerlink" href="#fig-figure-workflow-fig" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-<p><a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> illustrates the steps involved. Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters.</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li><p>start with an image (A).</p></li>
-<li><p>save it as a .vti file that is easily understood by Paraview. We use <a class="reference external" href="https://porespy.org/">porespy</a> for this step.</p></li>
-<li><p>load the vti file into paraview and use the <em>clip</em> (B) and <em>triangulation</em> (B) filers to created a surface of the pore space (C).</p></li>
-<li><p>save this surface as a stl file</p></li>
-</ol>
-</div></blockquote>
-</section>
-</section>
-<section id="case-files">
-<h2>case files<a class="headerlink" href="#case-files" title="Permalink to this headline"></a></h2>
+<section id="hydrothermal-convection-test-case">
+<span id="l03-firstcase"></span><h1>Hydrothermal convection test case<a class="headerlink" href="#hydrothermal-convection-test-case" title="Permalink to this headline"></a></h1>
+<section id="prepare-case-files">
+<h2>Prepare case files<a class="headerlink" href="#prepare-case-files" title="Permalink to this headline"></a></h2>
 <p>To get started we will run the <strong>Regular2DBox</strong> case from the cookbook directory of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a>. This cookbooks describes how we can simulate a simple hydrothermal convection cell. It resolves hydrothermal convection driven by a gaussian-shaped constant temperature boundary condition at the bottom.</p>
 <p>Copy the  case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:</p>
 <div class="highlight-bash notranslate" id="lst-cp2dboxtoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
@@ -249,7 +193,7 @@ cp -r <span class="nv">$HOME</span>/hydrothermalfoam-master/cookbooks/2d/Regular
 </div>
 <p>Check out the directory structure shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:2dbox:tree</span></code>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-tree">
-<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">File tree structure of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-tree" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-text">File tree structure of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-tree" title="Permalink to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>.
 <span class="linenos"> 2</span><span class="p">|</span>-- <span class="m">0</span>
 <span class="hll"><span class="linenos"> 3</span><span class="p">|</span>   <span class="p">|</span>-- T
@@ -276,8 +220,8 @@ cp -r <span class="nv">$HOME</span>/hydrothermalfoam-master/cookbooks/2d/Regular
 </div>
 <p>The 0 directory contains all initial and boundary conditions, the system folder contains all controlling parameter files, and the constant folder contains constant properties like the mesh - which we will create next.</p>
 </section>
-<section id="id1">
-<h2>Mesh generation<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
+<section id="mesh-generation">
+<h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline"></a></h2>
 <p>The case is run on a simple 2-d-box-like geometry and the mesh is build using <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code>, just like in the previous lecture on cavity flow. Look at <code class="code docutils literal notranslate"><span class="pre">blockMeshDict</span></code> and check that you sill understand the structure. Afterwards, you can create the mesh:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>blockMesh
 </pre></div>
@@ -295,7 +239,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-bc">
-<div class="code-block-caption"><span class="caption-number">Listing 12 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -366,7 +310,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-bc-p">
-<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc-p" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc-p" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -425,7 +369,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-perm">
-<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">Permeability on hydrothermal flow simulations.</span><a class="headerlink" href="#lst-2dbox-perm" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-text">Permeability on hydrothermal flow simulations.</span><a class="headerlink" href="#lst-2dbox-perm" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -463,7 +407,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-cdict">
-<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">controlDict of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-cdict" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-text">controlDict of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-cdict" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -518,7 +462,7 @@ paraview a.foam
 <figure class="align-center" id="fig-regular2dbox-fig">
 <img alt="../../_images/RegularBox2D.png" src="../../_images/RegularBox2D.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Results of the Regular2DBox example calculation.</span><a class="headerlink" href="#fig-regular2dbox-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-text">Results of the Regular2DBox example calculation.</span><a class="headerlink" href="#fig-regular2dbox-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -527,10 +471,7 @@ paraview a.foam
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="intro.html" class="btn btn-neutral float-left" title="Digital Rock Physics - Effective Permeability of Rocks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Exercise.html" class="btn btn-neutral float-right" title="Excercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 
