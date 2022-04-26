@@ -8,7 +8,7 @@ Computing effective permeability
 Objective
 ---------
 
-Starting from an image of a sample's pore space, we want to compute its effective permeability. Or put differently, we will make a **direct** simulation of flow on the pore level and post-process it for extracting the effective permeability for simplified **continuum** simulations using Darcy's law.
+Starting from a digital representation of a sample's pore space (typically an image produced by a cT-scan), we want to compute its effective permeability. Or put differently, we will make a **direct** simulation of flow on the pore level and post-process it for extracting the effective permeability for simplified **continuum** simulations using Darcy's law.
 
 
 .. figure:: /_figures/porousModel.*
@@ -34,12 +34,12 @@ Ok, let's do it!
 
 Mesh generation
 ^^^^^^^^^^^^^^^
-The first major step is to generate a mesh of the pores space shwon in :numref:`fig:porousModel_fig`. For this purpose, we will use `OpenFOAM's snappyHexMesh tool <https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4>`_. It allows meshing arbitrary geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made. 
+The first major step is to generate a mesh of the pores space shown in :numref:`fig:porousModel_fig`. For this purpose, we will use `OpenFOAM's snappyHexMesh tool <https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4>`_ . It allows meshing arbitrary geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made. 
 
 .. tip::
     We will not go into the details of snappyHexMesh (SHM). If you want to use it and/or understand it, a good starting point is the user-guide linked above. Another great resource are the `Rock Vapor Classic tutorial series <https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic>`_ .
 
-In a nutshell, SHM is about starting from a blockMesh (as in the previous lecture) and then cutting-out portions according to a surface and then *snapping* the mesh to this surface. A typical way to desribe this surface is and .stl file - a typical file format for triangulated surface that is also often used for 3D printing.
+In a nutshell, snappyHexMesh (SHM) is about starting from a blockMesh (as in the previous lecture) and then cutting-out the solid grain (described by a triangulated surface), and then *snapping* the mesh to this surface. A typical way to describe this surface is an .stl file - a typical file format for triangulated surfaces that is also often used for 3D printing.
 
 
 .. figure:: /_figures/figure_workflow.*
@@ -50,7 +50,7 @@ In a nutshell, SHM is about starting from a blockMesh (as in the previous lectur
    Workflow illustrating the meshing process.
 
 
-:numref:`fig:figure_workflow_fig` illustrates the steps involved. Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters.
+The steps involved are shown in :numref:`fig:figure_workflow_fig` . Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters.
 
     #. start with an image (A).
     #. save it as a .vti file that is easily understood by Paraview. We use `porespy <https://porespy.org/>`_ for this step.
@@ -58,10 +58,212 @@ In a nutshell, SHM is about starting from a blockMesh (as in the previous lectur
     #. save this surface as a stl file
 
 
+Python pre-processing
+^^^^^^^^^^^^^^^^^^^^^
+
+Let's work through the steps involved and assume we received a 2-D image of scanned pore space ( :numref:`fig:figure_workflow_fig` A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it and the first steps are to install porespy into our python virtual environment (we should already have PIL, which is also needed).
+
+.. code-block:: bash
+
+      conda activate "your_environment_name"
+      conda install -c conda-forge porespy
+
+.. tip::
+
+    If conda install fails, you can also use :code:`pip install porespy`
+    
+    
+Now we are good to go and it's time to download the data. The complete openFOAM case can be downloaded from :download:`here <cases/DRP_permeability_2D.zip>` . Next we import the .png file from the :code:`geometry` folder and convert it to a .vti file, which is the `Visualization Toolkit's <https://vtk.org>`_ format for storing image data. Note that vti files can also store series of images, which is important when doing this in 3-D.
+
+.. code-block:: python
+    
+    import numpy as np   
+    from PIL import Image
+    import porespy as ps
+
+    impath = 'geometry/'         # image path
+    imname = 'porousModel.png'   # file name 
+
+    image = Image.open('%s/%s'%(impath,imname)).convert("L")                   # open image
+    arr = np.asarray(image)                                                    # convert image to array
+    ps.io.to_vtk(np.array(arr, dtype=int)[:, :, np.newaxis], 'porous_model')   # use porespy and save to .vti format
+
+You can put this little script into a jupyter notebook, or save it as .py file to be run from the command line. After running it, you should  have a file :code:`porous_model.vti` in the folder where you executed the script. Now comes the segementation and triangulation part. We can use paraview's python interface for this (or do everything by hand using the graphical user interface).
+
+.. code-block:: python
+
+    # workflow as python code using the paraview.simple module
+    from paraview.simple import *
+    
+    def write_stl(vti_file, stl_file):
+        data = OpenDataFile('%s.vti'%vti_file)
+        clip1 = Clip(data, ClipType = 'Scalar', Scalars = ['CELLS', 'im'], Value = 127.5, Invert = 1) 
+        extractSurface1 = ExtractSurface(clip1)
+        triangulate1 = Triangulate(extractSurface1)
+        SaveData(stl_file, proxy = triangulate1)
+    
+    vti_file = 'porous_model'      # input .vti file
+    stl_file = 'porous_model.stl'  # output .stl file
+
+    write_stl(vti_file, stl_file)
 
 
-case files
-------------------
+Getting the paraview.simple module to work in a virtual environment is a challenge. The easiest workaround is to use paraview's python shell and execute the script there:
+
+.. figure:: /_figures/paraview_python.*
+   :align: center
+   :name: fig:figure_workflow_fig
+   :figwidth: 85%
+
+   Using the paraview python shell.
+
+
+An easy way to do this is to use these commands:
+
+.. code:: python
+
+    import os 
+
+    os.chdir("your_case_directory")
+    exec(open("your_file_name.py").read())
+    
+
+This will create a .stl file, which we will use in the meshing process. Let's do some clean up and move the vti file into :code:`./geometry` and the stl file into :code:`./constant/triSurface`, where openFOAM expects it. This assumes that you are in the case directory.
+
+.. code:: bash
+
+    mv ./porous_model.vti ./geometry/
+    mv ./porous_model.stl ./constant/triSurface/
+
+
+OpenFOAM case
+^^^^^^^^^^^^^
+
+Great, back to openfoam for the final mesh making! Making the mesh with SHM is a two-step process. First we make a standard blockMesh background mesh. This is, as usual, controlled by :code:`system/blockMeshDict`:
+
+.. code-block:: foam 
+    :caption: blockMeshDict
+    :emphasize-lines: 24, 25, 40, 49
+    :linenos:
+
+
+    /*--------------------------------*- C++ -*----------------------------------*\
+    =========                 |
+    \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+     \\    /   O peration     | Website:  https://openfoam.org
+      \\  /    A nd           | Version:  7
+       \\/     M anipulation  |
+    \*---------------------------------------------------------------------------*/
+    FoamFile
+    {
+        version     2.0;
+        format      ascii;
+        class       dictionary;
+        object      blockMeshDict;
+    }
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    convertToMeters 1;
+
+    lx0 0;
+    ly0 0;
+    lz0 0;
+
+    lx1 1196;
+    ly1 1494;
+    lz1 1;
+
+    vertices
+    (
+        ($lx0 $ly0 $lz0)   //0
+        ($lx1 $ly0 $lz0)   //1
+        ($lx1 $ly1 $lz0)   //2
+        ($lx0 $ly1 $lz0)   //3
+        ($lx0 $ly0 $lz1)   //4
+        ($lx1 $ly0 $lz1)   //5
+        ($lx1 $ly1 $lz1)   //6
+        ($lx0 $ly1 $lz1)   //7
+    );
+
+    blocks
+    (
+        hex (0 1 2 3 4 5 6 7) (315 390 1) simpleGrading (1 1 1)
+    );
+
+    edges
+    (
+    );
+
+    boundary
+    (
+        top
+        {
+            type symmetryPlane;
+            faces
+            (
+                (7 6 3 2)
+            );
+        }
+
+        inlet
+        {
+            type wall;
+            faces
+            (
+                (0 4 7 3)
+            );
+        }
+
+        bottom
+        {
+            type symmetryPlane;
+            faces
+            (
+                (1 5 4 0)
+            );
+        }
+
+        outlet
+        {
+            type patch;
+            faces
+            (
+                (1 2 6 5)
+            );
+        }
+
+
+        frontAndBack
+        {
+            type empty;
+            faces
+            (
+                (0 3 2 1)
+                (4 5 6 7)
+            );
+        }
+    );
+
+
+Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions. Notice also how the box is described and how boundary conditions are applied.
+
+Now have a look at :code:`system/snappyHexMeshDict`. We will not go into details here, just explore the general structure yourself if you are interested using the resources linked above.
+
+Now it's time to make the mesh. Run each of the steps below individually and check out the results in paraview!
+
+.. code:: bash
+
+    blockMesh
+    snappyHexMesh -overwrite
+    checkMesh -allTopology -allGeometry
+    transformPoints -scale "(1e-6 1e-6 1e-6)"
+
+The final conversion turns everything in micrometer (:math:`10^{-6} m`). Check out the final mesh in paraview, it should look like this:
+
+
+
+
 To get started we will run the **Regular2DBox** case from the cookbook directory of |foam|. This cookbooks describes how we can simulate a simple hydrothermal convection cell. It resolves hydrothermal convection driven by a gaussian-shaped constant temperature boundary condition at the bottom. 
 
 Copy the  case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:
