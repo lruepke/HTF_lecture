@@ -1,5 +1,3 @@
-Navier-Stokes flow with OpenFoam
-================================
 
 Theoretical background
 -------------------------------------

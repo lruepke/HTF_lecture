@@ -3,21 +3,11 @@
 Lecture overview
 ================
 
-In this lecture we will explore flow in porous media and use the |foam| solvers to solve for flow in submarine hydrothermal systems.
+In this lecture we explore an example problem from the field "Digital Rock Physics". The concept behind this is that we assess the hydro-geological properties of porous rocks using direct numerical simulations.As an example problem, we will calculate the effective permeability of a synthetic 2-D representation of the pore space. The steps involved include:
 
-.. figure:: /_figures/hts_cartoon.*
-   :align: center
-   :name: fig:hts_cartoon
+   * Using a png image as input and turning it into a pore-space model
+   * Meshing the pore space using `openFoam's snappyHexMesh tool <https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4>`_  
+   * Performing a flow simulations using constant pressure boundary conditions
+   * Computing the effective permeability of the sample by evaluating the total flow
 
-   Cartoon illustrating flow in a submarine hydrothermal circulation system :cite:`ingebritsen2010numerical`.
 
-.. only:: html
-
-   A numerical of hydrothermal flow at the East Pacific Rise at 9N by :cite:`hasenclever2014hybrid`.
-
-   .. raw:: html
-
-      <video width=100% autoplay muted controls loop>
-         <source src="../../_static/video/Hasenclever_EPR_small.mp4" type="video/mp4">
-         Your browser does not support HTML video.
-      </video>

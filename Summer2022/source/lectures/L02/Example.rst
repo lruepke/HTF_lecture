@@ -1,5 +1,8 @@
-Example
+Navier-Stokes flow with OpenFoam
 ================================
+
+In this lecture we will solve the famous Navier-Stokes equation for flow. At this point, we will not worry about the detailed equations we are solving. Let's just accept that the Navier-Stokes equation(s) allow us to solve for the motion of a fluid subject to boundary conditions (simply speaking). 
+
 
 2D cavity flow
 ------------------------

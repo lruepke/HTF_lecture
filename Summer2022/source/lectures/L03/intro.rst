@@ -1,59 +1,45 @@
 .. include:: /include.rst_
 
-Porous Flow - Submarine Hydrothermal Systems
-============================================
+Digital Rock Physics - Effective Permeability of Rocks
+======================================================
 
 Theoretical background
 -------------------------------------
 
-In the last lecture, we had made our first Navier-Stokes simulations, which resolved the full dynamics of fluid flow. When studying porous media, flow is often approximated by Darcy's law that states that flow is proportional to the pressure gradient. The invovled constants are viscosity and permeability. Extensive theoretical work helped to elucidate the relationship between Navier-Stokes flow and Darcy flow, which was first derived as a phenomelogical equation.
+Flow in porous media occurs on different scales and differing theoretical frameworks are used to resolve flow on those scales. 
+**Direct simulations** are based on solving the Navier-Stokes equation using a discretized representation(mesh) of the pore space. These simulations provide a complete description of how fluids flow through the pore network. Naturally, such simulations are computationally demanding as the nano- to micro-meter sized pores need to be resolved. In its simples incrompressible and stead-state form, it can be written as:
+
+.. math::
+    :label: eq:continuity 
+
+    \nabla \cdot \vec{U} = 0
+    
+.. math::
+    :label: eq:mom_con
+    
+    \nabla \cdot (\vec{U} \vec{U}) = \nabla \cdot (\nu \nabla \vec{U}) - \nabla p
+
+Where :eq:`eq:continuity` is the continuity equation (based on mass conservation) and :eq:`eq:mom_con` is the momentum balance equation. :math:`\nu` is the kinematic viscosity and :math:`p` the kinematic pressure.
 
 .. tip::
-    There is a great pdf on the relationship between Navier-Stokes and Darcy flow on the webpages of `Cyprien Soulaine <https://www.cypriensoulaine.com/publications-copy>`_.
+    There are many books and resources out there on the derivation of the Navier-Stokes equations, including many in an OpenFOAM context. We really like `Tobias Holtzmann's book <https://holzmann-cfd.com/community/publications/mathematics-numerics-derivations-and-openfoam>`_. Have a look! There is also the new `book by CFD direct <https://doc.cfd.direct/notes/cfd-general-principles/contents>`_.
 
-During this lecture we will study single-phase hydrothermal flow in submarine hydrothermal systems. The respective solver is named :code:`HydrothermalSinglePhaseDarcyFoam`. The hydrothermal fluid flow is governed by Darcy's law (Eqn. :eq:`eq:darcy`), 
-mass continuity (Eqn. :eq:`eq:conti`) and energy conservation (Eqn. :eq:`eq:temperature`) equations shown below, 
+
+An alternative are **Continuum simulation**, which effective properties (permeability) are used for representative control volumes are prescribed and *Darcy's law* is used to compute the flow.
 
 .. math::
     :label: eq:darcy 
 
     \vec{U} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})
-      
-.. math::
-    :label: eq:conti
-    
-    \varepsilon \frac{\partial \rho_f}{\partial t} + \nabla \cdot (\vec{U} \rho_f)
 
-.. math::
-    :label: eq:pressure
-    
-    \varepsilon \rho_f \left( \beta_f \frac{\partial p}{\partial t} - \alpha_f \frac{\partial T}{\partial t} \right) = \nabla \cdot \left( \rho_f \frac{k}{\mu_f} (\nabla p - \rho_f \vec{g}) \right)
+Here :math:`\vec{U}` is the so-called Darcy velocity, which is the effective flow through a porous media (we will get to this later but this is actual velocity weighted by the porosity as flow only occurs in the pores). The involved constants are viscosity, :math:`\mu_f`, and permeability, :math:`\k` . Extensive theoretical work helped to elucidate the relationship between Navier-Stokes flow and Darcy flow, which was first derived as a phenomelogical equation.
 
-.. math::
-    :label: eq:temperature
-    
-    (\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{pr})\frac{\partial T}{\partial t} = \nabla \cdot (\lambda_r \nabla T) - \rho_f C_{pf} \vec{U}\cdot \nabla T + \frac{\mu_f}{k} \parallel \vec{U} \parallel ^2 - \left( \frac{\partial ln \rho_f}{\partial ln T} \right)_p \frac{Dp}{Dt}
+Note that **direct** and **continuum** simulatons are not *per se* related to absolute scales (like mm vs meters) but simply refer to differing relative length scales / processes that are resolved.
 
-where the pressure equation :eq:`eq:pressure` is derived from continuity equation :eq:`eq:conti` and Darcy's law :eq:`eq:darcy`.
-
-Implementation
---------------
-The details of the OpenFoam implementation can be found in the |foam| documentation. Here we only show a brief summary. :numref:`fig:htf_solution` shows how the energy equation is solved within the OpenFoam framework.
+.. tip::
+    There is a great pdf on the relationship between Navier-Stokes and Darcy flow on the webpages of `Cyprien Soulaine <https://www.cypriensoulaine.com/publications-copy>`_.
 
 
-.. figure:: /_figures/solution_algorithm.* 
-   :align: center
-   :name: fig:htf_solution
+.. admonition:: Further info
 
-   Implementation of the energy conservation equation.
-
-Equation-of-state
------------------
-The fluid properties like density, viscosity, specific heat are determined from the equation-of-state of pure water. :numref:`fig:phase_diagram` shows the phase diagram of pure water. At sub-critical conditions (P< 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. |foam| is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems. 
-
-
-.. figure:: /_figures/PhaseDiagram.*
-   :align: center
-   :name: fig:phase_diagram
-
-   Phase diagram of pure water.
+    Have a look at the `digital rock portal <https://www.digitalrocksportal.org>`_ to get a better idea of what Digital Rock Physics is all about! 
