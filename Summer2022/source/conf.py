@@ -208,9 +208,9 @@ class APALabelStyle(BaseLabelStyle):
             return "{}, n.d.".format(label)
 
     def format_author_or_editor_names(self, persons):
-        if len(persons) is 1:
+        if len(persons) == 1:
             return _strip_nonalnum(persons[0].last_names)
-        elif len(persons) is 2:
+        elif len(persons) == 2:
             return "{} & {}".format(
                 _strip_nonalnum(persons[0].last_names),
                 _strip_nonalnum(persons[1].last_names))

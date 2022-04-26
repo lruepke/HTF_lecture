@@ -2,65 +2,10 @@
 
 .. _L03_FirstCase:
 
-Computing effective permeability
+Hydrothermal convection test case
 ==================================
 
-Objective
----------
-
-Starting from an image of a sample's pore space, we want to compute its effective permeability. Or put differently, we will make a **direct** simulation of flow on the pore level and post-process it for extracting the effective permeability for simplified **continuum** simulations using Darcy's law.
-
-
-.. figure:: /_figures/porousModel.*
-   :align: center
-   :name: fig:porousModel_fig
-   :figwidth: 70%
-
-   Synthetic image of the pore geometry. Pores are white; solid is black.
-
-
-To compute the effective permeability, we will apply constant pressure boundary conditions and evaluate the flow rate through the sample. Once we have that, we can re-arrange Darcy's law to solve for permeability:
-
-.. math::
-    :label: eq:darcy_perm 
-
-        K_{i,j} \, = \, \mu \Biggl( \frac{ \Delta P}{ \Delta x_j} \Biggr)^{-1} \, \Biggl( \frac{1}{V} \int_V u_i \, dV \Biggr) \; .
-
-
-Workflow
---------
-
-Ok, let's do it!
-
-Mesh generation
-^^^^^^^^^^^^^^^
-The first major step is to generate a mesh of the pores space shwon in :numref:`fig:porousModel_fig`. For this purpose, we will use `OpenFOAM's snappyHexMesh tool <https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4>`_. It allows meshing arbitrary geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made. 
-
-.. tip::
-    We will not go into the details of snappyHexMesh (SHM). If you want to use it and/or understand it, a good starting point is the user-guide linked above. Another great resource are the `Rock Vapor Classic tutorial series <https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic>`_ .
-
-In a nutshell, SHM is about starting from a blockMesh (as in the previous lecture) and then cutting-out portions according to a surface and then *snapping* the mesh to this surface. A typical way to desribe this surface is and .stl file - a typical file format for triangulated surface that is also often used for 3D printing.
-
-
-.. figure:: /_figures/figure_workflow.*
-   :align: center
-   :name: fig:figure_workflow_fig
-   :figwidth: 85%
-
-   Workflow illustrating the meshing process.
-
-
-:numref:`fig:figure_workflow_fig` illustrates the steps involved. Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters.
-
-    #. start with an image (A).
-    #. save it as a .vti file that is easily understood by Paraview. We use `porespy <https://porespy.org/>`_ for this step.
-    #. load the vti file into paraview and use the *clip* (B) and *triangulation* (B) filers to created a surface of the pore space (C).
-    #. save this surface as a stl file
-
-
-
-
-case files
+Prepare case files
 ------------------
 To get started we will run the **Regular2DBox** case from the cookbook directory of |foam|. This cookbooks describes how we can simulate a simple hydrothermal convection cell. It resolves hydrothermal convection driven by a gaussian-shaped constant temperature boundary condition at the bottom. 
 
