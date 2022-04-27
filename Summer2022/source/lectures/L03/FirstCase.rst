@@ -475,7 +475,7 @@ Again, in incompressible simulations (where we can divide the momentum balance e
 Case control
 ^^^^^^^^^^^^
 
-Finally, we need to set some control parameters in system/controlDict. Open it and explore the values
+Finally, we need to set some control parameters in :code:`system/controlDict`. Open it and explore the values.
 
 .. code-block:: bash 
 
@@ -533,26 +533,25 @@ Finally, we need to set some control parameters in system/controlDict. Open it a
 
     runTimeModifiable true;
 
-The solver is a stead-state solver, so that the settings are quite simple with respect to transient solution.
+The solver is a stead-state solver, so that the settings are quite simple with respect to transient simulations.
 
 
 Running the case
 ^^^^^^^^^^^^^^^^
-Now we are finally ready to run our first test case. Just type this into your docker shell:
+Now we are finally ready to run the case! Just type this into your docker shell:
 
 .. code-block:: bash 
 
     ./run.sh
 
-or 
+or, if you did the steps above by hand:
+
 .. code-block:: bash 
 
     simpleFoam
 
 
-if you did the steps above by hand.
-
-Notice how one new directory is appearing, which contains the steady-state solution. Check that the solution has converged by looking at the log.simpleFoam file.
+Notice how one new directory is appearing, which contains the steady-state solution. Check that the solution has converged by looking at the :code:`log.simpleFoam` file.
 
 .. code-block:: bash
 
@@ -585,10 +584,7 @@ And explore the solution in Paraview!
 Post-processing / Effective permeability
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve :eq:`eq:darcy_perm`.
-
-Solving :eq:`eq:darcy_perm` requires are few intermediate steps. First we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM's `postProcess <https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/>`_ functionality handy. Just do this:
-
+Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve :eq:`eq:darcy_perm`, which requires are few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM's `postProcess <https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/>`_ functionality handy. Just do this:
 
 .. code-block:: bash 
 
@@ -602,7 +598,7 @@ This will create a new variable :math:`V` in in the output directories, which is
     foamToVTK -useTimeName -latestTime -poly
 
 
-Check that a new :code:`VTK` directory was created. Now we are ready for some more fancy post-processing using python. Main idea is to show how we can python for more detailed post-processing (or plotting).
+Check that a new :code:`VTK` directory was created. Now we are ready for some more fancy post-processing using python.
 
 Here is an example script for computing permeability. You can turn it into a jupyter notebook or save it as a .py file into your case directory and run it from there.
 
@@ -659,4 +655,4 @@ Here is an example script for computing permeability. You can turn it into a jup
 
     print('Bulk permeability: %5.3e m2' % kxx)
 
-We made it - :math:`2.71e^{-11} m^2` is our predicted effective permeability of our sample!  
+We made it! :math:`2.71e^{-11} m^2` is our predicted effective permeability of our sample. 
