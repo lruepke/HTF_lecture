@@ -26,7 +26,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Excercises" href="Exercise.html" />
+    <link rel="next" title="Exercises" href="Exercise.html" />
     <link rel="prev" title="Digital Rock Physics - Effective Permeability of Rocks" href="intro.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
@@ -95,7 +95,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Exercise.html">Excercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise.html">Exercises</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -615,7 +615,7 @@ transformPoints -scale <span class="s2">&quot;(1e-6 1e-6 1e-6)&quot;</span>
 </section>
 <section id="case-control">
 <h3>Case control<a class="headerlink" href="#case-control" title="Permalink to this headline"></a></h3>
-<p>Finally, we need to set some control parameters in system/controlDict. Open it and explore the values</p>
+<p>Finally, we need to set some control parameters in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>. Open it and explore the values.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code system/controlDict
 </pre></div>
 </div>
@@ -669,21 +669,19 @@ transformPoints -scale <span class="s2">&quot;(1e-6 1e-6 1e-6)&quot;</span>
 </pre></div>
 </div>
 </div>
-<p>The solver is a stead-state solver, so that the settings are quite simple with respect to transient solution.</p>
+<p>The solver is a stead-state solver, so that the settings are quite simple with respect to transient simulations.</p>
 </section>
 <section id="running-the-case">
 <h3>Running the case<a class="headerlink" href="#running-the-case" title="Permalink to this headline"></a></h3>
-<p>Now we are finally ready to run our first test case. Just type this into your docker shell:</p>
+<p>Now we are finally ready to run the case! Just type this into your docker shell:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run.sh
 </pre></div>
 </div>
-<p>or
-.. code-block:: bash</p>
-<blockquote>
-<div><p>simpleFoam</p>
-</div></blockquote>
-<p>if you did the steps above by hand.</p>
-<p>Notice how one new directory is appearing, which contains the steady-state solution. Check that the solution has converged by looking at the log.simpleFoam file.</p>
+<p>or, if you did the steps above by hand:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>simpleFoam
+</pre></div>
+</div>
+<p>Notice how one new directory is appearing, which contains the steady-state solution. Check that the solution has converged by looking at the <code class="code docutils literal notranslate"><span class="pre">log.simpleFoam</span></code> file.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tail -15 tail -15 log.simpleFoam
 
 <span class="nv">Time</span> <span class="o">=</span> <span class="m">537</span>
@@ -710,8 +708,7 @@ End
 </section>
 <section id="post-processing-effective-permeability">
 <h3>Post-processing / Effective permeability<a class="headerlink" href="#post-processing-effective-permeability" title="Permalink to this headline"></a></h3>
-<p>Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve <a class="reference internal" href="#equation-eq-darcy-perm">equation (7)</a>.</p>
-<p>Solving <a class="reference internal" href="#equation-eq-darcy-perm">equation (7)</a> requires are few intermediate steps. First we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM’s <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/">postProcess</a> functionality handy. Just do this:</p>
+<p>Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve <a class="reference internal" href="#equation-eq-darcy-perm">equation (7)</a>, which requires are few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM’s <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/">postProcess</a> functionality handy. Just do this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>postProcess -func writeCellVolumes
 </pre></div>
 </div>
@@ -719,7 +716,7 @@ End
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>foamToVTK -useTimeName -latestTime -poly
 </pre></div>
 </div>
-<p>Check that a new <code class="code docutils literal notranslate"><span class="pre">VTK</span></code> directory was created. Now we are ready for some more fancy post-processing using python. Main idea is to show how we can python for more detailed post-processing (or plotting).</p>
+<p>Check that a new <code class="code docutils literal notranslate"><span class="pre">VTK</span></code> directory was created. Now we are ready for some more fancy post-processing using python.</p>
 <p>Here is an example script for computing permeability. You can turn it into a jupyter notebook or save it as a .py file into your case directory and run it from there.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">vtk</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -772,7 +769,7 @@ End
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bulk permeability: </span><span class="si">%5.3e</span><span class="s1"> m2&#39;</span> <span class="o">%</span> <span class="n">kxx</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>We made it - <span class="math notranslate nohighlight">\(2.71e^{-11} m^2\)</span> is our predicted effective permeability of our sample!</p>
+<p>We made it! <span class="math notranslate nohighlight">\(2.71e^{-11} m^2\)</span> is our predicted effective permeability of our sample.</p>
 </section>
 </section>
 </section>
@@ -782,7 +779,7 @@ End
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="intro.html" class="btn btn-neutral float-left" title="Digital Rock Physics - Effective Permeability of Rocks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Exercise.html" class="btn btn-neutral float-right" title="Excercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Exercise.html" class="btn btn-neutral float-right" title="Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
