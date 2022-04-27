@@ -1,9 +1,9 @@
 .. include:: /include.rst_
 
-.. _L03_FirstCase:
+.. _L04_FirstCase:
 
 Hydrothermal convection test case
-==================================
+====================================
 
 Prepare case files
 ------------------
