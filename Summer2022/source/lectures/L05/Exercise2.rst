@@ -114,7 +114,7 @@ The figure below shows an example plot of the final temperature solution. It bas
    :align: center
    :name: fig:T_Jupp_Schultz_steady
 
-   The steady-state temperature distribution. See :ref:`/lectures/L04/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb#Temperature-+-velocity-field-(quiver)` in the notebook.
+   The steady-state temperature distribution. See :ref:`/lectures/L05/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb#Temperature-+-velocity-field-(quiver)` in the notebook.
 
 
 Click on the link in the figure caption and go through the notebook. Safest way of getting this to work is to copy the steps into local notebooks (see :ref:`Installation guide`). 
@@ -157,7 +157,7 @@ Effect of cell size (**CS**) and full width at half maximum (**FWHM**),
    :align: center
    :name: fig:Jupp_Schultz_early
 
-   Early stages of the simulation. See :ref:`/lectures/L04/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb#Early-stage` in the notebook.
+   Early stages of the simulation. See :ref:`/lectures/L05/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb#Early-stage` in the notebook.
 
 
 .. toctree::
