@@ -2,7 +2,7 @@
 
 .. _L03_Exercise:
 
-Excercises
+Exercises
 ==========
 Let's explore the solution in a bit more detail.
 
@@ -16,5 +16,5 @@ Make a copy of your case and repeat the analysis in the vertical direction. You 
 
 Changes to the geometry
 ------------------------------------
-Check how the solution changes if you distort the mesh. For example, squeeze it a bit in the vertical direction by modifying the :code:`transformPoints -scale "(1e-6 1e-6 1e-6)"` statement. Also check if the absolute dimensions matter!
+Check if/how the solution changes if you distort the mesh. For example, squeeze it a bit in the vertical direction by modifying the :code:`transformPoints -scale "(1e-6 1e-6 1e-6)"` statement. Also check if the absolute dimensions matter!
 
