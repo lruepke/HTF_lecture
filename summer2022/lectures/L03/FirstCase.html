@@ -5,7 +5,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Computing effective permeability &mdash; HydrothermalFoam Lecture  documentation</title>
+  <title>Flow on the pore scale &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
@@ -78,19 +78,21 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Computing effective permeability</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Flow on the pore scale</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#objective">Objective</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#workflow">Workflow</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#mesh-generation">Mesh generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mesh-generation">Mesh generation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#python-pre-processing">Python pre-processing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#openfoam-case">OpenFOAM case</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">Mesh generation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#transport-properties">Transport properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#case-control">Case control</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-the-case">Running the case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#openfoam-case">OpenFOAM case</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#making-the-mesh">Making the mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transport-properties">Transport properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#case-control">Case control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-case">Running the case</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#post-processing-effective-permeability">Post-processing / Effective permeability</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise.html">Excercises</a></li>
@@ -163,7 +165,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Computing effective permeability</li>
+      <li>Flow on the pore scale</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L03/FirstCase.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -197,8 +199,8 @@
     text-align: unset;
 }
 </style>
-<section id="computing-effective-permeability">
-<span id="l03-firstcase"></span><h1>Computing effective permeability<a class="headerlink" href="#computing-effective-permeability" title="Permalink to this headline"></a></h1>
+<section id="flow-on-the-pore-scale">
+<span id="l03-firstcase"></span><h1>Flow on the pore scale<a class="headerlink" href="#flow-on-the-pore-scale" title="Permalink to this headline"></a></h1>
 <section id="objective">
 <h2>Objective<a class="headerlink" href="#objective" title="Permalink to this headline"></a></h2>
 <p>Starting from a digital representation of a sample’s pore space (typically an image produced by a cT-scan), we want to compute its effective permeability. Or put differently, we will make a <strong>direct</strong> simulation of flow on the pore level and post-process it for extracting the effective permeability for simplified <strong>continuum</strong> simulations using Darcy’s law.</p>
@@ -211,12 +213,10 @@
 <p>To compute the effective permeability, we will apply constant pressure boundary conditions and evaluate the flow rate through the sample. Once we have that, we can re-arrange Darcy’s law to solve for permeability:</p>
 <div class="math notranslate nohighlight" id="equation-eq-darcy-perm">
 <span class="eqno">(7)<a class="headerlink" href="#equation-eq-darcy-perm" title="Permalink to this equation"></a></span>\[    K_{i,j} \, = \, \mu \Biggl( \frac{ \Delta P}{ \Delta x_j} \Biggr)^{-1} \, \Biggl( \frac{1}{V} \int_V u_i \, dV \Biggr) \; .\]</div>
-</section>
-<section id="workflow">
-<h2>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline"></a></h2>
 <p>Ok, let’s do it!</p>
+</section>
 <section id="mesh-generation">
-<h3>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline"></a></h3>
+<h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline"></a></h2>
 <p>The first major step is to generate a mesh of the pores space shown in <a class="reference internal" href="#fig-porousmodel-fig"><span class="std std-numref">Fig. 11</span></a>. For this purpose, we will use <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4">OpenFOAM’s snappyHexMesh tool</a> . It allows meshing arbitrary geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -238,7 +238,6 @@
 <li><p>save this surface as a stl file</p></li>
 </ol>
 </div></blockquote>
-</section>
 <section id="python-pre-processing">
 <h3>Python pre-processing<a class="headerlink" href="#python-pre-processing" title="Permalink to this headline"></a></h3>
 <p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:figure_workflow_fig</span></code> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it and the first steps are to install porespy into our python virtual environment (we should already have PIL, which is also needed).</p>
@@ -250,7 +249,39 @@ conda install -c conda-forge porespy
 <p class="admonition-title">Tip</p>
 <p>If conda install fails, you can also use <code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">porespy</span></code></p>
 </div>
-<p>Now we are good to go and it’s time to download the data. The complete openFOAM case can be downloaded from <code class="xref download docutils literal notranslate"><span class="pre">here</span></code> . Next we import the .png file from the <code class="code docutils literal notranslate"><span class="pre">geometry</span></code> folder and convert it to a .vti file, which is the <a class="reference external" href="https://vtk.org">Visualization Toolkit’s</a> format for storing image data. Note that vti files can also store series of images, which is important when doing this in 3-D.</p>
+<p>Now we are good to go and it’s time to download the data. The complete openFOAM case can be downloaded from <code class="xref download docutils literal notranslate"><span class="pre">here</span></code> .</p>
+<p>Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:</p>
+<p>Check out the directory structure shown in <a class="reference internal" href="#lst-drp-case-tree"><span class="std std-numref">Listing 11</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="lst-drp-case-tree">
+<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">File tree structure of the Digital Rock Physics case.</span><a class="headerlink" href="#lst-drp-case-tree" title="Permalink to this code"></a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.
+├── <span class="m">0</span>
+│   ├── U
+│   └── p
+├── a.foam
+├── clean.sh
+├── constant
+│   ├── transportProperties
+│   ├── triSurface
+│   └── turbulenceProperties
+├── geometry
+│   └── porousModel.png
+├── run.sh
+└── system
+    ├── blockMeshDict
+    ├── controlDict
+    ├── fvSchemes
+    ├── fvSolution
+    ├── meshQualityDict
+    └── snappyHexMeshDict
+</pre></div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Most OpenFoam cases include scripts like <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> and <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code>. The <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script is a good starting point for “understanding” a case. It lists all commands that have to be executed (e.g. meshing, setting of properties, etc.) to run a case. The <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code> script cleans up the case and deletes e.g. the mesh and all output directories. Have a look into these files and see if you understand them!</p>
+</div>
+<p>Next we import the .png file from the <code class="code docutils literal notranslate"><span class="pre">geometry</span></code> folder and convert it to a .vti file, which is the <a class="reference external" href="https://vtk.org">Visualization Toolkit’s</a> format for storing image data. Note that vti files can also store series of images, which is important when doing this in 3-D.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">porespy</span> <span class="k">as</span> <span class="nn">ps</span>
@@ -300,11 +331,14 @@ mv ./porous_model.stl ./constant/triSurface/
 </pre></div>
 </div>
 </section>
+</section>
 <section id="openfoam-case">
-<h3>OpenFOAM case<a class="headerlink" href="#openfoam-case" title="Permalink to this headline"></a></h3>
+<h2>OpenFOAM case<a class="headerlink" href="#openfoam-case" title="Permalink to this headline"></a></h2>
+<section id="making-the-mesh">
+<h3>Making the mesh<a class="headerlink" href="#making-the-mesh" title="Permalink to this headline"></a></h3>
 <p>Great, back to openfoam for the final mesh making! Making the mesh with SHM is a two-step process. First we make a standard blockMesh background mesh. This is, as usual, controlled by <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>:</p>
-<div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">blockMeshDict</span><a class="headerlink" href="#id3" title="Permalink to this code"></a></div>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-number">Listing 12 </span><span class="caption-text">blockMeshDict</span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -407,206 +441,30 @@ mv ./porous_model.stl ./constant/triSurface/
 </div>
 <p>Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions. Notice also how the box is described and how boundary conditions are applied.</p>
 <p>Now have a look at <code class="code docutils literal notranslate"><span class="pre">system/snappyHexMeshDict</span></code>. We will not go into details here, just explore the general structure yourself if you are interested using the resources linked above.</p>
-<p>Now it’s time to make the mesh. Run each of the steps below individually and check out the results in paraview!</p>
+<p>Time to make the mesh! Run each of the steps below individually and check out the results in paraview.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>blockMesh
 snappyHexMesh -overwrite
 checkMesh -allTopology -allGeometry
 transformPoints -scale <span class="s2">&quot;(1e-6 1e-6 1e-6)&quot;</span>
 </pre></div>
 </div>
-<p>The final conversion turns everything in micrometer (<span class="math notranslate nohighlight">\(10^{-6} m\)</span>). Check out the final mesh in paraview, it should look like this:</p>
-<p>To get started we will run the <strong>Regular2DBox</strong> case from the cookbook directory of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a>. This cookbooks describes how we can simulate a simple hydrothermal convection cell. It resolves hydrothermal convection driven by a gaussian-shaped constant temperature boundary condition at the bottom.</p>
-<p>Copy the  case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:</p>
-<div class="highlight-bash notranslate" id="lst-cp2dboxtoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
-cp -r <span class="nv">$HOME</span>/hydrothermalfoam-master/cookbooks/2d/Regular2DBox .
-</pre></div>
-</div>
-<p>Check out the directory structure shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:2dbox:tree</span></code>.</p>
-<div class="literal-block-wrapper docutils container" id="lst-2dbox-tree">
-<div class="code-block-caption"><span class="caption-number">Listing 12 </span><span class="caption-text">File tree structure of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-tree" title="Permalink to this code"></a></div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>.
-<span class="linenos"> 2</span><span class="p">|</span>-- <span class="m">0</span>
-<span class="hll"><span class="linenos"> 3</span><span class="p">|</span>   <span class="p">|</span>-- T
-</span><span class="hll"><span class="linenos"> 4</span><span class="p">|</span>   <span class="p">|</span>-- p
-</span><span class="hll"><span class="linenos"> 5</span><span class="p">|</span>    -- permeability
-</span><span class="linenos"> 6</span><span class="p">|</span>-- a.foam
-<span class="linenos"> 7</span><span class="p">|</span>-- clean.sh
-<span class="linenos"> 8</span><span class="p">|</span>-- constant
-<span class="linenos"> 9</span><span class="p">|</span>   <span class="p">|</span>-- g
-<span class="hll"><span class="linenos">10</span><span class="p">|</span>    -- thermophysicalProperties
-</span><span class="linenos">11</span><span class="p">|</span>-- run.sh
-<span class="linenos">12</span> -- system
-<span class="linenos">13</span>    <span class="p">|</span>-- blockMeshDict
-<span class="linenos">14</span>    <span class="p">|</span>-- controlDict
-<span class="linenos">15</span>    <span class="p">|</span>-- fvSchemes
-<span class="linenos">16</span>     -- fvSolution.
-</pre></div>
-</div>
-</div>
-<p>The 0 directory now has entries for T (temperature) and p (pressure) our new primary variables, and for permeability, which we will discuss later. In addition, the constant directory has an entry thermophysicalProperties, which describes the solid properties.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Most OpenFoam cases include scripts like <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> and <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code>. The <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script is a good starting point for “understanding” a case. It lists all commands that have to be executed (e.g. meshing, setting of properties, etc.) to run a case. The <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code> script cleans up the case and deletes e.g. the mesh and all output directories. Have a look into these files and see if you understand them!</p>
-</div>
-<p>The 0 directory contains all initial and boundary conditions, the system folder contains all controlling parameter files, and the constant folder contains constant properties like the mesh - which we will create next.</p>
-</section>
-</section>
-<section id="id2">
-<h2>Mesh generation<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
-<p>The case is run on a simple 2-d-box-like geometry and the mesh is build using <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code>, just like in the previous lecture on cavity flow. Look at <code class="code docutils literal notranslate"><span class="pre">blockMeshDict</span></code> and check that you sill understand the structure. Afterwards, you can create the mesh:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>blockMesh
-</pre></div>
-</div>
-<p>After making the mesh, you can use <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize it,</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch a.foam
-paraview a.foam
-</pre></div>
-</div>
+<p>The final conversion turns everything in micrometer (<span class="math notranslate nohighlight">\(10^{-6} m\)</span>). Check out the final mesh in paraview!</p>
 </section>
 <section id="boundary-conditions">
-<h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline"></a></h2>
-<p>Next we need to set boundary conditions. Open the file T inside the 0 directory from your local left-hand shell.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code <span class="m">0</span>/T
-</pre></div>
-</div>
-<div class="literal-block-wrapper docutils container" id="lst-2dbox-bc">
-<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc" title="Permalink to this code"></a></div>
-<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
-<span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
-<span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
-<span class="linenos"> 4</span><span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
-<span class="linenos"> 5</span><span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
-<span class="linenos"> 6</span><span class="cm">|    \\/     M anipulation  |                                                 |</span>
-<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
-<span class="linenos"> 8</span><span class="k">FoamFile</span>
-<span class="linenos"> 9</span><span class="p">{</span>
-<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
-<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
-<span class="linenos">12</span>    <span class="kt">class</span>       <span class="n">volScalarField</span><span class="p">;</span>
-<span class="linenos">13</span>    <span class="kt">object</span>      <span class="k">T</span><span class="p">;</span>
-<span class="linenos">14</span><span class="p">}</span>
-<span class="linenos">15</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
-<span class="linenos">16</span>
-<span class="hll"><span class="linenos">17</span><span class="kt">dimensions</span>      <span class="p">[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
-</span><span class="linenos">18</span>
-<span class="linenos">19</span><span class="kt">internalField</span>   <span class="k">uniform</span> <span class="mf">278.15</span><span class="p">;</span>     <span class="c1">//278.15 K = 5 C</span>
-<span class="linenos">20</span>
-<span class="linenos">21</span><span class="k">boundaryField</span>
-<span class="linenos">22</span><span class="p">{</span>
-<span class="linenos">23</span>    <span class="n">left</span>
-<span class="linenos">24</span>    <span class="p">{</span>
-<span class="linenos">25</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
-<span class="linenos">26</span>    <span class="p">}</span>
-<span class="linenos">27</span>    <span class="n">right</span>
-<span class="linenos">28</span>    <span class="p">{</span>
-<span class="hll"><span class="linenos">29</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
-</span><span class="linenos">30</span>    <span class="p">}</span>
-<span class="linenos">31</span>    <span class="n">top</span>
-<span class="linenos">32</span>    <span class="p">{</span>
-<span class="linenos">33</span>        <span class="c1">//type            fixedValue;</span>
-<span class="linenos">34</span>        <span class="c1">//value           uniform 273.15;</span>
-<span class="hll"><span class="linenos">35</span>        <span class="kt">type</span>            <span class="n">inletOutlet</span><span class="p">;</span>
-</span><span class="linenos">36</span>        <span class="k">phi</span>                     <span class="k">phi</span><span class="p">;</span>
-<span class="linenos">37</span>        <span class="k">inletValue</span>      <span class="k">uniform</span> <span class="mf">278.15</span><span class="p">;</span>
-<span class="linenos">38</span>    <span class="p">}</span>
-<span class="linenos">39</span>    <span class="n">bottom</span>
-<span class="linenos">40</span>    <span class="p">{</span>
-<span class="hll"><span class="linenos">41</span>        <span class="kt">type</span>            <span class="n">codedFixedValue</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">42</span>        <span class="kt">value</span>           <span class="k">uniform</span> <span class="mf">873.15</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">43</span>        <span class="n">name</span>            <span class="n">gaussShapeT</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">44</span>        <span class="n">code</span>            <span class="err">#</span><span class="p">{</span>
-</span><span class="hll"><span class="linenos">45</span>                            <span class="n">scalarField</span> <span class="n">x</span><span class="p">(</span><span class="n">this</span><span class="o">-&gt;</span><span class="n">patch</span><span class="p">().</span><span class="n">Cf</span><span class="p">().</span><span class="n">component</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-</span><span class="hll"><span class="linenos">46</span>                            <span class="kt">double</span> <span class="n">wGauss</span><span class="o">=</span><span class="mi">200</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">47</span>                            <span class="kt">double</span> <span class="k">x0</span><span class="o">=</span><span class="mi">1000</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">48</span>                            <span class="kt">double</span> <span class="n">Tmin</span><span class="o">=</span><span class="mi">573</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">49</span>                            <span class="kt">double</span> <span class="n">Tmax</span><span class="o">=</span><span class="mf">873.15</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">50</span>                            <span class="n">scalarField</span> <span class="nf">T</span><span class="p">(</span><span class="n">Tmin</span><span class="o">+</span><span class="p">(</span><span class="n">Tmax</span><span class="o">-</span><span class="n">Tmin</span><span class="p">)</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="k">x0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="k">x0</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">wGauss</span><span class="o">*</span><span class="n">wGauss</span><span class="p">)));</span>
-</span><span class="hll"><span class="linenos">51</span>                            <span class="n">operator</span><span class="o">==</span><span class="p">(</span><span class="k">T</span><span class="p">);</span>
-</span><span class="hll"><span class="linenos">52</span>                        <span class="cp">#};</span>
-</span><span class="linenos">53</span>    <span class="p">}</span>
-<span class="linenos">54</span>    <span class="n">frontAndBack</span>
-<span class="linenos">55</span>    <span class="p">{</span>
-<span class="linenos">56</span>        <span class="kt">type</span>            <span class="n">empty</span><span class="p">;</span>
-<span class="linenos">57</span>    <span class="p">}</span>
-<span class="linenos">58</span><span class="p">}</span>
-<span class="linenos">59</span>
-<span class="linenos">60</span><span class="c1">// ************************************************************************* //</span>
-</pre></div>
-</div>
-</div>
-<p>The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the side are insulating (zeroGradient). The top has a  boundary condition called inletOutlet; it sets a constant inflow temperature (recharge of cold seawater) and assumes zeroGradient for the outflow (mimicing free fluid venting). The bottom boundary condition is special, it is set to codedFixedValue. The codedFixedValue BC allows “programming” a boundary condition on the fly. Here a gaussian-shapes constant temperature boundary condition is programmed. Note that <code class="code docutils literal notranslate"><span class="pre">x(this-&gt;patch().Cf().component(0))</span></code> is the x-coordinate of each FV face of the patch “bottom”.</p>
-<p>Units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a one in the fourth columns, the units of the defined properties has units of Kelvin.</p>
-<p>We also need to set boundary conditions for pressure.</p>
+<h3>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline"></a></h3>
+<p>Next we need to set boundary conditions. Our “rock” sample is 1196 and 1494 <span class="math notranslate nohighlight">\(\mu\)</span> is flowing through our smaple, we will need to set a constant pressure value of <span class="math notranslate nohighlight">\(P_{left}=0.001 m^2/s^2\)</span>. The pressure on the righ-hand side will be set to zero.</p>
+<p>Open the file p inside the 0 directory from your local left-hand shell.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code <span class="m">0</span>/p
 </pre></div>
 </div>
-<div class="literal-block-wrapper docutils container" id="lst-2dbox-bc-p">
-<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc-p" title="Permalink to this code"></a></div>
+<div class="literal-block-wrapper docutils container" id="lst-drp-bc-p">
+<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-p" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
-<span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
-<span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
-<span class="linenos"> 4</span><span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
-<span class="linenos"> 5</span><span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
-<span class="linenos"> 6</span><span class="cm">|    \\/     M anipulation  |                                                 |</span>
-<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
-<span class="linenos"> 8</span><span class="k">FoamFile</span>
-<span class="linenos"> 9</span><span class="p">{</span>
-<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
-<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
-<span class="linenos">12</span>    <span class="kt">class</span>       <span class="n">volScalarField</span><span class="p">;</span>
-<span class="linenos">13</span>    <span class="kt">object</span>      <span class="k">p</span><span class="p">;</span>
-<span class="linenos">14</span><span class="p">}</span>
-<span class="linenos">15</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
-<span class="linenos">16</span>
-<span class="hll"><span class="linenos">17</span><span class="kt">dimensions</span>      <span class="p">[</span><span class="mi">1</span> <span class="o">-</span><span class="mi">1</span> <span class="o">-</span><span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
-</span><span class="linenos">18</span>
-<span class="linenos">19</span><span class="kt">internalField</span>   <span class="k">uniform</span> <span class="mf">300e5</span><span class="p">;</span>
-<span class="linenos">20</span>
-<span class="linenos">21</span><span class="k">boundaryField</span>
-<span class="linenos">22</span><span class="p">{</span>
-<span class="linenos">23</span>    <span class="n">left</span>
-<span class="linenos">24</span>    <span class="p">{</span>
-<span class="linenos">25</span>        <span class="kt">type</span>            <span class="n">noFlux</span><span class="p">;</span>
-<span class="linenos">26</span>    <span class="p">}</span>
-<span class="linenos">27</span>    <span class="n">right</span>
-<span class="linenos">28</span>    <span class="p">{</span>
-<span class="linenos">29</span>        <span class="kt">type</span>            <span class="n">noFlux</span><span class="p">;</span>
-<span class="linenos">30</span>    <span class="p">}</span>
-<span class="linenos">31</span>    <span class="n">top</span>
-<span class="linenos">32</span>    <span class="p">{</span>
-<span class="hll"><span class="linenos">33</span>        <span class="kt">type</span>            <span class="n">submarinePressure</span><span class="p">;</span>
-</span><span class="linenos">34</span>        <span class="kt">value</span>           <span class="k">uniform</span> <span class="mf">300e5</span><span class="p">;</span>
-<span class="linenos">35</span>    <span class="p">}</span>
-<span class="linenos">36</span>    <span class="n">bottom</span>
-<span class="linenos">37</span>    <span class="p">{</span>
-<span class="linenos">38</span>        <span class="kt">type</span>            <span class="n">noFlux</span><span class="p">;</span>
-<span class="linenos">39</span>    <span class="p">}</span>
-<span class="linenos">40</span>    <span class="n">frontAndBack</span>
-<span class="linenos">41</span>    <span class="p">{</span>
-<span class="linenos">42</span>        <span class="kt">type</span>            <span class="n">empty</span><span class="p">;</span>
-<span class="linenos">43</span>    <span class="p">}</span>
-<span class="linenos">44</span><span class="p">}</span>
-<span class="linenos">45</span>
-<span class="linenos">46</span><span class="c1">// ************************************************************************* //</span>
-</pre></div>
-</div>
-</div>
-<p>The <code class="code docutils literal notranslate"><span class="pre">noFlux</span></code> boundary conditions, sets the pressure gradient to zero (horizontal direction) and hydrostatic (vertical direction), so that no flow occurs through these boundaries. The <code class="code docutils literal notranslate"><span class="pre">submarinePressure</span></code> boundary condition is provided by <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and sets the pressure according to water depth. Change it to fixedValue; we will discuss the special boundary conditions later.</p>
-</section>
-<section id="transport-properties">
-<h2>Transport properties<a class="headerlink" href="#transport-properties" title="Permalink to this headline"></a></h2>
-<p>In hydrothermal convection simulations, the fluid properties are given by the used EOS (details on this in the next lecture). What we need to set are the solid properties like permeability, solid density, solid specific heat, and porosity. These are set in two different files. Permeabilty is treated as a variable and is set in the 0 directory.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code <span class="m">0</span>/permeability
-</pre></div>
-</div>
-<div class="literal-block-wrapper docutils container" id="lst-2dbox-perm">
-<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">Permeability on hydrothermal flow simulations.</span><a class="headerlink" href="#lst-2dbox-perm" title="Permalink to this code"></a></div>
-<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
-<span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
-<span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
-<span class="linenos"> 4</span><span class="cm">|  \\    /   O peration     | Version:  5.0                                   |</span>
-<span class="linenos"> 5</span><span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
-<span class="linenos"> 6</span><span class="cm">|    \\/     M anipulation  |                                                 |</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
 <span class="linenos"> 9</span><span class="p">{</span>
@@ -614,37 +472,156 @@ paraview a.foam
 <span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
 <span class="linenos">12</span>    <span class="kt">class</span>       <span class="n">volScalarField</span><span class="p">;</span>
 <span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;0&quot;</span><span class="p">;</span>
-<span class="linenos">14</span>    <span class="kt">object</span>      <span class="n">permeability</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="kt">object</span>      <span class="k">p</span><span class="p">;</span>
 <span class="linenos">15</span><span class="p">}</span>
 <span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
 <span class="linenos">17</span>
-<span class="hll"><span class="linenos">18</span><span class="kt">dimensions</span>      <span class="p">[</span><span class="mi">0</span> <span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
+<span class="hll"><span class="linenos">18</span><span class="kt">dimensions</span>      <span class="p">[</span><span class="mi">0</span> <span class="mi">2</span> <span class="o">-</span><span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
 </span><span class="linenos">19</span>
-<span class="linenos">20</span><span class="kt">internalField</span>   <span class="k">uniform</span> <span class="mf">1e-14</span><span class="p">;</span>
+<span class="linenos">20</span><span class="kt">internalField</span>   <span class="k">uniform</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="k">boundaryField</span>
+<span class="linenos">23</span><span class="p">{</span>
+<span class="linenos">24</span>    <span class="n">top</span>
+<span class="linenos">25</span>    <span class="p">{</span>
+<span class="linenos">26</span>        <span class="kt">type</span>            <span class="n">symmetryPlane</span><span class="p">;</span>
+<span class="linenos">27</span>    <span class="p">}</span>
+<span class="linenos">28</span>    <span class="n">inlet</span>
+<span class="linenos">29</span>    <span class="p">{</span>
+<span class="hll"><span class="linenos">30</span>        <span class="kt">type</span>            <span class="k">fixedValue</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">31</span>        <span class="kt">value</span>           <span class="k">uniform</span> <span class="mf">0.001</span><span class="p">;</span>
+</span><span class="linenos">32</span>    <span class="p">}</span>
+<span class="linenos">33</span>    <span class="n">bottom</span>
+<span class="linenos">34</span>    <span class="p">{</span>
+<span class="linenos">35</span>        <span class="kt">type</span>            <span class="n">symmetryPlane</span><span class="p">;</span>
+<span class="linenos">36</span>    <span class="p">}</span>
+<span class="linenos">37</span>    <span class="n">outlet</span>
+<span class="linenos">38</span>    <span class="p">{</span>
+<span class="hll"><span class="linenos">39</span>        <span class="kt">type</span>            <span class="k">fixedValue</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">40</span>        <span class="kt">value</span>           <span class="k">uniform</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="linenos">41</span>    <span class="p">}</span>
+<span class="linenos">42</span>    <span class="n">solids</span>
+<span class="linenos">43</span>    <span class="p">{</span>
+<span class="hll"><span class="linenos">44</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+</span><span class="linenos">45</span>    <span class="p">}</span>
+<span class="linenos">46</span>    <span class="n">frontAndBack</span>
+<span class="linenos">47</span>    <span class="p">{</span>
+<span class="hll"><span class="linenos">48</span>        <span class="kt">type</span>            <span class="n">empty</span><span class="p">;</span>
+</span><span class="linenos">49</span>    <span class="p">}</span>
+<span class="linenos">50</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
-<p>Again, check that you understand the units, which here add up to m^2.</p>
-<p>Next we look at the solid properties:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code constant/thermophysicalProperties
+<p>The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the sides have constant values. The top and bottom are symmetry planes and the internal boundaries with the solid grains get a <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> condition. As we are performing a 2-D simulations, the frontAndBack faces are set to <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
+<p>Remember that units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a 2 in the second and third column, we get the correct units for the kinematic pressure.</p>
+<p>We also need to set boundary conditions for the velocity.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code <span class="m">0</span>/U
 </pre></div>
 </div>
-<p>Check that you understand the units! Details can be found in the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> documentation.</p>
+<div class="literal-block-wrapper docutils container" id="lst-drp-bc-u">
+<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-u" title="Permalink to this code"></a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="n">volVectorField</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;0&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="kt">object</span>      <span class="n">U</span><span class="p">;</span>
+<span class="linenos">15</span><span class="p">}</span>
+<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="kt">dimensions</span>      <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="kt">internalField</span>   <span class="nf">uniform</span> <span class="p">(</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">);</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="k">boundaryField</span>
+<span class="linenos">23</span><span class="p">{</span>
+<span class="linenos">24</span>    <span class="n">top</span>
+<span class="linenos">25</span>    <span class="p">{</span>
+<span class="linenos">26</span>        <span class="kt">type</span>            <span class="n">symmetryPlane</span><span class="p">;</span>
+<span class="linenos">27</span>    <span class="p">}</span>
+<span class="linenos">28</span>    <span class="n">inlet</span>
+<span class="linenos">29</span>    <span class="p">{</span>
+<span class="hll"><span class="linenos">30</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+</span><span class="linenos">31</span>    <span class="p">}</span>
+<span class="linenos">32</span>    <span class="n">bottom</span>
+<span class="linenos">33</span>    <span class="p">{</span>
+<span class="hll"><span class="linenos">34</span>        <span class="kt">type</span>            <span class="n">symmetryPlane</span><span class="p">;</span>
+</span><span class="linenos">35</span>    <span class="p">}</span>
+<span class="linenos">36</span>    <span class="n">outlet</span>
+<span class="linenos">37</span>    <span class="p">{</span>
+<span class="linenos">38</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+<span class="linenos">39</span>    <span class="p">}</span>
+<span class="linenos">40</span>    <span class="n">solids</span>
+<span class="linenos">41</span>    <span class="p">{</span>
+<span class="hll"><span class="linenos">42</span>        <span class="kt">type</span>            <span class="n">noSlip</span><span class="p">;</span>
+</span><span class="linenos">43</span>    <span class="p">}</span>
+<span class="linenos">44</span>    <span class="n">frontAndBack</span>
+<span class="linenos">45</span>    <span class="p">{</span>
+<span class="linenos">46</span>        <span class="kt">type</span>            <span class="n">empty</span><span class="p">;</span>
+<span class="linenos">47</span>    <span class="p">}</span>
+<span class="linenos">48</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>The top and bottom are again symmetry planes and the The <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> conditions are the side ensure that fluids can freely flow in and out. The contacts with the solid grains get <code class="code docutils literal notranslate"><span class="pre">noSlip</span></code> , which makes the velocity go to zero; frontAndBack are again set tp <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
+</section>
+<section id="transport-properties">
+<h3>Transport properties<a class="headerlink" href="#transport-properties" title="Permalink to this headline"></a></h3>
+<p>Final step is to set the remaining free parameter in <a class="reference internal" href="intro.html#equation-eq-mom-con">equation (5)</a> that is the viscosity.</p>
+<p>We also need to set boundary conditions for the velocity.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code constant/transportProperties
+</pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="lst-drp-tp">
+<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-drp-tp" title="Permalink to this code"></a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">object</span>      <span class="k">transportProperties</span><span class="p">;</span>
+<span class="linenos">14</span><span class="p">}</span>
+<span class="linenos">15</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">16</span>
+<span class="hll"><span class="linenos">17</span><span class="n">transportModel</span>  <span class="n">Newtonian</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">18</span>
+</span><span class="hll"><span class="linenos">19</span><span class="n">nu</span>              <span class="p">[</span><span class="mi">0</span> <span class="mi">2</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span> <span class="mf">1e-06</span><span class="p">;</span>
+</span><span class="linenos">20</span>
+<span class="linenos">21</span><span class="c1">// ************************************************************************* //</span>
+</pre></div>
+</div>
+</div>
+<p>Again, in incompressible simulations (where we can divide the momentum balance equation by density) the kinematic viscosity is used, which has units of <span class="math notranslate nohighlight">\(m^2/s\)</span>. The value of <span class="math notranslate nohighlight">\(1e{-6} m^2/s\)</span> with an assumed density of <span class="math notranslate nohighlight">\(1000kg/m^3\)</span> is <span class="math notranslate nohighlight">\(1 mPa\)</span> - typical value for water at room temperature.</p>
 </section>
 <section id="case-control">
-<h2>Case control<a class="headerlink" href="#case-control" title="Permalink to this headline"></a></h2>
-<p>Finally, we need to set some control parameters like the time step, run time, output writing. These kind of parameters are set in system/controlDict. Open it and explore the values</p>
+<h3>Case control<a class="headerlink" href="#case-control" title="Permalink to this headline"></a></h3>
+<p>Finally, we need to set some control parameters in system/controlDict. Open it and explore the values</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code system/controlDict
 </pre></div>
 </div>
-<div class="literal-block-wrapper docutils container" id="lst-2dbox-cdict">
-<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">controlDict of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-cdict" title="Permalink to this code"></a></div>
+<div class="literal-block-wrapper docutils container" id="lst-drp-cdict">
+<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">controlDict of the DRP case.</span><a class="headerlink" href="#lst-drp-cdict" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
-<span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
-<span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
-<span class="linenos"> 4</span><span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
-<span class="linenos"> 5</span><span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
-<span class="linenos"> 6</span><span class="cm">|    \\/     M anipulation  |                                                 |</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
 <span class="linenos"> 9</span><span class="p">{</span>
@@ -653,49 +630,145 @@ paraview a.foam
 <span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
 <span class="linenos">13</span>    <span class="kt">object</span>      <span class="k">controlDict</span><span class="p">;</span>
 <span class="linenos">14</span><span class="p">}</span>
-<span class="linenos">15</span>
-<span class="hll"><span class="linenos">16</span><span class="kt">application</span> <span class="n">HydrothermalSinglePhaseDarcyFoam</span><span class="p">;</span>
-</span><span class="linenos">17</span><span class="kt">startFrom</span> <span class="k">latestTime</span><span class="p">;</span>
-<span class="linenos">18</span><span class="kt">startTime</span> <span class="mi">0</span><span class="p">;</span>
-<span class="linenos">19</span><span class="kt">stopAt</span> <span class="kt">endTime</span><span class="p">;</span>
-<span class="linenos">20</span><span class="kt">endTime</span> <span class="mi">16912000000</span><span class="p">;</span> <span class="c1">//86400000000</span>
-<span class="linenos">21</span><span class="kt">deltaT</span> <span class="mi">864000</span><span class="p">;</span>
-<span class="linenos">22</span><span class="kt">adjustTimeStep</span> <span class="n">yes</span><span class="p">;</span>
-<span class="linenos">23</span><span class="kt">maxCo</span>           <span class="mf">0.8</span><span class="p">;</span>
-<span class="linenos">24</span><span class="kt">maxDeltaT</span>       <span class="mi">86400000</span><span class="p">;</span>
-<span class="linenos">25</span><span class="kt">writeControl</span> <span class="n">adjustableRunTime</span><span class="p">;</span>
-<span class="linenos">26</span><span class="kt">writeInterval</span> <span class="mi">86400000</span><span class="p">;</span>
-<span class="linenos">27</span><span class="kt">purgeWrite</span> <span class="mi">0</span><span class="p">;</span>
-<span class="linenos">28</span><span class="kt">writeFormat</span> <span class="k">ascii</span><span class="p">;</span>
-<span class="linenos">29</span><span class="kt">writePrecision</span> <span class="mi">6</span><span class="p">;</span>
-<span class="linenos">30</span><span class="kt">writeCompression</span> <span class="k">off</span><span class="p">;</span>
-<span class="linenos">31</span><span class="kt">timeFormat</span> <span class="k">general</span><span class="p">;</span>
-<span class="linenos">32</span><span class="kt">timePrecision</span> <span class="mi">14</span><span class="p">;</span>
-<span class="linenos">33</span><span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
-<span class="linenos">34</span><span class="kt">libs</span>
-<span class="linenos">35</span><span class="p">(</span>
+<span class="linenos">15</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="hll"><span class="linenos">16</span>
+</span><span class="linenos">17</span><span class="kt">application</span>     <span class="n">simpleFoam</span><span class="p">;</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="kt">startFrom</span>       <span class="kt">startTime</span><span class="p">;</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="kt">startTime</span>       <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="kt">stopAt</span>          <span class="kt">endTime</span><span class="p">;</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="kt">endTime</span>         <span class="mi">1500</span><span class="p">;</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="kt">deltaT</span>          <span class="mi">1</span><span class="p">;</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="kt">writeControl</span>    <span class="n">timeStep</span><span class="p">;</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="kt">writeInterval</span>   <span class="mi">1500</span><span class="p">;</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="kt">purgeWrite</span>      <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span><span class="kt">writeFormat</span>     <span class="k">ascii</span><span class="p">;</span>
 <span class="linenos">36</span>
-<span class="hll"><span class="linenos">37</span>    <span class="s">&quot;libHydrothermalBoundaryConditions.so&quot;</span>
-</span><span class="hll"><span class="linenos">38</span>    <span class="s">&quot;libHydroThermoPhysicalModels.so&quot;</span>
-</span><span class="linenos">39</span><span class="p">);</span>
+<span class="hll"><span class="linenos">37</span><span class="kt">writePrecision</span>  <span class="mi">9</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">38</span>
+</span><span class="linenos">39</span><span class="kt">writeCompression</span> <span class="k">off</span><span class="p">;</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span><span class="kt">timeFormat</span>      <span class="k">general</span><span class="p">;</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span><span class="kt">timePrecision</span>   <span class="mi">6</span><span class="p">;</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span><span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
-<p>The solver we are using is called HydrothermalSinglePhaseDarcyFoam. In addition, we are including two libraries “libHydrothermalBoundaryConditions.so”; these are part of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and provide special boundary conditions for submarine hydrothermal flow calculations.</p>
+<p>The solver is a stead-state solver, so that the settings are quite simple with respect to transient solution.</p>
 </section>
 <section id="running-the-case">
-<h2>Running the case<a class="headerlink" href="#running-the-case" title="Permalink to this headline"></a></h2>
+<h3>Running the case<a class="headerlink" href="#running-the-case" title="Permalink to this headline"></a></h3>
 <p>Now we are finally ready to run our first test case. Just type this into your docker shell:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>HydrothermalSinglePhaseDarcyFoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run.sh
 </pre></div>
 </div>
-<p>Notice how several directories are appearing, which contain the intermediate results. You can postprocess the case by simply opening the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> file from paraview.</p>
-<figure class="align-center" id="fig-regular2dbox-fig">
-<img alt="../../_images/RegularBox2D.png" src="../../_images/RegularBox2D.png" />
+<p>or
+.. code-block:: bash</p>
+<blockquote>
+<div><p>simpleFoam</p>
+</div></blockquote>
+<p>if you did the steps above by hand.</p>
+<p>Notice how one new directory is appearing, which contains the steady-state solution. Check that the solution has converged by looking at the log.simpleFoam file.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tail -15 tail -15 log.simpleFoam
+
+<span class="nv">Time</span> <span class="o">=</span> <span class="m">537</span>
+
+smoothSolver:  Solving <span class="k">for</span> Ux, Initial <span class="nv">residual</span> <span class="o">=</span> <span class="m">9</span>.48718063e-10, Final <span class="nv">residual</span> <span class="o">=</span> <span class="m">9</span>.48718063e-10, No Iterations <span class="m">0</span>
+smoothSolver:  Solving <span class="k">for</span> Uy, Initial <span class="nv">residual</span> <span class="o">=</span> <span class="m">9</span>.93804308e-10, Final <span class="nv">residual</span> <span class="o">=</span> <span class="m">9</span>.93804308e-10, No Iterations <span class="m">0</span>
+GAMG:  Solving <span class="k">for</span> p, Initial <span class="nv">residual</span> <span class="o">=</span> <span class="m">9</span>.71539045e-09, Final <span class="nv">residual</span> <span class="o">=</span> <span class="m">9</span>.71539045e-09, No Iterations <span class="m">0</span>
+<span class="nb">time</span> step continuity errors : sum <span class="nb">local</span> <span class="o">=</span> <span class="m">7</span>.1290424e-07, <span class="nv">global</span> <span class="o">=</span> -1.41776643e-07, <span class="nv">cumulative</span> <span class="o">=</span> <span class="m">3</span>.8954571
+<span class="nv">ExecutionTime</span> <span class="o">=</span> <span class="m">30</span>.24 s  <span class="nv">ClockTime</span> <span class="o">=</span> <span class="m">30</span> s
+
+
+SIMPLE solution converged <span class="k">in</span> <span class="m">537</span> iterations
+
+End
+</pre></div>
+</div>
+<p>And explore the solution in Paraview!</p>
+<figure class="align-center" id="fig-porousmodel-solution-fig" style="width: 100%">
+<img alt="../../_images/paraview_DRP_solution.png" src="../../_images/paraview_DRP_solution.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Results of the Regular2DBox example calculation.</span><a class="headerlink" href="#fig-regular2dbox-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Predicted velocity field.</span><a class="headerlink" href="#fig-porousmodel-solution-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
+</section>
+<section id="post-processing-effective-permeability">
+<h3>Post-processing / Effective permeability<a class="headerlink" href="#post-processing-effective-permeability" title="Permalink to this headline"></a></h3>
+<p>Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve <a class="reference internal" href="#equation-eq-darcy-perm">equation (7)</a>.</p>
+<p>Solving <a class="reference internal" href="#equation-eq-darcy-perm">equation (7)</a> requires are few intermediate steps. First we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM’s <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/">postProcess</a> functionality handy. Just do this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>postProcess -func writeCellVolumes
+</pre></div>
+</div>
+<p>This will create a new variable <span class="math notranslate nohighlight">\(V\)</span> in in the output directories, which is the volume of each cell. Next we can save the full solution as a vtk file, so that we can postprocess it with python.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>foamToVTK -useTimeName -latestTime -poly
+</pre></div>
+</div>
+<p>Check that a new <code class="code docutils literal notranslate"><span class="pre">VTK</span></code> directory was created. Now we are ready for some more fancy post-processing using python. Main idea is to show how we can python for more detailed post-processing (or plotting).</p>
+<p>Here is an example script for computing permeability. You can turn it into a jupyter notebook or save it as a .py file into your case directory and run it from there.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">vtk</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">vtk.util</span> <span class="kn">import</span> <span class="n">numpy_support</span> <span class="k">as</span> <span class="n">VN</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># load VTK data</span>
+<span class="n">vtkFile</span> <span class="o">=</span> <span class="s1">&#39;VTK/DRP_permeability_2D_537.vtk&#39;</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkUnstructuredGridReader</span><span class="p">()</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">vtkFile</span><span class="p">)</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">ReadAllScalarsOn</span><span class="p">()</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">ReadAllVectorsOn</span><span class="p">()</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+
+
+<span class="c1"># extract velocity arrays</span>
+<span class="n">Vcells</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">&#39;V&#39;</span><span class="p">))</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">))</span>
+<span class="n">Umag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">U</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">U</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">U</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Ux</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Uy</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">Uz</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># calculate volume fluxes</span>
+<span class="n">qx</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">qy</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Vcells</span><span class="p">)):</span>
+    <span class="n">q1</span> <span class="o">=</span> <span class="n">Vcells</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="n">Ux</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+    <span class="n">q2</span> <span class="o">=</span> <span class="n">Vcells</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="n">Uy</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+    <span class="n">qx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q1</span><span class="p">)</span>
+    <span class="n">qy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q2</span><span class="p">)</span>
+
+<span class="c1"># simulation parameters</span>
+<span class="n">DP</span> <span class="o">=</span> <span class="mi">1</span>                       <span class="c1"># pressure drop [Pa]</span>
+<span class="n">nu</span> <span class="o">=</span> <span class="mf">1e-06</span>                   <span class="c1"># kinematic viscosity [m²/s²]</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="mi">1000</span>                   <span class="c1"># density [kg/m³]</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">nu</span> <span class="o">*</span> <span class="n">rho</span>                <span class="c1"># dynamic viscosity [kg/(m*s)]</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="mf">0.001196</span>                <span class="c1"># model length x [m]</span>
+<span class="n">dy</span> <span class="o">=</span> <span class="mf">0.001494</span>                <span class="c1"># model width y [m]</span>
+<span class="n">dz</span> <span class="o">=</span> <span class="mf">1e-6</span>                    <span class="c1"># model thickness z [m]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">dz</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">A</span>
+
+<span class="c1"># calculate Darcy velocity</span>
+<span class="n">U_Darcy_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">qx</span><span class="p">)</span><span class="o">/</span><span class="n">V</span>
+
+<span class="n">kxx</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">U_Darcy_x</span><span class="o">/</span><span class="n">DP</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bulk permeability: </span><span class="si">%5.3e</span><span class="s1"> m2&#39;</span> <span class="o">%</span> <span class="n">kxx</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We made it - <span class="math notranslate nohighlight">\(2.71e^{-11} m^2\)</span> is our predicted effective permeability of our sample!</p>
+</section>
 </section>
 </section>
 

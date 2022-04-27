@@ -27,7 +27,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Lecture overview" href="../L04/Overview.html" />
-    <link rel="prev" title="Computing effective permeability" href="FirstCase.html" /> 
+    <link rel="prev" title="Flow on the pore scale" href="FirstCase.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -78,15 +78,10 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="FirstCase.html">Computing effective permeability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FirstCase.html">Flow on the pore scale</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Excercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#constant-temperature-1-layer-system">Constant temperature 1-layer system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#constant-temperature-2-layer-system">Constant temperature 2-layer system</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#change-the-mesh">Change the mesh</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#assign-properties">Assign properties</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#run-the-case">Run the case</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#vertical-versus-horizontal-permeability">Vertical versus horizontal permeability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changes-to-the-geometry">Changes to the geometry</a></li>
 </ul>
 </li>
 </ul>
@@ -194,193 +189,20 @@
 </style>
 <section id="excercises">
 <span id="l03-exercise"></span><h1>Excercises<a class="headerlink" href="#excercises" title="Permalink to this headline"></a></h1>
-<p>In this exercise we will investigate how permeability contrast affect hydrothermal flow and vent temperatures. We will first modify the Regular2DBox case to have constant temperature boundary condition and afterwards add a second layer to our mesh, so that we can explore permeability constrasts.</p>
-<section id="constant-temperature-1-layer-system">
-<h2>Constant temperature 1-layer system<a class="headerlink" href="#constant-temperature-1-layer-system" title="Permalink to this headline"></a></h2>
-<div class="admonition-what-s-needed-for-the-constant-temperature-case admonition">
-<p class="admonition-title">What’s needed for the constant temperature case?</p>
-<ul class="simple">
-<li><p>make a copy of the case directory</p></li>
-<li><p>change the temperature boundary condition.</p></li>
-</ul>
-</div>
-<figure class="align-center" id="fig-regularbox2d-constantt-fig">
-<img alt="../../_images/RegularBox2D_constantT.png" src="../../_images/RegularBox2D_constantT.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Constant temperature boundary condition.</span><a class="headerlink" href="#fig-regularbox2d-constantt-fig" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-</section>
-<section id="constant-temperature-2-layer-system">
-<h2>Constant temperature 2-layer system<a class="headerlink" href="#constant-temperature-2-layer-system" title="Permalink to this headline"></a></h2>
-<p>Now we will explore permeability contrasts!</p>
-<div class="admonition-what-s-needed-for-the-two-layer-case admonition">
-<p class="admonition-title">What’s needed for the two-layer case?</p>
-<ul class="simple">
-<li><p>make a copy of the 1-layer case directory</p></li>
-<li><p>change the mesh to have two layers</p></li>
-<li><p>assign different permeabilities to the two layers</p></li>
-</ul>
-</div>
-<section id="change-the-mesh">
-<h3>Change the mesh<a class="headerlink" href="#change-the-mesh" title="Permalink to this headline"></a></h3>
-<p>Remember how the vertice counting is done! If you don’t, check the info box.</p>
-<figure class="align-center" id="fig-exercise-2layer-fig">
-<img alt="../../_images/exercise_2layer.png" src="../../_images/exercise_2layer.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Starting point for the two layer system.</span><a class="headerlink" href="#fig-exercise-2layer-fig" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-<p>The easiest way is start with the blockMeshDict file of the 1-layer case and then add a second layer on top. A good way of getting this right, is to draw the node numbering and then add the vertices to the blockMeshDict file. Notice how we give labels layer_bot and layer_top to the two blocks.</p>
-<div class="admonition-order-of-vertices admonition">
-<p class="admonition-title">Order of vertices</p>
-<figure class="align-center" id="fig-vertices-order-fig">
-<img alt="../../_images/vertices_order.png" src="../../_images/vertices_order.png" />
-</figure>
-<p>The OpenFoam documentation provides a nice description of the vertices ordering.</p>
-<ul class="simple">
-<li><p>the axis origin is the first entry in the block definition, vertex 0 in our example</p></li>
-<li><p>the x direction is described by moving from vertex 0 to vertex 1</p></li>
-<li><p>the y direction is described by moving from vertex 1 to vertex 2</p></li>
-<li><p>vertices 0, 1, 2, 3 define the plane z = 0</p></li>
-<li><p>vertex 4 is found by moving from vertex 0 in the z direction</p></li>
-<li><p>vertices 5,6 and 7 are similarly found by moving in the z direction from vertices 1,2 and 3 respectively.</p></li>
-</ul>
-</div>
-<p>Next boundary patches are defined and labeled in the blockMeshDict. Also here care must be take to provide the vertices in a consistent order (right-hand coordinate system). Two easy ways to remember this is to:</p>
+<p>Let’s explore the solution in a bit more detail.</p>
+<section id="vertical-versus-horizontal-permeability">
+<h2>Vertical versus horizontal permeability<a class="headerlink" href="#vertical-versus-horizontal-permeability" title="Permalink to this headline"></a></h2>
+<p>Make a copy of your case and repeat the analysis in the vertical direction. You will need to</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>apply the right-hand rule, which means if the thumb of your right hand points to the outside of a face, the numbering has to follow your fingers.</p></li>
-<li><p>or, looking onto a face and starting from any vertex, the numbering has to be counter-clockwise.</p></li>
+<li><p>Change the boundary conditions</p></li>
+<li><p>Modify the post-processing script</p></li>
 </ul>
 </div></blockquote>
 </section>
-<section id="assign-properties">
-<span id="l03-properties"></span><h3>Assign properties<a class="headerlink" href="#assign-properties" title="Permalink to this headline"></a></h3>
-<p>Next we need to set the permeability for the different zones. This can be achieved with <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> tool. The <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> tool requires a dictionary file <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> that tells it what to do. This file resides in the system folder. Here is a possible listing, just copy it and save it to your system folder.</p>
-<div class="tab-set docutils container">
-<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">zoneToCell</label><div class="tab-content docutils container">
-<div class="literal-block-wrapper docutils container" id="lst-2dbox-setfdict">
-<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">Use the setFieldsDict to assign different permeabilities.</span><a class="headerlink" href="#lst-2dbox-setfdict" title="Permalink to this code"></a></div>
-<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
-<span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
-<span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
-<span class="linenos"> 4</span><span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
-<span class="linenos"> 5</span><span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
-<span class="linenos"> 6</span><span class="cm">|    \\/     M anipulation  |                                                 |</span>
-<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
-<span class="linenos"> 8</span><span class="k">FoamFile</span>
-<span class="linenos"> 9</span><span class="p">{</span>
-<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
-<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
-<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
-<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
-<span class="linenos">14</span>    <span class="kt">object</span>      <span class="n">setFieldsDict</span><span class="p">;</span>
-<span class="linenos">15</span><span class="p">}</span>
-<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
-<span class="linenos">17</span>
-<span class="linenos">18</span>
-<span class="linenos">19</span><span class="k">defaultFieldValues</span>
-<span class="linenos">20</span><span class="p">(</span>
-<span class="linenos">21</span>    <span class="n">volScalarFieldValue</span> <span class="n">permeability</span> <span class="mf">1e-14</span>
-<span class="linenos">22</span><span class="p">);</span>
-<span class="linenos">23</span>
-<span class="hll"><span class="linenos">24</span><span class="k">regions</span>
-</span><span class="hll"><span class="linenos">25</span><span class="p">(</span>
-</span><span class="hll"><span class="linenos">26</span>    <span class="k">zoneToCell</span>
-</span><span class="hll"><span class="linenos">27</span>    <span class="p">{</span>
-</span><span class="hll"><span class="linenos">28</span>        <span class="n">name</span> <span class="s">&quot;layer_top&quot;</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">29</span>        <span class="k">fieldValues</span>
-</span><span class="hll"><span class="linenos">30</span>        <span class="p">(</span>
-</span><span class="hll"><span class="linenos">31</span>            <span class="n">volScalarFieldValue</span> <span class="n">permeability</span> <span class="mf">1e-13</span>
-</span><span class="hll"><span class="linenos">32</span>        <span class="p">);</span>
-</span><span class="hll"><span class="linenos">33</span>    <span class="p">}</span>
-</span><span class="hll"><span class="linenos">34</span><span class="p">);</span>
-</span><span class="linenos">35</span>
-<span class="linenos">36</span><span class="c1">// ************************************************************************* //</span>
-</pre></div>
-</div>
-</div>
-</div>
-<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">boxToCell</label><div class="tab-content docutils container">
-<div class="literal-block-wrapper docutils container" id="lst-2dbox-boxtocell">
-<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">Use boxToCell to simply set permeability for two-layer model.</span><a class="headerlink" href="#lst-2dbox-boxtocell" title="Permalink to this code"></a></div>
-<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
-<span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
-<span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
-<span class="linenos"> 4</span><span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
-<span class="linenos"> 5</span><span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
-<span class="linenos"> 6</span><span class="cm">|    \\/     M anipulation  |                                                 |</span>
-<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
-<span class="linenos"> 8</span><span class="k">FoamFile</span>
-<span class="linenos"> 9</span><span class="p">{</span>
-<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
-<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
-<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
-<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
-<span class="linenos">14</span>    <span class="kt">object</span>      <span class="n">setFieldsDict</span><span class="p">;</span>
-<span class="linenos">15</span><span class="p">}</span>
-<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
-<span class="linenos">17</span>
-<span class="linenos">18</span>
-<span class="linenos">19</span><span class="k">defaultFieldValues</span>
-<span class="linenos">20</span><span class="p">(</span>
-<span class="linenos">21</span>    <span class="n">volScalarFieldValue</span> <span class="n">permeability</span> <span class="mf">1e-14</span>
-<span class="linenos">22</span><span class="p">);</span>
-<span class="linenos">23</span>
-<span class="hll"><span class="linenos">24</span><span class="k">regions</span>
-</span><span class="hll"><span class="linenos">25</span><span class="p">(</span>
-</span><span class="hll"><span class="linenos">26</span>    <span class="n">boxToCell</span>
-</span><span class="hll"><span class="linenos">27</span>    <span class="p">{</span>
-</span><span class="hll"><span class="linenos">28</span>        <span class="n">box</span> <span class="p">(</span><span class="mi">0</span> <span class="o">-</span><span class="mi">500</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="mi">1000</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">//(xmin,ymin,zmin) (xmax,ymax,zmax)</span>
-</span><span class="hll"><span class="linenos">29</span>        <span class="k">fieldValues</span>
-</span><span class="hll"><span class="linenos">30</span>        <span class="p">(</span>
-</span><span class="hll"><span class="linenos">31</span>            <span class="n">volScalarFieldValue</span> <span class="n">permeability</span> <span class="mf">1e-13</span>
-</span><span class="hll"><span class="linenos">32</span>        <span class="p">);</span>
-</span><span class="hll"><span class="linenos">33</span>    <span class="p">}</span>
-</span><span class="hll"><span class="linenos">34</span><span class="p">);</span>
-</span><span class="linenos">35</span>
-<span class="linenos">36</span><span class="c1">// ************************************************************************* //</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Alternately, one can also set permeability of two layers by using <code class="code docutils literal notranslate"><span class="pre">boxToCell</span></code> based on one layer mesh (see <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:2dbox:boxToCell</span></code>), which is similar to <code class="code docutils literal notranslate"><span class="pre">zoneToCell</span></code> shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:2dbox:setfdict</span></code>.</p>
-</div>
-</section>
-<section id="run-the-case">
-<h3>Run the case<a class="headerlink" href="#run-the-case" title="Permalink to this headline"></a></h3>
-<p>Now we are using the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility to set the permeability. Therefore we need to change the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script to also include the setFields command.</p>
-<div class="literal-block-wrapper docutils container" id="lst-2dbox-setrun">
-<div class="code-block-caption"><span class="caption-number">Listing 19 </span><span class="caption-text">Modified run.sh file that also includes the setFields command.</span><a class="headerlink" href="#lst-2dbox-setrun" title="Permalink to this code"></a></div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/sh</span>
-<span class="linenos"> 2</span><span class="nb">cd</span> <span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>    <span class="c1"># Run from this directory</span>
-<span class="linenos"> 3</span>
-<span class="linenos"> 4</span><span class="c1"># Source tutorial run functions</span>
-<span class="linenos"> 5</span>. <span class="nv">$WM_PROJECT_DIR</span>/bin/tools/RunFunctions
-<span class="linenos"> 6</span>
-<span class="linenos"> 7</span><span class="nv">application</span><span class="o">=</span><span class="sb">`</span>getApplication<span class="sb">`</span>
-<span class="linenos"> 8</span>
-<span class="linenos"> 9</span>./clean.sh
-<span class="linenos">10</span>runApplication blockMesh
-<span class="linenos">11</span>cp <span class="m">0</span>/permeability.orig <span class="m">0</span>/permeability
-<span class="linenos">12</span>runApplication setFields
-<span class="linenos">13</span>runApplication <span class="nv">$application</span>
-</pre></div>
-</div>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Notice that we have also included the statement <code class="code docutils literal notranslate"><span class="pre">cp</span> <span class="pre">0/permeability.orig</span> <span class="pre">0/permeability</span></code> into the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script. The <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> command writes mesh-dependent information into the <code class="code docutils literal notranslate"><span class="pre">permeability</span></code> file, which causes problems when we want to change the mesh. Compare the <code class="code docutils literal notranslate"><span class="pre">permeability</span></code> file before and after running the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> command. To preserve the original file, it is a good idea to name the original file <code class="code docutils literal notranslate"><span class="pre">permeability.orig</span></code> and only edit that one. When <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> is executed, this file is then copied to <code class="code docutils literal notranslate"><span class="pre">permeability</span></code> and mesh-dependent information is added to this file when <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> is executed.</p>
-</div>
-<p>Results of the two layer model. The highly permeable upper layer results in cold fluid entrainment and cooling due to mixing.</p>
-<video width=100% autoplay muted controls loop>
-   <source src="../../_static/video/layered_movie.mp4" type="video/mp4">
-   Your browser does not support HTML video.
-</video></section>
+<section id="changes-to-the-geometry">
+<h2>Changes to the geometry<a class="headerlink" href="#changes-to-the-geometry" title="Permalink to this headline"></a></h2>
+<p>Check how the solution changes if you distort the mesh. For example, squeeze it a bit in the vertical direction by modifying the <code class="code docutils literal notranslate"><span class="pre">transformPoints</span> <span class="pre">-scale</span> <span class="pre">&quot;(1e-6</span> <span class="pre">1e-6</span> <span class="pre">1e-6)&quot;</span></code> statement. Also check if the absolute dimensions matter!</p>
 </section>
 </section>
 
@@ -388,7 +210,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="FirstCase.html" class="btn btn-neutral float-left" title="Computing effective permeability" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="FirstCase.html" class="btn btn-neutral float-left" title="Flow on the pore scale" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../L04/Overview.html" class="btn btn-neutral float-right" title="Lecture overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
