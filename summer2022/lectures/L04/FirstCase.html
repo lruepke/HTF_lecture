@@ -25,7 +25,9 @@
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Excercises" href="Exercise.html" />
+    <link rel="prev" title="Porous Flow - Submarine Hydrothermal Systems" href="intro.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -81,21 +83,36 @@
 <li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise1.html">Exercise 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise2.html">Exercise 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise3.html">Exercise 3</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Hydrothermal convection test case</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-case-files">Prepare case files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mesh-generation">Mesh generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transport-properties">Transport properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#case-control">Case control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-case">Running the case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise.html">Excercises</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L05/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L05/Exercise1.html">Exercise 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L05/Exercise2.html">Exercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise3.html">Exercise 3</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
@@ -150,7 +167,7 @@
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Hydrothermal convection test case</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L03_old/FirstCase.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L04/FirstCase.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -192,9 +209,9 @@
 cp -r <span class="nv">$HOME</span>/hydrothermalfoam-master/cookbooks/2d/Regular2DBox .
 </pre></div>
 </div>
-<p>Check out the directory structure shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:2dbox:tree</span></code>.</p>
+<p>Check out the directory structure shown in <a class="reference internal" href="#lst-2dbox-tree"><span class="std std-numref">Listing 17</span></a>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-tree">
-<div class="code-block-caption"><span class="caption-text">File tree structure of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-tree" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">File tree structure of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-tree" title="Permalink to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>.
 <span class="linenos"> 2</span><span class="p">|</span>-- <span class="m">0</span>
 <span class="hll"><span class="linenos"> 3</span><span class="p">|</span>   <span class="p">|</span>-- T
@@ -240,7 +257,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-bc">
-<div class="code-block-caption"><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -311,7 +328,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-bc-p">
-<div class="code-block-caption"><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc-p" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 19 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc-p" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -370,7 +387,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-perm">
-<div class="code-block-caption"><span class="caption-text">Permeability on hydrothermal flow simulations.</span><a class="headerlink" href="#lst-2dbox-perm" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 20 </span><span class="caption-text">Permeability on hydrothermal flow simulations.</span><a class="headerlink" href="#lst-2dbox-perm" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -408,7 +425,7 @@ paraview a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-cdict">
-<div class="code-block-caption"><span class="caption-text">controlDict of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-cdict" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 21 </span><span class="caption-text">controlDict of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-cdict" title="Permalink to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -463,7 +480,7 @@ paraview a.foam
 <figure class="align-center" id="fig-regular2dbox-fig">
 <img alt="../../_images/RegularBox2D.png" src="../../_images/RegularBox2D.png" />
 <figcaption>
-<p><span class="caption-text">Results of the Regular2DBox example calculation.</span><a class="headerlink" href="#fig-regular2dbox-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Results of the Regular2DBox example calculation.</span><a class="headerlink" href="#fig-regular2dbox-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -472,7 +489,10 @@ paraview a.foam
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro.html" class="btn btn-neutral float-left" title="Porous Flow - Submarine Hydrothermal Systems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Exercise.html" class="btn btn-neutral float-right" title="Excercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

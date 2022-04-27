@@ -26,8 +26,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Structural controls on hydrothermal flow" href="intro.html" />
-    <link rel="prev" title="Jupyter Notebook of case results" href="../L04/cases/Driesner2010/jupyter/Plot_CaseResults.html" /> 
+    <link rel="next" title="Upflow temperatures in submarine hydrothermal systems" href="intro.html" />
+    <link rel="prev" title="Excercises" href="../L04/Exercise.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -85,19 +85,26 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise1.html">Exercise 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise2.html">Exercise 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise3.html">Exercise 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise.html">Excercises</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise2.html">Exercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise3.html">Exercise 3</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
@@ -186,16 +193,15 @@
 </style>
 <section id="lecture-overview">
 <h1>Lecture overview<a class="headerlink" href="#lecture-overview" title="Permalink to this headline"></a></h1>
-<p>After having studied how the thermodynamic properties of water control the dynamics of submarine hydrothermal systems, we will now have a closer lock on structural controls and explore how permeability variations affect flow. For this we will first look into synthetic cases, before considering fault-controlled vent system at slow-spreading ridges such as TAG, Logatchev, and Lonqi.</p>
-<p>The goal of the lecture is to understand how permeability controls hydrothermal flow and how we can setup complicated geometries and permeability distributions in OpenFoam.</p>
+<p>During this lecture we will investigate how fluid properties, given by the pure water equation-of-state, affect flow dynamics and vent temperatures. We will use python scripts to plot and analyze the thermodynamic properties of pure water amd will make 2D convection experiments for assessing how those properties affect upflow temperatures.</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../L04/cases/Driesner2010/jupyter/Plot_CaseResults.html" class="btn btn-neutral float-left" title="Jupyter Notebook of case results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="intro.html" class="btn btn-neutral float-right" title="Structural controls on hydrothermal flow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../L04/Exercise.html" class="btn btn-neutral float-left" title="Excercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="intro.html" class="btn btn-neutral float-right" title="Upflow temperatures in submarine hydrothermal systems" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

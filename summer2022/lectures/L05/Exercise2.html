@@ -26,8 +26,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Lecture overview" href="../L_FVM/Overview.html" />
-    <link rel="prev" title="Exercise 1" href="Exercise1.html" /> 
+    <link rel="next" title="Jupyter Notebook of case results" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html" />
+    <link rel="prev" title="Jupyter Notebook of water properties" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -85,24 +85,37 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise1.html">Exercise 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise2.html">Exercise 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise3.html">Exercise 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise.html">Excercises</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 2</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#step-1">Step 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-2">Step 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#step-3">Step 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#model-setup-and-running-the-case">Model setup and running the case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#post-processing">Post-processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#plotting-temperature">Plotting temperature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exploring-the-parameter-space">Exploring the parameter space</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html">Jupyter Notebook of case results</a></li>
 </ul>
 </li>
 </ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise3.html">Exercise 3</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
@@ -190,77 +203,131 @@
 }
 </style>
 <section id="exercise-2">
-<span id="l05-exercise2"></span><h1>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline"></a></h1>
-<p>Ok, time to put our new knowledge to work! Let’s explore a more realistic case and investigate how a more permeable fault zone can deviate hydrothermal upflow. You can find background on such a setup in <span id="id1">[<a class="reference internal" href="../../refs.html#id11" title="C. Andersen, LH Rüpke, J. Hasenclever, I. Grevemeyer, and S. Petersen. Fault geometry and permeability contrast control vent temperatures at the logatchev 1 hydrothermal field, mid-atlantic ridge. Geology, 43(1):51-54, 2015. doi:doi:10.1130/G36113.1.">Andersen et al., 2015</a>]</span>.</p>
-<div class="admonition-steps admonition">
-<p class="admonition-title">Steps</p>
+<span id="l04-exercise2"></span><h1>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline"></a></h1>
+<p><span id="id1">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> published a landmark paper on how A landmark paper on how the thermodynamic properties of water determine temperatures in hydrothermal upflow zones. Their concept of “fluxibility” was later extended to explore interrelations between permeability on vent temperatures <span id="id2">[<a class="reference internal" href="../../refs.html#id9" title="T. Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132-141, 2010. URL: &lt;Go to ISI&gt;://WOS:000277410200010, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010a</a>]</span>, the structure of hydrothermal flow zone <span id="id3">[<a class="reference internal" href="../../refs.html#id10" title="D. Coumou, T. Driesner, and C. A. Heinrich. The structure and dynamics of mid-ocean ridge hydrothermal systems. Science, 321(5897):1825-1828, 2008. URL: &lt;Go to ISI&gt;://000259501300035 http://www.sciencemag.org/cgi/reprint/321/5897/1825.pdf, doi:10.1126/science.1159582.">Coumou et al., 2008</a>]</span>, and fault-controlled off-axis hydrothermal system <span id="id4">[<a class="reference internal" href="../../refs.html#id11" title="C. Andersen, LH Rüpke, J. Hasenclever, I. Grevemeyer, and S. Petersen. Fault geometry and permeability contrast control vent temperatures at the logatchev 1 hydrothermal field, mid-atlantic ridge. Geology, 43(1):51-54, 2015. doi:doi:10.1130/G36113.1.">Andersen et al., 2015</a>]</span>. Some of these papers are available in the e-learning site of this course for registered CAU students.</p>
+<div class="admonition-objectives-of-this-exercise admonition">
+<p class="admonition-title">Objectives of this exercise</p>
 <ul class="simple">
-<li><p>check all settings and modify model run time so that the plume arrives at the surface</p></li>
-<li><p>modify (or create) a <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> to create the permeability structure.</p></li>
-<li><p>use a function called <code class="code docutils literal notranslate"><span class="pre">rotatedBoxToCell</span></code> to set the permeability structure</p></li>
-<li><p>run the case and explore how the results change for different fault widths and permeability contrasts.</p></li>
+<li><p>understand how thermodynamic properties control upflow temperatures</p></li>
+<li><p>learn how to use python to post-process OpenFoam cases</p></li>
 </ul>
 </div>
-<section id="step-1">
-<h2>Step 1<a class="headerlink" href="#step-1" title="Permalink to this headline"></a></h2>
-<p>Copy the <code class="code docutils literal notranslate"><span class="pre">$HOME/hydrothermalfoam-master/cookbooks/2d/Regular2DBox/</span></code> into your working directory.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
-cp -r /home/openfoam/hydrothermalfoam-master/cookbooks/2d/Regular2DBox/ ./Fault_zone_2D
+<p>We will now try to reproduce the results presented by <span id="id5">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span>. The setup is very similar to the simple single plume driven by a gaussian heat source we had simulated previously.</p>
+<section id="model-setup-and-running-the-case">
+<h2>Model setup and running the case<a class="headerlink" href="#model-setup-and-running-the-case" title="Permalink to this headline"></a></h2>
+<p>We are simulating a 3700 x 1000m sized box with a gaussian constant temperature boundary condition at the bottom. The general model setup is shown in the Figure below. The OpenFoam case can be downloaded from here: <code class="xref download docutils literal notranslate"><span class="pre">Jupp_Schultz</span></code>.</p>
+<p>(<a class="reference external" href="../../lectures/L05/Exercise2-1.py">Source code</a>, <a class="reference external" href="../../lectures/L05/Exercise2-1.svg">svg</a>, <a class="reference external" href="../../lectures/L05/Exercise2-1.pdf">pdf</a>)</p>
+<figure class="align-default">
+<img alt="../../_images/Exercise2-1.svg" class="plot-directive" src="../../_images/Exercise2-1.svg" /></figure>
+<p>Download the case file, unzip it and copy it into your shared folder that is accessible both from your local system and from the docker container. Check out the usual files like <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>, <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code>, <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>. Make sure you understand the setup!</p>
+<p>There is a dynamic code section within <code class="code docutils literal notranslate"><span class="pre">system/conrolDict</span></code> that allows outputting more variables including the thermodynamic properties of water.</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">functions</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span>    <span class="n">calPlumeT</span>
+<span class="linenos"> 4</span>    <span class="p">{</span>
+<span class="linenos"> 5</span>        <span class="kt">libs</span>                <span class="p">(</span><span class="s">&quot;libutilityFunctionObjects.so&quot;</span><span class="p">);</span>
+<span class="linenos"> 6</span>        <span class="kt">type</span>                <span class="n">coded</span><span class="p">;</span>
+<span class="linenos"> 7</span>        <span class="n">enabled</span>             <span class="nb">true</span><span class="p">;</span>
+<span class="linenos"> 8</span>        <span class="kt">writeControl</span>        <span class="n">adjustableRunTime</span><span class="p">;</span>
+<span class="linenos"> 9</span>        <span class="kt">writeInterval</span>       <span class="k">$</span><span class="kt">writeInterval</span><span class="p">;</span>
+<span class="linenos">10</span>        <span class="n">name</span>                <span class="n">plumeTemperature</span><span class="p">;</span>
+<span class="linenos">11</span>        <span class="n">codeWrite</span>
+<span class="linenos">12</span>        <span class="cp">#{</span>
+<span class="linenos">13</span>            <span class="c1">//get maximum tempeature on the top boundary</span>
+<span class="linenos">14</span>            <span class="n">label</span> <span class="n">patchID</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">boundaryMesh</span><span class="p">().</span><span class="n">findPatchID</span><span class="p">(</span><span class="s">&quot;top&quot;</span><span class="p">);</span>
+<span class="linenos">15</span>            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="k">T</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;T&quot;</span><span class="p">);</span>
+<span class="linenos">16</span>            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mu&quot;</span><span class="p">);</span>
+<span class="linenos">17</span>            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">Cp</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Cp&quot;</span><span class="p">);</span>
+<span class="linenos">18</span>            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">rho</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;rho&quot;</span><span class="p">);</span>
+<span class="linenos">19</span>            <span class="k">const</span> <span class="n">surfaceScalarField</span><span class="o">&amp;</span> <span class="k">phi</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">surfaceScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;phi&quot;</span><span class="p">);</span>
+<span class="linenos">20</span>            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;enthalpy&quot;</span><span class="p">);</span>
+<span class="linenos">21</span>            <span class="kt">double</span> <span class="n">kr</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">22</span>            <span class="c1">// calculate local Rayleigh number</span>
+<span class="linenos">23</span>            <span class="n">volScalarField</span> <span class="nf">Ra_L</span><span class="p">(</span><span class="s">&quot;LocalRayleigh&quot;</span><span class="p">,</span><span class="n">mag</span><span class="p">(</span><span class="n">fvc</span><span class="o">::</span><span class="n">div</span><span class="p">(</span><span class="k">phi</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">kr</span><span class="o">*</span><span class="n">fvc</span><span class="o">::</span><span class="n">laplacian</span><span class="p">(</span><span class="k">T</span><span class="p">))));</span>
+<span class="linenos">24</span>            <span class="c1">// write properties to output files</span>
+<span class="linenos">25</span>            <span class="n">mu</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">Cp</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">h</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">Ra_L</span><span class="p">.</span><span class="n">write</span><span class="p">();</span>
+<span class="linenos">26</span>            <span class="c1">// write vent temperature</span>
+<span class="linenos">27</span>            <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">fout</span><span class="p">(</span><span class="s">&quot;ventT.txt&quot;</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">ofstream</span><span class="o">::</span><span class="n">app</span><span class="p">);</span>
+<span class="linenos">28</span>            <span class="c1">// Info&lt;&lt;&quot;Plume Temperature: &quot;&lt;&lt;mesh().time().value()/31536000&lt;&lt;&quot;\t&quot;&lt;&lt;Foam::gMax(T.boundaryField()[patchID])-273.15&lt;&lt;&quot; C&quot;&lt;&lt;endl;</span>
+<span class="linenos">29</span>            <span class="n">fout</span><span class="o">&lt;&lt;</span><span class="n">mesh</span><span class="p">().</span><span class="n">time</span><span class="p">().</span><span class="kt">value</span><span class="p">()</span><span class="o">/</span><span class="mi">31536000</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">Foam</span><span class="o">::</span><span class="n">gMax</span><span class="p">(</span><span class="k">T</span><span class="p">.</span><span class="k">boundaryField</span><span class="p">()[</span><span class="n">patchID</span><span class="p">])</span><span class="o">-</span><span class="mf">273.15</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="linenos">30</span>            <span class="n">fout</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+<span class="linenos">31</span>        <span class="cp">#};</span>
+<span class="linenos">32</span>    <span class="p">}</span>
+<span class="linenos">33</span><span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="step-2">
-<h2>Step 2<a class="headerlink" href="#step-2" title="Permalink to this headline"></a></h2>
-<p>Now modify the case and setup the permeability structure. It should look like this:</p>
-<figure class="align-center" id="setup-l5-2-fig" style="width: 80%">
-<img alt="../../_images/perm_fault.png" src="../../_images/perm_fault.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 30 </span><span class="caption-text">Permeability structure of our detachment fault example cause.</span><a class="headerlink" href="#setup-l5-2-fig" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-<p>We can use the <code class="code docutils literal notranslate"><span class="pre">rotatedBoxToCell</span></code> function in the <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> for this. Check the <a class="reference external" href="https://cpp.openfoam.org/v3/a02202.html">openfoam documentation</a> !</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>It’s all about rotating the coordinate system to figure out the origin and i,j,k vectors for <code class="code docutils literal notranslate"><span class="pre">rotatedBoxToCell</span></code>!</p>
-<figure class="align-center" id="coord-sys-fig" style="width: 40%">
-<img alt="../../_images/coord_sys.png" src="../../_images/coord_sys.png" />
-</figure>
-</div>
-<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="k">regions</span>
-<span class="p">(</span>
-    <span class="n">rotatedBoxToCell</span>
-    <span class="p">{</span>
-        <span class="n">origin</span>   <span class="p">(</span> <span class="o">?</span> <span class="o">?</span> <span class="o">?</span><span class="p">);</span>
-        <span class="n">i</span>        <span class="p">(</span> <span class="o">?</span> <span class="o">?</span> <span class="o">?</span><span class="p">);</span>
-        <span class="n">j</span>        <span class="p">(</span> <span class="o">?</span> <span class="o">?</span>  <span class="o">?</span><span class="p">);</span>
-        <span class="n">k</span>        <span class="p">(</span> <span class="o">?</span> <span class="o">?</span>  <span class="o">?</span><span class="p">);</span>
-
-        <span class="k">fieldValues</span>
-        <span class="p">(</span>
-            <span class="n">volScalarFieldValue</span> <span class="n">permeability</span> <span class="mf">1e-13</span>
-        <span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">);</span>
+<p>That code block requires the specific enthalpy to be accessible by the code. The version of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> we are using does not have that activated. Therefore we need to update it to the newest version. Thankfully that’s easy to do; go into the docker container shell and</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>
+./getHydrothermalFoam_latest.sh
 </pre></div>
 </div>
+<p>This will update the source code of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and recompile it. Just wait for it to complete. Now you can run the case!</p>
+<p>It’s possible that we have been a bit overambitious in our chosen numerical resolution. In case the run-time is too long, just reduce the horizontal and vertical resolution. Make the mesh with <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> and call the solver; or execute the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script. If you are feeling courages today, you can also try our running it in parallel! Check out the <code class="code docutils literal notranslate"><span class="pre">run_par.sh</span></code> script for that.</p>
 </section>
-<section id="step-3">
-<h2>Step 3<a class="headerlink" href="#step-3" title="Permalink to this headline"></a></h2>
-<p>Explore the results in paraview! And investigate how the results change for different fault widths and permeability contrasts.</p>
-<figure class="align-center" id="flow-fault-fig" style="width: 80%">
-<img alt="../../_images/flow_fault.png" src="../../_images/flow_fault.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 31 </span><span class="caption-text">Hydrothermal flow along a preferential pathway.</span><a class="headerlink" href="#flow-fault-fig" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
+<section id="post-processing">
+<h2>Post-processing<a class="headerlink" href="#post-processing" title="Permalink to this headline"></a></h2>
+<section id="plotting-temperature">
+<h3>Plotting temperature<a class="headerlink" href="#plotting-temperature" title="Permalink to this headline"></a></h3>
+<p>After running the case, check it out in paraview and make sure you understand the results and that everything looks fine. While paraview is great for 3-D processing, sometimes python can be more powerfull in detailed post-processing.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<ul class="simple">
-<li><p>Run many simulations for different fault widths and permeabilities</p></li>
-<li><p>Explore how vent temperature changes</p></li>
-<li><p>…and when the plume is captured by the fault!</p></li>
+<p>Have you noticed the python terminal in paraview? Combining python with paraview can be extremely powerful! If you are curious, check it out on the internet. We will also show some examples later in the course.</p>
+</div>
+<p>The figure below shows an example plot of the final temperature solution. It basically does the same thing as paraview, but let’s walk through it.</p>
+<figure class="align-center" id="fig-t-jupp-schultz-steady">
+<img alt="../../_images/T_Jupp_Schultz_steady.svg" src="../../_images/T_Jupp_Schultz_steady.svg" /><figcaption>
+<p><span class="caption-number">Fig. 24 </span><span class="caption-text">The steady-state temperature distribution. See <span class="xref std std-ref">/lectures/L04/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb#Temperature-+-velocity-field-(quiver)</span> in the notebook.</span><a class="headerlink" href="#fig-t-jupp-schultz-steady" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Click on the link in the figure caption and go through the notebook. Safest way of getting this to work is to copy the steps into local notebooks (see <a class="reference internal" href="../L01/Installation.html#installation-guide"><span class="std std-ref">Installation guide</span></a>).</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="n">code</span> <span class="n">plot_temp</span><span class="p">.</span><span class="n">ipynb</span>
+</pre></div>
+</div>
+<p>Copy the sections into your local notebook, try to execute the sections (press SHIFT+RETURN), add some markdown sections with comments.</p>
+</section>
+<section id="exploring-the-parameter-space">
+<h3>Exploring the parameter space<a class="headerlink" href="#exploring-the-parameter-space" title="Permalink to this headline"></a></h3>
+<p>Effect of cell size (<strong>CS</strong>) and full width at half maximum (<strong>FWHM</strong>),</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">CS=10,FWHM=300</label><div class="tab-content docutils container">
+<figure class="align-center" id="id6">
+<img alt="../../_images/T_Jupp_Schultz300_steady.svg" src="../../_images/T_Jupp_Schultz300_steady.svg" /><figcaption>
+<p><span class="caption-number">Fig. 25 </span><span class="caption-text">Cell size = 10 m, FWHM = 300 m.</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">CS=10,FWHM=400</label><div class="tab-content docutils container">
+<figure class="align-center" id="id7">
+<img alt="../../_images/T_Jupp_Schultz400_steady.svg" src="../../_images/T_Jupp_Schultz400_steady.svg" /><figcaption>
+<p><span class="caption-number">Fig. 26 </span><span class="caption-text">Cell size = 10 m, FWHM = 400 m.</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">CS=2.5,FWHM=300</label><div class="tab-content docutils container">
+<figure class="align-center" id="id8">
+<img alt="../../_images/T_Jupp_Schultz300_2.5_steady.svg" src="../../_images/T_Jupp_Schultz300_2.5_steady.svg" /><figcaption>
+<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Cell size = 2.5 m, FWHM = 300 m.</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<figure class="align-center" id="fig-jupp-schultz-early">
+<img alt="../../_images/Jupp_Schultz_early.svg" src="../../_images/Jupp_Schultz_early.svg" /><figcaption>
+<p><span class="caption-number">Fig. 28 </span><span class="caption-text">Early stages of the simulation. See <span class="xref std std-ref">/lectures/L04/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb#Early-stage</span> in the notebook.</span><a class="headerlink" href="#fig-jupp-schultz-early" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html">Jupyter Notebook of case results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Read-results">Read results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Plot-result-data">Plot result data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Temperature-+-velocity-field-(quiver)">Temperature + velocity field (quiver)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Early-stage">Early stage</a></li>
+</ul>
+</li>
 </ul>
 </div>
+</section>
 </section>
 </section>
 
@@ -268,8 +335,8 @@ cp -r /home/openfoam/hydrothermalfoam-master/cookbooks/2d/Regular2DBox/ ./Fault_
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Exercise1.html" class="btn btn-neutral float-left" title="Exercise 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../L_FVM/Overview.html" class="btn btn-neutral float-right" title="Lecture overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" class="btn btn-neutral float-left" title="Jupyter Notebook of water properties" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html" class="btn btn-neutral float-right" title="Jupyter Notebook of case results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

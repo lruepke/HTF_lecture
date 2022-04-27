@@ -26,8 +26,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Jupyter Notebook of water properties" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" />
-    <link rel="prev" title="Upflow temperatures in submarine hydrothermal systems" href="intro.html" /> 
+    <link rel="next" title="Exercise 2" href="Exercise2.html" />
+    <link rel="prev" title="Structural controls on hydrothermal flow" href="intro.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -83,24 +83,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 1</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html">Jupyter Notebook of water properties</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Exercise2.html">Exercise 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Exercise3.html">Exercise 3</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise.html">Excercises</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L05/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L05/Exercise1.html">Exercise 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L05/Exercise2.html">Exercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise3.html">Exercise 3</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#step-1">Step 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-2">Step 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#step-3">Step 3</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
@@ -155,7 +164,7 @@
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Exercise 1</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L04/Exercise1.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L06/Exercise1.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -188,52 +197,88 @@
 }
 </style>
 <section id="exercise-1">
-<span id="l04-exercise1"></span><h1>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline"></a></h1>
-<p>We have prepared jupyter notebooks that let’s you explore the thermodynamic properties of pure water. Play with them!</p>
-<figure class="align-center" id="fig-properties-water">
-<img alt="../../_images/Properties_Water.svg" src="../../_images/Properties_Water.svg" /><figcaption>
-<p><span class="caption-number">Fig. 17 </span><span class="caption-text">Water properties as a function of temperature and pressure, using python package of <a class="reference external" href="https://iapws.readthedocs.io/en/latest/#">iapws</a>. Properties calculation details can be found in the <a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html#Properties-as-function-of-temperature"><span class="std std-ref">Properties as function of temperature</span></a> in the notebook.</span><a class="headerlink" href="#fig-properties-water" title="Permalink to this image"></a></p>
+<span id="l05-exercise1"></span><h1>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline"></a></h1>
+<p>We will first explore a simple setup of 2-D flow along a pressure gradient in the presence of permeability contrasts.</p>
+<div class="admonition-goals admonition">
+<p class="admonition-title">Goals</p>
+<ul class="simple">
+<li><p>explore porous flow along prescribed pressure gradient</p></li>
+<li><p>use <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility to modify the permeability structure</p></li>
+<li><p>Understand how permeability contrasts affect flow</p></li>
+</ul>
+</div>
+<section id="step-1">
+<h2>Step 1<a class="headerlink" href="#step-1" title="Permalink to this headline"></a></h2>
+<p>We will explore the following case: A 2-D box of dimensions 1500 m by 1000 m. Flow is driven by a prescribed pressure gradient. Within the box, variations in permeability affect the flow field.</p>
+<figure class="align-center" id="setup-l5-1-fig" style="width: 80%">
+<img alt="../../_images/lecture_plot.png" src="../../_images/lecture_plot.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 34 </span><span class="caption-text">Setup of our 2D test case for flow in a porous medium with variable permeability.</span><a class="headerlink" href="#setup-l5-1-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html">Jupyter Notebook of water properties</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html#How-to-use-iapws-calculate-water-properties">How to use iapws calculate water properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html#Properties-as-function-of-temperature">Properties as function of temperature</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="admonition-assignment admonition">
-<p class="admonition-title">Assignment</p>
-<p>Try to get these notebooks to work and play a little bit with them. Explore how the values change under different P-T conditions and change the line plot to also show enthalpy. One way of doing this is to create a new notebook and to copy the code from above into them</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code plot_iapws_class.ipynb
+<p>A good starting point for setting up new case is always to take an existing similar case. Here we can use one of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> benchmark cases. It’s located in <code class="code docutils literal notranslate"><span class="pre">$HOME/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1</span></code>.</p>
+<p>Copy the case into your working directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp -r /home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1 ./h1_class
 </pre></div>
 </div>
+</section>
+<section id="step-2">
+<h2>Step 2<a class="headerlink" href="#step-2" title="Permalink to this headline"></a></h2>
+<p>Now we need to modify the case. These are the necessary steps:</p>
+<div class="admonition-goals admonition">
+<p class="admonition-title">Goals</p>
+<ul class="simple">
+<li><p>modify the mesh by chnanging <code class="code docutils literal notranslate"><span class="pre">blockMeshDict</span></code></p></li>
+<li><p>check that gravity is zero in <code class="code docutils literal notranslate"><span class="pre">constant/g</span></code></p></li>
+<li><p>update boundary conditions for pressure and temperature (and permeability)</p></li>
+<li><p>use the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility and the controlling <code class="code docutils literal notranslate"><span class="pre">system/setFieldsDict</span></code> to modify the permeability structure</p></li>
+<li><p>the exact of dimensions of the permeability blocks don’t matter</p></li>
+<li><p>modify <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code> so that we only make one time step. Easiest way is to set endTime, deltaT and writeInterval all to 864000.</p></li>
+</ul>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Dangers and Annoyances</p>
-<p>Sometimes Visual Studio’s way of setting the python interpretor is not that “intuitive”. In principle, you set the the interpretor (your python environment) using CMD/CTRL+SHIFT+P and typing Python: Select Interpretor. Then you can chose the python environment of the class that has all the necessarry packages installed.</p>
-<p>Problem is, .ipynb files also contain information on the interpretor that should be used with a notbook and Visual Studio uses that information. Therefore, if you download the scripts from us, there is a non-zero chance that your Visual Studio will chose the “wrong” interpretor and that you get an error message that certain packages are not installed.</p>
-<p>In that case you need to follow a workaround. Rename your .ipynb file to .ipynb.json and open that file. Find the section on kernelspec:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;kernelspec&quot;</span>: <span class="o">{</span>
-<span class="s2">&quot;display_name&quot;</span>: <span class="s2">&quot;Python 3&quot;</span>,
-<span class="s2">&quot;language&quot;</span>: <span class="s2">&quot;python&quot;</span>,
-<span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;python3&quot;</span>
-<span class="o">}</span>,
+<p>You might have noticed that the <code class="code docutils literal notranslate"><span class="pre">benchmarks/HydrothermalFoam/1d/h1</span></code> case does not contain a <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code>. This is common “problem” that a dictionary file is missing when starting from an existing case file. You can easily fix this by copying the respective dictionary from another case and then modify it. If you don’t know which case has the missing dictionary, you can just search for it (inside the docker container). For example like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find <span class="nv">$HOME</span> -type f -name <span class="s2">&quot;setFieldsDict&quot;</span>
 </pre></div>
 </div>
-<p>and delete that entire section. Save the file again as a .ipynb file and re-open it in Visual Studio - and hope for the best…</p>
+<p>Now that we have the setFieldsDict, we need to modify it. Do you remember <a class="reference internal" href="../L04/Exercise.html#l03-properties"><span class="std std-ref">Assign properties</span></a> part the two-layered convection <a class="reference internal" href="../L04/Exercise.html#l03-exercise"><span class="std std-ref">Excercises</span></a> in lecture 3? There we used the boxToCell function within <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> as an alternative way of making a layerd permeability structure. Now we can do the same here, just that we need several boxes.</p>
+<p>This is how the code snippit looked like in lecture 3; take it as a starting point!</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>regions
+<span class="o">(</span>
+    boxToCell
+    <span class="o">{</span>
+        box <span class="o">(</span><span class="m">0</span> -500 <span class="m">0</span><span class="o">)</span> <span class="o">(</span><span class="m">1000</span> <span class="m">0</span> <span class="m">1</span><span class="o">)</span><span class="p">;</span> //<span class="o">(</span>xmin,ymin,zmin<span class="o">)</span> <span class="o">(</span>xmax,ymax,zmax<span class="o">)</span>
+        fieldValues
+        <span class="o">(</span>
+            volScalarFieldValue permeability 1e-13
+        <span class="o">)</span><span class="p">;</span>
+    <span class="o">}</span>
+<span class="o">)</span><span class="p">;</span>
+</pre></div>
 </div>
+<p>You can also play with different shapes, like cylinder or rotated box. Check the documentation!</p>
+</div>
+</section>
+<section id="step-3">
+<h2>Step 3<a class="headerlink" href="#step-3" title="Permalink to this headline"></a></h2>
+<p>Explore the results in paraview!</p>
+<figure class="align-center" id="flow-l5-1-fig" style="width: 80%">
+<img alt="../../_images/hetero_perm_flow.png" src="../../_images/hetero_perm_flow.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 35 </span><span class="caption-text">Porous flow in the presence of permeability variations.</span><a class="headerlink" href="#flow-l5-1-fig" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="intro.html" class="btn btn-neutral float-left" title="Upflow temperatures in submarine hydrothermal systems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" class="btn btn-neutral float-right" title="Jupyter Notebook of water properties" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="intro.html" class="btn btn-neutral float-left" title="Structural controls on hydrothermal flow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Exercise2.html" class="btn btn-neutral float-right" title="Exercise 2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
