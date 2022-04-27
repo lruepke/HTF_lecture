@@ -8,17 +8,17 @@ Flow on the pore scale
 Objective
 ---------
 
-Starting from a digital representation of a sample's pore space (typically an image produced by a cT-scan), we want to compute its effective permeability. Or put differently, we will make a **direct** simulation of flow on the pore level and post-process it for extracting the effective permeability for simplified **continuum** simulations using Darcy's law.
+Starting from a digital representation of a sample's pore space (typically an image produced by a cT-scan), we want to compute the permeability of the sample. Put differently, we will make a **direct** simulation of flow on the pore level and post-process it for extracting the permeability to be used, for example, in simplified **continuum** simulations using Darcy's law.
 
 .. figure:: /_figures/porousModel.*
    :align: center
    :name: fig:porousModel_fig
    :figwidth: 70%
 
-   Synthetic image of the pore geometry. Pores are white; solid is black.
+   Synthetic image of the pore geometry. Pores are white; solids are black.
 
 
-To compute the effective permeability, we will apply constant pressure boundary conditions and evaluate the flow rate through the sample. Once we have that, we can re-arrange Darcy's law to solve for permeability:
+To compute permeability, we will apply constant pressure boundary conditions and evaluate the flow rate through the sample. Once we have that, we can re-arrange Darcy's law to solve for permeability:
 
 .. math::
     :label: eq:darcy_perm 
@@ -31,12 +31,12 @@ Ok, let's do it!
 Mesh generation
 ---------------
 
-The first major step is to generate a mesh of the pores space shown in :numref:`fig:porousModel_fig`. For this purpose, we will use `OpenFOAM's snappyHexMesh tool <https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4>`_ . It allows meshing arbitrary geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made. 
+The first major step is to generate a mesh of the pore space (:numref:`fig:porousModel_fig`). For this purpose, we will use `OpenFOAM's snappyHexMesh tool <https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4>`_. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made. 
 
 .. tip::
-    We will not go into the details of snappyHexMesh (SHM). If you want to use it and/or understand it, a good starting point is the user-guide linked above. Another great resource are the `Rock Vapor Classic tutorial series <https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic>`_ .
+    We will not go into the details of snappyHexMesh (SHM) works. If you want to use and/or understand it, a good starting point is the user guide linked above. Another great resource is the `Rock Vapor Classic tutorial series <https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic>`_.
 
-In a nutshell, snappyHexMesh (SHM) is about starting from a blockMesh (as in the previous lecture) and then cutting-out the solid grain (described by a triangulated surface), and then *snapping* the mesh to this surface. A typical way to describe this surface is an .stl file - a typical file format for triangulated surfaces that is also often used for 3D printing.
+In a nutshell, snappyHexMesh (SHM) is about starting from a blockMesh (as in the previous lecture), cutting out the solid grain (described by a triangulated surface), and then *snapping* the mesh to this surface. A typical way to describe this surface is an .stl file - a file format for triangulated surfaces that is often used for 3D printing.
 
 
 .. figure:: /_figures/figure_workflow.*
@@ -47,18 +47,18 @@ In a nutshell, snappyHexMesh (SHM) is about starting from a blockMesh (as in the
    Workflow illustrating the meshing process.
 
 
-The steps involved are shown in :numref:`fig:figure_workflow_fig` . Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters.
+The steps involved are shown in :numref:`fig:figure_workflow_fig` . Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters and the workflow is this.
 
-    #. start with an image (A).
-    #. save it as a .vti file that is easily understood by Paraview. We use `porespy <https://porespy.org/>`_ for this step.
-    #. load the vti file into paraview and use the *clip* (B) and *triangulation* (B) filers to created a surface of the pore space (C).
-    #. save this surface as a stl file
+    #. Start with an image (A).
+    #. Save it as a .vti file that is easily understood by Paraview. We use `porespy <https://porespy.org/>`_ for this step.
+    #. Load the vti file into paraview and use the *clip* (B) and *triangulation* (B) filers to created a surface of the pore space (C).
+    #. Save this surface as a stl file
 
 
 Python pre-processing
 ^^^^^^^^^^^^^^^^^^^^^
 
-Let's work through the steps involved and assume we received a 2-D image of scanned pore space ( :numref:`fig:figure_workflow_fig` A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it and the first steps are to install porespy into our python virtual environment (we should already have PIL, which is also needed).
+Let's work through the steps involved and assume we received a 2-D image of scanned pore space ( :numref:`fig:figure_workflow_fig` A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it and the first step is to install porespy into our python virtual environment (we should already have PIL, which is also needed).
 
 .. code-block:: bash
 
@@ -72,7 +72,7 @@ Let's work through the steps involved and assume we received a 2-D image of scan
     
 Now we are good to go and it's time to download the data. The complete openFOAM case can be downloaded from :download:`here <case/DRP_permeability_2D.zip>` . 
 
-Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:
+Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup).
 
 Check out the directory structure shown in :numref:`lst:drp_case:tree`.
 
@@ -124,6 +124,14 @@ Next we import the .png file from the :code:`geometry` folder and convert it to 
 
 You can put this little script into a jupyter notebook, or save it as .py file to be run from the command line. After running it, you should  have a file :code:`porous_model.vti` in the folder where you executed the script. Now comes the segementation and triangulation part. We can use paraview's python interface for this (or do everything by hand using the graphical user interface).
 
+.. code:: python
+
+    import os 
+
+    os.chdir("your_case_directory")
+    exec(open("your_file_name.py").read())
+
+
 .. code-block:: python
 
     # workflow as python code using the paraview.simple module
@@ -142,24 +150,12 @@ You can put this little script into a jupyter notebook, or save it as .py file t
     write_stl(vti_file, stl_file)
 
 
-Getting the paraview.simple module to work in a virtual environment is a challenge. The easiest workaround is to use paraview's python shell and execute the script there:
-
 .. figure:: /_figures/paraview_python.*
    :align: center
    :name: fig:paraview_figure_fig
    :figwidth: 85%
 
    Using the paraview python shell.
-
-
-An easy way to do this is to use these commands:
-
-.. code:: python
-
-    import os 
-
-    os.chdir("your_case_directory")
-    exec(open("your_file_name.py").read())
 
 
 This will create a .stl file, which we will use in the meshing process. Let's do some clean up and move the vti file into :code:`./geometry` and the stl file into :code:`./constant/triSurface`, where openFOAM expects it. This assumes that you are in the case directory.
@@ -283,7 +279,7 @@ Great, back to openfoam for the final mesh making! Making the mesh with SHM is a
     );
 
 
-Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions. Notice also how the box is described and how boundary conditions are applied.
+Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions.
 
 Now have a look at :code:`system/snappyHexMeshDict`. We will not go into details here, just explore the general structure yourself if you are interested using the resources linked above.
 
@@ -302,7 +298,7 @@ The final conversion turns everything in micrometer (:math:`10^{-6} m`). Check o
 Boundary conditions
 ^^^^^^^^^^^^^^^^^^^
 
-Next we need to set boundary conditions. Our "rock" sample is 1196 and 1494 :math:`\mu`m and we will apply a constant pressure drop of 1 Pa. We will further use openFOAM's **simpleFoam** solver, which resolves incomprossible steady-state flow. One important thing to remember is that openFOAM uses the *kinematic* pressure in incompressible simulations, which is the pressure divided by density. If we assume that water with a density of :math:`1000kg/m^3` is flowing through our smaple, we will need to set a constant pressure value of :math:`P_{left}=0.001 m^2/s^2`. The pressure on the righ-hand side will be set to zero. 
+Next we need to set boundary conditions. Our "rock" sample is 1196 and 1494 :math:`\mu m` and we will apply a constant pressure drop of 1 Pa. We will further use openFOAM's **simpleFoam** solver, which resolves incompressible steady-state flow. One important thing to remember is that openFOAM uses the *kinematic* pressure in incompressible simulations, which is the pressure divided by density. If we assume that water with a density of :math:`1000kg/m^3` is flowing through our smaple, we will need to set a constant pressure value of :math:`P_{left}=0.001 m^2/s^2`. The pressure on the right-hand side will be set to zero. 
 
 Open the file p inside the 0 directory from your local left-hand shell.
 
@@ -432,15 +428,13 @@ We also need to set boundary conditions for the velocity.
         }
     }
 
-The top and bottom are again symmetry planes and the The :code:`zeroGradient` conditions are the side ensure that fluids can freely flow in and out. The contacts with the solid grains get :code:`noSlip` , which makes the velocity go to zero; frontAndBack are again set tp :code:`empty`.
+The top and bottom are again symmetry planes and the :code:`zeroGradient` condition ensure that fluids can freely flow in and out. The contacts with the solid grains get :code:`noSlip`, which makes the velocity go to zero; frontAndBack are again set tp :code:`empty`.
 
 
 Transport properties
 ^^^^^^^^^^^^^^^^^^^^
 
-Final step is to set the remaining free parameter in :eq:`eq:mom_con` that is the viscosity. 
-
-We also need to set boundary conditions for the velocity.
+Final step is to set the remaining free parameter (viscosity) in :eq:`eq:mom_con`. 
 
 .. code-block:: bash 
 
@@ -475,7 +469,7 @@ We also need to set boundary conditions for the velocity.
     // ************************************************************************* //
 
 
-Again, in incompressible simulations (where we can divide the momentum balance equation by density) the kinematic viscosity is used, which has units of :math:`m^2/s`. The value of :math:`1e{-6} m^2/s` with an assumed density of :math:`1000kg/m^3` is :math:`1 mPa` - typical value for water at room temperature. 
+Again, in incompressible simulations (where we can divide the momentum balance equation by density) the kinematic viscosity is used, which has units of :math:`m^2/s`. The value of :math:`1e{-6} m^2/s` with an assumed density of :math:`1000kg/m^3` is :math:`1 mPa` - a typical value for water at room temperature. 
 
 
 Case control
