@@ -3,13 +3,12 @@
 .. _L03_FirstCase:
 
 Flow on the pore scale
-==================================
+======================
 
 Objective
 ---------
 
 Starting from a digital representation of a sample's pore space (typically an image produced by a cT-scan), we want to compute its effective permeability. Or put differently, we will make a **direct** simulation of flow on the pore level and post-process it for extracting the effective permeability for simplified **continuum** simulations using Darcy's law.
-
 
 .. figure:: /_figures/porousModel.*
    :align: center
@@ -71,7 +70,7 @@ Let's work through the steps involved and assume we received a 2-D image of scan
     If conda install fails, you can also use :code:`pip install porespy`
     
     
-Now we are good to go and it's time to download the data. The complete openFOAM case can be downloaded from :download:`here <cases/DRP_permeability_2D.zip>` . 
+Now we are good to go and it's time to download the data. The complete openFOAM case can be downloaded from :download:`here <case/DRP_permeability_2D.zip>` . 
 
 Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:
 
@@ -147,7 +146,7 @@ Getting the paraview.simple module to work in a virtual environment is a challen
 
 .. figure:: /_figures/paraview_python.*
    :align: center
-   :name: fig:figure_workflow_fig
+   :name: fig:paraview_figure_fig
    :figwidth: 85%
 
    Using the paraview python shell.

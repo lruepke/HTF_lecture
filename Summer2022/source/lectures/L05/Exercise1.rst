@@ -1,92 +1,46 @@
 .. include:: /include.rst_
 
-.. _L05_Exercise1:
+.. _L04_Exercise1:
 
 Exercise 1
 ===========
 
-We will first explore a simple setup of 2-D flow along a pressure gradient in the presence of permeability contrasts.
+We have prepared jupyter notebooks that let's you explore the thermodynamic properties of pure water. Play with them!
 
-.. admonition:: Goals
-
-   - explore porous flow along prescribed pressure gradient
-   - use :code:`setFields` utility to modify the permeability structure
-   - Understand how permeability contrasts affect flow
-
-Step 1
-------
-
-We will explore the following case: A 2-D box of dimensions 1500 m by 1000 m. Flow is driven by a prescribed pressure gradient. Within the box, variations in permeability affect the flow field.
-
-.. figure:: /_figures/lecture_plot.*
+.. figure:: /_figures/Properties_Water.*
    :align: center
-   :name: setup_l5_1_fig
-   :figwidth: 80%
+   :name: fig:Properties_Water
 
-   Setup of our 2D test case for flow in a porous medium with variable permeability.
+   Water properties as a function of temperature and pressure, using python package of iapws_. Properties calculation details can be found in the :ref:`/lectures/L04/cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb#Properties-as-function-of-temperature` in the notebook.
 
+.. toctree::
+    :maxdepth: 2
 
-A good starting point for setting up new case is always to take an existing similar case. Here we can use one of |foam| benchmark cases. It's located in :code:`$HOME/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1`.
-
-Copy the case into your working directory.
-
-.. code-block:: bash
-
-    cd $HOME/HydrothermalFoam_runs
-    cp -r /home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1 ./h1_class
-
-Step 2
-------
-
-Now we need to modify the case. These are the necessary steps:
-
-.. admonition:: Goals
-
-   - modify the mesh by chnanging :code:`blockMeshDict`
-   - check that gravity is zero in :code:`constant/g`
-   - update boundary conditions for pressure and temperature (and permeability)
-   - use the :code:`setFields` utility and the controlling :code:`system/setFieldsDict` to modify the permeability structure
-   - the exact of dimensions of the permeability blocks don't matter
-   - modify :code:`system/controlDict` so that we only make one time step. Easiest way is to set endTime, deltaT and writeInterval all to 864000.
+    cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb
 
 
-.. tip::
+.. admonition:: Assignment
 
-    You might have noticed that the :code:`benchmarks/HydrothermalFoam/1d/h1` case does not contain a :code:`setFieldsDict`. This is common "problem" that a dictionary file is missing when starting from an existing case file. You can easily fix this by copying the respective dictionary from another case and then modify it. If you don't know which case has the missing dictionary, you can just search for it (inside the docker container). For example like this:
+   Try to get these notebooks to work and play a little bit with them. Explore how the values change under different P-T conditions and change the line plot to also show enthalpy. One way of doing this is to create a new notebook and to copy the code from above into them
 
-    .. code-block:: bash
+   .. code-block:: bash 
 
-        find $HOME -type f -name "setFieldsDict"
- 
-    Now that we have the setFieldsDict, we need to modify it. Do you remember :ref:`L03_properties` part the two-layered convection :ref:`L03_Exercise` in lecture 3? There we used the boxToCell function within :code:`setFieldsDict` as an alternative way of making a layerd permeability structure. Now we can do the same here, just that we need several boxes.
+      code plot_iapws_class.ipynb
 
-    This is how the code snippit looked like in lecture 3; take it as a starting point!
+.. tip:: Dangers and Annoyances
 
-    .. code-block:: bash
+   Sometimes Visual Studio's way of setting the python interpretor is not that "intuitive". In principle, you set the the interpretor (your python environment) using CMD/CTRL+SHIFT+P and typing Python: Select Interpretor. Then you can chose the python environment of the class that has all the necessarry packages installed. 
 
-        regions
-        (
-            boxToCell
-            {
-                box (0 -500 0) (1000 0 1); //(xmin,ymin,zmin) (xmax,ymax,zmax)
-                fieldValues
-                (
-                    volScalarFieldValue permeability 1e-13
-                );
-            }
-        );
+   Problem is, .ipynb files also contain information on the interpretor that should be used with a notbook and Visual Studio uses that information. Therefore, if you download the scripts from us, there is a non-zero chance that your Visual Studio will chose the "wrong" interpretor and that you get an error message that certain packages are not installed. 
 
-    You can also play with different shapes, like cylinder or rotated box. Check the documentation!
+   In that case you need to follow a workaround. Rename your .ipynb file to .ipynb.json and open that file. Find the section on kernelspec:
 
-Step 3
-------
+   .. code-block:: bash
 
-Explore the results in paraview!
+      "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+      }, 
 
-.. figure:: /_figures/hetero_perm_flow.*
-   :align: center
-   :name: flow_l5_1_fig
-   :figwidth: 80%
-
-   Porous flow in the presence of permeability variations.
-
+   and delete that entire section. Save the file again as a .ipynb file and re-open it in Visual Studio - and hope for the best...
