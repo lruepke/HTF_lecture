@@ -80,13 +80,13 @@ There the temperature boundary condition at the bottom patch can be set as,
    :align: center
    :name: fig:ventT_time_perm
 
-   :ref:`/lectures/L04/cases/Driesner2010/jupyter/Plot_CaseResults.ipynb#Maximum-vent-temperature-changes-with-time`.
+   :ref:`/lectures/L05/cases/Driesner2010/jupyter/Plot_CaseResults.ipynb#Maximum-vent-temperature-changes-with-time`.
 
 .. figure:: /_figures/ventT_perm.*
    :align: center
    :name: fig:ventT_perm
    
-   :ref:`/lectures/L04/cases/Driesner2010/jupyter/Plot_CaseResults.ipynb#Vent-temperature-as-a-function-of-permeability`.
+   :ref:`/lectures/L05/cases/Driesner2010/jupyter/Plot_CaseResults.ipynb#Vent-temperature-as-a-function-of-permeability`.
 
 .. toctree::
     :maxdepth: 2

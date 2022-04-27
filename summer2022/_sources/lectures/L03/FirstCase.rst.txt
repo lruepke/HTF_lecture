@@ -3,7 +3,7 @@
 .. _L03_FirstCase:
 
 Flow on the pore scale
-======================
+===========================
 
 Objective
 ---------
