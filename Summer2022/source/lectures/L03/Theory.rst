@@ -99,7 +99,7 @@ The we update pressure by solving the pressure equation :eq:`eq:mom_matrix6`
 
         \nabla \cdot A^{-1} \nabla p = \nabla \cdot(A^{-1}H)
 
-Finally, the pressure is used to "correct" the velocity solution, so that it fulfills the continuity equation :eq:`continuity_theory`.
+Finally, the pressure is used to "correct" the velocity solution, so that it fulfills the continuity equation :eq:`eq:continuity_theory` .
 
 .. math::
     :label: eq:u_cor

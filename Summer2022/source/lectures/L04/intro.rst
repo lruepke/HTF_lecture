@@ -1,54 +1,59 @@
 .. include:: /include.rst_
 
-.. _L04_PostProcess:
+Porous Flow - Submarine Hydrothermal Systems
+============================================
 
-Upflow temperatures in submarine hydrothermal systems
-=====================================================
+Theoretical background
+-------------------------------------
 
-A striking observations from global vent fluid measurements is that fluid exit temperatures apparently never exceed 400°C (:numref:`fig:vent_T_fig` ). 
+In the last lecture, we had made our first Navier-Stokes simulations, which resolved the full dynamics of fluid flow. When studying porous media, flow is often approximated by Darcy's law that states that flow is proportional to the pressure gradient. The invovled constants are viscosity and permeability. Extensive theoretical work helped to elucidate the relationship between Navier-Stokes flow and Darcy flow, which was first derived as a phenomelogical equation.
+
+.. tip::
+    There is a great pdf on the relationship between Navier-Stokes and Darcy flow on the webpages of `Cyprien Soulaine <https://www.cypriensoulaine.com/publications-copy>`_.
+
+During this lecture we will study single-phase hydrothermal flow in submarine hydrothermal systems. The respective solver is named :code:`HydrothermalSinglePhaseDarcyFoam`. The hydrothermal fluid flow is governed by Darcy's law (Eqn. :eq:`eq:darcy`), 
+mass continuity (Eqn. :eq:`eq:conti`) and energy conservation (Eqn. :eq:`eq:temperature`) equations shown below, 
+
+.. math::
+    :label: eq:darcy 
+
+    \vec{U} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})
+      
+.. math::
+    :label: eq:conti
+    
+    \varepsilon \frac{\partial \rho_f}{\partial t} + \nabla \cdot (\vec{U} \rho_f)
+
+.. math::
+    :label: eq:pressure
+    
+    \varepsilon \rho_f \left( \beta_f \frac{\partial p}{\partial t} - \alpha_f \frac{\partial T}{\partial t} \right) = \nabla \cdot \left( \rho_f \frac{k}{\mu_f} (\nabla p - \rho_f \vec{g}) \right)
+
+.. math::
+    :label: eq:temperature
+    
+    (\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{pr})\frac{\partial T}{\partial t} = \nabla \cdot (\lambda_r \nabla T) - \rho_f C_{pf} \vec{U}\cdot \nabla T + \frac{\mu_f}{k} \parallel \vec{U} \parallel ^2 - \left( \frac{\partial ln \rho_f}{\partial ln T} \right)_p \frac{Dp}{Dt}
+
+where the pressure equation :eq:`eq:pressure` is derived from continuity equation :eq:`eq:conti` and Darcy's law :eq:`eq:darcy`.
+
+Implementation
+--------------
+The details of the OpenFoam implementation can be found in the |foam| documentation. Here we only show a brief summary. :numref:`fig:htf_solution` shows how the energy equation is solved within the OpenFoam framework.
 
 
-.. figure:: /_figures/vent_T_deoth.*
+.. figure:: /_figures/solution_algorithm.* 
    :align: center
-   :name: fig:vent_T_fig
-   :figwidth: 70%
+   :name: fig:htf_solution
 
-   Figure taken from :cite:`Nakamura2014` showing measured vent fluid temperatures.
+   Implementation of the energy conservation equation.
 
-Maybe you have already noticed in our convection experiments in the previous session that the upflow temperatures are always much lower than the bottom boundary condition implying that the hottest fluids are actually stagnant and do not rise towards the seafloor. :cite:`jupp2000thermodynamic` published a landmark paper in which they showed that the thermodynamic properties of water control the upflow temperature and can explain the observed upper limit of vent fluid temperatures. In this lecture we will have a detailed look into the proposed mechanisms.
-
-
-Mechanism to limit black smoker temperature 
------------------------------------------------
-
-We recommend reading the original papers by :cite:`jupp2000thermodynamic` and :cite:`Jupp2004`; here we only provide a very short summarry. The underlying idea is to determine from the pure water equation-of-state the optimum temperature for buoyant upwelling. Within the energy conservation equation, advective heat transport is described by a divergence term:
-
-.. math::
-    :label: eq:div_e
-    
-    \nabla \cdot (\rho h \vec{U})
-
-Following :cite:`jupp2000thermodynamic`, we can assume that the pressure gradient, driving upflow, can be approximated as cold hydrostatic so that we can express the upflow velocity as:
-
-.. math::
-    :label: eq:upflow_js
-    
-    U_z = \frac{k}{\mu} \left( \nabla P - \rho g_z \right) \approx \frac{k}{\mu}(\rho_0 g_z - \rho g_z) = g_z \frac{k}{\mu} (\rho_0 - \rho)
-
-Now we plug this expression into :eq:`eq:div_e` to get:
-
-.. math::
-    :label: eq:udiv_e2
-    
-    \nabla \cdot (\rho h \vec{U}) = \frac{\partial}{\partial z} \left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right) g_z k
-
-:cite:`jupp2000thermodynamic` called the term wihtin the large brackets, :math:`F=\left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right)` , fluxibility. Fluxibility is a function of fluid properties only and those properties are pressure and temperature dependent. To first order, advective heat transport is maximized, where :math:`\nabla \cdot F` is maximum and this divergence can be approximated within the basal boundary as :math:`\nabla \cdot F \approx \frac{\partial}{\partial z} F \approx \frac{\partial}{\partial T} F` . 
+Equation-of-state
+-----------------
+The fluid properties like density, viscosity, specific heat are determined from the equation-of-state of pure water. :numref:`fig:phase_diagram` shows the phase diagram of pure water. At sub-critical conditions (P< 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. |foam| is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems. 
 
 
-:numref:`fig:Fluxibility_Water` a shows fluxibility as a function of pressure and temperature. It is clear that this function has a distinct peak at temperature of approximately 400°C. :numref:`fig:Fluxibility_Water` b shows sections of constant pressure and also the derivative of F with temperature. The peaks in these functions mark the temperature for which buoyant heat transport is most efficient for a given pressure. Later we will explore this further in numerical convection experiments.
-
-.. figure:: /_figures/Fluxibility_Water.*
+.. figure:: /_figures/PhaseDiagram.*
    :align: center
-   :name: fig:Fluxibility_Water
+   :name: fig:phase_diagram
 
-   Fluxibility F as a function of temperature and pressure (a), profile of F along temperature with constant pressure (b).
+   Phase diagram of pure water.

@@ -78,10 +78,9 @@ The majority of this course will be spent in front of a computer working on exer
     :caption: Lecture 4
 
     lectures/L04/Overview
-    lectures/L04/intro
-    lectures/L04/Exercise1
-    lectures/L04/Exercise2
-    lectures/L04/Exercise3
+    lectures/L04/intro  
+    lectures/L04/FirstCase  
+    lectures/L04/Exercise  
 
 .. toctree::
     :maxdepth: 2
@@ -91,10 +90,20 @@ The majority of this course will be spent in front of a computer working on exer
     lectures/L05/intro
     lectures/L05/Exercise1
     lectures/L05/Exercise2
+    lectures/L05/Exercise3
 
 .. toctree::
     :maxdepth: 2
     :caption: Lecture 6
+
+    lectures/L06/Overview
+    lectures/L06/intro
+    lectures/L06/Exercise1
+    lectures/L06/Exercise2
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Lecture 7
 
     lectures/L_FVM/Overview
     lectures/L_FVM/intro
