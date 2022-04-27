@@ -1,43 +1,36 @@
+.. include:: /include.rst_
+
+.. _L03_Theory:
 
 Theoretical background
--------------------------------------
-The dynamics of fluids is described by the Navier-Stokes equation. It is based on mass and momentum conservation in a moving fluid.
+======================
 
-For simplified incompressible case, these equations take the following form:
+In the preceeding example and excercises, we have used the :code:`simpleFoam` solver to compute steady-state incompressible flow. This solver computes flow according to a variant of our simplified equations.
 
 .. math::
-    :label: eq:continuity 
+    :label: eq:continuity_theory 
 
     \nabla \cdot \vec{U} = 0
     
 .. math::
-    :label: eq:mom_con
+    :label: eq:mom_con_theory
     
-    \frac{\partial \vec{U} }{\partial t} + \nabla \cdot (\vec{U} \vec{U}) = \nabla \cdot (\nu \nabla \vec{U}) - \nabla p
+    \nabla \cdot (\vec{U} \vec{U}) = \nabla \cdot (\nu \nabla \vec{U}) - \nabla p
+
+
+Let's have a closer look at how this solver actually works.
 
 Solution strategies - the SIMPLE algorithm
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------------
 The 3-D Navier-Stokes equation has four unknowns (three velocity components and one pressure) but the standard formulation does not include an explicit "pressure equation", which complicated solving the system of equations.
 
 .. tip::
     There is a very nice `youtube video  <https://www.youtube.com/watch?v=OOILoJ1zuiw>`_ by FluidDynamics101 (Aidan Winshurst) that explains the SIMPLE algorithm. We are here following his derivation and notation.
 
-There are different solution strategies implemented in OpenFoam. The simplest one is the SIMPLE algorithm for the steady-state form of the incompressible Navier-Stokes equation.
 
-.. math::
-    :label: eq:continuity2 
-
-    \nabla \cdot \vec{U} = 0
-    
-.. math::
-    :label: eq:mom_con2
-    
-    \nabla \cdot (\vec{U} \vec{U}) = \nabla \cdot (\nu \nabla \vec{U}) - \nabla p
-
-The SIMPLE algorithm solves these equations by deriving a pressure equation by combining the momentum and continuity equations and by formulating a corrector equation to make the velocity field satisfy the continuity equation.
+The SIMPLE algorithm solves the equations stated above by deriving a pressure equation by combining the momentum and continuity equations and by formulating a corrector equation to make the velocity field satisfy the continuity equation.
 
 Step 1 is to formulate the momentum balance as general matrix equation:
-
 
 .. math::
     :label: eq:mom_con3
@@ -106,7 +99,7 @@ The we update pressure by solving the pressure equation :eq:`eq:mom_matrix6`
 
         \nabla \cdot A^{-1} \nabla p = \nabla \cdot(A^{-1}H)
 
-Finally, the pressure is used to "correct" the velocity solution, so that it fulfills the continuity equation :eq:`eq:continuity2`.
+Finally, the pressure is used to "correct" the velocity solution, so that it fulfills the continuity equation :eq:`continuity_theory`.
 
 .. math::
     :label: eq:u_cor

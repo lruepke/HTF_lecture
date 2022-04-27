@@ -5,7 +5,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Accompanying slide deck &mdash; HydrothermalFoam Lecture  documentation</title>
+  <title>Theoretical background &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
@@ -21,9 +21,13 @@
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/tabs.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lecture overview" href="../L04/Overview.html" />
+    <link rel="prev" title="Excercises" href="Exercise.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -66,16 +70,20 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Example.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Exercise.html">Excercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Excercises</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FirstCase.html">Flow on the pore scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise.html">Excercises</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Theoretical background</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#solution-strategies-the-simple-algorithm">Solution strategies - the SIMPLE algorithm</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
 <ul>
@@ -145,9 +153,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Accompanying slide deck</li>
+      <li>Theoretical background</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L02/slide.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L03/Theory.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -179,14 +187,65 @@
     text-align: unset;
 }
 </style>
-<section id="accompanying-slide-deck">
-<span id="l02-slide"></span><h1>Accompanying slide deck<a class="headerlink" href="#accompanying-slide-deck" title="Permalink to this headline"></a></h1>
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQE8d_w0p6fu-BERQsD_Wa_EvMj-1FtLgAhWje31fO9evP9qN7mmQ1Ezi9zs6S8kmcc_WyjUgwfHSHn/embed?start=true&loop=false&delayms=3000" frameborder="0" width="100%" height="430" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe></section>
+<section id="theoretical-background">
+<span id="l03-theory"></span><h1>Theoretical background<a class="headerlink" href="#theoretical-background" title="Permalink to this headline"></a></h1>
+<p>In the preceeding example and excercises, we have used the <code class="code docutils literal notranslate"><span class="pre">simpleFoam</span></code> solver to compute steady-state incompressible flow. This solver computes flow according to a variant of our simplified equations.</p>
+<div class="math notranslate nohighlight" id="equation-eq-continuity-theory">
+<span class="eqno">(8)<a class="headerlink" href="#equation-eq-continuity-theory" title="Permalink to this equation"></a></span>\[\nabla \cdot \vec{U} = 0\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-mom-con-theory">
+<span class="eqno">(9)<a class="headerlink" href="#equation-eq-mom-con-theory" title="Permalink to this equation"></a></span>\[\nabla \cdot (\vec{U} \vec{U}) = \nabla \cdot (\nu \nabla \vec{U}) - \nabla p\]</div>
+<p>Let’s have a closer look at how this solver actually works.</p>
+<section id="solution-strategies-the-simple-algorithm">
+<h2>Solution strategies - the SIMPLE algorithm<a class="headerlink" href="#solution-strategies-the-simple-algorithm" title="Permalink to this headline"></a></h2>
+<p>The 3-D Navier-Stokes equation has four unknowns (three velocity components and one pressure) but the standard formulation does not include an explicit “pressure equation”, which complicated solving the system of equations.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>There is a very nice <a class="reference external" href="https://www.youtube.com/watch?v=OOILoJ1zuiw">youtube video</a> by FluidDynamics101 (Aidan Winshurst) that explains the SIMPLE algorithm. We are here following his derivation and notation.</p>
+</div>
+<p>The SIMPLE algorithm solves the equations stated above by deriving a pressure equation by combining the momentum and continuity equations and by formulating a corrector equation to make the velocity field satisfy the continuity equation.</p>
+<p>Step 1 is to formulate the momentum balance as general matrix equation:</p>
+<div class="math notranslate nohighlight" id="equation-eq-mom-con3">
+<span class="eqno">(10)<a class="headerlink" href="#equation-eq-mom-con3" title="Permalink to this equation"></a></span>\[\nabla \cdot (\vec{U} \vec{U}) = \nabla \cdot (\nu \nabla \vec{U}) - \nabla p\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-mom-matrix">
+<span class="eqno">(11)<a class="headerlink" href="#equation-eq-mom-matrix" title="Permalink to this equation"></a></span>\[M \vec{U} = - \nabla p\]</div>
+<p>Next we split the matrix <span class="math notranslate nohighlight">\(M\)</span> into a diagonal part and remaining part.</p>
+<div class="math notranslate nohighlight" id="equation-eq-mom-matrix2">
+<span class="eqno">(12)<a class="headerlink" href="#equation-eq-mom-matrix2" title="Permalink to this equation"></a></span>\[M \vec{U} = - \nabla p\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-mom-matrix3">
+<span class="eqno">(13)<a class="headerlink" href="#equation-eq-mom-matrix3" title="Permalink to this equation"></a></span>\[A \vec{U} -H = - \nabla p\]</div>
+<p>The nice thing about diagonal matrices is that they are easy to invert.</p>
+<p>Step 2 is to solve for <span class="math notranslate nohighlight">\(\vec U\)</span> using an initial guess for the pressure field.</p>
+<div class="math notranslate nohighlight" id="equation-eq-mom-matrix4">
+<span class="eqno">(14)<a class="headerlink" href="#equation-eq-mom-matrix4" title="Permalink to this equation"></a></span>\[\vec{U} = A^{-1} H - A^{-1}A \nabla p\]</div>
+<p>and plug it into the continuity equation:</p>
+<div class="math notranslate nohighlight" id="equation-eq-mom-matrix5">
+<span class="eqno">(15)<a class="headerlink" href="#equation-eq-mom-matrix5" title="Permalink to this equation"></a></span>\[    \nabla \cdot \vec{U} = 0\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-mom-matrix6">
+<span class="eqno">(16)<a class="headerlink" href="#equation-eq-mom-matrix6" title="Permalink to this equation"></a></span>\[    \nabla \cdot (A^{-1} H - A^{-1}A \nabla p) = 0\]</div>
+<p>to get</p>
+<div class="math notranslate nohighlight" id="equation-eq-mom-matrix7">
+<span class="eqno">(17)<a class="headerlink" href="#equation-eq-mom-matrix7" title="Permalink to this equation"></a></span>\[    \nabla \cdot A^{-1} \nabla p = \nabla \cdot(A^{-1}H)\]</div>
+<p>Equations <a class="reference internal" href="#equation-eq-mom-matrix">equation (11)</a> and <a class="reference internal" href="#equation-eq-mom-matrix6">equation (16)</a> form a set of equations that are solved in sequence.</p>
+<p>The actual solution sequence in the SIMPLE algorithm is this. First, we solve the momentum balance using an initial guess for pressure:</p>
+<div class="math notranslate nohighlight" id="equation-eq-mom-matrix8">
+<span class="eqno">(18)<a class="headerlink" href="#equation-eq-mom-matrix8" title="Permalink to this equation"></a></span>\[M \vec{U} = - \nabla p\]</div>
+<p>The we update pressure by solving the pressure equation <a class="reference internal" href="#equation-eq-mom-matrix6">equation (16)</a></p>
+<div class="math notranslate nohighlight" id="equation-eq-mom-matrix9">
+<span class="eqno">(19)<a class="headerlink" href="#equation-eq-mom-matrix9" title="Permalink to this equation"></a></span>\[    \nabla \cdot A^{-1} \nabla p = \nabla \cdot(A^{-1}H)\]</div>
+<p>Finally, the pressure is used to “correct” the velocity solution, so that it fulfills the continuity equation <code class="xref eq docutils literal notranslate"><span class="pre">continuity_theory</span></code>.</p>
+<div class="math notranslate nohighlight" id="equation-eq-u-cor">
+<span class="eqno">(20)<a class="headerlink" href="#equation-eq-u-cor" title="Permalink to this equation"></a></span>\[    \vec{U} = A^{-1} H - A^{-1}A \nabla p\]</div>
+<p>This is the SIMPLE algorithm for the steady-state incompressible Navier-Stokes equation. Later we will also learn about other algorithms for more general forms of the N-S stokes like the PISO and PIMPLE algorithms.</p>
+</section>
+</section>
 
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Exercise.html" class="btn btn-neutral float-left" title="Excercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../L04/Overview.html" class="btn btn-neutral float-right" title="Lecture overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
