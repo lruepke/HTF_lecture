@@ -242,11 +242,6 @@ Time to run the case! Just start the solver
 
     icoFoam
 
-.. admonition:: Technical detail
-
-   The :code:`icoFoam` solver is actually using the PISO algorithm and the not the SIMPLE algorithm described above. SIMPLE is a steady-state solver, while PISO can also resolve transient flows. PISO also make some smart corrections for better convergence. We will learn about these technical issues later in this course. 
-
-
 Visualization
 ^^^^^^^^^^^^^^^^^^^
 Open paraview and look at the results.

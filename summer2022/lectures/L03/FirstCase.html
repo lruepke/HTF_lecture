@@ -211,44 +211,44 @@
 <span id="l03-firstcase"></span><h1>Flow on the pore scale<a class="headerlink" href="#flow-on-the-pore-scale" title="Permalink to this headline"></a></h1>
 <section id="objective">
 <h2>Objective<a class="headerlink" href="#objective" title="Permalink to this headline"></a></h2>
-<p>Starting from a digital representation of a sample’s pore space (typically an image produced by a cT-scan), we want to compute its effective permeability. Or put differently, we will make a <strong>direct</strong> simulation of flow on the pore level and post-process it for extracting the effective permeability for simplified <strong>continuum</strong> simulations using Darcy’s law.</p>
+<p>Starting from a digital representation of a sample’s pore space (typically an image produced by a cT-scan), we want to compute the permeability of the sample. Put differently, we will make a <strong>direct</strong> simulation of flow on the pore level and post-process it for extracting the permeability to be used, for example, in simplified <strong>continuum</strong> simulations using Darcy’s law.</p>
 <figure class="align-center" id="fig-porousmodel-fig" style="width: 70%">
 <img alt="../../_images/porousModel.png" src="../../_images/porousModel.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Synthetic image of the pore geometry. Pores are white; solid is black.</span><a class="headerlink" href="#fig-porousmodel-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Synthetic image of the pore geometry. Pores are white; solids are black.</span><a class="headerlink" href="#fig-porousmodel-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<p>To compute the effective permeability, we will apply constant pressure boundary conditions and evaluate the flow rate through the sample. Once we have that, we can re-arrange Darcy’s law to solve for permeability:</p>
+<p>To compute permeability, we will apply constant pressure boundary conditions and evaluate the flow rate through the sample. Once we have that, we can re-arrange Darcy’s law to solve for permeability:</p>
 <div class="math notranslate nohighlight" id="equation-eq-darcy-perm">
 <span class="eqno">(7)<a class="headerlink" href="#equation-eq-darcy-perm" title="Permalink to this equation"></a></span>\[    K_{i,j} \, = \, \mu \Biggl( \frac{ \Delta P}{ \Delta x_j} \Biggr)^{-1} \, \Biggl( \frac{1}{V} \int_V u_i \, dV \Biggr) \; .\]</div>
 <p>Ok, let’s do it!</p>
 </section>
 <section id="mesh-generation">
 <h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline"></a></h2>
-<p>The first major step is to generate a mesh of the pores space shown in <a class="reference internal" href="#fig-porousmodel-fig"><span class="std std-numref">Fig. 11</span></a>. For this purpose, we will use <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4">OpenFOAM’s snappyHexMesh tool</a> . It allows meshing arbitrary geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
+<p>The first major step is to generate a mesh of the pore space (<a class="reference internal" href="#fig-porousmodel-fig"><span class="std std-numref">Fig. 11</span></a>). For this purpose, we will use <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4">OpenFOAM’s snappyHexMesh tool</a>. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>We will not go into the details of snappyHexMesh (SHM). If you want to use it and/or understand it, a good starting point is the user-guide linked above. Another great resource are the <a class="reference external" href="https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic">Rock Vapor Classic tutorial series</a> .</p>
+<p>We will not go into the details of snappyHexMesh (SHM) works. If you want to use and/or understand it, a good starting point is the user guide linked above. Another great resource is the <a class="reference external" href="https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic">Rock Vapor Classic tutorial series</a>.</p>
 </div>
-<p>In a nutshell, snappyHexMesh (SHM) is about starting from a blockMesh (as in the previous lecture) and then cutting-out the solid grain (described by a triangulated surface), and then <em>snapping</em> the mesh to this surface. A typical way to describe this surface is an .stl file - a typical file format for triangulated surfaces that is also often used for 3D printing.</p>
+<p>In a nutshell, snappyHexMesh (SHM) is about starting from a blockMesh (as in the previous lecture), cutting out the solid grain (described by a triangulated surface), and then <em>snapping</em> the mesh to this surface. A typical way to describe this surface is an .stl file - a file format for triangulated surfaces that is often used for 3D printing.</p>
 <figure class="align-center" id="fig-figure-workflow-fig" style="width: 85%">
 <img alt="../../_images/figure_workflow.jpg" src="../../_images/figure_workflow.jpg" />
 <figcaption>
 <p><span class="caption-number">Fig. 12 </span><span class="caption-text">Workflow illustrating the meshing process.</span><a class="headerlink" href="#fig-figure-workflow-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<p>The steps involved are shown in <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> . Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters.</p>
+<p>The steps involved are shown in <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> . Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters and the workflow is this.</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li><p>start with an image (A).</p></li>
-<li><p>save it as a .vti file that is easily understood by Paraview. We use <a class="reference external" href="https://porespy.org/">porespy</a> for this step.</p></li>
-<li><p>load the vti file into paraview and use the <em>clip</em> (B) and <em>triangulation</em> (B) filers to created a surface of the pore space (C).</p></li>
-<li><p>save this surface as a stl file</p></li>
+<li><p>Start with an image (A).</p></li>
+<li><p>Save it as a .vti file that is easily understood by Paraview. We use <a class="reference external" href="https://porespy.org/">porespy</a> for this step.</p></li>
+<li><p>Load the vti file into paraview and use the <em>clip</em> (B) and <em>triangulation</em> (B) filers to created a surface of the pore space (C).</p></li>
+<li><p>Save this surface as a stl file</p></li>
 </ol>
 </div></blockquote>
 <section id="python-pre-processing">
 <h3>Python pre-processing<a class="headerlink" href="#python-pre-processing" title="Permalink to this headline"></a></h3>
-<p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it and the first steps are to install porespy into our python virtual environment (we should already have PIL, which is also needed).</p>
+<p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it and the first step is to install porespy into our python virtual environment (we should already have PIL, which is also needed).</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate <span class="s2">&quot;your_environment_name&quot;</span>
 conda install -c conda-forge porespy
 </pre></div>
@@ -258,7 +258,7 @@ conda install -c conda-forge porespy
 <p>If conda install fails, you can also use <code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">porespy</span></code></p>
 </div>
 <p>Now we are good to go and it’s time to download the data. The complete openFOAM case can be downloaded from <code class="xref download docutils literal notranslate"><span class="pre">here</span></code> .</p>
-<p>Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:</p>
+<p>Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup).</p>
 <p>Check out the directory structure shown in <a class="reference internal" href="#lst-drp-case-tree"><span class="std std-numref">Listing 11</span></a>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-drp-case-tree">
 <div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">File tree structure of the Digital Rock Physics case.</span><a class="headerlink" href="#lst-drp-case-tree" title="Permalink to this code"></a></div>
@@ -303,6 +303,12 @@ conda install -c conda-forge porespy
 </pre></div>
 </div>
 <p>You can put this little script into a jupyter notebook, or save it as .py file to be run from the command line. After running it, you should  have a file <code class="code docutils literal notranslate"><span class="pre">porous_model.vti</span></code> in the folder where you executed the script. Now comes the segementation and triangulation part. We can use paraview’s python interface for this (or do everything by hand using the graphical user interface).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;your_case_directory&quot;</span><span class="p">)</span>
+<span class="n">exec</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;your_file_name.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># workflow as python code using the paraview.simple module</span>
 <span class="kn">from</span> <span class="nn">paraview.simple</span> <span class="kn">import</span> <span class="o">*</span>
 
@@ -319,20 +325,12 @@ conda install -c conda-forge porespy
 <span class="n">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Getting the paraview.simple module to work in a virtual environment is a challenge. The easiest workaround is to use paraview’s python shell and execute the script there:</p>
 <figure class="align-center" id="fig-paraview-figure-fig" style="width: 85%">
 <img alt="../../_images/paraview_python.png" src="../../_images/paraview_python.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 13 </span><span class="caption-text">Using the paraview python shell.</span><a class="headerlink" href="#fig-paraview-figure-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<p>An easy way to do this is to use these commands:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;your_case_directory&quot;</span><span class="p">)</span>
-<span class="n">exec</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;your_file_name.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-</pre></div>
-</div>
 <p>This will create a .stl file, which we will use in the meshing process. Let’s do some clean up and move the vti file into <code class="code docutils literal notranslate"><span class="pre">./geometry</span></code> and the stl file into <code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>, where openFOAM expects it. This assumes that you are in the case directory.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mv ./porous_model.vti ./geometry/
 mv ./porous_model.stl ./constant/triSurface/
@@ -447,7 +445,7 @@ mv ./porous_model.stl ./constant/triSurface/
 </pre></div>
 </div>
 </div>
-<p>Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions. Notice also how the box is described and how boundary conditions are applied.</p>
+<p>Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions.</p>
 <p>Now have a look at <code class="code docutils literal notranslate"><span class="pre">system/snappyHexMeshDict</span></code>. We will not go into details here, just explore the general structure yourself if you are interested using the resources linked above.</p>
 <p>Time to make the mesh! Run each of the steps below individually and check out the results in paraview.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>blockMesh
@@ -460,7 +458,7 @@ transformPoints -scale <span class="s2">&quot;(1e-6 1e-6 1e-6)&quot;</span>
 </section>
 <section id="boundary-conditions">
 <h3>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline"></a></h3>
-<p>Next we need to set boundary conditions. Our “rock” sample is 1196 and 1494 <span class="math notranslate nohighlight">\(\mu\)</span> is flowing through our smaple, we will need to set a constant pressure value of <span class="math notranslate nohighlight">\(P_{left}=0.001 m^2/s^2\)</span>. The pressure on the righ-hand side will be set to zero.</p>
+<p>Next we need to set boundary conditions. Our “rock” sample is 1196 and 1494 <span class="math notranslate nohighlight">\(\mu m\)</span> and we will apply a constant pressure drop of 1 Pa. We will further use openFOAM’s <strong>simpleFoam</strong> solver, which resolves incompressible steady-state flow. One important thing to remember is that openFOAM uses the <em>kinematic</em> pressure in incompressible simulations, which is the pressure divided by density. If we assume that water with a density of <span class="math notranslate nohighlight">\(1000kg/m^3\)</span> is flowing through our smaple, we will need to set a constant pressure value of <span class="math notranslate nohighlight">\(P_{left}=0.001 m^2/s^2\)</span>. The pressure on the right-hand side will be set to zero.</p>
 <p>Open the file p inside the 0 directory from your local left-hand shell.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code <span class="m">0</span>/p
 </pre></div>
@@ -579,12 +577,11 @@ transformPoints -scale <span class="s2">&quot;(1e-6 1e-6 1e-6)&quot;</span>
 </pre></div>
 </div>
 </div>
-<p>The top and bottom are again symmetry planes and the The <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> conditions are the side ensure that fluids can freely flow in and out. The contacts with the solid grains get <code class="code docutils literal notranslate"><span class="pre">noSlip</span></code> , which makes the velocity go to zero; frontAndBack are again set tp <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
+<p>The top and bottom are again symmetry planes and the <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> condition ensure that fluids can freely flow in and out. The contacts with the solid grains get <code class="code docutils literal notranslate"><span class="pre">noSlip</span></code>, which makes the velocity go to zero; frontAndBack are again set tp <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
 </section>
 <section id="transport-properties">
 <h3>Transport properties<a class="headerlink" href="#transport-properties" title="Permalink to this headline"></a></h3>
-<p>Final step is to set the remaining free parameter in <a class="reference internal" href="intro.html#equation-eq-mom-con">equation (5)</a> that is the viscosity.</p>
-<p>We also need to set boundary conditions for the velocity.</p>
+<p>Final step is to set the remaining free parameter (viscosity) in <a class="reference internal" href="intro.html#equation-eq-mom-con">equation (5)</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code constant/transportProperties
 </pre></div>
 </div>
@@ -614,7 +611,7 @@ transformPoints -scale <span class="s2">&quot;(1e-6 1e-6 1e-6)&quot;</span>
 </pre></div>
 </div>
 </div>
-<p>Again, in incompressible simulations (where we can divide the momentum balance equation by density) the kinematic viscosity is used, which has units of <span class="math notranslate nohighlight">\(m^2/s\)</span>. The value of <span class="math notranslate nohighlight">\(1e{-6} m^2/s\)</span> with an assumed density of <span class="math notranslate nohighlight">\(1000kg/m^3\)</span> is <span class="math notranslate nohighlight">\(1 mPa\)</span> - typical value for water at room temperature.</p>
+<p>Again, in incompressible simulations (where we can divide the momentum balance equation by density) the kinematic viscosity is used, which has units of <span class="math notranslate nohighlight">\(m^2/s\)</span>. The value of <span class="math notranslate nohighlight">\(1e{-6} m^2/s\)</span> with an assumed density of <span class="math notranslate nohighlight">\(1000kg/m^3\)</span> is <span class="math notranslate nohighlight">\(1 mPa\)</span> - a typical value for water at room temperature.</p>
 </section>
 <section id="case-control">
 <h3>Case control<a class="headerlink" href="#case-control" title="Permalink to this headline"></a></h3>
