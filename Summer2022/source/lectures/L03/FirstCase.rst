@@ -70,7 +70,7 @@ Let's work through the steps involved and assume we received a 2-D image of scan
     If conda install fails, you can also use :code:`pip install porespy`
     
     
-Now we are good to go and it's time to download the data. The complete openFOAM case can be downloaded from :download:`here <case/DRP_permeability_2D.zip>` . 
+Now we are good to go and it's time to download the data. The complete openFOAM case can be downloaded from :download:`here <cases/DRP_permeability_2D.zip>` . 
 
 Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup).
 
