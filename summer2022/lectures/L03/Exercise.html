@@ -82,6 +82,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Exercises</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#vertical-versus-horizontal-permeability">Vertical versus horizontal permeability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#changes-to-the-geometry">Changes to the geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-scalar-transport">Adding scalar transport</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Theory.html">Theoretical background</a></li>
@@ -202,15 +203,78 @@
 <h2>Vertical versus horizontal permeability<a class="headerlink" href="#vertical-versus-horizontal-permeability" title="Permalink to this headline"></a></h2>
 <p>Make a copy of your case and repeat the analysis in the vertical direction. You will need to</p>
 <blockquote>
-<div><ul class="simple">
-<li><p>Change the boundary conditions</p></li>
-<li><p>Modify the post-processing script</p></li>
-</ul>
+<div><ol class="arabic simple">
+<li><p>adapt the face types in blockMeshDict</p></li>
+<li><p>modify the boundary conditions in <code class="code docutils literal notranslate"><span class="pre">0/p</span></code> and <code class="code docutils literal notranslate"><span class="pre">0/U</span></code></p></li>
+<li><p>modify the post-processing script to compute vertical velocity</p></li>
+</ol>
 </div></blockquote>
+<p>You should get something like this:</p>
+<figure class="align-center" id="fig-rp-vert-perm-fig" style="width: 100%">
+<img alt="../../_images/DRP_vert_perm.png" src="../../_images/DRP_vert_perm.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Pore-level flow in the vertical direction.</span><a class="headerlink" href="#fig-rp-vert-perm-fig" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
 </section>
 <section id="changes-to-the-geometry">
 <h2>Changes to the geometry<a class="headerlink" href="#changes-to-the-geometry" title="Permalink to this headline"></a></h2>
 <p>Check if/how the solution changes if you distort the mesh. For example, squeeze it a bit in the vertical direction by modifying the <code class="code docutils literal notranslate"><span class="pre">transformPoints</span> <span class="pre">-scale</span> <span class="pre">&quot;(1e-6</span> <span class="pre">1e-6</span> <span class="pre">1e-6)&quot;</span></code> statement. Also check if the absolute dimensions matter!</p>
+<p>Numerical models should (usually) not surprise us. So before running the different case, ask yourself what you expect.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>will permeability increase or decrease if you squeeze the sample, for example by half in one direction?</p></li>
+<li><p>Do the absolute dimension matter?</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="adding-scalar-transport">
+<h2>Adding scalar transport<a class="headerlink" href="#adding-scalar-transport" title="Permalink to this headline"></a></h2>
+<p>In the next session, we will progress towards submarine hydrothermal systems and will explore Darcy flow in detail. In preparation for that, let’s explore how scalar transport (like advecting temperature) would look like in our synthetic pore model.</p>
+<p>OpenFOAM’s scalarTransportFoam application solves the 3-D advection-diffusion equation for a given velocity field:</p>
+<div class="math notranslate nohighlight" id="equation-eq-scalar-transport">
+<span class="eqno">(8)<a class="headerlink" href="#equation-eq-scalar-transport" title="Permalink to this equation"></a></span>\[    \frac{\partial T}{\partial t} = -\nabla \cdot ( \vec{U} T ) + \nabla \cdot (D_T \nabla T) + S_T,\]</div>
+<p>with <code class="code docutils literal notranslate"><span class="pre">T</span></code> being the transported scalar, <code class="code docutils literal notranslate"><span class="pre">DT</span></code> the diffusivity with units of <span class="math notranslate nohighlight">\(m^2/s\)</span> , and <code class="code docutils literal notranslate"><span class="pre">ST</span></code> is a source term. Note that it is tempting to think of T as temperature but here it is simply a transported scalar (like a solute in groundwater flow). The energy conservation equation written in terms of temperature looks slightly different, as we will learn in the next chapter.</p>
+<p>The key source code of <a class="reference external" href="https://cpp.openfoam.org/v9/scalarTransportFoam_8C_source.html">scalarTransportFoam</a> looks like this:</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="p">...</span>
+<span class="n">fvScalarMatrix</span> <span class="n">TEqn</span>
+<span class="p">(</span>
+    <span class="n">fvm</span><span class="o">::</span><span class="n">ddt</span><span class="p">(</span><span class="k">T</span><span class="p">)</span>
+    <span class="o">+</span> <span class="n">fvm</span><span class="o">::</span><span class="n">div</span><span class="p">(</span><span class="k">phi</span><span class="p">,</span> <span class="k">T</span><span class="p">)</span>
+    <span class="o">-</span> <span class="n">fvm</span><span class="o">::</span><span class="n">laplacian</span><span class="p">(</span><span class="n">DT</span><span class="p">,</span> <span class="k">T</span><span class="p">)</span>
+    <span class="o">==</span>
+    <span class="n">fvModels</span><span class="p">.</span><span class="n">source</span><span class="p">(</span><span class="k">T</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="n">TEqn</span><span class="p">.</span><span class="n">relax</span><span class="p">();</span>
+<span class="n">fvConstraints</span><span class="p">.</span><span class="n">constrain</span><span class="p">(</span><span class="n">TEqn</span><span class="p">);</span>
+<span class="n">TEqn</span><span class="p">.</span><span class="n">solve</span><span class="p">();</span>
+<span class="n">fvConstraints</span><span class="p">.</span><span class="n">constrain</span><span class="p">(</span><span class="k">T</span><span class="p">);</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+<p>Since we have already computed the velocity field (and made the mesh etc.), we can now use our results as the starting point for a scalarTransportFoam case. The foam tuturials are always a good starting point for a new case. scalarTransportFoam is handled in <code class="code docutils literal notranslate"><span class="pre">$FOAM_TUTORIALS/basic/scalarTransportFoam/pitzDaily/</span></code> . Let’s copy it over to our working directory, add our velocity field and mesh, and modify the control dictionoaries.</p>
+<p>In the docker do this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp -r <span class="nv">$FOAM_TUTORIALS</span>/basic/scalarTransportFoam/pitzDaily/ ./DRP_transport
+cp -r ./DRP_permeability_2D/constant/polyMesh ./DRP_transport/
+cp ./DRP_permeability_2D/0/U ./DRP_transport/0/
+</pre></div>
+</div>
+<p>This assumes that you used the  case and directory names; if not, modify the names accordingly.</p>
+<p>Now go back to our local shell and Visual Studio and modify the scripts:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="code docutils literal notranslate"><span class="pre">0/T</span></code> to make “temperature” 1 at the inlet and zeroGradient at the outlet</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">constant/transportProperties</span></code> set the diffusivity to something small, like <span class="math notranslate nohighlight">\(1e-{12}\)</span>, so that the problem is advection-dominated</p></li>
+<li><p>change <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code> so that the endTime is 20, deltaT is 0.1, and writeInterval   is 3e-1. These are somewhat arbitrary changes making sure we get a reasonable solution for our synthetic setup.</p></li>
+</ul>
+</div></blockquote>
+<p>That’s it, run it and explore the solution!</p>
+<video width=100% autoplay muted controls loop>
+   <source src="../../_static/video/scalarTransport.mp4" type="video/mp4">
+   Your browser does not support HTML video.
+</video><p>Would the temperature evolution in our rock sample look like this? What would the grains do the speed of the thermal front?</p>
 </section>
 </section>
 

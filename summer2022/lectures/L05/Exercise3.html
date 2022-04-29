@@ -206,9 +206,9 @@ The model in <span id="id2">[<a class="reference internal" href="../../refs.html
 <p>Let’s see how to set this boundary condition in HydrothermalFoam.
 <code class="code docutils literal notranslate"><span class="pre">hydrothermalHeatFlux</span></code> supports Gaussian-shape (<code class="code docutils literal notranslate"><span class="pre">shape</span> <span class="pre">gaussian2d;</span></code>) distribution and the shape is defined by four parameters <code class="code docutils literal notranslate"><span class="pre">x0,</span> <span class="pre">qmax,</span> <span class="pre">qmin,</span> <span class="pre">c</span></code>, the equation of the shape is</p>
 <div class="math notranslate nohighlight" id="equation-eq-gauss-hf">
-<span class="eqno">(28)<a class="headerlink" href="#equation-eq-gauss-hf" title="Permalink to this equation"></a></span>\[q_h(x) = q_{min} + (q_{max}-q_{min})e^{-\frac{(x-x_0)^2}{2c^2}}\]</div>
+<span class="eqno">(29)<a class="headerlink" href="#equation-eq-gauss-hf" title="Permalink to this equation"></a></span>\[q_h(x) = q_{min} + (q_{max}-q_{min})e^{-\frac{(x-x_0)^2}{2c^2}}\]</div>
 <p>for a normal Gaussian-shape profile in this model, <code class="code docutils literal notranslate"><span class="pre">qmin</span></code> is set to zero and <code class="code docutils literal notranslate"><span class="pre">x0</span></code> is set to 1500.
-From equation <a class="reference internal" href="#equation-eq-gauss-hf">equation (28)</a>, we can get the half-width and total heat flux (approximately) are <span class="math notranslate nohighlight">\(c\sqrt{2ln2}\)</span> and <span class="math notranslate nohighlight">\((q_{max}-q_{min})\sqrt{2\pi}c\)</span>, respectively. According to the model setup, it’s easy to get <span class="math notranslate nohighlight">\(c = \frac{500}{\sqrt{2ln2}} = 424.661\)</span> and <span class="math notranslate nohighlight">\(q_{max} = \frac{86}{c\sqrt{2\pi}} = 0.0808\ kw/m^2\)</span>.
+From equation <a class="reference internal" href="#equation-eq-gauss-hf">equation (29)</a>, we can get the half-width and total heat flux (approximately) are <span class="math notranslate nohighlight">\(c\sqrt{2ln2}\)</span> and <span class="math notranslate nohighlight">\((q_{max}-q_{min})\sqrt{2\pi}c\)</span>, respectively. According to the model setup, it’s easy to get <span class="math notranslate nohighlight">\(c = \frac{500}{\sqrt{2ln2}} = 424.661\)</span> and <span class="math notranslate nohighlight">\(q_{max} = \frac{86}{c\sqrt{2\pi}} = 0.0808\ kw/m^2\)</span>.
 There the temperature boundary condition at the bottom patch can be set as,</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Code snippet</label><div class="tab-content docutils container">
@@ -238,12 +238,12 @@ There the temperature boundary condition at the bottom patch can be set as,</p>
 <figure class="align-center" id="fig-ventt-time-perm">
 <img alt="../../_images/ventT_time_perm.jpg" src="../../_images/ventT_time_perm.jpg" />
 <figcaption>
-<p><span class="caption-number">Fig. 29 </span><span class="caption-text"><a class="reference internal" href="cases/Driesner2010/jupyter/Plot_CaseResults.html#Maximum-vent-temperature-changes-with-time"><span class="std std-ref">Maximum vent temperature changes with time</span></a>.</span><a class="headerlink" href="#fig-ventt-time-perm" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 30 </span><span class="caption-text"><a class="reference internal" href="cases/Driesner2010/jupyter/Plot_CaseResults.html#Maximum-vent-temperature-changes-with-time"><span class="std std-ref">Maximum vent temperature changes with time</span></a>.</span><a class="headerlink" href="#fig-ventt-time-perm" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="fig-ventt-perm">
 <img alt="../../_images/ventT_perm.svg" src="../../_images/ventT_perm.svg" /><figcaption>
-<p><span class="caption-number">Fig. 30 </span><span class="caption-text"><a class="reference internal" href="cases/Driesner2010/jupyter/Plot_CaseResults.html#Vent-temperature-as-a-function-of-permeability"><span class="std std-ref">Vent temperature as a function of permeability</span></a>.</span><a class="headerlink" href="#fig-ventt-perm" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 31 </span><span class="caption-text"><a class="reference internal" href="cases/Driesner2010/jupyter/Plot_CaseResults.html#Vent-temperature-as-a-function-of-permeability"><span class="std std-ref">Vent temperature as a function of permeability</span></a>.</span><a class="headerlink" href="#fig-ventt-perm" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <div class="toctree-wrapper compound">
