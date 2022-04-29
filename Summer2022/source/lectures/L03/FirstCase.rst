@@ -111,44 +111,39 @@ Next we import the .png file from the :code:`geometry` folder and convert it to 
 
 .. code-block:: python
     
-    import numpy as np   
+    import numpy as np
     from PIL import Image
     import porespy as ps
 
     impath = 'geometry/'         # image path
-    imname = 'porousModel.png'   # file name 
+    imname = 'porousModel.png'   # file name
 
-    image = Image.open('%s/%s'%(impath,imname)).convert("L")                   # open image
-    arr = np.asarray(image)                                                    # convert image to array
-    ps.io.to_vtk(np.array(arr, dtype=int)[:, :, np.newaxis], 'porous_model')   # use porespy and save to .vti format
+    # 1. use PIL to load the image
+    # convert("L") converts RGB into greyscale, L = R * 299/1000 + G * 587/1000 + B * 114/1000
+    image = Image.open('%s/%s'%(impath,imname)).convert("L")                  
 
-You can put this little script into a jupyter notebook, or save it as .py file to be run from the command line. After running it, you should  have a file :code:`porous_model.vti` in the folder where you executed the script. Now comes the segementation and triangulation part. We can use paraview's python interface for this (or do everything by hand using the graphical user interface).
+    # 2. convert image into numpy array with "normal" integer values
+    arr = np.asarray(image, dtype=int)
 
-.. code:: python
+    # 3. save as vti (VTK's image format)
+    # 3.1 make 3D by repeating in new axis=2 dimension (openfoam and porespy want 3D)
+    arr_stacked = np.stack((arr,arr), axis=2)
 
-    import os 
+    # 3.2 save as vti using porespy                                              
+    ps.io.to_vtk(arr_stacked, 'geometry/porous_model') 
 
-    os.chdir("your_case_directory")
-    exec(open("your_file_name.py").read())
+You can put this little script into a jupyter notebook or save it as .py (e.g. png2vti.py), then activate the right kernel (e.g. :code:`conda activate py3_htf_class`), and do this:
+
+.. code-block:: bash
+
+    python png2vti.py
 
 
-.. code-block:: python
+After running it, you should  have a file :code:`porous_model.vti` in the geometry folder. Now comes the segmentation and triangulation part to make an stl file that openFOAM understands. We will use paraview for this and there are different ways of doing this:
 
-    # workflow as python code using the paraview.simple module
-    from paraview.simple import *
-    
-    def write_stl(vti_file, stl_file):
-        data = OpenDataFile('%s.vti'%vti_file)
-        clip1 = Clip(data, ClipType = 'Scalar', Scalars = ['CELLS', 'im'], Value = 127.5, Invert = 1) 
-        extractSurface1 = ExtractSurface(clip1)
-        triangulate1 = Triangulate(extractSurface1)
-        SaveData(stl_file, proxy = triangulate1)
-    
-    vti_file = 'porous_model'      # input .vti file
-    stl_file = 'porous_model.stl'  # output .stl file
-
-    write_stl(vti_file, stl_file)
-
+    #. use paraview's graphical user interface
+    #. use paraview's inbuild python shell
+    #. install paraview into a conda environment and use a jupyter notebook
 
 .. figure:: /_figures/paraview_python.*
    :align: center
@@ -158,12 +153,61 @@ You can put this little script into a jupyter notebook, or save it as .py file t
    Using the paraview python shell.
 
 
+
+Probably the easiest way is to copy the python code below into the python shell of paraview :numref:`fig:paraview_figure_fig`. Within the shell you first have to make sure you are in the directory of your openFOAM case:
+
+.. code:: python
+
+    import os 
+    os.chdir("your_case_directory")
+    exec(open("your_file_name.py").read())
+
+
+Now you can paste the python code:
+
+.. code-block:: python
+
+    # workflow as python code using the paraview.simple module
+    from paraview.simple import *
+    
+    def write_stl(vti_file, stl_file):
+        # 1. load vti file
+        data            = OpenDataFile('%s.vti'%vti_file)
+        # 2. clip at some intermediate value (we have 0 and 255 as pores and grains)
+        clip1           = Clip(data, ClipType = 'Scalar', Scalars = ['CELLS', 'im'], Value = 127.5, Invert = 1)
+        # 3. make a surface of the remaining grains
+        extractSurface1 = ExtractSurface(clip1)
+        # 4. and triangulate it for stl export
+        triangulate1    = Triangulate(extractSurface1)
+    
+        # 5. finally save it as an stl file
+        SaveData(stl_file, proxy = triangulate1)
+    
+    # main part
+    vti_file = 'porous_model'      # input .vti file
+    stl_file = 'porous_model.stl'  # output .stl file
+    # call function
+    write_stl(vti_file, stl_file)
+
 This will create a .stl file, which we will use in the meshing process. Let's do some clean up and move the vti file into :code:`./geometry` and the stl file into :code:`./constant/triSurface`, where openFOAM expects it. This assumes that you are in the case directory.
 
 .. code:: bash
 
     mv ./porous_model.vti ./geometry/
     mv ./porous_model.stl ./constant/triSurface/
+
+.. admonition:: Doing it the proper way
+
+    The more elegant way would have been to avoid the in-build paraview shell and do everything in a jupyter notebook or a stand-alone python file. Unfortunately, installing the :code:`paraview.simple` module can be a pain - and even the paraview conda package is incompatible with other packages (like vtk, which we will need later in the class). 
+
+    Here is a way to get this to work: make a clean conda environment that has paraview and some other useful things, activate the base environment, startup jupyter and choose the newly created py3_htf_paraview kernel for a new notebook, and finally copy and paste the code above into notebook. Try it!
+
+    .. code-block:: bash
+
+        conda create -n py3_htf_paraview python=3 numpy pandas matplotlib paraview scipy ipykernel
+
+        conda activate base 
+        jupyter notebook
 
 
 OpenFOAM case
