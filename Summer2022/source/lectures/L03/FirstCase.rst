@@ -158,7 +158,7 @@ After running it, you should  have a file :code:`porous_model.vti` in the geomet
                     255 255 255 255 255 255
                     ...
 
-    Notice how this is written as cell data. The total extents are 1197x1495x3,  the voxel size is 1, and the cell data is 1196x1494x2 (our two images).
+    Notice how this is written as cell data. The total extents are 1197x1495x3, the voxel size is 1, and the cell data is 1196x1494x2 (our two images).
 
 
 Now comes the segmentation and triangulation part to make an stl file that openFOAM understands. We will use paraview for this and there are different ways of doing this:
