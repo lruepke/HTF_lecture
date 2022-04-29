@@ -200,22 +200,18 @@
 <h1>Porous Flow - Submarine Hydrothermal Systems<a class="headerlink" href="#porous-flow-submarine-hydrothermal-systems" title="Permalink to this headline"></a></h1>
 <section id="theoretical-background">
 <h2>Theoretical background<a class="headerlink" href="#theoretical-background" title="Permalink to this headline"></a></h2>
-<p>In the last lecture, we had made our first Navier-Stokes simulations, which resolved the full dynamics of fluid flow. When studying porous media, flow is often approximated by Darcy’s law that states that flow is proportional to the pressure gradient. The invovled constants are viscosity and permeability. Extensive theoretical work helped to elucidate the relationship between Navier-Stokes flow and Darcy flow, which was first derived as a phenomelogical equation.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>There is a great pdf on the relationship between Navier-Stokes and Darcy flow on the webpages of <a class="reference external" href="https://www.cypriensoulaine.com/publications-copy">Cyprien Soulaine</a>.</p>
-</div>
-<p>During this lecture we will study single-phase hydrothermal flow in submarine hydrothermal systems. The respective solver is named <code class="code docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam</span></code>. The hydrothermal fluid flow is governed by Darcy’s law (Eqn. <a class="reference internal" href="#equation-eq-darcy">equation (22)</a>),
-mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti">equation (23)</a>) and energy conservation (Eqn. <a class="reference internal" href="#equation-eq-temperature">equation (25)</a>) equations shown below,</p>
-<div class="math notranslate nohighlight" id="equation-eq-darcy">
-<span class="eqno">(22)<a class="headerlink" href="#equation-eq-darcy" title="Permalink to this equation"></a></span>\[\vec{U} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})\]</div>
-<div class="math notranslate nohighlight" id="equation-eq-conti">
-<span class="eqno">(23)<a class="headerlink" href="#equation-eq-conti" title="Permalink to this equation"></a></span>\[\varepsilon \frac{\partial \rho_f}{\partial t} + \nabla \cdot (\vec{U} \rho_f)\]</div>
+<p>In the last lecture, we had made Navier-Stokes simulations on the pore-scale, which resolved the full dynamics of fluid flow. As we have already learned, in porous media studies flow is often approximated by Darcy’s, in which flow is proportional to the pressure gradient. The invovled constants are viscosity and permeability.</p>
+<p>During this lecture we will study single-phase hydrothermal flow in submarine hydrothermal systems. The respective solver is named <code class="code docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam</span></code>. The hydrothermal fluid flow is governed by Darcy’s law (Eqn. <a class="reference internal" href="#equation-eq-darcy-l04">equation (22)</a>),
+mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti-l04">equation (23)</a>) and energy conservation (Eqn. <a class="reference internal" href="#equation-eq-temperature">equation (25)</a>) equations shown below,</p>
+<div class="math notranslate nohighlight" id="equation-eq-darcy-l04">
+<span class="eqno">(22)<a class="headerlink" href="#equation-eq-darcy-l04" title="Permalink to this equation"></a></span>\[\vec{U} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-conti-l04">
+<span class="eqno">(23)<a class="headerlink" href="#equation-eq-conti-l04" title="Permalink to this equation"></a></span>\[\varepsilon \frac{\partial \rho_f}{\partial t} + \nabla \cdot (\vec{U} \rho_f)\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-pressure">
 <span class="eqno">(24)<a class="headerlink" href="#equation-eq-pressure" title="Permalink to this equation"></a></span>\[\varepsilon \rho_f \left( \beta_f \frac{\partial p}{\partial t} - \alpha_f \frac{\partial T}{\partial t} \right) = \nabla \cdot \left( \rho_f \frac{k}{\mu_f} (\nabla p - \rho_f \vec{g}) \right)\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-temperature">
 <span class="eqno">(25)<a class="headerlink" href="#equation-eq-temperature" title="Permalink to this equation"></a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{pr})\frac{\partial T}{\partial t} = \nabla \cdot (\lambda_r \nabla T) - \rho_f C_{pf} \vec{U}\cdot \nabla T + \frac{\mu_f}{k} \parallel \vec{U} \parallel ^2 - \left( \frac{\partial ln \rho_f}{\partial ln T} \right)_p \frac{Dp}{Dt}\]</div>
-<p>where the pressure equation <a class="reference internal" href="#equation-eq-pressure">equation (24)</a> is derived from continuity equation <a class="reference internal" href="#equation-eq-conti">equation (23)</a> and Darcy’s law <a class="reference internal" href="#equation-eq-darcy">equation (22)</a>.</p>
+<p>where the pressure equation <a class="reference internal" href="#equation-eq-pressure">equation (24)</a> is derived from continuity equation <a class="reference internal" href="#equation-eq-conti-l04">equation (23)</a> and Darcy’s law <a class="reference internal" href="#equation-eq-darcy-l04">equation (22)</a>.</p>
 </section>
 <section id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline"></a></h2>
