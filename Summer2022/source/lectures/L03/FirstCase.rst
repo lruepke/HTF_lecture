@@ -139,7 +139,29 @@ You can put this little script into a jupyter notebook or save it as .py (e.g. p
     python png2vti.py
 
 
-After running it, you should  have a file :code:`porous_model.vti` in the geometry folder. Now comes the segmentation and triangulation part to make an stl file that openFOAM understands. We will use paraview for this and there are different ways of doing this:
+After running it, you should  have a file :code:`porous_model.vti` in the geometry folder. 
+
+.. tip::
+    If you are interested in the vti file format, this is what we have just written to porous_model.vti
+
+    .. code-block:: bash
+
+        <VTKFile type="ImageData" version="1.0" byte_order="LittleEndian" header_type="UInt64">
+            <ImageData WholeExtent="0 1196 0 1494 0 2" Origin="0 0 0" Spacing="1 1 1" Direction="1 0 0 0 1 0 0 0 1">
+                <Piece Extent="0 1196 0 1494 0 2">
+                <PointData>
+                </PointData>
+                <CellData Scalars="im">
+                <DataArray type="Int64" Name="im" format="ascii" RangeMin="0" RangeMax="255">
+                    255 255 255 255 255 255
+                    255 255 255 255 255 255
+                    255 255 255 255 255 255
+                    ...
+
+    Notice how this is written as cell data. The total extents are 1197x1495x3,  the voxel size is 1, and the cell data is 1196x1494x2 (our two images).
+
+
+Now comes the segmentation and triangulation part to make an stl file that openFOAM understands. We will use paraview for this and there are different ways of doing this:
 
     #. use paraview's graphical user interface
     #. use paraview's inbuild python shell
