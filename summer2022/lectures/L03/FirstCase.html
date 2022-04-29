@@ -316,7 +316,26 @@ conda install -c conda-forge porespy
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python png2vti.py
 </pre></div>
 </div>
-<p>After running it, you should  have a file <code class="code docutils literal notranslate"><span class="pre">porous_model.vti</span></code> in the geometry folder. Now comes the segmentation and triangulation part to make an stl file that openFOAM understands. We will use paraview for this and there are different ways of doing this:</p>
+<p>After running it, you should  have a file <code class="code docutils literal notranslate"><span class="pre">porous_model.vti</span></code> in the geometry folder.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you are interested in the vti file format, this is what we have just written to porous_model.vti</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;VTKFile <span class="nv">type</span><span class="o">=</span><span class="s2">&quot;ImageData&quot;</span> <span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span> <span class="nv">byte_order</span><span class="o">=</span><span class="s2">&quot;LittleEndian&quot;</span> <span class="nv">header_type</span><span class="o">=</span><span class="s2">&quot;UInt64&quot;</span>&gt;
+    &lt;ImageData <span class="nv">WholeExtent</span><span class="o">=</span><span class="s2">&quot;0 1196 0 1494 0 2&quot;</span> <span class="nv">Origin</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span> <span class="nv">Spacing</span><span class="o">=</span><span class="s2">&quot;1 1 1&quot;</span> <span class="nv">Direction</span><span class="o">=</span><span class="s2">&quot;1 0 0 0 1 0 0 0 1&quot;</span>&gt;
+        &lt;Piece <span class="nv">Extent</span><span class="o">=</span><span class="s2">&quot;0 1196 0 1494 0 2&quot;</span>&gt;
+        &lt;PointData&gt;
+        &lt;/PointData&gt;
+        &lt;CellData <span class="nv">Scalars</span><span class="o">=</span><span class="s2">&quot;im&quot;</span>&gt;
+        &lt;DataArray <span class="nv">type</span><span class="o">=</span><span class="s2">&quot;Int64&quot;</span> <span class="nv">Name</span><span class="o">=</span><span class="s2">&quot;im&quot;</span> <span class="nv">format</span><span class="o">=</span><span class="s2">&quot;ascii&quot;</span> <span class="nv">RangeMin</span><span class="o">=</span><span class="s2">&quot;0&quot;</span> <span class="nv">RangeMax</span><span class="o">=</span><span class="s2">&quot;255&quot;</span>&gt;
+            <span class="m">255</span> <span class="m">255</span> <span class="m">255</span> <span class="m">255</span> <span class="m">255</span> <span class="m">255</span>
+            <span class="m">255</span> <span class="m">255</span> <span class="m">255</span> <span class="m">255</span> <span class="m">255</span> <span class="m">255</span>
+            <span class="m">255</span> <span class="m">255</span> <span class="m">255</span> <span class="m">255</span> <span class="m">255</span> <span class="m">255</span>
+            ...
+</pre></div>
+</div>
+<p>Notice how this is written as cell data. The total extents are 1197x1495x3,  the voxel size is 1, and the cell data is 1196x1494x2 (our two images).</p>
+</div>
+<p>Now comes the segmentation and triangulation part to make an stl file that openFOAM understands. We will use paraview for this and there are different ways of doing this:</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li><p>use paraview’s graphical user interface</p></li>
