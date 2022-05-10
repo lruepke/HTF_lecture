@@ -89,8 +89,8 @@ hasChildren = true
 
 # banner
 [Languages.en.params.banner]
-title = "Lecture notes on Numerical Fluid Dynamics I & II"
-subtitle = "Welcome to the course notes for Numerical Fluid Dynamics taught at Kiel University"
+title = "Lectures on numerical fluid dynamics in geophysics"
+subtitle = "Welcome to the course notes for the Numerical Fluid Dynamics courses taught at Kiel University"
 bg_image = "images/banner.jpg"
 placeholder = "Have a question? Try to ask here or enter terms"
 
