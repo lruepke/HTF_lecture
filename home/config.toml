@@ -17,7 +17,7 @@ unsafe= true
 ############################# Default Parameters ##########################
 [params]
 # logo is for all page
-logo = "images/logo.png"
+# logo = "images/logo.png"
 # logo white is for homepage logo, you can use colorful logo too...
 logo_white = ""
 # when logo is empty, it will shown your site title
@@ -56,6 +56,8 @@ name = "contact"
 url = "contact"
 weight = 2
 
+
+
 # Dropdown menu
 [[Languages.en.menu.main]]
 weight = 4
@@ -85,7 +87,7 @@ hasChildren = true
 [Languages.en.params.banner]
 title = "Lecture notes on "Numerical Fluid Dynamics I & II"
 subtitle = "Welcome to the course notes for "Numerical Fluid Dynamics" taught at Kiel University"
-# bg_image = "images/banner.jpg"
+bg_image = "images/banner.jpg"
 placeholder = "Have a question? Try to ask here or enter terms"
 
 # social links 
