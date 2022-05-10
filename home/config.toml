@@ -80,12 +80,6 @@ hasChildren = true
   url = "summer2022"
   weight = 3
 
-# imprint
-[[Languages.en.menu.main]]
-name = "imprint"
-url = "imprint"
-weight = 2
-
 
 # banner
 [Languages.en.params.banner]
