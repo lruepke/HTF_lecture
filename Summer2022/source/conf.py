@@ -90,6 +90,10 @@ html_context = {
     'conf_py_path': 'source/',
     "menu_links": [
         (
+            '<i class="fa fa-stamp"></i> Imprint',
+            "https://lruepke.github.io/HTF_lecture/imprint/",
+        ),
+        (
             '<i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke',
             "mailto:lruepke@geomar.de",
             
