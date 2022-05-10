@@ -133,6 +133,8 @@
         </p>
         <ul>
             
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
                 <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
             
                 <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
@@ -243,7 +245,7 @@ cp -r /home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1 .
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find <span class="nv">$HOME</span> -type f -name <span class="s2">&quot;setFieldsDict&quot;</span>
 </pre></div>
 </div>
-<p>Now that we have the setFieldsDict, we need to modify it. Do you remember <a class="reference internal" href="../L04/Exercise.html#l03-properties"><span class="std std-ref">Assign properties</span></a> part the two-layered convection <a class="reference internal" href="../L04/Exercise.html#l03-exercise"><span class="std std-ref">Excercises</span></a> in lecture 3? There we used the boxToCell function within <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> as an alternative way of making a layerd permeability structure. Now we can do the same here, just that we need several boxes.</p>
+<p>Now that we have the setFieldsDict, we need to modify it. Do you remember <a class="reference internal" href="../L04/Exercise.html#l03-properties"><span class="std std-ref">Assign properties</span></a> part the two-layered convection <a class="reference internal" href="../L03/Exercise.html#l03-exercise"><span class="std std-ref">Exercises</span></a> in lecture 3? There we used the boxToCell function within <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> as an alternative way of making a layerd permeability structure. Now we can do the same here, just that we need several boxes.</p>
 <p>This is how the code snippit looked like in lecture 3; take it as a starting point!</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>regions
 <span class="o">(</span>
