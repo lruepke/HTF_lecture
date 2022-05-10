@@ -80,11 +80,18 @@ hasChildren = true
   url = "summer2022"
   weight = 3
 
+# imprint
+[[Languages.en.menu.main]]
+name = "imprint"
+url = "imprint"
+weight = 2
+
+
 # banner
 [Languages.en.params.banner]
-title = "Online lectures of fluid dynamics"
-subtitle = "Welcome to the course Numerical Fluid Dynamics taught at Kiel University"
-bg_image = "images/banner.jpg"
+title = "Lecture notes on "Numerical Fluid Dynamics I & II"
+subtitle = "Welcome to the course notes for "Numerical Fluid Dynamics" taught at Kiel University"
+# bg_image = "images/banner.jpg"
 placeholder = "Have a question? Try to ask here or enter terms"
 
 # social links 
