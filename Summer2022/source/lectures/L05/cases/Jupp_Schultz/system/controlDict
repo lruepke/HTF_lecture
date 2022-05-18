@@ -14,16 +14,18 @@ FoamFile
 }
 
 application HydrothermalSinglePhaseDarcyFoam;
-startFrom latestTime;
+startFrom startTime;
 startTime 0;
 stopAt endTime;
-endTime 157680000000;
-deltaT 864000;
+//total simulation time is 300 yrs
+endTime 9460800000; 
+deltaT 1576800; 
 adjustTimeStep yes;
 maxCo           0.8; 
-maxDeltaT       86400000; 
+maxDeltaT       94608000; 
 writeControl adjustableRunTime;
-writeInterval 86400000;
+//and we wrte every 3 yrs
+writeInterval 94608000; 
 purgeWrite 0;
 writeFormat ascii;
 writePrecision 6;
