@@ -92,7 +92,7 @@ That code block requires the specific enthalpy to be accessible by the code. The
 This will update the source code of |foam| and recompile it. Just wait for it to complete. Now you can run the case!
 
 It's possible that we have been a bit overambitious in our chosen numerical resolution. In case the run-time is too long, just reduce the horizontal and vertical resolution. Make the mesh with :code:`blockMesh` and call the solver; or execute the :code:`run.sh` script. If you are feeling courages today, you can also try our running it in parallel! Check out the :code:`run_par.sh` script for that.
-
+You can also shorten the total run-time (to say 40 yrs) in :code:`system/controlDict`; we are mainly interested in the early stages anyway. 
 
 
 Post-processing
@@ -102,11 +102,6 @@ Plotting temperature
 ^^^^^^^^^^^^^^^^^^^^
 
 After running the case, check it out in paraview and make sure you understand the results and that everything looks fine. While paraview is great for 3-D processing, sometimes python can be more powerfull in detailed post-processing. 
-
-
-.. tip::
-    Have you noticed the python terminal in paraview? Combining python with paraview can be extremely powerful! If you are curious, check it out on the internet. We will also show some examples later in the course.
-
 
 The figure below shows an example plot of the final temperature solution. It basically does the same thing as paraview, but let's walk through it. 
 
@@ -125,42 +120,3 @@ Click on the link in the figure caption and go through the notebook. Safest way 
 
 Copy the sections into your local notebook, try to execute the sections (press SHIFT+RETURN), add some markdown sections with comments. 
    
-
-Exploring the parameter space
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Effect of cell size (**CS**) and full width at half maximum (**FWHM**),
-
-.. tab:: CS=10,FWHM=300
-
-    .. figure:: /_figures/T_Jupp_Schultz300_steady.*
-        :align: center
-
-        Cell size = 10 m, FWHM = 300 m.
-
-.. tab:: CS=10,FWHM=400
-
-    .. figure:: /_figures/T_Jupp_Schultz400_steady.*
-        :align: center
-
-        Cell size = 10 m, FWHM = 400 m.
-
-.. tab:: CS=2.5,FWHM=300
-
-    .. figure:: /_figures/T_Jupp_Schultz300_2.5_steady.*
-        :align: center
-
-        Cell size = 2.5 m, FWHM = 300 m.
-
-
-.. figure:: /_figures/Jupp_Schultz_early.*
-   :align: center
-   :name: fig:Jupp_Schultz_early
-
-   Early stages of the simulation. See :ref:`/lectures/L05/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb#Early-stage` in the notebook.
-
-
-.. toctree::
-    :maxdepth: 2
-
-    cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb

@@ -5,10 +5,7 @@
 Exercise 3
 ===========
 
-.. warning::
-   This section is under construction!
-
-We will now try to reproduce the results presented by :cite:`driesner2010interplay`, the case files :download:`Driesner2010 <cases/Driesner2010.zip>`.
+We will now explore the interplay between permeability and bottom heat flux. The research question is: what kind of permeability is needed to sustain a high-temperature hydrothermal system? This question has been addressed by :cite:`driesner2010interplay` and we will perform very similar runs. A basic setup can be downloaded from here: :download:`Driesner2010 <cases/Driesner2010.zip>`.
 
 The magma heat source is simulated by a heat flux boundary condition, which can be set by customized boundary condition type of :code:`hydrothermalHeatFlux` (see `doc <https://www.hydrothermalfoam.info/manual/en/Models_Equations/index.html#heat-flux-bc-hydrothermalheatflux>`_ ).
 The model in :cite:`driesner2010interplay` is 1 m thick, 3 km wide, 1 km height, the heat source is simulated by a Gaussian-shaped heat flux profile with total heat input 86 km, half-width 500 m and center 1500 m. 
