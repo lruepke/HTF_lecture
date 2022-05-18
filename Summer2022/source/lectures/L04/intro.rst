@@ -19,7 +19,7 @@ mass continuity (Eqn. :eq:`eq:conti_l04`) and energy conservation (Eqn. :eq:`eq:
 .. math::
     :label: eq:conti_l04
     
-    \varepsilon \frac{\partial \rho_f}{\partial t} + \nabla \cdot (\vec{U} \rho_f)
+    \varepsilon \frac{\partial \rho_f}{\partial t} + \nabla \cdot (\vec{U} \rho_f) = 0
 
 .. math::
     :label: eq:pressure
