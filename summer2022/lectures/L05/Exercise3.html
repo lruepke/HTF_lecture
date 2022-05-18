@@ -27,7 +27,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Jupyter Notebook of case results" href="cases/Driesner2010/jupyter/Plot_CaseResults.html" />
-    <link rel="prev" title="Jupyter Notebook of case results" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html" /> 
+    <link rel="prev" title="Exercise 2" href="Exercise2.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -198,11 +198,7 @@
 </style>
 <section id="exercise-3">
 <span id="l04-exercise3"></span><h1>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline"></a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This section is under construction!</p>
-</div>
-<p>We will now try to reproduce the results presented by <span id="id1">[<a class="reference internal" href="../../refs.html#id3" title="T Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132–141, 2010. URL: http://doi.wiley.com/10.1111/j.1468-8123.2009.00273.x, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010b</a>]</span>, the case files <a class="reference download internal" download="" href="../../_downloads/368b2a5809e62ae64f20c8ee48e0d72a/Driesner2010.zip"><code class="xref download docutils literal notranslate"><span class="pre">Driesner2010</span></code></a>.</p>
+<p>We will now explore the interplay between permeability and bottom heat flux. The research question is: what kind of permeability is needed to sustain a high-temperature hydrothermal system? This question has been addressed by <span id="id1">[<a class="reference internal" href="../../refs.html#id3" title="T Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132–141, 2010. URL: http://doi.wiley.com/10.1111/j.1468-8123.2009.00273.x, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010b</a>]</span> and we will perform very similar runs. A basic setup can be downloaded from here: <a class="reference download internal" download="" href="../../_downloads/368b2a5809e62ae64f20c8ee48e0d72a/Driesner2010.zip"><code class="xref download docutils literal notranslate"><span class="pre">Driesner2010</span></code></a>.</p>
 <p>The magma heat source is simulated by a heat flux boundary condition, which can be set by customized boundary condition type of <code class="code docutils literal notranslate"><span class="pre">hydrothermalHeatFlux</span></code> (see <a class="reference external" href="https://www.hydrothermalfoam.info/manual/en/Models_Equations/index.html#heat-flux-bc-hydrothermalheatflux">doc</a> ).
 The model in <span id="id2">[<a class="reference internal" href="../../refs.html#id3" title="T Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132–141, 2010. URL: http://doi.wiley.com/10.1111/j.1468-8123.2009.00273.x, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010b</a>]</span> is 1 m thick, 3 km wide, 1 km height, the heat source is simulated by a Gaussian-shaped heat flux profile with total heat input 86 km, half-width 500 m and center 1500 m.</p>
 <p>Let’s see how to set this boundary condition in HydrothermalFoam.
@@ -240,12 +236,12 @@ There the temperature boundary condition at the bottom patch can be set as,</p>
 <figure class="align-center" id="fig-ventt-time-perm">
 <img alt="../../_images/ventT_time_perm.jpg" src="../../_images/ventT_time_perm.jpg" />
 <figcaption>
-<p><span class="caption-number">Fig. 30 </span><span class="caption-text"><a class="reference internal" href="cases/Driesner2010/jupyter/Plot_CaseResults.html#Maximum-vent-temperature-changes-with-time"><span class="std std-ref">Maximum vent temperature changes with time</span></a>.</span><a class="headerlink" href="#fig-ventt-time-perm" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 26 </span><span class="caption-text"><a class="reference internal" href="cases/Driesner2010/jupyter/Plot_CaseResults.html#Maximum-vent-temperature-changes-with-time"><span class="std std-ref">Maximum vent temperature changes with time</span></a>.</span><a class="headerlink" href="#fig-ventt-time-perm" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="fig-ventt-perm">
 <img alt="../../_images/ventT_perm.svg" src="../../_images/ventT_perm.svg" /><figcaption>
-<p><span class="caption-number">Fig. 31 </span><span class="caption-text"><a class="reference internal" href="cases/Driesner2010/jupyter/Plot_CaseResults.html#Vent-temperature-as-a-function-of-permeability"><span class="std std-ref">Vent temperature as a function of permeability</span></a>.</span><a class="headerlink" href="#fig-ventt-perm" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 27 </span><span class="caption-text"><a class="reference internal" href="cases/Driesner2010/jupyter/Plot_CaseResults.html#Vent-temperature-as-a-function-of-permeability"><span class="std std-ref">Vent temperature as a function of permeability</span></a>.</span><a class="headerlink" href="#fig-ventt-perm" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <div class="toctree-wrapper compound">
@@ -264,7 +260,7 @@ There the temperature boundary condition at the bottom patch can be set as,</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html" class="btn btn-neutral float-left" title="Jupyter Notebook of case results" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Exercise2.html" class="btn btn-neutral float-left" title="Exercise 2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="cases/Driesner2010/jupyter/Plot_CaseResults.html" class="btn btn-neutral float-right" title="Jupyter Notebook of case results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

@@ -26,7 +26,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Jupyter Notebook of case results" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html" />
+    <link rel="next" title="Exercise 3" href="Exercise3.html" />
     <link rel="prev" title="Jupyter Notebook of water properties" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
@@ -98,10 +98,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#model-setup-and-running-the-case">Model setup and running the case</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#post-processing">Post-processing</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#plotting-temperature">Plotting temperature</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exploring-the-parameter-space">Exploring the parameter space</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html">Jupyter Notebook of case results</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -264,17 +260,14 @@
 </pre></div>
 </div>
 <p>This will update the source code of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and recompile it. Just wait for it to complete. Now you can run the case!</p>
-<p>It’s possible that we have been a bit overambitious in our chosen numerical resolution. In case the run-time is too long, just reduce the horizontal and vertical resolution. Make the mesh with <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> and call the solver; or execute the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script. If you are feeling courages today, you can also try our running it in parallel! Check out the <code class="code docutils literal notranslate"><span class="pre">run_par.sh</span></code> script for that.</p>
+<p>It’s possible that we have been a bit overambitious in our chosen numerical resolution. In case the run-time is too long, just reduce the horizontal and vertical resolution. Make the mesh with <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> and call the solver; or execute the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script. If you are feeling courages today, you can also try our running it in parallel! Check out the <code class="code docutils literal notranslate"><span class="pre">run_par.sh</span></code> script for that.
+You can also shorten the total run-time (to say 40 yrs) in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>; we are mainly interested in the early stages anyway.</p>
 </section>
 <section id="post-processing">
 <h2>Post-processing<a class="headerlink" href="#post-processing" title="Permalink to this headline"></a></h2>
 <section id="plotting-temperature">
 <h3>Plotting temperature<a class="headerlink" href="#plotting-temperature" title="Permalink to this headline"></a></h3>
 <p>After running the case, check it out in paraview and make sure you understand the results and that everything looks fine. While paraview is great for 3-D processing, sometimes python can be more powerfull in detailed post-processing.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Have you noticed the python terminal in paraview? Combining python with paraview can be extremely powerful! If you are curious, check it out on the internet. We will also show some examples later in the course.</p>
-</div>
 <p>The figure below shows an example plot of the final temperature solution. It basically does the same thing as paraview, but let’s walk through it.</p>
 <figure class="align-center" id="fig-t-jupp-schultz-steady">
 <img alt="../../_images/T_Jupp_Schultz_steady.svg" src="../../_images/T_Jupp_Schultz_steady.svg" /><figcaption>
@@ -287,49 +280,6 @@
 </div>
 <p>Copy the sections into your local notebook, try to execute the sections (press SHIFT+RETURN), add some markdown sections with comments.</p>
 </section>
-<section id="exploring-the-parameter-space">
-<h3>Exploring the parameter space<a class="headerlink" href="#exploring-the-parameter-space" title="Permalink to this headline"></a></h3>
-<p>Effect of cell size (<strong>CS</strong>) and full width at half maximum (<strong>FWHM</strong>),</p>
-<div class="tab-set docutils container">
-<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">CS=10,FWHM=300</label><div class="tab-content docutils container">
-<figure class="align-center" id="id6">
-<img alt="../../_images/T_Jupp_Schultz300_steady.svg" src="../../_images/T_Jupp_Schultz300_steady.svg" /><figcaption>
-<p><span class="caption-number">Fig. 26 </span><span class="caption-text">Cell size = 10 m, FWHM = 300 m.</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-</div>
-<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">CS=10,FWHM=400</label><div class="tab-content docutils container">
-<figure class="align-center" id="id7">
-<img alt="../../_images/T_Jupp_Schultz400_steady.svg" src="../../_images/T_Jupp_Schultz400_steady.svg" /><figcaption>
-<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Cell size = 10 m, FWHM = 400 m.</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-</div>
-<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">CS=2.5,FWHM=300</label><div class="tab-content docutils container">
-<figure class="align-center" id="id8">
-<img alt="../../_images/T_Jupp_Schultz300_2.5_steady.svg" src="../../_images/T_Jupp_Schultz300_2.5_steady.svg" /><figcaption>
-<p><span class="caption-number">Fig. 28 </span><span class="caption-text">Cell size = 2.5 m, FWHM = 300 m.</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-</div>
-</div>
-<figure class="align-center" id="fig-jupp-schultz-early">
-<img alt="../../_images/Jupp_Schultz_early.svg" src="../../_images/Jupp_Schultz_early.svg" /><figcaption>
-<p><span class="caption-number">Fig. 29 </span><span class="caption-text">Early stages of the simulation. See <a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Early-stage"><span class="std std-ref">Early stage</span></a> in the notebook.</span><a class="headerlink" href="#fig-jupp-schultz-early" title="Permalink to this image"></a></p>
-</figcaption>
-</figure>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html">Jupyter Notebook of case results</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Read-results">Read results</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Plot-result-data">Plot result data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Temperature-+-velocity-field-(quiver)">Temperature + velocity field (quiver)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Early-stage">Early stage</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
 </section>
 </section>
 
@@ -338,7 +288,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" class="btn btn-neutral float-left" title="Jupyter Notebook of water properties" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html" class="btn btn-neutral float-right" title="Jupyter Notebook of case results" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Exercise3.html" class="btn btn-neutral float-right" title="Exercise 3" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
