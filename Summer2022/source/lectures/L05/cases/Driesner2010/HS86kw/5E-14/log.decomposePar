@@ -1,0 +1,146 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 7
+Exec   : decomposePar
+Date   : May 24 2022
+Time   : 10:45:59
+Host   : "muhs-nb017mc"
+PID    : 4442
+I/O    : uncollated
+Case   : /Users/lruepke/Research/Lectures/HTF_lecture/Summer2022/source/lectures/L05/cases/Driesner2010/HS86kw/5E-14
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydrothermalBoundaryConditions.dylib"
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydroThermoPhysicalModels.dylib"
+
+
+Decomposing mesh region0
+
+Create mesh
+
+Calculating distribution of cells
+ Foam::decompositionMethod::New 
+{
+    numberOfSubdomains 3;
+    method          scotch;
+    simpleCoeffs
+    {
+        n               ( 3 1 1 );
+        delta           0.001;
+    }
+}
+
+Selecting decompositionMethod scotch
+
+Finished decomposition in 0.11 s
+
+Calculating original mesh data
+
+Distributing cells to processors
+
+Distributing faces to processors
+
+Distributing points to processors
+
+Constructing processor meshes
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydrothermalBoundaryConditions.dylib"
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydroThermoPhysicalModels.dylib"
+
+Processor 0
+    Number of cells = 10085
+    Number of faces shared with processor 2 = 107
+    Number of processor patches = 1
+    Number of processor faces = 107
+    Number of boundary faces = 20471
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydrothermalBoundaryConditions.dylib"
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydroThermoPhysicalModels.dylib"
+
+Processor 1
+    Number of cells = 9915
+    Number of faces shared with processor 2 = 115
+    Number of processor patches = 1
+    Number of processor faces = 115
+    Number of boundary faces = 20133
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydrothermalBoundaryConditions.dylib"
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydroThermoPhysicalModels.dylib"
+
+Processor 2
+    Number of cells = 10000
+    Number of faces shared with processor 0 = 107
+    Number of faces shared with processor 1 = 115
+    Number of processor patches = 2
+    Number of processor faces = 222
+    Number of boundary faces = 20196
+
+Number of processor faces = 222
+Max number of cells = 10085 (0.85% above average 10000)
+Max number of processor patches = 2 (50% above average 1.33333)
+Max number of faces between processors = 222 (50% above average 148)
+
+Time = 0
+
+Processor 0: field transfer
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydrothermalBoundaryConditions.dylib"
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydroThermoPhysicalModels.dylib"
+Processor 1: field transfer
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydrothermalBoundaryConditions.dylib"
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydroThermoPhysicalModels.dylib"
+Processor 2: field transfer
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydrothermalBoundaryConditions.dylib"
+--> FOAM Warning : 
+    From function dlOpen(const fileName&, const bool)
+    in file POSIX.C at line 1264
+    dlOpen: using fallback library name "libHydroThermoPhysicalModels.dylib"
+
+End
+
