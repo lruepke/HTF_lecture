@@ -167,3 +167,7 @@ There the temperature boundary condition at the bottom patch can be set as,
         plt.show()
 
 
+Excercise
+---------
+
+Set up a new run, for example with :math:`k=5e^{-14} m^2`, and compare the vent temperatures of the numerical simulation with the predictions of our semi-analytical solution.

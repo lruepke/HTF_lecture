@@ -1,0 +1,64 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+
+application HydrothermalSinglePhaseDarcyFoam;
+startFrom latestTime;
+startTime 0;
+stopAt endTime;
+//total simulation time is 300 yrs
+endTime 9460800000; 
+deltaT 864000;
+adjustTimeStep yes;
+maxCo           0.8; 
+maxDeltaT       86400000; 
+writeControl adjustableRunTime;
+//and we wrte every 3 yrs
+writeInterval 94608000; 
+purgeWrite 2;
+writeFormat ascii;
+writePrecision 6;
+writeCompression off;
+timeFormat general;
+timePrecision 14;
+runTimeModifiable true;
+libs 
+( 
+    "libHydrothermalBoundaryConditions.so"
+    "libHydroThermoPhysicalModels.so"
+);
+
+functions
+{
+    calPlumeT
+    {
+        libs                ("libutilityFunctionObjects.so");
+        type                coded;
+        enabled             true;
+        writeControl        adjustableRunTime;
+        writeInterval       $writeInterval;
+        name                plumeTemperature;
+        codeWrite
+        #{
+            //get maximum tempeature on the top boundary
+            label patchID = mesh().boundaryMesh().findPatchID("top"); 
+            const volScalarField& T = mesh().lookupObject<volScalarField>("T");
+            // write vent temperature
+            std::ofstream fout("ventT.txt",std::ofstream::app);
+            // Info<<"Plume Temperature: "<<mesh().time().value()/31536000<<"\t"<<Foam::gMax(T.boundaryField()[patchID])-273.15<<" C"<<endl;
+            fout<<mesh().time().value()/31536000<<"\t"<<Foam::gMax(T.boundaryField()[patchID])-273.15<<std::endl;
+            fout.close();
+        #};
+    }
+}
