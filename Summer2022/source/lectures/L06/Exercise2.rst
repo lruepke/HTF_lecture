@@ -1,6 +1,6 @@
 .. include:: /include.rst_
 
-.. _L05_Exercise2:
+.. _L06_Exercise2:
 
 Exercise 2
 ===========

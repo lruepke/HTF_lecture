@@ -13,5 +13,5 @@ Contact:
   <li>24148 Kiel</li>
   <li>Germany</li>
   <li>Email: lruepke@geomar.de</li>
-</ul
+</ul>
 
