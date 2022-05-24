@@ -5,14 +5,23 @@
 Exercise 2
 ===========
 
-:cite:`jupp2000thermodynamic` published a landmark paper on how A landmark paper on how the thermodynamic properties of water determine temperatures in hydrothermal upflow zones. Their concept of "fluxibility" was later extended to explore interrelations between permeability on vent temperatures :cite:`driesner2010`, the structure of hydrothermal flow zone :cite:`coumou2008`, and fault-controlled off-axis hydrothermal system :cite:`andersen2015`. Some of these papers are available in the e-learning site of this course for registered CAU students.
+Before going into more details, let's have a closer into the case we explored last week. 
 
-.. admonition:: Objectives of this exercise
+    * Load the homogeneous or layered case with constant
+    * Use the paraview calculator to create a new variable T_Celsius (by doing T_Celsius = T - 273.15)
+    * Make a z-normal slice
+    * And explore the 100,200,300,400,500 °C contours through time?
 
-    - understand how thermodynamic properties control upflow temperatures
-    - learn how to use python to post-process OpenFoam cases
+.. figure:: /_figures/Fluxibility_postprocess.*
+   :align: center
+   :name: fig:Fluxibility_postprocess_fig
 
-We will now try to reproduce the results presented by :cite:`jupp2000thermodynamic`. The setup is very similar to the simple single plume driven by a gaussian heat source we had simulated previously. 
+   Notice how the diffusive thermal boundary layer becomes unstable between the 300°C and 400°C isotherms. This is what concept of fluxibility tells us!
+
+
+:cite:`jupp2000thermodynamic` concept of fluxibility was later extended to explore interrelations between permeability on vent temperatures :cite:`driesner2010`, the structure of hydrothermal flow zone :cite:`coumou2008`, and fault-controlled off-axis hydrothermal system :cite:`andersen2015`. Some of these papers are available in the e-learning site of this course for registered CAU students.
+
+Let's look into the original setup! We will  try to reproduce the results presented by :cite:`jupp2000thermodynamic`. The setup is very similar to the simple single plume driven by a gaussian heat source we had simulated previously. 
 
 Model setup and running the case
 --------------------------------
@@ -113,10 +122,3 @@ The figure below shows an example plot of the final temperature solution. It bas
 
 
 Click on the link in the figure caption and go through the notebook. Safest way of getting this to work is to copy the steps into local notebooks (see :ref:`Installation guide`). 
-
-.. code-block::
-
-    code plot_temp.ipynb
-
-Copy the sections into your local notebook, try to execute the sections (press SHIFT+RETURN), add some markdown sections with comments. 
-   
