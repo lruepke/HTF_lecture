@@ -1,9 +1,9 @@
 .. include:: /include.rst_
 
-.. _L04_Exercise2:
+.. _L05_Exercise2:
 
-Exercise 2
-===========
+Exercise 2: Fluxibility and Tvent
+=================================
 
 Before going into more details, let's have a closer into the case we explored last week. 
 

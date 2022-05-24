@@ -1,9 +1,9 @@
 .. include:: /include.rst_
 
-.. _L04_Exercise1:
+.. _L05_Exercise1:
 
-Exercise 1
-===========
+Exercise 1: Fluid properties
+============================
 
 We have prepared jupyter notebooks that let's you explore the thermodynamic properties of pure water. Play with them!
 
