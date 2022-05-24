@@ -93,9 +93,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L05/Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise1.html">Exercise 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise2.html">Exercise 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise3.html">Exercise 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise1.html">Exercise 1: Fluid properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise2.html">Exercise 2: Fluxibility and Tvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise3.html">Exercise 3: Permeability and Tvent</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
 <ul>
@@ -257,7 +257,7 @@ see also <a class="reference internal" href="../L01/FirstCase.html#theory-heat-d
 <p>Below is a simple 2D setup for a heat diffusion test case. We will use it to learn about the details of how openFOAM’s FV method works.</p>
 <figure class="align-center" id="fvm-geometry-bcs-regularbox" style="width: 100%">
 <img alt="../../_images/boundaryConditions_FVM_regularBox.svg" src="../../_images/boundaryConditions_FVM_regularBox.svg" /><figcaption>
-<p><span class="caption-number">Fig. 40 </span><span class="caption-text">Model geometry, boundary conditions and initial condition.</span><a class="headerlink" href="#fvm-geometry-bcs-regularbox" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 38 </span><span class="caption-text">Model geometry, boundary conditions and initial condition.</span><a class="headerlink" href="#fvm-geometry-bcs-regularbox" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition-what-we-need-to-solve admonition">
@@ -276,14 +276,14 @@ Therefore, the mesh topology shown below is the same as OpenFOAM polyMesh.</p>
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Regular mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-polymesh-regularbox" style="width: 100%">
 <img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" /><figcaption>
-<p><span class="caption-number">Fig. 41 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#fig-polymesh-regularbox" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 39 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#fig-polymesh-regularbox" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-polymesh-unstructured" style="width: 100%">
 <img alt="../../_images/mesh_FVM_unstructured.svg" src="../../_images/mesh_FVM_unstructured.svg" /><figcaption>
-<p><span class="caption-number">Fig. 42 </span><span class="caption-text">2D unstructured mesh topology information (<a class="reference download internal" download="" href="../../_downloads/511a4a1fe2a54b529f96db7ce8318cd3/unstructured.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</span><a class="headerlink" href="#fig-polymesh-unstructured" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 40 </span><span class="caption-text">2D unstructured mesh topology information (<a class="reference download internal" download="" href="../../_downloads/511a4a1fe2a54b529f96db7ce8318cd3/unstructured.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</span><a class="headerlink" href="#fig-polymesh-unstructured" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -306,7 +306,7 @@ The normal vector of face always points from the <strong>owner</strong> cell to 
 <p>Transform partial differential <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">equation (39)</a> into a set of algebraic equations: <span class="math notranslate nohighlight">\(\mathbf{A}[T] = \mathbf{b}\)</span>.</p>
 </div>
 <ol class="arabic simple">
-<li><p>Integrate <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">equation (39)</a> over element <span class="math notranslate nohighlight">\(C\)</span> (the green cell in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>) that enables recovering its integral balance form as,</p></li>
+<li><p>Integrate <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">equation (39)</a> over element <span class="math notranslate nohighlight">\(C\)</span> (the green cell in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>) that enables recovering its integral balance form as,</p></li>
 </ol>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-volume-int">
 <span class="eqno">(40)<a class="headerlink" href="#equation-eq-fvm-volume-int" title="Permalink to this equation"></a></span>\[\iiint\limits_{V_C} \frac{\partial T}{\partial t} dV - \iiint\limits_{V_C} \nabla \cdot D\nabla T dV = 0\]</div>
@@ -335,7 +335,7 @@ It is basically the integral form of the original partial differential equation 
 All faces of a internal cell are internal faces. The remain cells are boundary cells which contain at least one boundary face.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--1">Internal cell</label><div class="tab-content docutils container">
-<p>For a specific internal cell <span class="math notranslate nohighlight">\(C\)</span>, e.g. cell 12, shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>,
+<p>For a specific internal cell <span class="math notranslate nohighlight">\(C\)</span>, e.g. cell 12, shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>,
 the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (43)</a> can be expanded as,</p>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-surface-sum-expand">
 <span class="eqno">(44)<a class="headerlink" href="#equation-eq-fvm-surface-sum-expand" title="Permalink to this equation"></a></span>\[\color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} + \iint_{f_{24}}\vec{J}^{T,D}_{f_{24}} \cdot \vec{S}_{f_{24}} + \iint_{f_{21}}\vec{J}^{T,D}_{f_{21}} \cdot \vec{S}_{f_{21}}  + \iint_{f_{5}}\vec{J}^{T,D}_{f_{5}} \cdot \vec{S}_{f_{5}} = 0\]</div>
@@ -347,12 +347,12 @@ the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (
 <figure class="align-center" id="fig-fig5-2">
 <a class="reference internal image-reference" href="../../_images/Fig5.2_RedBook.svg"><img alt="../../_images/Fig5.2_RedBook.svg" src="../../_images/Fig5.2_RedBook.svg" width="100%" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 43 </span><span class="caption-text">Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points <span id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The total flux <span class="math notranslate nohighlight">\(FluxT_f\)</span> is computed as linear combinations of the two cell values plus a source term.</span><a class="headerlink" href="#fig-fig5-2" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 41 </span><span class="caption-text">Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points <span id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The total flux <span class="math notranslate nohighlight">\(FluxT_f\)</span> is computed as linear combinations of the two cell values plus a source term.</span><a class="headerlink" href="#fig-fig5-2" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Only the <strong>one integration point scheme</strong>, i.e. <a class="reference internal" href="#fig-fig5-2"><span class="std std-numref">Fig. 43</span></a> (a), is implemented in OpenFOAM (at least before version 8).
+<p>Only the <strong>one integration point scheme</strong>, i.e. <a class="reference internal" href="#fig-fig5-2"><span class="std std-numref">Fig. 41</span></a> (a), is implemented in OpenFOAM (at least before version 8).
 Therefore the first keyword of Laplacian scheme in <code class="code docutils literal notranslate"><span class="pre">system/fvScheme</span></code> dictionary file of a case has only one option, it is <code class="code docutils literal notranslate"><span class="pre">Gauss</span></code>.</p>
 </div>
 <p>4.2 Choose integral scheme or integral points</p>
@@ -363,7 +363,7 @@ Therefore the first keyword of Laplacian scheme in <code class="code docutils li
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(S_{f_{23}} = \Delta y_{f_{23}}\)</span>  is the area of face  <span class="math notranslate nohighlight">\(f_{23}\)</span> by assuming <span class="math notranslate nohighlight">\(\Delta z = 1\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\vec{S}_{f_{23}} = S_{f_{23}} \vec{n}_{f_{23}}\)</span> is the surface vector of face <span class="math notranslate nohighlight">\(f_{23}\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\vec{n}_{f_{23}} = \vec{i}\)</span> is the normal vector of the face <span class="math notranslate nohighlight">\(f_{23}\)</span> directed out of the cell <span class="math notranslate nohighlight">\(C\)</span> (see <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{n}_{f_{23}} = \vec{i}\)</span> is the normal vector of the face <span class="math notranslate nohighlight">\(f_{23}\)</span> directed out of the cell <span class="math notranslate nohighlight">\(C\)</span> (see <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>).</p></li>
 </ul>
 <p>4.3 Calculate gradient of <span class="math notranslate nohighlight">\(T\)</span> at face centroid, here introduce <strong>the second approximation</strong>, e.g. assuming linear variation of T and then the gradient term in the <a class="reference internal" href="#equation-eq-fvm-surface-term-f1">equation (46)</a> can be approximated as,</p>
 <div class="math notranslate nohighlight">
@@ -396,11 +396,11 @@ a_{C} &amp; = &amp; -(a_{23} + a_{24} + a_{21}  + a_{5}) \\
 <span class="eqno">(49)<a class="headerlink" href="#equation-eq-fvm-matrix-form-internalcell12" title="Permalink to this equation"></a></span>\[\mathbf{A}_{N\times N}[12,:] \mathbf{T}_{N\times 1} =  0\]</div>
 </div>
 <input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--2">Boundary cell</label><div class="tab-content docutils container">
-<p>For a specific boundary cell, e.g. <strong>cell 19</strong> shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>, the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (43)</a> can be rewritten as,</p>
+<p>For a specific boundary cell, e.g. <strong>cell 19</strong> shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>, the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (43)</a> can be rewritten as,</p>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-surface-sum-expand-boundary">
 <span class="eqno">(50)<a class="headerlink" href="#equation-eq-fvm-surface-sum-expand-boundary" title="Permalink to this equation"></a></span>\[\iint_{f_{18}}\vec{J}^{T,D}_{f_{18}} \cdot \vec{S}_{f_{18}} + \iint_{f_{35}}\vec{J}^{T,D}_{f_{35}} \cdot \vec{S}_{f_{35}} +\iint_{f_{37}}\vec{J}^{T,D}_{f_{37}} \cdot \vec{S}_{f_{37}} + \color{red}{\iint_{f_{51}}\vec{J}^{T,D}_{f_{51}} \cdot \vec{S}_{f_{51}}} = 0\]</div>
 <p>The first three terms are normal fluxes across internal faces, so there is nothing special and we can just calculate them following steps for internal faces as before. The special thing is the boundary face <span class="math notranslate nohighlight">\(f_{52}\)</span>, we can call it <span class="math notranslate nohighlight">\(f_b\)</span> for a general case. <strong>Now the problem is how to evaluate flux on the boundary face</strong> <span class="math notranslate nohighlight">\(f_b\)</span>.</p>
-<p>The fluxes on the interior faces are discretized as before, while <strong>the boundary flux is discretized with the aim of constructing a linearization with respect to</strong> the cell field <span class="math notranslate nohighlight">\(T_C\)</span>, e.g. <span class="math notranslate nohighlight">\(T_{C_{19}}\)</span> of cell <span class="math notranslate nohighlight">\(C_{19}\)</span> shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>, thus</p>
+<p>The fluxes on the interior faces are discretized as before, while <strong>the boundary flux is discretized with the aim of constructing a linearization with respect to</strong> the cell field <span class="math notranslate nohighlight">\(T_C\)</span>, e.g. <span class="math notranslate nohighlight">\(T_{C_{19}}\)</span> of cell <span class="math notranslate nohighlight">\(C_{19}\)</span> shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>, thus</p>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-surface-flux-boundary">
 <span class="eqno">(51)<a class="headerlink" href="#equation-eq-fvm-surface-flux-boundary" title="Permalink to this equation"></a></span>\[\color{red}{\iint_{f_{b}}\vec{J}^{T,D}_{f_{b}} \cdot d\vec{S}_{f_{b}}} = a_{F_b} T_C + c_{F_b}\]</div>
 <p>All right, <strong>now out goal is to determine the coefficients of</strong> <span class="math notranslate nohighlight">\(a_{F_b}\)</span> and <span class="math notranslate nohighlight">\(c_{F_b}\)</span> according to the boundary conditions. Generally there are two basic kinds of boundary conditions, they are <strong>Dirichlet boundary condition</strong> (also called the first type or fixed value boundary condition) and <strong>Von Neumann boundary condition</strong> (all called the second type or fixed flux boundary condition), respectively.</p>
@@ -457,22 +457,22 @@ b_{C_{19}} &amp; =  &amp; a_{F_{18}} (T_{F_{18}} - T_C) + a_{F_{35}} (T_{F_{35}}
 <span class="eqno">(61)<a class="headerlink" href="#equation-fvm-matrix-form" title="Permalink to this equation"></a></span>\[\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{B}_{N\times1}\]</div>
 <p>here <span class="math notranslate nohighlight">\(N\)</span> is the number of cell, <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a sparse matrix of coefficients,
 <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is cell-centered temperature field.
-The matrix is visualized as <a class="reference internal" href="#fig-fvm-matrix"><span class="std std-numref">Fig. 44</span></a>.
+The matrix is visualized as <a class="reference internal" href="#fig-fvm-matrix"><span class="std std-numref">Fig. 42</span></a>.
 It should be noted that <strong>the coefficients matrix of Laplacian term is a symmetric matrix and the boundary conditions only affect diagonal entry of the coefficients matrix</strong>. Further, only the fixed value boundary condition affects the matrix and the fixed flux boundary condition affects the RHS(Right hand of side) <span class="math notranslate nohighlight">\(B\)</span>.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">Regular mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-fvm-matrix" style="width: 100%">
 <img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" /><figcaption>
-<p><span class="caption-number">Fig. 44 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
-The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 42 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
+The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-fvm-matrix-unstructured" style="width: 100%">
 <img alt="../../_images/matrix_FVM_unstructured.svg" src="../../_images/matrix_FVM_unstructured.svg" /><figcaption>
-<p><span class="caption-number">Fig. 45 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
-The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix-unstructured" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 43 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
+The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix-unstructured" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -704,7 +704,7 @@ classified as direct or iterative.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--4-input--1" name="tab-set--4" type="radio"><label class="tab-label" for="tab-set--4-input--1">Generate mesh</label><div class="tab-content docutils container">
 <p>Nothing special, just a meshing process.
-Here we use the OpenFOAM utility <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> to generate a regular mesh (<a class="reference download internal" download="" href="../../_downloads/182fc0c7918b295146e8ff66ee704105/regularBox.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>) same as <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>.</p>
+Here we use the OpenFOAM utility <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> to generate a regular mesh (<a class="reference download internal" download="" href="../../_downloads/182fc0c7918b295146e8ff66ee704105/regularBox.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>) same as <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>.</p>
 </div>
 <input class="tab-input" id="tab-set--4-input--2" name="tab-set--4" type="radio"><label class="tab-label" for="tab-set--4-input--2">OpenFOAM script</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-blockmesh-regularbox">
@@ -887,7 +887,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 </div>
 <input class="tab-input" id="tab-set--6-input--3" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--3">Internal mesh</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-internalmesh">
-<div class="code-block-caption"><span class="caption-number">Listing 32 </span><span class="caption-text">Internal mesh properties of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>.</span><a class="headerlink" href="#lst-log-internalmesh" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 32 </span><span class="caption-text">Internal mesh properties of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>.</span><a class="headerlink" href="#lst-log-internalmesh" title="Permalink to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="m">46</span>: coeff<span class="o">(</span>D*magSf*deltacoeff<span class="o">)</span> <span class="o">((</span><span class="m">100</span>*DT<span class="o">)</span>*0.0001<span class="o">)</span> <span class="o">[</span><span class="m">0</span> <span class="m">2</span> -1 <span class="m">0</span> <span class="m">0</span> <span class="m">0</span> <span class="m">0</span><span class="o">]</span> 4e-07Access internal mesh
 <span class="linenos">  2</span><span class="m">0</span>: face center <span class="o">(</span>-0.04 -0.01 <span class="m">0</span>.005<span class="o">)</span>
 <span class="linenos">  3</span><span class="m">0</span>: face area vector <span class="o">(</span><span class="m">0</span>.0001 <span class="m">0</span> <span class="m">0</span><span class="o">)</span>
@@ -1130,7 +1130,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 </div>
 <input class="tab-input" id="tab-set--6-input--4" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--4">Boundary mesh</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-boundarymesh">
-<div class="code-block-caption"><span class="caption-number">Listing 33 </span><span class="caption-text">Boundary mesh properties of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>.</span><a class="headerlink" href="#lst-log-boundarymesh" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 33 </span><span class="caption-text">Boundary mesh properties of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>.</span><a class="headerlink" href="#lst-log-boundarymesh" title="Permalink to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span>Patch bottom face <span class="m">9</span>: owner cell 9Access boundary mesh
 <span class="linenos">  2</span>Patch left face <span class="m">0</span>: face center <span class="o">(</span>-0.05 -0.01 <span class="m">0</span>.005<span class="o">)</span>
 <span class="linenos">  3</span>Patch left face <span class="m">0</span>: face area vector <span class="o">(</span>-0.0001 <span class="m">0</span> <span class="m">0</span><span class="o">)</span>
@@ -1268,7 +1268,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 </div>
 <input class="tab-input" id="tab-set--6-input--5" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--5">Boundary T</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-boundaryt">
-<div class="code-block-caption"><span class="caption-number">Listing 34 </span><span class="caption-text">Boundary properties of field T of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>.</span><a class="headerlink" href="#lst-log-boundaryt" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 34 </span><span class="caption-text">Boundary properties of field T of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>.</span><a class="headerlink" href="#lst-log-boundaryt" title="Permalink to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="m">0</span><span class="o">()</span>Boundary patch: left
 <span class="linenos"> 2</span>Is coupled ? <span class="m">0</span>
 <span class="linenos"> 3</span>gradientInternalCoeffs of field T 
@@ -1313,7 +1313,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 <figure class="align-center" id="fig-deltacoeff-internalcell">
 <a class="reference internal image-reference" href="../../_images/Coordinate_delta_internalcell_regularBox.svg"><img alt="../../_images/Coordinate_delta_internalcell_regularBox.svg" src="../../_images/Coordinate_delta_internalcell_regularBox.svg" width="100%" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 46 </span><span class="caption-text">Information of internal cell (<span class="math notranslate nohighlight">\(C_{12}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-internalcell" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 44 </span><span class="caption-text">Information of internal cell (<span class="math notranslate nohighlight">\(C_{12}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-internalcell" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1321,7 +1321,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 <figure class="align-center" id="fig-deltacoeff-boundarycell">
 <a class="reference internal image-reference" href="../../_images/Coordinate_delta_boundary_regularBox.svg"><img alt="../../_images/Coordinate_delta_boundary_regularBox.svg" src="../../_images/Coordinate_delta_boundary_regularBox.svg" width="100%" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 47 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{19}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-boundarycell" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 45 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{19}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-boundarycell" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1412,7 +1412,7 @@ There is a protected member function named <code class="code docutils literal no
 </div>
 <input class="tab-input" id="tab-set--8-input--4" name="tab-set--8" type="radio"><label class="tab-label" for="tab-set--8-input--4">Laplacian coefficients</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-fvm-laplacian">
-<div class="code-block-caption"><span class="caption-number">Listing 37 </span><span class="caption-text">fvm::Laplacian Coefficients  of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>.</span><a class="headerlink" href="#lst-log-fvm-laplacian" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 37 </span><span class="caption-text">fvm::Laplacian Coefficients  of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>.</span><a class="headerlink" href="#lst-log-fvm-laplacian" title="Permalink to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="o">)</span>
 <span class="linenos">  2</span>fvm::laplacian<span class="o">(</span>DT, T<span class="o">)</span>: 
 <span class="linenos">  3</span>	Lower
@@ -1618,7 +1618,7 @@ There is a protected member function named <code class="code docutils literal no
 <figure class="align-center" id="fig-laplaciancoeff-internalcell">
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg" src="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg" width="100%" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 48 </span><span class="caption-text">Information of internal cell (<span class="math notranslate nohighlight">\(C_{12}\)</span>)</span><a class="headerlink" href="#fig-laplaciancoeff-internalcell" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 46 </span><span class="caption-text">Information of internal cell (<span class="math notranslate nohighlight">\(C_{12}\)</span>)</span><a class="headerlink" href="#fig-laplaciancoeff-internalcell" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1626,7 +1626,7 @@ There is a protected member function named <code class="code docutils literal no
 <figure class="align-center" id="fig-laplaciancoeff-boundarycell">
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg" width="100%" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 49 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{19}\)</span>)</span><a class="headerlink" href="#fig-laplaciancoeff-boundarycell" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 47 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{19}\)</span>)</span><a class="headerlink" href="#fig-laplaciancoeff-boundarycell" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1634,7 +1634,7 @@ There is a protected member function named <code class="code docutils literal no
 <figure class="align-center" id="id5">
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg" width="100%" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{9}\)</span>)</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 48 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{9}\)</span>)</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1642,7 +1642,7 @@ There is a protected member function named <code class="code docutils literal no
 <figure class="align-center" id="id6">
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg" width="100%" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 51 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{0}\)</span>)</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 49 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{0}\)</span>)</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1650,7 +1650,7 @@ There is a protected member function named <code class="code docutils literal no
 <figure class="align-center" id="id7">
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg" width="100%" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 52 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{10}\)</span>)</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{10}\)</span>)</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1658,7 +1658,7 @@ There is a protected member function named <code class="code docutils literal no
 <figure class="align-center" id="id8">
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg" width="100%" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 53 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{5}\)</span>)</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 51 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{5}\)</span>)</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1745,7 +1745,7 @@ All these are implemented in <a class="reference external" href="https://cpp.ope
 <input class="tab-input" id="tab-set--9-input--4" name="tab-set--9" type="radio"><label class="tab-label" for="tab-set--9-input--4">fvm::ddt coefficients</label><div class="tab-content docutils container">
 <p><span class="math notranslate nohighlight">\(\Delta t = 0.05\ s\)</span></p>
 <div class="literal-block-wrapper docutils container" id="lst-log-fvm-ddt">
-<div class="code-block-caption"><span class="caption-number">Listing 40 </span><span class="caption-text">fvm::ddt Coefficients  of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a>.</span><a class="headerlink" href="#lst-log-fvm-ddt" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 40 </span><span class="caption-text">fvm::ddt Coefficients  of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>.</span><a class="headerlink" href="#lst-log-fvm-ddt" title="Permalink to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="o">)</span>fvm::ddt<span class="o">(</span>T<span class="o">)</span>: 
 <span class="linenos"> 2</span>	Lower47<span class="o">{</span><span class="m">0</span><span class="o">}</span>
 <span class="linenos"> 3</span>	Diagonal
@@ -1857,7 +1857,7 @@ All these are implemented in <a class="reference external" href="https://cpp.ope
 </div>
 <input class="tab-input" id="tab-set--10-input--2" name="tab-set--10" type="radio"><label class="tab-label" for="tab-set--10-input--2">Coefficients at the first time step</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-fvm-teqn">
-<div class="code-block-caption"><span class="caption-number">Listing 41 </span><span class="caption-text">Final matrix coefficients of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 41</span></a> at the first time step.</span><a class="headerlink" href="#lst-log-fvm-teqn" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 41 </span><span class="caption-text">Final matrix coefficients of the regular mesh shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a> at the first time step.</span><a class="headerlink" href="#lst-log-fvm-teqn" title="Permalink to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="o">)</span>TEqn: 
 <span class="linenos">  2</span>	Lower
 <span class="linenos">  3</span><span class="m">47</span>
