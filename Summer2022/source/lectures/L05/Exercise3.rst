@@ -5,7 +5,91 @@
 Exercise 3
 ===========
 
-We will now explore the interplay between permeability and bottom heat flux. The research question is: what kind of permeability is needed to sustain a high-temperature hydrothermal system? This question has been addressed by :cite:`driesner2010interplay` and we will perform very similar runs. A basic setup can be downloaded from here: :download:`Driesner2010 <cases/Driesner2010.zip>`.
+We now understand a bit better why the approx. 400°C fluids are rising towards the surface and the hotter fluids are remaining stagnant within the reaction zone. Let's do the next step and understand what is happening at the interface between lower and higher permeabilities. 
+
+Go back to our two-layered case and post-process the solution in paraview a bit more. 
+
+    * Load the layered case with constant
+    * Use the paraview calculator to create a two new variables T_Celsius (by doing T_Celsius = T - 273.15) and mass flux (U*rho)
+    * Make a z-normal slice
+    * Puzzle temperature contours and vertical mass flux together and explore what happens at the interface.
+
+.. figure:: /_figures/Flux_interface.*
+   :align: center
+   :name: fig:Flux_interface_fig
+
+
+Clearly, mass flux is increasing and temperature is decreasing. What do you think is happening to the convective heat flux?
+
+We will now explore the interplay between permeability and bottom heat flux. The research question is: what kind of permeability is needed to sustain a high-temperature hydrothermal system? This question has been addressed by :cite:`driesner2010interplay`.
+
+Let's first go through the theory. The flux into the reaction zone of hydrothermal convection cell can be written as:
+
+.. math::
+    :label: eq:heat_flux_rz
+
+    q_in = 2\frac{L\lambda (T_D - T_U)}{H_R}
+
+:math:`L` is the half-width of the reaction zone, :math:`\lambda` is the thermal conductivity, :math:`T_D` the temperature of the driving heat source, :math:`T_U` the upflow temperature, and :math:`H_R` the thickness of the reaction zone.
+
+Let's follow :cite:`jupp2000thermodynamic` and explore the heat transported by hydrothermal convection. For this we have to make a few assumptions. The first is that the pressure gradient in the upwflow is close to cold hydrostatic :math:`\rho_0 g`, which is a reasonable assumption based on convection experiments. 
+
+Now we can use Darcy's law to spell out the vertical velocity and mass flux:
+
+.. math::
+    :label: eq:mass_flux_1
+
+    \vec{u} = -\frac{k}{\mu}( \nabla P - \rho \vec{g} )
+
+.. math::
+    :label: eq:mass_flux_2
+
+    \frac{\partial P}{\partial z} = \rho_0 g_z
+
+.. math::
+    :label: eq:mass_flux_3
+
+    u_z = -\frac{k}{\mu_U(T_U)}g_z(\rho_0 - \rho_U(T_U))
+
+.. math::
+    :label: eq:mass_flux_4
+
+    \rho_U(T_U) u_z = -\frac{k}{\mu_U \rho_U(T_U) (T_U)}g_z(\rho_0 - \rho_U(T_U))
+
+with :math:`_U(T_U)` always referring to properties within the upflow zone, which has a temperature of :math:`T_U`.
+
+We can spell out the heat output by multiplying this with the difference in specific enthalpy :math:`h [J/Kg]` between the upflow (:math:`h_U(T_U)`) and the recharge zone (:math:`h_0`). To get the total heat flux, we also need to multiply with two times the half-width (:math:`L`) of the upflow zone:
+
+.. math::
+    :label: eq:mass_flux_5
+
+    2L\rho_U(T_U) u_z (h_U - h_0) = 2gk \left[ \frac{\rho_U (h_U - h_0) (\rho_0 - \rho_U) }{\mu_U}\right]L
+
+
+And by setting this equal to the heat input, we get:
+
+.. math::
+    :label: eq:heat_balance
+
+    2\frac{L\lambda (T_D - T_U)}{H_R} = 2gk \left[ \frac{\rho_U (h_U - h_0) (\rho_0 - \rho_U) }{\mu_U}\right]L
+
+
+Note how we "flipped" the sign of g for better readability and omitted the :math:`T_U` index. If we replace the right-hand side with a given heat flux :math:`Q` we get:
+
+.. math::
+    :label: eq:heat_balance_2
+
+    Q = 2gk \left[ \frac{\rho_U (h_U - h_0) (\rho_0 - \rho_U) }{\mu_U}\right]L
+
+
+Nice, we have an equation that relates heat input, permeability, and upflow temperature. Unfortunately, it is not that useful as the upflow temperature is hidden as an implicit term in the fluid properties. 
+
+Python to the rescue! 
+
+
+
+
+and we will perform very similar runs. A basic setup can be downloaded from here: :download:`Driesner2010 <cases/Driesner2010.zip>`.
 
 The magma heat source is simulated by a heat flux boundary condition, which can be set by customized boundary condition type of :code:`hydrothermalHeatFlux` (see `doc <https://www.hydrothermalfoam.info/manual/en/Models_Equations/index.html#heat-flux-bc-hydrothermalheatflux>`_ ).
 The model in :cite:`driesner2010interplay` is 1 m thick, 3 km wide, 1 km height, the heat source is simulated by a Gaussian-shaped heat flux profile with total heat input 86 km, half-width 500 m and center 1500 m. 
