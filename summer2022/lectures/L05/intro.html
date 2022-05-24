@@ -198,17 +198,18 @@
 </style>
 <section id="upflow-temperatures-in-submarine-hydrothermal-systems">
 <span id="l04-postprocess"></span><h1>Upflow temperatures in submarine hydrothermal systems<a class="headerlink" href="#upflow-temperatures-in-submarine-hydrothermal-systems" title="Permalink to this headline"></a></h1>
-<p>A striking observations from global vent fluid measurements is that fluid exit temperatures apparently never exceed 400°C (<a class="reference internal" href="#fig-vent-t-fig"><span class="std std-numref">Fig. 22</span></a> ).</p>
+<p>During the last session we have explored free hydrothermal convection in a porous medium heated from below. That 2-D setting can be thought of as hydrothermal convection in an along axis slice above a stable melt lens - for example at a fast spreading ridge. Two things are striking about our initial results. First, in the homogenous permeability case, vent temperatures never exceed 400°C although the bottom boundary condition was set to 800°C. Shouldn’t it be the hottest and most buoyant fluids that rise in free convection? Second, in the layered case, mixing at the interface to the higher permeability layer resulted in a reduction in vent temperature. What is controlling this reduction in the upwelling temperature?</p>
+<p>If we turn to observations to adress these question, we notice another striking feature of submarine hydrothermal systems. Global compilations of vent fluid exit temperatures demonstrate that these never exceed approx. 400°C (<a class="reference internal" href="#fig-vent-t-fig"><span class="std std-numref">Fig. 22</span></a> ).</p>
 <figure class="align-center" id="fig-vent-t-fig" style="width: 70%">
 <img alt="../../_images/vent_T_deoth.jpg" src="../../_images/vent_T_deoth.jpg" />
 <figcaption>
 <p><span class="caption-number">Fig. 22 </span><span class="caption-text">Figure taken from <span id="id1">[<a class="reference internal" href="../../refs.html#id7" title="Kentaro Nakamura and Ken Takai. Theoretical constraints of physical and chemical properties of hydrothermal fluids on variations in chemolithotrophic microbial communities in seafloor hydrothermal systems. Progress in Earth and Planetary Science, 1(1):5, 2014. URL: https://doi.org/10.1186/2197-4284-1-5, doi:10.1186/2197-4284-1-5.">Nakamura &amp; Takai, 2014</a>]</span> showing measured vent fluid temperatures.</span><a class="headerlink" href="#fig-vent-t-fig" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
-<p>Maybe you have already noticed in our convection experiments in the previous session that the upflow temperatures are always much lower than the bottom boundary condition implying that the hottest fluids are actually stagnant and do not rise towards the seafloor. <span id="id2">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> published a landmark paper in which they showed that the thermodynamic properties of water control the upflow temperature and can explain the observed upper limit of vent fluid temperatures. In this lecture we will have a detailed look into the proposed mechanisms.</p>
+<p>So, what controls the upflow temperature in submarine hydrothermal systems? This question was adressed by <span id="id2">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> in a landmark paper. They showed that the thermodynamic properties of water control the upflow temperature and can explain the observed upper limit of vent fluid temperatures. In this lecture we will have a detailed look into the underlying mechanisms.</p>
 <section id="mechanism-to-limit-black-smoker-temperature">
 <h2>Mechanism to limit black smoker temperature<a class="headerlink" href="#mechanism-to-limit-black-smoker-temperature" title="Permalink to this headline"></a></h2>
-<p>We recommend reading the original papers by <span id="id3">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> and <span id="id4">[<a class="reference internal" href="../../refs.html#id8" title="T. E. Jupp and A. Schultz. Physical balances in subseafloor hydrothermal convection cells. Journal of Geophysical Research-Solid Earth, 2004. URL: &lt;Go to ISI&gt;://WOS:000221911900002, doi:10.1029/2003jb002697.">Jupp &amp; Schultz, 2004</a>]</span>; here we only provide a very short summarry. The underlying idea is to determine from the pure water equation-of-state the optimum temperature for buoyant upwelling. Within the energy conservation equation, advective heat transport is described by a divergence term:</p>
+<p>We recommend reading the original papers by <span id="id3">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> and <span id="id4">[<a class="reference internal" href="../../refs.html#id8" title="T. E. Jupp and A. Schultz. Physical balances in subseafloor hydrothermal convection cells. Journal of Geophysical Research-Solid Earth, 2004. URL: &lt;Go to ISI&gt;://WOS:000221911900002, doi:10.1029/2003jb002697.">Jupp &amp; Schultz, 2004</a>]</span>; here we only provide a very short summary. The underlying idea is to determine from the pure water equation-of-state the optimum temperature for buoyant upwelling. Within the energy conservation equation, advective heat transport is described by a divergence term:</p>
 <div class="math notranslate nohighlight" id="equation-eq-div-e">
 <span class="eqno">(26)<a class="headerlink" href="#equation-eq-div-e" title="Permalink to this equation"></a></span>\[\nabla \cdot (\rho h \vec{U})\]</div>
 <p>Following <span id="id5">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span>, we can assume that the pressure gradient, driving upflow, can be approximated as cold hydrostatic so that we can express the upflow velocity as:</p>
@@ -217,13 +218,45 @@
 <p>Now we plug this expression into <a class="reference internal" href="#equation-eq-div-e">equation (26)</a> to get:</p>
 <div class="math notranslate nohighlight" id="equation-eq-udiv-e2">
 <span class="eqno">(28)<a class="headerlink" href="#equation-eq-udiv-e2" title="Permalink to this equation"></a></span>\[\nabla \cdot (\rho h \vec{U}) = \frac{\partial}{\partial z} \left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right) g_z k\]</div>
-<p><span id="id6">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> called the term wihtin the large brackets, <span class="math notranslate nohighlight">\(F=\left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right)\)</span> , fluxibility. Fluxibility is a function of fluid properties only and those properties are pressure and temperature dependent. To first order, advective heat transport is maximized, where <span class="math notranslate nohighlight">\(\nabla \cdot F\)</span> is maximum and this divergence can be approximated within the basal boundary as <span class="math notranslate nohighlight">\(\nabla \cdot F \approx \frac{\partial}{\partial z} F \approx \frac{\partial}{\partial T} F\)</span> .</p>
+<p><span id="id6">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> called the term within the large brackets, <span class="math notranslate nohighlight">\(F=\left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right)\)</span> , fluxibility. Fluxibility is a function of fluid properties only and those properties are pressure and temperature dependent. To first order, advective heat transport is maximized, where <span class="math notranslate nohighlight">\(\nabla \cdot F\)</span> is maximum and this divergence can be approximated within the bottom thermal boundary as <span class="math notranslate nohighlight">\(\nabla \cdot F \approx \frac{\partial}{\partial z} F \approx \frac{\partial}{\partial T} F\)</span> .</p>
 <p><a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 23</span></a> a shows fluxibility as a function of pressure and temperature. It is clear that this function has a distinct peak at temperature of approximately 400°C. <a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 23</span></a> b shows sections of constant pressure and also the derivative of F with temperature. The peaks in these functions mark the temperature for which buoyant heat transport is most efficient for a given pressure. Later we will explore this further in numerical convection experiments.</p>
 <figure class="align-center" id="fig-fluxibility-water">
 <img alt="../../_images/Fluxibility_Water.svg" src="../../_images/Fluxibility_Water.svg" /><figcaption>
 <p><span class="caption-number">Fig. 23 </span><span class="caption-text">Fluxibility F as a function of temperature and pressure (a), profile of F along temperature with constant pressure (b).</span><a class="headerlink" href="#fig-fluxibility-water" title="Permalink to this image"></a></p>
 </figcaption>
 </figure>
+<p>Let’s have a look into the controlling fluid properties density, specific enthalpy, and dynamic viscosity in P,T space.</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">P-T H2O phase diagram</label><div class="tab-content docutils container">
+<figure class="align-center" id="id7">
+<img alt="../../_images/sphx_glr_plot_PhaseDiagram_pT_003_2_0x.svg" src="../../_images/sphx_glr_plot_PhaseDiagram_pT_003_2_0x.svg" /><figcaption>
+<p><span class="caption-number">Fig. 24 </span><span class="caption-text">Phase regions of pure water in P-T space. We are mainly interested in the supercritical region above the critical end point, when water is always in the single phase regime.</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">P-T H2O phase diagram</label><div class="tab-content docutils container">
+<figure class="align-center" id="id8" style="width: 60%">
+<img alt="../../_images/sphx_glr_plot_Density_pT_001_2_0x.svg" src="../../_images/sphx_glr_plot_Density_pT_001_2_0x.svg" /><figcaption>
+<p><span class="caption-number">Fig. 25 </span><span class="caption-text">Density (<span class="math notranslate nohighlight">\(Kg/m^3\)</span>) as a function of pressure and temperature. There is a monotonic rise in density with increasing pressure and and decreasing temperature - just as intuition would tell us.</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">P-T H2O phase diagram</label><div class="tab-content docutils container">
+<figure class="align-center" id="id9" style="width: 60%">
+<img alt="../../_images/sphx_glr_plot_Enthalpy_pT_001_2_0x.svg" src="../../_images/sphx_glr_plot_Enthalpy_pT_001_2_0x.svg" /><figcaption>
+<p><span class="caption-number">Fig. 26 </span><span class="caption-text">Specific enthalpy (<span class="math notranslate nohighlight">\(J/Kg\)</span>) as a function of pressure and temperature. The energy “stored” in a kilogram of water rises with increasing tempeature - also no surprises here.</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+<input class="tab-input" id="tab-set--0-input--4" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--4">P-T H2O phase diagram</label><div class="tab-content docutils container">
+<figure class="align-center" id="id10" style="width: 60%">
+<img alt="../../_images/sphx_glr_plot_Viscosity_pT_001_2_0x.svg" src="../../_images/sphx_glr_plot_Viscosity_pT_001_2_0x.svg" /><figcaption>
+<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Viscosity (<span class="math notranslate nohighlight">\(Pa s\)</span>) as a function of pressure and temperature. Here things get interesting; the viscosity is first going down with increasing temperature (as expected) but then increases again within the vapor phase field.</span><a class="headerlink" href="#id10" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Looks like viscosity may play a big role in determining flow dynamics and upwelling temperatures. Let’s explore this in more detail.</p>
 </section>
 </section>
 

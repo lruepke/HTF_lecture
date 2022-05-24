@@ -43,4 +43,4 @@ We have prepared jupyter notebooks that let's you explore the thermodynamic prop
       "name": "python3"
       }, 
 
-   and delete that entire section. Save the file again as a .ipynb file and re-open it in Visual Studio - and hope for the best...
+   and delete that entire section. Save the file again as a .ipynb file and re-open it in Visual Studio - and hope for the best.
