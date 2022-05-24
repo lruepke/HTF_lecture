@@ -51,7 +51,65 @@ We are simulating a 3700 x 1000m sized box with a gaussian constant temperature 
 
 Download the case file, unzip it and copy it into your shared folder that is accessible both from your local system and from the docker container. Check out the usual files like :code:`system/blockMeshDict`, :code:`run.sh`, :code:`0/T`. Make sure you understand the setup!
 
-There is a dynamic code section within :code:`system/conrolDict` that allows outputting more variables including the thermodynamic properties of water.
+Code modifications and local Rayleigh number
+--------------------------------------------
+
+We have learned about "fluxibility" but let's go one step back and first think about the vigor of convection in general. The tendency of a fluid to convect and the vigor/regime of free convection is often expressed by a dimensionless number, the famous Rayleigh number, :math:`Ra`. It naturally shows up as the driving force of convection, when the governing equations are non-dimensionalized, or one can follow a more classic derivation. There is a good explanation on `wikipedia <https://en.wikipedia.org/wiki/Rayleigh_number>`_ . Formally :math:`Ra` is the ratio between the time scales of heat transport by diffusion and convection. 
+
+Let's have a quick look and do a quick dimensional analysis. Simple heat diffusion looks like this:
+
+.. math::
+    :label: eq:dim_ana_1
+
+    \frac{\partial T}{\partial t} = \kappa \frac{\partial^2 T}{\partial x^2}
+
+
+Let's make the variables dimensionless by introducing characteristic scales:
+
+.. math::
+    :label: eq:dim_ana_2
+
+    T' = \frac{T}{\Delta T}
+
+.. math::
+    :label: eq:dim_ana_3
+
+    x' = \frac{x}{L}
+
+.. math::
+    :label: eq:dim_ana_4
+
+    t' = \frac{t}{\frac{L^2}{\kappa}}
+
+There we have it. The characteristic time of diffusion is :math:`\tau_{diff} =\frac{L^2}{\kappa}` with units of :math:`s`.
+
+Alright, let's look at convection. In Darcy flow the velocity is proportional to the density difference according to :math:`u \sim \frac{\Delta \rho g k}{\mu}`. If we express the density difference via the thermal expansion and divide the characteristic length, :math:`L` by this velocity, we get :math:`\tau_{conv} =\frac{L \mu}{\Delta T \alpha \rho g k}`, which again has units of :math:`s`.
+
+So the Rayleigh number is:
+
+.. math::
+    :label: eq:dim_ana_5
+
+    Ra = \frac{\frac{L^2}{\kappa}}{\frac{L \mu}{\Delta T \alpha \rho g k}}
+
+.. math::
+    :label: eq:dim_ana_6
+    
+    Ra = \lvert \frac{\nabla \cdot \rho \ T \alpha \rho g k L}{\kappa \mu}
+
+
+With this analysis in mind, we can check local Rayleigh numbers and what we expect is that right where the fluxibity is highest, we should also get high Rayleigh numbers indicating that the fluid wants to start convecting. The Rayleigh number derived above is a measure for the vigor of convection in the entire domain. We can follow :cite:`jupp2000thermodynamic` and derive a local Rayleigh number by relating convective and diffusive fluxes:
+
+.. math::
+    :label: eq:dim_ana_6
+    
+    Ra_L = \lvert \frac{\nabla \cdot (\vec{u} \rho h)}{\lambda \nabla^2 T} \rvert
+
+
+Oh, the convective energy transport, :math:`\nabla \cdot (\vec{u} \rho h)` term is back! If you read :cite:`jupp2000thermodynamic` carefully, you find a dimensional analysis that shows that :math:`Ra_L` becomes maximum where that transport term is maximum and we are back to the fluxibility concept.
+
+
+Enough theroy, let's put this into a model. The compute local Rayleigh numbers, we have to add something to the code. There is a dynamic code section within :code:`system/conrolDict` that allows outputting more variables including the thermodynamic properties of water. Look how easy it is to evaluate the local convective and diffusive fluxes.
 
 .. code-block:: foam
     :linenos:
@@ -122,3 +180,6 @@ The figure below shows an example plot of the final temperature solution. It bas
 
 
 Click on the link in the figure caption and go through the notebook. Safest way of getting this to work is to copy the steps into local notebooks (see :ref:`Installation guide`). 
+
+
+You can also start up paraview and explore everything there! Check which temperature contours become unstable first, plot vectors and local Rayleigh numbers.
