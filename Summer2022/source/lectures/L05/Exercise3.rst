@@ -1,9 +1,9 @@
 .. include:: /include.rst_
 
-.. _L04_Exercise3:
+.. _L05_Exercise3:
 
-Exercise 3
-===========
+Exercise 3: Permeability and Tvent
+==================================
 
 We now understand a bit better why the approx. 400°C fluids are rising towards the surface and the hotter fluids are remaining stagnant within the reaction zone. Let's do the next step and understand what is happening at the interface between lower and higher permeabilities. 
 
@@ -28,7 +28,7 @@ Let's first go through the theory. The flux into the reaction zone of hydrotherm
 .. math::
     :label: eq:heat_flux_rz
 
-    q_in = 2\frac{L\lambda (T_D - T_U)}{H_R}
+    \vec{q_{in}} = 2\frac{L\lambda (T_D - T_U)}{H_R}
 
 :math:`L` is the half-width of the reaction zone, :math:`\lambda` is the thermal conductivity, :math:`T_D` the temperature of the driving heat source, :math:`T_U` the upflow temperature, and :math:`H_R` the thickness of the reaction zone.
 
@@ -49,21 +49,21 @@ Now we can use Darcy's law to spell out the vertical velocity and mass flux:
 .. math::
     :label: eq:mass_flux_3
 
-    u_z = -\frac{k}{\mu_U(T_U)}g_z(\rho_0 - \rho_U(T_U))
+    u_z = -\frac{k}{\mu_U}g_z(\rho_0 - \rho_U)
 
 .. math::
     :label: eq:mass_flux_4
 
-    \rho_U(T_U) u_z = -\frac{k}{\mu_U \rho_U(T_U) (T_U)}g_z(\rho_0 - \rho_U(T_U))
+    \rho_U u_z = -\frac{k}{\mu_U} \rho_U g_z(\rho_0 - \rho_U)
 
-with :math:`_U(T_U)` always referring to properties within the upflow zone, which has a temperature of :math:`T_U`.
+with :math:`_U` always referring to properties within the upflow zone, which has a temperature of :math:`T_U`.
 
-We can spell out the heat output by multiplying this with the difference in specific enthalpy :math:`h [J/Kg]` between the upflow (:math:`h_U(T_U)`) and the recharge zone (:math:`h_0`). To get the total heat flux, we also need to multiply with two times the half-width (:math:`L`) of the upflow zone:
+We can spell out the heat output by multiplying this with the difference in specific enthalpy :math:`h [J/Kg]` between the upflow (:math:`h_U`) and the recharge zone (:math:`h_0`). To get the total heat flux, we also need to multiply with two times the half-width (:math:`L`) of the upflow zone:
 
 .. math::
     :label: eq:mass_flux_5
 
-    2L\rho_U(T_U) u_z (h_U - h_0) = 2gk \left[ \frac{\rho_U (h_U - h_0) (\rho_0 - \rho_U) }{\mu_U}\right]L
+    2L\rho_U u_z (h_U - h_0) = 2gk \left[ \frac{\rho_U (h_U - h_0) (\rho_0 - \rho_U) }{\mu_U}\right]L
 
 
 And by setting this equal to the heat input, we get:
@@ -84,15 +84,24 @@ Note how we "flipped" the sign of g for better readability and omitted the :math
 
 Nice, we have an equation that relates heat input, permeability, and upflow temperature. Unfortunately, it is not that useful as the upflow temperature is hidden as an implicit term in the fluid properties. 
 
-Python to the rescue! 
+Try it out!
+-----------
+
+Let's implement the equation in python and explore the solution and implications. Go through the attached notebook, fill out the missing pieces and think about what this means for upflow temperatures in genetral and for heterogeneous rock in particular.
+
+.. toctree::
+    :maxdepth: 2
+
+    driesner_2010.ipynb
 
 
+Numerical solution
+-------------------
 
-
-and we will perform very similar runs. A basic setup can be downloaded from here: :download:`Driesner2010 <cases/Driesner2010.zip>`.
+Next we will explore this using our numerical model.  A basic setup can be downloaded from here: :download:`Driesner2010 <cases/Driesner2010.zip>`.
 
 The magma heat source is simulated by a heat flux boundary condition, which can be set by customized boundary condition type of :code:`hydrothermalHeatFlux` (see `doc <https://www.hydrothermalfoam.info/manual/en/Models_Equations/index.html#heat-flux-bc-hydrothermalheatflux>`_ ).
-The model in :cite:`driesner2010interplay` is 1 m thick, 3 km wide, 1 km height, the heat source is simulated by a Gaussian-shaped heat flux profile with total heat input 86 km, half-width 500 m and center 1500 m. 
+The model in :cite:`driesner2010interplay` is 1 m thick, 3 km wide, 1 km height, the heat source is simulated by a Gaussian-shaped heat flux profile with total heat input 86 kW/m, half-width 500 m and center 1500 m. 
 
 Let's see how to set this boundary condition in HydrothermalFoam. 
 :code:`hydrothermalHeatFlux` supports Gaussian-shape (:code:`shape gaussian2d;`) distribution and the shape is defined by four parameters :code:`x0, qmax, qmin, c`, the equation of the shape is 
@@ -103,7 +112,7 @@ Let's see how to set this boundary condition in HydrothermalFoam.
     q_h(x) = q_{min} + (q_{max}-q_{min})e^{-\frac{(x-x_0)^2}{2c^2}}
 
 for a normal Gaussian-shape profile in this model, :code:`qmin` is set to zero and :code:`x0` is set to 1500. 
-From equation :eq:`eq:gauss_hf`, we can get the half-width and total heat flux (approximately) are :math:`c\sqrt{2ln2}` and :math:`(q_{max}-q_{min})\sqrt{2\pi}c`, respectively. According to the model setup, it's easy to get :math:`c = \frac{500}{\sqrt{2ln2}} = 424.661` and :math:`q_{max} = \frac{86}{c\sqrt{2\pi}} = 0.0808\ kw/m^2`.
+From equation :eq:`eq:gauss_hf`, we can get the half-width and total heat flux (approximately) are :math:`c\sqrt{2ln2}` and :math:`(q_{max}-q_{min})\sqrt{2\pi}c`, respectively. According to the model setup, it's easy to get :math:`c = \frac{500}{\sqrt{2ln2}} = 424.661` and :math:`q_{max} = \frac{86}{c\sqrt{2\pi}} = 0.0808\ kW/m^2`.
 There the temperature boundary condition at the bottom patch can be set as,
 
 .. tab:: Code snippet
@@ -157,19 +166,4 @@ There the temperature boundary condition at the bottom patch can be set as,
         plt.tight_layout()
         plt.show()
 
-.. figure:: /_figures/ventT_time_perm.*
-   :align: center
-   :name: fig:ventT_time_perm
 
-   :ref:`/lectures/L05/cases/Driesner2010/jupyter/Plot_CaseResults.ipynb#Maximum-vent-temperature-changes-with-time`.
-
-.. figure:: /_figures/ventT_perm.*
-   :align: center
-   :name: fig:ventT_perm
-   
-   :ref:`/lectures/L05/cases/Driesner2010/jupyter/Plot_CaseResults.ipynb#Vent-temperature-as-a-function-of-permeability`.
-
-.. toctree::
-    :maxdepth: 2
-
-    cases/Driesner2010/jupyter/Plot_CaseResults.ipynb
