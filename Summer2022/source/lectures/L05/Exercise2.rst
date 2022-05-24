@@ -5,7 +5,7 @@
 Exercise 2: Fluxibility and Tvent
 =================================
 
-Before going into more details, let's have a closer into the case we explored last week. 
+Before going into more detail, let's have a closer into the case we explored last week. 
 
     * Load the homogeneous or layered case with constant
     * Use the paraview calculator to create a new variable T_Celsius (by doing T_Celsius = T - 273.15)
