@@ -96,6 +96,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1: Fluid properties</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 2: Fluxibility and Tvent</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#model-setup-and-running-the-case">Model setup and running the case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-modifications-and-local-rayleigh-number">Code modifications and local Rayleigh number</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#post-processing">Post-processing</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#plotting-temperature">Plotting temperature</a></li>
 </ul>
@@ -226,7 +227,32 @@
 <figure class="align-default">
 <img alt="../../_images/Exercise2-1.svg" class="plot-directive" src="../../_images/Exercise2-1.svg" /></figure>
 <p>Download the case file, unzip it and copy it into your shared folder that is accessible both from your local system and from the docker container. Check out the usual files like <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>, <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code>, <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>. Make sure you understand the setup!</p>
-<p>There is a dynamic code section within <code class="code docutils literal notranslate"><span class="pre">system/conrolDict</span></code> that allows outputting more variables including the thermodynamic properties of water.</p>
+</section>
+<section id="code-modifications-and-local-rayleigh-number">
+<h2>Code modifications and local Rayleigh number<a class="headerlink" href="#code-modifications-and-local-rayleigh-number" title="Permalink to this headline"></a></h2>
+<p>We have learned about “fluxibility” but let’s go one step back and first think about the vigor of convection in general. The tendency of a fluid to convect and the vigor/regime of free convection is often expressed by a dimensionless number, the famous Rayleigh number, <span class="math notranslate nohighlight">\(Ra\)</span>. It naturally shows up as the driving force of convection, when the governing equations are non-dimensionalized, or one can follow a more classic derivation. There is a good explanation on <a class="reference external" href="https://en.wikipedia.org/wiki/Rayleigh_number">wikipedia</a> . Formally <span class="math notranslate nohighlight">\(Ra\)</span> is the ratio between the time scales of heat transport by diffusion and convection.</p>
+<p>Let’s have a quick look and do a quick dimensional analysis. Simple heat diffusion looks like this:</p>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-1">
+<span class="eqno">(29)<a class="headerlink" href="#equation-eq-dim-ana-1" title="Permalink to this equation"></a></span>\[\frac{\partial T}{\partial t} = \kappa \frac{\partial^2 T}{\partial x^2}\]</div>
+<p>Let’s make the variables dimensionless by introducing characteristic scales:</p>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-2">
+<span class="eqno">(30)<a class="headerlink" href="#equation-eq-dim-ana-2" title="Permalink to this equation"></a></span>\[T' = \frac{T}{\Delta T}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-3">
+<span class="eqno">(31)<a class="headerlink" href="#equation-eq-dim-ana-3" title="Permalink to this equation"></a></span>\[x' = \frac{x}{L}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-4">
+<span class="eqno">(32)<a class="headerlink" href="#equation-eq-dim-ana-4" title="Permalink to this equation"></a></span>\[t' = \frac{t}{\frac{L^2}{\kappa}}\]</div>
+<p>There we have it. The characteristic time of diffusion is <span class="math notranslate nohighlight">\(\tau_{diff} =\frac{L^2}{\kappa}\)</span> with units of <span class="math notranslate nohighlight">\(s\)</span>.</p>
+<p>Alright, let’s look at convection. In Darcy flow the velocity is proportional to the density difference according to <span class="math notranslate nohighlight">\(u \sim \frac{\Delta \rho g k}{\mu}\)</span>. If we express the density difference via the thermal expansion and divide the characteristic length, <span class="math notranslate nohighlight">\(L\)</span> by this velocity, we get <span class="math notranslate nohighlight">\(\tau_{conv} =\frac{L \mu}{\Delta T \alpha \rho g k}\)</span>, which again has units of <span class="math notranslate nohighlight">\(s\)</span>.</p>
+<p>So the Rayleigh number is:</p>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-5">
+<span class="eqno">(33)<a class="headerlink" href="#equation-eq-dim-ana-5" title="Permalink to this equation"></a></span>\[Ra = \frac{\frac{L^2}{\kappa}}{\frac{L \mu}{\Delta T \alpha \rho g k}}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-6">
+<span class="eqno">(35)<a class="headerlink" href="#equation-eq-dim-ana-6" title="Permalink to this equation"></a></span>\[Ra = \lvert \frac{\nabla \cdot \rho \ T \alpha \rho g k L}{\kappa \mu}\]</div>
+<p>With this analysis in mind, we can check local Rayleigh numbers and what we expect is that right where the fluxibity is highest, we should also get high Rayleigh numbers indicating that the fluid wants to start convecting. The Rayleigh number derived above is a measure for the vigor of convection in the entire domain. We can follow <span id="id6">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> and derive a local Rayleigh number by relating convective and diffusive fluxes:</p>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-6">
+<span class="eqno">(35)<a class="headerlink" href="#equation-eq-dim-ana-6" title="Permalink to this equation"></a></span>\[Ra_L = \lvert \frac{\nabla \cdot (\vec{u} \rho h)}{\lambda \nabla^2 T} \rvert\]</div>
+<p>Oh, the convective energy transport, <span class="math notranslate nohighlight">\(\nabla \cdot (\vec{u} \rho h)\)</span> term is back! If you read <span id="id7">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> carefully, you find a dimensional analysis that shows that <span class="math notranslate nohighlight">\(Ra_L\)</span> becomes maximum where that transport term is maximum and we are back to the fluxibility concept.</p>
+<p>Enough theroy, let’s put this into a model. The compute local Rayleigh numbers, we have to add something to the code. There is a dynamic code section within <code class="code docutils literal notranslate"><span class="pre">system/conrolDict</span></code> that allows outputting more variables including the thermodynamic properties of water. Look how easy it is to evaluate the local convective and diffusive fluxes.</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">functions</span>
 <span class="linenos"> 2</span><span class="p">{</span>
 <span class="linenos"> 3</span>    <span class="n">calPlumeT</span>
@@ -283,6 +309,7 @@ You can also shorten the total run-time (to say 40 yrs) in <code class="code doc
 </figcaption>
 </figure>
 <p>Click on the link in the figure caption and go through the notebook. Safest way of getting this to work is to copy the steps into local notebooks (see <a class="reference internal" href="../L01/Installation.html#installation-guide"><span class="std std-ref">Installation guide</span></a>).</p>
+<p>You can also start up paraview and explore everything there! Check which temperature contours become unstable first, plot vectors and local Rayleigh numbers.</p>
 </section>
 </section>
 </section>
