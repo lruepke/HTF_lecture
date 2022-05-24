@@ -496,12 +496,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide</span>
-<span class="c1">#  function to minimize</span>
-<span class="k">def</span> <span class="nf">heat_balance_minimize</span><span class="p">(</span><span class="n">T0</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
-    <span class="n">steam</span><span class="o">=</span><span class="n">iapws</span><span class="o">.</span><span class="n">IAPWS97</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="n">T0</span><span class="o">+</span><span class="mf">273.15</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="n">P0</span><span class="p">)</span> <span class="c1"># note that the unit of input T is K and P is MPa</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Q0</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">steam</span><span class="o">.</span><span class="n">rho</span><span class="o">*</span><span class="p">(</span><span class="n">steam</span><span class="o">.</span><span class="n">h</span><span class="o">*</span><span class="mi">1000</span> <span class="o">-</span> <span class="n">h0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">rho0</span><span class="o">-</span><span class="n">steam</span><span class="o">.</span><span class="n">rho</span><span class="p">))</span><span class="o">/</span><span class="n">steam</span><span class="o">.</span><span class="n">mu</span><span class="o">*</span><span class="n">L</span><span class="p">)</span>
-<br/><br/></pre></div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide: the code in this cell is hidden by the author</span>
+</pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -519,22 +515,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide</span>
-<span class="n">Q0</span><span class="o">=</span><span class="mf">86e3</span>
-<span class="n">T_U_86kw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
-    <span class="n">T_U_86kw</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">fminbound</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">heat_balance_minimize</span><span class="p">,</span><span class="n">x1</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">x2</span><span class="o">=</span><span class="mi">450</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">k</span><span class="p">,),</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-06</span><span class="p">)</span>
-
-<span class="n">T_U_12kw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="n">Q0</span> <span class="o">=</span> <span class="mf">12e3</span>
-<span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
-    <span class="n">T_U_12kw</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">fminbound</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">heat_balance_minimize</span><span class="p">,</span><span class="n">x1</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">x2</span><span class="o">=</span><span class="mi">450</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">k</span><span class="p">,),</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-06</span><span class="p">)</span>
-
-
-<span class="n">T_U_300kw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="n">Q0</span> <span class="o">=</span> <span class="mf">300e3</span>
-<span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
-    <span class="n">T_U_300kw</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">fminbound</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">heat_balance_minimize</span><span class="p">,</span><span class="n">x1</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">x2</span><span class="o">=</span><span class="mi">450</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">k</span><span class="p">,),</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-06</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide: the code in this cell is hidden by the author</span>
 </pre></div>
 </div>
 </div>
@@ -542,13 +523,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide</span>
-<span class="c1">#Q0=86e3</span>
-<span class="c1">#T_U_86kw = np.empty(K.shape)</span>
-<span class="c1">#for id, k in enumerate(K):</span>
-<span class="c1">#    T_U_86kw[id] = fminbound(func=heat_balance_minimize,x1=5, x2=450,args=(k,), xtol=1e-06)</span>
-
-<span class="c1"># do this for 300kw/m and 12kw/m</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide: the code in this cell is hidden by the author</span>
 </pre></div>
 </div>
 </div>

@@ -67,7 +67,7 @@ Let's have a look into the controlling fluid properties density, specific enthal
 
             Phase regions of pure water in P-T space. We are mainly interested in the supercritical region above the critical end point, when water is always in the single phase regime.
 
-    .. tab:: P-T H2O phase diagram
+    .. tab:: Density
 
         .. figure:: /_figures/sphx_glr_plot_Density_pT_001_2_0x.*
             :align: center
@@ -75,7 +75,7 @@ Let's have a look into the controlling fluid properties density, specific enthal
 
             Density (:math:`Kg/m^3`) as a function of pressure and temperature. There is a monotonic rise in density with increasing pressure and and decreasing temperature - just as intuition would tell us. 
 
-    .. tab:: P-T H2O phase diagram
+    .. tab:: Specific enthalpy
 
         .. figure:: /_figures/sphx_glr_plot_Enthalpy_pT_001_2_0x.*
             :align: center
@@ -83,7 +83,7 @@ Let's have a look into the controlling fluid properties density, specific enthal
 
             Specific enthalpy (:math:`J/Kg`) as a function of pressure and temperature. The energy "stored" in a kilogram of water rises with increasing tempeature - also no surprises here. 
 
-    .. tab:: P-T H2O phase diagram
+    .. tab:: Dynamic viscosity
 
         .. figure:: /_figures/sphx_glr_plot_Viscosity_pT_001_2_0x.*
             :align: center
