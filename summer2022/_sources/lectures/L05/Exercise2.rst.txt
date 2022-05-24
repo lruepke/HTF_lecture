@@ -95,7 +95,7 @@ So the Rayleigh number is:
 .. math::
     :label: eq:dim_ana_6
     
-    Ra = \lvert \frac{\nabla \cdot \rho \ T \alpha \rho g k L}{\kappa \mu}
+    Ra = \lvert \frac{\rho \Delta T \alpha \rho g k L}{\kappa \mu} \rvert
 
 
 With this analysis in mind, we can check local Rayleigh numbers and what we expect is that right where the fluxibity is highest, we should also get high Rayleigh numbers indicating that the fluid wants to start convecting. The Rayleigh number derived above is a measure for the vigor of convection in the entire domain. We can follow :cite:`jupp2000thermodynamic` and derive a local Rayleigh number by relating convective and diffusive fluxes:
