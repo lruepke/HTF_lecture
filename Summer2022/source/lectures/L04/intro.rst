@@ -22,6 +22,21 @@ mass continuity (Eqn. :eq:`eq:conti_l04`) and energy conservation (Eqn. :eq:`eq:
     \varepsilon \frac{\partial \rho_f}{\partial t} + \nabla \cdot (\vec{U} \rho_f) = 0
 
 .. math::
+    :label: eq:rho_to_pt
+
+    \frac{\partial \rho}{\partial t} =   \frac{\partial \rho}{\partial P}\frac{\partial P}{\partial t}\rvert_T +  \frac{\partial \rho}{\partial T}\frac{\partial T}{\partial t}\rvert_P
+
+.. math::
+    :label: eq:beta
+
+    \beta = \frac{1}{\rho}\frac{\partial \rho}{\partial P}
+
+.. math::
+    :label: eq:alpha
+    
+    \alpha = -\frac{1}{\rho}\frac{\partial \rho}{\partial T}
+
+.. math::
     :label: eq:pressure
     
     \varepsilon \rho_f \left( \beta_f \frac{\partial p}{\partial t} - \alpha_f \frac{\partial T}{\partial t} \right) = \nabla \cdot \left( \rho_f \frac{k}{\mu_f} (\nabla p - \rho_f \vec{g}) \right)
