@@ -204,16 +204,22 @@
 <h2>Theoretical background<a class="headerlink" href="#theoretical-background" title="Permalink to this headline"></a></h2>
 <p>In the last lecture, we had made Navier-Stokes simulations on the pore-scale, which resolved the full dynamics of fluid flow. As we have already learned, in porous media studies flow is often approximated by Darcy’s, in which flow is proportional to the pressure gradient. The invovled constants are viscosity and permeability.</p>
 <p>During this lecture we will study single-phase hydrothermal flow in submarine hydrothermal systems. The respective solver is named <code class="code docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam</span></code>. The hydrothermal fluid flow is governed by Darcy’s law (Eqn. <a class="reference internal" href="#equation-eq-darcy-l04">equation (22)</a>),
-mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti-l04">equation (23)</a>) and energy conservation (Eqn. <a class="reference internal" href="#equation-eq-temperature">equation (25)</a>) equations shown below,</p>
+mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti-l04">equation (23)</a>) and energy conservation (Eqn. <a class="reference internal" href="#equation-eq-temperature">equation (28)</a>) equations shown below,</p>
 <div class="math notranslate nohighlight" id="equation-eq-darcy-l04">
 <span class="eqno">(22)<a class="headerlink" href="#equation-eq-darcy-l04" title="Permalink to this equation"></a></span>\[\vec{U} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-conti-l04">
 <span class="eqno">(23)<a class="headerlink" href="#equation-eq-conti-l04" title="Permalink to this equation"></a></span>\[\varepsilon \frac{\partial \rho_f}{\partial t} + \nabla \cdot (\vec{U} \rho_f) = 0\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-rho-to-pt">
+<span class="eqno">(24)<a class="headerlink" href="#equation-eq-rho-to-pt" title="Permalink to this equation"></a></span>\[\frac{\partial \rho}{\partial t} =   \frac{\partial \rho}{\partial P}\frac{\partial P}{\partial t}\rvert_T +  \frac{\partial \rho}{\partial T}\frac{\partial T}{\partial t}\rvert_P\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-beta">
+<span class="eqno">(25)<a class="headerlink" href="#equation-eq-beta" title="Permalink to this equation"></a></span>\[\beta = \frac{1}{\rho}\frac{\partial \rho}{\partial P}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-alpha">
+<span class="eqno">(26)<a class="headerlink" href="#equation-eq-alpha" title="Permalink to this equation"></a></span>\[\alpha = -\frac{1}{\rho}\frac{\partial \rho}{\partial T}\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-pressure">
-<span class="eqno">(24)<a class="headerlink" href="#equation-eq-pressure" title="Permalink to this equation"></a></span>\[\varepsilon \rho_f \left( \beta_f \frac{\partial p}{\partial t} - \alpha_f \frac{\partial T}{\partial t} \right) = \nabla \cdot \left( \rho_f \frac{k}{\mu_f} (\nabla p - \rho_f \vec{g}) \right)\]</div>
+<span class="eqno">(27)<a class="headerlink" href="#equation-eq-pressure" title="Permalink to this equation"></a></span>\[\varepsilon \rho_f \left( \beta_f \frac{\partial p}{\partial t} - \alpha_f \frac{\partial T}{\partial t} \right) = \nabla \cdot \left( \rho_f \frac{k}{\mu_f} (\nabla p - \rho_f \vec{g}) \right)\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-temperature">
-<span class="eqno">(25)<a class="headerlink" href="#equation-eq-temperature" title="Permalink to this equation"></a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{pr})\frac{\partial T}{\partial t} = \nabla \cdot (\lambda_r \nabla T) - \rho_f C_{pf} \vec{U}\cdot \nabla T + \frac{\mu_f}{k} \parallel \vec{U} \parallel ^2 - \left( \frac{\partial ln \rho_f}{\partial ln T} \right)_p \frac{Dp}{Dt}\]</div>
-<p>where the pressure equation <a class="reference internal" href="#equation-eq-pressure">equation (24)</a> is derived from continuity equation <a class="reference internal" href="#equation-eq-conti-l04">equation (23)</a> and Darcy’s law <a class="reference internal" href="#equation-eq-darcy-l04">equation (22)</a>.</p>
+<span class="eqno">(28)<a class="headerlink" href="#equation-eq-temperature" title="Permalink to this equation"></a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{pr})\frac{\partial T}{\partial t} = \nabla \cdot (\lambda_r \nabla T) - \rho_f C_{pf} \vec{U}\cdot \nabla T + \frac{\mu_f}{k} \parallel \vec{U} \parallel ^2 - \left( \frac{\partial ln \rho_f}{\partial ln T} \right)_p \frac{Dp}{Dt}\]</div>
+<p>where the pressure equation <a class="reference internal" href="#equation-eq-pressure">equation (27)</a> is derived from continuity equation <a class="reference internal" href="#equation-eq-conti-l04">equation (23)</a> and Darcy’s law <a class="reference internal" href="#equation-eq-darcy-l04">equation (22)</a>.</p>
 </section>
 <section id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline"></a></h2>
