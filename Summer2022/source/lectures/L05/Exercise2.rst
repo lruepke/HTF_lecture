@@ -95,7 +95,7 @@ So the Rayleigh number is:
 .. math::
     :label: eq:dim_ana_6
     
-    Ra = \lvert \frac{\rho \Delta T \alpha \rho g k L}{\kappa \mu} \rvert
+    Ra = \lvert \frac{\rho \Delta T \alpha g k L}{\kappa \mu} \rvert
 
 
 With this analysis in mind, we can check local Rayleigh numbers and what we expect is that right where the fluxibity is highest, we should also get high Rayleigh numbers indicating that the fluid wants to start convecting. The Rayleigh number derived above is a measure for the vigor of convection in the entire domain. We can follow :cite:`jupp2000thermodynamic` and derive a local Rayleigh number by relating convective and diffusive fluxes:
@@ -106,7 +106,7 @@ With this analysis in mind, we can check local Rayleigh numbers and what we expe
     Ra_L = \lvert \frac{\nabla \cdot (\vec{u} \rho h)}{\lambda \nabla^2 T} \rvert
 
 
-Oh, the convective energy transport, :math:`\nabla \cdot (\vec{u} \rho h)` term is back! If you read :cite:`jupp2000thermodynamic` carefully, you find a dimensional analysis that shows that :math:`Ra_L` becomes maximum where that transport term is maximum and we are back to the fluxibility concept.
+The convective energy transport, :math:`\nabla \cdot (\vec{u} \rho h)` term is back! If you read :cite:`jupp2000thermodynamic` carefully, you find a dimensional analysis that shows that :math:`Ra_L` becomes maximum where that transport term is maximum and we are back to the fluxibility concept.
 
 
 Enough theroy, let's put this into a model. The compute local Rayleigh numbers, we have to add something to the code. There is a dynamic code section within :code:`system/conrolDict` that allows outputting more variables including the thermodynamic properties of water. Look how easy it is to evaluate the local convective and diffusive fluxes.
