@@ -35,16 +35,17 @@ Following :cite:`jupp2000thermodynamic`, we can assume that the pressure gradien
 .. math::
     :label: eq:upflow_js
     
-    U_z = \frac{k}{\mu} \left( \nabla P - \rho g_z \right) \approx \frac{k}{\mu}(\rho_0 g_z - \rho g_z) = g_z \frac{k}{\mu} (\rho_0 - \rho)
+    U_z = -\frac{k}{\mu} \left( \nabla P - \rho g_z \right) \approx -\frac{k}{\mu}(\rho_0 g_z - \rho g_z) = -g_z \frac{k}{\mu} (\rho_0 - \rho)
 
 Now we plug this expression into :eq:`eq:div_e` to get:
 
 .. math::
     :label: eq:udiv_e2
     
-    \nabla \cdot (\rho h \vec{U}) = \frac{\partial}{\partial z} \left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right) g_z k
+    \nabla \cdot (\rho h \vec{U}) = -\frac{\partial}{\partial z} \left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right) g_z k
 
-:cite:`jupp2000thermodynamic` called the term within the large brackets, :math:`F=\left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right)` , fluxibility. Fluxibility is a function of fluid properties only and those properties are pressure and temperature dependent. To first order, advective heat transport is maximized, where :math:`\nabla \cdot F` is maximum and this divergence can be approximated within the bottom thermal boundary as :math:`\nabla \cdot F \approx \frac{\partial}{\partial z} F \approx \frac{\partial}{\partial T} F` . 
+
+The minus on the left-hand term is a bit irritating. We can continue by assuming that :math:`g=9.81`, so is positive. :cite:`jupp2000thermodynamic` called the term within the large brackets, :math:`F=\left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right)` , fluxibility. Fluxibility is a function of fluid properties only and those properties are pressure and temperature dependent. To first order, advective heat transport is maximized, where :math:`\nabla \cdot F` is maximum and this divergence can be approximated within the bottom thermal boundary as :math:`\nabla \cdot F \approx \frac{\partial}{\partial z} F \approx \frac{\partial}{\partial T} F` . 
 
 
 :numref:`fig:Fluxibility_Water` a shows fluxibility as a function of pressure and temperature. It is clear that this function has a distinct peak at temperature of approximately 400°C. :numref:`fig:Fluxibility_Water` b shows sections of constant pressure and also the derivative of F with temperature. The peaks in these functions mark the temperature for which buoyant heat transport is most efficient for a given pressure. Later we will explore this further in numerical convection experiments.
