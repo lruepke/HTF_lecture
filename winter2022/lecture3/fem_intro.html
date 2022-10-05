@@ -1,0 +1,419 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction Finite Element Method (FEM) &mdash; Finite Element Modeling in Geodynamics  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Symbolic derivation of 1-D FEM stiffness matrix" href="jupyter/fem_1d_symbolic.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
+            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/course-details.html">Course details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/installation.html">Installation guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_intro.html">Introduction: The Finite Differences Method (FDM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_1.html">Example 1: Cooling dike</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_2.html">Example 2: Cooling dike - implicit version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_3.html">Example 3: Periodic variations in seafloor temperature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_advection.html">Transport problems with FDM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_intro.html">Introduction: Method of Weighted Residuals (MWR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_examples.html">MWR solutions of the steady advection-diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/excercises.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction Finite Element Method (FEM)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#governing-equation-strong-form">Governing equation - strong form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#approximate-solution">Approximate solution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#galerkin-method">Galerkin method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#weak-form">Weak form</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#fem-implementation">FEM implementation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#element-stiffness-matrix-a-el">Element stiffness matrix <span class="math notranslate nohighlight">\(A_{el}\)</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#excercise-derive-a-el">Excercise: derive <span class="math notranslate nohighlight">\(A_{el}\)</span></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jupyter/fem_1d_symbolic.html">Symbolic derivation of 1-D FEM stiffness matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#matrix-assembly">Matrix assembly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jupyter/fem_1d_numerical.html">Numerical 1-D FEM solution of the heat diffusion equation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fem_advection.html">FEM and advection problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html">2-D FEM - elliptic problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html#implementation">Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html">Triangles: unstructured meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html#excercise">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/transient_problems.html">Transient heat diffusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/turing_coupled_problem.html">Coupled diffusion problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/FEM_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Finite Element Modeling in Geodynamics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Introduction Finite Element Method (FEM)</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture3/fem_intro.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="introduction-finite-element-method-fem">
+<h1>Introduction Finite Element Method (FEM)<a class="headerlink" href="#introduction-finite-element-method-fem" title="Permalink to this heading"></a></h1>
+<p>We will again use the 1-D steady state heat diffusion equation as an example and solve it using FEM. Formally speaking the steady-state diffusion equation is an <strong>elliptic</strong> PDE. Elliptic equations describe a large variety of steady state problems in earth sciences including diffusion, plate flexure, and incompressible flows.</p>
+<div class="admonition-types-of-pdes admonition">
+<p class="admonition-title">Types of PDEs</p>
+<p>Besides <strong>elliptic</strong> PDEs, there are, for example, also <strong>parabolic</strong> PDEs, which include the transient term, and <strong>hyperbolic</strong> PDEs, which describe e.g. wave propagation. We will learn about those a bit later in the course.</p>
+</div>
+<section id="governing-equation-strong-form">
+<h2>Governing equation - strong form<a class="headerlink" href="#governing-equation-strong-form" title="Permalink to this heading"></a></h2>
+<p>Let’s go on and solve the elliptic 1-D heat diffusion equation with the Finite Element Method (FEM):</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-strong">
+<span class="eqno">(90)<a class="headerlink" href="#equation-eq-fem-1d-strong" title="Permalink to this equation"></a></span>\[\frac{\partial}{\partial x}k\frac{\partial T_{ex}}{\partial x}=0.\]</div>
+<p>This is called the strong form of the governing equation and the function <span class="math notranslate nohighlight">\(T_{ex}(x)\)</span> by a (simpler) approximation:</p>
+</section>
+<section id="approximate-solution">
+<h2>Approximate solution<a class="headerlink" href="#approximate-solution" title="Permalink to this heading"></a></h2>
+<div class="math notranslate nohighlight" id="equation-eq-fem-aprox-funcion">
+<span class="eqno">(91)<a class="headerlink" href="#equation-eq-fem-aprox-funcion" title="Permalink to this equation"></a></span>\[T_{ex} \cong \tilde{T}= \sum_{j=1}^{n} N_j T_j = N_j T_j.\]</div>
+<p>In FEM we divide our computational domain into simple geometeric entities, the finite elements, and those finite elements have grid points. For example, in 2-D we can divide the domain in triangles with three nodes and in 1-D in simple lines with two nodes each. Think of our simple FD descritization, if we were to use the same descritization in FEM, the intervals between grid points would be our finite elements.</p>
+<figure class="align-center" id="fig-shapefunc-1d-linear">
+<img alt="../_images/shapeFunction_Linear_1D.svg" src="../_images/shapeFunction_Linear_1D.svg" /><figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Example of 1D linear finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-1d-linear" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>These linear independent functions <span class="math notranslate nohighlight">\(N\)</span>, called shape functions in FEM, are associated with the chosen discretization (<a class="reference internal" href="#fig-shapefunc-1d-linear"><span class="std std-numref">Fig. 4</span></a>). Each node is associated with one shape function and that shape function has the value <span class="math notranslate nohighlight">\(1\)</span> at that node and is zero at every other node. In our simple 1-D case, the shape functions vary linearly from one to zero over the adjacent elements of each node. With these properties, the sum over all all shape functions is always one, and the coefficients of those shape functions happen to be the unknown variable values at the nodes, the nodal temperatures in our case.</p>
+<p>Let’s plug the approximated solution into the strong form of our equation:</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-r">
+<span class="eqno">(92)<a class="headerlink" href="#equation-eq-fem-1d-r" title="Permalink to this equation"></a></span>\[R = \frac{\partial}{\partial x}k\frac{\partial N_j T_j }{\partial x}\neq 0.\]</div>
+<p>Note how we use the Einstein convention and sum over repeated indices. We can now write the MWR form of the equation:</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-mwr">
+<span class="eqno">(93)<a class="headerlink" href="#equation-eq-fem-mwr" title="Permalink to this equation"></a></span>\[\int_XW_i\frac{\partial}{\partial x}k\frac{\partial N_j T_j }{\partial x}dx=0\ \ \ \ \ \ \ i=1,2,...,n\]</div>
+</section>
+<section id="galerkin-method">
+<h2>Galerkin method<a class="headerlink" href="#galerkin-method" title="Permalink to this heading"></a></h2>
+<p>In finite elements, the most frequently used weighting method is the Galerkin method that we already know from the previous session. We therefore use the interpolation functions also as weighting functions:</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-mwr-2">
+<span class="eqno">(94)<a class="headerlink" href="#equation-eq-fem-mwr-2" title="Permalink to this equation"></a></span>\[\int_XN_i\frac{\partial}{\partial x}k\frac{\partial N_j T_j }{\partial x}dx=0\ \ \ \ \ \ \ i=1,2,...,n\]</div>
+<p>The next step is to reduce the order of differentiation by using partial integration. Remember, integration by parts looks like this:</p>
+<div class="math notranslate nohighlight" id="equation-eq-partial-int">
+<span class="eqno">(95)<a class="headerlink" href="#equation-eq-partial-int" title="Permalink to this equation"></a></span>\[\int_{\Omega} fg' d\Omega = -\int_{\Omega} f'g d\Omega + \oint_{\Gamma} fg d\Gamma\]</div>
+</section>
+<section id="weak-form">
+<h2>Weak form<a class="headerlink" href="#weak-form" title="Permalink to this heading"></a></h2>
+<p>Applying this to <a class="reference internal" href="#equation-eq-partial-int">equation (95)</a> results in the <strong>weak form</strong> of our governing equation:</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-weak">
+<span class="eqno">(96)<a class="headerlink" href="#equation-eq-fem-1d-weak" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+\begin{split}
+\int_XN_i\frac{\partial}{\partial x}k\frac{\partial N_j T_j }{\partial x}dx=0\ \ \ \ \ \ \ i=1,2,...,n\\
+\Rightarrow \\
+-\int_X \frac{\partial N_i}{\partial x}k\frac{\partial N_j T_j }{\partial x}dx + \oint_{\Gamma} N_ik\frac{\partial N_j T_j }{\partial x}d\Gamma=0\ \ \ \ \ \ \ i=1,2,...,n\\
+\Rightarrow \\
+\int_X \frac{\partial N_i}{\partial x}k\frac{\partial N_j T_j }{\partial x}dx + \oint_{\Gamma}\vec{q}\vec{n}d\Gamma=0\ \ \ \ \ \ \ i=1,2,...,n\\
+\end{split}
+\end{align}\end{split}\]</div>
+<p>Close inspection of the boundary integral reveals that it is the heat flow through the boundaries of the modeling domain. In 1-D these are simply numbers of heat flow at the sides and in 2-D/3-D heat fluxes through the sides of the modeling domain. For the moment we will neglect it and only continue with the solution inside our domain:</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-weak-simple">
+<span class="eqno">(97)<a class="headerlink" href="#equation-eq-fem-1d-weak-simple" title="Permalink to this equation"></a></span>\[\int_X \frac{\partial N_i}{\partial x}k\frac{\partial N_j T_j }{\partial x}dx =0\ \ \ \ \ \ \ i=1,2,...,n\]</div>
+<p>How can we solve this using the FEM? The basic idea is to split the integrals into subdomains and the solution will be the sum of the subdomains. In FEM, those subdomains are the finite elements:</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-weak-simple-2">
+<span class="eqno">(98)<a class="headerlink" href="#equation-eq-fem-1d-weak-simple-2" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+\begin{split}
+\int_X \frac{\partial N_i}{\partial x}k\frac{\partial N_j T_j }{\partial x}dx =0\ \ \ \ \ \ \ i=1,2,...,n\\
+\Rightarrow \\
+\int_X \frac{\partial N_i}{\partial x}k\frac{\partial N_j T_j }{\partial x}dx =  \sum_{Elements} \int_{X_e} \frac{\partial N_i}{\partial x}k\frac{\partial N_j T_j }{\partial x}dx = 0\ \ \ \ \ \ \ i=1,2,...,n\\
+\end{split}
+\end{align}\end{split}\]</div>
+<p>While mathematically we are always allowed to split an integral into a sum of integrals, in FEM this is particularly useful. The catch is that the shape function associated with a node is only non-zero in the elements connected to that node. This in turn means that in <a class="reference internal" href="#equation-eq-fem-1d-weak-simple-2">equation (98)</a>, we can do the integration of each element completely independent from all other elements!</p>
+<p>In the following sessions, we will go through all the steps involved in solving <a class="reference internal" href="#equation-eq-fem-1d-weak-simple-2">equation (98)</a>. We will first do this in a simple 1-D case before moving on to the general 2-D.</p>
+</section>
+</section>
+<section id="fem-implementation">
+<h1>FEM implementation<a class="headerlink" href="#fem-implementation" title="Permalink to this heading"></a></h1>
+<section id="element-stiffness-matrix-a-el">
+<h2>Element stiffness matrix <span class="math notranslate nohighlight">\(A_{el}\)</span><a class="headerlink" href="#element-stiffness-matrix-a-el" title="Permalink to this heading"></a></h2>
+<p>Let’s look at a single 1-D element. If we use linear shape functions, one 1-D element has two nodes – and only the shape functions of those two nodes will be non-zero. The so-called connectivity, which connects elements and nodes (which nodes belong to which element) is easy in 1-D: element number k will have the nodes i=k and i=k+1 (Element 1 has nodes 1 and 2). This means that for each element we will get two equations:</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-single-element">
+<span class="eqno">(99)<a class="headerlink" href="#equation-eq-fem-1d-single-element" title="Permalink to this equation"></a></span>\[\begin{split}\begin{bmatrix}
+\int_{X_e} \frac{\partial N_1}{\partial x}k\frac{\partial N_1}{\partial x}dx &amp;
+\int_{X_e} \frac{\partial N_1}{\partial x}k\frac{\partial N_2}{\partial x}dx \\
+\int_{X_e} \frac{\partial N_2}{\partial x}k\frac{\partial N_1}{\partial x}dx &amp;
+\int_{X_e} \frac{\partial N_2}{\partial x}k\frac{\partial N_2}{\partial x}dx
+\end{bmatrix}
+\begin{bmatrix}
+T_1 \\
+T_2
+\end{bmatrix}=0\end{split}\]</div>
+<p>We get a <span class="math notranslate nohighlight">\(2x2\)</span> so-called stiffness matrix for every element. In the end we will have to sum the contributions from every element into a global stiffness matrix, which will again be <span class="math notranslate nohighlight">\([n x n]\)</span>.  Note: The node numbering in <a class="reference internal" href="#equation-eq-fem-1d-single-element">equation (99)</a> is local! I.e. node number 1 is the first node of an element k and has the global node number k, while node number 2 is the second node of the element and has the global node number k+1!</p>
+<p>We have two linear shape functions for the points i and i+1 of each element (see <a class="reference internal" href="#fig-shapefunc-1d-linear"><span class="std std-numref">Fig. 4</span></a>):</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-shape-elem">
+<span class="eqno">(100)<a class="headerlink" href="#equation-eq-fem-1d-shape-elem" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+\begin{split}
+N_i(x) = 1 - \frac{x-x_i}{x_{i+1} - x_i} &amp;= 1 - \frac{x-x_i}{\Delta x}\\
+N_{i+1}(x) = \frac{x-x_i}{x_{i+1} - x_i} &amp;= \frac{x-x_i}{\Delta x}\\
+\end{split}
+\end{align}\end{split}\]</div>
+</section>
+<section id="excercise-derive-a-el">
+<h2>Excercise: derive <span class="math notranslate nohighlight">\(A_{el}\)</span><a class="headerlink" href="#excercise-derive-a-el" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="jupyter/fem_1d_symbolic.html">Symbolic derivation of 1-D FEM stiffness matrix</a></li>
+</ul>
+</div>
+</section>
+<section id="matrix-assembly">
+<h2>Matrix assembly<a class="headerlink" href="#matrix-assembly" title="Permalink to this heading"></a></h2>
+<p>The above exercise results in the integrated element stiffness matrix of steady-state diffusion:</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-int-ae">
+<span class="eqno">(101)<a class="headerlink" href="#equation-eq-fem-1d-int-ae" title="Permalink to this equation"></a></span>\[\begin{split}Ael =
+\begin{bmatrix}
+\frac{k}{\Delta x} &amp;
+-\frac{k}{\Delta x} \\
+-\frac{k}{\Delta x} &amp;
+\frac{k}{\Delta x}
+\end{bmatrix}\end{split}\]</div>
+<p>The global stiffness matrix <span class="math notranslate nohighlight">\(A\)</span> is the sum of all element stiffness matrices; we simply have to add them all together using the connectivity information, i.e. which nodes belong to which elements (something that we call EL2NOD in the codes).</p>
+<p>If we assume three linear elements, this looks like this</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-matrix-assembly">
+<span class="eqno">(102)<a class="headerlink" href="#equation-eq-fem-1d-matrix-assembly" title="Permalink to this equation"></a></span>\[\begin{split}A =
+\begin{bmatrix}
+\frac{k}{\Delta x} &amp; -\frac{k}{\Delta x} &amp; 0 &amp; 0\\
+-\frac{k}{\Delta x} &amp; \frac{k}{\Delta x} &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0\\
+\end{bmatrix} +
+\begin{bmatrix}
+0 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; \frac{k}{\Delta x} &amp; -\frac{k}{\Delta x} &amp; 0 \\
+0 &amp; -\frac{k}{\Delta x} &amp; \frac{k}{\Delta x} &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0\\
+\end{bmatrix}+
+\begin{bmatrix}
+0 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; 0 &amp; 0\\
+0 &amp; 0 &amp; \frac{k}{\Delta x} &amp; -\frac{k}{\Delta x} \\
+0 &amp; 0 &amp; -\frac{k}{\Delta x} &amp; \frac{k}{\Delta x} \\
+\end{bmatrix}\end{split}\]</div>
+</section>
+<section id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this heading"></a></h2>
+<p>Let’s put everything together and write our first finite element code! We will do this by programming a FEM solution to the steady-state heat diffusion equation but this time with a source term.</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-strong-ex">
+<span class="eqno">(103)<a class="headerlink" href="#equation-eq-fem-1d-strong-ex" title="Permalink to this equation"></a></span>\[\frac{\partial}{\partial x}k\frac{\partial T_{ex}}{\partial x}+Q=0.\]</div>
+<p>The weak form will then look like this (signs get flipped during partial integration):</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-weak-simple-ex1">
+<span class="eqno">(104)<a class="headerlink" href="#equation-eq-fem-1d-weak-simple-ex1" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+\begin{split}
+\int_X \frac{\partial N_i}{\partial x}k\frac{\partial N_j  }{\partial x}T_j - N_iQdx =0\ \ \ \ \ \ \ i=1,2,...,n\\
+\Rightarrow \\
+\int_X \frac{\partial N_i}{\partial x}k\frac{\partial N_j  }{\partial x} T_j - N_i Qd x =  \sum_{Elements} \int_{X_e} \frac{\partial N_i}{\partial x}k\frac{\partial N_j  }{\partial x} T_j - N_i Q dx = 0\ \ \ \ \ \ \ i=1,2,...,n\\
+\end{split}
+\end{align}\end{split}\]</div>
+<p>After another symbolic integration (try it) of the source term,we get the following element stiffness matrix and element system of equations:</p>
+<div class="math notranslate nohighlight" id="equation-eq-fem-1d-weak-simple-ex2">
+<span class="eqno">(105)<a class="headerlink" href="#equation-eq-fem-1d-weak-simple-ex2" title="Permalink to this equation"></a></span>\[\begin{split}Ael =
+\begin{bmatrix}
+\frac{k}{\Delta x} &amp;
+-\frac{k}{\Delta x} \\
+-\frac{k}{\Delta x} &amp;
+\frac{k}{\Delta x}
+\end{bmatrix}
+\begin{bmatrix}
+T_i \\
+T_{i+1}
+\end{bmatrix} =
+\begin{bmatrix}
+\frac{\Delta x}{2}Q_{el} \\
+\frac{\Delta x}{2}Q_{el}
+\end{bmatrix}\end{split}\]</div>
+<p>Where the first matrix is the element stiffness matrix, the second vector are the unknown temperatures of the element, and the right-hand side has the integration source term <span class="math notranslate nohighlight">\(Q_{el}\)</span> which here is constant value (per element).</p>
+<p>Let’s put this into python!</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="jupyter/fem_1d_numerical.html">Numerical 1-D FEM solution of the heat diffusion equation</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jupyter/fem_1d_symbolic.html" class="btn btn-neutral float-right" title="Symbolic derivation of 1-D FEM stiffness matrix" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+      
+        <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+          <span class="rst-current-version" data-toggle="rst-current-version">
+            <span class="fa fa-book"> Finite Element Modeling in Geodynamics</span>
+            v: latest
+            <span class="fa fa-caret-down"></span>
+          </span>
+          <div class="rst-other-versions">
+            <dl>
+              
+                
+                <dd><a href="https://lruepke.github.io/FEM_lecture/downloads/LectureNote.pdf">latest</a></dd>
+                
+                <dd><a href="#/LectureNote.pdf">2.0</a></dd>
+                
+              
+          </div>
+        </div>
+      
+    
+
+</body>
+</html>

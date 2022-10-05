@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example 3: Periodic variations in seafloor temperature &mdash; Finite Element Modeling in Geodynamics  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Periodic variations in seafloor temperature" href="jupyter/seafloor_temp_variations.html" />
+    <link rel="prev" title="Implicit descretization" href="jupyter/imp_dike_cooling.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
+            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/course-details.html">Course details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/installation.html">Installation guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fdm_intro.html">Introduction: The Finite Differences Method (FDM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_1.html">Example 1: Cooling dike</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_2.html">Example 2: Cooling dike - implicit version</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example 3: Periodic variations in seafloor temperature</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#flux-boundary-conditions">Flux boundary conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-seafloor-temperature-variations">Example: seafloor temperature variations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fdm-notebook">FDM notebook</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jupyter/seafloor_temp_variations.html">Periodic variations in seafloor temperature</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#excercise-periodic-changes-in-seafloor-temperature">Excercise - periodic changes in seafloor temperature</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fdm_advection.html">Transport problems with FDM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_intro.html">Introduction: Method of Weighted Residuals (MWR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_examples.html">MWR solutions of the steady advection-diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/excercises.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html">Introduction Finite Element Method (FEM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html#fem-implementation">FEM implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_advection.html">FEM and advection problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html">2-D FEM - elliptic problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html#implementation">Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html">Triangles: unstructured meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html#excercise">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/transient_problems.html">Transient heat diffusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/turing_coupled_problem.html">Coupled diffusion problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/FEM_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Finite Element Modeling in Geodynamics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Example 3: Periodic variations in seafloor temperature</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture1/example_3.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="example-3-periodic-variations-in-seafloor-temperature">
+<h1>Example 3: Periodic variations in seafloor temperature<a class="headerlink" href="#example-3-periodic-variations-in-seafloor-temperature" title="Permalink to this heading"></a></h1>
+<section id="flux-boundary-conditions">
+<h2>Flux boundary conditions<a class="headerlink" href="#flux-boundary-conditions" title="Permalink to this heading"></a></h2>
+<p>So far, we have always assumed that the boundary condition for the temperature equation was a fixed temperature. This condition is also called a <em>Dirichlet boundary condition</em>. We can, however, also assume a case where the boundary has a constant gradient (e.g. heat flux). This is called a <em>Neumann boundary conditions</em> and an example would be a given conductive heat flux from below. A flux boundary condition at the bottom could be written like this:</p>
+<div class="math notranslate nohighlight" id="equation-eq-sf-dummy1">
+<span class="eqno">(42)<a class="headerlink" href="#equation-eq-sf-dummy1" title="Permalink to this equation"></a></span>\[\frac{\partial T(y=-L,t)}{\partial y}=c_1\]</div>
+<p>where <span class="math notranslate nohighlight">\(c_1\)</span> is the specified gradient. We could also write it as a heat flow boundary conditions</p>
+<div class="math notranslate nohighlight" id="equation-eq-sf-dummy2">
+<span class="eqno">(43)<a class="headerlink" href="#equation-eq-sf-dummy2" title="Permalink to this equation"></a></span>\[\frac{−q_{base}}{k}= \frac{\partial T(y = −L,t)}{\partial y}\]</div>
+<p>We can program these conditions by using a forward or a backward finite difference expression. However, this is not so good, since these finite difference approximations are only first order accurate in space. Moreover they would yield the first derivative at the location <span class="math notranslate nohighlight">\(T_{\frac{1}{2}}\)</span> or at <span class="math notranslate nohighlight">\(T_{ny-\frac{1}{2}}\)</span>, and not at <span class="math notranslate nohighlight">\(T_1\)</span> and <span class="math notranslate nohighlight">\(T_y\)</span>. A better way to incorporate a flux boundary conditions is therefore to use a central finite difference approximation, which is given (at <span class="math notranslate nohighlight">\(i = 1\)</span>) by:</p>
+<div class="math notranslate nohighlight" id="equation-eq-flux-bc">
+<span class="eqno">(44)<a class="headerlink" href="#equation-eq-flux-bc" title="Permalink to this equation"></a></span>\[\frac{T_2^{n+1} − T_0^{n+1}}{2\Delta y} = −\frac{q_{base}}{k}\]</div>
+<p>The problem is that the expression above involves a point that is not part of the numerical grid (<span class="math notranslate nohighlight">\(T_0\)</span>). A way around this can be found by noting that the equation for the center nodes is given by:</p>
+<div class="math notranslate nohighlight" id="equation-eq-centered-node">
+<span class="eqno">(45)<a class="headerlink" href="#equation-eq-centered-node" title="Permalink to this equation"></a></span>\[\frac{T_i^{n+1} − T_i^n}{\Delta t} = \kappa \frac{T_{i+1}^{n+1} − 2T_i^{n+1} + T_{i−1}^{n+1}}{\Delta y^2}\]</div>
+<p>Writing this expression for the first node gives</p>
+<div class="math notranslate nohighlight" id="equation-eq-centered-node-first">
+<span class="eqno">(46)<a class="headerlink" href="#equation-eq-centered-node-first" title="Permalink to this equation"></a></span>\[\frac{T_1^{n+1} − T_1^n}{\Delta t} = \kappa \frac{T_2^{n+1} − 2T_1^{n+1} + T_0^{n+1}}{\Delta y^2}\]</div>
+<p>An explicit expression for <span class="math notranslate nohighlight">\(T_0\)</span> can be obtained from <a class="reference internal" href="#equation-eq-flux-bc">equation (44)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-centered-node-first-explicit">
+<span class="eqno">(47)<a class="headerlink" href="#equation-eq-centered-node-first-explicit" title="Permalink to this equation"></a></span>\[T_0^{n+1} = T_2^{n+1} + \frac{2 \Delta y q_{base}}{k}\]</div>
+<p>Substituting <a class="reference internal" href="#equation-eq-centered-node-first-explicit">equation (47)</a> into <a class="reference internal" href="#equation-eq-centered-node-first">equation (46)</a> gives:</p>
+<div class="math notranslate nohighlight" id="equation-eq-sf-dummy3">
+<span class="eqno">(48)<a class="headerlink" href="#equation-eq-sf-dummy3" title="Permalink to this equation"></a></span>\[\frac{T_1^{n+1} − T_1^n}{\Delta t} = \kappa \frac{2 T_2^{n+1} − 2 T_1^{n+1} + 2\Delta y \frac{q_{base}}{k}}{\Delta y^2}\]</div>
+<p>Again we can rearrange this equation to bring known terms to the right-hand side:</p>
+<div class="math notranslate nohighlight" id="equation-eq-flux-bc-implicit-formulation">
+<span class="eqno">(49)<a class="headerlink" href="#equation-eq-flux-bc-implicit-formulation" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+\begin{split}
+(1+2\beta) T_1^{n+1} − 2\beta T_2^{n+1} = T_1^n + 2\beta \Delta y \frac{q_{base}}{k}\\
+\beta = \frac{\kappa \Delta t}{\Delta y^2}
+\end{split}
+\end{align}\end{split}\]</div>
+<p>This equation only involves grid points that are part of the computational grid and equation <a class="reference internal" href="#equation-eq-flux-bc-implicit-formulation">equation (49)</a> can be incorporated into the matrix <span class="math notranslate nohighlight">\(A\)</span> and the right-hand side <span class="math notranslate nohighlight">\(b\)</span>.</p>
+</section>
+<section id="example-seafloor-temperature-variations">
+<h2>Example: seafloor temperature variations<a class="headerlink" href="#example-seafloor-temperature-variations" title="Permalink to this heading"></a></h2>
+<p>Oceanic heat flow measurements provide important insights into cooling and alteration processes of oceanic plates. Such measurements are usually done with devices that measure heat flow within the first few meters of sediment. A natural question to ask is to which degree such measurements may be perturbed by seasonal variations in bottom water temperatures. Let’s set up a simple model for this.</p>
+<p>Assume a vertical modeling domain of <span class="math notranslate nohighlight">\(30m\)</span>. At the top of the domain a sinusoidal change in surface temperature (<span class="math notranslate nohighlight">\(\pm 2°C\)</span> around <span class="math notranslate nohighlight">\(4°C\)</span>) over a one year period is applied and at the bottom a constant heat flow of <span class="math notranslate nohighlight">\(60 \frac{mW}{m^2}\)</span> is assumed. The sediments have a constant diffusivity of <span class="math notranslate nohighlight">\(1e^{-6} m^2/s\)</span> and a thermal conductivity of <span class="math notranslate nohighlight">\(1.5 W/m/K\)</span>.</p>
+</section>
+<section id="fdm-notebook">
+<h2>FDM notebook<a class="headerlink" href="#fdm-notebook" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="jupyter/seafloor_temp_variations.html">Periodic variations in seafloor temperature</a></li>
+</ul>
+</div>
+</section>
+<section id="excercise-periodic-changes-in-seafloor-temperature">
+<h2>Excercise - periodic changes in seafloor temperature<a class="headerlink" href="#excercise-periodic-changes-in-seafloor-temperature" title="Permalink to this heading"></a></h2>
+<p>Explore the solution and understand what controls the depth to which periodic varations in seafloor temperature are “felt” inside the sediments</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>To which depth to seasonal, annual, and decadal variations propagate into the sediments?</p></li>
+<li><p>Is there a phase shift between surface heat flow and temperature variations?</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="jupyter/imp_dike_cooling.html" class="btn btn-neutral float-left" title="Implicit descretization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="jupyter/seafloor_temp_variations.html" class="btn btn-neutral float-right" title="Periodic variations in seafloor temperature" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+      
+        <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+          <span class="rst-current-version" data-toggle="rst-current-version">
+            <span class="fa fa-book"> Finite Element Modeling in Geodynamics</span>
+            v: latest
+            <span class="fa fa-caret-down"></span>
+          </span>
+          <div class="rst-other-versions">
+            <dl>
+              
+                
+                <dd><a href="https://lruepke.github.io/FEM_lecture/downloads/LectureNote.pdf">latest</a></dd>
+                
+                <dd><a href="#/LectureNote.pdf">2.0</a></dd>
+                
+              
+          </div>
+        </div>
+      
+    
+
+</body>
+</html>
