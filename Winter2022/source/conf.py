@@ -19,7 +19,7 @@ sys.path.append(os.path.abspath('_extensions'))
 project = 'Finite Element Modeling in Geodynamics'
 latex_name='LectureNote'
 copyright = '2022, Lars Ruepke and Zhikui Guo'
-author = 'Lars Ruepke'
+author = 'Lars Ruepke' 
 
 
 # -- General configuration ---------------------------------------------------
