@@ -1,0 +1,4 @@
+*.pdf
+__pycache__
+ParaViewGlance.html
+*.vtkjs
