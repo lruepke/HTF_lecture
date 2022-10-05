@@ -1,10 +1,10 @@
 ---
 title: "Summer 2021"
-date: 2018-12-28T11:02:05+06:00
+date: 2021-06-28T11:02:05+06:00
 icon: "fas fa-book-open"
 description: "PDEs, FEM, Python, heat diffusion, reactive systems, mantle convection."
 type : "docs"
-color: "254, 147, 0"
+color: "73, 147, 65"
 ---
 
 <script type="text/javascript">

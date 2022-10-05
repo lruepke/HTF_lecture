@@ -70,21 +70,27 @@ hasChildren = true
 
   [[Languages.en.menu.main]]
   parent = "Lectures"
-  name = "Winter 2020"
-  url = "winter2020"
+  name = "Winter 2022"
+  url = "winter2022"
   weight = 1
-
-  [[Languages.en.menu.main]]
-  parent = "Lectures"
-  name = "Summer2021"
-  url = "summer2021"
-  weight = 2
 
   [[Languages.en.menu.main]]
   parent = "Lectures"
   name = "Summer 2022"
   url = "summer2022"
+  weight = 2
+
+  [[Languages.en.menu.main]]
+  parent = "Lectures"
+  name = "Summer2021"
+  url = "summer2021"
   weight = 3
+
+  [[Languages.en.menu.main]]
+  parent = "Lectures"
+  name = "Winter 2020"
+  url = "winter2020"
+  weight = 4
 
 
 # banner
