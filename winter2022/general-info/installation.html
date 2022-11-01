@@ -186,59 +186,55 @@
 </section>
 <section id="python">
 <h2>Python<a class="headerlink" href="#python" title="Permalink to this heading"></a></h2>
-<p>In case you already have a working python environment, you can adapt it for this course (e.g. by creating a new virtual environment). If not, we recommend <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose “no”. It’s usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.</p>
 <section id="download-and-install-miniconda">
 <h3>Download and install miniconda<a class="headerlink" href="#download-and-install-miniconda" title="Permalink to this heading"></a></h3>
-<p>Just follow the installation instructions and keep the default options. We recommend to install python 3. During the installation, choose to <strong>not</strong> add it to your path (that’s the default). Adding miniconda/anaconda to your <code class="code docutils literal notranslate"><span class="pre">$PATH</span></code> may seem convenient but there are several reason to not do it.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Python is used by many different tools on your computer, which probably expect that just calling python will use the Python (and additional packages) installed by the operating system. None of these will be available to Miniconda’s Python.</p></li>
-<li><p>The conda environment we will create contains several binary dependencies and we do not want to interfer with defaults on your system when, e.g. compiling software unrelated to our lecture.</p></li>
-</ul>
-</div></blockquote>
+<p>In case you already have a working python environment, you can adapt it for this course (e.g. by creating a new virtual environment). If not, we recommend <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose “no”. It’s usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.</p>
+<div class="admonition-conda-forge-setup admonition">
+<p class="admonition-title">conda-forge setup</p>
+<p>There are different sources, so-called channels, from where you can obtain the packages for your python environment. We will use the community channel <em>conda-forge</em>.</p>
+<p>Our recommended setup is to the use a very basic <em>base environment</em> that only cotains the necessarry packages to run <em>jupyter notebook</em> and/or <em>jupyter lab</em>. Everything else will be done from virtual enviroments, which you can activate from within jupyter.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install -n base -c conda-forge jupyterlab notebook nb_conda_kernels
+</pre></div>
+</div>
+</div>
 </section>
 <section id="create-a-virtual-environment">
 <h3>Create a virtual environment<a class="headerlink" href="#create-a-virtual-environment" title="Permalink to this heading"></a></h3>
-<p>We will create a so-called virtual environment with all the python packages we will use during this class. To not infer with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation.</p>
-<div class="admonition-starting-python admonition">
-<p class="admonition-title">Starting python</p>
-<p>If you are on Windows, start an Anaconda Powershell Prompt from the start menu.</p>
-<p>On MacOS / Linux, open a terminal and type</p>
+<p>We will create a virtual environment with all the python packages we will use during this class. To not interfer with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation.</p>
+<p>Make sure cour conda base environment is activated</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate base
 </pre></div>
 </div>
-<p>You can also do that in the terminal within Visual Studio Code (on MacOS).</p>
-</div>
 <p>Now we are ready to create a virtual environment. We can create it with this command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n py37_fem_class <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 numpy pandas matplotlib vtk h5py ipython scipy ipykernel jupyterlab
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n py3_fem_class numpy pandas matplotlib scipy ipykernel
 </pre></div>
 </div>
-<p>We are using python 3.7 here (instead of the newest 3.8) because of an incompatibility with vtk. Activate the new environment</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_fem_class
+<p>Activate the new environment</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py3_fem_class
 </pre></div>
 </div>
 </section>
 <section id="switching-between-environments">
 <h3>Switching between environments<a class="headerlink" href="#switching-between-environments" title="Permalink to this heading"></a></h3>
 <p>You can activate and deactivate environments like this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_fem_class
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py3_fem_class
 conda deactivate
 </pre></div>
 </div>
 </section>
 <section id="working-with-jupyter-notebooks">
 <h3>Working with jupyter notebooks<a class="headerlink" href="#working-with-jupyter-notebooks" title="Permalink to this heading"></a></h3>
-<p>We will do most excercises using jupyter notebooks. A good workflow is to start jupyter labs in working directory.</p>
+<p>We will do most excercises using jupyter notebooks. A good workflow is to start jupyter notebook in the conda base environment and then chose the the python kernel (the virtual environment) inside the notebook.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="s2">&quot;your working directory&quot;</span>
-jupyter lab
+conda activate base
+jupyter notebook
 </pre></div>
 </div>
-<p>One possible issue is that you need to make sure that your jupyter notebooks use the correct python environment. One way of doing this is to register your virtual environment as a jupyter kernel. This can be done like this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_fem_class
-ipython kernel install --user --name<span class="o">=</span>py37_fem_class
-</pre></div>
+<p>Now create a new notebook and choose <em>py3_fem_class</em> as your kernel. Check that you can import e.g. pandas.</p>
+<div class="admonition-confused admonition">
+<p class="admonition-title">Confused?</p>
+<p>If you have never used python or are new to jupyter notebooks, no worries! Things will become clear when we are doing the actual exercises.</p>
 </div>
-<p>Restart you jupyter lab and try to select the correct python kernel.</p>
 </section>
 <section id="integration-with-visual-studio-code">
 <h3>Integration with Visual Studio Code<a class="headerlink" href="#integration-with-visual-studio-code" title="Permalink to this heading"></a></h3>

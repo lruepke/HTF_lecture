@@ -9,43 +9,43 @@ We will do a lot of editing of text files and you can use your favorite text edi
 
 Python
 --------
-In case you already have a working python environment, you can adapt it for this course (e.g. by creating a new virtual environment). If not, we recommend `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose "no". It's usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.
 
 Download and install miniconda
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Just follow the installation instructions and keep the default options. We recommend to install python 3. During the installation, choose to **not** add it to your path (that's the default). Adding miniconda/anaconda to your :code:`$PATH` may seem convenient but there are several reason to not do it.
+In case you already have a working python environment, you can adapt it for this course (e.g. by creating a new virtual environment). If not, we recommend `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose "no". It's usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.
 
-    * Python is used by many different tools on your computer, which probably expect that just calling python will use the Python (and additional packages) installed by the operating system. None of these will be available to Miniconda's Python.
+.. admonition:: conda-forge setup
 
-    * The conda environment we will create contains several binary dependencies and we do not want to interfer with defaults on your system when, e.g. compiling software unrelated to our lecture.
+    There are different sources, so-called channels, from where you can obtain the packages for your python environment. We will use the community channel *conda-forge*. 
 
-Create a virtual environment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-We will create a so-called virtual environment with all the python packages we will use during this class. To not infer with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation. 
-
-.. admonition:: Starting python
-
-    If you are on Windows, start an Anaconda Powershell Prompt from the start menu.
-
-    On MacOS / Linux, open a terminal and type
+    Our recommended setup is to the use a very basic *base environment* that only cotains the necessarry packages to run *jupyter notebook* and/or *jupyter lab*. Everything else will be done from virtual enviroments, which you can activate from within jupyter. 
 
     .. code-block:: bash
 
-        conda activate base
+        conda install -n base -c conda-forge jupyterlab notebook nb_conda_kernels
 
-    You can also do that in the terminal within Visual Studio Code (on MacOS).
+
+Create a virtual environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+We will create a virtual environment with all the python packages we will use during this class. To not interfer with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation. 
+
+Make sure cour conda base environment is activated
+
+.. code-block:: bash
+
+    conda activate base
 
 Now we are ready to create a virtual environment. We can create it with this command:
 
 .. code-block:: bash
 
-    conda create -n py37_fem_class python=3.7 numpy pandas matplotlib vtk h5py ipython scipy ipykernel jupyterlab
+    conda create -n py3_fem_class numpy pandas matplotlib scipy ipykernel
 
-We are using python 3.7 here (instead of the newest 3.8) because of an incompatibility with vtk. Activate the new environment
+Activate the new environment
 
 .. code-block:: bash
 
-    conda activate py37_fem_class
+    conda activate py3_fem_class
 
 
 Switching between environments
@@ -55,29 +55,27 @@ You can activate and deactivate environments like this:
 
 .. code-block:: bash
 
-    conda activate py37_fem_class
+    conda activate py3_fem_class
     conda deactivate 
 
 Working with jupyter notebooks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We will do most excercises using jupyter notebooks. A good workflow is to start jupyter labs in working directory. 
+We will do most excercises using jupyter notebooks. A good workflow is to start jupyter notebook in the conda base environment and then chose the the python kernel (the virtual environment) inside the notebook.
 
 .. code-block:: bash
 
     cd "your working directory"
-    jupyter lab
+    conda activate base
+    jupyter notebook
 
 
-One possible issue is that you need to make sure that your jupyter notebooks use the correct python environment. One way of doing this is to register your virtual environment as a jupyter kernel. This can be done like this:
+Now create a new notebook and choose *py3_fem_class* as your kernel. Check that you can import e.g. pandas. 
+ 
 
-.. code-block:: bash
+.. admonition:: Confused?
 
-    conda activate py37_fem_class
-    ipython kernel install --user --name=py37_fem_class
-
-Restart you jupyter lab and try to select the correct python kernel.
-
+    If you have never used python or are new to jupyter notebooks, no worries! Things will become clear when we are doing the actual exercises. 
 
 Integration with Visual Studio Code
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
