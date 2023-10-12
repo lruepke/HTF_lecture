@@ -1,0 +1,23 @@
+
+The include path of thermophysical library has to be set correctly in `Make/options`.
+
+```bash
+EXE_INC = \
+    -I$(LIB_SRC)/transportModels/compressible/compressibleTransportModel  \
+    -I$(LIB_SRC)/sampling/lnInclude \
+    -I$(LIB_SRC)/meshTools/lnInclude \
+    -I$(LIB_SRC)/finiteVolume/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
+    -I/home/openfoam/hydrothermalfoam-master/libraries/ThermoModels/basic/hydroThermo \
+
+EXE_LIBS = \
+    -lfiniteVolume \
+    -lfvOptions \
+    -lsampling \
+    -lmeshTools \
+    -lfluidThermophysicalModels \
+    -lspecie \
+    -L$(FOAM_USER_LIBBIN) \
+    -lHydroThermoPhysicalModels \
+
+```

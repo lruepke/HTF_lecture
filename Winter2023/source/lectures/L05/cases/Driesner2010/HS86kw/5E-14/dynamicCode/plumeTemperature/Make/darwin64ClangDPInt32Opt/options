@@ -1,0 +1,17 @@
+# 1 "Make/options"
+# 1 "<built-in>" 1
+# 1 "<built-in>" 3
+# 367 "<built-in>" 3
+# 1 "<command line>" 1
+# 1 "<built-in>" 2
+# 1 "Make/options" 2
+
+
+
+EXE_INC = -g -I$(LIB_SRC)/finiteVolume/lnInclude -I$(LIB_SRC)/meshTools/lnInclude 
+
+
+
+
+LIB_LIBS = -lOpenFOAM -lfiniteVolume -lmeshTools 
+
