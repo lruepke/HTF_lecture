@@ -1,50 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://lruepke.github.io/HTF_lecture/</loc>
     <lastmod>2022-10-01T11:02:05+06:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lruepke.github.io/HTF_lecture/winter2022/</loc>
     <lastmod>2022-10-01T11:02:05+06:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lruepke.github.io/HTF_lecture/summer2022/</loc>
     <lastmod>2022-06-28T11:02:05+06:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>https://lruepke.github.io/HTF_lecture/winter2023/</loc>
+    <lastmod>2022-06-28T11:02:05+06:00</lastmod>
+  </url><url>
     <loc>https://lruepke.github.io/HTF_lecture/summer2021/</loc>
     <lastmod>2021-06-28T11:02:05+06:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lruepke.github.io/HTF_lecture/winter2020/</loc>
     <lastmod>2020-12-29T11:02:05+06:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lruepke.github.io/HTF_lecture/categories/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lruepke.github.io/HTF_lecture/faq/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lruepke.github.io/HTF_lecture/imprint/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lruepke.github.io/HTF_lecture/tags/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://lruepke.github.io/HTF_lecture/contact/</loc>
   </url>
-  
 </urlset>

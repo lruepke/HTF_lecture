@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A first test case - heat diffusion &mdash; HydrothermalFoam Lecture  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lecture overview" href="../L02/Overview.html" />
+    <link rel="prev" title="Getting started with OpenFoam" href="OpenFoam.html" /> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">A first test case - heat diffusion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#theory">Theory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-case-files">Prepare case files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mesh-generation">Mesh generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transport-properties">Transport properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#case-control">Case control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-case">Running the case</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise1.html">Exercise 1: Fluid properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise2.html">Exercise 2: Fluxibility and Tvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise3.html">Exercise 3: Permeability and Tvent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Exercise1.html">Exercise 1</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project1.html">Project 1: Flow along a detachment fault</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project3.html">Project 3: Hydrofracturing and localized venting above sill intrusion?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydrothermalFoam Lecture</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">A first test case - heat diffusion</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L01/FirstCase.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="a-first-test-case-heat-diffusion">
+<span id="l01-firstcase"></span><h1>A first test case - heat diffusion<a class="headerlink" href="#a-first-test-case-heat-diffusion" title="Link to this heading"></a></h1>
+<div class="admonition-what-do-we-need admonition">
+<p class="admonition-title">What do we need?</p>
+<ul class="simple">
+<li><p>case files</p></li>
+<li><p>a mesh</p></li>
+<li><p>boundary/initial conditions</p></li>
+<li><p>a solver</p></li>
+<li><p>simulations controls (time step, run time, etc.)</p></li>
+<li><p>post-processing</p></li>
+</ul>
+</div>
+<section id="theory">
+<span id="theory-heat-diffusion"></span><h2>Theory<a class="headerlink" href="#theory" title="Link to this heading"></a></h2>
+<p>The first case is the <strong>flange</strong> case from OpenFOAM tutorials, which illustrates how to solve for 3-D heat conduction in a complex-shaped solid. The equation we will be solving is the transient heat diffusion, a laplacian partial differential equation (PDE) that is here written for the simplfied case of constant properties (Eqn. <a class="reference internal" href="#equation-eq-laplacian-dif">equation (3)</a>). The equation is based on plugging Fourier’s law (Eqn. <a class="reference internal" href="#equation-eq-fourier-law">equation (1)</a>) into a general energy conservation equation (Eqn. <a class="reference internal" href="#equation-eq-simple-energy-dif">equation (2)</a>)</p>
+<div class="math notranslate nohighlight" id="equation-eq-fourier-law">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-fourier-law" title="Link to this equation"></a></span>\[\vec{q} = -\lambda_r \nabla T\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-simple-energy-dif">
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-simple-energy-dif" title="Link to this equation"></a></span>\[\rho C_{cp} \frac{\partial T}{\partial t}= -\nabla \cdot \vec{q}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-laplacian-dif">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-laplacian-dif" title="Link to this equation"></a></span>\[\frac{\partial T}{\partial t} = D \nabla^2 T\]</div>
+<p>Here  <span class="math notranslate nohighlight">\(\rho\)</span> is density, <span class="math notranslate nohighlight">\(C_{cp}\)</span> the specific heat,  <span class="math notranslate nohighlight">\(\lambda_r\)</span> the heat conduction coefficient, and <span class="math notranslate nohighlight">\(D=\frac{\lambda_r}{\rho C_{cp}}\)</span> the thermal diffusivity.</p>
+</section>
+<section id="prepare-case-files">
+<h2>Prepare case files<a class="headerlink" href="#prepare-case-files" title="Link to this heading"></a></h2>
+<p>Our first case is the <strong>flange</strong> case from the <a class="reference external" href="https://cfd.direct/openfoam/user-guide/">OpenFoam tutorials</a>, which illustrates how to solve for 3-D heat conduction in a complex-shaped solid.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>It is good practice to never change the original tutorials, which reside in $FOAM_TUTORIALS but to always make a copy to your working directory.</p>
+</div>
+<p>To get started, just copy the whole case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:</p>
+<div class="highlight-bash notranslate" id="lst-cpflangetoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$FOAM_TUTORIALS</span>/basic/laplacianFoam/flange<span class="w"> </span>.
+</pre></div>
+</div>
+<p>An OpenFoam case consist of a certain directory structure, which contains text files that control the case. The tree structure of flange case is shown in <a class="reference internal" href="#lst-flange-tree"><span class="std std-numref">Listing 1</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="lst-flange-tree">
+<div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-tree" title="Link to this code"></a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>.
+<span class="linenos"> 2</span>├──<span class="w"> </span><span class="m">0</span>
+<span class="linenos"> 3</span>│<span class="w">   </span>└──<span class="w"> </span>T
+<span class="linenos"> 4</span>├──<span class="w"> </span>Allclean
+<span class="linenos"> 5</span>├──<span class="w"> </span>Allrun
+<span class="linenos"> 6</span>├──<span class="w"> </span>constant
+<span class="linenos"> 7</span>│<span class="w">   </span>└──<span class="w"> </span>transportProperties
+<span class="hll"><span class="linenos"> 8</span>├──<span class="w"> </span>flange.ans
+</span><span class="linenos"> 9</span>└──<span class="w"> </span>system
+<span class="linenos">10</span><span class="w">    </span>├──<span class="w"> </span>controlDict
+<span class="linenos">11</span><span class="w">    </span>├──<span class="w"> </span>fvSchemes
+<span class="linenos">12</span><span class="w">    </span>└──<span class="w"> </span>fvSolution
+</pre></div>
+</div>
+</div>
+<p>The 0 directory contains all initial and boundary conditions, the system folder contains all controlling parameter files, and the constant folder contains constant properties like the mesh - which we will create next.</p>
+</section>
+<section id="mesh-generation">
+<h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Link to this heading"></a></h2>
+<p>The mesh of flange case is prepared as <a class="reference external" href="https://www.ansys.com">Ansys</a> format (see line 8 of <a class="reference internal" href="#lst-flange-tree"><span class="std std-numref">Listing 1</span></a>), you can use OpenFOAM mesh convert utility of <code class="code docutils literal notranslate"><span class="pre">ansysToFoam</span></code> to convert the ansys format to OpenFOAM format, the command is shown below,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansysToFoam<span class="w"> </span>flange.ans<span class="w"> </span>-scale<span class="w"> </span><span class="m">0</span>.001
+</pre></div>
+</div>
+<p>The <code class="code docutils literal notranslate"><span class="pre">-scale</span></code> option is used to set scale factor of the whole mesh.
+Again, you can use command of <code class="code docutils literal notranslate"><span class="pre">tree</span></code> to explore what changes in the case folder, you can get something like <a class="reference internal" href="#lst-flange-mesh-tree"><span class="std std-numref">Listing 2</span></a>, please notice the new files emphasized in the lines 7-13.</p>
+<div class="literal-block-wrapper docutils container" id="lst-flange-mesh-tree">
+<div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">File tree structure of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-tree" title="Link to this code"></a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>.
+<span class="linenos"> 2</span>├──<span class="w"> </span><span class="m">0</span>
+<span class="linenos"> 3</span>│<span class="w">   </span>└──<span class="w"> </span>T
+<span class="linenos"> 4</span>├──<span class="w"> </span>Allclean
+<span class="linenos"> 5</span>├──<span class="w"> </span>Allrun
+<span class="linenos"> 6</span>├──<span class="w"> </span>constant
+<span class="hll"><span class="linenos"> 7</span>│<span class="w">   </span>├──<span class="w"> </span>polyMesh
+</span><span class="hll"><span class="linenos"> 8</span>│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>boundary
+</span><span class="hll"><span class="linenos"> 9</span>│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>faceZones
+</span><span class="hll"><span class="linenos">10</span>│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>faces
+</span><span class="hll"><span class="linenos">11</span>│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>neighbour
+</span><span class="hll"><span class="linenos">12</span>│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>owner
+</span><span class="hll"><span class="linenos">13</span>│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>points
+</span><span class="linenos">14</span>│<span class="w">   </span>└──<span class="w"> </span>transportProperties
+<span class="linenos">15</span>├──<span class="w"> </span>flange.ans
+<span class="linenos">16</span>└──<span class="w"> </span>system
+<span class="linenos">17</span><span class="w">    </span>├──<span class="w"> </span>controlDict
+<span class="linenos">18</span><span class="w">    </span>├──<span class="w"> </span>fvSchemes
+<span class="linenos">19</span><span class="w">    </span>└──<span class="w"> </span>fvSolution
+</pre></div>
+</div>
+</div>
+<p>After converting the mesh, you can use <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize the mesh,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>a.foam
+paraview<span class="w"> </span>a.foam
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="code docutils literal notranslate"><span class="pre">touch</span> <span class="pre">a.foam</span></code> means create a empty file named <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code>. You might might have the <code class="code docutils literal notranslate"><span class="pre">touch</span></code> command in windows; then create the empty file inside the docker shell.</p>
+</div>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Mesh of flange</label><div class="tab-content docutils container">
+<figure class="align-center" id="id1">
+<img alt="../../_images/flange_mesh.png" src="../../_images/flange_mesh.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Mesh of the first case - flange.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Interactive</label><div class="tab-content docutils container">
+<iframe src="../../_static/vtk_js/index.html?fileURL=flange_mesh.vtkjs" width="100%" height="500px"></iframe></div>
+</div>
+</section>
+<section id="boundary-conditions">
+<h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading"></a></h2>
+<p>Next we need to set boundary conditions. Open the file T inside the 0 directory from your local left-hand shell.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/T
+</pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="lst-flange-mesh-bc">
+<div class="code-block-caption"><span class="caption-number">Listing 3 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-flange-mesh-bc" title="Link to this code"></a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="n">volScalarField</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">object</span>      <span class="k">T</span><span class="p">;</span>
+<span class="linenos">14</span><span class="p">}</span>
+<span class="linenos">15</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">16</span>
+<span class="hll"><span class="linenos">17</span><span class="kt">dimensions</span>      <span class="p">[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
+</span><span class="linenos">18</span>
+<span class="linenos">19</span><span class="kt">internalField</span>   <span class="k">uniform</span> <span class="mi">273</span><span class="p">;</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="k">boundaryField</span>
+<span class="linenos">22</span><span class="p">{</span>
+<span class="linenos">23</span>    <span class="n">patch1</span>
+<span class="linenos">24</span>    <span class="p">{</span>
+<span class="linenos">25</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+<span class="linenos">26</span>    <span class="p">}</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="n">patch2</span>
+<span class="linenos">29</span>    <span class="p">{</span>
+<span class="hll"><span class="linenos">30</span>        <span class="kt">type</span>            <span class="k">fixedValue</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">31</span>        <span class="kt">value</span>           <span class="k">uniform</span> <span class="mi">273</span><span class="p">;</span>
+</span><span class="linenos">32</span>    <span class="p">}</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span>    <span class="n">patch3</span>
+<span class="linenos">35</span>    <span class="p">{</span>
+<span class="linenos">36</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+<span class="linenos">37</span>    <span class="p">}</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span>    <span class="n">patch4</span>
+<span class="linenos">40</span>    <span class="p">{</span>
+<span class="linenos">41</span>        <span class="kt">type</span>            <span class="k">fixedValue</span><span class="p">;</span>
+<span class="linenos">42</span>        <span class="kt">value</span>           <span class="k">uniform</span> <span class="mi">573</span><span class="p">;</span>
+<span class="linenos">43</span>    <span class="p">}</span>
+<span class="linenos">44</span><span class="p">}</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span><span class="c1">// ************************************************************************* //</span>
+</pre></div>
+</div>
+</div>
+<p>Notice how boundary conditions are set to parts of the mesh that have an identifier like patch2. Those identifiers are defined during the meshing procedure. Here they were defined in the ansys file.</p>
+<p>Units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a “1” in the fourth columns, the units of the defined properties has units of Kelvin.</p>
+</section>
+<section id="transport-properties">
+<h2>Transport properties<a class="headerlink" href="#transport-properties" title="Link to this heading"></a></h2>
+<p>Next we need to set the value of the thermal diffusivity.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>constant/transportProperties
+</pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="lst-flange-mesh-tp">
+<div class="code-block-caption"><span class="caption-number">Listing 4 </span><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-flange-mesh-tp" title="Link to this code"></a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;constant&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="kt">object</span>      <span class="k">transportProperties</span><span class="p">;</span>
+<span class="linenos">15</span><span class="p">}</span>
+<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">17</span>
+<span class="hll"><span class="linenos">18</span><span class="n">DT</span>              <span class="n">DT</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">2</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span> <span class="mf">4e-05</span><span class="p">;</span>
+</span><span class="linenos">19</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="c1">// ************************************************************************* //</span>
+</pre></div>
+</div>
+</div>
+<p>Again, check that you understand the units, which here add up to m^2/s.</p>
+</section>
+<section id="case-control">
+<h2>Case control<a class="headerlink" href="#case-control" title="Link to this heading"></a></h2>
+<p>Finally, we need to set some control parameters like the time step, run time, output writing. These kind of parameters are set in system/controlDict. Open it and explore the values</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>system/controlDict
+</pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="lst-flange-mesh-cd">
+<div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text">controlDict of the flange case.</span><a class="headerlink" href="#lst-flange-mesh-cd" title="Link to this code"></a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="kt">object</span>      <span class="k">controlDict</span><span class="p">;</span>
+<span class="linenos">15</span><span class="p">}</span>
+<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">17</span>
+<span class="hll"><span class="linenos">18</span><span class="kt">application</span>     <span class="n">laplacianFoam</span><span class="p">;</span>
+</span><span class="linenos">19</span>
+<span class="linenos">20</span><span class="kt">startFrom</span>       <span class="k">latestTime</span><span class="p">;</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="kt">startTime</span>       <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="kt">stopAt</span>          <span class="kt">endTime</span><span class="p">;</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="kt">endTime</span>         <span class="mi">3</span><span class="p">;</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="kt">deltaT</span>          <span class="mf">0.005</span><span class="p">;</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="kt">writeControl</span>    <span class="k">runTime</span><span class="p">;</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span><span class="kt">writeInterval</span>   <span class="mf">0.1</span><span class="p">;</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="kt">purgeWrite</span>      <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="kt">writeFormat</span>     <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="kt">writePrecision</span>  <span class="mi">6</span><span class="p">;</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span><span class="kt">writeCompression</span> <span class="k">off</span><span class="p">;</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span><span class="kt">timeFormat</span>      <span class="k">general</span><span class="p">;</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span><span class="kt">timePrecision</span>   <span class="mi">6</span><span class="p">;</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span><span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>You can find detailed descriptions of the different parameters in the <a class="reference external" href="https://cfd.direct/openfoam/user-guide/">OpenFoam User Guide</a>. Note that the solver we are using is called laplacianFoam.</p>
+</section>
+<section id="running-the-case">
+<h2>Running the case<a class="headerlink" href="#running-the-case" title="Link to this heading"></a></h2>
+<p>Now we are finally ready to run our first test case. Just type this into your docker shell:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>laplacianFoam
+</pre></div>
+</div>
+<p>Notice how several directories are appearing, which contain the intermediate results. You can postprocess the case by simply opening the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> file from paraview.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="OpenFoam.html" class="btn btn-neutral float-left" title="Getting started with OpenFoam" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../L02/Overview.html" class="btn btn-neutral float-right" title="Lecture overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

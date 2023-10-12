@@ -1,0 +1,680 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jupyter Notebook of case results &mdash; HydrothermalFoam Lecture  documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/style.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../../_static/tabs.js?v=3ee01567"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../../../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L01/FirstCase.html">A first test case - heat diffusion</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L02/Exercise.html">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L03/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L03/FirstCase.html">Flow on the pore scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L03/Theory.html">Theoretical background</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L04/Exercise.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Exercise1.html">Exercise 1: Fluid properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Exercise2.html">Exercise 2: Fluxibility and Tvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Exercise3.html">Exercise 3: Permeability and Tvent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L06/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L06/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L06/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L06/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L_FVM/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L_FVM/intro.html">FVM and OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L_FVM/Exercise1.html">Exercise 1</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L_PROJECTS/Project1.html">Project 1: Flow along a detachment fault</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L_PROJECTS/Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L_PROJECTS/Project3.html">Project 3: Hydrofracturing and localized venting above sill intrusion?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">HydrothermalFoam Lecture</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Jupyter Notebook of case results</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L05/cases/Driesner2010/jupyter/Plot_CaseResults.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="Jupyter-Notebook-of-case-results">
+<h1>Jupyter Notebook of case results<a class="headerlink" href="#Jupyter-Notebook-of-case-results" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">scipy.interpolate</span>
+<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">MultipleLocator</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1.inset_locator</span> <span class="kn">import</span> <span class="n">inset_axes</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
+<span class="kn">import</span> <span class="nn">meshio</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">iapws</span> <span class="kn">import</span> <span class="n">IAPWS97</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">vtk</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">vtk.util</span> <span class="kn">import</span> <span class="n">numpy_support</span> <span class="k">as</span> <span class="n">VN</span>
+<span class="c1">#===============================================================</span>
+<span class="c1"># config font</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Arial&#39;</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;mathtext.fontset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cm&#39;</span>
+<span class="n">sec_year</span><span class="o">=</span><span class="mi">86400</span><span class="o">*</span><span class="mi">365</span>
+<span class="n">cm2inch</span><span class="o">=</span><span class="mi">1</span> <span class="c1">#0.393701</span>
+<span class="n">dpi</span><span class="o">=</span><span class="mi">600</span>
+<span class="c1"># path----------</span>
+<span class="n">path_figures</span><span class="o">=</span><span class="s1">&#39;../../../../../_figures&#39;</span>
+</pre></div>
+</div>
+</div>
+<section id="Read-results">
+<h2>Read results<a class="headerlink" href="#Read-results" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">foamToVTK</span></code> utility convert OpenFOAM result to VTK format, e.g. <code class="docutils literal notranslate"><span class="pre">foamToVTK</span> <span class="pre">-time</span> <span class="pre">'823328000000'</span>&#160; <span class="pre">-useTimeName</span></code></p></li>
+<li><p>Read VTK file (Ustructured data) using <a class="reference external" href="https://github.com/nschloe/meshio">meshio</a></p></li>
+<li><p>Triangulate the unstructured data using <code class="docutils literal notranslate"><span class="pre">mpl.tri.Triangulation</span></code><a class="reference external" href="https://matplotlib.org/3.1.0/api/tri_api.html#matplotlib.tri.Triangulation">(doc)</a> function</p></li>
+</ol>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read vtk file generated by `foamToVTK`</span>
+<span class="c1"># vtk unstructured mesh</span>
+<span class="k">def</span> <span class="nf">readVTK_2D</span><span class="p">(</span><span class="n">vtkfile</span><span class="p">,</span><span class="n">positiveDepth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">scale_coord</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">meshio</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">vtkfile</span><span class="p">)</span>
+    <span class="n">points</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">points</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">scale_coord</span><span class="p">,</span><span class="n">points</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">scale_coord</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">positiveDepth</span><span class="p">):</span>
+        <span class="n">y</span><span class="o">=-</span><span class="n">y</span>
+    <span class="n">cells</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">triangles</span><span class="o">=</span><span class="n">cells</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">point_data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">point_data</span>
+    <span class="n">cell_data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">cell_data</span>
+    <span class="n">cell_perm</span><span class="o">=</span><span class="n">cell_data</span><span class="p">[</span><span class="s1">&#39;permeability&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">trimesh</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">cells</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">trimesh</span><span class="o">=</span><span class="n">mpl</span><span class="o">.</span><span class="n">tri</span><span class="o">.</span><span class="n">Triangulation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">trimesh</span><span class="o">=</span><span class="n">mpl</span><span class="o">.</span><span class="n">tri</span><span class="o">.</span><span class="n">Triangulation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">triangles</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">trimesh</span><span class="p">,</span> <span class="n">point_data</span><span class="p">,</span><span class="n">cell_data</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Maximum-vent-temperature-changes-with-time">
+<h2>Maximum vent temperature changes with time<a class="headerlink" href="#Maximum-vent-temperature-changes-with-time" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path_results</span><span class="o">=</span><span class="s1">&#39;../HS86kw/results&#39;</span>
+<span class="n">permeabilities</span><span class="o">=</span><span class="p">[</span><span class="mf">1E-16</span><span class="p">,</span><span class="mf">3E-16</span><span class="p">,</span><span class="mf">5E-16</span><span class="p">,</span><span class="mf">8E-16</span><span class="p">,</span><span class="mf">1E-15</span><span class="p">,</span><span class="mf">2E-15</span><span class="p">,</span><span class="mf">3E-15</span><span class="p">,</span><span class="mf">4E-15</span><span class="p">,</span><span class="mf">6E-15</span><span class="p">,</span><span class="mf">8E-15</span><span class="p">,</span><span class="mf">1E-14</span><span class="p">,</span><span class="mf">3E-14</span><span class="p">,</span><span class="mf">6E-14</span><span class="p">,</span><span class="mf">8E-14</span><span class="p">,</span><span class="mf">1E-13</span><span class="p">,</span><span class="mf">2E-13</span><span class="p">,</span><span class="mf">3E-13</span><span class="p">,</span><span class="mf">4E-13</span><span class="p">,</span><span class="mf">1E-12</span><span class="p">]</span>
+<span class="n">ventT</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:[],</span><span class="s1">&#39;max&#39;</span><span class="p">:[],</span><span class="s1">&#39;mean&#39;</span><span class="p">:[]}</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ventT</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">ventT</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">permeabilities</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">8.5</span><span class="p">,</span><span class="mf">4.95</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ls</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span>
+<span class="n">start_steadState</span><span class="o">=-</span><span class="mi">100</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">permeabilities</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">perm</span><span class="o">=</span><span class="n">permeabilities</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">fname_ventT</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/ventT_</span><span class="si">%.0E</span><span class="s1">.txt&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_results</span><span class="p">,</span><span class="n">perm</span><span class="p">))</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">fname_ventT</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">T</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ventT</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">start_steadState</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ventT</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">start_steadState</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">ventT</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">start_steadState</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%.0E</span><span class="s1">, </span><span class="si">%.0f</span><span class="s1">, </span><span class="si">%.0f</span><span class="s1">, </span><span class="si">%.0f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">perm</span><span class="p">,</span> <span class="n">ventT</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">ventT</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">ventT</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">//</span><span class="mi">10</span> <span class="o">==</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;solid&#39;</span>
+    <span class="k">elif</span><span class="p">(</span><span class="n">i</span><span class="o">//</span><span class="mi">10</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span>
+    <span class="k">elif</span><span class="p">(</span><span class="n">i</span><span class="o">//</span><span class="mi">10</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">perm</span><span class="o">&lt;</span><span class="mf">5E-16</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">3000</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.0E</span><span class="s1"> (-3 kyrs)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">perm</span><span class="p">),</span><span class="n">ls</span><span class="o">=</span><span class="n">ls</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.0E</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">perm</span><span class="p">),</span><span class="n">ls</span><span class="o">=</span><span class="n">ls</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mf">0.02</span><span class="p">),</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Permeability (m$^{\mathregular</span><span class="si">{2}</span><span class="s1">}$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time (kyrs)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Maximum vent temperature ($^{\circ}$C)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">540</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/ventT_time_perm.pdf&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/ventT_time_perm.jpg&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ 1E-12, 73, 118, 157
+ 4E-13, 83, 160, 210
+ 3E-13, 106, 175, 223
+ 2E-13, 120, 200, 258
+ 1E-13, 178, 241, 292
+ 8E-14, 200, 254, 311
+ 6E-14, 190, 282, 337
+ 3E-14, 323, 369, 400
+ 1E-14, 357, 382, 395
+ 8E-15, 363, 384, 403
+ 6E-15, 355, 387, 395
+ 4E-15, 381, 390, 399
+ 3E-15, 386, 393, 399
+ 2E-15, 403, 404, 404
+ 1E-15, 435, 446, 459
+ 8E-16, 454, 460, 462
+ 5E-16, 482, 482, 482
+ 3E-16, 389, 390, 391
+ 1E-16, 337, 342, 345
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../../../_images/lectures_L05_cases_Driesner2010_jupyter_Plot_CaseResults_6_1.png" src="../../../../../_images/lectures_L05_cases_Driesner2010_jupyter_Plot_CaseResults_6_1.png" />
+</div>
+</div>
+</section>
+<section id="Vent-temperature-as-a-function-of-permeability">
+<h2>Vent temperature as a function of permeability<a class="headerlink" href="#Vent-temperature-as-a-function-of-permeability" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">permeabilities</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">permeabilities</span><span class="p">)</span>
+<span class="c1"># ax.semilogx(permeabilities,ventT[&#39;mean&#39;],&#39;o&#39;)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">permeabilities</span><span class="p">,</span><span class="n">ventT</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="p">[</span><span class="n">ventT</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">ventT</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">],</span> <span class="n">ventT</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">ventT</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]],</span>
+            <span class="n">capsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">elinewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">mec</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="n">permeabilities</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">permeabilities</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="n">ls</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Permeability (m$^{\mathregular</span><span class="si">{2}</span><span class="s1">}$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Maximum vent temperature ($^{\circ}$C)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,),</span><span class="n">numticks</span><span class="o">=</span><span class="mi">20</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span><span class="n">numticks</span><span class="o">=</span><span class="mi">20</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">520</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">permeabilities</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">permeabilities</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/ventT_perm.pdf&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/ventT_perm.svg&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../../../_images/lectures_L05_cases_Driesner2010_jupyter_Plot_CaseResults_8_0.png" src="../../../../../_images/lectures_L05_cases_Driesner2010_jupyter_Plot_CaseResults_8_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,994 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. Read and plot mesh information &mdash; HydrothermalFoam Lecture  documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/tabs.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/plot_directive.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/style.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../_static/tabs.js?v=3ee01567"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Project 1: Flow along a detachment fault" href="../../../L_PROJECTS/Project1.html" />
+    <link rel="prev" title="Exercise 1" href="../../Exercise1.html" /> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L01/FirstCase.html">A first test case - heat diffusion</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L02/Exercise.html">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../L03/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L03/FirstCase.html">Flow on the pore scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L03/Theory.html">Theoretical background</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L04/Exercise.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../L05/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L05/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L05/Exercise1.html">Exercise 1: Fluid properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L05/Exercise2.html">Exercise 2: Fluxibility and Tvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L05/Exercise3.html">Exercise 3: Permeability and Tvent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../L06/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L06/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L06/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L06/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">FVM and OpenFoam</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../Exercise1.html">Exercise 1</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../Exercise1.html#theory">Theory</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../Exercise1.html#openfoam-implementation">OpenFOAM implementation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../Exercise1.html#step0-generate-mesh">Step0, Generate mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Exercise1.html#step-1-read-mesh-and-input-field">Step 1, Read mesh and input field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Exercise1.html#step-2-discretize-laplacian-term">Step 2, discretize Laplacian term</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Exercise1.html#step-3-discretize-transient-term">Step 3, discretize transient term</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Exercise1.html#step-4-construct-the-final-coefficient-matrix-and-rhs">Step 4, construct the final coefficient matrix and RHS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Exercise1.html#step-5-solve">Step 5, solve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Exercise1.html#step-6-write">Step 6, write</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../Exercise1.html#jupyter-notebook">Jupyter notebook</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">1. Read and plot mesh information</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#2.-Boundary-conditions">2. Boundary conditions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#3.-Plot-coefficients-matrix">3. Plot coefficients matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#1.-Coordinates-and-delta-coefficients-of-internal-cell">1. Coordinates and delta coefficients of internal cell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#2.-Coordinates-and-delta-coefficients-of-boundary-cell">2. Coordinates and delta coefficients of boundary cell</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../L_PROJECTS/Project1.html">Project 1: Flow along a detachment fault</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L_PROJECTS/Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../L_PROJECTS/Project3.html">Project 3: Hydrofracturing and localized venting above sill intrusion?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">HydrothermalFoam Lecture</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../Exercise1.html">Exercise 1</a></li>
+      <li class="breadcrumb-item active">1. Read and plot mesh information</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L_FVM/cases/jupyter/VisualizeResults.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt .copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vtk</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">vtk.util</span> <span class="kn">import</span> <span class="n">numpy_support</span> <span class="k">as</span> <span class="n">VN</span>
+<span class="kn">import</span> <span class="nn">meshio</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">MultipleLocator</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">linecache</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sciPyFoam.polyMesh2d</span> <span class="k">as</span> <span class="nn">mesh2d</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Arial&#39;</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;mathtext.fontset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;cm&#39;</span>
+<span class="n">dpi</span><span class="o">=</span><span class="mi">600</span>
+<span class="n">fig_fmt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;svg&#39;</span><span class="p">,</span><span class="s1">&#39;pdf&#39;</span><span class="p">]</span>
+<span class="c1"># path----------</span>
+<span class="n">path_figures</span><span class="o">=</span><span class="s1">&#39;../../../../_figures&#39;</span>
+</pre></div>
+</div>
+</div>
+<section id="1.-Read-and-plot-mesh-information">
+<h1>1. Read and plot mesh information<a class="headerlink" href="#1.-Read-and-plot-mesh-information" title="Link to this heading"></a></h1>
+<p>Please use command <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">sciPyFoam</span></code> to install a usefull python package to read polyMesh and plot mesh topology.</p>
+<p>There are 5 functions are available in <code class="docutils literal notranslate"><span class="pre">sciPyFoam.polyMesh</span></code> 1. <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">cells_rect=mesh2d.readInternal('case/VTK/case_0.vtk')</span></code> 2. <code class="docutils literal notranslate"><span class="pre">faces</span> <span class="pre">=</span> <span class="pre">readFaces(caseDir)</span></code> 3. <code class="docutils literal notranslate"><span class="pre">owners</span> <span class="pre">=</span> <span class="pre">readOwner(caseDir)</span></code> 4. <code class="docutils literal notranslate"><span class="pre">neighbours</span> <span class="pre">=</span> <span class="pre">readNeighbour(caseDir)</span></code> 5. <code class="docutils literal notranslate"><span class="pre">boundaries,</span> <span class="pre">index_internalFaces,</span> <span class="pre">name_faces</span> <span class="pre">=</span> <span class="pre">readBoundary(caseDir,nFaces)</span></code></p>
+<p><strong>Interesting and smart design! the internal face index is consecutive and from zero.</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">caseName</span><span class="o">=</span><span class="s1">&#39;regularBox&#39;</span> <span class="c1"># regularBox, unstructured, these are two cases we prepared</span>
+<span class="n">solver</span><span class="o">=</span><span class="s1">&#39;test_laplacianFoam&#39;</span>
+<span class="n">caseDir</span><span class="o">=</span><span class="s1">&#39;../</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">caseName</span><span class="p">)</span> <span class="c1"># set your own path!!!</span>
+<span class="n">mesh</span><span class="o">=</span><span class="n">mesh2d</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">caseDir</span><span class="p">)</span>
+<span class="n">nCells</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;faces&#39;</span><span class="p">])</span>
+<span class="n">index_cellC</span><span class="o">=</span><span class="mi">12</span>
+<span class="k">if</span><span class="p">(</span><span class="n">index_cellC</span><span class="o">&gt;=</span><span class="n">nCells</span><span class="p">):</span>
+    <span class="n">index_cellC</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">nCells</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># plot</span>
+<span class="n">figsize_mesh</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize_mesh</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">cells_rect</span><span class="p">,</span><span class="n">faces</span><span class="p">,</span><span class="n">boundaries</span><span class="p">,</span><span class="n">owners</span><span class="p">,</span><span class="n">neighbours</span><span class="o">=</span><span class="n">mesh2d</span><span class="o">.</span><span class="n">plotMeshTopology</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">caseDir</span><span class="p">,</span><span class="n">ind_cell</span><span class="o">=</span><span class="n">index_cellC</span><span class="p">,</span><span class="n">index_intFace</span><span class="o">=</span><span class="mi">31</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># set axis</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X (mm)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y (mm)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">leg</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">leg</span><span class="o">.</span><span class="n">legendHandles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_legmarker</span><span class="o">.</span><span class="n">set_markersize</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">fname_fig</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/mesh_FVM_</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">,</span><span class="n">caseName</span><span class="p">,</span><span class="n">fmt</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">fig_fmt</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname_fig</span><span class="p">(</span><span class="n">fmt</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span><span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+nBoundaries: 5,  [&#39;left&#39;, &#39;right&#39;, &#39;top&#39;, &#39;bottom&#39;, &#39;frontAndBack&#39;]
+nInternalFaces: 47
+nBoundaries: 5,  [&#39;left&#39;, &#39;right&#39;, &#39;top&#39;, &#39;bottom&#39;, &#39;frontAndBack&#39;]
+nInternalFaces: 47
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../../_images/lectures_L_FVM_cases_jupyter_VisualizeResults_3_1.png" src="../../../../_images/lectures_L_FVM_cases_jupyter_VisualizeResults_3_1.png" />
+</div>
+</div>
+</section>
+<section id="2.-Boundary-conditions">
+<h1>2. Boundary conditions<a class="headerlink" href="#2.-Boundary-conditions" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">bcs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;left&#39;</span><span class="p">:{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span><span class="s1">&#39;$T$ = 273 K&#39;</span><span class="p">,</span><span class="s1">&#39;lc&#39;</span><span class="p">:</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:[],</span><span class="s1">&#39;y&#39;</span><span class="p">:[],</span> <span class="s1">&#39;scale&#39;</span><span class="p">:[</span><span class="mf">0.95</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;bc&#39;</span><span class="p">:</span><span class="mi">273</span><span class="p">},</span>
+    <span class="s1">&#39;right&#39;</span><span class="p">:{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span><span class="s1">&#39;$T$ = 573 K&#39;</span><span class="p">,</span><span class="s1">&#39;lc&#39;</span><span class="p">:</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:[],</span><span class="s1">&#39;y&#39;</span><span class="p">:[],</span> <span class="s1">&#39;scale&#39;</span><span class="p">:[</span><span class="mf">0.95</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;bc&#39;</span><span class="p">:</span><span class="mi">573</span><span class="p">},</span>
+    <span class="s1">&#39;top&#39;</span><span class="p">:{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">nabla T $ = 0&#39;</span><span class="p">,</span><span class="s1">&#39;lc&#39;</span><span class="p">:</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:[],</span><span class="s1">&#39;y&#39;</span><span class="p">:[],</span> <span class="s1">&#39;scale&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="s1">&#39;bc&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span>
+    <span class="s1">&#39;bottom&#39;</span><span class="p">:{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">nabla T $ = 0&#39;</span><span class="p">,</span><span class="s1">&#39;lc&#39;</span><span class="p">:</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">:[],</span><span class="s1">&#39;y&#39;</span><span class="p">:[],</span> <span class="s1">&#39;scale&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span> <span class="s1">&#39;bc&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}}</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
+<span class="c1"># print(faces)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span><span class="n">index</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">boundaries</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span><span class="n">boundaries</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]):</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">name</span><span class="o">==</span><span class="s1">&#39;frontAndBack&#39;</span><span class="p">):</span>
+        <span class="k">continue</span>
+    <span class="k">for</span> <span class="n">patchIndex</span> <span class="ow">in</span> <span class="n">index</span><span class="p">:</span>
+        <span class="n">x_bd</span><span class="p">,</span><span class="n">y_bd</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">][</span><span class="n">patchIndex</span><span class="p">]],</span> <span class="n">y</span><span class="p">[</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">][</span><span class="n">patchIndex</span><span class="p">]]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bd</span><span class="p">,</span><span class="n">y_bd</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;lc&#39;</span><span class="p">],</span><span class="n">lw</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="n">clip_on</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_bd</span><span class="p">)</span>
+        <span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_bd</span><span class="p">)</span>
+    <span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">],</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">])</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">==</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">*</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;scale&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">*</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;scale&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">]),</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="n">name</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;lc&#39;</span><span class="p">])</span>
+    <span class="k">elif</span><span class="p">(</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">==</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">*</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;scale&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">*</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;scale&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">]),</span><span class="n">ha</span><span class="o">=</span><span class="n">name</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">bcs</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;lc&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.51</span><span class="p">,</span><span class="s1">&#39;Initial condition: $T$ = 273 K&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.49</span><span class="p">,</span><span class="s1">&#39;The front and back boundary is empty for the 2D case&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span><span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span><span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span><span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;</span><span class="si">%.3f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span><span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;</span><span class="si">%.3f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span><span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="c1"># set axis</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">([</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">()])</span>
+<span class="c1"># ax.set_xlabel(&#39;X (mm)&#39;)</span>
+<span class="c1"># ax.set_ylabel(&#39;Y (mm)&#39;)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="c1"># leg=ax.legend(ncol=7,loc=&#39;lower left&#39;, bbox_to_anchor=[0,1])</span>
+<span class="c1"># leg.legendHandles[0]._legmarker.set_markersize(12)</span>
+<span class="n">fname_fig</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/boundaryConditions_FVM_</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">,</span><span class="n">caseName</span><span class="p">,</span><span class="n">fmt</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">fig_fmt</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname_fig</span><span class="p">(</span><span class="n">fmt</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span><span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../../_images/lectures_L_FVM_cases_jupyter_VisualizeResults_5_0.png" src="../../../../_images/lectures_L_FVM_cases_jupyter_VisualizeResults_5_0.png" />
+</div>
+</div>
+</section>
+<section id="3.-Plot-coefficients-matrix">
+<h1>3. Plot coefficients matrix<a class="headerlink" href="#3.-Plot-coefficients-matrix" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot</span>
+<span class="n">figwidth</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">figwidth</span><span class="p">,</span> <span class="n">figwidth</span><span class="o">/</span><span class="p">(</span><span class="n">nCells</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span><span class="o">*</span><span class="n">nCells</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
+<span class="n">xmin</span><span class="p">,</span><span class="n">xmax</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">nCells</span><span class="o">+</span><span class="mf">6.5</span>
+<span class="n">ymin</span><span class="p">,</span><span class="n">ymax</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">nCells</span><span class="o">-</span><span class="mf">0.5</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ymin</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+
+<span class="c1"># 1. plot matrix A</span>
+<span class="c1"># ax.axvspan(xmin,xmin+nCells, fc=&#39;lightgray&#39;,alpha=0.5)</span>
+<span class="n">w_bracket</span><span class="o">=</span><span class="mf">0.2</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">xmin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">xmin</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">l_brack</span><span class="p">,</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">-</span><span class="n">w_bracket</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">x0</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="c1"># 2. plot vector T</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mf">1.5</span>
+<span class="n">x_T</span><span class="o">=</span><span class="n">x0</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;lightblue&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="n">w_bracket</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">x0</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">x0</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">l_brack</span><span class="p">,</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mi">3</span><span class="o">-</span><span class="n">w_bracket</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">x0</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+
+<span class="c1"># 3. plot vector b</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mf">4.5</span>
+<span class="n">x_b</span><span class="o">=</span><span class="n">x0</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">fc</span><span class="o">=</span><span class="s1">&#39;pink&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mi">4</span><span class="o">+</span><span class="n">w_bracket</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">x0</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">x0</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">l_brack</span><span class="p">,</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">x0</span><span class="o">=</span><span class="n">nCells</span><span class="o">+</span><span class="mi">6</span><span class="o">-</span><span class="n">w_bracket</span>
+<span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="o">=</span><span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">x0</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span><span class="n">x0</span><span class="p">],[</span><span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymin</span><span class="o">-</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">,</span> <span class="n">ymax</span><span class="o">+</span><span class="n">w_bracket</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_bracket</span><span class="p">,</span> <span class="n">y_bracket</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="c1"># plot matrix value</span>
+<span class="n">ms</span><span class="o">=</span><span class="mi">20</span>
+<span class="n">label_C_internal</span><span class="o">=</span><span class="s1">&#39;a$_</span><span class="si">{C}</span><span class="s1">$ (internal cell)&#39;</span>
+<span class="n">label_C_boundary</span><span class="o">=</span><span class="s1">&#39;a$_</span><span class="si">{C}</span><span class="s1">$ (boundary cell)&#39;</span>
+<span class="n">label_F_owner</span><span class="o">=</span><span class="s1">&#39;$a_</span><span class="si">{F}</span><span class="s1">$ (owner cell)&#39;</span>
+<span class="n">label_F_neigh</span><span class="o">=</span><span class="s1">&#39;$a_</span><span class="si">{F}</span><span class="s1">$ (neighbour cell)&#39;</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">owner</span><span class="p">,</span><span class="n">neighbour</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nCells</span><span class="p">),</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;owner&#39;</span><span class="p">],</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;neighbour&#39;</span><span class="p">]):</span>
+    <span class="n">faces_cellC</span><span class="o">=</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;faces&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">num_internal_faces</span><span class="o">=</span><span class="mi">0</span>
+    <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">faces_cellC</span><span class="p">:</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;internal&#39;</span><span class="p">):</span>
+            <span class="n">num_internal_faces</span><span class="o">=</span><span class="n">num_internal_faces</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">num_internal_faces</span><span class="o">==</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">faces_cellC</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">)):</span> <span class="c1"># remove frontAndBack faces</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span><span class="n">mfc</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">),</span><span class="n">mec</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label_C_internal</span><span class="p">)</span>
+        <span class="n">label_C_internal</span><span class="o">=</span><span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span><span class="n">mfc</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">),</span><span class="n">mec</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label_C_boundary</span><span class="p">)</span>
+        <span class="n">label_C_boundary</span><span class="o">=</span><span class="kc">None</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;$a_{C_{</span><span class="si">%d</span><span class="s1">}}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="c1">#     nodes_cellC=np.array([faces[&#39;index&#39;][ii] for ii in faces_cellC]).flatten()</span>
+<span class="c1">#     x_cellC,y_cellC,z_cellC=x[nodes_cellC], y[nodes_cellC],z[nodes_cellC]</span>
+<span class="c1">#     xc,yc=x_cellC.mean(),y_cellC.mean()</span>
+    <span class="n">owner</span><span class="p">,</span><span class="n">neighbour</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">owner</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">neighbour</span><span class="p">)</span>
+    <span class="c1"># owner cell</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">owner</span><span class="p">,</span><span class="n">owner</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span><span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span><span class="n">mec</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label_F_owner</span><span class="p">)</span>
+    <span class="n">label_F_owner</span><span class="o">=</span><span class="kc">None</span>
+    <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">owner</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">faces_cellC</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;owners&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span><span class="o">==</span><span class="n">o</span><span class="p">):</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;$a_{F_{</span><span class="si">%d</span><span class="s1">}}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">face</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="c1"># neighbour cell</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">neighbour</span><span class="p">,</span><span class="n">neighbour</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">ms</span><span class="o">=</span><span class="n">ms</span><span class="p">,</span><span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span><span class="n">mec</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label_F_neigh</span><span class="p">)</span>
+    <span class="n">label_F_neigh</span><span class="o">=</span><span class="kc">None</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">neighbour</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">faces_cellC</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;internal&#39;</span><span class="p">):</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;neighbours&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span><span class="o">==</span><span class="n">n</span><span class="p">):</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;$a_{F_{</span><span class="si">%d</span><span class="s1">}}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">face</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="c1"># T</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_T</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;$T_{\mathregular{</span><span class="si">%d</span><span class="s1">}}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+    <span class="c1"># b</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_b</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;$b_{\mathregular{</span><span class="si">%d</span><span class="s1">}}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="c1"># marker the selected cell coefficents</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhspan</span><span class="p">(</span><span class="n">index_cellC</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">index_cellC</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="mf">0.985</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;limegreen&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Coefficients of the selected cell $C$&#39;</span><span class="p">)</span>
+
+<span class="c1"># dot</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nCells</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span><span class="n">nCells</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">mec</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">)</span>
+<span class="c1"># =</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">nCells</span><span class="o">+</span><span class="mf">3.5</span><span class="p">,</span><span class="n">nCells</span><span class="o">/</span><span class="mf">2.0</span><span class="p">,</span><span class="s1">&#39;=&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="c1"># plot comments</span>
+<span class="n">comments</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">For specific cell in the OpenFOAM framework, i.e. polyMesh,</span>
+<span class="s2">owners represent the lower triangular part of the matrix (lower addressing),</span>
+<span class="s2">while neighbors refer to the upper triangular part (upper addressing)</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="n">comments</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="c1"># ax.grid(axis=&#39;y&#39;,which=&#39;major&#39;,lw=1, color=&#39;gray&#39;)</span>
+<span class="c1"># ax.yaxis.set_ticklabels([])</span>
+<span class="c1"># plt.tight_layout()</span>
+<span class="n">leg</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">handletextpad</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="c1"># for l in leg.legendHandles[0:3]:</span>
+<span class="c1">#     l._legmarker.set_markersize(16)</span>
+<span class="n">fname_fig</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/matrix_FVM_</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">,</span><span class="n">caseName</span><span class="p">,</span><span class="n">fmt</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">fig_fmt</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname_fig</span><span class="p">(</span><span class="n">fmt</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span><span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../../_images/lectures_L_FVM_cases_jupyter_VisualizeResults_7_0.png" src="../../../../_images/lectures_L_FVM_cases_jupyter_VisualizeResults_7_0.png" />
+</div>
+</div>
+<section id="Implementation-in-OpenFOAM">
+<h2>Implementation in OpenFOAM<a class="headerlink" href="#Implementation-in-OpenFOAM" title="Link to this heading"></a></h2>
+<p>Not yet test for unstructured mesh!!!</p>
+</section>
+</section>
+<section id="1.-Coordinates-and-delta-coefficients-of-internal-cell">
+<h1>1. Coordinates and delta coefficients of internal cell<a class="headerlink" href="#1.-Coordinates-and-delta-coefficients-of-internal-cell" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[126]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotCell</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">index_cell</span><span class="p">,</span> <span class="n">coeffType</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">showFace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">showF</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">D</span><span class="o">=</span><span class="mf">4E-5</span><span class="p">):</span>
+    <span class="n">faces_cellC</span><span class="o">=</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;faces&#39;</span><span class="p">][</span><span class="n">index_cell</span><span class="p">]</span>
+    <span class="n">nodes_cellC</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">][</span><span class="n">ii</span><span class="p">]</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">faces_cellC</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">x_cellC</span><span class="p">,</span><span class="n">y_cellC</span><span class="p">,</span><span class="n">z_cellC</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">nodes_cellC</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">nodes_cellC</span><span class="p">],</span><span class="n">z</span><span class="p">[</span><span class="n">nodes_cellC</span><span class="p">]</span>
+    <span class="n">xc</span><span class="p">,</span><span class="n">yc</span><span class="o">=</span><span class="n">x_cellC</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">y_cellC</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">a_C_cellC</span><span class="o">=</span><span class="mi">0</span>
+    <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">faces_cellC</span><span class="p">:</span>
+        <span class="n">x_tmp</span><span class="p">,</span><span class="n">y_tmp</span><span class="p">,</span><span class="n">z_tmp</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]],</span> <span class="n">y</span><span class="p">[</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]],</span> <span class="n">z</span><span class="p">[</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]]</span>
+        <span class="n">v1</span><span class="o">=</span><span class="p">[</span><span class="n">x_tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">x_tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y_tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">y_tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">z_tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">z_tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">v2</span><span class="o">=</span><span class="p">[</span><span class="n">x_tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">x_tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y_tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">y_tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">z_tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">z_tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">Sf</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span><span class="n">v2</span><span class="p">)</span>
+        <span class="n">magSf</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Sf</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">norm</span><span class="o">=</span><span class="n">Sf</span><span class="o">/</span><span class="n">magSf</span>
+        <span class="n">ang_rot</span> <span class="o">=</span> <span class="mi">90</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">norm</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">180</span> <span class="c1"># make text nice in the figure</span>
+        <span class="c1"># !!!!!!!! key point !!!!!!!!!!!!!!!!</span>
+        <span class="n">norm_face_cell</span><span class="p">,</span> <span class="n">Sf_face_cell</span> <span class="o">=</span> <span class="n">norm</span><span class="p">,</span> <span class="n">Sf</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;owners&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span><span class="o">==</span><span class="n">index_cell</span><span class="p">):</span>
+            <span class="n">norm_face_cell</span><span class="p">,</span> <span class="n">Sf_face_cell</span> <span class="o">=</span> <span class="n">norm</span><span class="p">,</span> <span class="n">Sf</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">norm_face_cell</span><span class="p">,</span> <span class="n">Sf_face_cell</span> <span class="o">=</span> <span class="o">-</span><span class="n">norm</span><span class="p">,</span> <span class="o">-</span><span class="n">Sf</span>
+        <span class="c1">#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">x_tmp</span><span class="p">,</span> <span class="n">y_tmp</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="n">fc</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="n">ec</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+        <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
+        <span class="c1"># plot face</span>
+        <span class="k">if</span><span class="p">(</span> <span class="p">(</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span><span class="o">!=</span><span class="s1">&#39;frontAndBack&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">showFace</span><span class="o">==</span><span class="kc">True</span><span class="p">)</span> <span class="p">):</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">y_tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="s1">&#39;$f_{</span><span class="si">%d</span><span class="s1">}, S=</span><span class="si">%.5f</span><span class="s1">\ m^2$</span><span class="se">\n</span><span class="s1">$C_f(</span><span class="si">%.3f</span><span class="s1">, </span><span class="si">%.3f</span><span class="s1">, </span><span class="si">%.3f</span><span class="s1">)$</span><span class="se">\n</span><span class="s1">$</span><span class="se">\\</span><span class="s1">vec</span><span class="si">{n}</span><span class="s1">_f=(</span><span class="si">%.1f</span><span class="s1">, </span><span class="si">%.1f</span><span class="s1">, </span><span class="si">%.1f</span><span class="s1">)$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">magSf</span><span class="p">,</span>
+                    <span class="n">x_tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">y_tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">z_tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">norm_face_cell</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">norm_face_cell</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">norm_face_cell</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+                    <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">bbox</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span><span class="s1">&#39;ec&#39;</span><span class="p">:</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">:</span><span class="mf">0.8</span><span class="p">},</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="n">ang_rot</span><span class="p">)</span>
+        <span class="c1"># plot cell who share face with the cell</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">showF</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;internal&#39;</span><span class="p">)):</span>
+            <span class="n">ind_cellF</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;neighbours&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">ind_cellF</span><span class="o">!=</span><span class="n">index_cell</span><span class="p">):</span>
+                <span class="n">faces_cellF</span><span class="o">=</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;faces&#39;</span><span class="p">][</span><span class="n">ind_cellF</span><span class="p">]</span>
+                <span class="n">nodes_cellF</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">][</span><span class="n">ii</span><span class="p">]</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">faces_cellF</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+                <span class="n">x_cellF</span><span class="p">,</span> <span class="n">y_cellF</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">nodes_cellF</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">nodes_cellF</span><span class="p">]</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_cellF</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">y_cellF</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">-</span><span class="mf">0.0005</span><span class="p">,</span><span class="s1">&#39;$F_{</span><span class="si">%d</span><span class="s1">}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">face</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+                <span class="c1"># plot delta coefficient</span>
+                <span class="n">dist_C_F</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">xc</span><span class="o">-</span><span class="n">x_cellF</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">yc</span><span class="o">-</span><span class="n">y_cellF</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">delta_CF</span><span class="o">=</span><span class="mf">1.0</span><span class="o">/</span><span class="n">dist_C_F</span>
+                <span class="n">a_F</span><span class="o">=</span><span class="n">D</span><span class="o">*</span><span class="n">delta_CF</span><span class="o">*</span><span class="n">magSf</span>
+                <span class="n">a_C_cellC</span><span class="o">-=</span><span class="n">a_F</span>
+                <span class="n">text</span><span class="o">=</span><span class="s1">&#39;deltaCoeffs: $</span><span class="se">\\</span><span class="s1">frac</span><span class="si">{1}</span><span class="s1">{\delta_{C\leftrightarrow F}}$ = </span><span class="si">%.1f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">delta_CF</span><span class="p">)</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">coeffType</span><span class="o">==</span><span class="s1">&#39;Laplacian&#39;</span><span class="p">):</span>
+                    <span class="n">text</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">$a_{F_{</span><span class="si">%d</span><span class="s1">}}=</span><span class="se">\\</span><span class="s1">frac{D_f</span><span class="se">\\</span><span class="s1">times S_f}{\delta_{C\leftrightarrow F}}$=</span><span class="si">%.1E</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">a_F</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">+</span><span class="n">norm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">magSf</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">y_tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">+</span><span class="n">norm</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">magSf</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span>
+                        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="n">ang_rot</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">showF</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;internal&#39;</span><span class="p">)):</span>
+            <span class="n">ind_cellF</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;owners&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">ind_cellF</span><span class="o">!=</span><span class="n">index_cell</span><span class="p">):</span>
+                <span class="n">faces_cellF</span><span class="o">=</span><span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;faces&#39;</span><span class="p">][</span><span class="n">ind_cellF</span><span class="p">]</span>
+                <span class="n">nodes_cellF</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">][</span><span class="n">ii</span><span class="p">]</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">faces_cellF</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+                <span class="n">x_cellF</span><span class="p">,</span> <span class="n">y_cellF</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="n">nodes_cellF</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">nodes_cellF</span><span class="p">]</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_cellF</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">y_cellF</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">-</span><span class="mf">0.0005</span><span class="p">,</span><span class="s1">&#39;$F_{</span><span class="si">%d</span><span class="s1">}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">face</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+                <span class="c1"># plot delta coefficient</span>
+                <span class="n">dist_C_F</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">xc</span><span class="o">-</span><span class="n">x_cellF</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">yc</span><span class="o">-</span><span class="n">y_cellF</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">delta_CF</span><span class="o">=</span><span class="mf">1.0</span><span class="o">/</span><span class="n">dist_C_F</span>
+                <span class="n">a_F</span><span class="o">=</span><span class="n">D</span><span class="o">*</span><span class="n">delta_CF</span><span class="o">*</span><span class="n">magSf</span>
+                <span class="n">a_C_cellC</span><span class="o">-=</span><span class="n">a_F</span>
+                <span class="n">text</span><span class="o">=</span><span class="s1">&#39;deltaCoeffs: $</span><span class="se">\\</span><span class="s1">frac</span><span class="si">{1}</span><span class="s1">{\delta_{C\leftrightarrow F}}$ = </span><span class="si">%.1f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">delta_CF</span><span class="p">)</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">coeffType</span><span class="o">==</span><span class="s1">&#39;Laplacian&#39;</span><span class="p">):</span>
+                    <span class="n">text</span><span class="o">+=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">$a_{F_{</span><span class="si">%d</span><span class="s1">}}=</span><span class="se">\\</span><span class="s1">frac{D_f</span><span class="se">\\</span><span class="s1">times S_f}{\delta_{C\leftrightarrow F}}$=</span><span class="si">%.1E</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">a_F</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">-</span><span class="n">norm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">magSf</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">y_tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">-</span><span class="n">norm</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">magSf</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="n">text</span><span class="p">,</span>
+                        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="n">ang_rot</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">showF</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">,</span><span class="s1">&#39;left&#39;</span><span class="p">,</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span><span class="s1">&#39;top&#39;</span><span class="p">])):</span>
+            <span class="n">x_cellF</span><span class="p">,</span> <span class="n">y_cellF</span><span class="o">=</span><span class="n">x_tmp</span><span class="p">,</span> <span class="n">y_tmp</span>
+            <span class="c1"># plot delta coefficient</span>
+            <span class="n">dist_C_F</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">xc</span><span class="o">-</span><span class="n">x_cellF</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">yc</span><span class="o">-</span><span class="n">y_cellF</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">delta_CF</span><span class="o">=</span><span class="mf">1.0</span><span class="o">/</span><span class="n">dist_C_F</span>
+            <span class="n">gradientInternalCoeffs</span><span class="o">=</span><span class="s1">&#39;-$</span><span class="se">\\</span><span class="s1">frac</span><span class="si">{1}</span><span class="s1">{\delta_{C\leftrightarrow f}}$&#39;</span>
+            <span class="n">gradientBoundaryCoeffs</span><span class="o">=</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">frac</span><span class="si">{1}</span><span class="s1">{\delta_{C\leftrightarrow f}} </span><span class="se">\\</span><span class="s1">times T_f$ = </span><span class="si">%.1f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">delta_CF</span><span class="o">*</span><span class="n">bcs</span><span class="p">[</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]][</span><span class="s1">&#39;bc&#39;</span><span class="p">])</span>
+            <span class="n">internalCoeffs</span><span class="o">=-</span><span class="n">delta_CF</span><span class="o">*</span><span class="n">D</span><span class="o">*</span><span class="n">magSf</span>
+            <span class="n">boundaryCoeffs</span><span class="o">=</span><span class="n">internalCoeffs</span><span class="o">*</span><span class="n">bcs</span><span class="p">[</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]][</span><span class="s1">&#39;bc&#39;</span><span class="p">]</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">,</span><span class="s1">&#39;bottom&#39;</span><span class="p">]):</span>
+                <span class="n">gradientInternalCoeffs</span><span class="o">=</span><span class="s1">&#39;0&#39;</span>
+                <span class="n">gradientBoundaryCoeffs</span><span class="o">=</span><span class="s1">&#39;q_f = </span><span class="si">%f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">bcs</span><span class="p">[</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]][</span><span class="s1">&#39;bc&#39;</span><span class="p">])</span>
+                <span class="n">internalCoeffs</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">boundaryCoeffs</span><span class="o">=</span><span class="n">bcs</span><span class="p">[</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]][</span><span class="s1">&#39;bc&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">magSf</span>
+            <span class="n">a_C_cellC</span><span class="o">+=</span><span class="n">internalCoeffs</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">mesh</span><span class="se">\n</span><span class="s2">deltaCoeffs: $</span><span class="se">\\</span><span class="s2">frac</span><span class="si">{1}</span><span class="s2">{\delta_{C\leftrightarrow f}}$ = </span><span class="si">%.1f</span>
+<span class="s2">gradientInternalCoeffs =  </span><span class="si">%s</span>
+<span class="s2">gradientBoundaryCoeffs = </span><span class="si">%s</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">delta_CF</span><span class="p">,</span><span class="n">gradientInternalCoeffs</span><span class="p">,</span><span class="n">gradientBoundaryCoeffs</span><span class="p">)</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">coeffType</span><span class="o">==</span><span class="s1">&#39;Laplacian&#39;</span><span class="p">):</span>
+                <span class="n">text</span><span class="o">+=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">fvm::Laplacian</span><span class="se">\n</span><span class="s2">internalCoeffs = gradientInternalCoeffs * $D_f</span><span class="se">\\</span><span class="s2">times S_f$ = </span><span class="si">%.1E</span><span class="s2"> = -$a_{F_{</span><span class="si">%d</span><span class="s2">}}$</span>
+<span class="s2">boundaryCoeffs = </span><span class="si">%.4E</span><span class="s2"> = -$c_{F_{</span><span class="si">%d</span><span class="s2">}}$ (source)</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">internalCoeffs</span><span class="p">,</span><span class="n">face</span><span class="p">,</span> <span class="n">boundaryCoeffs</span><span class="p">,</span><span class="n">face</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">+</span><span class="n">norm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">magSf</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">y_tmp</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">+</span><span class="n">norm</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">magSf</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="n">text</span><span class="p">,</span>
+                    <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="n">ang_rot</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_tmp</span><span class="p">,</span> <span class="n">y_tmp</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">bcs</span><span class="p">[</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]][</span><span class="s1">&#39;lc&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Boundary: &#39;</span><span class="o">+</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">],</span> <span class="n">clip_on</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># plot cell center</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span><span class="n">yc</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">mec</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="o">+</span><span class="mf">0.0005</span><span class="p">,</span> <span class="s1">&#39;$C_{</span><span class="si">%d</span><span class="s1">}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">index_cell</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="c1"># calculate cell volume</span>
+    <span class="n">len_x</span><span class="p">,</span><span class="n">len_y</span><span class="p">,</span><span class="n">len_z</span><span class="o">=</span><span class="n">x_cellC</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">x_cellC</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y_cellC</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">y_cellC</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">z_cellC</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">z_cellC</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">Vc</span><span class="o">=</span><span class="n">len_x</span><span class="o">*</span><span class="n">len_y</span><span class="o">*</span><span class="n">len_z</span>
+
+    <span class="k">return</span> <span class="n">xc</span><span class="p">,</span><span class="n">yc</span><span class="p">,</span><span class="n">Vc</span><span class="p">,[</span><span class="n">len_x</span><span class="p">,</span> <span class="n">len_y</span><span class="p">,</span> <span class="n">len_z</span><span class="p">],</span><span class="n">a_C_cellC</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[109]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
+<span class="n">coeff_type</span><span class="o">=</span><span class="s1">&#39;Laplacian&#39;</span> <span class="c1"># delta, Laplacian, ddt</span>
+<span class="c1"># 1.2 plot the internal cell[index_cellC]</span>
+<span class="n">xc_cellC</span><span class="p">,</span> <span class="n">yc_cellC</span><span class="p">,</span> <span class="n">V_cellC</span><span class="p">,</span> <span class="n">len_xyz</span><span class="p">,</span><span class="n">a_C_cellC</span><span class="o">=</span><span class="n">plotCell</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">index_cellC</span><span class="p">,</span> <span class="n">coeff_type</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;limegreen&#39;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">showFace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">showF</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">str_Vc</span><span class="p">,</span><span class="n">str_a_C</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%E</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">V_cellC</span><span class="p">),</span><span class="s1">&#39;</span><span class="si">%E</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">a_C_cellC</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xc_cellC</span><span class="p">,</span> <span class="n">yc_cellC</span><span class="o">-</span><span class="mf">0.0005</span><span class="p">,</span> <span class="s1">&#39;$V_</span><span class="si">{C}</span><span class="s1">=$</span><span class="si">%s</span><span class="s1">$</span><span class="se">\\</span><span class="s1">times$10$^{</span><span class="si">%.0f</span><span class="s1">}$</span><span class="se">\n</span><span class="s1">Diagonal</span><span class="se">\n</span><span class="s1">$a_</span><span class="si">{C}</span><span class="s1">=-</span><span class="se">\\</span><span class="s1">sum a_F = $</span><span class="si">%s</span><span class="s1">$</span><span class="se">\\</span><span class="s1">times$10$^{</span><span class="si">%.0f</span><span class="s1">}$&#39;</span>
+        <span class="o">%</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">str_Vc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">str_Vc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]),</span>
+          <span class="nb">float</span><span class="p">(</span><span class="n">str_a_C</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">str_a_C</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="s1">&#39;$dz$ = </span><span class="si">%.3f</span><span class="s1"> m</span><span class="se">\n</span><span class="s1">$D=4</span><span class="se">\\</span><span class="s1">times 10^{-5}\ m^2/s$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">len_xyz</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+<span class="c1"># 1.2.1 plot neighbour cells of the cell</span>
+<span class="n">label</span><span class="o">=</span><span class="s1">&#39;neighbour cell&#39;</span>
+<span class="n">a_F_cellC</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">for</span> <span class="n">cellI</span> <span class="ow">in</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;neighbour&#39;</span><span class="p">][</span><span class="n">index_cellC</span><span class="p">]:</span>
+    <span class="n">plotCell</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">cellI</span><span class="p">,</span> <span class="n">coeff_type</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">ec</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
+<span class="c1"># 1.2.2 plot owner cells of the cell</span>
+<span class="n">label</span><span class="o">=</span><span class="s1">&#39;owner cell&#39;</span>
+<span class="k">for</span> <span class="n">cellI</span> <span class="ow">in</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;owner&#39;</span><span class="p">][</span><span class="n">index_cellC</span><span class="p">]:</span>
+    <span class="n">plotCell</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">cellI</span><span class="p">,</span> <span class="n">coeff_type</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">ec</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
+<span class="c1"># set axis</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.04</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mf">0.01</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mf">0.005</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X (m)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y (m)&#39;</span><span class="p">)</span>
+<span class="c1"># ax.axis(&#39;off&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">leg</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="c1"># leg.legendHandles[0]._legmarker.set_markersize(12)</span>
+<span class="n">fname_fig</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/Coordinate_</span><span class="si">%s</span><span class="s1">_internalcell_</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">,</span><span class="n">coeff_type</span><span class="p">,</span> <span class="n">caseName</span><span class="p">,</span><span class="n">fmt</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">fig_fmt</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname_fig</span><span class="p">(</span><span class="n">fmt</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span><span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../../_images/lectures_L_FVM_cases_jupyter_VisualizeResults_11_0.png" src="../../../../_images/lectures_L_FVM_cases_jupyter_VisualizeResults_11_0.png" />
+</div>
+</div>
+</section>
+<section id="2.-Coordinates-and-delta-coefficients-of-boundary-cell">
+<h1>2. Coordinates and delta coefficients of boundary cell<a class="headerlink" href="#2.-Coordinates-and-delta-coefficients-of-boundary-cell" title="Link to this heading"></a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[129]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indices_boundaryC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">19</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">index_boundaryC</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">for</span> <span class="n">index_boundaryC</span> <span class="ow">in</span> <span class="n">indices_boundaryC</span><span class="p">:</span>
+    <span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;scaled&#39;</span><span class="p">)</span>
+    <span class="c1"># 1.2 plot the internal cell[index_cellC]</span>
+    <span class="n">xc_cellC</span><span class="p">,</span> <span class="n">yc_cellC</span><span class="p">,</span> <span class="n">V_cellC</span><span class="p">,</span> <span class="n">len_xyz</span><span class="p">,</span> <span class="n">a_C_cellC</span><span class="o">=</span><span class="n">plotCell</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">index_boundaryC</span><span class="p">,</span> <span class="n">coeff_type</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;limegreen&#39;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">showFace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">showF</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">str_Vc</span><span class="p">,</span><span class="n">str_a_C</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%E</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">V_cellC</span><span class="p">),</span><span class="s1">&#39;</span><span class="si">%E</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">a_C_cellC</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xc_cellC</span><span class="p">,</span> <span class="n">yc_cellC</span><span class="o">-</span><span class="mf">0.0005</span><span class="p">,</span> <span class="s1">&#39;$V_</span><span class="si">{C}</span><span class="s1">=$</span><span class="si">%s</span><span class="s1">$</span><span class="se">\\</span><span class="s1">times$10$^{</span><span class="si">%.0f</span><span class="s1">}$</span><span class="se">\n</span><span class="s1">Diagonal</span><span class="se">\n</span><span class="s1">$a_</span><span class="si">{C}</span><span class="s1">=-</span><span class="se">\\</span><span class="s1">sum a_F = $</span><span class="si">%s</span><span class="s1">$</span><span class="se">\\</span><span class="s1">times$10$^{</span><span class="si">%.0f</span><span class="s1">}$&#39;</span>
+            <span class="o">%</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">str_Vc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">str_Vc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]),</span>
+              <span class="nb">float</span><span class="p">(</span><span class="n">str_a_C</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">str_a_C</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;E&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="s1">&#39;$dz$ = </span><span class="si">%.3f</span><span class="s1"> m</span><span class="se">\n</span><span class="s1">$D=4</span><span class="se">\\</span><span class="s1">times 10^{-5}\ m^2/s$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">len_xyz</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span><span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+    <span class="c1"># 1.2.1 plot neighbour cells of the cell</span>
+    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;neighbour cell&#39;</span>
+    <span class="k">for</span> <span class="n">cellI</span> <span class="ow">in</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;neighbour&#39;</span><span class="p">][</span><span class="n">index_boundaryC</span><span class="p">]:</span>
+        <span class="n">plotCell</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">cellI</span><span class="p">,</span> <span class="n">coeff_type</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">ec</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+        <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
+    <span class="c1"># 1.2.2 plot owner cells of the cell</span>
+    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;owner cell&#39;</span>
+    <span class="k">for</span> <span class="n">cellI</span> <span class="ow">in</span> <span class="n">mesh</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">][</span><span class="s1">&#39;owner&#39;</span><span class="p">][</span><span class="n">index_boundaryC</span><span class="p">]:</span>
+        <span class="n">plotCell</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">cellI</span><span class="p">,</span> <span class="n">coeff_type</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span><span class="n">ec</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+        <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
+
+    <span class="c1"># set axis</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xc_cellC</span><span class="o">-</span><span class="mf">0.015</span><span class="p">,</span> <span class="n">xc_cellC</span><span class="o">+</span><span class="mf">0.015</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">yc_cellC</span><span class="o">-</span><span class="mf">0.015</span><span class="p">,</span> <span class="n">yc_cellC</span><span class="o">+</span><span class="mf">0.015</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mf">0.01</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="mf">0.005</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X (m)&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y (m)&#39;</span><span class="p">)</span>
+    <span class="c1"># ax.axis(&#39;off&#39;)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">leg</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower left&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># leg.legendHandles[0]._legmarker.set_markersize(12)</span>
+    <span class="n">fname_fig</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/Coordinate_</span><span class="si">%s</span><span class="s1">_boundary_C</span><span class="si">%d</span><span class="s1">_</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">path_figures</span><span class="p">,</span><span class="n">coeff_type</span><span class="p">,</span><span class="n">index_boundaryC</span><span class="p">,</span> <span class="n">caseName</span><span class="p">,</span><span class="n">fmt</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">fig_fmt</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fname_fig</span><span class="p">(</span><span class="n">fmt</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span><span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../../Exercise1.html" class="btn btn-neutral float-left" title="Exercise 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../../L_PROJECTS/Project1.html" class="btn btn-neutral float-right" title="Project 1: Flow along a detachment fault" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
