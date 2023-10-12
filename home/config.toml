@@ -64,33 +64,39 @@ weight = 3
 
 # Dropdown menu
 [[Languages.en.menu.main]]
-weight = 4
+weight = 5
 name = "Lectures"
 hasChildren = true
 
   [[Languages.en.menu.main]]
   parent = "Lectures"
+  name = "Winter 2023"
+  url = "winter2023"
+  weight = 1
+  
+  [[Languages.en.menu.main]]
+  parent = "Lectures"
   name = "Winter 2022"
   url = "winter2022"
-  weight = 1
+  weight = 2
 
   [[Languages.en.menu.main]]
   parent = "Lectures"
   name = "Summer 2022"
   url = "summer2022"
-  weight = 2
+  weight = 3
 
   [[Languages.en.menu.main]]
   parent = "Lectures"
   name = "Summer2021"
   url = "summer2021"
-  weight = 3
+  weight = 4
 
   [[Languages.en.menu.main]]
   parent = "Lectures"
   name = "Winter 2020"
   url = "winter2020"
-  weight = 4
+  weight = 5
 
 
 # banner

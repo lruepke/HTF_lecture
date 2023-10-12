@@ -58,7 +58,7 @@ jobs:
       - name: Generate main pages and sphinx pages
         run: |
           # 0. set lectures 
-          lectures="Winter2020 Summer2021 Summer2022 Winter2022"
+          lectures="Winter2020 Summer2021 Summer2022 Winter2022 Winter2023"
           commitIDFile_stored=commit.ID
           # 1. fetch history lecture pages and copy them to history folder as backup
           git fetch origin gh-pages
