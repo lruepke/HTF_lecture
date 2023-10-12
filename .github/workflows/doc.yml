@@ -31,32 +31,32 @@ jobs:
 
       
       # simple version
-       - name: Generate main pages and sphinx pages
-         run: |
-           # fetch history lecture pages
-           git fetch origin gh-pages
-           git checkout gh-pages
-           mkdir ../history
-           cp -rf winter2020 ../history
-           cp -rf summer2021 ../history
-           cp -rf summer2022 ../history
-           cp -rf winter2022 ../history
+      - name: Generate main pages and sphinx pages
+        run: |
+          # fetch history lecture pages
+          git fetch origin gh-pages
+          git checkout gh-pages
+          mkdir ../history
+          cp -rf winter2020 ../history
+          cp -rf summer2021 ../history
+          cp -rf summer2022 ../history
+          cp -rf winter2022 ../history
           git checkout main
-           # make home page
-           cd home
-           hugo
-           cd ..
-           cp -rf home/public/ .
-           # make new lecture pages
-           cd Winter2023
-           make html
-           cp -rf build/html/* ../public/winter2023
-           # copy history lecture pages
-           cd ..
-           cp -rf ../history/winter2020/* public/winter2020
-           cp -rf ../history/summer2021/* public/summer2021
-           cp -rf ../history/summer2022/* public/summer2022
-           cp -rf ../history/winter2022/* public/winter2022
+          # make home page
+          cd home
+          hugo
+          cd ..
+          cp -rf home/public/ .
+          # make new lecture pages
+          cd Winter2023
+          make html
+          cp -rf build/html/* ../public/winter2023
+          # copy history lecture pages
+          cd ..
+          cp -rf ../history/winter2020/* public/winter2020
+          cp -rf ../history/summer2021/* public/summer2021
+          cp -rf ../history/summer2022/* public/summer2022
+          cp -rf ../history/winter2022/* public/winter2022
 
       # more automatic version
       # - name: Generate main pages and sphinx pages
