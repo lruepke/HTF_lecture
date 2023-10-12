@@ -67,7 +67,7 @@ jobs:
           for lecture in $lectures
           do
             # note that the folder name in Hugo pages is all in lower case
-            cp -rf `echo "$lecture" | awk '{print tolower($0)}'` ../history
+          #  cp -rf `echo "$lecture" | awk '{print tolower($0)}'` ../history
           done
           git checkout main
           # 2. make home page
