@@ -79,7 +79,7 @@ In the docker do this:
 
     cd $HOME/HydrothermalFoam_runs
     cp -r $FOAM_TUTORIALS/basic/scalarTransportFoam/pitzDaily/ ./DRP_transport
-    cp -r ./DRP_permeability_2D/constant/polyMesh ./DRP_transport/
+    cp -r ./DRP_permeability_2D/constant/polyMesh ./DRP_transport/constant/
     cp ./DRP_permeability_2D/0/U ./DRP_transport/0/
 
 This assumes that you used the  case and directory names; if not, modify the names accordingly.
