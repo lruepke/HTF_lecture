@@ -114,13 +114,14 @@ Next we import the .png file from the :code:`geometry` folder and convert it to 
     import numpy as np
     from PIL import Image
     import porespy as ps
+    import os
 
     impath = 'geometry/'         # image path
     imname = 'porousModel.png'   # file name
 
     # 1. use PIL to load the image
     # convert("L") converts RGB into greyscale, L = R * 299/1000 + G * 587/1000 + B * 114/1000
-    image = Image.open('%s/%s'%(impath,imname)).convert("L")                  
+    image = Image.open(os.path.join(impath, imname)).convert("L")
 
     # 2. convert image into numpy array with "normal" integer values
     arr = np.asarray(image, dtype=int)
@@ -175,26 +176,17 @@ Now comes the segmentation and triangulation part to make an stl file that openF
    Using the paraview python shell.
 
 
-
-Probably the easiest way is to copy the python code below into the python shell of paraview :numref:`fig:paraview_figure_fig`. Within the shell you first have to make sure you are in the directory of your openFOAM case:
-
-.. code:: python
-
-    import os 
-    os.chdir("your_case_directory")
-    exec(open("your_file_name.py").read())
-
-
-Now you can paste the python code:
+Here is some python code that uses the paraview python bindings. You can save it into your case directory. Or, you use the paraview GUI to create the stl file.
 
 .. code-block:: python
 
     # workflow as python code using the paraview.simple module
     from paraview.simple import *
-    
+    import os
+
     def write_stl(vti_file, stl_file):
         # 1. load vti file
-        data            = OpenDataFile('%s.vti'%vti_file)
+        data            = OpenDataFile(vti_file)
         # 2. clip at some intermediate value (we have 0 and 255 as pores and grains)
         clip1           = Clip(data, ClipType = 'Scalar', Scalars = ['CELLS', 'im'], Value = 127.5, Invert = 1)
         # 3. make a surface of the remaining grains
@@ -206,12 +198,25 @@ Now you can paste the python code:
         SaveData(stl_file, proxy = triangulate1)
     
     # main part
-    vti_file = 'porous_model'      # input .vti file
+    vti_file = 'porous_model.vti'      # input .vti file
     stl_file = 'porous_model.stl'  # output .stl file
     # call function
     write_stl(vti_file, stl_file)
 
-This will create a .stl file, which we will use in the meshing process. Let's do some clean up and move the vti file into :code:`./geometry` and the stl file into :code:`./constant/triSurface`, where openFOAM expects it. This assumes that you are in the case directory.
+
+An easy way to exectute the python scrip is to call it from the python shell in paraview :numref:`fig:paraview_figure_fig`. Within the shell, you first make sure that you are in your case directory; then you make the correct folder to hold the .stl file that we will create (:code:`./constant/triSurface`).
+
+.. code:: python
+
+    import os 
+    os.chdir("your_case_directory")
+    os.mkdir('constant/triSurface')
+    exec(open("your_file_name.py").read())
+
+
+This will create a .stl file, which we will use in the meshing process.
+
+If you used the paraview GUI, you might have to do some cleanup, so that the files are in the correct location. Move the vti file into :code:`./geometry` and the stl file into :code:`./constant/triSurface`, where openFOAM expects it. This assumes that you are in the case directory.
 
 .. code:: bash
 
@@ -364,7 +369,7 @@ The final conversion turns everything in micrometer (:math:`10^{-6} m`). Check o
 Boundary conditions
 ^^^^^^^^^^^^^^^^^^^
 
-Next we need to set boundary conditions. Our "rock" sample is 1196 and 1494 :math:`\mu m` and we will apply a constant pressure drop of 1 Pa. We will further use openFOAM's **simpleFoam** solver, which resolves incompressible steady-state flow. One important thing to remember is that openFOAM uses the *kinematic* pressure in incompressible simulations, which is the pressure divided by density. If we assume that water with a density of :math:`1000kg/m^3` is flowing through our smaple, we will need to set a constant pressure value of :math:`P_{left}=0.001 m^2/s^2`. The pressure on the right-hand side will be set to zero. 
+Next we need to set boundary conditions. Our "rock" sample is 1196 and 1494 :math:`\mu m` and we will apply a constant pressure drop of 1 Pa. We will further use openFOAM's **simpleFoam** solver, which resolves incompressible steady-state flow. One important thing to remember is that openFOAM uses the *kinematic* pressure in incompressible simulations, which is the pressure divided by density. If we assume that water with a density of :math:`1000kg/m^3` is flowing through our example, we will need to set a constant pressure value of :math:`P_{left}=0.001 m^2/s^2`. The pressure on the right-hand side will be set to zero. 
 
 Open the file p inside the 0 directory from your local left-hand shell.
 

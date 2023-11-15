@@ -300,13 +300,14 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">porespy</span> <span class="k">as</span> <span class="nn">ps</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="n">impath</span> <span class="o">=</span> <span class="s1">&#39;geometry/&#39;</span>         <span class="c1"># image path</span>
 <span class="n">imname</span> <span class="o">=</span> <span class="s1">&#39;porousModel.png&#39;</span>   <span class="c1"># file name</span>
 
 <span class="c1"># 1. use PIL to load the image</span>
 <span class="c1"># convert(&quot;L&quot;) converts RGB into greyscale, L = R * 299/1000 + G * 587/1000 + B * 114/1000</span>
-<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">impath</span><span class="p">,</span><span class="n">imname</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">impath</span><span class="p">,</span> <span class="n">imname</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
 
 <span class="c1"># 2. convert image into numpy array with &quot;normal&quot; integer values</span>
 <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -356,19 +357,14 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
 <p><span class="caption-number">Fig. 13 </span><span class="caption-text">Using the paraview python shell.</span><a class="headerlink" href="#fig-paraview-figure-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
-<p>Probably the easiest way is to copy the python code below into the python shell of paraview <a class="reference internal" href="#fig-paraview-figure-fig"><span class="std std-numref">Fig. 13</span></a>. Within the shell you first have to make sure you are in the directory of your openFOAM case:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;your_case_directory&quot;</span><span class="p">)</span>
-<span class="n">exec</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;your_file_name.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-</pre></div>
-</div>
-<p>Now you can paste the python code:</p>
+<p>Here is some python code that uses the paraview python bindings. You can save it into your case directory. Or, you use the paraview GUI to create the stl file.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># workflow as python code using the paraview.simple module</span>
 <span class="kn">from</span> <span class="nn">paraview.simple</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="k">def</span> <span class="nf">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">):</span>
     <span class="c1"># 1. load vti file</span>
-    <span class="n">data</span>            <span class="o">=</span> <span class="n">OpenDataFile</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.vti&#39;</span><span class="o">%</span><span class="n">vti_file</span><span class="p">)</span>
+    <span class="n">data</span>            <span class="o">=</span> <span class="n">OpenDataFile</span><span class="p">(</span><span class="n">vti_file</span><span class="p">)</span>
     <span class="c1"># 2. clip at some intermediate value (we have 0 and 255 as pores and grains)</span>
     <span class="n">clip1</span>           <span class="o">=</span> <span class="n">Clip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ClipType</span> <span class="o">=</span> <span class="s1">&#39;Scalar&#39;</span><span class="p">,</span> <span class="n">Scalars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CELLS&#39;</span><span class="p">,</span> <span class="s1">&#39;im&#39;</span><span class="p">],</span> <span class="n">Value</span> <span class="o">=</span> <span class="mf">127.5</span><span class="p">,</span> <span class="n">Invert</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
     <span class="c1"># 3. make a surface of the remaining grains</span>
@@ -380,13 +376,21 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
     <span class="n">SaveData</span><span class="p">(</span><span class="n">stl_file</span><span class="p">,</span> <span class="n">proxy</span> <span class="o">=</span> <span class="n">triangulate1</span><span class="p">)</span>
 
 <span class="c1"># main part</span>
-<span class="n">vti_file</span> <span class="o">=</span> <span class="s1">&#39;porous_model&#39;</span>      <span class="c1"># input .vti file</span>
+<span class="n">vti_file</span> <span class="o">=</span> <span class="s1">&#39;porous_model.vti&#39;</span>      <span class="c1"># input .vti file</span>
 <span class="n">stl_file</span> <span class="o">=</span> <span class="s1">&#39;porous_model.stl&#39;</span>  <span class="c1"># output .stl file</span>
 <span class="c1"># call function</span>
 <span class="n">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This will create a .stl file, which we will use in the meshing process. Let’s do some clean up and move the vti file into <code class="code docutils literal notranslate"><span class="pre">./geometry</span></code> and the stl file into <code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>, where openFOAM expects it. This assumes that you are in the case directory.</p>
+<p>An easy way to exectute the python scrip is to call it from the python shell in paraview <a class="reference internal" href="#fig-paraview-figure-fig"><span class="std std-numref">Fig. 13</span></a>. Within the shell, you first make sure that you are in your case directory; then you make the correct folder to hold the .stl file that we will create (<code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;your_case_directory&quot;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;constant/triSurface&#39;</span><span class="p">)</span>
+<span class="n">exec</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;your_file_name.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>This will create a .stl file, which we will use in the meshing process.</p>
+<p>If you used the paraview GUI, you might have to do some cleanup, so that the files are in the correct location. Move the vti file into <code class="code docutils literal notranslate"><span class="pre">./geometry</span></code> and the stl file into <code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>, where openFOAM expects it. This assumes that you are in the case directory.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mv<span class="w"> </span>./porous_model.vti<span class="w"> </span>./geometry/
 mv<span class="w"> </span>./porous_model.stl<span class="w"> </span>./constant/triSurface/
 </pre></div>
@@ -524,7 +528,7 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 </section>
 <section id="boundary-conditions">
 <h3>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading"></a></h3>
-<p>Next we need to set boundary conditions. Our “rock” sample is 1196 and 1494 <span class="math notranslate nohighlight">\(\mu m\)</span> and we will apply a constant pressure drop of 1 Pa. We will further use openFOAM’s <strong>simpleFoam</strong> solver, which resolves incompressible steady-state flow. One important thing to remember is that openFOAM uses the <em>kinematic</em> pressure in incompressible simulations, which is the pressure divided by density. If we assume that water with a density of <span class="math notranslate nohighlight">\(1000kg/m^3\)</span> is flowing through our smaple, we will need to set a constant pressure value of <span class="math notranslate nohighlight">\(P_{left}=0.001 m^2/s^2\)</span>. The pressure on the right-hand side will be set to zero.</p>
+<p>Next we need to set boundary conditions. Our “rock” sample is 1196 and 1494 <span class="math notranslate nohighlight">\(\mu m\)</span> and we will apply a constant pressure drop of 1 Pa. We will further use openFOAM’s <strong>simpleFoam</strong> solver, which resolves incompressible steady-state flow. One important thing to remember is that openFOAM uses the <em>kinematic</em> pressure in incompressible simulations, which is the pressure divided by density. If we assume that water with a density of <span class="math notranslate nohighlight">\(1000kg/m^3\)</span> is flowing through our example, we will need to set a constant pressure value of <span class="math notranslate nohighlight">\(P_{left}=0.001 m^2/s^2\)</span>. The pressure on the right-hand side will be set to zero.</p>
 <p>Open the file p inside the 0 directory from your local left-hand shell.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/p
 </pre></div>

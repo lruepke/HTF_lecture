@@ -71,7 +71,7 @@ The key source code of `scalarTransportFoam <https://cpp.openfoam.org/v9/scalarT
         fvConstraints.constrain(T);
         ...
 
-Since we have already computed the velocity field (and made the mesh etc.), we can now use our results as the starting point for a scalarTransportFoam case. The foam tuturials are always a good starting point for a new case. scalarTransportFoam is handled in :code:`$FOAM_TUTORIALS/basic/scalarTransportFoam/pitzDaily/` . Let's copy it over to our working directory, add our velocity field and mesh, and modify the control dictionoaries.
+Since we have already computed the velocity field (and made the mesh etc.), we can now use our results as the starting point for a scalarTransportFoam case. The foam tuturials are always a good starting point for a new case. scalarTransportFoam is handled in :code:`$FOAM_TUTORIALS/basic/scalarTransportFoam/pitzDaily/` . Let's copy it over to our working directory, add our velocity field and mesh, and modify the control dictionaries.
 
 In the docker do this:
 

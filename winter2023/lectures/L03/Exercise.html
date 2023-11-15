@@ -260,7 +260,7 @@
 <span class="p">...</span>
 </pre></div>
 </div>
-<p>Since we have already computed the velocity field (and made the mesh etc.), we can now use our results as the starting point for a scalarTransportFoam case. The foam tuturials are always a good starting point for a new case. scalarTransportFoam is handled in <code class="code docutils literal notranslate"><span class="pre">$FOAM_TUTORIALS/basic/scalarTransportFoam/pitzDaily/</span></code> . Let’s copy it over to our working directory, add our velocity field and mesh, and modify the control dictionoaries.</p>
+<p>Since we have already computed the velocity field (and made the mesh etc.), we can now use our results as the starting point for a scalarTransportFoam case. The foam tuturials are always a good starting point for a new case. scalarTransportFoam is handled in <code class="code docutils literal notranslate"><span class="pre">$FOAM_TUTORIALS/basic/scalarTransportFoam/pitzDaily/</span></code> . Let’s copy it over to our working directory, add our velocity field and mesh, and modify the control dictionaries.</p>
 <p>In the docker do this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
 cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$FOAM_TUTORIALS</span>/basic/scalarTransportFoam/pitzDaily/<span class="w"> </span>./DRP_transport
