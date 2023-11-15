@@ -127,4 +127,9 @@
     visibility: visible;
     opacity: 1;
   }
+
+  .banner .form-control {
+    display: none;
+}
+
   
