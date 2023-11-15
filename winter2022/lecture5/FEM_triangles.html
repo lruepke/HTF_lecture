@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Triangles: unstructured meshes &mdash; Finite Element Modeling in Geodynamics  documentation</title>
@@ -15,13 +15,12 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/tabs.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -37,12 +36,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
-            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -143,8 +146,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Triangles: unstructured meshes</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Triangles: unstructured meshes</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture5/FEM_triangles.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -179,7 +182,7 @@
 }
 </style>
 <section id="triangles-unstructured-meshes">
-<h1>Triangles: unstructured meshes<a class="headerlink" href="#triangles-unstructured-meshes" title="Permalink to this heading"></a></h1>
+<h1>Triangles: unstructured meshes<a class="headerlink" href="#triangles-unstructured-meshes" title="Link to this heading"></a></h1>
 <p>In this session we will learn</p>
 <blockquote>
 <div><ul class="simple">
@@ -189,17 +192,17 @@
 </div></blockquote>
 <p>The problem we will look at is basically the same as in the example given above. We will resolve steady-state heat diffusion within a rectangular region but now we will have circular inclusions of different thermal conductivity.</p>
 <section id="theoretical-background">
-<h2>Theoretical background<a class="headerlink" href="#theoretical-background" title="Permalink to this heading"></a></h2>
+<h2>Theoretical background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
 <p>Let’s first explore how triangle element “work”. <a class="reference internal" href="#fig-fem-triangle-coords-f"><span class="std std-numref">Fig. 16</span></a>  shows a triangle in global and local coordinates. The local node numering is again counterclockwise.</p>
 <figure class="align-center" id="fig-fem-triangle-coords-f">
 <img alt="../_images/triangle_coords.png" src="../_images/triangle_coords.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Global and local coordinates of a triangle element. Black crosses mark the locations of the three integration points.</span><a class="headerlink" href="#fig-fem-triangle-coords-f" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Global and local coordinates of a triangle element. Black crosses mark the locations of the three integration points.</span><a class="headerlink" href="#fig-fem-triangle-coords-f" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Here we look at a linear triangle with three nodes. The relation between global and local coordinates is therefore:</p>
 <div class="math notranslate nohighlight" id="equation-eq-triangle-1">
-<span class="eqno">(135)<a class="headerlink" href="#equation-eq-triangle-1" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(135)<a class="headerlink" href="#equation-eq-triangle-1" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 x &amp;= x_1 + (x_2-x_1)\xi + (x_3-x_1)\eta \\
 y &amp;= y_1 + (y_2-y_1)\xi + (y_3-y_1)\eta \\
@@ -207,10 +210,10 @@ y &amp;= y_1 + (y_2-y_1)\xi + (y_3-y_1)\eta \\
 \end{align}\end{split}\]</div>
 <p>Temperature, or any other variable, will also vary linearly with the local coordinates and we can write</p>
 <div class="math notranslate nohighlight" id="equation-eq-triangle-2">
-<span class="eqno">(136)<a class="headerlink" href="#equation-eq-triangle-2" title="Permalink to this equation"></a></span>\[T(\xi,\eta) = a_1 +a_2\xi + a_3\eta\]</div>
+<span class="eqno">(136)<a class="headerlink" href="#equation-eq-triangle-2" title="Link to this equation"></a></span>\[T(\xi,\eta) = a_1 +a_2\xi + a_3\eta\]</div>
 <p>We can spell this out for the three nodes:</p>
 <div class="math notranslate nohighlight" id="equation-eq-triangle-3">
-<span class="eqno">(137)<a class="headerlink" href="#equation-eq-triangle-3" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(137)<a class="headerlink" href="#equation-eq-triangle-3" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 T_1 &amp;= T(0,0) = a_1 \\
 T_2 &amp;= T(1,0) = a_1 + a_2 \\
@@ -219,7 +222,7 @@ T_3 &amp;= T(0,1) = a_1 + a_3
 \end{align}\end{split}\]</div>
 <p>And express the contants <span class="math notranslate nohighlight">\(a\)</span> in terms of the nodal temperatures (or whatever our unknown is).</p>
 <div class="math notranslate nohighlight" id="equation-eq-triangle-4">
-<span class="eqno">(138)<a class="headerlink" href="#equation-eq-triangle-4" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(138)<a class="headerlink" href="#equation-eq-triangle-4" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 a_1 = T_1 \\
 a_2 = T_2 - T_1 \\
@@ -228,7 +231,7 @@ a_3 = T_3 - T_1
 \end{align}\end{split}\]</div>
 <p>This we put back into the definition of the approximate solution <a class="reference internal" href="#equation-eq-triangle-2">equation (136)</a> and get:</p>
 <div class="math notranslate nohighlight" id="equation-eq-triangle-5">
-<span class="eqno">(139)<a class="headerlink" href="#equation-eq-triangle-5" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(139)<a class="headerlink" href="#equation-eq-triangle-5" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 T(\xi,\eta) &amp;= T_1 +(T_2 - T_1)\xi + (T_3-T_1)\eta\\
 \Rightarrow \\
@@ -245,15 +248,15 @@ T(\xi,\eta) &amp;= N_1 T_1 + N_2 T_2 + N_3 T_3 \\
 </section>
 </section>
 <section id="excercise">
-<h1>Excercise<a class="headerlink" href="#excercise" title="Permalink to this heading"></a></h1>
+<h1>Excercise<a class="headerlink" href="#excercise" title="Link to this heading"></a></h1>
 <section id="step-0-getting-ready">
-<h2>Step 0: getting ready<a class="headerlink" href="#step-0-getting-ready" title="Permalink to this heading"></a></h2>
+<h2>Step 0: getting ready<a class="headerlink" href="#step-0-getting-ready" title="Link to this heading"></a></h2>
 <p>Make a copy of the example solver above. Take it as a starting point and integrate the various code pieces and pieces of information below into.</p>
 </section>
 <section id="step-1-mesh-generation">
-<h2>Step 1: mesh generation<a class="headerlink" href="#step-1-mesh-generation" title="Permalink to this heading"></a></h2>
+<h2>Step 1: mesh generation<a class="headerlink" href="#step-1-mesh-generation" title="Link to this heading"></a></h2>
 <p>We will use the mesh generator <a class="reference external" href="https://www.cs.cmu.edu/~quake/triangle.html">triangle</a> by Jonathan Shewchuk. It’s one of the best 2-D mesh generators for triangle meshes. It’s originally written in C but we will for convenience use a python wrapper. You can install it into your virtual environment by doing this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install triangle
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>triangle
 </pre></div>
 </div>
 <p>Here is a code piece for making the the mesh:</p>
@@ -336,7 +339,7 @@ T(\xi,\eta) &amp;= N_1 T_1 + N_2 T_2 + N_3 T_3 \\
 <p>Note how the generated mesh comes back as a python dictionary from which we extract the mesh information. Note also that the array <code class="code docutils literal notranslate"><span class="pre">Phases</span></code> contains a marker to which region an element belongs (matrix versus inclusion).</p>
 </section>
 <section id="step-2-triangle-shape-functions-and-integration-points">
-<h2>Step 2: triangle shape functions and integration points<a class="headerlink" href="#step-2-triangle-shape-functions-and-integration-points" title="Permalink to this heading"></a></h2>
+<h2>Step 2: triangle shape functions and integration points<a class="headerlink" href="#step-2-triangle-shape-functions-and-integration-points" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="../lecture4/fem_in_2d.html#fig-shapefunc-2d-linear"><span class="std std-numref">Fig. 5</span></a> shows shape functions for a linear triangle element. You will need to modify the function in our <code class="code docutils literal notranslate"><span class="pre">shapes.py</span></code> file to implement the triangular shape functions.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#shape functions</span>
 <span class="n">eta2</span> <span class="o">=</span> <span class="n">xi</span>
@@ -351,13 +354,7 @@ T(\xi,\eta) &amp;= N_1 T_1 + N_2 T_2 + N_3 T_3 \\
 <p>Take this as a starting point and modify <code class="code docutils literal notranslate"><span class="pre">shapes.py</span></code> to return the correct three shape functions and the six derivatives!</p>
 <p>Next we need to adapt our integration rule. Take these three integration points and weights.</p>
 <table class="docutils align-default" id="id1">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text">Triangle integration</span><a class="headerlink" href="#id1" title="Permalink to this table"></a></caption>
-<colgroup>
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-<col style="width: 25%" />
-</colgroup>
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Triangle integration</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Integration point</p></th>
 <th class="head"><p><span class="math notranslate nohighlight">\(\xi\)</span></p></th>
@@ -389,7 +386,7 @@ T(\xi,\eta) &amp;= N_1 T_1 + N_2 T_2 + N_3 T_3 \\
 </div>
 </section>
 <section id="step-3-boundary-conditions">
-<h2>Step 3: Boundary conditions<a class="headerlink" href="#step-3-boundary-conditions" title="Permalink to this heading"></a></h2>
+<h2>Step 3: Boundary conditions<a class="headerlink" href="#step-3-boundary-conditions" title="Link to this heading"></a></h2>
 <p>We were actually a bit “lazy” when we implemented the boundary conditions in the example above. Instead of coming up with a general solution, we identified the global node numbers on the boundaries assuming a structured quad mesh. Now we are using an unstructured triangle mesh and it is not so easy anymore to know which nodes are on the boundaries and should get boundary conditions. The “typical” way would be to use boundary markers in the mesh generation; here we use a different approach and use an ad-hoc search for the boundary nodes:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># indices and values at top and bottom</span>
 <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-3</span>
@@ -404,7 +401,7 @@ T(\xi,\eta) &amp;= N_1 T_1 + N_2 T_2 + N_3 T_3 \\
 </div>
 </section>
 <section id="step-4-post-processing-and-plotting">
-<h2>Step 4: Post-processing and plotting<a class="headerlink" href="#step-4-post-processing-and-plotting" title="Permalink to this heading"></a></h2>
+<h2>Step 4: Post-processing and plotting<a class="headerlink" href="#step-4-post-processing-and-plotting" title="Link to this heading"></a></h2>
 <p>Modify the post-processing code that computes the heat fluxes, so that it works for triangles. This should just involve setting a new local coordinates for the single integration points. Use <span class="math notranslate nohighlight">\(\xi=\frac{1}{3}\)</span> and  <span class="math notranslate nohighlight">\(\eta=\frac{1}{3}\)</span>, which is the center of each triangle.</p>
 <p>Now we just need to plot! Thankfully python makes it easy for us and we can use the functions <code class="code docutils literal notranslate"><span class="pre">triplot</span></code> and <code class="code docutils literal notranslate"><span class="pre">tricontourf</span></code> to plot the unstructured data.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># plotting</span>
@@ -427,7 +424,7 @@ T(\xi,\eta) &amp;= N_1 T_1 + N_2 T_2 + N_3 T_3 \\
 <figure class="align-center" id="fig-fem-triangle-dif-f" style="width: 80%">
 <img alt="../_images/triangle_fem_diffusion.png" src="../_images/triangle_fem_diffusion.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 17 </span><span class="caption-text">2-D diffusion on unstructured mesh.</span><a class="headerlink" href="#fig-fem-triangle-dif-f" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">2-D diffusion on unstructured mesh.</span><a class="headerlink" href="#fig-fem-triangle-dif-f" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FEM and advection problems &mdash; Finite Element Modeling in Geodynamics  documentation</title>
@@ -15,13 +15,12 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/tabs.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -37,12 +36,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
-            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -143,8 +146,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>FEM and advection problems</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FEM and advection problems</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture3/fem_advection.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -179,16 +182,16 @@
 }
 </style>
 <section id="fem-and-advection-problems">
-<h1>FEM and advection problems<a class="headerlink" href="#fem-and-advection-problems" title="Permalink to this heading"></a></h1>
+<h1>FEM and advection problems<a class="headerlink" href="#fem-and-advection-problems" title="Link to this heading"></a></h1>
 <p>In one of the introductory chapters, we had looked into transport problems and how to solve them using FDM. Today we will take this a bit further in order to understand why certain solutions did not work and why finite elements have their own problems for advection. For this purpose, we will again use the standard 1-D steady-state advection diffusion equation:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-adv-diff">
-<span class="eqno">(106)<a class="headerlink" href="#equation-eq-fem-adv-diff" title="Permalink to this equation"></a></span>\[c \frac{\partial }{\partial x}T - \frac{\partial}{\partial x}k \frac{\partial T}{\partial x} = 0,\]</div>
+<span class="eqno">(106)<a class="headerlink" href="#equation-eq-fem-adv-diff" title="Link to this equation"></a></span>\[c \frac{\partial }{\partial x}T - \frac{\partial}{\partial x}k \frac{\partial T}{\partial x} = 0,\]</div>
 <p>where <span class="math notranslate nohighlight">\(c\)</span> is velocity, <span class="math notranslate nohighlight">\(T\)</span> temperature, and <span class="math notranslate nohighlight">\(k\)</span> thermal conductivity.</p>
 <section id="d-finite-differences-solutions">
-<h2>1D Finite Differences Solutions<a class="headerlink" href="#d-finite-differences-solutions" title="Permalink to this heading"></a></h2>
+<h2>1D Finite Differences Solutions<a class="headerlink" href="#d-finite-differences-solutions" title="Link to this heading"></a></h2>
 <p>Let’s have a look at the two different FD solutions that we know alreay: FTCS and upwind. We can write them in condensed form. The FTCS looks like this:</p>
 <div class="math notranslate nohighlight" id="equation-eq-adv-diff-ftcs">
-<span class="eqno">(107)<a class="headerlink" href="#equation-eq-adv-diff-ftcs" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(107)<a class="headerlink" href="#equation-eq-adv-diff-ftcs" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 \frac{c}{\Delta x}
 \begin{bmatrix}
@@ -202,7 +205,7 @@
 <p>Do you notice the asymmetry?</p>
 <p>Let’s do the same thing for the upwind case:</p>
 <div class="math notranslate nohighlight" id="equation-eq-adv-diff-uw">
-<span class="eqno">(108)<a class="headerlink" href="#equation-eq-adv-diff-uw" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(108)<a class="headerlink" href="#equation-eq-adv-diff-uw" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 \frac{c}{\Delta x}
 \begin{bmatrix}
@@ -222,10 +225,10 @@
 <p>Explore the solution for different pairs of Peclet numbers and c/k ratios. What is the main difference between the upwind and FTCS solution? What kind of numerical diffusion is happening? What’s the sign of the numerical diffusion? Is negative diffusion physically possible, or a source of trouble?</p>
 </section>
 <section id="d-finite-element-solutions">
-<h2>1D Finite Element Solutions<a class="headerlink" href="#d-finite-element-solutions" title="Permalink to this heading"></a></h2>
+<h2>1D Finite Element Solutions<a class="headerlink" href="#d-finite-element-solutions" title="Link to this heading"></a></h2>
 <p>Let’s see how a simple finite element solution looks like. This would be the stiffness matrix for a single element using linear shape functions:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-1d-single-element-adv">
-<span class="eqno">(109)<a class="headerlink" href="#equation-eq-fem-1d-single-element-adv" title="Permalink to this equation"></a></span>\[\begin{split}\begin{bmatrix}
+<span class="eqno">(109)<a class="headerlink" href="#equation-eq-fem-1d-single-element-adv" title="Link to this equation"></a></span>\[\begin{split}\begin{bmatrix}
 \int_{X_e} \left ( N_1 c \frac{\partial N_1}{dx} + \frac{\partial N_1}{\partial x}k\frac{\partial N_1}{\partial x} \right) dx &amp;
 \int_{X_e} \left (  N_1 c \frac{\partial N_2}{dx} + \frac{\partial N_1}{\partial x}k\frac{\partial N_2}{\partial x} \right) dx \\
 \int_{X_e} \left ( N_2 c \frac{\partial N_1}{dx} + \frac{\partial N_2}{\partial x}k\frac{\partial N_1}{\partial x} \right )dx &amp;
@@ -238,7 +241,7 @@ T_2
 <p>Notice how the sign changed on the diffusion term after partial integration. Again, we get a <span class="math notranslate nohighlight">\(2x2\)</span> stiffness matrix for every element. The node numbering is again local; node number 1 is the first node of an element k and has the global node number k, while node number 2 is the second node of the element and has the global node number k+1!</p>
 <p>We can do the integration using symbolic math. We use again our standard 1D linear interpolation functions; just changed to use <span class="math notranslate nohighlight">\(\bar{x}\)</span> as our variable describing distance along the element to make the integration easier.</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-1d-shape-elem-adv">
-<span class="eqno">(110)<a class="headerlink" href="#equation-eq-fem-1d-shape-elem-adv" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(110)<a class="headerlink" href="#equation-eq-fem-1d-shape-elem-adv" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 N_i(x) = 1 - \frac{x-x_i}{x_{i+1} - x_i} = 1 - \frac{x-x_i}{\Delta x} &amp;= 1 - \frac{\bar{x}}{\Delta x}\\
 N_{i+1}(x) = \frac{x-x_i}{x_{i+1} - x_i} = \frac{x-x_i}{\Delta x}&amp; = \frac{\bar{x}}{\Delta x}\\
@@ -252,7 +255,7 @@ N_{i+1}(x) = \frac{x-x_i}{x_{i+1} - x_i} = \frac{x-x_i}{\Delta x}&amp; = \frac{\
 </div>
 <p>What we find is that the element stiffness matrix of a single element looks like this:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-1d-int-ae-adv">
-<span class="eqno">(111)<a class="headerlink" href="#equation-eq-fem-1d-int-ae-adv" title="Permalink to this equation"></a></span>\[\begin{split}Ael =
+<span class="eqno">(111)<a class="headerlink" href="#equation-eq-fem-1d-int-ae-adv" title="Link to this equation"></a></span>\[\begin{split}Ael =
 \begin{bmatrix}
 -\frac{c}{2} + \frac{k}{\Delta x} &amp;
 \frac{c}{2} -\frac{k}{\Delta x} \\
@@ -261,7 +264,7 @@ N_{i+1}(x) = \frac{x-x_i}{x_{i+1} - x_i} = \frac{x-x_i}{\Delta x}&amp; = \frac{\
 \end{bmatrix}\end{split}\]</div>
 <p>If we assemble it into the global stiffness matrix assuming two elements, we get this equation:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-1d-int-ag-adv">
-<span class="eqno">(112)<a class="headerlink" href="#equation-eq-fem-1d-int-ag-adv" title="Permalink to this equation"></a></span>\[\begin{split}A =
+<span class="eqno">(112)<a class="headerlink" href="#equation-eq-fem-1d-int-ag-adv" title="Link to this equation"></a></span>\[\begin{split}A =
 \begin{bmatrix}
 -\frac{c}{2} + \frac{k}{\Delta x}  &amp; \frac{c}{2} -\frac{k}{\Delta x} &amp; 0 \\
 -\frac{c}{2} -\frac{k}{\Delta x} &amp; \frac{2k}{\Delta x} &amp; \frac{c}{2} -\frac{k}{\Delta x} \\
@@ -274,7 +277,7 @@ T_{3}\\
 \end{bmatrix}=0\end{split}\]</div>
 <p>And if we spell this out for the internal node <span class="math notranslate nohighlight">\(2\)</span>, we get:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-1d-int-ag-adv-node">
-<span class="eqno">(113)<a class="headerlink" href="#equation-eq-fem-1d-int-ag-adv-node" title="Permalink to this equation"></a></span>\[\begin{split}\begin{bmatrix}
+<span class="eqno">(113)<a class="headerlink" href="#equation-eq-fem-1d-int-ag-adv-node" title="Link to this equation"></a></span>\[\begin{split}\begin{bmatrix}
 -\frac{c}{2} -\frac{k}{\Delta x} &amp; \frac{2k}{\Delta x} &amp; \frac{c}{2} -\frac{k}{\Delta x}
 \end{bmatrix}
 \begin{bmatrix}
@@ -284,7 +287,7 @@ T_{3}\\
 \end{bmatrix}=0,\end{split}\]</div>
 <p>which we can compare to the FTCS solution:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-1d-int-ag-adv-node-ftcs">
-<span class="eqno">(114)<a class="headerlink" href="#equation-eq-fem-1d-int-ag-adv-node-ftcs" title="Permalink to this equation"></a></span>\[\begin{split}\begin{bmatrix}
+<span class="eqno">(114)<a class="headerlink" href="#equation-eq-fem-1d-int-ag-adv-node-ftcs" title="Link to this equation"></a></span>\[\begin{split}\begin{bmatrix}
 -\left(\frac{c}{2\Delta x} + \frac{k}{\Delta x^2} \right) &amp; \frac{2k}{\Delta x^2} &amp;  - \left( - \frac{c}{2 \Delta x} + \frac{k}{\Delta x^2} \right) \end{bmatrix} \begin{bmatrix} T_{i-1} \\ T_{i} \\ T_{i+1} \end{bmatrix}  &amp;= 0\end{split}\]</div>
 <p>The two solutions are the same - safe for a constant factor <span class="math notranslate nohighlight">\(\Delta x\)</span>, which drops out because it also shows up on the RHS (if we had one)! This implies that FE solutions also have an intrinsinc negative diffusion component, which makes them unstable. A popular way to stabilize them is to use the Streamline Upwind Petrov Galerkin (SUPG) method, which modifies the weighting functions so that a little bit of numerical diffusion is added in the direction of flow.</p>
 </section>

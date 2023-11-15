@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hydrothermal convection test case &mdash; HydrothermalFoam Lecture  documentation</title>
@@ -15,11 +15,12 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/tabs.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -45,12 +46,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -166,8 +171,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Hydrothermal convection test case</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Hydrothermal convection test case</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L04/FirstCase.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -202,34 +207,34 @@
 }
 </style>
 <section id="hydrothermal-convection-test-case">
-<span id="l04-firstcase"></span><h1>Hydrothermal convection test case<a class="headerlink" href="#hydrothermal-convection-test-case" title="Permalink to this headline"></a></h1>
+<span id="l04-firstcase"></span><h1>Hydrothermal convection test case<a class="headerlink" href="#hydrothermal-convection-test-case" title="Link to this heading"></a></h1>
 <section id="prepare-case-files">
-<h2>Prepare case files<a class="headerlink" href="#prepare-case-files" title="Permalink to this headline"></a></h2>
+<h2>Prepare case files<a class="headerlink" href="#prepare-case-files" title="Link to this heading"></a></h2>
 <p>To get started we will run the <strong>Regular2DBox</strong> case from the cookbook directory of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a>. This cookbooks describes how we can simulate a simple hydrothermal convection cell. It resolves hydrothermal convection driven by a gaussian-shaped constant temperature boundary condition at the bottom.</p>
 <p>Copy the  case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:</p>
-<div class="highlight-bash notranslate" id="lst-cp2dboxtoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
-cp -r <span class="nv">$HOME</span>/hydrothermalfoam-master/cookbooks/2d/Regular2DBox .
+<div class="highlight-bash notranslate" id="lst-cp2dboxtoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$HOME</span>/hydrothermalfoam-master/cookbooks/2d/Regular2DBox<span class="w"> </span>.
 </pre></div>
 </div>
 <p>Check out the directory structure shown in <a class="reference internal" href="#lst-2dbox-tree"><span class="std std-numref">Listing 17</span></a>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-tree">
-<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">File tree structure of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-tree" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">File tree structure of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-tree" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>.
-<span class="linenos"> 2</span><span class="p">|</span>-- <span class="m">0</span>
-<span class="hll"><span class="linenos"> 3</span><span class="p">|</span>   <span class="p">|</span>-- T
-</span><span class="hll"><span class="linenos"> 4</span><span class="p">|</span>   <span class="p">|</span>-- p
-</span><span class="hll"><span class="linenos"> 5</span><span class="p">|</span>    -- permeability
-</span><span class="linenos"> 6</span><span class="p">|</span>-- a.foam
-<span class="linenos"> 7</span><span class="p">|</span>-- clean.sh
-<span class="linenos"> 8</span><span class="p">|</span>-- constant
-<span class="linenos"> 9</span><span class="p">|</span>   <span class="p">|</span>-- g
-<span class="hll"><span class="linenos">10</span><span class="p">|</span>    -- thermophysicalProperties
-</span><span class="linenos">11</span><span class="p">|</span>-- run.sh
-<span class="linenos">12</span> -- system
-<span class="linenos">13</span>    <span class="p">|</span>-- blockMeshDict
-<span class="linenos">14</span>    <span class="p">|</span>-- controlDict
-<span class="linenos">15</span>    <span class="p">|</span>-- fvSchemes
-<span class="linenos">16</span>     -- fvSolution.
+<span class="linenos"> 2</span><span class="p">|</span>--<span class="w"> </span><span class="m">0</span>
+<span class="hll"><span class="linenos"> 3</span><span class="p">|</span><span class="w">   </span><span class="p">|</span>--<span class="w"> </span>T
+</span><span class="hll"><span class="linenos"> 4</span><span class="p">|</span><span class="w">   </span><span class="p">|</span>--<span class="w"> </span>p
+</span><span class="hll"><span class="linenos"> 5</span><span class="p">|</span><span class="w">    </span>--<span class="w"> </span>permeability
+</span><span class="linenos"> 6</span><span class="p">|</span>--<span class="w"> </span>a.foam
+<span class="linenos"> 7</span><span class="p">|</span>--<span class="w"> </span>clean.sh
+<span class="linenos"> 8</span><span class="p">|</span>--<span class="w"> </span>constant
+<span class="linenos"> 9</span><span class="p">|</span><span class="w">   </span><span class="p">|</span>--<span class="w"> </span>g
+<span class="hll"><span class="linenos">10</span><span class="p">|</span><span class="w">    </span>--<span class="w"> </span>thermophysicalProperties
+</span><span class="linenos">11</span><span class="p">|</span>--<span class="w"> </span>run.sh
+<span class="linenos">12</span><span class="w"> </span>--<span class="w"> </span>system
+<span class="linenos">13</span><span class="w">    </span><span class="p">|</span>--<span class="w"> </span>blockMeshDict
+<span class="linenos">14</span><span class="w">    </span><span class="p">|</span>--<span class="w"> </span>controlDict
+<span class="linenos">15</span><span class="w">    </span><span class="p">|</span>--<span class="w"> </span>fvSchemes
+<span class="linenos">16</span><span class="w">     </span>--<span class="w"> </span>fvSolution.
 </pre></div>
 </div>
 </div>
@@ -241,25 +246,25 @@ cp -r <span class="nv">$HOME</span>/hydrothermalfoam-master/cookbooks/2d/Regular
 <p>The 0 directory contains all initial and boundary conditions, the system folder contains all controlling parameter files, and the constant folder contains constant properties like the mesh - which we will create next.</p>
 </section>
 <section id="mesh-generation">
-<h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Permalink to this headline"></a></h2>
+<h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Link to this heading"></a></h2>
 <p>The case is run on a simple 2-d-box-like geometry and the mesh is build using <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code>, just like in the previous lecture on cavity flow. Look at <code class="code docutils literal notranslate"><span class="pre">blockMeshDict</span></code> and check that you sill understand the structure. Afterwards, you can create the mesh:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>blockMesh
 </pre></div>
 </div>
 <p>After making the mesh, you can use <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize it,</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch a.foam
-paraview a.foam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>a.foam
+paraview<span class="w"> </span>a.foam
 </pre></div>
 </div>
 </section>
 <section id="boundary-conditions">
-<h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline"></a></h2>
+<h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading"></a></h2>
 <p>Next we need to set boundary conditions. Open the file T inside the 0 directory from your local left-hand shell.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code <span class="m">0</span>/T
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/T
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-bc">
-<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -326,11 +331,11 @@ paraview a.foam
 <p>The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the side are insulating (zeroGradient). The top has a  boundary condition called inletOutlet; it sets a constant inflow temperature (recharge of cold seawater) and assumes zeroGradient for the outflow (mimicing free fluid venting). The bottom boundary condition is special, it is set to codedFixedValue. The codedFixedValue BC allows “programming” a boundary condition on the fly. Here a gaussian-shapes constant temperature boundary condition is programmed. Note that <code class="code docutils literal notranslate"><span class="pre">x(this-&gt;patch().Cf().component(0))</span></code> is the x-coordinate of each FV face of the patch “bottom”.</p>
 <p>Units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a one in the fourth columns, the units of the defined properties has units of Kelvin.</p>
 <p>We also need to set boundary conditions for pressure.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code <span class="m">0</span>/p
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/p
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-bc-p">
-<div class="code-block-caption"><span class="caption-number">Listing 19 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc-p" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 19 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc-p" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -383,13 +388,13 @@ paraview a.foam
 <p>The <code class="code docutils literal notranslate"><span class="pre">noFlux</span></code> boundary conditions, sets the pressure gradient to zero (horizontal direction) and hydrostatic (vertical direction), so that no flow occurs through these boundaries. The <code class="code docutils literal notranslate"><span class="pre">submarinePressure</span></code> boundary condition is provided by <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and sets the pressure according to water depth. Change it to fixedValue; we will discuss the special boundary conditions later.</p>
 </section>
 <section id="transport-properties">
-<h2>Transport properties<a class="headerlink" href="#transport-properties" title="Permalink to this headline"></a></h2>
+<h2>Transport properties<a class="headerlink" href="#transport-properties" title="Link to this heading"></a></h2>
 <p>In hydrothermal convection simulations, the fluid properties are given by the used EOS (details on this in the next lecture). What we need to set are the solid properties like permeability, solid density, solid specific heat, and porosity. These are set in two different files. Permeabilty is treated as a variable and is set in the 0 directory.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code <span class="m">0</span>/permeability
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/permeability
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-perm">
-<div class="code-block-caption"><span class="caption-number">Listing 20 </span><span class="caption-text">Permeability on hydrothermal flow simulations.</span><a class="headerlink" href="#lst-2dbox-perm" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 20 </span><span class="caption-text">Permeability on hydrothermal flow simulations.</span><a class="headerlink" href="#lst-2dbox-perm" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -415,19 +420,19 @@ paraview a.foam
 </div>
 <p>Again, check that you understand the units, which here add up to m^2.</p>
 <p>Next we look at the solid properties:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code constant/thermophysicalProperties
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>constant/thermophysicalProperties
 </pre></div>
 </div>
 <p>Check that you understand the units! Details can be found in the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> documentation.</p>
 </section>
 <section id="case-control">
-<h2>Case control<a class="headerlink" href="#case-control" title="Permalink to this headline"></a></h2>
+<h2>Case control<a class="headerlink" href="#case-control" title="Link to this heading"></a></h2>
 <p>Finally, we need to set some control parameters like the time step, run time, output writing. These kind of parameters are set in system/controlDict. Open it and explore the values</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code system/controlDict
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>system/controlDict
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-cdict">
-<div class="code-block-caption"><span class="caption-number">Listing 21 </span><span class="caption-text">controlDict of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-cdict" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 21 </span><span class="caption-text">controlDict of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-cdict" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -473,7 +478,7 @@ paraview a.foam
 <p>The solver we are using is called HydrothermalSinglePhaseDarcyFoam. In addition, we are including two libraries “libHydrothermalBoundaryConditions.so”; these are part of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and provide special boundary conditions for submarine hydrothermal flow calculations.</p>
 </section>
 <section id="running-the-case">
-<h2>Running the case<a class="headerlink" href="#running-the-case" title="Permalink to this headline"></a></h2>
+<h2>Running the case<a class="headerlink" href="#running-the-case" title="Link to this heading"></a></h2>
 <p>Now we are finally ready to run our first test case. Just type this into your docker shell:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>HydrothermalSinglePhaseDarcyFoam
 </pre></div>
@@ -482,7 +487,7 @@ paraview a.foam
 <figure class="align-center" id="fig-regular2dbox-fig">
 <img alt="../../_images/RegularBox2D.png" src="../../_images/RegularBox2D.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Results of the Regular2DBox example calculation.</span><a class="headerlink" href="#fig-regular2dbox-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Results of the Regular2DBox example calculation.</span><a class="headerlink" href="#fig-regular2dbox-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>

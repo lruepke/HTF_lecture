@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exercise 1: Fluid properties &mdash; HydrothermalFoam Lecture  documentation</title>
@@ -15,11 +15,12 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/tabs.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -45,12 +46,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -161,8 +166,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Exercise 1: Fluid properties</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Exercise 1: Fluid properties</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L05/Exercise1.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -197,11 +202,11 @@
 }
 </style>
 <section id="exercise-1-fluid-properties">
-<span id="l05-exercise1"></span><h1>Exercise 1: Fluid properties<a class="headerlink" href="#exercise-1-fluid-properties" title="Permalink to this headline"></a></h1>
+<span id="l05-exercise1"></span><h1>Exercise 1: Fluid properties<a class="headerlink" href="#exercise-1-fluid-properties" title="Link to this heading"></a></h1>
 <p>We have prepared jupyter notebooks that let’s you explore the thermodynamic properties of pure water. Play with them!</p>
 <figure class="align-center" id="fig-properties-water">
 <img alt="../../_images/Properties_Water.svg" src="../../_images/Properties_Water.svg" /><figcaption>
-<p><span class="caption-number">Fig. 28 </span><span class="caption-text">Water properties as a function of temperature and pressure, using python package of <a class="reference external" href="https://iapws.readthedocs.io/en/latest/#">iapws</a>. Properties calculation details can be found in the <a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html#Properties-as-function-of-temperature"><span class="std std-ref">Properties as function of temperature</span></a> in the notebook.</span><a class="headerlink" href="#fig-properties-water" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 28 </span><span class="caption-text">Water properties as a function of temperature and pressure, using python package of <a class="reference external" href="https://iapws.readthedocs.io/en/latest/#">iapws</a>. Properties calculation details can be found in the <a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html#Properties-as-function-of-temperature"><span class="std std-ref">Properties as function of temperature</span></a> in the notebook.</span><a class="headerlink" href="#fig-properties-water" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <div class="toctree-wrapper compound">
@@ -216,7 +221,7 @@
 <div class="admonition-assignment admonition">
 <p class="admonition-title">Assignment</p>
 <p>Try to get these notebooks to work and play a little bit with them. Explore how the values change under different P-T conditions and change the line plot to also show enthalpy. One way of doing this is to create a new notebook and to copy the code from above into them</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code plot_iapws_class.ipynb
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>plot_iapws_class.ipynb
 </pre></div>
 </div>
 </div>
@@ -226,10 +231,10 @@
 <p>Sometimes Visual Studio’s way of setting the python interpretor is not that “intuitive”. In principle, you set the the interpretor (your python environment) using CMD/CTRL+SHIFT+P and typing Python: Select Interpretor. Then you can chose the python environment of the class that has all the necessarry packages installed.</p>
 <p>Problem is, .ipynb files also contain information on the interpretor that should be used with a notbook and Visual Studio uses that information. Therefore, if you download the scripts from us, there is a non-zero chance that your Visual Studio will chose the “wrong” interpretor and that you get an error message that certain packages are not installed.</p>
 <p>In that case you need to follow a workaround. Rename your .ipynb file to .ipynb.json and open that file. Find the section on kernelspec:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;kernelspec&quot;</span>: <span class="o">{</span>
-<span class="s2">&quot;display_name&quot;</span>: <span class="s2">&quot;Python 3&quot;</span>,
-<span class="s2">&quot;language&quot;</span>: <span class="s2">&quot;python&quot;</span>,
-<span class="s2">&quot;name&quot;</span>: <span class="s2">&quot;python3&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;kernelspec&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="s2">&quot;display_name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Python 3&quot;</span>,
+<span class="s2">&quot;language&quot;</span>:<span class="w"> </span><span class="s2">&quot;python&quot;</span>,
+<span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;python3&quot;</span>
 <span class="o">}</span>,
 </pre></div>
 </div>

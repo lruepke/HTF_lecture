@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Excercises &mdash; HydrothermalFoam Lecture  documentation</title>
@@ -15,11 +15,12 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/tabs.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -45,12 +46,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -167,8 +172,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Excercises</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Excercises</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L04/Exercise.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -203,10 +208,10 @@
 }
 </style>
 <section id="excercises">
-<span id="l04-exercise"></span><h1>Excercises<a class="headerlink" href="#excercises" title="Permalink to this headline"></a></h1>
+<span id="l04-exercise"></span><h1>Excercises<a class="headerlink" href="#excercises" title="Link to this heading"></a></h1>
 <p>In this exercise we will investigate how permeability contrast affect hydrothermal flow and vent temperatures. We will first modify the Regular2DBox case to have constant temperature boundary condition and afterwards add a second layer to our mesh, so that we can explore permeability constrasts.</p>
 <section id="constant-temperature-1-layer-system">
-<h2>Constant temperature 1-layer system<a class="headerlink" href="#constant-temperature-1-layer-system" title="Permalink to this headline"></a></h2>
+<h2>Constant temperature 1-layer system<a class="headerlink" href="#constant-temperature-1-layer-system" title="Link to this heading"></a></h2>
 <div class="admonition-what-s-needed-for-the-constant-temperature-case admonition">
 <p class="admonition-title">What’s needed for the constant temperature case?</p>
 <ul class="simple">
@@ -217,12 +222,12 @@
 <figure class="align-center" id="fig-regularbox2d-constantt-fig">
 <img alt="../../_images/RegularBox2D_constantT.png" src="../../_images/RegularBox2D_constantT.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Constant temperature boundary condition.</span><a class="headerlink" href="#fig-regularbox2d-constantt-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Constant temperature boundary condition.</span><a class="headerlink" href="#fig-regularbox2d-constantt-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="constant-temperature-2-layer-system">
-<h2>Constant temperature 2-layer system<a class="headerlink" href="#constant-temperature-2-layer-system" title="Permalink to this headline"></a></h2>
+<h2>Constant temperature 2-layer system<a class="headerlink" href="#constant-temperature-2-layer-system" title="Link to this heading"></a></h2>
 <p>Now we will explore permeability contrasts!</p>
 <div class="admonition-what-s-needed-for-the-two-layer-case admonition">
 <p class="admonition-title">What’s needed for the two-layer case?</p>
@@ -233,12 +238,12 @@
 </ul>
 </div>
 <section id="change-the-mesh">
-<h3>Change the mesh<a class="headerlink" href="#change-the-mesh" title="Permalink to this headline"></a></h3>
+<h3>Change the mesh<a class="headerlink" href="#change-the-mesh" title="Link to this heading"></a></h3>
 <p>Remember how the vertice counting is done! If you don’t, check the info box.</p>
 <figure class="align-center" id="fig-exercise-2layer-fig">
 <img alt="../../_images/exercise_2layer.png" src="../../_images/exercise_2layer.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Starting point for the two layer system.</span><a class="headerlink" href="#fig-exercise-2layer-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Starting point for the two layer system.</span><a class="headerlink" href="#fig-exercise-2layer-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>The easiest way is start with the blockMeshDict file of the 1-layer case and then add a second layer on top. A good way of getting this right, is to draw the node numbering and then add the vertices to the blockMeshDict file. Notice how we give labels layer_bot and layer_top to the two blocks.</p>
@@ -266,12 +271,12 @@
 </div></blockquote>
 </section>
 <section id="assign-properties">
-<span id="l03-properties"></span><h3>Assign properties<a class="headerlink" href="#assign-properties" title="Permalink to this headline"></a></h3>
+<span id="l03-properties"></span><h3>Assign properties<a class="headerlink" href="#assign-properties" title="Link to this heading"></a></h3>
 <p>Next we need to set the permeability for the different zones. This can be achieved with <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> tool. The <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> tool requires a dictionary file <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> that tells it what to do. This file resides in the system folder. Here is a possible listing, just copy it and save it to your system folder.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">zoneToCell</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-setfdict">
-<div class="code-block-caption"><span class="caption-number">Listing 22 </span><span class="caption-text">Use the setFieldsDict to assign different permeabilities.</span><a class="headerlink" href="#lst-2dbox-setfdict" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 22 </span><span class="caption-text">Use the setFieldsDict to assign different permeabilities.</span><a class="headerlink" href="#lst-2dbox-setfdict" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -314,7 +319,7 @@
 </div>
 <input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">boxToCell</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-boxtocell">
-<div class="code-block-caption"><span class="caption-number">Listing 23 </span><span class="caption-text">Use boxToCell to simply set permeability for two-layer model.</span><a class="headerlink" href="#lst-2dbox-boxtocell" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 23 </span><span class="caption-text">Use boxToCell to simply set permeability for two-layer model.</span><a class="headerlink" href="#lst-2dbox-boxtocell" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -362,23 +367,23 @@
 </div>
 </section>
 <section id="run-the-case">
-<h3>Run the case<a class="headerlink" href="#run-the-case" title="Permalink to this headline"></a></h3>
+<h3>Run the case<a class="headerlink" href="#run-the-case" title="Link to this heading"></a></h3>
 <p>Now we are using the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility to set the permeability. Therefore we need to change the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script to also include the setFields command.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-setrun">
-<div class="code-block-caption"><span class="caption-number">Listing 24 </span><span class="caption-text">Modified run.sh file that also includes the setFields command.</span><a class="headerlink" href="#lst-2dbox-setrun" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 24 </span><span class="caption-text">Modified run.sh file that also includes the setFields command.</span><a class="headerlink" href="#lst-2dbox-setrun" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/sh</span>
-<span class="linenos"> 2</span><span class="nb">cd</span> <span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>    <span class="c1"># Run from this directory</span>
+<span class="linenos"> 2</span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="w">    </span><span class="c1"># Run from this directory</span>
 <span class="linenos"> 3</span>
 <span class="linenos"> 4</span><span class="c1"># Source tutorial run functions</span>
-<span class="linenos"> 5</span>. <span class="nv">$WM_PROJECT_DIR</span>/bin/tools/RunFunctions
+<span class="linenos"> 5</span>.<span class="w"> </span><span class="nv">$WM_PROJECT_DIR</span>/bin/tools/RunFunctions
 <span class="linenos"> 6</span>
 <span class="linenos"> 7</span><span class="nv">application</span><span class="o">=</span><span class="sb">`</span>getApplication<span class="sb">`</span>
 <span class="linenos"> 8</span>
 <span class="linenos"> 9</span>./clean.sh
-<span class="linenos">10</span>runApplication blockMesh
-<span class="linenos">11</span>cp <span class="m">0</span>/permeability.orig <span class="m">0</span>/permeability
-<span class="linenos">12</span>runApplication setFields
-<span class="linenos">13</span>runApplication <span class="nv">$application</span>
+<span class="linenos">10</span>runApplication<span class="w"> </span>blockMesh
+<span class="linenos">11</span>cp<span class="w"> </span><span class="m">0</span>/permeability.orig<span class="w"> </span><span class="m">0</span>/permeability
+<span class="linenos">12</span>runApplication<span class="w"> </span>setFields
+<span class="linenos">13</span>runApplication<span class="w"> </span><span class="nv">$application</span>
 </pre></div>
 </div>
 </div>

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coupled diffusion problems &mdash; Finite Element Modeling in Geodynamics  documentation</title>
@@ -15,13 +15,12 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/tabs.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -37,12 +36,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
-            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -144,8 +147,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Coupled diffusion problems</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Coupled diffusion problems</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture6/turing_coupled_problem.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -180,26 +183,26 @@
 }
 </style>
 <section id="coupled-diffusion-problems">
-<h1>Coupled diffusion problems<a class="headerlink" href="#coupled-diffusion-problems" title="Permalink to this heading"></a></h1>
+<h1>Coupled diffusion problems<a class="headerlink" href="#coupled-diffusion-problems" title="Link to this heading"></a></h1>
 <p>So far we have looked at problems that included a single unknown (e.g. temperature) at each node. Sometimes it is necessary to solve for multiple unknowns at each node simultaneously. This could just be multiple displacement or velocity components (as in mechanics), or this could be necessary when equations are strongly coupled.</p>
 <p>One example, where a coupled system of equations needs to be solved are so-called Turing pattern <span id="id1">[<a class="reference internal" href="../refs.html#id36" title="A. M. Turing. The chemical basis of morphogenesis. Philosophical Transactions of the Royal Society of London Series B-Biological Sciences, 237(641):37-72, 1952. URL: &lt;Go to ISI&gt;://WOS:A1952YF90500001, doi:10.1098/rstb.1952.0012.">Turing, 1952</a>]</span>, which appear to emerge in many biological and chemical systems quasi spontaneously from near homogeneous starting conditions. A modern look at it can be found in the paper by <span id="id2">[<a class="reference internal" href="../refs.html#id37" title="Philip K. Maini, Thomas E. Woolley, Ruth E. Baker, Eamonn A. Gaffney, and S. Seirin Lee. Turing's model for biological pattern formation and the robustness problem. Interface Focus, 2(4):487-496, 2012. URL: https://doi.org/10.1098/rsfs.2011.0113, doi:10.1098/rsfs.2011.0113.">Maini et al., 2012</a>]</span>. Here we follow the implementation and problem description given in the FEM book by Guy Simpson <span id="id3">[<a class="reference internal" href="../refs.html#id31" title="Guy Simpson. Practical Finite Element Modeling in Earth Science Using Matlab. John Wiley &amp; Sons, Ltd, 2017. ISBN 9781119248644. URL: https://onlinelibrary.wiley.com/doi/abs/10.1002/9781119248644.part1, arXiv:https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781119248644.part1, doi:https://doi.org/10.1002/9781119248644.part1.">Simpson, 2017</a>]</span>.</p>
 <section id="governing-equations">
-<h2>Governing equations<a class="headerlink" href="#governing-equations" title="Permalink to this heading"></a></h2>
+<h2>Governing equations<a class="headerlink" href="#governing-equations" title="Link to this heading"></a></h2>
 <p>We will explore the evolution of two chemical compounds, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, which affect each other. One is an ‘activator’ and one is an ‘inhibitor’. Both compounds are also produced by a background rate and the their concentrations control each other. This can be expressed by a set of coupled equations.</p>
 <div class="math notranslate nohighlight" id="equation-eq-turing-eqs">
-<span class="eqno">(147)<a class="headerlink" href="#equation-eq-turing-eqs" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(147)<a class="headerlink" href="#equation-eq-turing-eqs" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 \frac{\partial A}{\partial t} &amp;= \nabla^2 A + \gamma (a - A +A^2 B)\\
 \frac{\partial B}{\partial t} &amp;= d\nabla^2 B + \gamma (b - A^2 B)
 \end{split}
 \end{align}\end{split}\]</div>
-<p>In these equations, both compounds are produced at background rates <span class="math notranslate nohighlight">\(\gamma a\)</span> and <span class="math notranslate nohighlight">\(\gamma b\)</span>, <span class="math notranslate nohighlight">\(A\)</span>gamma A`, and reaction further produces the ‘ activator’ <span class="math notranslate nohighlight">\(A\)</span> resulting in a feedback that is described by the non-linear <span class="math notranslate nohighlight">\(A^2 B\)</span> term, which couples the equations in a non-trivial way.</p>
+<p>In these equations, both compounds are produced at background rates <span class="math notranslate nohighlight">\(\gamma a\)</span> and <span class="math notranslate nohighlight">\(\gamma b\)</span>, <span class="math notranslate nohighlight">\(A`decays with a rate :math:\)</span>gamma A`, and reaction further produces the ‘ activator’ <span class="math notranslate nohighlight">\(A\)</span> resulting in a feedback that is described by the non-linear <span class="math notranslate nohighlight">\(A^2 B\)</span> term, which couples the equations in a non-trivial way.</p>
 </section>
 <section id="fem-discretization">
-<h2>FEM discretization<a class="headerlink" href="#fem-discretization" title="Permalink to this heading"></a></h2>
+<h2>FEM discretization<a class="headerlink" href="#fem-discretization" title="Link to this heading"></a></h2>
 <p>Using the same FD time discretization and using an implicit scheme, we can write these equations in FEM matrix form (just like we did for temperature in the previous example):</p>
 <div class="math notranslate nohighlight" id="equation-eq-turing-eqs-fem">
-<span class="eqno">(148)<a class="headerlink" href="#equation-eq-turing-eqs-fem" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(148)<a class="headerlink" href="#equation-eq-turing-eqs-fem" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 (M(1+\Delta t\gamma) + \Delta tA_A)A^{n+1} = MA^n + \Delta tF_A^{n+1}\\
 (M + \Delta tA_B)B^{n+1} = MB^n + \Delta tF_B^{n+1}
@@ -207,7 +210,7 @@
 \end{align}\end{split}\]</div>
 <p>with the matrices defined as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-turing-eqs-fem-matrix">
-<span class="eqno">(149)<a class="headerlink" href="#equation-eq-turing-eqs-fem-matrix" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(149)<a class="headerlink" href="#equation-eq-turing-eqs-fem-matrix" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 M &amp;= \int_\Omega N_i N_j  d\Omega \ \ \ \ \ \ \ i,j=1,2,...,n\\
 A_A &amp;= \int_\Omega \left ( \frac{\partial N_i}{\partial x}\frac{\partial N_j }{\partial x} + \frac{\partial N_i}{\partial y}\frac{\partial N_j }{\partial y} d\Omega \right ) d\Omega\ \ \ \ \ \ \ i,j=1,2,...,n\\
@@ -218,7 +221,7 @@ F_B &amp;= \int_\Omega \gamma N_i \left (b - (N_jA_j)^2N_jB_j      \right )  d\O
 \end{align}\end{split}\]</div>
 <p>We can combine the matrices on the left-hand side and get the stifness matrices <span class="math notranslate nohighlight">\(K_A\)</span> and <span class="math notranslate nohighlight">\(K_B\)</span>.</p>
 <div class="math notranslate nohighlight" id="equation-eq-turing-eqs-fem-matrix-2">
-<span class="eqno">(150)<a class="headerlink" href="#equation-eq-turing-eqs-fem-matrix-2" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(150)<a class="headerlink" href="#equation-eq-turing-eqs-fem-matrix-2" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 K_A A^{n+1} = M A^n + \Delta t F_A^{n+1}\\
 K_B B^{n+1} = M B^n + \Delta t F_B^{n+1}
@@ -227,7 +230,7 @@ K_B B^{n+1} = M B^n + \Delta t F_B^{n+1}
 <p>Notice how we used a fully implicit scheme that evaluates the source terms at the new time level <span class="math notranslate nohighlight">\(n+1\)</span>. We we will review this design decisions later.</p>
 <p>One way of solving such a coupled problem is to have two unknowns per node (two so-called degrees of freedom). In our case, the complete element stiffness matrix would look like this:</p>
 <div class="math notranslate nohighlight" id="equation-eq-turing-eqs-fem-matrix-3">
-<span class="eqno">(151)<a class="headerlink" href="#equation-eq-turing-eqs-fem-matrix-3" title="Permalink to this equation"></a></span>\[\begin{split}\begin{bmatrix}
+<span class="eqno">(151)<a class="headerlink" href="#equation-eq-turing-eqs-fem-matrix-3" title="Link to this equation"></a></span>\[\begin{split}\begin{bmatrix}
 {K_A}_{11} &amp; 0 &amp; {K_A}_{12} &amp; 0 &amp; {K_A}_{13} &amp; 0 \\
 0 &amp; {K_B}_{11} &amp; 0 &amp; {K_B}_{12} &amp; 0 &amp; {K_B}_{13} \\
 {K_A}_{21} &amp; 0 &amp; {K_A}_{22} &amp; 0 &amp; {K_A}_{23} &amp; 0 \\
@@ -247,11 +250,11 @@ B_3^{n+1}\\
 <p>The unknown concentrations of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> or both showing up in the solution vector. What we also note is that the coupling is not that strong as there are no cross-terms. The equation for <span class="math notranslate nohighlight">\(A_1^{n+1}\)</span>, the first row in <a class="reference internal" href="#equation-eq-turing-eqs-fem-matrix-3">equation (151)</a>, has zeros in the columns that operate on B. The coupling comes in through the source terms that appear on the Rhs (<a class="reference internal" href="#equation-eq-turing-eqs">equation (147)</a>).</p>
 </section>
 <section id="non-linear-terms">
-<h2>Non-linear terms<a class="headerlink" href="#non-linear-terms" title="Permalink to this heading"></a></h2>
-<p>Treating the non-linear source term in an implicit way requires iterations - because the term <span class="math notranslate nohighlight">\(A^2B\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, then update the source terms, and solve again until the solution is converged. Easiest to implement would be a non-linear iteration loop over the entire element loop but that would not be very smart as the stiffness matrix is not changing during iterations. Instead we first assembly the stiffness matrix and then have an iteration loop that updates the source term (right-hand side) until the solution is converged.</p>
+<h2>Non-linear terms<a class="headerlink" href="#non-linear-terms" title="Link to this heading"></a></h2>
+<p>Treating the non-linear source term in an implicit way requires iterations - because the term <span class="math notranslate nohighlight">\(A^2B`cannot be directly incorporated into the stiffness matrix. We will use simple direct iterations, in which we solve for :math:`A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, then update the source terms, and solve again until the solution is converged. Easiest to implement would be a non-linear iteration loop over the entire element loop but that would not be very smart as the stiffness matrix is not changing during iterations. Instead we first assembly the stiffness matrix and then have an iteration loop that updates the source term (right-hand side) until the solution is converged.</p>
 </section>
 <section id="python-implementation">
-<h2>Python implementation<a class="headerlink" href="#python-implementation" title="Permalink to this heading"></a></h2>
+<h2>Python implementation<a class="headerlink" href="#python-implementation" title="Link to this heading"></a></h2>
 <p>We take our transient triangle solver from the previous excercise as a starting point and just modify the mesh and equation assembly, and add the non-linear iterations.</p>
 <dl class="simple">
 <dt>The model parameters are:</dt><dd><ul class="simple">
@@ -274,7 +277,7 @@ B_3^{n+1}\\
 </dl>
 <p>Key pieces of the code are:</p>
 <div class="literal-block-wrapper docutils container" id="lst-2d-fem-turing-3">
-<div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text">Initial conditions</span><a class="headerlink" href="#lst-2d-fem-turing-3" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text">Initial conditions</span><a class="headerlink" href="#lst-2d-fem-turing-3" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nnodel</span> <span class="o">=</span> <span class="n">EL2NOD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">nel</span>    <span class="o">=</span> <span class="n">EL2NOD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">nnod</span>   <span class="o">=</span> <span class="n">GCOORD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -292,7 +295,7 @@ B_3^{n+1}\\
 </div>
 <p>This is how the initial conditions are set using random noise. Notice also how we define a variable <code class="code docutils literal notranslate"><span class="pre">sdof</span></code> that refers to the number of equations, while <code class="code docutils literal notranslate"><span class="pre">nnod</span></code> refers to the number of nodes in the mesh.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2d-fem-turing-1">
-<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">Matrix assembly</span><a class="headerlink" href="#lst-2d-fem-turing-1" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">Matrix assembly</span><a class="headerlink" href="#lst-2d-fem-turing-1" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nt</span><span class="p">):</span>
 
 <span class="c1"># Storage</span>
@@ -343,7 +346,7 @@ B_3^{n+1}\\
 </div>
 <p>Notice how the node numbering is different to the equation numbering! Each node has two degrees of freedom, the concentration of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>. All concentrations of <span class="math notranslate nohighlight">\(A\)</span> are stored at <code class="code docutils literal notranslate"><span class="pre">2*EL2NOD[iel,:]</span></code> for the element, iel, and the concentrations of <span class="math notranslate nohighlight">\(B\)</span> at <code class="code docutils literal notranslate"><span class="pre">2*EL2NOD[iel,:]+1</span></code>. This is a typical way of numbering the equations and we will see the same pattern when solving for viscous flow (when each node has two velocities).</p>
 <div class="literal-block-wrapper docutils container" id="lst-2d-fem-turing-2">
-<div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">Non-linear iterations and solution</span><a class="headerlink" href="#lst-2d-fem-turing-2" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">Non-linear iterations and solution</span><a class="headerlink" href="#lst-2d-fem-turing-2" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># update right hand side in iterations</span>
 
 <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
@@ -399,7 +402,7 @@ B_3^{n+1}\\
 <p>During the non-linear iterations, which happen inside the time loop, we keep changing the right-hand side and solve the system of equations. We do not re-assembly the stiffness matrix as it actually doesn’t change during itreations. It actually also doesn’t change during time steps and we could optimize the code further.</p>
 </section>
 <section id="excercise">
-<h2>Excercise<a class="headerlink" href="#excercise" title="Permalink to this heading"></a></h2>
+<h2>Excercise<a class="headerlink" href="#excercise" title="Link to this heading"></a></h2>
 <p>Try to puzzle a working code together and make sure that you understand the equation numbering and the way the iterations are done. If you get bored, stuck, or impatient: here is a link to the working code <a class="reference download internal" download="" href="../_downloads/980edd14512accd895dbf2deca82dfd1/double_diff.py"><code class="xref download docutils literal notranslate"><span class="pre">double_diff.py</span></code></a>.</p>
 <p>Results of transient Turing problem.</p>
 <video width=100% autoplay muted controls loop>
@@ -407,7 +410,7 @@ B_3^{n+1}\\
    Your browser does not support HTML video.
 </video></section>
 <section id="is-fem-a-good-idea-for-solving-this-problem">
-<h2>Is FEM a good idea for solving this problem?<a class="headerlink" href="#is-fem-a-good-idea-for-solving-this-problem" title="Permalink to this heading"></a></h2>
+<h2>Is FEM a good idea for solving this problem?<a class="headerlink" href="#is-fem-a-good-idea-for-solving-this-problem" title="Link to this heading"></a></h2>
 <p>Ok, we got it to work but the solution seems super slow. We iterate to get a consistent right-hand side and solve the equations on an unstructured mesh although we are not resolving any complex geometries.</p>
 <p>A closer look at the equations also reveals that we are solving a problem that is dominated by the source terms (the reactions rates). Such problems are always a bit tricky to solve as the reactions often take please at faster rates than the diffusion process. As a consequence, we actually struggle to take big time steps and our fully implicit scheme is not efficient.</p>
 <p>A much more effective way to solve the equations is to use explicit methods that are time-step limited (remember the FDM lectures?) but are also very efficient as they do not involve solving a system of equations.</p>

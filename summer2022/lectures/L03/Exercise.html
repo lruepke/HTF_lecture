@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exercises &mdash; HydrothermalFoam Lecture  documentation</title>
@@ -15,11 +15,12 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/tabs.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -45,12 +46,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -163,8 +168,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Exercises</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Exercises</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L03/Exercise.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -199,10 +204,10 @@
 }
 </style>
 <section id="exercises">
-<span id="l03-exercise"></span><h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline"></a></h1>
+<span id="l03-exercise"></span><h1>Exercises<a class="headerlink" href="#exercises" title="Link to this heading"></a></h1>
 <p>Let’s explore the solution in a bit more detail.</p>
 <section id="vertical-versus-horizontal-permeability">
-<h2>Vertical versus horizontal permeability<a class="headerlink" href="#vertical-versus-horizontal-permeability" title="Permalink to this headline"></a></h2>
+<h2>Vertical versus horizontal permeability<a class="headerlink" href="#vertical-versus-horizontal-permeability" title="Link to this heading"></a></h2>
 <p>Make a copy of your case and repeat the analysis in the vertical direction. You will need to</p>
 <blockquote>
 <div><ol class="arabic simple">
@@ -215,12 +220,12 @@
 <figure class="align-center" id="fig-rp-vert-perm-fig" style="width: 100%">
 <img alt="../../_images/DRP_vert_perm.png" src="../../_images/DRP_vert_perm.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Pore-level flow in the vertical direction.</span><a class="headerlink" href="#fig-rp-vert-perm-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Pore-level flow in the vertical direction.</span><a class="headerlink" href="#fig-rp-vert-perm-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="changes-to-the-geometry">
-<h2>Changes to the geometry<a class="headerlink" href="#changes-to-the-geometry" title="Permalink to this headline"></a></h2>
+<h2>Changes to the geometry<a class="headerlink" href="#changes-to-the-geometry" title="Link to this heading"></a></h2>
 <p>Check if/how the solution changes if you distort the mesh. For example, squeeze it a bit in the vertical direction by modifying the <code class="code docutils literal notranslate"><span class="pre">transformPoints</span> <span class="pre">-scale</span> <span class="pre">&quot;(1e-6</span> <span class="pre">1e-6</span> <span class="pre">1e-6)&quot;</span></code> statement. Also check if the absolute dimensions matter!</p>
 <p>Numerical models should (usually) not surprise us. So before running the different case, ask yourself what you expect.</p>
 <blockquote>
@@ -231,11 +236,11 @@
 </div></blockquote>
 </section>
 <section id="adding-scalar-transport">
-<h2>Adding scalar transport<a class="headerlink" href="#adding-scalar-transport" title="Permalink to this headline"></a></h2>
+<h2>Adding scalar transport<a class="headerlink" href="#adding-scalar-transport" title="Link to this heading"></a></h2>
 <p>In the next session, we will progress towards submarine hydrothermal systems and will explore Darcy flow in detail. In preparation for that, let’s explore how scalar transport (like advecting temperature) would look like in our synthetic pore model.</p>
 <p>OpenFOAM’s scalarTransportFoam application solves the 3-D advection-diffusion equation for a given velocity field:</p>
 <div class="math notranslate nohighlight" id="equation-eq-scalar-transport">
-<span class="eqno">(8)<a class="headerlink" href="#equation-eq-scalar-transport" title="Permalink to this equation"></a></span>\[    \frac{\partial T}{\partial t} = -\nabla \cdot ( \vec{U} T ) + \nabla \cdot (D_T \nabla T) + S_T,\]</div>
+<span class="eqno">(8)<a class="headerlink" href="#equation-eq-scalar-transport" title="Link to this equation"></a></span>\[    \frac{\partial T}{\partial t} = -\nabla \cdot ( \vec{U} T ) + \nabla \cdot (D_T \nabla T) + S_T,\]</div>
 <p>with <code class="code docutils literal notranslate"><span class="pre">T</span></code> being the transported scalar, <code class="code docutils literal notranslate"><span class="pre">DT</span></code> the diffusivity with units of <span class="math notranslate nohighlight">\(m^2/s\)</span> , and <code class="code docutils literal notranslate"><span class="pre">ST</span></code> is a source term. Note that it is tempting to think of T as temperature but here it is simply a transported scalar (like a solute in groundwater flow). The energy conservation equation written in terms of temperature looks slightly different, as we will learn in the next chapter.</p>
 <p>The key source code of <a class="reference external" href="https://cpp.openfoam.org/v9/scalarTransportFoam_8C_source.html">scalarTransportFoam</a> looks like this:</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="p">...</span>
@@ -257,10 +262,10 @@
 </div>
 <p>Since we have already computed the velocity field (and made the mesh etc.), we can now use our results as the starting point for a scalarTransportFoam case. The foam tuturials are always a good starting point for a new case. scalarTransportFoam is handled in <code class="code docutils literal notranslate"><span class="pre">$FOAM_TUTORIALS/basic/scalarTransportFoam/pitzDaily/</span></code> . Let’s copy it over to our working directory, add our velocity field and mesh, and modify the control dictionoaries.</p>
 <p>In the docker do this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
-cp -r <span class="nv">$FOAM_TUTORIALS</span>/basic/scalarTransportFoam/pitzDaily/ ./DRP_transport
-cp -r ./DRP_permeability_2D/constant/polyMesh ./DRP_transport/
-cp ./DRP_permeability_2D/0/U ./DRP_transport/0/
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$FOAM_TUTORIALS</span>/basic/scalarTransportFoam/pitzDaily/<span class="w"> </span>./DRP_transport
+cp<span class="w"> </span>-r<span class="w"> </span>./DRP_permeability_2D/constant/polyMesh<span class="w"> </span>./DRP_transport/
+cp<span class="w"> </span>./DRP_permeability_2D/0/U<span class="w"> </span>./DRP_transport/0/
 </pre></div>
 </div>
 <p>This assumes that you used the  case and directory names; if not, modify the names accordingly.</p>

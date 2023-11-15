@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Example 1: Cooling dike &mdash; Finite Element Modeling in Geodynamics  documentation</title>
@@ -15,13 +15,12 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/tabs.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -37,12 +36,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
-            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -141,8 +144,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Example 1: Cooling dike</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example 1: Cooling dike</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture1/example_1.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -177,12 +180,12 @@
 }
 </style>
 <section id="example-1-cooling-dike">
-<h1>Example 1: Cooling dike<a class="headerlink" href="#example-1-cooling-dike" title="Permalink to this heading"></a></h1>
+<h1>Example 1: Cooling dike<a class="headerlink" href="#example-1-cooling-dike" title="Link to this heading"></a></h1>
 <section id="problem-description">
-<h2>Problem description<a class="headerlink" href="#problem-description" title="Permalink to this heading"></a></h2>
+<h2>Problem description<a class="headerlink" href="#problem-description" title="Link to this heading"></a></h2>
 <p>As a first example, we will use the finite differences form (<a class="reference internal" href="fdm_intro.html#equation-eq-fd-heat-flow-explicit-solution">equation (11)</a>) of the heat diffusion equation (<a class="reference internal" href="fdm_intro.html#equation-eq-1d-heat-flow">equation (2)</a>) to explore the cooling of a dike. We will look at a  <span class="math notranslate nohighlight">\(2m\)</span> wide dike that intruded with a temperature of  <span class="math notranslate nohighlight">\(1200°C\)</span> into  <span class="math notranslate nohighlight">\(300°C\)</span> warm country rock. The initial conditions can be written as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-dike-ic">
-<span class="eqno">(31)<a class="headerlink" href="#equation-eq-dike-ic" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(31)<a class="headerlink" href="#equation-eq-dike-ic" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 T(x\leq-1 &amp;\mid x\geq1) = 300°C\\
 T(x&gt;-1 &amp;\&amp; x&lt;1) = 1200°C
@@ -191,7 +194,7 @@ T(x&gt;-1 &amp;\&amp; x&lt;1) = 1200°C
 <p>In addition, we assume that the temperature far away from the dike center (at <span class="math notranslate nohighlight">\(\lvert L/2 \rvert\)</span>) remains at a constant temperature. The boundary conditions are thus:</p>
 <p><a class="reference internal" href="#dike-setup"><span class="std std-numref">Fig. 2</span></a> summarizes the setup of the cooling dike problem.</p>
 <div class="math notranslate nohighlight" id="equation-eq-dike-bc">
-<span class="eqno">(32)<a class="headerlink" href="#equation-eq-dike-bc" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(32)<a class="headerlink" href="#equation-eq-dike-bc" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 T(x=-\frac{L}{2}) = 300°C\\
 T(x=\frac{L}{2}) = 300°C
@@ -200,21 +203,21 @@ T(x=\frac{L}{2}) = 300°C
 <figure class="align-center" id="dike-setup" style="width: 100%">
 <img alt="../_images/1D_dike_example_stencil.png" src="../_images/1D_dike_example_stencil.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Setup of the model considered here (A). A hot basaltic dike intrudes into colder country rock. Only variations in x-direction are considered; properties in the other directions are assumed to be constant. The initial temperature distribution <span class="math notranslate nohighlight">\(T(x,0)\)</span> has a step-like perturbation. B) Finite difference discretization of the 1D heat equation. The finite difference method approximates the temperature at given grid points, with spacing <span class="math notranslate nohighlight">\(\Delta x\)</span>. The time-evolution is also computed at given times with timestep <span class="math notranslate nohighlight">\(\Delta t\)</span>.</span><a class="headerlink" href="#dike-setup" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Setup of the model considered here (A). A hot basaltic dike intrudes into colder country rock. Only variations in x-direction are considered; properties in the other directions are assumed to be constant. The initial temperature distribution <span class="math notranslate nohighlight">\(T(x,0)\)</span> has a step-like perturbation. B) Finite difference discretization of the 1D heat equation. The finite difference method approximates the temperature at given grid points, with spacing <span class="math notranslate nohighlight">\(\Delta x\)</span>. The time-evolution is also computed at given times with timestep <span class="math notranslate nohighlight">\(\Delta t\)</span>.</span><a class="headerlink" href="#dike-setup" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="excercises-1-d-cooling-dike-explicit">
-<h2>Excercises - 1-D cooling dike (explicit)<a class="headerlink" href="#excercises-1-d-cooling-dike-explicit" title="Permalink to this heading"></a></h2>
+<h2>Excercises - 1-D cooling dike (explicit)<a class="headerlink" href="#excercises-1-d-cooling-dike-explicit" title="Link to this heading"></a></h2>
 <p>Try to implement the above prolem in python using the juypter notebook below as a starting point. One way is to activate your course python environment, start a jupyter lab or notebook, and create a new notebook. You can then copy the code blocks (cells) from the script into your notebook and complete the missing pieces.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="jupyter/cooling_dike_1d_fdm.html">Script for solving the 1D diffusion equation</a></li>
 </ul>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_fem_lecture
-<span class="nb">cd</span> <span class="nv">$your_working_directory</span>$
-jupyter lab
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>py37_fem_lecture
+<span class="nb">cd</span><span class="w"> </span><span class="nv">$your_working_directory</span>$
+jupyter<span class="w"> </span>lab
 </pre></div>
 </div>
 <p>Now you can explore the numerical solution.</p>

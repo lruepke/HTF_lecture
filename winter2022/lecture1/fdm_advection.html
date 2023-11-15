@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Transport problems with FDM &mdash; Finite Element Modeling in Geodynamics  documentation</title>
@@ -15,13 +15,12 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/tabs.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -37,12 +36,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
-            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -144,8 +147,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Transport problems with FDM</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Transport problems with FDM</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture1/fdm_advection.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -180,32 +183,32 @@
 }
 </style>
 <section id="transport-problems-with-fdm">
-<h1>Transport problems with FDM<a class="headerlink" href="#transport-problems-with-fdm" title="Permalink to this heading"></a></h1>
+<h1>Transport problems with FDM<a class="headerlink" href="#transport-problems-with-fdm" title="Link to this heading"></a></h1>
 <p>Before progressing towards finite elements, we will look into transport problems using FDM. Advection problems are described by so-called hyperbolic partial differential equations. The general form of advection/transport equations looks like this:</p>
 <div class="math notranslate nohighlight" id="equation-eq-advection-eqn">
-<span class="eqno">(50)<a class="headerlink" href="#equation-eq-advection-eqn" title="Permalink to this equation"></a></span>\[\frac{\partial C}{\partial t} = -\vec{u}\cdot\nabla C\]</div>
+<span class="eqno">(50)<a class="headerlink" href="#equation-eq-advection-eqn" title="Link to this equation"></a></span>\[\frac{\partial C}{\partial t} = -\vec{u}\cdot\nabla C\]</div>
 <p>or written in one-dimension:</p>
 <div class="math notranslate nohighlight" id="equation-eq-advection-eqn-1d">
-<span class="eqno">(51)<a class="headerlink" href="#equation-eq-advection-eqn-1d" title="Permalink to this equation"></a></span>\[\frac{\partial C}{\partial t} = -u_x \frac{\partial C}{\partial x}\]</div>
+<span class="eqno">(51)<a class="headerlink" href="#equation-eq-advection-eqn-1d" title="Link to this equation"></a></span>\[\frac{\partial C}{\partial t} = -u_x \frac{\partial C}{\partial x}\]</div>
 <p>These equations describe the non-diffusive transport of a concentration <span class="math notranslate nohighlight">\(C\)</span> with the flow field <span class="math notranslate nohighlight">\(\vec{u}\)</span>, like, for example, in solute transport. If the solute also diffused, there would also be a diffusion term on the right-hand side.</p>
 <p>While these equations look quite “friendly” and a bit simpler than the diffusion equations we have looked at so far, they can actually be a challenge to solve (well). Let’s explore a two possible FDM schemes!</p>
 <section id="fdm-advection-schemes">
-<h2>FDM advection schemes<a class="headerlink" href="#fdm-advection-schemes" title="Permalink to this heading"></a></h2>
+<h2>FDM advection schemes<a class="headerlink" href="#fdm-advection-schemes" title="Link to this heading"></a></h2>
 <section id="forward-in-time-central-in-space-ftcs">
-<h3>Forward in time, central in space (FTCS)<a class="headerlink" href="#forward-in-time-central-in-space-ftcs" title="Permalink to this heading"></a></h3>
+<h3>Forward in time, central in space (FTCS)<a class="headerlink" href="#forward-in-time-central-in-space-ftcs" title="Link to this heading"></a></h3>
 <p>One possible FDM discretization is to use the so-called <em>forward in time, central in space (FTCS)</em> technique, which uses forward differencing for the time derivative (what we had also done in the diffusion case) and central differencing for the gradient term.</p>
 <div class="math notranslate nohighlight" id="equation-eq-advection-ftcs">
-<span class="eqno">(52)<a class="headerlink" href="#equation-eq-advection-ftcs" title="Permalink to this equation"></a></span>\[\frac{C_i^{n+1}-C_i^n}{\Delta t}= -u_{x,i} \frac{C_{i+1}^{n}-C_{i-1}^n}{2\Delta x}\]</div>
+<span class="eqno">(52)<a class="headerlink" href="#equation-eq-advection-ftcs" title="Link to this equation"></a></span>\[\frac{C_i^{n+1}-C_i^n}{\Delta t}= -u_{x,i} \frac{C_{i+1}^{n}-C_{i-1}^n}{2\Delta x}\]</div>
 </section>
 <section id="upwind">
-<h3>Upwind<a class="headerlink" href="#upwind" title="Permalink to this heading"></a></h3>
+<h3>Upwind<a class="headerlink" href="#upwind" title="Link to this heading"></a></h3>
 <p>Another option is to use what is called an upwind scheme, in which the gradient on the right-hand side is evaluated according to the direction of flow:</p>
 <div class="math notranslate nohighlight" id="equation-eq-advection-upwind">
-<span class="eqno">(53)<a class="headerlink" href="#equation-eq-advection-upwind" title="Permalink to this equation"></a></span>\[\begin{split}\frac{C_i^{n+1}-C_i^n}{\Delta t}= -u_{x,i}  \begin{pmatrix} \frac{C_{i}^{n}-C_{i-1}^n}{\Delta x} \text{ , if $u_x \geq 0$} \\ \frac{C_{i+1}^{n}-C_{i}^n}{\Delta x} \text{ , if $u_x &lt; 0$} \end{pmatrix}\end{split}\]</div>
+<span class="eqno">(53)<a class="headerlink" href="#equation-eq-advection-upwind" title="Link to this equation"></a></span>\[\begin{split}\frac{C_i^{n+1}-C_i^n}{\Delta t}= -u_{x,i}  \begin{pmatrix} \frac{C_{i}^{n}-C_{i-1}^n}{\Delta x} \text{ , if $u_x \geq 0$} \\ \frac{C_{i+1}^{n}-C_{i}^n}{\Delta x} \text{ , if $u_x &lt; 0$} \end{pmatrix}\end{split}\]</div>
 <p>There are many more schemes including much better ones (see e.g. Marc Spiegelmann’s script on numerical methods  <a class="reference external" href="https://earth.usc.edu/~becker/teaching/557/reading/spiegelman_mmm.pdf">https://earth.usc.edu/~becker/teaching/557/reading/spiegelman_mmm.pdf</a>). We here look into these two basic types because we will come back to them when looking into finite elements for advection problems.</p>
 </section>
 <section id="excercise">
-<h3>Excercise<a class="headerlink" href="#excercise" title="Permalink to this heading"></a></h3>
+<h3>Excercise<a class="headerlink" href="#excercise" title="Link to this heading"></a></h3>
 <p>Implement the different schemes using this jupyter notebook as a starting point. Notice how the FTCS scheme is always unstable and how the upwind scheme is very diffusive.</p>
 <div class="toctree-wrapper compound">
 <ul>

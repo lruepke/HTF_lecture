@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Installation guide &mdash; HydrothermalFoam Lecture  documentation</title>
@@ -15,11 +15,12 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/tabs.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -45,12 +46,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -171,8 +176,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Installation guide</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation guide</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L01/Installation.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -207,10 +212,10 @@
 }
 </style>
 <section id="installation-guide">
-<span id="id1"></span><h1>Installation guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Installation guide<a class="headerlink" href="#installation-guide" title="Link to this heading"></a></h1>
 <p>We will be using the Foundation version of <a class="reference external" href="https://openfoam.org">OpenFOAM</a> and our own hydrothermal flow solver <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don’t like virtual environments, you will need to go through the <a class="reference external" href="https://www.hydrothermalfoam.info/manual/en/Installation/index.html#build-from-source">“install from source”</a> instructions of HydrothermalFoam and read the installation instructions of OpenFoam.</p>
 <section id="docker">
-<span id="sec-install-docker"></span><h2>Docker<a class="headerlink" href="#docker" title="Permalink to this headline"></a></h2>
+<span id="sec-install-docker"></span><h2>Docker<a class="headerlink" href="#docker" title="Link to this heading"></a></h2>
 <p>We will rely on <a class="reference internal" href="#docker">docker</a> and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. For this purpose we have modified the official OpenFoam docker image, so that it also contains all components of HydrothermalFoam. The way docker works is that a so-called docker image is downloaded and from this image a so-called docker container is built, which is the actual virtual environment. These are the necessary steps:</p>
 <ol class="arabic simple">
 <li><p><strong>Install</strong> <a class="reference external" href="https://www.docker.com/products/docker-desktop">docker desktop</a> and keep it running.</p></li>
@@ -223,11 +228,11 @@
 </div>
 <p>Now we are ready to pull the provided docker image, which can be found here <a class="reference external" href="https://hub.docker.com/repository/docker/zguo/hydrothermalfoam">zguo/hydrothermalfoam</a>.</p>
 <p>Open a shell (powershell under windows or a terminal under MacOS) and pull the image by typing this command.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull zguo/hydrothermalfoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>zguo/hydrothermalfoam
 </pre></div>
 </div>
 <p>This can take a while. After the download is finished, you can build the docker container. Use this command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -it -d --name hydrothermalfoam --workdir<span class="o">=</span><span class="s2">&quot;/home/openfoam&quot;</span> -v<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/HydrothermalFoam_runs&quot;</span>:<span class="s2">&quot;/home/openfoam/HydrothermalFoam_runs&quot;</span> zguo/hydrothermalfoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>hydrothermalfoam<span class="w"> </span>--workdir<span class="o">=</span><span class="s2">&quot;/home/openfoam&quot;</span><span class="w"> </span>-v<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/HydrothermalFoam_runs&quot;</span>:<span class="s2">&quot;/home/openfoam/HydrothermalFoam_runs&quot;</span><span class="w"> </span>zguo/hydrothermalfoam
 </pre></div>
 </div>
 <p>This complicated looking command builds the docker container and creates a “shared” folder called HydrothermalFoam_runs in your home directory (this is what the -v option does). If you want it somewhere else, you can change this “$HOME/HydrothermalFoam_runs” part of the above statement. Please do not uses path and directory names with spaces or special characters in it (if you are on windows).</p>
@@ -245,9 +250,9 @@
 </dl>
 </div>
 <p>Now that you have built the docker container you can use these basic docker commands to interact with it:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker start hydrothermalfoam
-docker attach hydrothermalfoam
-docker stop hydrothermalfoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>hydrothermalfoam
+docker<span class="w"> </span>attach<span class="w"> </span>hydrothermalfoam
+docker<span class="w"> </span>stop<span class="w"> </span>hydrothermalfoam
 </pre></div>
 </div>
 <p>The first command starts the container and the second one attaches it to the current shell. As you will see below, you will typically run these two commands from the right-hand side shell in your VS code when you start your work. To stop the container, just run the stop command from another shell.</p>
@@ -255,17 +260,17 @@ docker stop hydrothermalfoam
 <figure class="align-center" id="id3" style="width: 70%">
 <img alt="../../_images/docker_desktop.png" src="../../_images/docker_desktop.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Docker dashboard showing your images and containers.</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Docker dashboard showing your images and containers.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="visual-studio-code">
-<span id="sec-install-vscode"></span><h2>Visual Studio Code<a class="headerlink" href="#visual-studio-code" title="Permalink to this headline"></a></h2>
+<span id="sec-install-vscode"></span><h2>Visual Studio Code<a class="headerlink" href="#visual-studio-code" title="Link to this heading"></a></h2>
 <p>Working with OpenFoam involves a lot of editing of text files and you can use your favorite text editor for this. However, we strongly recommend to use <a class="reference external" href="https://code.visualstudio.com/">Microsoft’s Visual Studio Code</a>.</p>
 <p>Open Visual Studio Code and open two shells side-by-side at the bottom (powershell on Windows and terminal on Mac). We will use the convention that we use the terminal to the right-hand side as our “virtual machine (docker) shell” and the terminal to the left as our local shell.</p>
 <p>Start and attach the docker container to the right-hand-side shell by typing</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker start hydrothermalfoam
-docker attach hydrothermalfoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>hydrothermalfoam
+docker<span class="w"> </span>attach<span class="w"> </span>hydrothermalfoam
 </pre></div>
 </div>
 <p>If you want things to be pretty, try starting a z-shell (instead of the default bash):</p>
@@ -273,7 +278,7 @@ docker attach hydrothermalfoam
 </pre></div>
 </div>
 <p>You can stop the container whenever you want and your files will remain intact, just like in any other virtual machine. To stop the container type</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker stop hydrothermalfoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>hydrothermalfoam
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -282,14 +287,14 @@ docker attach hydrothermalfoam
 </div>
 </section>
 <section id="sec-install-paraview">
-<span id="id2"></span><h2>Paraview<a class="headerlink" href="#sec-install-paraview" title="Permalink to this headline"></a></h2>
+<span id="id2"></span><h2>Paraview<a class="headerlink" href="#sec-install-paraview" title="Link to this heading"></a></h2>
 <p>We will use Kiteware’s <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize the modeling results. Download and install the latest version. It also really helps to add paraview to the system path, so that it can be called from the command line.</p>
 </section>
 <section id="python">
-<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline"></a></h2>
+<h2>Python<a class="headerlink" href="#python" title="Link to this heading"></a></h2>
 <p>We will use python to analyze some of the numerical results and to dive deeper in to the details of the numerical methods use. In case you are already having a working python environment, read no further. If not, we recommend <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose “no”. It’s usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.</p>
 <section id="download-and-install-miniconda">
-<h3>Download and install miniconda<a class="headerlink" href="#download-and-install-miniconda" title="Permalink to this headline"></a></h3>
+<h3>Download and install miniconda<a class="headerlink" href="#download-and-install-miniconda" title="Link to this heading"></a></h3>
 <p>Just follow the installation instructions and keep the default options. We recommend to install python 3. During the installation, choose to <strong>not</strong> add it to your path (that’s the default). Adding miniconda/anaconda to your <code class="code docutils literal notranslate"><span class="pre">$PATH</span></code> may seem convenient but there are several reason to not do it.</p>
 <blockquote>
 <div><ul class="simple">
@@ -299,13 +304,13 @@ docker attach hydrothermalfoam
 </div></blockquote>
 </section>
 <section id="create-a-virtual-environment">
-<h3>Create a virtual environment<a class="headerlink" href="#create-a-virtual-environment" title="Permalink to this headline"></a></h3>
+<h3>Create a virtual environment<a class="headerlink" href="#create-a-virtual-environment" title="Link to this heading"></a></h3>
 <p>We will create a so-called virtual environment with all the python packages we will use during this class. To not interfere with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation.</p>
 <div class="admonition-starting-python admonition">
 <p class="admonition-title">Starting python</p>
 <p>If you are on Windows, start an Anaconda Powershell Prompt from the start menu.</p>
 <p>On MacOS / Linux, open a terminal and type</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate base
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>base
 </pre></div>
 </div>
 <p>You can also do that in the terminal within Visual Studio Code (on MacOS).</p>
@@ -318,36 +323,36 @@ docker attach hydrothermalfoam
 </ul>
 </div></blockquote>
 <p>Alright, let’s install some basic packages into the base environment:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install -n base -c conda-forge jupyterlab nb_conda_kernels
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-n<span class="w"> </span>base<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>jupyterlab<span class="w"> </span>nb_conda_kernels
 </pre></div>
 </div>
 <p>Now we can proceed and create our working environment.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n py3_htf_class <span class="nv">python</span><span class="o">=</span><span class="m">3</span> numpy pandas matplotlib vtk h5py scipy ipykernel
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>py3_htf_class<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span><span class="w"> </span>numpy<span class="w"> </span>pandas<span class="w"> </span>matplotlib<span class="w"> </span>vtk<span class="w"> </span>h5py<span class="w"> </span>scipy<span class="w"> </span>ipykernel
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py3_htf_class
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>py3_htf_class
 </pre></div>
 </div>
 <p>And add a few more packages that are not directly available form anaconda using pip:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install meshio
-pip install iapws
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>meshio
+pip<span class="w"> </span>install<span class="w"> </span>iapws
 </pre></div>
 </div>
 </section>
 <section id="switching-between-environments">
-<h3>Switching between environments<a class="headerlink" href="#switching-between-environments" title="Permalink to this headline"></a></h3>
+<h3>Switching between environments<a class="headerlink" href="#switching-between-environments" title="Link to this heading"></a></h3>
 <p>You can activate and deactivate environments like this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py3_htf_class
-conda deactivate
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>py3_htf_class
+conda<span class="w"> </span>deactivate
 </pre></div>
 </div>
 </section>
 <section id="integration-with-visual-studio-code">
-<h3>Integration with Visual Studio Code<a class="headerlink" href="#integration-with-visual-studio-code" title="Permalink to this headline"></a></h3>
+<h3>Integration with Visual Studio Code<a class="headerlink" href="#integration-with-visual-studio-code" title="Link to this heading"></a></h3>
 <p>You will need to install Microsoft’s Python extension. Just search for Python under Extensions and chose the one from Microsoft (usually the first option). Finally, you will have to set the Python interpreter. Do this by pushing CMD/CTRL+SHIFT+P. Type Python: Select Interpretor and select our newly created anaconda environment. If it doesn’t show up, close and re-open Visual Studio Code.</p>
 </section>
 <section id="test-your-installation">
-<h3>Test your installation<a class="headerlink" href="#test-your-installation" title="Permalink to this headline"></a></h3>
+<h3>Test your installation<a class="headerlink" href="#test-your-installation" title="Link to this heading"></a></h3>
 <p>Check that you everything is working by, for example, importing the meshio package and by executing some simple code. Do this in Visual Studio Code and in JupyterLab.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Visual Studio Code</label><div class="tab-content docutils container">

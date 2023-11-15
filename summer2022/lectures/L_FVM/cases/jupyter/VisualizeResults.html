@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>1. Read and plot mesh information &mdash; HydrothermalFoam Lecture  documentation</title>
@@ -15,11 +15,12 @@
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/tabs.js"></script>
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -45,12 +46,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -179,9 +184,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../Exercise1.html">Exercise 1</a> &raquo;</li>
-      <li>1. Read and plot mesh information</li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../Exercise1.html">Exercise 1</a></li>
+      <li class="breadcrumb-item active">1. Read and plot mesh information</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L_FVM/cases/jupyter/VisualizeResults.ipynb" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -486,7 +491,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <section id="1.-Read-and-plot-mesh-information">
-<h1>1. Read and plot mesh information<a class="headerlink" href="#1.-Read-and-plot-mesh-information" title="Permalink to this headline"></a></h1>
+<h1>1. Read and plot mesh information<a class="headerlink" href="#1.-Read-and-plot-mesh-information" title="Link to this heading"></a></h1>
 <p>Please use command <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">sciPyFoam</span></code> to install a usefull python package to read polyMesh and plot mesh topology.</p>
 <p>There are 5 functions are available in <code class="docutils literal notranslate"><span class="pre">sciPyFoam.polyMesh</span></code> 1. <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z,</span> <span class="pre">cells_rect=mesh2d.readInternal('case/VTK/case_0.vtk')</span></code> 2. <code class="docutils literal notranslate"><span class="pre">faces</span> <span class="pre">=</span> <span class="pre">readFaces(caseDir)</span></code> 3. <code class="docutils literal notranslate"><span class="pre">owners</span> <span class="pre">=</span> <span class="pre">readOwner(caseDir)</span></code> 4. <code class="docutils literal notranslate"><span class="pre">neighbours</span> <span class="pre">=</span> <span class="pre">readNeighbour(caseDir)</span></code> 5. <code class="docutils literal notranslate"><span class="pre">boundaries,</span> <span class="pre">index_internalFaces,</span> <span class="pre">name_faces</span> <span class="pre">=</span> <span class="pre">readBoundary(caseDir,nFaces)</span></code></p>
 <p><strong>Interesting and smart design! the internal face index is consecutive and from zero.</strong></p>
@@ -546,7 +551,7 @@ nInternalFaces: 47
 </div>
 </section>
 <section id="2.-Boundary-conditions">
-<h1>2. Boundary conditions<a class="headerlink" href="#2.-Boundary-conditions" title="Permalink to this headline"></a></h1>
+<h1>2. Boundary conditions<a class="headerlink" href="#2.-Boundary-conditions" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -606,7 +611,7 @@ nInternalFaces: 47
 </div>
 </section>
 <section id="3.-Plot-coefficients-matrix">
-<h1>3. Plot coefficients matrix<a class="headerlink" href="#3.-Plot-coefficients-matrix" title="Permalink to this headline"></a></h1>
+<h1>3. Plot coefficients matrix<a class="headerlink" href="#3.-Plot-coefficients-matrix" title="Link to this heading"></a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -733,12 +738,12 @@ nInternalFaces: 47
 </div>
 </div>
 <section id="Implementation-in-OpenFOAM">
-<h2>Implementation in OpenFOAM<a class="headerlink" href="#Implementation-in-OpenFOAM" title="Permalink to this headline"></a></h2>
+<h2>Implementation in OpenFOAM<a class="headerlink" href="#Implementation-in-OpenFOAM" title="Link to this heading"></a></h2>
 <p>Not yet test for unstructured mesh!!!</p>
 </section>
 </section>
 <section id="1.-Coordinates-and-delta-coefficients-of-internal-cell">
-<h1>1. Coordinates and delta coefficients of internal cell<a class="headerlink" href="#1.-Coordinates-and-delta-coefficients-of-internal-cell" title="Permalink to this headline"></a></h1>
+<h1>1. Coordinates and delta coefficients of internal cell<a class="headerlink" href="#1.-Coordinates-and-delta-coefficients-of-internal-cell" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[126]:
 </pre></div>
@@ -822,9 +827,9 @@ nInternalFaces: 47
                 <span class="n">boundaryCoeffs</span><span class="o">=</span><span class="n">bcs</span><span class="p">[</span><span class="n">faces</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">face</span><span class="p">]][</span><span class="s1">&#39;bc&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">magSf</span>
             <span class="n">a_C_cellC</span><span class="o">+=</span><span class="n">internalCoeffs</span>
             <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">mesh</span><span class="se">\n</span><span class="s2">deltaCoeffs: $</span><span class="se">\\</span><span class="s2">frac</span><span class="si">{1}</span><span class="s2">{\delta_{C\leftrightarrow f}}$ = </span><span class="si">%.1f</span><span class="s2"></span>
-<span class="s2">gradientInternalCoeffs =  </span><span class="si">%s</span><span class="s2"></span>
-<span class="s2">gradientBoundaryCoeffs = </span><span class="si">%s</span><span class="s2"></span>
+<span class="s2">mesh</span><span class="se">\n</span><span class="s2">deltaCoeffs: $</span><span class="se">\\</span><span class="s2">frac</span><span class="si">{1}</span><span class="s2">{\delta_{C\leftrightarrow f}}$ = </span><span class="si">%.1f</span>
+<span class="s2">gradientInternalCoeffs =  </span><span class="si">%s</span>
+<span class="s2">gradientBoundaryCoeffs = </span><span class="si">%s</span>
 <span class="s2">            &quot;&quot;&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">delta_CF</span><span class="p">,</span><span class="n">gradientInternalCoeffs</span><span class="p">,</span><span class="n">gradientBoundaryCoeffs</span><span class="p">)</span>
             <span class="k">if</span><span class="p">(</span><span class="n">coeffType</span><span class="o">==</span><span class="s1">&#39;Laplacian&#39;</span><span class="p">):</span>
                 <span class="n">text</span><span class="o">+=</span><span class="s2">&quot;&quot;&quot;</span>
@@ -897,7 +902,7 @@ nInternalFaces: 47
 </div>
 </section>
 <section id="2.-Coordinates-and-delta-coefficients-of-boundary-cell">
-<h1>2. Coordinates and delta coefficients of boundary cell<a class="headerlink" href="#2.-Coordinates-and-delta-coefficients-of-boundary-cell" title="Permalink to this headline"></a></h1>
+<h1>2. Coordinates and delta coefficients of boundary cell<a class="headerlink" href="#2.-Coordinates-and-delta-coefficients-of-boundary-cell" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[129]:
 </pre></div>

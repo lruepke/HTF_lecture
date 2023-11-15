@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Excercises &mdash; Finite Element Modeling in Geodynamics  documentation</title>
@@ -15,13 +15,12 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/tabs.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -37,12 +36,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
-            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -145,8 +148,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Excercises</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Excercises</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture2/excercises.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -181,10 +184,10 @@
 }
 </style>
 <section id="excercises">
-<h1>Excercises<a class="headerlink" href="#excercises" title="Permalink to this heading"></a></h1>
+<h1>Excercises<a class="headerlink" href="#excercises" title="Link to this heading"></a></h1>
 <p>Let us program some of the above MWR formulations. Here is a jupyter notebook that we can use as a starting point.</p>
 <section id="notebook-excercises">
-<h2>Notebook - excercises<a class="headerlink" href="#notebook-excercises" title="Permalink to this heading"></a></h2>
+<h2>Notebook - excercises<a class="headerlink" href="#notebook-excercises" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="jupyter/MWR_excercise.html">MWR example problems</a><ul>
@@ -204,13 +207,13 @@
 </div></blockquote>
 </section>
 <section id="higher-order-approximations">
-<h2>Higher-order approximations<a class="headerlink" href="#higher-order-approximations" title="Permalink to this heading"></a></h2>
+<h2>Higher-order approximations<a class="headerlink" href="#higher-order-approximations" title="Link to this heading"></a></h2>
 <p>What we have seen is that for diffusion dominated problems, the above approximation gives reasonable results. For advection dominated problems, a simple polynomial function can no longer approximate the solution in a satisfactory way. One possible solution is to use a higher polynomial as the approximating function. Let’s try this:</p>
 <div class="math notranslate nohighlight" id="equation-eq-mwr-example-ho-1">
-<span class="eqno">(85)<a class="headerlink" href="#equation-eq-mwr-example-ho-1" title="Permalink to this equation"></a></span>\[\tilde{u}(x)=a_0 + a_1 x + a_2 x^2 + a_3 x^3\]</div>
+<span class="eqno">(85)<a class="headerlink" href="#equation-eq-mwr-example-ho-1" title="Link to this equation"></a></span>\[\tilde{u}(x)=a_0 + a_1 x + a_2 x^2 + a_3 x^3\]</div>
 <p>The boundary conditions can now be written as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-mwr-example-ho-2">
-<span class="eqno">(86)<a class="headerlink" href="#equation-eq-mwr-example-ho-2" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(86)<a class="headerlink" href="#equation-eq-mwr-example-ho-2" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 \tilde{u}(0) &amp;= 0=a_0\\
 \tilde{u}(1) &amp;= 1=0+a_1 + a_2 + a_3\\
@@ -219,7 +222,7 @@
 \end{align}\end{split}\]</div>
 <p>The first and second derivatives become:</p>
 <div class="math notranslate nohighlight" id="equation-eq-mwr-example-ho-3">
-<span class="eqno">(87)<a class="headerlink" href="#equation-eq-mwr-example-ho-3" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(87)<a class="headerlink" href="#equation-eq-mwr-example-ho-3" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 \frac{\partial \tilde{u}}{\partial x} &amp;= a_1+2a_2x + 3a_3x^2\\
 \frac{\partial^2 \tilde{u}}{\partial x^2} &amp;= 2a_2 + 6a_3x
@@ -228,11 +231,11 @@
 <p>So the residual is</p>
 <blockquote>
 <div><div class="math notranslate nohighlight" id="equation-eq-mwr-example-ho-4">
-<span class="eqno">(88)<a class="headerlink" href="#equation-eq-mwr-example-ho-4" title="Permalink to this equation"></a></span>\[R(x)=c\left ( a_1 + 2a_2x+3a_3x^2 \right ) - K(2a_2+6a_3x)\]</div>
+<span class="eqno">(88)<a class="headerlink" href="#equation-eq-mwr-example-ho-4" title="Link to this equation"></a></span>\[R(x)=c\left ( a_1 + 2a_2x+3a_3x^2 \right ) - K(2a_2+6a_3x)\]</div>
 </div></blockquote>
 <p>We will only use the collocation method with two collocation points to determine the two unknown coefficients. The result is a system of equations for the four coefficients <span class="math notranslate nohighlight">\(ai\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-eq-mwr-example-ho-5">
-<span class="eqno">(89)<a class="headerlink" href="#equation-eq-mwr-example-ho-5" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(89)<a class="headerlink" href="#equation-eq-mwr-example-ho-5" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 a_0 &amp;=0\\
 c \left( a_1+2a_2 \left(\frac{1}{3}\right) +3a_3\left(\frac{1}{3}\right)^2 \right)-K\left(2a_2+6a_3\left(\frac{1}{3}\right)\right)&amp;=0=R\left(\frac{1}{3}\right)\\
@@ -243,7 +246,7 @@ a_1 + a_2 + a_3 -1 &amp;=0
 <p>We can solve this system of equations with the Symbolic Math Toolbox of Matlab or again via sympy using python. Try to do that!</p>
 </section>
 <section id="notebook-derivation-of-higher-order-constants">
-<h2>Notebook - derivation of higher-order constants<a class="headerlink" href="#notebook-derivation-of-higher-order-constants" title="Permalink to this heading"></a></h2>
+<h2>Notebook - derivation of higher-order constants<a class="headerlink" href="#notebook-derivation-of-higher-order-constants" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="jupyter/MWR_higher_order.html">Example of a high-order approximation</a></li>
@@ -252,7 +255,7 @@ a_1 + a_2 + a_3 -1 &amp;=0
 <p>Have a close look at the above notebook and make sure you understand how symbolic systems of equations are solved using sympy! Also check if we are now able to approximate the solution for advection-dominated problems.</p>
 </section>
 <section id="outlook">
-<h2>Outlook<a class="headerlink" href="#outlook" title="Permalink to this heading"></a></h2>
+<h2>Outlook<a class="headerlink" href="#outlook" title="Link to this heading"></a></h2>
 <p>The above considerations have shown how we can find approximate solutions to partial differential equations using MWR. If you remember the characterization above: <em>“…finite element methods partition the problem domain into subregions and produce a simple function in each subregion that approximates the solution”</em>, we can already see that finite elements do something very similar. In essence we will partition the domain into many elements, approximate the solution over every element using the Galerkin method and very simple basis functions, and will finally obtain the global solution by summing up the contributions of each element. That is what we will do over the next weeks!</p>
 </section>
 </section>

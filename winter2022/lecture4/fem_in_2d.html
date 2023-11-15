@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2-D FEM - elliptic problems &mdash; Finite Element Modeling in Geodynamics  documentation</title>
@@ -15,13 +15,12 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/tabs.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -37,12 +36,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
-            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -163,8 +166,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>2-D FEM - elliptic problems</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">2-D FEM - elliptic problems</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture4/fem_in_2d.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -199,19 +202,19 @@
 }
 </style>
 <section id="d-fem-elliptic-problems">
-<h1>2-D FEM - elliptic problems<a class="headerlink" href="#d-fem-elliptic-problems" title="Permalink to this heading"></a></h1>
+<h1>2-D FEM - elliptic problems<a class="headerlink" href="#d-fem-elliptic-problems" title="Link to this heading"></a></h1>
 <p>Let’s move on to 2D! We will again use our steady-state heat diffusion equation as an example and will follow basically the same steps as during the 1-D example.</p>
 <section id="governing-equation-strong-form">
-<h2>Governing equation - strong form<a class="headerlink" href="#governing-equation-strong-form" title="Permalink to this heading"></a></h2>
+<h2>Governing equation - strong form<a class="headerlink" href="#governing-equation-strong-form" title="Link to this heading"></a></h2>
 <p>The strong form looks like this, we have just added the second dimension.</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-strong">
-<span class="eqno">(115)<a class="headerlink" href="#equation-eq-fem-2d-strong" title="Permalink to this equation"></a></span>\[\frac{\partial}{\partial x}k\frac{\partial T_{ex}}{\partial x} + \frac{\partial}{\partial y}k\frac{\partial T_{ex}}{\partial y} =0.\]</div>
+<span class="eqno">(115)<a class="headerlink" href="#equation-eq-fem-2d-strong" title="Link to this equation"></a></span>\[\frac{\partial}{\partial x}k\frac{\partial T_{ex}}{\partial x} + \frac{\partial}{\partial y}k\frac{\partial T_{ex}}{\partial y} =0.\]</div>
 </section>
 <section id="d-shape-functions">
-<h2>2-D shape functions<a class="headerlink" href="#d-shape-functions" title="Permalink to this heading"></a></h2>
+<h2>2-D shape functions<a class="headerlink" href="#d-shape-functions" title="Link to this heading"></a></h2>
 <p>We now use 2-D shape functions in our approximate solution:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-aprox-funcion-2d">
-<span class="eqno">(116)<a class="headerlink" href="#equation-eq-fem-aprox-funcion-2d" title="Permalink to this equation"></a></span>\[T_{ex} \cong \tilde{T}= \sum_{j=1}^{n} N_j(x,y) T_j = N_j T_j,\]</div>
+<span class="eqno">(116)<a class="headerlink" href="#equation-eq-fem-aprox-funcion-2d" title="Link to this equation"></a></span>\[T_{ex} \cong \tilde{T}= \sum_{j=1}^{n} N_j(x,y) T_j = N_j T_j,\]</div>
 <p>where the shape functions <span class="math notranslate nohighlight">\(N_j(x,y)\)</span> are now function of both spatial dimensions. An example of a 2-D FEM mesh and associated shape functions are shown in <a class="reference internal" href="#fig-shapefunc-2d-linear"><span class="std std-numref">Fig. 5</span></a>. Note that the structured quad mesh and the bi-linear shape functions are just one possibility of using the FEM in 2-D. There are many other possibility, like unstructured triangle meshes and higher order shape functions.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -221,14 +224,14 @@
 <input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--1">Four‐Node Bilinear Quadrilateral</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-linear">
 <img alt="../_images/shapeFunction_2D_Q1.svg" src="../_images/shapeFunction_2D_Q1.svg" /><figcaption>
-<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Example of 2D linear finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-linear" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Example of 2D linear finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-linear" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--2">Nine‐Node Biquadratic Quadrilateral</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-quad-q2">
 <img alt="../_images/shapeFunction_2D_Q2.svg" src="../_images/shapeFunction_2D_Q2.svg" /><figcaption>
-<p><span class="caption-number">Fig. 6 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-quad-q2" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-quad-q2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -237,37 +240,37 @@
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Three‐Node Triangle Element</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-tri-q1">
 <img alt="../_images/shapeFunction_2D_triangle_Q1.svg" src="../_images/shapeFunction_2D_triangle_Q1.svg" /><figcaption>
-<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-tri-q1" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-tri-q1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Six‐Node Quadratic Triangle</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-tri-q2">
 <img alt="../_images/shapeFunction_2D_triangle_Q2.svg" src="../_images/shapeFunction_2D_triangle_Q2.svg" /><figcaption>
-<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-tri-q2" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-tri-q2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">Ten‐Node Qubic Triangle</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-tri-q3">
 <img alt="../_images/shapeFunction_2D_triangle_Q3.svg" src="../_images/shapeFunction_2D_triangle_Q3.svg" /><figcaption>
-<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-tri-q3" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-tri-q3" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 </div>
 <p>Note that the 2-D shape functions still sum to <span class="math notranslate nohighlight">\(1\)</span> everywhere:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-aprox-funcion-2d-2">
-<span class="eqno">(117)<a class="headerlink" href="#equation-eq-fem-aprox-funcion-2d-2" title="Permalink to this equation"></a></span>\[\sum_{j=1}^{n} N_j(x,y)  = 1.\]</div>
+<span class="eqno">(117)<a class="headerlink" href="#equation-eq-fem-aprox-funcion-2d-2" title="Link to this equation"></a></span>\[\sum_{j=1}^{n} N_j(x,y)  = 1.\]</div>
 </section>
 <section id="weak-form">
-<h2>Weak form<a class="headerlink" href="#weak-form" title="Permalink to this heading"></a></h2>
+<h2>Weak form<a class="headerlink" href="#weak-form" title="Link to this heading"></a></h2>
 <p>We proceed by substituting <a class="reference internal" href="#equation-eq-fem-aprox-funcion-2d">equation (116)</a> into <a class="reference internal" href="#equation-eq-fem-2d-strong">equation (115)</a> and by using the Galerkin method we get:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-weak">
-<span class="eqno">(118)<a class="headerlink" href="#equation-eq-fem-2d-weak" title="Permalink to this equation"></a></span>\[\int_\Omega N_i \frac{\partial}{\partial x}k\frac{\partial N_j T_j }{\partial x} + N_i \frac{\partial}{\partial y}k\frac{\partial N_j T_j }{\partial y} d\Omega=0\ \ \ \ \ \ \ i=1,2,...,n\]</div>
+<span class="eqno">(118)<a class="headerlink" href="#equation-eq-fem-2d-weak" title="Link to this equation"></a></span>\[\int_\Omega N_i \frac{\partial}{\partial x}k\frac{\partial N_j T_j }{\partial x} + N_i \frac{\partial}{\partial y}k\frac{\partial N_j T_j }{\partial y} d\Omega=0\ \ \ \ \ \ \ i=1,2,...,n\]</div>
 <p>We do the integration by parts and obtain:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-weak-2">
-<span class="eqno">(119)<a class="headerlink" href="#equation-eq-fem-2d-weak-2" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(119)<a class="headerlink" href="#equation-eq-fem-2d-weak-2" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 -\int_\Omega \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j T_j }{\partial x} + \frac{\partial N_i}{\partial y}k\frac{\partial N_j T_j }{\partial y} d\Omega \right ) &amp;+ \oint_{\Gamma} \left ( N_ik\frac{\partial N_j T_j }{\partial x}  +  N_ik\frac{\partial N_j T_j }{\partial y} \right ) d\Gamma    =0\ \ \ \ \ \ \ i=1,2,...,n\\
 \Rightarrow \\
@@ -277,7 +280,7 @@
 <p>Note how the signs flipped during integration by parts and by substituting <span class="math notranslate nohighlight">\(\vec{q}=-k\nabla T\)</span>. The line integral has a clear physical meaning now, it’s the heat flow in and out of the modeling domain.</p>
 <p>We go on and split the modeling domain into finite elements and the first integral turns into a sum over those elements. The line integral is again obmitted for the moment.</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-weak-3">
-<span class="eqno">(120)<a class="headerlink" href="#equation-eq-fem-2d-weak-3" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(120)<a class="headerlink" href="#equation-eq-fem-2d-weak-3" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 +\int_\Omega \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j}{\partial x} + \frac{\partial N_i}{\partial y}k\frac{\partial N_j}{\partial y} T_j \right ) d\Omega   &amp;=0\ \ \ \ \ \ \ i=1,2,...,n\\
 \Rightarrow \\
@@ -286,7 +289,7 @@
 \end{align}\end{split}\]</div>
 </section>
 <section id="element-connectivity">
-<h2>Element connectivity<a class="headerlink" href="#element-connectivity" title="Permalink to this heading"></a></h2>
+<h2>Element connectivity<a class="headerlink" href="#element-connectivity" title="Link to this heading"></a></h2>
 <p>The basic concept of the finite element method is to solve/assemble the system of equations, for e.g. heat diffusion, on each element and add all element contributions together to obtain the global matrix equation.
 Every element has an element number and a certain number of nodes. We will initially use quadratic elements with four nodes.</p>
 <p>For a FEM mesh with bi-linear quad elements, we will need two matrices: a matrix we will call CGCOORD that contains the global coordinates of each grid point (it therefore has the size [nnod,2], where 2 is the number of dimensions (x,y) and nnod is the total number of nodes) and a matris so we call ELEM2NODE, which contains for each element the indices of the four nodes that belong to it (it therefore has the size [nel, nnodel], where nel is the total number of elements and nnodel is the number of nodes per element). See <a class="reference internal" href="#fig-mesh-2d-structured"><span class="std std-numref">Fig. 10</span></a> for more details. We had already used these matrices in 1-D but now their meanings become clear.</p>
@@ -294,21 +297,21 @@ Every element has an element number and a certain number of nodes. We will initi
 <input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">Structured mesh 1</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-mesh-2d-structured">
 <img alt="../_images/mesh2D_structured.svg" src="../_images/mesh2D_structured.svg" /><figcaption>
-<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Structured mesh example of 2D finite element</span><a class="headerlink" href="#fig-mesh-2d-structured" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Structured mesh example of 2D finite element</span><a class="headerlink" href="#fig-mesh-2d-structured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">Structured mesh 2</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-mesh-2d-structured-usi">
 <img alt="../_images/mesh2D_structured_usi.svg" src="../_images/mesh2D_structured_usi.svg" /><figcaption>
-<p><span class="caption-number">Fig. 11 </span><span class="caption-text"><a class="reference download internal" download="" href="../_downloads/06175368e0da1f39153a96c18d7cef8b/structure.msh"><code class="xref download docutils literal notranslate"><span class="pre">Structured</span> <span class="pre">mesh</span></code></a> example of 2D finite element</span><a class="headerlink" href="#fig-mesh-2d-structured-usi" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text"><a class="reference download internal" download="" href="../_downloads/06175368e0da1f39153a96c18d7cef8b/structure.msh"><code class="xref download docutils literal notranslate"><span class="pre">Structured</span> <span class="pre">mesh</span></code></a> example of 2D finite element</span><a class="headerlink" href="#fig-mesh-2d-structured-usi" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--2-input--3" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--3">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-mesh-2d-unstructured">
 <img alt="../_images/mesh2D_unstructured.svg" src="../_images/mesh2D_unstructured.svg" /><figcaption>
-<p><span class="caption-number">Fig. 12 </span><span class="caption-text"><a class="reference download internal" download="" href="../_downloads/4c3ddbe4b1640134939545f76313c427/unstructure.msh"><code class="xref download docutils literal notranslate"><span class="pre">Unstructured</span> <span class="pre">mesh</span></code></a> example of 2D finite element</span><a class="headerlink" href="#fig-mesh-2d-unstructured" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text"><a class="reference download internal" download="" href="../_downloads/4c3ddbe4b1640134939545f76313c427/unstructure.msh"><code class="xref download docutils literal notranslate"><span class="pre">Unstructured</span> <span class="pre">mesh</span></code></a> example of 2D finite element</span><a class="headerlink" href="#fig-mesh-2d-unstructured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -318,46 +321,39 @@ Every element has an element number and a certain number of nodes. We will initi
 <input checked="True" class="tab-input" id="tab-set--3-input--1" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--1">Structured mesh 1</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-matrix-2d-structured">
 <img alt="../_images/Matrix2D_structured.svg" src="../_images/Matrix2D_structured.svg" /><figcaption>
-<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Connectivity example of 2D finite element with structured mesh</span><a class="headerlink" href="#fig-matrix-2d-structured" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Connectivity example of 2D finite element with structured mesh</span><a class="headerlink" href="#fig-matrix-2d-structured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--3-input--2" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--2">Structured mesh 2</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-matrix-2d-structured-usi">
 <img alt="../_images/Matrix2D_structured_usi.svg" src="../_images/Matrix2D_structured_usi.svg" /><figcaption>
-<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Connectivity example of 2D finite element with structured mesh</span><a class="headerlink" href="#fig-matrix-2d-structured-usi" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Connectivity example of 2D finite element with structured mesh</span><a class="headerlink" href="#fig-matrix-2d-structured-usi" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--3-input--3" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--3">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-matrix-2d-unstructured">
 <img alt="../_images/Matrix2D_unstructured.svg" src="../_images/Matrix2D_unstructured.svg" /><figcaption>
-<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Connectivity example of 2D finite element with unstructured mesh</span><a class="headerlink" href="#fig-matrix-2d-unstructured" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Connectivity example of 2D finite element with unstructured mesh</span><a class="headerlink" href="#fig-matrix-2d-unstructured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 </div>
 </section>
 <section id="numerical-integration">
-<h2>Numerical integration<a class="headerlink" href="#numerical-integration" title="Permalink to this heading"></a></h2>
+<h2>Numerical integration<a class="headerlink" href="#numerical-integration" title="Link to this heading"></a></h2>
 <p>The next step is to learn how we can integrate the element stiffness matrix. We have seen that the general finite element form, called weak form, of the heat diffusion equation can be written as (with boundary terms omitted):</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-weak-num-int">
-<span class="eqno">(121)<a class="headerlink" href="#equation-eq-fem-2d-weak-num-int" title="Permalink to this equation"></a></span>\[\int_\Omega \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j}{\partial x} + \frac{\partial N_i}{\partial y}k\frac{\partial N_j}{\partial y} T_j \right ) d\Omega   = \sum_{Elements} \int_{\Omega_{e}} \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j}{\partial x} + \frac{\partial N_i}{\partial y}k\frac{\partial N_j}{\partial y}  \right ) T_j d\Omega_{e} =0\ \ \ \ \ \ \ i=1,2,...,n\]</div>
+<span class="eqno">(121)<a class="headerlink" href="#equation-eq-fem-2d-weak-num-int" title="Link to this equation"></a></span>\[\int_\Omega \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j}{\partial x} + \frac{\partial N_i}{\partial y}k\frac{\partial N_j}{\partial y} T_j \right ) d\Omega   = \sum_{Elements} \int_{\Omega_{e}} \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j}{\partial x} + \frac{\partial N_i}{\partial y}k\frac{\partial N_j}{\partial y}  \right ) T_j d\Omega_{e} =0\ \ \ \ \ \ \ i=1,2,...,n\]</div>
 <p>The main problem with solving <a class="reference internal" href="#equation-eq-fem-2d-weak-num-int">equation (121)</a> is that the integral may be very difficult to evaluate. In finite elements we can use elements of very different geometries to mesh complex objects, which makes the 2-D integrals very hard to solve. We will therefore use numerical integration techniques like Gauss-Legendre quadrature. The problem is (or good thing  as we will see later) that basically all quadrature rules (for quads) apply to rectangular domains that are 2x2 in size and have a local coordinate system <span class="math notranslate nohighlight">\((−1 \leq (\xi,\eta) \leq 1)\)</span>. The integration of a function over a 2d domain can than be expressed as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-num-int-1">
-<span class="eqno">(122)<a class="headerlink" href="#equation-eq-num-int-1" title="Permalink to this equation"></a></span>\[\int_{\hat{\Omega}} F(\xi,\eta) d\xi d\eta = \int_{-1}^{1}\int_{-1}^{1}F(\xi,\eta)d\xi d\eta = \sum_{I=1}^{M} \sum_{J=1}^{N} F(\xi_I,\eta_J)W_I W_J = \sum_{ip}F(\xi_{ip},\eta_{ip})W_{ip},\]</div>
-<p>where M and N denote the number of Gauss points, <span class="math notranslate nohighlight">\((\xi,\eta)\)</span> and <span class="math notranslate nohighlight">\(W_J\)</span> denote the corresponding Gauss weights. The selection of the number of Gauss points is based on the formula <span class="math notranslate nohighlight">\(N=int[(p+1)/2]+1\)</span>, where p the polynomial degree to which the integrand is approximated. We will use linear shape functions so that we have 2 Gauss points (in every direction). In this case the local coordinates are <span class="math notranslate nohighlight">\(\pm0.5773502692\)</span> and the weights are all <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<span class="eqno">(122)<a class="headerlink" href="#equation-eq-num-int-1" title="Link to this equation"></a></span>\[\int_{\hat{\Omega}} F(\xi,\eta) d\xi d\eta = \int_{-1}^{1}\int_{-1}^{1}F(\xi,\eta)d\xi d\eta = \sum_{I=1}^{M} \sum_{J=1}^{N} F(\xi_I,\eta_J)W_I W_J = \sum_{ip}F(\xi_{ip},\eta_{ip})W_{ip},\]</div>
+<p>where M and N denote the number of Gauss points, <span class="math notranslate nohighlight">\((\xi,\eta)`denote the Gauss point coordinates, and :math:`W_I\)</span> and <span class="math notranslate nohighlight">\(W_J\)</span> denote the corresponding Gauss weights. The selection of the number of Gauss points is based on the formula <span class="math notranslate nohighlight">\(N=int[(p+1)/2]+1\)</span>, where p the polynomial degree to which the integrand is approximated. We will use linear shape functions so that we have 2 Gauss points (in every direction). In this case the local coordinates are <span class="math notranslate nohighlight">\(\pm0.5773502692\)</span> and the weights are all <span class="math notranslate nohighlight">\(1\)</span>.</p>
 <section id="gauss-points">
-<h3>Gauss points<a class="headerlink" href="#gauss-points" title="Permalink to this heading"></a></h3>
+<h3>Gauss points<a class="headerlink" href="#gauss-points" title="Link to this heading"></a></h3>
 <table class="docutils align-default" id="id2">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Quad integration. Only one direction is spelled out, the second direction is done in the same way.</span><a class="headerlink" href="#id2" title="Permalink to this table"></a></caption>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Quad integration. Only one direction is spelled out, the second direction is done in the same way.</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Order</p></th>
 <th class="head"><p>Integration point</p></th>
@@ -407,10 +403,10 @@ Every element has an element number and a certain number of nodes. We will initi
 </table>
 </section>
 <section id="isoparametric-elements">
-<h3>Isoparametric elements<a class="headerlink" href="#isoparametric-elements" title="Permalink to this heading"></a></h3>
+<h3>Isoparametric elements<a class="headerlink" href="#isoparametric-elements" title="Link to this heading"></a></h3>
 <p>So far so good, but how do we solve the integral in <a class="reference internal" href="#equation-eq-fem-2d-weak-num-int">equation (121)</a> using local coordinates? We will have to do a coordinate transformation for the purpose of numerical integration that relates the element <span class="math notranslate nohighlight">\(\Omega_e\)</span> to the master element area <span class="math notranslate nohighlight">\(\hat{\Omega}\)</span> - or, equivalently, <span class="math notranslate nohighlight">\((x,y)\)</span> to <span class="math notranslate nohighlight">\((ξ,η)\)</span>. This can be done by using interpolation functions in terms of local coordinates. We will use so-called <em>isoparametric</em> elements in which we use the same number of interpolation functions for coordinate mapping and primary variable interpolation. This implies for our four node element that the local variables vary bi-linearly over the element.</p>
 <div class="math notranslate nohighlight" id="equation-eq-num-int-isoparam">
-<span class="eqno">(123)<a class="headerlink" href="#equation-eq-num-int-isoparam" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(123)<a class="headerlink" href="#equation-eq-num-int-isoparam" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 x=&amp;\sum_{j=1}^n \Phi_j(\xi,\eta)x_j \\
 y=&amp;\sum_{j=1}^n \Phi_j(\xi,\eta)y_j, \\
@@ -418,10 +414,10 @@ y=&amp;\sum_{j=1}^n \Phi_j(\xi,\eta)y_j, \\
 \end{align}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x_j\)</span> are the nodal coordinates. Our primary variable (temperature) interpolation functions are still in global coordinates:</p>
 <div class="math notranslate nohighlight" id="equation-eq-num-int-isoparam-pv">
-<span class="eqno">(124)<a class="headerlink" href="#equation-eq-num-int-isoparam-pv" title="Permalink to this equation"></a></span>\[T(x,y) = \sum_{j=1}^N N_j(x,y)T_j\]</div>
+<span class="eqno">(124)<a class="headerlink" href="#equation-eq-num-int-isoparam-pv" title="Link to this equation"></a></span>\[T(x,y) = \sum_{j=1}^N N_j(x,y)T_j\]</div>
 <p>We can express the shape functions N in terms of local coordinates using <a class="reference internal" href="#equation-eq-num-int-isoparam">equation (123)</a> and the chain rule of differentiation:</p>
 <div class="math notranslate nohighlight" id="equation-eq-num-int-isoparam-2">
-<span class="eqno">(125)<a class="headerlink" href="#equation-eq-num-int-isoparam-2" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(125)<a class="headerlink" href="#equation-eq-num-int-isoparam-2" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 \frac{\partial N}{\partial \xi} =&amp; \frac{\partial N}{\partial x} \frac{\partial x}{\partial \xi} + \frac{\partial N}{\partial y} \frac{\partial y}{\partial \xi} \\
 \frac{\partial N}{\partial \eta} =&amp; \frac{\partial N}{\partial x} \frac{\partial x}{\partial \eta} + \frac{\partial N}{\partial y} \frac{\partial y}{\partial \eta} \\
@@ -429,7 +425,7 @@ y=&amp;\sum_{j=1}^n \Phi_j(\xi,\eta)y_j, \\
 \end{align}\end{split}\]</div>
 <p>Or in matrix form:</p>
 <div class="math notranslate nohighlight" id="equation-eq-num-int-isoparam-3">
-<span class="eqno">(126)<a class="headerlink" href="#equation-eq-num-int-isoparam-3" title="Permalink to this equation"></a></span>\[\begin{split}\begin{bmatrix}
+<span class="eqno">(126)<a class="headerlink" href="#equation-eq-num-int-isoparam-3" title="Link to this equation"></a></span>\[\begin{split}\begin{bmatrix}
 \frac{\partial N}{\partial \xi} \\
 \frac{\partial N}{\partial \eta}
 \end{bmatrix} =
@@ -443,10 +439,10 @@ y=&amp;\sum_{j=1}^n \Phi_j(\xi,\eta)y_j, \\
 \end{bmatrix}\end{split}\]</div>
 </section>
 <section id="jacobian-matrix">
-<h3>Jacobian matrix<a class="headerlink" href="#jacobian-matrix" title="Permalink to this heading"></a></h3>
+<h3>Jacobian matrix<a class="headerlink" href="#jacobian-matrix" title="Link to this heading"></a></h3>
 <p><a class="reference internal" href="#equation-eq-num-int-isoparam-3">equation (126)</a> gives the relationship between the derivatives of <span class="math notranslate nohighlight">\(N\)</span> with respect to the global and local coordinates. The matrix in <a class="reference internal" href="#equation-eq-num-int-isoparam-3">equation (126)</a> is called the Jacobian matrix, J, of the coordinate transformation. Unfortunately this relationship is in the wrong direction. If we have a look at our starting equation <a class="reference internal" href="#equation-eq-fem-2d-weak-num-int">equation (121)</a>, we realize that we need to relate the derivative with respect to global coordinates to the derivative with respect to local coordinates (which is the opposite direction). Fortunately this can be done quite easily:</p>
 <div class="math notranslate nohighlight" id="equation-eq-num-int-isoparam-4">
-<span class="eqno">(127)<a class="headerlink" href="#equation-eq-num-int-isoparam-4" title="Permalink to this equation"></a></span>\[\begin{split}\begin{bmatrix}
+<span class="eqno">(127)<a class="headerlink" href="#equation-eq-num-int-isoparam-4" title="Link to this equation"></a></span>\[\begin{split}\begin{bmatrix}
 \frac{\partial N}{\partial x} \\
 \frac{\partial N}{\partial y}
 \end{bmatrix} =
@@ -459,7 +455,7 @@ J^{-1}
 \end{bmatrix}\end{split}\]</div>
 <p>Using <a class="reference internal" href="#equation-eq-num-int-isoparam">equation (123)</a> we can spell out the different components oft the Jacobian matrix:</p>
 <div class="math notranslate nohighlight" id="equation-eq-num-int-jacobian">
-<span class="eqno">(128)<a class="headerlink" href="#equation-eq-num-int-jacobian" title="Permalink to this equation"></a></span>\[\begin{split}\begin{bmatrix}
+<span class="eqno">(128)<a class="headerlink" href="#equation-eq-num-int-jacobian" title="Link to this equation"></a></span>\[\begin{split}\begin{bmatrix}
 J
 \end{bmatrix} =
 \begin{bmatrix}
@@ -472,18 +468,18 @@ J
 \end{bmatrix}\end{split}\]</div>
 <p>Finally the element area dA=dxdy of the original element in global coordinates is transformed to:</p>
 <div class="math notranslate nohighlight" id="equation-eq-num-int-jacobian-1">
-<span class="eqno">(129)<a class="headerlink" href="#equation-eq-num-int-jacobian-1" title="Permalink to this equation"></a></span>\[d\Omega_e = dxdy = det(J)d\xi d\eta\]</div>
+<span class="eqno">(129)<a class="headerlink" href="#equation-eq-num-int-jacobian-1" title="Link to this equation"></a></span>\[d\Omega_e = dxdy = det(J)d\xi d\eta\]</div>
 <p>We have now all the information we need to solve the integral in <a class="reference internal" href="#equation-eq-fem-2d-weak-num-int">equation (121)</a> numerically:</p>
 <div class="math notranslate nohighlight" id="equation-eq-num-int-jacobian-2">
-<span class="eqno">(130)<a class="headerlink" href="#equation-eq-num-int-jacobian-2" title="Permalink to this equation"></a></span>\[\begin{split}\int_{\Omega_{e}} \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j}{\partial x} + \frac{\partial N_i}{\partial y}k\frac{\partial N_j}{\partial y}  \right ) d\Omega_{e} T_j \approx \\ \left [ \sum_{ip} \left ( \frac{N_i(\xi_{ip},\eta_{ip})}{\partial x} k \frac{N_j(\xi_{ip},\eta_{ip})}{\partial x} + \frac{N_i(\xi_{ip},\eta_{ip})}{\partial y} k \frac{N_j(\xi_{ip},\eta_{ip})}{\partial y}
+<span class="eqno">(130)<a class="headerlink" href="#equation-eq-num-int-jacobian-2" title="Link to this equation"></a></span>\[\begin{split}\int_{\Omega_{e}} \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j}{\partial x} + \frac{\partial N_i}{\partial y}k\frac{\partial N_j}{\partial y}  \right ) d\Omega_{e} T_j \approx \\ \left [ \sum_{ip} \left ( \frac{N_i(\xi_{ip},\eta_{ip})}{\partial x} k \frac{N_j(\xi_{ip},\eta_{ip})}{\partial x} + \frac{N_i(\xi_{ip},\eta_{ip})}{\partial y} k \frac{N_j(\xi_{ip},\eta_{ip})}{\partial y}
 \right ) W_{ip} det(J) \right ] T_j\end{split}\]</div>
 <p>It should be noted that the transformation of a quadrilateral element of a mesh to a master element <span class="math notranslate nohighlight">\(\hat{\Omega}\)</span> is solely for the purpose of numerically evaluating the integrals in <a class="reference internal" href="#equation-eq-fem-2d-weak-num-int">equation (121)</a> . No transformation of the physical domain or elements is involved in the finite element analysis.</p>
 </section>
 </section>
 <section id="excercises">
-<h2>Excercises<a class="headerlink" href="#excercises" title="Permalink to this heading"></a></h2>
+<h2>Excercises<a class="headerlink" href="#excercises" title="Link to this heading"></a></h2>
 <section id="fem-mesh">
-<h3>FEM mesh<a class="headerlink" href="#fem-mesh" title="Permalink to this heading"></a></h3>
+<h3>FEM mesh<a class="headerlink" href="#fem-mesh" title="Link to this heading"></a></h3>
 <p>The first excercise is about building the FEM mesh and element connectivity matrix that contains the information on which nodes belong to which element. Have a look at <a class="reference internal" href="#fig-mesh-2d-structured"><span class="std std-numref">Fig. 10</span></a> and follow the logic of that Figure.</p>
 <ol class="arabic simple">
 <li><p>Create the global coordinate vector GCOORD. Assume that the length of the box in x direction (lx) is 1 ([0,1]) and the length of box is y direction (ly) is also 1 ([0, 1]). The number of nodes in x is 5 (nx) and the number of nodes in y is 4 (ny).</p></li>
@@ -499,8 +495,8 @@ J
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>We use a function called tabulate to format the output in the notebooks. You will probably have to install it into your virtual python environment.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda activate py37_fem_class
-conda install tabulate
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>py37_fem_class
+conda<span class="w"> </span>install<span class="w"> </span>tabulate
 </pre></div>
 </div>
 </div>
@@ -511,10 +507,10 @@ conda install tabulate
 </div>
 </section>
 <section id="shape-functions">
-<h3>Shape functions<a class="headerlink" href="#shape-functions" title="Permalink to this heading"></a></h3>
+<h3>Shape functions<a class="headerlink" href="#shape-functions" title="Link to this heading"></a></h3>
 <p>The second excercise is about spelling out the shape functions and their derivatives. Remember that the shape functions are defined in local coordinates. For bi-linear quads, they have this functional form:</p>
 <div class="math notranslate nohighlight" id="equation-eq-shape-functions">
-<span class="eqno">(131)<a class="headerlink" href="#equation-eq-shape-functions" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(131)<a class="headerlink" href="#equation-eq-shape-functions" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 \tilde{T}(x,y) = \sum_{j=1}^{n} N_jT_J = N_jT_J = NT \\
 NT &amp;= \begin{bmatrix} N_1 &amp; N_2 &amp; N_3 &amp; N_4 \end{bmatrix} \begin{bmatrix} T_1 \\ T_2 \\ T_3 \\ T_4 \end{bmatrix}\\
@@ -535,12 +531,12 @@ N_4 &amp; = 0.25(1-\xi)(1+\eta) \\
 </section>
 </section>
 <section id="implementation">
-<h1>Implementation<a class="headerlink" href="#implementation" title="Permalink to this heading"></a></h1>
+<h1>Implementation<a class="headerlink" href="#implementation" title="Link to this heading"></a></h1>
 <p>Now we have assembled all the pieces that we need to make a finite element model and solve it. <a class="reference internal" href="#lst-2d-fem-ss"><span class="std std-numref">Listing 1</span></a> shows the complete python code for our first solver.</p>
 <section id="python-code">
-<h2>Python code<a class="headerlink" href="#python-code" title="Permalink to this heading"></a></h2>
+<h2>Python code<a class="headerlink" href="#python-code" title="Link to this heading"></a></h2>
 <div class="literal-block-wrapper docutils container" id="lst-2d-fem-ss">
-<div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">2-D FEM diffusion, steady-state.</span><a class="headerlink" href="#lst-2d-fem-ss" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">2-D FEM diffusion, steady-state.</span><a class="headerlink" href="#lst-2d-fem-ss" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="linenos">  2</span><span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 <span class="linenos">  3</span><span class="kn">from</span> <span class="nn">scipy.sparse.linalg</span> <span class="kn">import</span> <span class="n">spsolve</span>
@@ -721,10 +717,10 @@ N_4 &amp; = 0.25(1-\xi)(1+\eta) \\
 <p>Let’s have a closer look at some of the different steps.</p>
 </section>
 <section id="jacobian">
-<h2>Jacobian:<a class="headerlink" href="#jacobian" title="Permalink to this heading"></a></h2>
+<h2>Jacobian:<a class="headerlink" href="#jacobian" title="Link to this heading"></a></h2>
 <p>The calculation of the Jacobian matrix is implemented via  <a class="reference internal" href="#equation-eq-num-int-isoparam-4">equation (127)</a>  as a matrix-vector multiplication:</p>
 <div class="math notranslate nohighlight" id="equation-eq-jacobian-code">
-<span class="eqno">(132)<a class="headerlink" href="#equation-eq-jacobian-code" title="Permalink to this equation"></a></span>\[\begin{split}J =
+<span class="eqno">(132)<a class="headerlink" href="#equation-eq-jacobian-code" title="Link to this equation"></a></span>\[\begin{split}J =
 \begin{bmatrix}
 \frac{\partial N_1}{\partial \xi} &amp; \frac{\partial N_2}{\partial \xi} &amp; \frac{\partial N_3}{\partial \xi} &amp; \frac{\partial N_4}{\partial \xi} \\
 \frac{\partial N_1}{\partial \eta} &amp; \frac{\partial N_2}{\partial \eta} &amp; \frac{\partial N_3}{\partial \eta} &amp; \frac{\partial N_4}{\partial \eta}
@@ -748,10 +744,10 @@ x_4 &amp; y_4 \\
 </div>
 </section>
 <section id="global-derivatives-of-shape-functions">
-<h2>Global derivatives of shape functions<a class="headerlink" href="#global-derivatives-of-shape-functions" title="Permalink to this heading"></a></h2>
+<h2>Global derivatives of shape functions<a class="headerlink" href="#global-derivatives-of-shape-functions" title="Link to this heading"></a></h2>
 <p>The global derivatives are calculated according to <a class="reference internal" href="#equation-eq-num-int-jacobian">equation (128)</a>, which in matrix form is:</p>
 <div class="math notranslate nohighlight" id="equation-eq-dndx-code">
-<span class="eqno">(133)<a class="headerlink" href="#equation-eq-dndx-code" title="Permalink to this equation"></a></span>\[\begin{split}\begin{bmatrix}
+<span class="eqno">(133)<a class="headerlink" href="#equation-eq-dndx-code" title="Link to this equation"></a></span>\[\begin{split}\begin{bmatrix}
 \frac{\partial N_1}{\partial x} &amp; \frac{\partial N_2}{\partial x} &amp; \frac{\partial N_3}{\partial x} &amp; \frac{\partial N_4}{\partial x} \\
 \frac{\partial N_1}{\partial y} &amp; \frac{\partial N_2}{\partial y} &amp; \frac{\partial N_3}{\partial y} &amp; \frac{\partial N_4}{\partial y}
 \end{bmatrix}
@@ -769,10 +765,10 @@ J^{-1}
 </div>
 </section>
 <section id="element-stiffness-matrix">
-<h2>Element stiffness matrix<a class="headerlink" href="#element-stiffness-matrix" title="Permalink to this heading"></a></h2>
+<h2>Element stiffness matrix<a class="headerlink" href="#element-stiffness-matrix" title="Link to this heading"></a></h2>
 <p>The final step is to put the <a class="reference internal" href="#equation-eq-num-int-jacobian-2">equation (130)</a> into finite element form. Also this now quite easy:</p>
 <div class="math notranslate nohighlight" id="equation-eq-ael-code">
-<span class="eqno">(134)<a class="headerlink" href="#equation-eq-ael-code" title="Permalink to this equation"></a></span>\[\begin{split}\begin{bmatrix}
+<span class="eqno">(134)<a class="headerlink" href="#equation-eq-ael-code" title="Link to this equation"></a></span>\[\begin{split}\begin{bmatrix}
 \begin{bmatrix}
 \frac{\partial N_1}{\partial x} &amp; \frac{\partial N_1}{\partial y} \\
 \frac{\partial N_2}{\partial x} &amp; \frac{\partial N_2}{\partial y} \\
@@ -797,7 +793,7 @@ T_1 \\ T_2 \\ T_3 \\ T_4
 </div>
 </section>
 <section id="boundary-conditions">
-<h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this heading"></a></h2>
+<h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading"></a></h2>
 <p>Before we can solve anything, we need to set boundary conditions. In the 1-D case, we had set the boundary conditions in the usual way by setting the entire row to zero, putting a 1 on the main diagonal, and setting the Rhs to the specified temperature. We had noted before that this procedure breaks matrix symmetry. We will therefore use a more elaborate method here, which was described in <span id="id1">[<a class="reference internal" href="../refs.html#id35" title="M. Dabrowski, M. Krotkiewski, and D. W. Schmid. Milamin: matlab-based finite element method solver for large problems. Geochemistry Geophysics Geosystems, 2008. URL: &lt;Go to ISI&gt;://000255458100002 http://www.agu.org/journals/gc/gc0804/2007GC001719/2007GC001719.pdf, doi:10.1029/2007gc001719.">Dabrowski et al., 2008</a>]</span> .
 We add the columns that refer to nodes with boundary conditions to the righ-hand side and afterwards solve the smaller system of equations! This is implemented as</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># indices and values at top and bottom</span>

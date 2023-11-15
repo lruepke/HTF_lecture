@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Introduction: The Finite Differences Method (FDM) &mdash; Finite Element Modeling in Geodynamics  documentation</title>
@@ -15,13 +15,12 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/tabs.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -37,12 +36,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
-            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -142,8 +145,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Introduction: The Finite Differences Method (FDM)</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introduction: The Finite Differences Method (FDM)</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture1/fdm_intro.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -178,14 +181,14 @@
 }
 </style>
 <section id="introduction-the-finite-differences-method-fdm">
-<h1>Introduction: The Finite Differences Method (FDM)<a class="headerlink" href="#introduction-the-finite-differences-method-fdm" title="Permalink to this heading"></a></h1>
+<h1>Introduction: The Finite Differences Method (FDM)<a class="headerlink" href="#introduction-the-finite-differences-method-fdm" title="Link to this heading"></a></h1>
 <p>Before progressing towards finite element modeling, we will learn about the Finite Difference Method (FDM), which is a somewhat easier method to solve partial differential equations. We will do so by looking at how heat conduction “works”.</p>
 <section id="background-on-conductive-heat-transport">
-<h2>Background on conductive heat transport<a class="headerlink" href="#background-on-conductive-heat-transport" title="Permalink to this heading"></a></h2>
+<h2>Background on conductive heat transport<a class="headerlink" href="#background-on-conductive-heat-transport" title="Link to this heading"></a></h2>
 <p>Temperature is one of the key parameters that control and affect the geological processes that we are exploring during this class. Mantle melting, rock rheology, and metamorphism are all functions of temperature. It is therefore essential that we understand how rocks exchange heat and change their temperature.</p>
 <p>One fundamental equation in the analysis of heat transfer is Fourier’s law for heat flow:</p>
 <div class="math notranslate nohighlight" id="equation-eq-heat-flow">
-<span class="eqno">(1)<a class="headerlink" href="#equation-eq-heat-flow" title="Permalink to this equation"></a></span>\[\begin{split}\vec{q} = -k \nabla T = -k
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-heat-flow" title="Link to this equation"></a></span>\[\begin{split}\vec{q} = -k \nabla T = -k
 \begin{bmatrix}
 \frac{\partial T}{\partial x} \\
 \frac{\partial T}{\partial y} \\
@@ -196,12 +199,12 @@
 <figure class="align-center" id="heat-flux-box" style="width: 80%">
 <img alt="../_images/3D_cube_heat_flow.png" src="../_images/3D_cube_heat_flow.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Derivation of the energy equation. Change in internal energy is related to changes in heat fluxes into and out of the box (and a lot of other terms (e.g. advection) that are neglected here).</span><a class="headerlink" href="#heat-flux-box" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Derivation of the energy equation. Change in internal energy is related to changes in heat fluxes into and out of the box (and a lot of other terms (e.g. advection) that are neglected here).</span><a class="headerlink" href="#heat-flux-box" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>For simple incompressible cases, changes in internal energy can be expressed as changes in temperature times density and specific heat. The change in internal energy with time can now be written as <span class="math notranslate nohighlight">\(\rho c_p \frac{\partial}{\partial t} T \Delta x \Delta y \Delta z\)</span> (<span class="math notranslate nohighlight">\(\rho\)</span> is density, <span class="math notranslate nohighlight">\(c_p\)</span> specific heat, and <span class="math notranslate nohighlight">\(T\)</span> temperature), has units of (<span class="math notranslate nohighlight">\(J/s\)</span>), and must be equal to the difference between the heat flow into the box <span class="math notranslate nohighlight">\(q_{in} \Delta y \Delta z \left( \frac{W}{m K}\frac{K}{m}m^2 = \frac{J}{s}\right)\)</span> and the heat flow out of the box <span class="math notranslate nohighlight">\(\left( q_{in} + \frac{\partial q_{in}}{\partial x} \Delta x\right) \Delta y \Delta z\)</span> (the y and z directions are done in the same way). With these considerations, we can write a conservation equation for energy in 1D:</p>
 <div class="math notranslate nohighlight" id="equation-eq-1d-heat-flow">
-<span class="eqno">(2)<a class="headerlink" href="#equation-eq-1d-heat-flow" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-1d-heat-flow" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 \rho c_p \frac{\partial T}{\partial t} = -\frac{\partial q_{in}}{\partial x} = \frac{\partial}{\partial x}k\frac{\partial T}{\partial x}\\
 \frac{\partial T}{\partial t} = \frac{k}{\rho c_p} \frac{\partial^2 T}{\partial x^2} = \kappa \frac{\partial^2 T}{\partial x^2}\\
@@ -211,12 +214,12 @@
 <p><a class="reference internal" href="#equation-eq-1d-heat-flow">equation (2)</a> is called the heat transfer or heat diffusion equation and is one of the most fundamental equations in Earth Sciences. If the thermal conductivity is constant, we can define a thermal diffusivity, <span class="math notranslate nohighlight">\(\kappa\)</span>, and write the simpler second form of the equation.</p>
 <p>Note that in 3D, the changes in heat flow are expressed as a divergence:</p>
 <div class="math notranslate nohighlight" id="equation-eq-1d-heat-flow-div">
-<span class="eqno">(3)<a class="headerlink" href="#equation-eq-1d-heat-flow-div" title="Permalink to this equation"></a></span>\[\rho c_p \frac{\partial T}{\partial t} =
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-1d-heat-flow-div" title="Link to this equation"></a></span>\[\rho c_p \frac{\partial T}{\partial t} =
 -\nabla \cdot (\vec{q}) =
 \frac{\partial}{\partial x}k\frac{\partial T}{\partial x} + \frac{\partial}{\partial y}k\frac{\partial T}{\partial y} + \frac{\partial}{\partial z}k\frac{\partial T}{\partial z}\]</div>
 <p>Or in vector notation:</p>
 <div class="math notranslate nohighlight" id="equation-eq-1d-heat-flow-vec">
-<span class="eqno">(4)<a class="headerlink" href="#equation-eq-1d-heat-flow-vec" title="Permalink to this equation"></a></span>\[\begin{split}\rho c_p \frac{\partial T}{\partial t} =
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-1d-heat-flow-vec" title="Link to this equation"></a></span>\[\begin{split}\rho c_p \frac{\partial T}{\partial t} =
 -\nabla \cdot \left(\vec{q}\right) =
 \begin{bmatrix}
 \frac{\partial}{\partial x} &amp; \frac{\partial}{\partial y} &amp; \frac{\partial}{\partial z}
@@ -229,46 +232,46 @@ k
 \end{bmatrix}\end{split}\]</div>
 </section>
 <section id="finite-differences-discretization">
-<h2>Finite Differences discretization<a class="headerlink" href="#finite-differences-discretization" title="Permalink to this heading"></a></h2>
+<h2>Finite Differences discretization<a class="headerlink" href="#finite-differences-discretization" title="Link to this heading"></a></h2>
 <p><a class="reference internal" href="#equation-eq-1d-heat-flow">equation (2)</a> is a partial differential equation that describes the evolution of temperature. There are two fundamentally different ways to solve it: 1) analytically or 2) numerically. Analytical solutions have the virtue that they are exact but it is often not possible to find one for complex systems. Numerical solutions are always approximations but can be found also for very complex systems. We will first use one numerical technique called finite differences. To learn how partial differential equations are solved using finite differences, we have to go back to the definition of a derivative:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fd-heat-flow-d1">
-<span class="eqno">(5)<a class="headerlink" href="#equation-eq-fd-heat-flow-d1" title="Permalink to this equation"></a></span>\[\frac{\partial T}{\partial x} =
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-fd-heat-flow-d1" title="Link to this equation"></a></span>\[\frac{\partial T}{\partial x} =
 \lim_{\Delta x \rightarrow 0} \frac{T(x + \Delta x) - T(x)}{\Delta x}\]</div>
 <p>In our case, the above derivative describes the change in temperature with x (our space coordinate). In numerics, we always deal with discrete functions (as opposed to continuous functions), which only exist at grid points <a class="reference internal" href="example_1.html#dike-setup"><span class="std std-numref">Fig. 2</span></a>. We can therefore translate the above equation into computer readable form:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fd-heat-flow-d2">
-<span class="eqno">(6)<a class="headerlink" href="#equation-eq-fd-heat-flow-d2" title="Permalink to this equation"></a></span>\[\frac{\partial T}{\partial x} \approx
+<span class="eqno">(6)<a class="headerlink" href="#equation-eq-fd-heat-flow-d2" title="Link to this equation"></a></span>\[\frac{\partial T}{\partial x} \approx
 \frac{T(i + 1) - T(i)}{x(i+1) - x(i)} =
 \frac{T(i + 1) - T(i)}{\Delta x}\]</div>
 <p><span class="math notranslate nohighlight">\(T(i)\)</span> is the temperature at a grid point <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(\Delta x\)</span> is the grid spacing between two grid points. Using this definition of a derivative, we can now compute the heat flow from the calculated temperature solution:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fd-heat-flow-d3">
-<span class="eqno">(7)<a class="headerlink" href="#equation-eq-fd-heat-flow-d3" title="Permalink to this equation"></a></span>\[q_x = -k \frac{\partial T}{\partial x} \approx -k \left(\frac{T(i+1)-T(i)}{x(i+1)-x(i)}\right)\]</div>
+<span class="eqno">(7)<a class="headerlink" href="#equation-eq-fd-heat-flow-d3" title="Link to this equation"></a></span>\[q_x = -k \frac{\partial T}{\partial x} \approx -k \left(\frac{T(i+1)-T(i)}{x(i+1)-x(i)}\right)\]</div>
 <p>This form is called the <em>finite differences</em> form and is a first step towards solving partial differential equations numerically.</p>
 <p>Note that it matters in which direction you count. Usually it makes life much easier if indices and physical coordinates point in the same direction, e.g. x coordinate and index increase to the right.</p>
 <p>We have learned how we can compute derivatives numerically. The next step is to solve the heat conduction equation (<a class="reference internal" href="#equation-eq-1d-heat-flow">equation (2)</a>) completely numerically. We are interested in the temperature evolution as a function of time and space <span class="math notranslate nohighlight">\(T(x, t)\)</span>, which satisfies <a class="reference internal" href="#equation-eq-1d-heat-flow">equation (2)</a>, given an initial temperature distribution. We know already from the heat flow example how to calculate first derivatives (forward differencing):</p>
 <div class="math notranslate nohighlight" id="equation-eq-fd-temperature">
-<span class="eqno">(8)<a class="headerlink" href="#equation-eq-fd-temperature" title="Permalink to this equation"></a></span>\[\frac{\partial T}{\partial t} = \frac{T_i^{n+1} - T_i^n}{\Delta t}\]</div>
+<span class="eqno">(8)<a class="headerlink" href="#equation-eq-fd-temperature" title="Link to this equation"></a></span>\[\frac{\partial T}{\partial t} = \frac{T_i^{n+1} - T_i^n}{\Delta t}\]</div>
 <p>The index <span class="math notranslate nohighlight">\(n\)</span> corresponds to the time step and the index <span class="math notranslate nohighlight">\(i\)</span> to the grid point (x-coordinate, <a class="reference internal" href="example_1.html#dike-setup"><span class="std std-numref">Fig. 2</span></a>). Next, we need to know how to write second derivatives. A second derivative is just a derivative of a derivate. So we can write (central differencing):</p>
 <div class="math notranslate nohighlight" id="equation-eq-fd-heat-flow-central-difference">
-<span class="eqno">(9)<a class="headerlink" href="#equation-eq-fd-heat-flow-central-difference" title="Permalink to this equation"></a></span>\[\kappa\frac{\partial^2 T}{\partial x^2} \approx \kappa \frac{\frac{T_{i+1}^n - T_i^n}{\Delta x}-\frac{T_{i}^n - T_{i-1}^n}{\Delta x}}{\Delta x} = \kappa \frac{T_{i+1}^n-2T_{i}^n+T_{i-1}^n}{\Delta x^2}\]</div>
+<span class="eqno">(9)<a class="headerlink" href="#equation-eq-fd-heat-flow-central-difference" title="Link to this equation"></a></span>\[\kappa\frac{\partial^2 T}{\partial x^2} \approx \kappa \frac{\frac{T_{i+1}^n - T_i^n}{\Delta x}-\frac{T_{i}^n - T_{i-1}^n}{\Delta x}}{\Delta x} = \kappa \frac{T_{i+1}^n-2T_{i}^n+T_{i-1}^n}{\Delta x^2}\]</div>
 <p>If we combine equation <a class="reference internal" href="#equation-eq-fd-temperature">equation (8)</a> and <a class="reference internal" href="#equation-eq-fd-heat-flow-central-difference">equation (9)</a> we get:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fd-heat-flow-explicit">
-<span class="eqno">(10)<a class="headerlink" href="#equation-eq-fd-heat-flow-explicit" title="Permalink to this equation"></a></span>\[\frac{T_i^{n+1}-T_i^n}{\Delta t} = \kappa \left(\frac{T_{i+1}^n - 2T_i^n + T_{i-1}^n}{{\Delta x^2}}\right)\]</div>
+<span class="eqno">(10)<a class="headerlink" href="#equation-eq-fd-heat-flow-explicit" title="Link to this equation"></a></span>\[\frac{T_i^{n+1}-T_i^n}{\Delta t} = \kappa \left(\frac{T_{i+1}^n - 2T_i^n + T_{i-1}^n}{{\Delta x^2}}\right)\]</div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Notice how we have <em>conveniently</em> used the time index <span class="math notranslate nohighlight">\(n\)</span> for the temperatures in the spatial derivatives. This results in the explicit form of the final discretized equation. The implicit form, which we will learn about later, would used the unknown new (time index <span class="math notranslate nohighlight">\(n+1\)</span>) temperatures for the spatial derivatives, which requires solving a system of equations.</p>
 </div>
 <p>The last step is a rearrangement of the discretized equation, so that all known quantities (i.e. temperature at time <span class="math notranslate nohighlight">\(n\)</span>) are on the right-hand side and the unknown quantities on the left-hand side (properties at <span class="math notranslate nohighlight">\(n+1\)</span>). This results in:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fd-heat-flow-explicit-solution">
-<span class="eqno">(11)<a class="headerlink" href="#equation-eq-fd-heat-flow-explicit-solution" title="Permalink to this equation"></a></span>\[T_i^{n+1} = \frac{\kappa \Delta t}{\Delta x^2} \left( T_{i+1}^n - 2 T_i^n + T_{i-1}^n\right) + T_i^n\]</div>
+<span class="eqno">(11)<a class="headerlink" href="#equation-eq-fd-heat-flow-explicit-solution" title="Link to this equation"></a></span>\[T_i^{n+1} = \frac{\kappa \Delta t}{\Delta x^2} \left( T_{i+1}^n - 2 T_i^n + T_{i-1}^n\right) + T_i^n\]</div>
 <p>We have now translated the heat conduction equation <a class="reference internal" href="#equation-eq-1d-heat-flow">equation (2)</a> into a computer readable finite differences form.</p>
 </section>
 <section id="appendix">
-<h2>Appendix<a class="headerlink" href="#appendix" title="Permalink to this heading"></a></h2>
+<h2>Appendix<a class="headerlink" href="#appendix" title="Link to this heading"></a></h2>
 <section id="taylor-series-expansions">
-<h3>Taylor-series expansions<a class="headerlink" href="#taylor-series-expansions" title="Permalink to this heading"></a></h3>
+<h3>Taylor-series expansions<a class="headerlink" href="#taylor-series-expansions" title="Link to this heading"></a></h3>
 <p>Finite difference approximations can be derived through the use of Taylor-series expansions. Suppose we have a function <span class="math notranslate nohighlight">\(f(x)\)</span>, which is continuous and differentiable over the range of interest. Let’s also assume we know the value <span class="math notranslate nohighlight">\(f(x_0)\)</span> and all the derivatives at <span class="math notranslate nohighlight">\(x = x_0\)</span>. The forward Taylor-series expansion for <span class="math notranslate nohighlight">\(f(x_0+\Delta x)\)</span> about <span class="math notranslate nohighlight">\(x_0\)</span> gives</p>
 <div class="math notranslate nohighlight" id="equation-eq-taylor-series-expansion">
-<span class="eqno">(12)<a class="headerlink" href="#equation-eq-taylor-series-expansion" title="Permalink to this equation"></a></span>\[f(x_0+\Delta x) =
+<span class="eqno">(12)<a class="headerlink" href="#equation-eq-taylor-series-expansion" title="Link to this equation"></a></span>\[f(x_0+\Delta x) =
 f(x_0)+
 \frac{\partial f(x_0)}{\partial x} \Delta x +
 \frac{\partial^2 f(x_0)}{\partial x^2} \frac{(\Delta x)^2}{2!} +
@@ -277,36 +280,36 @@ f(x_0)+
 O(\Delta x)^{n+1}\]</div>
 <p>We can compute the first derivative by rearranging equation ref{eqs:Taylor_series_expansion}</p>
 <div class="math notranslate nohighlight" id="equation-eq-taylor-series-expansion-rearranged">
-<span class="eqno">(13)<a class="headerlink" href="#equation-eq-taylor-series-expansion-rearranged" title="Permalink to this equation"></a></span>\[\frac{\partial f(x_0)}{\partial x} =
+<span class="eqno">(13)<a class="headerlink" href="#equation-eq-taylor-series-expansion-rearranged" title="Link to this equation"></a></span>\[\frac{\partial f(x_0)}{\partial x} =
 \frac{f(x_0+\Delta x)− f(x_0)}{\Delta x} −
 \frac{\partial^2 f(x_0)}{\partial x^2} \frac{(\Delta x)}{2!} −
 \frac{\partial^3 f(x_0)}{\partial x^3} \frac{(\Delta x)^2}{3!} ...\]</div>
 <p>This can also be written in discretized notation as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-taylor-series-expansion-rearranged-2">
-<span class="eqno">(14)<a class="headerlink" href="#equation-eq-taylor-series-expansion-rearranged-2" title="Permalink to this equation"></a></span>\[\frac{\partial f(x_i)}{\partial x} = \frac{f_{i+1}−f_i}{\Delta x} + O(\Delta x)\]</div>
+<span class="eqno">(14)<a class="headerlink" href="#equation-eq-taylor-series-expansion-rearranged-2" title="Link to this equation"></a></span>\[\frac{\partial f(x_i)}{\partial x} = \frac{f_{i+1}−f_i}{\Delta x} + O(\Delta x)\]</div>
 <p>here <span class="math notranslate nohighlight">\(O(\Delta x)\)</span> is called the <em>truncation error</em>, which means that if the distance <span class="math notranslate nohighlight">\(\Delta x\)</span> is made smaller and smaller, the (numerical approximation) error decreases with <span class="math notranslate nohighlight">\(\Delta x\)</span>. This derivative is also called first order accurate.</p>
 <p>We can also expand the Taylor series backward</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-backward">
-<span class="eqno">(15)<a class="headerlink" href="#equation-eq-tayler-series-expansion-backward" title="Permalink to this equation"></a></span>\[f(x_0−\Delta x) =
+<span class="eqno">(15)<a class="headerlink" href="#equation-eq-tayler-series-expansion-backward" title="Link to this equation"></a></span>\[f(x_0−\Delta x) =
 f(x_0)− \frac{\partial f(x_0)}{\partial x} \Delta x+
 \frac{\partial^2 f(x_0)}{\partial x^2} \frac{(\Delta x)^2}{2!} −
 \frac{\partial^3 f(x_0)}{\partial x^3} \frac{(\Delta x)^3}{3!} + \cdots\]</div>
 <p>In this case, the first (backward) derivative can be written as</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-backward-fist-derivativ">
-<span class="eqno">(16)<a class="headerlink" href="#equation-eq-tayler-series-expansion-backward-fist-derivativ" title="Permalink to this equation"></a></span>\[\begin{split}\frac{\partial f (x0)}{\partial x} =
+<span class="eqno">(16)<a class="headerlink" href="#equation-eq-tayler-series-expansion-backward-fist-derivativ" title="Link to this equation"></a></span>\[\begin{split}\frac{\partial f (x0)}{\partial x} =
 \frac{f(x_0)− f(x_0−\Delta x)}{\Delta x} +
 \frac{\partial^2 f(x_0)}{\partial x^2} \frac{(\Delta x)}{2!} −
 \frac{\partial^3 f(x_0)}{\partial x^3} \frac{(\Delta x)^2}{3!} \cdots\\
 \frac{\partial f(x_i)}{\partial x} = \frac{f_i− f_{i−1}}{\Delta x} + O(\Delta x)\end{split}\]</div>
 <p>By adding <a class="reference internal" href="#equation-eq-taylor-series-expansion-rearranged">equation (13)</a> and <a class="reference internal" href="#equation-eq-tayler-series-expansion-backward-fist-derivativ">equation (16)</a> and dividing by two, a second order accurate first order derivative is obtained</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy1">
-<span class="eqno">(17)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy1" title="Permalink to this equation"></a></span>\[\frac{\partial f(x_i)}{\partial x} = \frac{f_{i+1} − f_{i−1}}{2\Delta x} + O(\Delta x)^2\]</div>
+<span class="eqno">(17)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy1" title="Link to this equation"></a></span>\[\frac{\partial f(x_i)}{\partial x} = \frac{f_{i+1} − f_{i−1}}{2\Delta x} + O(\Delta x)^2\]</div>
 <p>By adding equations <a class="reference internal" href="#equation-eq-taylor-series-expansion-rearranged">equation (13)</a> and <a class="reference internal" href="#equation-eq-tayler-series-expansion-backward">equation (15)</a> an approximation of the second derivative is obtained</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy2">
-<span class="eqno">(18)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy2" title="Permalink to this equation"></a></span>\[\frac{\partial f^2(x_i)}{\partial x^2} = \frac{f_{i+1}−2 f_i+ f_{i−1}}{(\Delta x)^2} +O(\Delta x)^2\]</div>
+<span class="eqno">(18)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy2" title="Link to this equation"></a></span>\[\frac{\partial f^2(x_i)}{\partial x^2} = \frac{f_{i+1}−2 f_i+ f_{i−1}}{(\Delta x)^2} +O(\Delta x)^2\]</div>
 <p>With this approach we can basically derive all possible finite difference approximations. A different way to derive the second derivative is by computing the first derivative at <span class="math notranslate nohighlight">\(i+\frac{1}{2}\)</span> and at <span class="math notranslate nohighlight">\(i-\frac{1}{2}\)</span> and computing the second derivative at <span class="math notranslate nohighlight">\(i\)</span> by using those two first derivatives:</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy3">
-<span class="eqno">(19)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy3" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(19)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy3" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 \frac{\partial f(x_{i+1/2})}{\partial x} = \frac{f_{i+1}−f_i}{x_{i+1}−x_i}\\
 \frac{\partial f(x_{i−1/2})}{\partial x} = \frac{f_i−f_{i−1}}{x_i−x_{i−1}}\\
@@ -317,41 +320,41 @@ f(x_0)− \frac{\partial f(x_0)}{\partial x} \Delta x+
 <p>Similarly we can derive higher order derivatives. Note that the highest order derivative that usually occurs in geodynamics is the <span class="math notranslate nohighlight">\(4^th\)</span>-order derivative.</p>
 </section>
 <section id="finite-difference-approximations">
-<h3>Finite difference approximations<a class="headerlink" href="#finite-difference-approximations" title="Permalink to this heading"></a></h3>
+<h3>Finite difference approximations<a class="headerlink" href="#finite-difference-approximations" title="Link to this heading"></a></h3>
 <p>The following equations are common finite difference approximations of derivatives. If you, in the future, need to write a finite difference approximation, come back here.</p>
 <p>Left-sided first derivative, first order</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy4">
-<span class="eqno">(20)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy4" title="Permalink to this equation"></a></span>\[\left| \frac{\partial u}{\partial x}\right|_{i−1/2} = \frac{u_i−u_{i−1}}{\Delta x} +O(\Delta x)\]</div>
+<span class="eqno">(20)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy4" title="Link to this equation"></a></span>\[\left| \frac{\partial u}{\partial x}\right|_{i−1/2} = \frac{u_i−u_{i−1}}{\Delta x} +O(\Delta x)\]</div>
 <p>Right-sided first derivative, first order</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy5">
-<span class="eqno">(21)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy5" title="Permalink to this equation"></a></span>\[\left| \frac{\partial u}{\partial x}\right|_{i+1/2} = \frac{u_{i+1}−u_i}{\Delta x} +O(\Delta x)\]</div>
+<span class="eqno">(21)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy5" title="Link to this equation"></a></span>\[\left| \frac{\partial u}{\partial x}\right|_{i+1/2} = \frac{u_{i+1}−u_i}{\Delta x} +O(\Delta x)\]</div>
 <p>Central first derivative, second order</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy6">
-<span class="eqno">(22)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy6" title="Permalink to this equation"></a></span>\[\left| \frac{\partial u}{\partial x}\right|_i = \frac{u_{i+1}−u_{i−1}}{2\Delta x} +O(\Delta x)^2\]</div>
+<span class="eqno">(22)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy6" title="Link to this equation"></a></span>\[\left| \frac{\partial u}{\partial x}\right|_i = \frac{u_{i+1}−u_{i−1}}{2\Delta x} +O(\Delta x)^2\]</div>
 <p>Central first derivative, fourth order</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy7">
-<span class="eqno">(23)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy7" title="Permalink to this equation"></a></span>\[\left| \frac{\partial u}{\partial x}\right|_i = \frac{−u_{i+2}+8u_{i+1}−8u_{i−1}+u_{i−2}}{12\Delta x} +O(\Delta x)^4\]</div>
+<span class="eqno">(23)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy7" title="Link to this equation"></a></span>\[\left| \frac{\partial u}{\partial x}\right|_i = \frac{−u_{i+2}+8u_{i+1}−8u_{i−1}+u_{i−2}}{12\Delta x} +O(\Delta x)^4\]</div>
 <p>Central second derivative, second order</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy8">
-<span class="eqno">(24)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy8" title="Permalink to this equation"></a></span>\[\left| \frac{\partial^2 u}{\partial x^2}\right|_i = \frac{u_{i+1}−2u_i+u_{i−1}}{\Delta x^2} +O(\Delta x)^2\]</div>
+<span class="eqno">(24)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy8" title="Link to this equation"></a></span>\[\left| \frac{\partial^2 u}{\partial x^2}\right|_i = \frac{u_{i+1}−2u_i+u_{i−1}}{\Delta x^2} +O(\Delta x)^2\]</div>
 <p>Central second derivative, fourth order</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy9">
-<span class="eqno">(25)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy9" title="Permalink to this equation"></a></span>\[\left|\frac{\partial^2 u}{\partial x^2} \right|_i = \frac{−u_{i+2}+16u_{i+1}−30u_i+16u_{i−1}−u_{i−2}}{12\Delta x^2} +O(\Delta x)^4\]</div>
+<span class="eqno">(25)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy9" title="Link to this equation"></a></span>\[\left|\frac{\partial^2 u}{\partial x^2} \right|_i = \frac{−u_{i+2}+16u_{i+1}−30u_i+16u_{i−1}−u_{i−2}}{12\Delta x^2} +O(\Delta x)^4\]</div>
 <p>Central third derivative, second order</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy10">
-<span class="eqno">(26)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy10" title="Permalink to this equation"></a></span>\[\left|\frac{\partial^3 u}{\partial x^3}\right|_i = \frac{u_{i+2}−2u_{i+1}+2u_{i−1}−u_{i−2}}{2\Delta x^3} +O(\Delta x)^2\]</div>
+<span class="eqno">(26)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy10" title="Link to this equation"></a></span>\[\left|\frac{\partial^3 u}{\partial x^3}\right|_i = \frac{u_{i+2}−2u_{i+1}+2u_{i−1}−u_{i−2}}{2\Delta x^3} +O(\Delta x)^2\]</div>
 <p>Central third derivative, fourth order</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy11">
-<span class="eqno">(27)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy11" title="Permalink to this equation"></a></span>\[\left| \frac{\partial^3 u}{\partial x^3}\right|_i = \frac{−u_{i+3}+8u_{i+2}−13u_{i+1}+13u_{i−1}−8u_{i−2}+u_{i−3}}{8\Delta x^3} +O(\Delta x)^4\]</div>
+<span class="eqno">(27)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy11" title="Link to this equation"></a></span>\[\left| \frac{\partial^3 u}{\partial x^3}\right|_i = \frac{−u_{i+3}+8u_{i+2}−13u_{i+1}+13u_{i−1}−8u_{i−2}+u_{i−3}}{8\Delta x^3} +O(\Delta x)^4\]</div>
 <p>Central fourth derivative</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy12">
-<span class="eqno">(28)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy12" title="Permalink to this equation"></a></span>\[\left| \frac{\partial^4 u}{\partial x^4}\right|_i =\frac{u_{i+2}−4u_{i+1}+6u_i−4u_{i−1}+u_{i−2}}{\Delta x^4} +O(\Delta x)2\]</div>
+<span class="eqno">(28)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy12" title="Link to this equation"></a></span>\[\left| \frac{\partial^4 u}{\partial x^4}\right|_i =\frac{u_{i+2}−4u_{i+1}+6u_i−4u_{i−1}+u_{i−2}}{\Delta x^4} +O(\Delta x)2\]</div>
 <p>Note that the higher the order of the finite difference scheme, the more adjacent points are required. It is also important to note that derivatives of the following form</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy13">
-<span class="eqno">(29)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy13" title="Permalink to this equation"></a></span>\[\frac{\partial}{\partial x}\left(k\frac{\partial u}{\partial x}\right)\]</div>
+<span class="eqno">(29)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy13" title="Link to this equation"></a></span>\[\frac{\partial}{\partial x}\left(k\frac{\partial u}{\partial x}\right)\]</div>
 <p>should be formed as follows</p>
 <div class="math notranslate nohighlight" id="equation-eq-tayler-series-expansion-dummy14">
-<span class="eqno">(30)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy14" title="Permalink to this equation"></a></span>\[\left| \frac{\partial}{\partial x}\left(k\frac{\partial u}{\partial x} \right)\right|_i =
+<span class="eqno">(30)<a class="headerlink" href="#equation-eq-tayler-series-expansion-dummy14" title="Link to this equation"></a></span>\[\left| \frac{\partial}{\partial x}\left(k\frac{\partial u}{\partial x} \right)\right|_i =
 \frac{k_{i+1/2} \frac{u_{i+1}−u_i}{\Delta x} − k_{i−1/2} \frac{u_i−u_{i−1}}{\Delta x}}{\Delta x} +O(\Delta x)^2\]</div>
 </section>
 </section>

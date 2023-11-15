@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Example 2: Cooling dike - implicit version &mdash; Finite Element Modeling in Geodynamics  documentation</title>
@@ -15,13 +15,12 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/tabs.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -37,12 +36,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
-            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -148,8 +151,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Example 2: Cooling dike - implicit version</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example 2: Cooling dike - implicit version</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture1/example_2.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -184,10 +187,10 @@
 }
 </style>
 <section id="example-2-cooling-dike-implicit-version">
-<h1>Example 2: Cooling dike - implicit version<a class="headerlink" href="#example-2-cooling-dike-implicit-version" title="Permalink to this heading"></a></h1>
+<h1>Example 2: Cooling dike - implicit version<a class="headerlink" href="#example-2-cooling-dike-implicit-version" title="Link to this heading"></a></h1>
 <p>In the previous session, we have learned how to solve for temperature using finite differences. However, our solution was only stable for certain parameter choices. In fact, we found that the finite differences formulation is only stable for <span class="math notranslate nohighlight">\(\beta&lt;0.5\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-eq-imp-dummy1">
-<span class="eqno">(33)<a class="headerlink" href="#equation-eq-imp-dummy1" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(33)<a class="headerlink" href="#equation-eq-imp-dummy1" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 T_i^{n+1} = \frac{\kappa \Delta t}{\Delta x^2} \left( T_{i-1}^n - 2T_i^n + T_{i+1}^n\right) + T_i^n\\
 \beta = \frac{\kappa \Delta t}{\Delta x^2}\\
@@ -204,17 +207,17 @@ T_{i+1}^n
 \end{align}\end{split}\]</div>
 <p>Today we will explore how to formulate a finite differences model that is always stable.</p>
 <section id="stability-analysis">
-<h2>Stability analysis<a class="headerlink" href="#stability-analysis" title="Permalink to this heading"></a></h2>
+<h2>Stability analysis<a class="headerlink" href="#stability-analysis" title="Link to this heading"></a></h2>
 <p>Before progressing let us explore when and why the explicit scheme is unstable. Let us assume a temperature profile with a single peak:</p>
 <div class="math notranslate nohighlight" id="equation-eq-imp-dummy2">
-<span class="eqno">(34)<a class="headerlink" href="#equation-eq-imp-dummy2" title="Permalink to this equation"></a></span>\[\begin{split}T =
+<span class="eqno">(34)<a class="headerlink" href="#equation-eq-imp-dummy2" title="Link to this equation"></a></span>\[\begin{split}T =
 \begin{bmatrix}
 0\\0\\1\\0\\0
 \end{bmatrix}\end{split}\]</div>
 <p>and let’s further assume that <span class="math notranslate nohighlight">\(\beta = 0.2\)</span>. Then after one time step the temperature profile looks like
 this:</p>
 <div class="math notranslate nohighlight" id="equation-eq-imp-dummy3">
-<span class="eqno">(35)<a class="headerlink" href="#equation-eq-imp-dummy3" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align*}
+<span class="eqno">(35)<a class="headerlink" href="#equation-eq-imp-dummy3" title="Link to this equation"></a></span>\[\begin{split}\begin{align*}
 \begin{split}
 T_2 = \begin{bmatrix}0.2 &amp; 0.6 &amp; 0.2\end{bmatrix}\begin{bmatrix}1\\0\\0\end{bmatrix} = 0.2\\
 T_3 = \begin{bmatrix}0.2 &amp; 0.6 &amp; 0.2\end{bmatrix}\begin{bmatrix}0\\1\\0\end{bmatrix} = 0.6\\
@@ -224,21 +227,21 @@ T_4 = \begin{bmatrix}0.2 &amp; 0.6 &amp; 0.2\end{bmatrix}\begin{bmatrix}0\\0\\1\
 <p>A nice diffusion profile. By further try-and-error (do it for different values for beta!), we find that the scheme is only stable for <span class="math notranslate nohighlight">\(\beta&lt;0.5\)</span></p>
 </section>
 <section id="radioactive-decay-analog">
-<h2>Radioactive decay analog<a class="headerlink" href="#radioactive-decay-analog" title="Permalink to this heading"></a></h2>
+<h2>Radioactive decay analog<a class="headerlink" href="#radioactive-decay-analog" title="Link to this heading"></a></h2>
 <p>A good test problem to explore the stability and accuracy of different finite element schemes is radioactive decay. The change in concentration is controlled by this equation:</p>
 <div class="math notranslate nohighlight" id="equation-eq-radio-1">
-<span class="eqno">(36)<a class="headerlink" href="#equation-eq-radio-1" title="Permalink to this equation"></a></span>\[\frac{\partial c}{\partial t}= - \lambda c\]</div>
+<span class="eqno">(36)<a class="headerlink" href="#equation-eq-radio-1" title="Link to this equation"></a></span>\[\frac{\partial c}{\partial t}= - \lambda c\]</div>
 <p><a class="reference internal" href="#equation-eq-radio-1">equation (36)</a> states that the rate of decay is controlled by how much of the material is still there. To solve <a class="reference internal" href="#equation-eq-radio-1">equation (36)</a>, we can use our standard finite differences approach:</p>
 <div class="math notranslate nohighlight" id="equation-eq-radio-2">
-<span class="eqno">(37)<a class="headerlink" href="#equation-eq-radio-2" title="Permalink to this equation"></a></span>\[\frac{c^{n+1} - c^{n}}{\Delta t}= - \lambda c^n\]</div>
+<span class="eqno">(37)<a class="headerlink" href="#equation-eq-radio-2" title="Link to this equation"></a></span>\[\frac{c^{n+1} - c^{n}}{\Delta t}= - \lambda c^n\]</div>
 <p>This standard implementation is called the explicit form because you can write the new concentration directly as a function of the old one. The assumption here is that the concentration at the beginning of the time step controls the decay rate.
 An alternative formulation, the implicit form, is to assume that the decay rate is controlled by the (unknown) concentration at the end of the time step <span class="math notranslate nohighlight">\(c^{n+1}\)</span>. The implicit from is therefore:</p>
 <div class="math notranslate nohighlight" id="equation-eq-radio-3">
-<span class="eqno">(38)<a class="headerlink" href="#equation-eq-radio-3" title="Permalink to this equation"></a></span>\[\frac{c^{n+1} - c^{n}}{\Delta t}= - \lambda c^{n+1}\]</div>
+<span class="eqno">(38)<a class="headerlink" href="#equation-eq-radio-3" title="Link to this equation"></a></span>\[\frac{c^{n+1} - c^{n}}{\Delta t}= - \lambda c^{n+1}\]</div>
 <p>We will explore the differences between both formulations with a little python script.</p>
 </section>
 <section id="fdm-notebook">
-<h2>FDM notebook<a class="headerlink" href="#fdm-notebook" title="Permalink to this heading"></a></h2>
+<h2>FDM notebook<a class="headerlink" href="#fdm-notebook" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="jupyter/radio_decay.html">FD calculation of radioactive decay</a></li>
@@ -246,17 +249,17 @@ An alternative formulation, the implicit form, is to assume that the decay rate 
 </div>
 </section>
 <section id="excercise-radioactive-decay">
-<h2>Excercise - radioactive decay<a class="headerlink" href="#excercise-radioactive-decay" title="Permalink to this heading"></a></h2>
+<h2>Excercise - radioactive decay<a class="headerlink" href="#excercise-radioactive-decay" title="Link to this heading"></a></h2>
 <p>Try out the notebook and explore under which conditions the solutions are stable. What’s the difference between the explicit and the implicit solution?</p>
 <p>Add another method to the script that takes the concentration at the center of the time step:</p>
 <div class="math notranslate nohighlight" id="equation-eq-radio-4">
-<span class="eqno">(39)<a class="headerlink" href="#equation-eq-radio-4" title="Permalink to this equation"></a></span>\[\frac{c^{n+1} - c^{n}}{\Delta t}= - \lambda c^{n+\frac{1}{2}}\]</div>
+<span class="eqno">(39)<a class="headerlink" href="#equation-eq-radio-4" title="Link to this equation"></a></span>\[\frac{c^{n+1} - c^{n}}{\Delta t}= - \lambda c^{n+\frac{1}{2}}\]</div>
 </section>
 <section id="implicit-heat-diffusion">
-<h2>Implicit Heat Diffusion<a class="headerlink" href="#implicit-heat-diffusion" title="Permalink to this heading"></a></h2>
+<h2>Implicit Heat Diffusion<a class="headerlink" href="#implicit-heat-diffusion" title="Link to this heading"></a></h2>
 <p>The previous exercise on radioactive decay has shown that the fully implicit method is always stable. We will now rewrite our dike cooling model using the implicit formulation. Here is the implicit finite differences form:</p>
 <div class="math notranslate nohighlight" id="equation-eq-imp-dummy5">
-<span class="eqno">(40)<a class="headerlink" href="#equation-eq-imp-dummy5" title="Permalink to this equation"></a></span>\[\begin{split}\begin{split}
+<span class="eqno">(40)<a class="headerlink" href="#equation-eq-imp-dummy5" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
 \frac{T_i^{n+1} - T_i^n}{\Delta t} = \frac{\kappa}{\Delta x^2} \left( T_{i-1}^{n+1} - 2T_i^{n+1} + T_{i+1}^{n+1} \right)\\
 \begin{bmatrix}
 -\beta &amp; (1+2\beta) &amp; -\beta
@@ -271,12 +274,12 @@ T_{i+1}^{n+1}
 <figure class="align-center" id="imp-exp-stencil-fig" style="width: 100%">
 <img alt="../_images/1D_implicit_vs_explicit_stencil.png" src="../_images/1D_implicit_vs_explicit_stencil.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Different explicit and implicit FD discretization stencils.</span><a class="headerlink" href="#imp-exp-stencil-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Different explicit and implicit FD discretization stencils.</span><a class="headerlink" href="#imp-exp-stencil-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>It is characteristic for the implicit form that the solution for <span class="math notranslate nohighlight">\(T^{n+1}_i\)</span> depends on the solution of the neighboring nodes (<span class="math notranslate nohighlight">\(i-1\)</span> and <span class="math notranslate nohighlight">\(i+1\)</span>). As a consequence, we cannot simply solve for one node after the other anymore but need to solve a system of equations. In fact, the way forward is to state the problem in matrix form <span class="math notranslate nohighlight">\(A\vec{x}=\vec{b}\)</span> and solve all equations simultaneously:</p>
 <div class="math notranslate nohighlight" id="equation-eq-imp-dummy6">
-<span class="eqno">(41)<a class="headerlink" href="#equation-eq-imp-dummy6" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(41)<a class="headerlink" href="#equation-eq-imp-dummy6" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 \begin{bmatrix}
 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
@@ -311,7 +314,7 @@ T_{bottom}\\
 <p>All we need to do is set up the matrix A and then solve for <span class="math notranslate nohighlight">\(T^{n+1} = A \backslash T^n\)</span>!</p>
 </section>
 <section id="id1">
-<h2>FDM notebook<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<h2>FDM notebook<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="jupyter/imp_dike_cooling.html">Implicit descretization</a></li>
@@ -319,7 +322,7 @@ T_{bottom}\\
 </div>
 </section>
 <section id="excercise-implicit-dike-cooling">
-<h2>Excercise - implicit dike cooling<a class="headerlink" href="#excercise-implicit-dike-cooling" title="Permalink to this heading"></a></h2>
+<h2>Excercise - implicit dike cooling<a class="headerlink" href="#excercise-implicit-dike-cooling" title="Link to this heading"></a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p>Get the notebook to work and programm the implicit solution. Explore if you find any stability limits.</p></li>

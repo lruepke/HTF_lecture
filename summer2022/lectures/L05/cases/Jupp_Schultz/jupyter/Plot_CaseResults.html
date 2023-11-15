@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jupyter Notebook of case results &mdash; HydrothermalFoam Lecture  documentation</title>
@@ -15,11 +15,12 @@
     <script src="../../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
-        <script src="../../../../../_static/jquery.js"></script>
-        <script src="../../../../../_static/underscore.js"></script>
-        <script src="../../../../../_static/doctools.js"></script>
-        <script src="../../../../../_static/tabs.js"></script>
+        <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../../../../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -43,12 +44,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../../../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../../../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -156,8 +161,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Jupyter Notebook of case results</li>
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Jupyter Notebook of case results</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L05/cases/Jupp_Schultz/jupyter/Plot_CaseResults.ipynb" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -438,7 +443,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Jupyter-Notebook-of-case-results">
-<h1>Jupyter Notebook of case results<a class="headerlink" href="#Jupyter-Notebook-of-case-results" title="Permalink to this headline"></a></h1>
+<h1>Jupyter Notebook of case results<a class="headerlink" href="#Jupyter-Notebook-of-case-results" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -472,7 +477,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <section id="Read-results">
-<h2>Read results<a class="headerlink" href="#Read-results" title="Permalink to this headline"></a></h2>
+<h2>Read results<a class="headerlink" href="#Read-results" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>Using <code class="docutils literal notranslate"><span class="pre">foamToVTK</span></code> utility convert OpenFOAM result to VTK format, e.g. <code class="docutils literal notranslate"><span class="pre">foamToVTK</span> <span class="pre">-time</span> <span class="pre">'823328000000'</span>&#160; <span class="pre">-useTimeName</span></code></p></li>
 <li><p>Read VTK file (Ustructured data) using <a class="reference external" href="https://github.com/nschloe/meshio">meshio</a></p></li>
@@ -506,7 +511,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="Plot-result-data">
-<h2>Plot result data<a class="headerlink" href="#Plot-result-data" title="Permalink to this headline"></a></h2>
+<h2>Plot result data<a class="headerlink" href="#Plot-result-data" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>It is pretty easy to plot contour using <code class="docutils literal notranslate"><span class="pre">ax.tricontour</span></code> <a class="reference external" href="https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.tricontour.html?highlight=tricontour">(doc)</a> function.</p></li>
 <li><p>In order to make a nice figure, there is a trick of <strong>manual location</strong> (see below, line 15-29) for contour labels.</p></li>
@@ -569,7 +574,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="Temperature-+-velocity-field-(quiver)">
-<h2>Temperature + velocity field (quiver)<a class="headerlink" href="#Temperature-+-velocity-field-(quiver)" title="Permalink to this headline"></a></h2>
+<h2>Temperature + velocity field (quiver)<a class="headerlink" href="#Temperature-+-velocity-field-(quiver)" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -651,7 +656,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </section>
 <section id="Early-stage">
-<h2>Early stage<a class="headerlink" href="#Early-stage" title="Permalink to this headline"></a></h2>
+<h2>Early stage<a class="headerlink" href="#Early-stage" title="Link to this heading"></a></h2>
 <p>see Fig. 2 of Juppy &amp; Schultz (2000)</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:

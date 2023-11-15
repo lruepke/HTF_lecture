@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exercise 1 &mdash; HydrothermalFoam Lecture  documentation</title>
@@ -15,11 +15,12 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/tabs.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -45,12 +46,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -163,8 +168,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Exercise 1</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Exercise 1</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L06/Exercise1.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -199,7 +204,7 @@
 }
 </style>
 <section id="exercise-1">
-<span id="l06-exercise1"></span><h1>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline"></a></h1>
+<span id="l06-exercise1"></span><h1>Exercise 1<a class="headerlink" href="#exercise-1" title="Link to this heading"></a></h1>
 <p>We will first explore a simple setup of 2-D flow along a pressure gradient in the presence of permeability contrasts.</p>
 <div class="admonition-goals admonition">
 <p class="admonition-title">Goals</p>
@@ -210,23 +215,23 @@
 </ul>
 </div>
 <section id="step-1">
-<h2>Step 1<a class="headerlink" href="#step-1" title="Permalink to this headline"></a></h2>
+<h2>Step 1<a class="headerlink" href="#step-1" title="Link to this heading"></a></h2>
 <p>We will explore the following case: A 2-D box of dimensions 1500 m by 1000 m. Flow is driven by a prescribed pressure gradient. Within the box, variations in permeability affect the flow field.</p>
 <figure class="align-center" id="setup-l5-1-fig" style="width: 80%">
 <img alt="../../_images/lecture_plot.png" src="../../_images/lecture_plot.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 34 </span><span class="caption-text">Setup of our 2D test case for flow in a porous medium with variable permeability.</span><a class="headerlink" href="#setup-l5-1-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 34 </span><span class="caption-text">Setup of our 2D test case for flow in a porous medium with variable permeability.</span><a class="headerlink" href="#setup-l5-1-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>A good starting point for setting up new case is always to take an existing similar case. Here we can use one of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> benchmark cases. It’s located in <code class="code docutils literal notranslate"><span class="pre">$HOME/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1</span></code>.</p>
 <p>Copy the case into your working directory.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
-cp -r /home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1 ./h1_class
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp<span class="w"> </span>-r<span class="w"> </span>/home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1<span class="w"> </span>./h1_class
 </pre></div>
 </div>
 </section>
 <section id="step-2">
-<h2>Step 2<a class="headerlink" href="#step-2" title="Permalink to this headline"></a></h2>
+<h2>Step 2<a class="headerlink" href="#step-2" title="Link to this heading"></a></h2>
 <p>Now we need to modify the case. These are the necessary steps:</p>
 <div class="admonition-goals admonition">
 <p class="admonition-title">Goals</p>
@@ -242,21 +247,21 @@ cp -r /home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1 .
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You might have noticed that the <code class="code docutils literal notranslate"><span class="pre">benchmarks/HydrothermalFoam/1d/h1</span></code> case does not contain a <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code>. This is common “problem” that a dictionary file is missing when starting from an existing case file. You can easily fix this by copying the respective dictionary from another case and then modify it. If you don’t know which case has the missing dictionary, you can just search for it (inside the docker container). For example like this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find <span class="nv">$HOME</span> -type f -name <span class="s2">&quot;setFieldsDict&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find<span class="w"> </span><span class="nv">$HOME</span><span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;setFieldsDict&quot;</span>
 </pre></div>
 </div>
 <p>Now that we have the setFieldsDict, we need to modify it. Do you remember <a class="reference internal" href="../L04/Exercise.html#l03-properties"><span class="std std-ref">Assign properties</span></a> part the two-layered convection <a class="reference internal" href="../L03/Exercise.html#l03-exercise"><span class="std std-ref">Exercises</span></a> in lecture 3? There we used the boxToCell function within <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> as an alternative way of making a layerd permeability structure. Now we can do the same here, just that we need several boxes.</p>
 <p>This is how the code snippit looked like in lecture 3; take it as a starting point!</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>regions
 <span class="o">(</span>
-    boxToCell
-    <span class="o">{</span>
-        box <span class="o">(</span><span class="m">0</span> -500 <span class="m">0</span><span class="o">)</span> <span class="o">(</span><span class="m">1000</span> <span class="m">0</span> <span class="m">1</span><span class="o">)</span><span class="p">;</span> //<span class="o">(</span>xmin,ymin,zmin<span class="o">)</span> <span class="o">(</span>xmax,ymax,zmax<span class="o">)</span>
-        fieldValues
-        <span class="o">(</span>
-            volScalarFieldValue permeability 1e-13
-        <span class="o">)</span><span class="p">;</span>
-    <span class="o">}</span>
+<span class="w">    </span>boxToCell
+<span class="w">    </span><span class="o">{</span>
+<span class="w">        </span>box<span class="w"> </span><span class="o">(</span><span class="m">0</span><span class="w"> </span>-500<span class="w"> </span><span class="m">0</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="m">1000</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="p">;</span><span class="w"> </span>//<span class="o">(</span>xmin,ymin,zmin<span class="o">)</span><span class="w"> </span><span class="o">(</span>xmax,ymax,zmax<span class="o">)</span>
+<span class="w">        </span>fieldValues
+<span class="w">        </span><span class="o">(</span>
+<span class="w">            </span>volScalarFieldValue<span class="w"> </span>permeability<span class="w"> </span>1e-13
+<span class="w">        </span><span class="o">)</span><span class="p">;</span>
+<span class="w">    </span><span class="o">}</span>
 <span class="o">)</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -264,12 +269,12 @@ cp -r /home/openfoam/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1 .
 </div>
 </section>
 <section id="step-3">
-<h2>Step 3<a class="headerlink" href="#step-3" title="Permalink to this headline"></a></h2>
+<h2>Step 3<a class="headerlink" href="#step-3" title="Link to this heading"></a></h2>
 <p>Explore the results in paraview!</p>
 <figure class="align-center" id="flow-l5-1-fig" style="width: 80%">
 <img alt="../../_images/hetero_perm_flow.png" src="../../_images/hetero_perm_flow.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 35 </span><span class="caption-text">Porous flow in the presence of permeability variations.</span><a class="headerlink" href="#flow-l5-1-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 35 </span><span class="caption-text">Porous flow in the presence of permeability variations.</span><a class="headerlink" href="#flow-l5-1-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>

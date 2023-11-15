@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project 1: Flow along a detachment fault &mdash; HydrothermalFoam Lecture  documentation</title>
@@ -15,11 +15,12 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/tabs.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -45,12 +46,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -168,8 +173,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Project 1: Flow along a detachment fault</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Project 1: Flow along a detachment fault</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L_PROJECTS/Project1.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -204,7 +209,7 @@
 }
 </style>
 <section id="project-1-flow-along-a-detachment-fault">
-<span id="l-projects-project1"></span><h1>Project 1: Flow along a detachment fault<a class="headerlink" href="#project-1-flow-along-a-detachment-fault" title="Permalink to this headline"></a></h1>
+<span id="l-projects-project1"></span><h1>Project 1: Flow along a detachment fault<a class="headerlink" href="#project-1-flow-along-a-detachment-fault" title="Link to this heading"></a></h1>
 <div class="admonition-project-objectives admonition">
 <p class="admonition-title">Project objectives</p>
 <ul class="simple">
@@ -217,11 +222,11 @@
 <figure class="align-center" id="fig-fault-2017-fig" style="width: 70%">
 <img alt="../../_images/andersen_fault_2017.png" src="../../_images/andersen_fault_2017.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 52 </span><span class="caption-text">Figure taken from <span id="id1">[<a class="reference internal" href="../../refs.html#id18" title="C. Andersen, S. Theissen-Krah, M. D. Hannington, L. Rüpke, and S. Petersen. Faulting and off-axis submarine massive sulfide accumulation at slow-spreading mid-ocean ridges: a numerical modeling perspective. Geochemistry Geophysics Geosystems, 2017.">Andersen et al., 2017</a>]</span> ; preferential fluid flow along a fault zone.</span><a class="headerlink" href="#fig-fault-2017-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 52 </span><span class="caption-text">Figure taken from <span id="id1">[<a class="reference internal" href="../../refs.html#id18" title="C. Andersen, S. Theissen-Krah, M. D. Hannington, L. Rüpke, and S. Petersen. Faulting and off-axis submarine massive sulfide accumulation at slow-spreading mid-ocean ridges: a numerical modeling perspective. Geochemistry Geophysics Geosystems, 2017.">Andersen et al., 2017</a>]</span> ; preferential fluid flow along a fault zone.</span><a class="headerlink" href="#fig-fault-2017-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <section id="deliverables">
-<h2>Deliverables<a class="headerlink" href="#deliverables" title="Permalink to this headline"></a></h2>
+<h2>Deliverables<a class="headerlink" href="#deliverables" title="Link to this heading"></a></h2>
 <p>The goal of this project is to provide work on these topics</p>
 <ol class="arabic simple">
 <li><p><strong>Plume captureing</strong>, provide a sequence of 2D simulations that illustrate what can “happen” for different fault widths and fault permeabilities (check <a class="reference internal" href="../L06/intro.html#andersen-fig"><span class="std std-numref">Fig. 33</span></a>)</p></li>
@@ -231,24 +236,24 @@
 <p>The results should be delivered in a short powerpoint presentation.</p>
 </section>
 <section id="starting-point">
-<h2>Starting point<a class="headerlink" href="#starting-point" title="Permalink to this headline"></a></h2>
+<h2>Starting point<a class="headerlink" href="#starting-point" title="Link to this heading"></a></h2>
 <section id="case-file">
-<h3>Case file<a class="headerlink" href="#case-file" title="Permalink to this headline"></a></h3>
+<h3>Case file<a class="headerlink" href="#case-file" title="Link to this heading"></a></h3>
 <p>Download the basic case file from (<a class="reference download internal" download="" href="../../_downloads/0475e4f952a3b299ce1b1c0ae2a6f799/fault_flow.zip"><code class="xref download docutils literal notranslate"><span class="pre">Fault</span> <span class="pre">Flow</span> <span class="pre">Model</span></code></a>).. It includes a basic setup for a fault-controlled hydrothermal system.</p>
 </section>
 <section id="meshing-software">
-<h3>Meshing software<a class="headerlink" href="#meshing-software" title="Permalink to this headline"></a></h3>
+<h3>Meshing software<a class="headerlink" href="#meshing-software" title="Link to this heading"></a></h3>
 <p>The example case uses a meshing software called <a class="reference external" href="http://gmsh.info">Gmsh</a> to create a mesh that resolves the fault zone. Gmsh is already installed within your docker containers, so there should be no need for installing additional software. The gmsh input file is in <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code>.</p>
 <figure class="align-center" id="fig-gmsh-screen-fig">
 <img alt="../../_images/gmsh_screen.png" src="../../_images/gmsh_screen.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 53 </span><span class="caption-text">Mesh created with gmsh.</span><a class="headerlink" href="#fig-gmsh-screen-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 53 </span><span class="caption-text">Mesh created with gmsh.</span><a class="headerlink" href="#fig-gmsh-screen-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Have a look at <code class="code docutils literal notranslate"><span class="pre">gmsh/make_mesh.geo</span></code> and the <a class="reference external" href="http://gmsh.info">Gmsh</a> . Check that you (more or less) understand what’s happening and try to change things like fault width and and angle.</p>
 </section>
 <section id="post-processing">
-<h3>Post-processing<a class="headerlink" href="#post-processing" title="Permalink to this headline"></a></h3>
+<h3>Post-processing<a class="headerlink" href="#post-processing" title="Link to this heading"></a></h3>
 <p>There are many ways of extracting information from a completed run. For this project, you will want to know how high the vent temperature is and where the venting occurs, so that you can evaluate if the plume was “captured” by the fault. You can either do this in paraview by using, for example, the “Plot Over Line” filter in Paraview. An alternative is to use the built-in postprocessing function of OpenFoam.</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="n">postProcess</span> <span class="o">-</span><span class="n">func</span> <span class="n">sampleDict</span> <span class="o">-</span><span class="k">latestTime</span>
 </pre></div>
@@ -258,7 +263,7 @@
 </section>
 </section>
 <section id="background-reading">
-<h2>Background reading<a class="headerlink" href="#background-reading" title="Permalink to this headline"></a></h2>
+<h2>Background reading<a class="headerlink" href="#background-reading" title="Link to this heading"></a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p><span id="id2">[<a class="reference internal" href="../../refs.html#id11" title="C. Andersen, LH Rüpke, J. Hasenclever, I. Grevemeyer, and S. Petersen. Fault geometry and permeability contrast control vent temperatures at the logatchev 1 hydrothermal field, mid-atlantic ridge. Geology, 43(1):51-54, 2015. doi:doi:10.1130/G36113.1.">Andersen et al., 2015</a>]</span> illustrates the problem for the Logatchev field</p></li>

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Excercise &mdash; HydrothermalFoam Lecture  documentation</title>
@@ -15,11 +15,12 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/tabs.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -45,12 +46,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -162,8 +167,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Excercise</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Excercise</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L02/Exercise.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -198,12 +203,12 @@
 }
 </style>
 <section id="excercise">
-<span id="l02-exercise"></span><h1>Excercise<a class="headerlink" href="#excercise" title="Permalink to this headline"></a></h1>
+<span id="l02-exercise"></span><h1>Excercise<a class="headerlink" href="#excercise" title="Link to this heading"></a></h1>
 <p>After we have mananged to solve for 2-D cavity flow, it’s time to try 3-D. And parralel proccessing!</p>
 <section id="d-cavity-flow">
-<h2>3-D cavity flow<a class="headerlink" href="#d-cavity-flow" title="Permalink to this headline"></a></h2>
+<h2>3-D cavity flow<a class="headerlink" href="#d-cavity-flow" title="Link to this heading"></a></h2>
 <p>First, try to make a 3-D simulations. Start by copying the case to a new folder and to clean the case</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp -r cavity2D cavity3D
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>-r<span class="w"> </span>cavity2D<span class="w"> </span>cavity3D
 ./clean.sh
 </pre></div>
 </div>
@@ -218,26 +223,26 @@
 </div>
 </section>
 <section id="getting-fancy-let-s-make-a-parallel-run">
-<h2>Getting fancy - let’s make a parallel run<a class="headerlink" href="#getting-fancy-let-s-make-a-parallel-run" title="Permalink to this headline"></a></h2>
+<h2>Getting fancy - let’s make a parallel run<a class="headerlink" href="#getting-fancy-let-s-make-a-parallel-run" title="Link to this heading"></a></h2>
 <p>Three-dimensional simulations need a lot of computing resources and thankfully OpenFoam is fully parallelized and very efficient in making parallel runs. The standard parallelization technique in OpenFoam is called “domain decompositon”. This means that the compuational domain is split into sub-domains and each sub-domain is send to one of the computional cores. As always, all of this is controlled via a dictionary file. This file is called <code class="code docutils literal notranslate"><span class="pre">system/decomposeParDict</span></code> .</p>
 <p>To get started we make a copy of our 3-D case.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp -r cavity3D cavity3D_par
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>-r<span class="w"> </span>cavity3D<span class="w"> </span>cavity3D_par
 ./clean.sh
 </pre></div>
 </div>
 <p>Unfortunately, theree is no file <code class="code docutils literal notranslate"><span class="pre">system/decomposeParDict</span></code> in our example case… Fortunately, there is probably an example file somewhere in all the provided tutorials. A simple way to find and copy one is this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span>
-find  . -name <span class="s2">&quot;decomposeParDict&quot;</span>
+find<span class="w">  </span>.<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;decomposeParDict&quot;</span>
 ./hydrothermalfoam-master/cookbooks/parallel_serial/fixedTfixedFluxPressure/2d_par/system/decomposeParDict
 ./hydrothermalfoam-master/cookbooks/parallel_serial/fixedTnoFlux/2d_par/system/decomposeParDict
 ./hydrothermalfoam-master/cookbooks/3Dbox_par/system/decomposeParDict
 ./hydrothermalfoam-master/cookbooks/helloworld_par/system/decomposeParDict
-cp ./hydrothermalfoam-master/cookbooks/helloworld_par/system/decomposeParDict <span class="nv">$HOME</span>/HydrothermalFoam_runs/cavity3D_par
+cp<span class="w"> </span>./hydrothermalfoam-master/cookbooks/helloworld_par/system/decomposeParDict<span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs/cavity3D_par
 </pre></div>
 </div>
 <p>Now open this file and edit it; it should look like this</p>
 <div class="literal-block-wrapper docutils container" id="lst-3dcavity-par">
-<div class="code-block-caption"><span class="caption-number">Listing 9 </span><span class="caption-text">Domain decomposition and parallel processing.</span><a class="headerlink" href="#lst-3dcavity-par" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 9 </span><span class="caption-text">Domain decomposition and parallel processing.</span><a class="headerlink" href="#lst-3dcavity-par" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -273,25 +278,25 @@ cp ./hydrothermalfoam-master/cookbooks/helloworld_par/system/decomposeParDict <s
 <img alt="../../_images/decomposed_mesh.png" src="../../_images/decomposed_mesh.png" />
 </figure>
 <p>Next you need to modify the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script to invoke a parallel run.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp run.sh run_par.sh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>run.sh<span class="w"> </span>run_par.sh
 </pre></div>
 </div>
 <p>It should look like this:</p>
 <blockquote>
 <div><div class="literal-block-wrapper docutils container" id="lst-2dcav-run-tree">
-<div class="code-block-caption"><span class="caption-number">Listing 10 </span><span class="caption-text">The run_par.sh file.</span><a class="headerlink" href="#lst-2dcav-run-tree" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 10 </span><span class="caption-text">The run_par.sh file.</span><a class="headerlink" href="#lst-2dcav-run-tree" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/sh</span>
-<span class="linenos"> 2</span><span class="nb">cd</span> <span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span> <span class="o">||</span> <span class="nb">exit</span> <span class="m">1</span>    <span class="c1"># Run from this directory</span>
+<span class="linenos"> 2</span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="w">    </span><span class="c1"># Run from this directory</span>
 <span class="linenos"> 3</span>
 <span class="linenos"> 4</span><span class="c1"># Source tutorial run functions</span>
-<span class="linenos"> 5</span>. <span class="nv">$WM_PROJECT_DIR</span>/bin/tools/RunFunctions
+<span class="linenos"> 5</span>.<span class="w"> </span><span class="nv">$WM_PROJECT_DIR</span>/bin/tools/RunFunctions
 <span class="linenos"> 6</span>
 <span class="linenos"> 7</span><span class="nv">application</span><span class="o">=</span><span class="sb">`</span>getApplication<span class="sb">`</span>
 <span class="linenos"> 8</span>
 <span class="linenos"> 9</span>./clean.sh
-<span class="linenos">10</span>runApplication blockMesh
-<span class="linenos">11</span>runApplication decomposePar
-<span class="linenos">12</span>runParallel <span class="nv">$application</span>
+<span class="linenos">10</span>runApplication<span class="w"> </span>blockMesh
+<span class="linenos">11</span>runApplication<span class="w"> </span>decomposePar
+<span class="linenos">12</span>runParallel<span class="w"> </span><span class="nv">$application</span>
 <span class="linenos">13</span>reconstructPar
 </pre></div>
 </div>
@@ -301,7 +306,7 @@ cp ./hydrothermalfoam-master/cookbooks/helloworld_par/system/decomposeParDict <s
 <figure class="align-center" id="fig-3dcavity-fig">
 <img alt="../../_images/3dcavity.png" src="../../_images/3dcavity.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Results of the 3-D parallel cavity flow simulation.</span><a class="headerlink" href="#fig-3dcavity-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Results of the 3-D parallel cavity flow simulation.</span><a class="headerlink" href="#fig-3dcavity-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>

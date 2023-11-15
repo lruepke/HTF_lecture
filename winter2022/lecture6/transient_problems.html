@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Transient heat diffusion &mdash; Finite Element Modeling in Geodynamics  documentation</title>
@@ -15,13 +15,12 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/tabs.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -37,12 +36,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Finite Element Modeling in Geodynamics
-            <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -141,8 +144,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Transient heat diffusion</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Transient heat diffusion</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture6/transient_problems.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -177,31 +180,31 @@
 }
 </style>
 <section id="transient-heat-diffusion">
-<h1>Transient heat diffusion<a class="headerlink" href="#transient-heat-diffusion" title="Permalink to this heading"></a></h1>
+<h1>Transient heat diffusion<a class="headerlink" href="#transient-heat-diffusion" title="Link to this heading"></a></h1>
 <p>The next step is to derive and implement the unsteady (time-dependent) heat diffusion equation and to solve an example problem for the cooling of the lithosphere. The unsteady heat diffusion equation looks like this:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-transient">
-<span class="eqno">(140)<a class="headerlink" href="#equation-eq-fem-2d-transient" title="Permalink to this equation"></a></span>\[\rho c_p \frac{\partial T}{\partial t} = \frac{\partial}{\partial x} k \frac{\partial T}{\partial x} + \frac{\partial}{\partial y}k\frac{\partial T}{\partial y}\]</div>
+<span class="eqno">(140)<a class="headerlink" href="#equation-eq-fem-2d-transient" title="Link to this equation"></a></span>\[\rho c_p \frac{\partial T}{\partial t} = \frac{\partial}{\partial x} k \frac{\partial T}{\partial x} + \frac{\partial}{\partial y}k\frac{\partial T}{\partial y}\]</div>
 <p>Two differences to the previously considered steady heat diffusion are apparent. First, we now have a time derivative in addition to the spatial derivatives. Second, the material parameters (density, specific heat, thermal conductivity) are not constant (neglected) any more. Nevertheless, the diffusion part of <a class="reference internal" href="#equation-eq-fem-2d-transient">equation (140)</a> looks very similar to the steady-state case that we know how to solve.</p>
 <p>We know how to handle spatial derivatives but this is the first time we encounter a time derivative in finite elements. To solve it we will use a “trick” from finite differences – we will simply write the time derivative in finite differences form.</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-transient-2">
-<span class="eqno">(141)<a class="headerlink" href="#equation-eq-fem-2d-transient-2" title="Permalink to this equation"></a></span>\[\rho c_p \frac{T^{n+1} - T^n}{\Delta t} = \frac{\partial}{\partial x} k\frac{\partial T^{n+1}}{\partial x} + \frac{\partial}{\partial y}k\frac{\partial T^{n+1}}{\partial y}.\]</div>
+<span class="eqno">(141)<a class="headerlink" href="#equation-eq-fem-2d-transient-2" title="Link to this equation"></a></span>\[\rho c_p \frac{T^{n+1} - T^n}{\Delta t} = \frac{\partial}{\partial x} k\frac{\partial T^{n+1}}{\partial x} + \frac{\partial}{\partial y}k\frac{\partial T^{n+1}}{\partial y}.\]</div>
 <p>Re-arrange <a class="reference internal" href="#equation-eq-fem-2d-transient">equation (140)</a> so that all known temperatures <span class="math notranslate nohighlight">\(T^n\)</span> are on the Rhs and all unknown temperatures <span class="math notranslate nohighlight">\(T^{n+1}\)</span> are on the Lhs.</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-transient-3">
-<span class="eqno">(142)<a class="headerlink" href="#equation-eq-fem-2d-transient-3" title="Permalink to this equation"></a></span>\[\rho c_p T^{n+1} - \Delta t \left( \frac{\partial}{\partial x} k\frac{\partial T^{n+1}}{\partial x} + \frac{\partial}{\partial y}k\frac{\partial T^{n+1}}{\partial y} \right ) = \rho c_p T^{n}.\]</div>
+<span class="eqno">(142)<a class="headerlink" href="#equation-eq-fem-2d-transient-3" title="Link to this equation"></a></span>\[\rho c_p T^{n+1} - \Delta t \left( \frac{\partial}{\partial x} k\frac{\partial T^{n+1}}{\partial x} + \frac{\partial}{\partial y}k\frac{\partial T^{n+1}}{\partial y} \right ) = \rho c_p T^{n}.\]</div>
 <section id="fem-form">
-<h2>FEM form<a class="headerlink" href="#fem-form" title="Permalink to this heading"></a></h2>
+<h2>FEM form<a class="headerlink" href="#fem-form" title="Link to this heading"></a></h2>
 <p>Now we proceed in the usual way: insert the approximate solution using shape functions and use the Galerkin method:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-transient-weak">
-<span class="eqno">(143)<a class="headerlink" href="#equation-eq-fem-2d-transient-weak" title="Permalink to this equation"></a></span>\[\int_\Omega  \rho c_p N_i N_j T^{n+1}_j d\Omega -  \int_\Omega N_i  \Delta t \left ( \frac{\partial}{\partial x}k\frac{\partial N_j T^{n+1}_j }{\partial x} + N_i \frac{\partial}{\partial y}k\frac{\partial N_j T^{n+1}_j }{\partial y} \right ) d\Omega= \int_\Omega  \rho c_p N_i N_j T^{n}_j d\Omega   0\ \ \ \ \ \ \ i=1,2,...,n\]</div>
+<span class="eqno">(143)<a class="headerlink" href="#equation-eq-fem-2d-transient-weak" title="Link to this equation"></a></span>\[\int_\Omega  \rho c_p N_i N_j T^{n+1}_j d\Omega -  \int_\Omega N_i  \Delta t \left ( \frac{\partial}{\partial x}k\frac{\partial N_j T^{n+1}_j }{\partial x} + N_i \frac{\partial}{\partial y}k\frac{\partial N_j T^{n+1}_j }{\partial y} \right ) d\Omega= \int_\Omega  \rho c_p N_i N_j T^{n}_j d\Omega   0\ \ \ \ \ \ \ i=1,2,...,n\]</div>
 <p>and integrate the diffusion term by parts:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-transient-weak-v2">
-<span class="eqno">(144)<a class="headerlink" href="#equation-eq-fem-2d-transient-weak-v2" title="Permalink to this equation"></a></span>\[\int_\Omega  \rho c_p N_i N_j T^{n+1}_j d\Omega +  \int_\Omega \left ( \Delta t  \frac{\partial N_i}{\partial x}k\frac{\partial N_j T_j }{\partial x} + \frac{\partial N_i}{\partial y}k\frac{\partial N_j T_j }{\partial y} d\Omega \right ) d\Omega= \int_\Omega  \rho c_p N_i N_j T^{n}_j d\Omega  - \oint_{\Gamma} N_i \Delta t \vec{q}\vec{n}  d\Gamma\ \ \ \ \ \ \ i=1,2,...,n\]</div>
+<span class="eqno">(144)<a class="headerlink" href="#equation-eq-fem-2d-transient-weak-v2" title="Link to this equation"></a></span>\[\int_\Omega  \rho c_p N_i N_j T^{n+1}_j d\Omega +  \int_\Omega \left ( \Delta t  \frac{\partial N_i}{\partial x}k\frac{\partial N_j T_j }{\partial x} + \frac{\partial N_i}{\partial y}k\frac{\partial N_j T_j }{\partial y} d\Omega \right ) d\Omega= \int_\Omega  \rho c_p N_i N_j T^{n}_j d\Omega  - \oint_{\Gamma} N_i \Delta t \vec{q}\vec{n}  d\Gamma\ \ \ \ \ \ \ i=1,2,...,n\]</div>
 <p>We can proceed and write everything in terms of matrices:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-transient-weak-matrix">
-<span class="eqno">(145)<a class="headerlink" href="#equation-eq-fem-2d-transient-weak-matrix" title="Permalink to this equation"></a></span>\[\begin{split}\left( \rho c_p M  + \Delta t A  \right ) T^{n+1} =  \rho c_p M  T^{n} + BC \\\end{split}\]</div>
+<span class="eqno">(145)<a class="headerlink" href="#equation-eq-fem-2d-transient-weak-matrix" title="Link to this equation"></a></span>\[\begin{split}\left( \rho c_p M  + \Delta t A  \right ) T^{n+1} =  \rho c_p M  T^{n} + BC \\\end{split}\]</div>
 <p>With the matrices being define as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-fem-2d-transient-weak-matrix-v2">
-<span class="eqno">(146)<a class="headerlink" href="#equation-eq-fem-2d-transient-weak-matrix-v2" title="Permalink to this equation"></a></span>\[\begin{split}\begin{align}
+<span class="eqno">(146)<a class="headerlink" href="#equation-eq-fem-2d-transient-weak-matrix-v2" title="Link to this equation"></a></span>\[\begin{split}\begin{align}
 \begin{split}
 M &amp;= \int_\Omega N_i N_j  d\Omega \ \ \ \ \ \ \ i,j=1,2,...,n\\
 A &amp;= \int_\Omega \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j }{\partial x} + \frac{\partial N_i}{\partial y}k\frac{\partial N_j }{\partial y} d\Omega \right ) d\Omega\ \ \ \ \ \ \ i,j=1,2,...,n\\
@@ -210,15 +213,15 @@ A &amp;= \int_\Omega \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j 
 <p>The matrix <span class="math notranslate nohighlight">\(M\)</span> is called the mass matrix. The terms in brackets on the LHS of <a class="reference internal" href="#equation-eq-fem-2d-transient-weak-matrix">equation (145)</a> will become the new matrix that is assembled per element and added to the global stiffness matrix.</p>
 </section>
 <section id="implementation">
-<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this heading"></a></h2>
+<h2>Implementation<a class="headerlink" href="#implementation" title="Link to this heading"></a></h2>
 <p>We implement the transient behavior into our triangle script from the previous lecture. If you didn’t complete it, you can download it from here (<a class="reference download internal" download="" href="../_downloads/5ea8b5ce96749a30d75b2bcc04c7bd29/2d_fem_transient_triangle.py"><code class="xref download docutils literal notranslate"><span class="pre">2d_fem_transient_triangle.py</span></code></a>).</p>
 <p>We will have to make several changes to the code:</p>
 <section id="time-loop-and-output-writing">
-<h3>Time loop and output writing<a class="headerlink" href="#time-loop-and-output-writing" title="Permalink to this heading"></a></h3>
+<h3>Time loop and output writing<a class="headerlink" href="#time-loop-and-output-writing" title="Link to this heading"></a></h3>
 <p>For transient problems, we will need a time loop over all time steps and a way to store/visualize the evolving solution. So far, we have plotted only steady-state solutions that we could directly plot using <code class="code docutils literal notranslate"><span class="pre">matplotlib</span></code>. Now we will have to come up with a different strategy as we want to visualize and analyze the complete transient solution. One good way is to use the <code class="code docutils literal notranslate"><span class="pre">meshio</span></code> python package to save the solution in vtk format and to later analyze is using <a class="reference external" href="https://www.paraview.org">Paraview</a> If you don’t have paraview installed, no is the time ;)</p>
 <p>Here is a code snippit that illustrates the logic:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">Output writing.</span><a class="headerlink" href="#id1" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">Output writing.</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># mesh information</span>
 <span class="n">points</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">GCOORD</span><span class="p">,</span> <span class="n">GCOORD</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">0</span><span class="p">))</span> <span class="c1">#must have 3 components (x,y,z)</span>
 <span class="n">cells</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;triangle&quot;</span><span class="p">,</span><span class="n">EL2NOD</span><span class="p">)]</span>
@@ -250,10 +253,10 @@ A &amp;= \int_\Omega \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j 
 <p>Note also, that we don’t need the python plotting at the end of the script anymore.</p>
 </section>
 <section id="matrix-assembly">
-<h3>Matrix assembly<a class="headerlink" href="#matrix-assembly" title="Permalink to this heading"></a></h3>
+<h3>Matrix assembly<a class="headerlink" href="#matrix-assembly" title="Link to this heading"></a></h3>
 <p>If we look at <a class="reference internal" href="#equation-eq-fem-2d-transient-weak-matrix-v2">equation (146)</a>, we notice that we have to change the matrix assembly to 1) account for the mass matrix in the element stiffness matrix, and 2) to integrate the old temperatures into the force vector. This can be done like this:</p>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-number">Listing 3 </span><span class="caption-text">matrix assembly.</span><a class="headerlink" href="#id2" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 3 </span><span class="caption-text">matrix assembly.</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 4. compute element stiffness matrix</span>
 <span class="n">Ael</span>     <span class="o">=</span> <span class="n">Ael</span> <span class="o">+</span> <span class="p">(</span><span class="n">rho</span><span class="o">*</span><span class="n">cp</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span>  <span class="n">dt</span><span class="o">*</span><span class="n">Kel</span><span class="p">[</span><span class="n">iel</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">dNdx</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dNdx</span><span class="p">))</span><span class="o">*</span><span class="n">detJ</span><span class="o">*</span><span class="n">weights</span><span class="p">[</span><span class="n">ip</span><span class="p">]</span> <span class="c1"># [nnodel,1]*[1,nnodel] / weights are missing, they are 1</span>
 
@@ -264,7 +267,7 @@ A &amp;= \int_\Omega \left ( \frac{\partial N_i}{\partial x}k\frac{\partial N_j 
 </div>
 <p>Notice how the logic for the element thermal conductivity has changed - and that we need two additional physical parameters <span class="math notranslate nohighlight">\(\rho\)</span> and <span class="math notranslate nohighlight">\(c_p\)</span> .</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">Listing 4 </span><span class="caption-text">model parameters.</span><a class="headerlink" href="#id3" title="Permalink to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 4 </span><span class="caption-text">model parameters.</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rho</span>         <span class="o">=</span> <span class="mi">1</span>
 <span class="n">cp</span>          <span class="o">=</span> <span class="mi">1</span>
 
