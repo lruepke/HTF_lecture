@@ -116,7 +116,7 @@ Next we import the .png file from the :code:`geometry` folder and convert it to 
     import porespy as ps
     import os
 
-    impath = 'geometry/'         # image path
+    impath = './geometry'         # image path
     imname = 'porousModel.png'   # file name
 
     # 1. use PIL to load the image
