@@ -54,7 +54,9 @@ Download the case file, unzip it and copy it into your shared folder that is acc
 Code modifications and local Rayleigh number
 --------------------------------------------
 
-We have learned about "fluxibility" but let's go one step back and first think about the vigor of convection in general. The tendency of a fluid to convect and the vigor/regime of free convection is often expressed by a dimensionless number, the famous Rayleigh number, :math:`Ra`. It naturally shows up as the driving force of convection, when the governing equations are non-dimensionalized, or one can follow a more classic derivation. There is a good explanation on `wikipedia <https://en.wikipedia.org/wiki/Rayleigh_number>`_ . Formally :math:`Ra` is the ratio between the time scales of heat transport by diffusion and convection. 
+We have learned about "fluxibility" but let's go one step back and first think about the vigor of convection in general. The tendency of a fluid to convect and the vigor/regime of free convection is often expressed by a dimensionless number, the famous Rayleigh number, :math:`Ra`. It naturally shows up as the driving force of convection, when the governing equations are non-dimensionalized, or one can follow a more classic derivation. There is a good explanation on `wikipedia <https://en.wikipedia.org/wiki/Rayleigh_number>`_ .
+
+Formally :math:`Ra` is the ratio between the time scales of heat transport by diffusion and convection. 
 
 Let's have a quick look and do a quick dimensional analysis. Simple heat diffusion looks like this:
 
@@ -98,7 +100,7 @@ So the Rayleigh number is:
     Ra = \lvert \frac{\rho \Delta T \alpha g k L}{\kappa \mu} \rvert
 
 
-With this analysis in mind, we can check local Rayleigh numbers and what we expect is that right where the fluxibity is highest, we should also get high Rayleigh numbers indicating that the fluid wants to start convecting. The Rayleigh number derived above is a measure for the vigor of convection in the entire domain. We can follow :cite:`jupp2000thermodynamic` and derive a local Rayleigh number by relating convective and diffusive fluxes:
+With this analysis in mind, we probably expect that the local Rayleigh number is highest, where also the fluxibility is high. The Rayleigh number derived above is a measure for the vigor of convection in the entire domain. We can follow :cite:`jupp2000thermodynamic` and derive a local Rayleigh number by relating convective and diffusive fluxes:
 
 .. math::
     :label: eq:dim_ana_6

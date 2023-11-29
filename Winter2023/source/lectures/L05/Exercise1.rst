@@ -65,6 +65,11 @@ Take this notebook as a starting point and make nice looking plots for the other
 
 What happens when you chose a pressure below the critical pressure at 22.064 MPa?
 
+Fluxibility
+------------------------------------------
+
+Use the same notbook to make plots of fluxibility as a function of temperature for different pressures. Would we expect different vent temperatures as a function of depth of the driving heat source?
+
 
 .. tip:: Dangers and Annoyances
 
