@@ -1,16 +1,18 @@
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exercise 2: Fluxibility and Tvent &mdash; HydrothermalFoam Lecture  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=3d3fbe02" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -28,7 +30,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Exercise 3: Permeability and Tvent" href="Exercise3.html" />
-    <link rel="prev" title="Jupyter Notebook of water properties" href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" /> 
+    <link rel="prev" title="Thermodynamic properties of pure water" href="plot_water_properties.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -257,7 +259,7 @@
 <div class="math notranslate nohighlight" id="equation-eq-dim-ana-6">
 <span class="eqno">(38)<a class="headerlink" href="#equation-eq-dim-ana-6" title="Link to this equation"></a></span>\[Ra_L = \lvert \frac{\nabla \cdot (\vec{u} \rho h)}{\lambda \nabla^2 T} \rvert\]</div>
 <p>The convective energy transport, <span class="math notranslate nohighlight">\(\nabla \cdot (\vec{u} \rho h)\)</span> term is back! If you read <span id="id7">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> carefully, you find a dimensional analysis that shows that <span class="math notranslate nohighlight">\(Ra_L\)</span> becomes maximum where that transport term is maximum and we are back to the fluxibility concept.</p>
-<p>Enough theroy, let’s put this into a model. The compute local Rayleigh numbers, we have to add something to the code. There is a dynamic code section within <code class="code docutils literal notranslate"><span class="pre">system/conrolDict</span></code> that allows outputting more variables including the thermodynamic properties of water. Look how easy it is to evaluate the local convective and diffusive fluxes.</p>
+<p>Enough theory, let’s put this into a model. The compute local Rayleigh numbers, we have to add something to the code. There is a dynamic code section within <code class="code docutils literal notranslate"><span class="pre">system/conrolDict</span></code> that allows outputting more variables including the thermodynamic properties of water. Look how easy it is to evaluate the local convective and diffusive fluxes.</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">functions</span>
 <span class="linenos"> 2</span><span class="p">{</span>
 <span class="linenos"> 3</span>    <span class="n">calPlumeT</span>
@@ -293,12 +295,15 @@
 <span class="linenos">33</span><span class="p">}</span>
 </pre></div>
 </div>
-<p>That code block requires the specific enthalpy to be accessible by the code. The version of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> we are using does not have that activated. Therefore we need to update it to the newest version. Thankfully that’s easy to do; go into the docker container shell and</p>
+<div class="admonition-update-hydrothermalfoam admonition">
+<p class="admonition-title">Update hydrothermalFoam</p>
+<p>Some early version of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> did not have access to the specific enthalpy. If you get an error due to this, you can easily update to the latest version. Go into the docker container shell and</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>
 ./getHydrothermalFoam_latest.sh
 </pre></div>
 </div>
 <p>This will update the source code of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and recompile it. Just wait for it to complete. Now you can run the case!</p>
+</div>
 <p>It’s possible that we have been a bit overambitious in our chosen numerical resolution. In case the run-time is too long, just reduce the horizontal and vertical resolution. Make the mesh with <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> and call the solver; or execute the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script. If you are feeling courages today, you can also try our running it in parallel! Check out the <code class="code docutils literal notranslate"><span class="pre">run_par.sh</span></code> script for that.
 You can also shorten the total run-time (to say 40 yrs) in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>; we are mainly interested in the early stages anyway.</p>
 </section>
@@ -323,7 +328,7 @@ You can also shorten the total run-time (to say 40 yrs) in <code class="code doc
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="cases/Jupp_Schultz/jupyter/Plot_Lectures.html" class="btn btn-neutral float-left" title="Jupyter Notebook of water properties" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="plot_water_properties.html" class="btn btn-neutral float-left" title="Thermodynamic properties of pure water" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="Exercise3.html" class="btn btn-neutral float-right" title="Exercise 3: Permeability and Tvent" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

@@ -5,7 +5,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upflow temperature as a function of permeability (Driesner 2010) &mdash; HydrothermalFoam Lecture  documentation</title>
+  <title>Thermodynamic properties of pure water &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=3d3fbe02" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
@@ -29,8 +29,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Lecture overview" href="../L06/Overview.html" />
-    <link rel="prev" title="Exercise 3: Permeability and Tvent" href="Exercise3.html" /> 
+    <link rel="next" title="Exercise 2: Fluxibility and Tvent" href="Exercise2.html" />
+    <link rel="prev" title="Exercise 1: Fluid properties" href="Exercise1.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -100,17 +100,15 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1: Fluid properties</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Exercise1.html">Exercise 1: Fluid properties</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="Exercise1.html#fluid-properties-as-function-of-p-and-t">Fluid properties as function of p and T</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Thermodynamic properties of pure water</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise2.html">Exercise 2: Fluxibility and Tvent</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="Exercise3.html">Exercise 3: Permeability and Tvent</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="Exercise3.html#try-it-out">Try it out!</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Upflow temperature as a function of permeability (Driesner 2010)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="Exercise3.html#numerical-solution">Numerical solution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Exercise3.html#excercise">Excercise</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise3.html">Exercise 3: Permeability and Tvent</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
 <ul>
@@ -174,10 +172,10 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="Exercise3.html">Exercise 3: Permeability and Tvent</a></li>
-      <li class="breadcrumb-item active">Upflow temperature as a function of permeability (Driesner 2010)</li>
+          <li class="breadcrumb-item"><a href="Exercise1.html">Exercise 1: Fluid properties</a></li>
+      <li class="breadcrumb-item active">Thermodynamic properties of pure water</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L05/driesner_2010.ipynb" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L05/plot_water_properties.ipynb" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -455,123 +453,102 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<section id="Upflow-temperature-as-a-function-of-permeability-(Driesner-2010)">
-<h1>Upflow temperature as a function of permeability (Driesner 2010)<a class="headerlink" href="#Upflow-temperature-as-a-function-of-permeability-(Driesner-2010)" title="Link to this heading"></a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fminbound</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">iapws</span>
-<span class="n">IAPWS97_TCRIT</span> <span class="o">=</span> <span class="mf">647.096</span>  <span class="c1">#/* K */</span>
-<span class="n">IAPWS97_PCRIT</span> <span class="o">=</span> <span class="mf">22.064e6</span> <span class="c1">#/* Pa */</span>
-<span class="n">IAPWS97_RHOCRIT</span> <span class="o">=</span> <span class="mf">322.</span> <span class="c1">#/* kg/m³ */</span>
-<span class="n">IAPWS97_TTRIP</span> <span class="o">=</span> <span class="mf">623.15</span>
-<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span><span class="o">=</span> <span class="mi">300</span>
-</pre></div>
-</div>
-</div>
+<section id="Thermodynamic-properties-of-pure-water">
+<h1>Thermodynamic properties of pure water<a class="headerlink" href="#Thermodynamic-properties-of-pure-water" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># model parameters // iapws module has weird units (MPa vs Pa), be careful and always read the docs!</span>
-<span class="n">L</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># half-width of upflow zone [m]</span>
-<span class="n">P0</span> <span class="o">=</span> <span class="mi">30</span> <span class="c1"># mean pressure in upflow zonw [MPa]</span>
-<span class="n">Q0</span> <span class="o">=</span> <span class="mf">86e3</span> <span class="c1"># total heat flux per meter ridge axis [W/m]</span>
-<span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span> <span class="c1">#gravity</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span><span class="o">=</span> <span class="mi">300</span>
 
-<span class="c1"># parameter space</span>
-<span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">17</span><span class="p">,</span> <span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#reference values</span>
-<span class="n">tmp</span> <span class="o">=</span> <span class="n">iapws</span><span class="o">.</span><span class="n">IAPWS97</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="mi">5</span><span class="o">+</span><span class="mf">273.15</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="n">P0</span><span class="p">)</span>
-<span class="n">rho0</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">rho</span>
-<span class="n">h0</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">h</span><span class="o">*</span><span class="mi">1000</span> <span class="c1">#J/Kg</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide: the code in this cell is hidden by the author</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#  function to minimize</span>
-<span class="c1">#def heat_balance_minimize(T0, k):</span>
-<span class="c1">#    steam=iapws.IAPWS97(???) # note that the unit of input T is K, P is MPa</span>
-<span class="c1">#    return ???</span>
-<br/><br/></pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide: the code in this cell is hidden by the author</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Q0=86e3</span>
-<span class="c1">#T_U_86kw = np.empty(K.shape)</span>
-<span class="c1">#for id, k in enumerate(K):</span>
-<span class="c1">#    T_U_86kw[id] = fminbound(func=heat_balance_minimize,x1=5, x2=450,args=(k,), xtol=1e-06)</span>
-
-<span class="c1"># do this for 300kw/m and 12kw/m</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">T_U_12kw</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Q=12kW/m&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">T_U_86kw</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Q=86kW/m&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">T_U_300kw</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Q=300kW/m&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Permeability (m^2)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature (°C)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="c1"># import water properties</span>
+<span class="kn">import</span> <span class="nn">iapws</span>
 <br/></pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<p>You can find information about the water properties in the following link:</p>
+<p><a class="reference external" href="https://iapws.readthedocs.io/en/latest/modules.html">https://iapws.readthedocs.io/en/latest/modules.html</a></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x16afa6110&gt;
-</pre></div></div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Now compute properties for given pressure and temperature</span>
+
+<span class="c1"># pressure and temperature in MPa, and C</span>
+<span class="n">p</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="mi">300</span>
+
+<span class="c1">#compute properties</span>
+<span class="n">steam</span><span class="o">=</span><span class="n">iapws</span><span class="o">.</span><span class="n">IAPWS97</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="o">+</span><span class="mf">273.15</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="n">p</span><span class="p">)</span> <span class="c1"># note that iaapws uses temperature in K and pressure in MPa</span>
+
+<span class="c1">#format the output for printing</span>
+<span class="n">output_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:&lt;17}</span><span class="s2"> = </span><span class="si">{:&gt;10.2f}</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="n">viscosity_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:&lt;17}</span><span class="s2"> = </span><span class="si">{:&gt;10.2e}</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="n">output_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="s2">&quot;kg/m</span><span class="se">\u00B3</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">+</span>
+          <span class="n">output_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Specific heat&quot;</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">cp</span><span class="o">*</span><span class="mi">1000</span><span class="p">,</span> <span class="s2">&quot;J/(kg</span><span class="se">\u00B7</span><span class="s2">K)&quot;</span><span class="p">)</span> <span class="o">+</span>
+          <span class="n">viscosity_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Viscosity&quot;</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="s2">&quot;Pa</span><span class="se">\u00B7</span><span class="s2">s&quot;</span><span class="p">)</span> <span class="o">+</span>
+          <span class="n">output_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Specific enthalpy&quot;</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="s2">&quot;J/kg&quot;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/lectures_L05_driesner_2010_8_1.png" src="../../_images/lectures_L05_driesner_2010_8_1.png" />
+<div class="highlight"><pre>
+Density           =     757.72 kg/m³
+Specific heat     =    4990.59 J/(kg·K)
+Viscosity         =   9.47e-05 Pa·s
+Specific enthalpy =    1326.81 J/kg
+
+</pre></div></div>
+</div>
+<p>Now make plots of the fluid properties as a function of temperature and pressure.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># start easy and make a single plot of density vs temperature</span>
+<span class="n">T</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span> <span class="c1"># deg.C</span>
+<span class="n">P</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span> <span class="c1"># MPa</span>
+
+<span class="c1"># compute density</span>
+<span class="n">rho</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">T</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
+        <span class="n">steam</span><span class="o">=</span><span class="n">iapws</span><span class="o">.</span><span class="n">IAPWS97</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="mf">273.15</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">rho</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="n">steam</span><span class="o">.</span><span class="n">rho</span>
+
+<span class="c1"># plot</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">P</span><span class="p">)):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">rho</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1"> MPa&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Temperature (deg C)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Density (kg/m$^3$)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># save figure</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;density_pt.svg&#39;</span><span class="p">)</span>
+<br/></pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/lectures_L05_plot_water_properties_5_0.png" src="../../_images/lectures_L05_plot_water_properties_5_0.png" />
+</div>
+</div>
+<p>Make similar plots for specific heat, enthalpy, viscosity.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -586,8 +563,8 @@ div.rendered_html tbody tr:hover {
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Exercise3.html" class="btn btn-neutral float-left" title="Exercise 3: Permeability and Tvent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../L06/Overview.html" class="btn btn-neutral float-right" title="Lecture overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Exercise1.html" class="btn btn-neutral float-left" title="Exercise 1: Fluid properties" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Exercise2.html" class="btn btn-neutral float-right" title="Exercise 2: Fluxibility and Tvent" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

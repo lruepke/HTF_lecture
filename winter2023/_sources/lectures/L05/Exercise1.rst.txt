@@ -5,27 +5,66 @@
 Exercise 1: Fluid properties
 ============================
 
-We have prepared jupyter notebooks that let's you explore the thermodynamic properties of pure water. Play with them!
+Let's start by computing some properties of pure water as a function of pressure and temperature.
 
-.. figure:: /_figures/Properties_Water.*
+.. figure:: /_figures/density_pt.*
    :align: center
    :name: fig:Properties_Water
 
-   Water properties as a function of temperature and pressure, using python package of iapws_. Properties calculation details can be found in the :ref:`/lectures/L05/cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb#Properties-as-function-of-temperature` in the notebook.
+   Pure water density as a function of temperature and pressure. Plot was made using the python package of iapws_.
+
+
+
+We can use the python package iapws to compute the fluid properties. One way to do this is to call the IAPWS97 class and to specify the temperature and pressure. The class then returns a build-in datatype that holds all the properties.
+
+.. code-block:: python
+
+   import numpy as np
+   import matplotlib.pyplot as plt
+
+
+.. code-block:: python
+
+   # pressure and temperature in MPa, and C
+   p, T =35, 300
+
+   #compute properties
+   steam=iapws.IAPWS97(T=T+273.15, P=p) # note that iaapws uses temperature in K and pressure in MPa
+
+   #format the output for printing
+   output_format = "{:<17} = {:>10.2f} {}\n"
+   viscosity_format = "{:<17} = {:>10.2e} {}\n"
+
+   output = (output_format.format("Density", steam.rho, "kg/m\u00B3") +
+            output_format.format("Specific heat", steam.cp*1000, "J/(kg\u00B7K)") +
+            viscosity_format.format("Viscosity", steam.mu, "Pa\u00B7s") +
+            output_format.format("Specific enthalpy", steam.h, "J/kg"))
+
+   print(output)# import water properties
+
+.. code-block:: bash
+
+   Density           =     757.72 kg/m³
+   Specific heat     =    4990.59 J/(kg·K)
+   Viscosity         =   9.47e-05 Pa·s
+   Specific enthalpy =    1326.81 J/kg
+
+
+Fluid properties as function of p and T
+------------------------------------------
+
+Next we want to make plots of the fluid properties as a function of pressure and temperature. We can do this by looping over the pressure and temperature and computing the properties for each combination. We then store the properties and plot them.
+
+Take this notebook as a starting point and make nice looking plots for the other fluid properties such as viscosity, specific heat, and enthalpy. You can find the documentation of the iapws package here: https://iapws.readthedocs.io/en/latest/
 
 .. toctree::
     :maxdepth: 2
 
-    cases/Jupp_Schultz/jupyter/Plot_Lectures.ipynb
+    plot_water_properties.ipynb
 
 
-.. admonition:: Assignment
+What happens when you chose a pressure below the critical pressure at 22.064 MPa?
 
-   Try to get these notebooks to work and play a little bit with them. Explore how the values change under different P-T conditions and change the line plot to also show enthalpy. One way of doing this is to create a new notebook and to copy the code from above into them
-
-   .. code-block:: bash 
-
-      code plot_iapws_class.ipynb
 
 .. tip:: Dangers and Annoyances
 
