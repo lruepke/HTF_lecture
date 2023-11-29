@@ -7,7 +7,7 @@ Upflow temperatures in submarine hydrothermal systems
 
 During the last session we have explored free hydrothermal convection in a porous medium heated from below. That 2-D setting can be thought of as hydrothermal convection in an along axis slice above a stable melt lens - for example at a fast spreading ridge. Two things are striking about our initial results. First, in the homogenous permeability case, vent temperatures never exceed 400°C although the bottom boundary condition was set to 800°C. Shouldn't it be the hottest and most buoyant fluids that rise in free convection? Second, in the layered case, mixing at the interface to the higher permeability layer resulted in a reduction in vent temperature. What is controlling this reduction in the upwelling temperature?
 
-If we turn to observations to adress these question, we notice another striking feature of submarine hydrothermal systems. Global compilations of vent fluid exit temperatures demonstrate that these never exceed approx. 400°C (:numref:`fig:vent_T_fig` ). 
+If we turn to observations to adress these question, we notice another striking feature of submarine hydrothermal systems. Global compilations of vent fluid exit temperatures demonstrate that these rarely exceed approx. 400°C (:numref:`fig:vent_T_fig` ). 
 
 
 .. figure:: /_figures/vent_T_deoth.*
@@ -45,7 +45,7 @@ Now we plug this expression into :eq:`eq:div_e` to get:
     \nabla \cdot (\rho h \vec{U}) = -\frac{\partial}{\partial z} \left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right) g_z k
 
 
-The minus on the left-hand term is a bit irritating. We can continue by assuming that :math:`g=9.81`, so is positive. :cite:`jupp2000thermodynamic` called the term within the large brackets, :math:`F=\left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right)` , fluxibility. Fluxibility is a function of fluid properties only and those properties are pressure and temperature dependent. To first order, advective heat transport is maximized, where :math:`\nabla \cdot F` is maximum and this divergence can be approximated within the bottom thermal boundary as :math:`\nabla \cdot F \approx \frac{\partial}{\partial z} F \approx \frac{\partial}{\partial T} F` . 
+The minus on the left-hand term is a bit irritating. We can continue by assuming that :math:`g=9.81`, so is positive. :cite:`jupp2000thermodynamic` called the term within the large brackets, :math:`F=\left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right)` , fluxibility. Fluxibility is a function of fluid properties only and those properties are pressure and temperature dependent. To first order, advective heat transport is maximized, where :math:`\nabla \cdot F` is maximum and this divergence can be approximated within the bottom thermal boundary as :math:`\nabla \cdot F \approx \frac{\partial}{\partial z} F` and this term is to first-order proportional to :math:`\frac{\partial}{\partial T} F` . 
 
 
 :numref:`fig:Fluxibility_Water` a shows fluxibility as a function of pressure and temperature. It is clear that this function has a distinct peak at temperature of approximately 400°C. :numref:`fig:Fluxibility_Water` b shows sections of constant pressure and also the derivative of F with temperature. The peaks in these functions mark the temperature for which buoyant heat transport is most efficient for a given pressure. Later we will explore this further in numerical convection experiments.

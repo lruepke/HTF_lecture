@@ -18,10 +18,11 @@ Go back to our two-layered case and post-process the solution in paraview a bit 
    :align: center
    :name: fig:Flux_interface_fig
 
+   Vertical mass flux and temperature contours at the interface between the two layers.
 
 Clearly, mass flux is increasing and temperature is decreasing. What do you think is happening to the convective heat flux?
 
-We will now explore the interplay between permeability and bottom heat flux. The research question is: what kind of permeability is needed to sustain a high-temperature hydrothermal system? This question has been addressed by :cite:`driesner2010interplay`.
+We will now explore the interplay between permeability and bottom heat flux. The research question is: what kind of permeability is needed to sustain a high-temperature hydrothermal system? This question was addressed by :cite:`driesner2010interplay`.
 
 Let's first go through the theory. The flux into the reaction zone of hydrothermal convection cell can be written as:
 
