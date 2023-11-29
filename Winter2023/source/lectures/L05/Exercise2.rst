@@ -109,7 +109,7 @@ With this analysis in mind, we can check local Rayleigh numbers and what we expe
 The convective energy transport, :math:`\nabla \cdot (\vec{u} \rho h)` term is back! If you read :cite:`jupp2000thermodynamic` carefully, you find a dimensional analysis that shows that :math:`Ra_L` becomes maximum where that transport term is maximum and we are back to the fluxibility concept.
 
 
-Enough theroy, let's put this into a model. The compute local Rayleigh numbers, we have to add something to the code. There is a dynamic code section within :code:`system/conrolDict` that allows outputting more variables including the thermodynamic properties of water. Look how easy it is to evaluate the local convective and diffusive fluxes.
+Enough theory, let's put this into a model. The compute local Rayleigh numbers, we have to add something to the code. There is a dynamic code section within :code:`system/conrolDict` that allows outputting more variables including the thermodynamic properties of water. Look how easy it is to evaluate the local convective and diffusive fluxes.
 
 .. code-block:: foam
     :linenos:
@@ -149,14 +149,18 @@ Enough theroy, let's put this into a model. The compute local Rayleigh numbers, 
     }
 
 
-That code block requires the specific enthalpy to be accessible by the code. The version of |foam| we are using does not have that activated. Therefore we need to update it to the newest version. Thankfully that's easy to do; go into the docker container shell and
 
-.. code-block:: bash
+.. admonition:: Update hydrothermalFoam
 
-    cd $HOME
-    ./getHydrothermalFoam_latest.sh
+    Some early version of |foam| did not have access to the specific enthalpy. If you get an error due to this, you can easily update to the latest version. Go into the docker container shell and
 
-This will update the source code of |foam| and recompile it. Just wait for it to complete. Now you can run the case!
+    .. code-block:: bash
+
+        cd $HOME
+        ./getHydrothermalFoam_latest.sh
+
+    This will update the source code of |foam| and recompile it. Just wait for it to complete. Now you can run the case!
+
 
 It's possible that we have been a bit overambitious in our chosen numerical resolution. In case the run-time is too long, just reduce the horizontal and vertical resolution. Make the mesh with :code:`blockMesh` and call the solver; or execute the :code:`run.sh` script. If you are feeling courages today, you can also try our running it in parallel! Check out the :code:`run_par.sh` script for that.
 You can also shorten the total run-time (to say 40 yrs) in :code:`system/controlDict`; we are mainly interested in the early stages anyway. 
