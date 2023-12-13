@@ -242,14 +242,37 @@ cp<span class="w"> </span>-r<span class="w"> </span>/home/openfoam/hydrothermalf
 <img alt="../../_images/coord_sys.png" src="../../_images/coord_sys.png" />
 </figure>
 </div>
-<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="k">regions</span>
+<p>You can use the <code class="code docutils literal notranslate"><span class="pre">#calc</span></code> macro that we already used in the very first lecture to do the rotation. The <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> should contain line like this:</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="c1">// define variables</span>
+<span class="c1">// origin of rotated box</span>
+<span class="n">X0</span> <span class="mi">750</span><span class="p">;</span>
+<span class="n">Y0</span> <span class="o">-</span><span class="mi">2800</span><span class="p">;</span>
+<span class="n">Z0</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="n">width</span>  <span class="mi">100</span><span class="p">;</span> <span class="c1">//width of fault zone</span>
+<span class="n">height</span> <span class="mi">800</span><span class="p">;</span> <span class="c1">// distance to surface of box</span>
+<span class="n">angle</span> <span class="mi">60</span><span class="p">;</span>  <span class="c1">// degrees, counter-clockwise angle between x-axis and fault</span>
+
+<span class="c1">// Example using #calc macro</span>
+<span class="n">angleRadians</span>  <span class="err">#</span><span class="n">calc</span> <span class="s">&quot;degToRad($angle)&quot;</span><span class="p">;</span>  <span class="c1">// Convert angle to radians</span>
+
+<span class="c1">// input for rotatedBoxToCell</span>
+<span class="n">i0</span> <span class="o">???</span><span class="p">;</span>
+<span class="n">i1</span> <span class="o">???</span><span class="p">;</span>
+<span class="n">i2</span> <span class="o">???</span><span class="p">;</span>
+
+<span class="n">j0</span> <span class="o">???</span><span class="p">;</span>
+<span class="n">j1</span> <span class="o">???</span><span class="p">;</span>
+<span class="n">j2</span> <span class="o">???</span><span class="p">;</span>
+
+<span class="k">regions</span>
 <span class="p">(</span>
     <span class="n">rotatedBoxToCell</span>
     <span class="p">{</span>
         <span class="n">origin</span>   <span class="p">(</span> <span class="o">?</span> <span class="o">?</span> <span class="o">?</span><span class="p">);</span>
         <span class="n">i</span>        <span class="p">(</span> <span class="o">?</span> <span class="o">?</span> <span class="o">?</span><span class="p">);</span>
-        <span class="n">j</span>        <span class="p">(</span> <span class="o">?</span> <span class="o">?</span>  <span class="o">?</span><span class="p">);</span>
-        <span class="n">k</span>        <span class="p">(</span> <span class="o">?</span> <span class="o">?</span>  <span class="o">?</span><span class="p">);</span>
+        <span class="n">j</span>        <span class="p">(</span> <span class="o">?</span> <span class="o">?</span> <span class="o">?</span><span class="p">);</span>
+        <span class="n">k</span>        <span class="p">(</span> <span class="o">?</span> <span class="o">?</span> <span class="o">?</span><span class="p">);</span>
 
         <span class="k">fieldValues</span>
         <span class="p">(</span>
