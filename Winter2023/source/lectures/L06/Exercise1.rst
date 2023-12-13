@@ -42,7 +42,7 @@ Now we need to modify the case. These are the necessary steps:
 
 .. admonition:: Goals
 
-   - modify the mesh by chnanging :code:`blockMeshDict`
+   - modify the mesh by changing :code:`blockMeshDict`. Use something like 75 by 50 as the number of cells.
    - check that gravity is zero in :code:`constant/g`
    - update boundary conditions for pressure and temperature (and permeability)
    - use the :code:`setFields` utility and the controlling :code:`system/setFieldsDict` to modify the permeability structure
@@ -77,6 +77,13 @@ Now we need to modify the case. These are the necessary steps:
         );
 
     You can also play with different shapes, like cylinder or rotated box. Check the documentation!
+
+
+.. tip::
+
+    Check how :code:`0/permeability` looks before after you execute the :code:`setFields` utility. You will notice that permeability is now a list of scalars. The number of cells need to match the number of cells in the polyMesh, which was created by the blockMesh utility. A good practice is therefore to make a copy of the :code:`0/permeability` file before you run :code:`setFields`. You can then always go back to the original file. This is also why there is the :code:`cp 0/permeability.orig 0/permeability` statement in :code:`run.sh`.
+    
+    
 
 Step 3
 ------
