@@ -51,7 +51,32 @@ We can use the :code:`rotatedBoxToCell` function in the :code:`setFieldsDict` fo
         :figwidth: 40%
 
 
+You can use the :code:`#calc` macro that we already used in the very first lecture to do the rotation. The :code:`setFieldsDict` should contain line like this:
+
+
 .. code-block:: foam
+
+    // define variables
+    // origin of rotated box
+    X0 750;
+    Y0 -2800;
+    Z0 0;
+
+    width  100; //width of fault zone 
+    height 800; // distance to surface of box
+    angle 60;  // degrees, counter-clockwise angle between x-axis and fault
+
+    // Example using #calc macro
+    angleRadians  #calc "degToRad($angle)";  // Convert angle to radians
+
+    // input for rotatedBoxToCell
+    i0 ???;
+    i1 ???;
+    i2 ???;
+
+    j0 ???;
+    j1 ???;
+    j2 ???;
 
     regions
     (
@@ -59,8 +84,8 @@ We can use the :code:`rotatedBoxToCell` function in the :code:`setFieldsDict` fo
         {
             origin   ( ? ? ?);
             i        ( ? ? ?);
-            j        ( ? ?  ?);
-            k        ( ? ?  ?);
+            j        ( ? ? ?);
+            k        ( ? ? ?);
 
             fieldValues
             (
