@@ -238,7 +238,7 @@ cp<span class="w"> </span>-r<span class="w"> </span>/home/openfoam/hydrothermalf
 <div class="admonition-goals admonition">
 <p class="admonition-title">Goals</p>
 <ul class="simple">
-<li><p>modify the mesh by chnanging <code class="code docutils literal notranslate"><span class="pre">blockMeshDict</span></code></p></li>
+<li><p>modify the mesh by changing <code class="code docutils literal notranslate"><span class="pre">blockMeshDict</span></code>. Use something like 75 by 50 as the number of cells.</p></li>
 <li><p>check that gravity is zero in <code class="code docutils literal notranslate"><span class="pre">constant/g</span></code></p></li>
 <li><p>update boundary conditions for pressure and temperature (and permeability)</p></li>
 <li><p>use the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility and the controlling <code class="code docutils literal notranslate"><span class="pre">system/setFieldsDict</span></code> to modify the permeability structure</p></li>
@@ -268,6 +268,10 @@ cp<span class="w"> </span>-r<span class="w"> </span>/home/openfoam/hydrothermalf
 </pre></div>
 </div>
 <p>You can also play with different shapes, like cylinder or rotated box. Check the documentation!</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Check how <code class="code docutils literal notranslate"><span class="pre">0/permeability</span></code> looks before after you execute the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility. You will notice that permeability is now a list of scalars. The number of cells need to match the number of cells in the polyMesh, which was created by the blockMesh utility. A good practice is therefore to make a copy of the <code class="code docutils literal notranslate"><span class="pre">0/permeability</span></code> file before you run <code class="code docutils literal notranslate"><span class="pre">setFields</span></code>. You can then always go back to the original file. This is also why there is the <code class="code docutils literal notranslate"><span class="pre">cp</span> <span class="pre">0/permeability.orig</span> <span class="pre">0/permeability</span></code> statement in <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code>.</p>
 </div>
 </section>
 <section id="step-3">
