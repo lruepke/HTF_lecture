@@ -21,6 +21,7 @@ We can use the python package iapws to compute the fluid properties. One way to 
 
    import numpy as np
    import matplotlib.pyplot as plt
+   import iapws
 
 
 .. code-block:: python

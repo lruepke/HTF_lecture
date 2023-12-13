@@ -39,7 +39,7 @@ Now modify the case and setup the permeability structure. It should look like th
    Permeability structure of our detachment fault example cause.
 
 
-We can use the :code:`rotatedBoxToCell` function in the :code:`setFieldsDict` for this. Check the `openfoam documentation <https://cpp.openfoam.org/v3/a02202.html>`_ !
+We can use the :code:`rotatedBoxToCell` function in the :code:`setFieldsDict` for this. Check the `openfoam documentation <https://cpp.openfoam.org/v11/classFoam_1_1rotatedBoxToCell.html>`_ !
 
 .. tip::
 
