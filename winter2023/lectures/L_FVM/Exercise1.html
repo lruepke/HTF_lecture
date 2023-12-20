@@ -303,6 +303,10 @@ While the boundary faces only have <strong>owner</strong> attribute.
 The normal vector of face always points from the <strong>owner</strong> cell to the <strong>neighbour</strong> cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with the lower index to the cell with the larger index.</p>
 <p>You can find details on the mesh description in the <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v8-mesh-description/">OpenFoam manual</a>. Have a look at it and check the structure of the files in <code class="code docutils literal notranslate"><span class="pre">constantpolymesh</span></code>.</p>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Check your understanding of the openFoam mesh structure and topology by creating the blockMesh mesh for the case we have downloaded and visualizing it using paraview. To create the labels, use the GenerateIds filter in paraview.</p>
+</div>
 </section>
 </section>
 <section id="step-3-spatial-discretization-the-diffusion-term">
@@ -456,7 +460,7 @@ b_{C_{19}} &amp; =  &amp; a_{F_{18}} (T_{F_{18}} - T_C) + a_{F_{35}} (T_{F_{35}}
 </ol>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-matrix-form0">
 <span class="eqno">(70)<a class="headerlink" href="#equation-eq-fvm-matrix-form0" title="Link to this equation"></a></span>\[\begin{split}\begin{eqnarray}
--\sum\limits_{f\sim nb(C)} (D\nabla T)_{F_f}\cdot \vec{S}_{F_f} &amp; = &amp;  \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{C} + \left(-\sum\limits_{f\sim nb(C)} a_{F_f} \right)T_{F_f} + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{F_f}} \\
+-\sum\limits_{f\sim nb(C)} (D\nabla T)_{F_f}\cdot \vec{S}_{F_f} &amp; = &amp;  \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{C} + \left(-\sum\limits_{f\sim nb(C)} a_{F_f} T_{F_f} \right) + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{F_f}} \\
 &amp; = &amp; a_CT_C - \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{F_f} + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{f}}
 \end{eqnarray}\end{split}\]</div>
 <p>Matrix form of the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (53)</a> can be written as,</p>
