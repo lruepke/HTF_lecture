@@ -92,6 +92,9 @@ Therefore, the mesh topology shown below is the same as OpenFOAM polyMesh.
    You can find details on the mesh description in the `OpenFoam manual <https://cfd.direct/openfoam/user-guide/v8-mesh-description/>`_. Have a look at it and check the structure of the files in :code:`constant\polymesh`. 
 
 
+.. tip::
+   Check your understanding of the openFoam mesh structure and topology by creating the blockMesh mesh for the case we have downloaded and visualizing it using paraview. To create the labels, use the GenerateIds filter in paraview. 
+
 
 Step 3, Spatial discretization: The diffusion term
 ---------------------------------------------------
@@ -352,7 +355,7 @@ All faces of a internal cell are internal faces. The remain cells are boundary c
    :label: eq:fvm_matrix_form0
 
    \begin{eqnarray}
-   -\sum\limits_{f\sim nb(C)} (D\nabla T)_{F_f}\cdot \vec{S}_{F_f} & = &  \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{C} + \left(-\sum\limits_{f\sim nb(C)} a_{F_f} \right)T_{F_f} + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{F_f}} \\
+   -\sum\limits_{f\sim nb(C)} (D\nabla T)_{F_f}\cdot \vec{S}_{F_f} & = &  \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{C} + \left(-\sum\limits_{f\sim nb(C)} a_{F_f} T_{F_f} \right) + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{F_f}} \\
    & = & a_CT_C - \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{F_f} + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{f}}
    \end{eqnarray}
 
