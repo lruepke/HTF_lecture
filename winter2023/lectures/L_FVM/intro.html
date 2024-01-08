@@ -114,7 +114,18 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">FVM and OpenFoam</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FVM and OpenFoam</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-concept">Basic Concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-problem-heat-diffusion">Example problem: heat diffusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#geometry-and-governing-equations">Geometry and governing equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#domain-discretization">Domain discretization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mesh-structure-and-topology">Mesh structure and topology</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#spatial-discretization-the-diffusion-term">Spatial discretization: The diffusion term</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mesh-connectivity-and-internal-data-storage">Mesh connectivity and internal data storage</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Projects</span></p>
@@ -201,9 +212,258 @@
 }
 </style>
 <section id="fvm-and-openfoam">
-<h1>FVM and OpenFoam<a class="headerlink" href="#fvm-and-openfoam" title="Link to this heading"></a></h1>
-<p>OpenFOAM uses the finite volume method to solve the governing partial differential equations of a problem. In the following excercise, we will derive the FV form of the Laplance equation (transient heat diffusion) and look into the details of OpenFOAM sets up the coefficient matrix, how boundary conditions are numericaly set, and how the final matrix equation is solved.</p>
-<p>Most of the excercise is about theory and in lecture form. We do, however, provide jupyter notebooks in the end that allows reproducing the figures and checking the output of the modified Laplace solver against the derived values.</p>
+<span id="l-fvm-intro"></span><h1>FVM and OpenFoam<a class="headerlink" href="#fvm-and-openfoam" title="Link to this heading"></a></h1>
+<p>In the previous session, we have used openFoam to resolve hydrothermal convection in oceanic crust. In this lecture, we will have a deeper look into how openFoam solves the governing equations and how the numerical schemes work.</p>
+<p>OpenFoam uses the Finite Volume Method (FVM), which is a popular numerical technique used in computational fluid dynamics (CFD) and other areas of computational physics to solve partial differential equations (PDEs) that describe physical phenomena. It’s particularly well-suited for problems involving fluid flow, heat transfer, and associated physical processes. Here’s an overview of how FVM works:</p>
+<section id="basic-concept">
+<h2>Basic Concept<a class="headerlink" href="#basic-concept" title="Link to this heading"></a></h2>
+<p><strong>Domain Discretization</strong> The computational domain (the area or volume where the physical problem occurs) is divided into small, discrete control volumes (cells). These control volumes cover the entire domain without overlapping.</p>
+<p><strong>Integral Form of PDEs</strong> FVM operates on the integral form of the governing PDEs, as opposed to the differential form used in methods like the Finite Difference Method (FDM). The equations are integrated over each control volume.</p>
+<p><strong>Flux Calculations</strong> The key aspect of FVM is the calculation of fluxes of the conserved quantities like mass, momentum, energy across the faces of each control volume. These fluxes are used to determine how these quantities change within each control volume over time.</p>
+<p><strong>Boundary Conditions</strong> The method also incorporates boundary conditions, which define how the field behaves at the boundaries of the computational domain.</p>
+<p>The general workflow in FVM is the following: Represent the variables like velocity, pressure, temperature at discrete locations in each control volume - either at the cell centers or at the cell faces. The integral form of the governing PDEs is discretized for each control volume. This involves expressing the rate of change of a quantity in a control volume in terms of the fluxes through its faces. The fluxes through the control volume faces are approximated using values of the variables at the centers or faces of the cells. Various schemes like upwind and central difference can be used for this approximation. The discretized equations form a system of algebraic equations. These equations are solved iteratively to find the field values (like pressure, velocity, etc.) throughout the domain. For steady-state problems, iterations continue until the solution converges. For transient problems, the solution is marched forward in time, updating the variables at each time step. One key advantage of the FVM is that it ensures conservation of physical quantities locally (in each control volume) and globally (across the entire domain); it can further handle complex geometries and irregular meshes. In summary, FVM is a versatile and powerful tool for solving complex physical problems numerically.</p>
+<p>Openfoam uses what is called a cell-centered finite volume method. This means that the variables are stored at the center of the cells. The fluxes are calculated at the cell faces. The fluxes are then used to update the variables at the cell centers.</p>
+</section>
+<section id="example-problem-heat-diffusion">
+<h2>Example problem: heat diffusion<a class="headerlink" href="#example-problem-heat-diffusion" title="Link to this heading"></a></h2>
+<p>Let’s look at an example problem that solves for temperature diffusion, using the laplacianFoam solver.</p>
+</section>
+<section id="geometry-and-governing-equations">
+<h2>Geometry and governing equations<a class="headerlink" href="#geometry-and-governing-equations" title="Link to this heading"></a></h2>
+<p>The governing equation is the heat diffusion equation, which is given by:</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-laplacian-con">
+<span class="eqno">(48)<a class="headerlink" href="#equation-eq-fvm-laplacian-con" title="Link to this equation"></a></span>\[\rho c_p\frac{\partial T}{\partial t} - \nabla \cdot k \nabla T = 0\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-laplacian-dif">
+<span class="eqno">(49)<a class="headerlink" href="#equation-eq-fvm-laplacian-dif" title="Link to this equation"></a></span>\[\frac{\partial T}{\partial t} - \nabla \cdot D \nabla T =0\]</div>
+<p><span class="math notranslate nohighlight">\(k\)</span> is the thermal conductivity and <span class="math notranslate nohighlight">\(D\)</span> is the thermal diffusivity <span class="math notranslate nohighlight">\(\frac{k}{\rho c_p}\)</span> . We here assume that <span class="math notranslate nohighlight">\(D\)</span> is a constant value. See also <a class="reference internal" href="../L01/FirstCase.html#theory-heat-diffusion"><span class="std std-ref">Theory</span></a>.</p>
+<p>Below is a simple 2D setup for a heat diffusion test case. We will use it to learn about the details of how openFOAM’s FV method works.</p>
+<figure class="align-center" id="fvm-geometry-bcs-regularbox" style="width: 100%">
+<img alt="../../_images/boundaryConditions_FVM_regularBox.svg" src="../../_images/boundaryConditions_FVM_regularBox.svg" /><figcaption>
+<p><span class="caption-number">Fig. 39 </span><span class="caption-text">Model geometry, boundary conditions and initial condition.</span><a class="headerlink" href="#fvm-geometry-bcs-regularbox" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition-what-we-need-to-solve admonition">
+<p class="admonition-title">What we need to solve ?</p>
+<p>Temperature field <span class="math notranslate nohighlight">\(T\)</span> of the model region at time <span class="math notranslate nohighlight">\(t\)</span>,
+therefore <span class="math notranslate nohighlight">\(T\)</span> is the only unknown variable of our problem. It is a scalar field at the center of each cell.</p>
+</div>
+</section>
+<section id="domain-discretization">
+<h2>Domain discretization<a class="headerlink" href="#domain-discretization" title="Link to this heading"></a></h2>
+<section id="mesh-structure-and-topology">
+<h3>Mesh structure and topology<a class="headerlink" href="#mesh-structure-and-topology" title="Link to this heading"></a></h3>
+<p>We can use a simple blockMesh to discretize our domain. You can download a prepared case here: <a class="reference download internal" download="" href="../../_downloads/182fc0c7918b295146e8ff66ee704105/regularBox.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>.</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Regular mesh</label><div class="tab-content docutils container">
+<figure class="align-center" id="fig-polymesh-regularbox" style="width: 100%">
+<img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" /><figcaption>
+<p><span class="caption-number">Fig. 40 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#fig-polymesh-regularbox" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Unstructured mesh</label><div class="tab-content docutils container">
+<figure class="align-center" id="fig-polymesh-unstructured" style="width: 100%">
+<img alt="../../_images/mesh_FVM_unstructured.svg" src="../../_images/mesh_FVM_unstructured.svg" /><figcaption>
+<p><span class="caption-number">Fig. 41 </span><span class="caption-text">2D unstructured mesh topology information (<a class="reference download internal" download="" href="../../_downloads/511a4a1fe2a54b529f96db7ce8318cd3/unstructured.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</span><a class="headerlink" href="#fig-polymesh-unstructured" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<p>The mesh comprises cell centers, cell faces, and cell vertices. The cell centers are the points where the temperature field is stored. The cell faces are the boundaries of the cells. The cell vertices are the points that define the cell faces. Notice how the internal faces (the ones that are not boundary conditions) are numbered continuously starting from 0.</p>
+<p>In addition, a connectivity is needed to describe the topology of the mesh. This connectivity describes which cells are connected to each other through the faces. In openFoam a highly efficent data structure is used to store the connectivity information. For each face, the <strong>owner</strong> cell and the <strong>neighbour</strong> cell are stored. The normal vector of face always points from the owner cell to the neighbour cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with the lower index to the cell with the larger index. Boundary faces  have only an <strong>owner</strong> cell.</p>
+<p>You can find details on the mesh description in the <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v8-mesh-description/">OpenFoam manual</a>. Have a look at it and check the structure of the files in <code class="code docutils literal notranslate"><span class="pre">constant/polymesh</span></code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Check your understanding of the openFoam mesh structure and topology by creating the blockMesh mesh for the case we have downloaded and visualizing it using paraview. To create the labels, use the GenerateIds filter in paraview.</p>
+</div>
+</section>
+</section>
+<section id="spatial-discretization-the-diffusion-term">
+<h2>Spatial discretization: The diffusion term<a class="headerlink" href="#spatial-discretization-the-diffusion-term" title="Link to this heading"></a></h2>
+<p>The equation discretization step is performed over each element of the computational domain to yield an algebraic relation that connects the value of a variable in an element to the values of the variable in the neighboring elements <span id="id1">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>.</p>
+<div class="admonition-goal admonition">
+<p class="admonition-title">Goal</p>
+<p>Transform partial differential <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">equation (49)</a> into a set of algebraic equations: <span class="math notranslate nohighlight">\(\mathbf{A} T = \mathbf{b}\)</span>.</p>
+</div>
+<ol class="arabic simple">
+<li><p>Integrate <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">equation (49)</a> over element <span class="math notranslate nohighlight">\(C\)</span> (the green cell in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>) that enables recovering its integral balance form as,</p></li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-volume-int">
+<span class="eqno">(50)<a class="headerlink" href="#equation-eq-fvm-volume-int" title="Link to this equation"></a></span>\[\iiint\limits_{V_C} \frac{\partial T}{\partial t} dV - \iiint\limits_{V_C} \nabla \cdot D\nabla T dV = 0\]</div>
+<p><strong>Note</strong> that the transient term <span class="math notranslate nohighlight">\(\iiint\limits_{V_C} \frac{\partial T}{\partial t} dV\)</span> will be processed in the later section. Let’s set it to zero for the moment and assume steady-state.</p>
+<ol class="arabic simple" start="2">
+<li><p>Transform the volume integral of the heat flux into a surface integral by applying the divergence theorem,</p></li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-surface-int">
+<span class="eqno">(51)<a class="headerlink" href="#equation-eq-fvm-surface-int" title="Link to this equation"></a></span>\[- \iiint\limits_{V_C} \nabla \cdot D\nabla T dV = -\oint\limits_{\partial V_C} (D\nabla T)\cdot d\vec{S} = 0\]</div>
+<p>The <a class="reference internal" href="#equation-eq-fvm-surface-int">equation (51)</a> is actually a heat balance over cell <span class="math notranslate nohighlight">\(C\)</span>.
+It is basically the integral form of the original partial differential equation and involves <strong>no approximation</strong>.</p>
+<p>The integrant is the <strong>diffusive heat flux</strong>,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-flux-d">
+<span class="eqno">(52)<a class="headerlink" href="#equation-eq-fvm-flux-d" title="Link to this equation"></a></span>\[\vec{J}^{T,D} \equiv -D\nabla T\]</div>
+<ol class="arabic simple" start="3">
+<li><p>Transform the surface integral in <a class="reference internal" href="#equation-eq-fvm-surface-int">equation (51)</a> as a summation over the control volume faces (<strong>still no approximation</strong>),</p></li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-surface-sum">
+<span class="eqno">(53)<a class="headerlink" href="#equation-eq-fvm-surface-sum" title="Link to this equation"></a></span>\[\sum\limits_{f\sim faces(V_C)} \iint\limits_{f}\vec{J}^{T,D}_f \cdot d\vec{S}_f =0\]</div>
+<p>Here <span class="math notranslate nohighlight">\(f\)</span> denotes the boundary face of cell <span class="math notranslate nohighlight">\(V_C\)</span>.</p>
+<p>Now, the key problem is how to calculate flux integral on a face.</p>
+<ol class="arabic simple" start="4">
+<li><p>Evaluating flux integral on the faces</p></li>
+</ol>
+<p>It’s worth noting that there are only two kinds of cells in the discretized domain, one is <strong>internal cell</strong>, the other is <strong>boundary cell</strong>.
+All faces of a internal cell are internal faces. The remain cells are boundary cells which contain at least one boundary face.</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--1">Internal cell</label><div class="tab-content docutils container">
+<p>For a specific internal cell <span class="math notranslate nohighlight">\(C\)</span>, e.g. cell 12, shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>,
+the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (53)</a> can be expanded as,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-surface-sum-expand">
+<span class="eqno">(54)<a class="headerlink" href="#equation-eq-fvm-surface-sum-expand" title="Link to this equation"></a></span>\[\color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} + \iint_{f_{24}}\vec{J}^{T,D}_{f_{24}} \cdot \vec{S}_{f_{24}} + \iint_{f_{21}}\vec{J}^{T,D}_{f_{21}} \cdot \vec{S}_{f_{21}}  + \iint_{f_{5}}\vec{J}^{T,D}_{f_{5}} \cdot \vec{S}_{f_{5}} = 0\]</div>
+<p>Note that the surface normals <span class="math notranslate nohighlight">\(\vec{S}\)</span> always point out of the cell; for example, <span class="math notranslate nohighlight">\(\vec{S}_{f_{23}}\)</span> would have a positive and <span class="math notranslate nohighlight">\(\vec{S}_{f_{21}}\)</span> a negative sign.</p>
+<p>4.1 Considering face <span class="math notranslate nohighlight">\(f_{23}\)</span>, calculate the first term on the right hand side of the <a class="reference internal" href="#equation-eq-fvm-surface-sum-expand">equation (54)</a> (we have to introduce the <strong>first approximation</strong> at this step). Using a Gaussian quadrature the integral at the face <span class="math notranslate nohighlight">\(f_{23}\)</span>, for example, becomes,</p>
+<div class="math notranslate nohighlight" id="equation-fvm-flux-gaussian-integral">
+<span class="eqno">(55)<a class="headerlink" href="#equation-fvm-flux-gaussian-integral" title="Link to this equation"></a></span>\[\color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} = \iint_{f_{23}} (\vec{J}^{T,D}_{f_{23}} \cdot \vec{n}_{f_{23}}) dS_{f_{23}} \approx \color{orange}{\sum\limits_{ip\sim ip(f_{23})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega_{ip} S_{f_{23}}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(S_f\)</span> is the area of face <span class="math notranslate nohighlight">\(f_{23}\)</span>, <span class="math notranslate nohighlight">\(ip\)</span> refers to a integration point and <span class="math notranslate nohighlight">\(ip(f_{23})\)</span> the number of integration points along surface <span class="math notranslate nohighlight">\(f_{23}\)</span>, <span class="math notranslate nohighlight">\(\omega_{ip}\)</span> is the integral weights.</p>
+<figure class="align-center" id="fig-fig5-2">
+<a class="reference internal image-reference" href="../../_images/Fig5.2_RedBook.svg"><img alt="../../_images/Fig5.2_RedBook.svg" src="../../_images/Fig5.2_RedBook.svg" width="100%" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 42 </span><span class="caption-text">Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points <span id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The total flux <span class="math notranslate nohighlight">\(FluxT_f\)</span> is computed as linear combinations of the two cell values plus a source term.</span><a class="headerlink" href="#fig-fig5-2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Only the <strong>one integration point scheme</strong>, i.e. <a class="reference internal" href="#fig-fig5-2"><span class="std std-numref">Fig. 42</span></a> (a), is implemented in OpenFOAM (at least before version 8).
+Therefore the first keyword of Laplacian scheme in <code class="code docutils literal notranslate"><span class="pre">system/fvScheme</span></code> dictionary file of a case has only one option, it is <code class="code docutils literal notranslate"><span class="pre">Gauss</span></code>.</p>
+</div>
+<p>4.2 Choose integral scheme or integral points</p>
+<p>To simply explain the calculation process/logic and to also be consistent with OpenFOAM, we here adopt an <strong>one integration point</strong> scheme with weight <span class="math notranslate nohighlight">\(\omega = 1\)</span>, thus <a class="reference internal" href="#equation-fvm-flux-gaussian-integral">equation (55)</a> becomes,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-surface-term-f1">
+<span class="eqno">(56)<a class="headerlink" href="#equation-eq-fvm-surface-term-f1" title="Link to this equation"></a></span>\[\color{orange}{\sum\limits_{ip\sim ip(f_{23})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = -\left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{23}} \cdot \Delta y_{f_{23}} \vec{i} = -\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}}\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(S_{f_{23}} = \Delta y_{f_{23}}\)</span>  is the area of face  <span class="math notranslate nohighlight">\(f_{23}\)</span> by assuming <span class="math notranslate nohighlight">\(\Delta z = 1\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{S}_{f_{23}} = S_{f_{23}} \vec{n}_{f_{23}}\)</span> is the surface vector of face <span class="math notranslate nohighlight">\(f_{23}\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{n}_{f_{23}} = \vec{i}\)</span> is the normal vector of the face <span class="math notranslate nohighlight">\(f_{23}\)</span> directed out of the cell <span class="math notranslate nohighlight">\(C\)</span> (see <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>).</p></li>
+</ul>
+<p>4.3 Calculate gradient of <span class="math notranslate nohighlight">\(T\)</span> at face centroid, here introduce <strong>the second approximation</strong>, e.g. assuming linear variation of T and then the gradient term in the <a class="reference internal" href="#equation-eq-fvm-surface-term-f1">equation (56)</a> can be approximated as,</p>
+<div class="math notranslate nohighlight">
+\[-\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{23}} \Delta y_{f_{23}}} = -D\frac{T_{13} - T_{C}}{x_{13} - x_C}\Delta y_{f_{23}} = -\frac{D \Delta y_{f_{23}}}   {\delta x_{f_{23}}}   (T_{13} - T_{C})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta x_{f_{23}}\)</span> represents the distance between center of cells who share face <span class="math notranslate nohighlight">\(f_{23}\)</span>, they are cell 12 and cell 13.</p>
+<p>Now let’s look at the western face <span class="math notranslate nohighlight">\(f_{21}\)</span> . Using a single integration point, we can again write:</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-surface-term-f1-west">
+<span class="eqno">(57)<a class="headerlink" href="#equation-eq-fvm-surface-term-f1-west" title="Link to this equation"></a></span>\[\color{orange}{\sum\limits_{ip\sim ip(f_{21})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = -\left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{21}} \cdot \Delta y_{f_{21}} \cdot-\vec{i} = \color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{21}} \Delta y_{f_{21}}}\]</div>
+<p>Notice how the surface normal now has the opposite sign!</p>
+<p>We continue to spell out the flux across face <span class="math notranslate nohighlight">\(f_{21}\)</span> as:</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{21}} \Delta y_{f_{21}}} = D\frac{T_{C} - T_{11}}{x_{11} - x_C}\Delta y_{f_{21}} = -\frac{D \Delta y_{f_{21}}}   {\delta x_{f_{21}}}   (T_{11} - T_{C})\]</div>
+</div></blockquote>
+<p>Do the same thing for the remain faces (<span class="math notranslate nohighlight">\(f_5, f_{24}\)</span>).</p>
+<p>4.3 Construct coefficients of a specific cell <span class="math notranslate nohighlight">\(C_{12}\)</span></p>
+<p>Now we get all the coefficients, thus the <a class="reference internal" href="#equation-eq-fvm-surface-sum-expand">equation (54)</a> can be discretized and expressed as a matrix form,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-matrix-form-internalcell">
+<span class="eqno">(58)<a class="headerlink" href="#equation-eq-fvm-matrix-form-internalcell" title="Link to this equation"></a></span>\[a_{C} T_C + a_{F_{23}} T_{F_{23}} + a_{F_{24}} T_{F_{24}} + a_{F_{21}} T_{F_{21}} + a_{F_{5}} T_{F_{5}} = 0\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{eqnarray}
+a_{23} &amp; = &amp;  -\frac{D \Delta y_{f_{23}}}   {\delta x_{f_{23}}} \\
+a_{24} &amp; = &amp;  -\frac{D \Delta y_{f_{24}}}   {\delta x_{f_{24}}} \\
+a_{21} &amp; = &amp;  -\frac{D \Delta y_{f_{21}}}   {\delta x_{f_{21}}} \\
+a_{5} &amp; = &amp;  -\frac{D \Delta y_{f_{5}}}   {\delta x_{f_{5}}} \\
+a_{C} &amp; = &amp; -(a_{23} + a_{24} + a_{21}  + a_{5}) \\
+\end{eqnarray}\end{split}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-matrix-form-internalcell12">
+<span class="eqno">(59)<a class="headerlink" href="#equation-eq-fvm-matrix-form-internalcell12" title="Link to this equation"></a></span>\[\mathbf{A}_{N\times N}[12,:] \mathbf{T}_{N\times 1} =  0\]</div>
+</div>
+<input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--2">Boundary cell</label><div class="tab-content docutils container">
+<p>For a specific boundary cell, e.g. <strong>cell 19</strong> shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>, the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (53)</a> can be rewritten as,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-surface-sum-expand-boundary">
+<span class="eqno">(60)<a class="headerlink" href="#equation-eq-fvm-surface-sum-expand-boundary" title="Link to this equation"></a></span>\[\iint_{f_{18}}\vec{J}^{T,D}_{f_{18}} \cdot \vec{S}_{f_{18}} + \iint_{f_{35}}\vec{J}^{T,D}_{f_{35}} \cdot \vec{S}_{f_{35}} +\iint_{f_{37}}\vec{J}^{T,D}_{f_{37}} \cdot \vec{S}_{f_{37}} + \color{red}{\iint_{f_{51}}\vec{J}^{T,D}_{f_{51}} \cdot \vec{S}_{f_{51}}} = 0\]</div>
+<p>The first three terms are normal fluxes across internal faces, so there is nothing special and we can just calculate them following steps for internal faces as before. The special thing is the boundary face <span class="math notranslate nohighlight">\(f_{52}\)</span>, we can call it <span class="math notranslate nohighlight">\(f_b\)</span> for a general case. <strong>Now the problem is how to evaluate flux on the boundary face</strong> <span class="math notranslate nohighlight">\(f_b\)</span>.</p>
+<p>The fluxes on the interior faces are discretized as before, while <strong>the boundary flux is discretized with the aim of constructing a linearization with respect to</strong> the cell field <span class="math notranslate nohighlight">\(T_C\)</span>, e.g. <span class="math notranslate nohighlight">\(T_{C_{19}}\)</span> of cell <span class="math notranslate nohighlight">\(C_{19}\)</span> shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>, thus</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-surface-flux-boundary">
+<span class="eqno">(61)<a class="headerlink" href="#equation-eq-fvm-surface-flux-boundary" title="Link to this equation"></a></span>\[\color{red}{\iint_{f_{b}}\vec{J}^{T,D}_{f_{b}} \cdot d\vec{S}_{f_{b}}} = a_{F_b} T_C + c_{F_b}\]</div>
+<p>All right, <strong>now out goal is to determine the coefficients of</strong> <span class="math notranslate nohighlight">\(a_{F_b}\)</span> and <span class="math notranslate nohighlight">\(c_{F_b}\)</span> according to the boundary conditions. Generally there are two basic kinds of boundary conditions, they are <strong>Dirichlet boundary condition</strong> (also called the first type or fixed value boundary condition) and <strong>Von Neumann boundary condition</strong> (all called the second type or fixed flux boundary condition), respectively.</p>
+<p>4.1 Fixed value boundary condition</p>
+<p>Fixed value means the value of field <span class="math notranslate nohighlight">\(T\)</span> is given on the boundary face is give, i.e. <span class="math notranslate nohighlight">\(\color{purple}{T_{f_b}}\)</span> is given. There fore we can calculate flux on boundary face, <span class="math notranslate nohighlight">\(f_{51}\)</span> for example,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-flux-boundary">
+<span class="eqno">(62)<a class="headerlink" href="#equation-eq-fvm-flux-boundary" title="Link to this equation"></a></span>\[\color{red}{\iint_{f_{51}}\vec{J}^{T,D}_{f_{51}} \cdot \vec{S}_{f_{51}}} = \iint_{f_{51}} (\vec{J}^{T,D}_{f_{51}} \cdot \vec{n}_{f_{51}}) dS_{f_{51}} \approx \color{orange}{\sum\limits_{ip\sim ip(f_{51})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega_{ip} S_{f_{51}}}\]</div>
+<p>Here we still use one integration point scheme to explain the calculation process,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-flux-gaussian-integral-boundary">
+<span class="eqno">(63)<a class="headerlink" href="#equation-eq-fvm-flux-gaussian-integral-boundary" title="Link to this equation"></a></span>\[\color{orange}{\sum\limits_{ip\sim ip(f_{51})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega S_f } = -\left(D \frac{\partial T}{\partial x} \vec{i} + D\frac{\partial T}{\partial y} \vec{j} \right)_{f_{51}} \cdot \Delta y_{f_{51}} \vec{i} = -\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{51}} \Delta y_{f_{51}}}\]</div>
+<p>Now let’s calculate the gradient on the boundary face,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-gradient-boundary">
+<span class="eqno">(64)<a class="headerlink" href="#equation-eq-fvm-gradient-boundary" title="Link to this equation"></a></span>\[-\color{blue}{\left( D\frac{\partial T}{\partial x} \right)_{f_{51}} \Delta y_{f_{51}}} = -D\frac{\color{purple}{T_{f_{51}}} - T_{C}}{x_{f_{51}} - x_C}\Delta y_{f_{51}} = -\frac{D \Delta y_{f_{51}}}{\delta x_{f_{51}}}(\color{purple}{T_{f_{51}}} - T_{C}) = a_{f_{51}}(-T_{C}) +  c_{f_{51}}\]</div>
+<p>Substituting <a class="reference internal" href="#equation-eq-fvm-gradient-boundary">equation (64)</a> back to  <a class="reference internal" href="#equation-eq-fvm-flux-gaussian-integral-boundary">equation (63)</a>, <a class="reference internal" href="#equation-eq-fvm-flux-boundary">equation (62)</a> and  <a class="reference internal" href="#equation-eq-fvm-surface-flux-boundary">equation (61)</a>, we can get Laplacian discretization coefficients <span class="math notranslate nohighlight">\(a_{f_{51}}\)</span> and <span class="math notranslate nohighlight">\(c_{f_{51}}\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">
+<span class="eqno">(65)<a class="headerlink" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue" title="Link to this equation"></a></span>\[\begin{split}\begin{eqnarray}
+a_{F_{51}} &amp;=&amp; -D\frac{\Delta y_{f_{51}}}{\delta x_{f_{51}}}\\
+c_{F_{51}} &amp;=&amp; a_{F_{51}}\color{purple}{T_{f_{51}}}
+\end{eqnarray}\end{split}\]</div>
+<p>Notice how <span class="math notranslate nohighlight">\(\color{purple}{T_{f_{51}}}\)</span> is known (a boundary condition), so that the term <span class="math notranslate nohighlight">\(-a_{F_{51}}\color{purple}{T_{f_{51}}}\)</span> will end up on the right-hand side and not in the coefficient matrix.</p>
+<p>4.2 Fixed flux boundary condition</p>
+<p><strong>Fixed flux</strong> means <strong>normal gradient to the boundary face</strong> of field <span class="math notranslate nohighlight">\(T\)</span> is given, i.e. <span class="math notranslate nohighlight">\(\color{purple}{\vec{J}^{T,D}_{f_{b}} \cdot \vec{n}_{f_{b}} = q_{f_b}}\)</span> is given. There fore we can calculate flux on boundary face, <span class="math notranslate nohighlight">\(f_{51}\)</span> for example,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-fixedflux-boundary">
+<span class="eqno">(66)<a class="headerlink" href="#equation-eq-fvm-fixedflux-boundary" title="Link to this equation"></a></span>\[\color{red}{\iint_{f_{51}}\vec{J}^{T,D}_{f_{51}} \cdot \vec{S}_{f_{51}}} = \iint_{f_{51}} (\vec{J}^{T,D}_{f_{51}} \cdot \vec{n}_{f_{51}}) dS_{f_{51}} = \iint_{f_{51}} \color{purple}{q_{f_{51}}} dS_{f_{51}} = \color{purple}{q_{f_{51}}} S_{f_{51}} = \color{purple}{q_{f_{51}}} \Delta y_{f_{51}}\]</div>
+<p>Substituting <a class="reference internal" href="#equation-eq-fvm-fixedflux-boundary">equation (66)</a> back to <a class="reference internal" href="#equation-eq-fvm-surface-flux-boundary">equation (61)</a>, we can get Laplacian discretization coefficients <span class="math notranslate nohighlight">\(a_{f_{51}}\)</span> and <span class="math notranslate nohighlight">\(c_{f_{51}}\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-laplacian-coeff-boundary-fixedflux">
+<span class="eqno">(67)<a class="headerlink" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedflux" title="Link to this equation"></a></span>\[\begin{split}\begin{eqnarray}
+a_{F_{51}} &amp;=&amp; 0 \\
+c_{F_{51}} &amp;=&amp; \color{purple}{q_{f_{51}}} \Delta y_{f_{51}}
+\end{eqnarray}\end{split}\]</div>
+<p>4.3 Construct coefficients of the boundary cell <span class="math notranslate nohighlight">\(C_{19}\)</span></p>
+<p>Do the same thing as 4.1 or 4.2 (depends on the type of boundary condition) for all boundary faces of a boundary cell <span class="math notranslate nohighlight">\(C\)</span> and calculate the coefficients of <span class="math notranslate nohighlight">\(a_{F_b}\)</span> and <span class="math notranslate nohighlight">\(c_{F_b}\)</span>, then the <a class="reference internal" href="#equation-eq-fvm-surface-sum-expand-boundary">equation (60)</a> can be expressed as,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-matrix-form-boundarycell">
+<span class="eqno">(68)<a class="headerlink" href="#equation-eq-fvm-matrix-form-boundarycell" title="Link to this equation"></a></span>\[\begin{split}  \begin{eqnarray}
+b_{C_{19}} &amp; =  &amp; a_{F_{18}} (T_{F_{18}} - T_C) + a_{F_{35}} (T_{F_{35}} - T_C) + a_{F_{37}} (T_{F_{37}} - T_C) + a_{F_{51}} (-T_C) +c_{F_{51}} \\
+   &amp; = &amp; \sum\limits_{f\in[18, 35, 37]} a_{F_f} T_{F_f} + \left(-\sum\limits_{f\in[18, 35, 37, 51]} a_{F_f} \right) T_C + \sum\limits_{f\in[51]} c_{F_f} \\
+   &amp; = &amp; \sum\limits_{f\sim nb(\text{internal face})} a_{F_f} T_{F_f} + \left(-\sum\limits_{f\sim nb(\text{all face})} a_{F_f} \right) T_C + \sum\limits_{f\sim nb(\text{boundary face})} c_{F_f}
+\end{eqnarray}\end{split}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-matrix-form-boundarycell19">
+<span class="eqno">(69)<a class="headerlink" href="#equation-eq-fvm-matrix-form-boundarycell19" title="Link to this equation"></a></span>\[\mathbf{A}_{N\times N}[19,:] \mathbf{T}_{N\times 1} =  B_{19}\]</div>
+<p>where <span class="math notranslate nohighlight">\(B_{19} = b_{C_{19}} - \sum\limits_{f\sim nb(\text{boundary face})} c_{F_f}\)</span>.</p>
+</div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Construct general matrix form of the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (53)</a></p></li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-matrix-form0">
+<span class="eqno">(70)<a class="headerlink" href="#equation-eq-fvm-matrix-form0" title="Link to this equation"></a></span>\[\begin{split}\begin{eqnarray}
+-\sum\limits_{f\sim nb(C)} (D\nabla T)_{F_f}\cdot \vec{S}_{F_f} &amp; = &amp;  \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{C} + \left(-\sum\limits_{f\sim nb(C)} a_{F_f} T_{F_f} \right) + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{F_f}} \\
+&amp; = &amp; a_CT_C - \sum\limits_{f\sim \text{internal faces}(C)} a_{F_f} T_{F_f} + \sum\limits_{f\sim \text{boundary faces}(C)} c_{F_{f}}
+\end{eqnarray}\end{split}\]</div>
+<p>Matrix form of the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (53)</a> can be written as,</p>
+<div class="math notranslate nohighlight" id="equation-fvm-matrix-form">
+<span class="eqno">(71)<a class="headerlink" href="#equation-fvm-matrix-form" title="Link to this equation"></a></span>\[\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{B}_{N\times1}\]</div>
+<p>here <span class="math notranslate nohighlight">\(N\)</span> is the number of cell, <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a sparse matrix of coefficients,
+<span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is cell-centered temperature field.
+The matrix is visualized as <a class="reference internal" href="#fig-fvm-matrix"><span class="std std-numref">Fig. 43</span></a>.
+It should be noted that <strong>the coefficients matrix of Laplacian term is a symmetric matrix and the boundary conditions only affect diagonal entry of the coefficients matrix</strong>. Further, only the fixed value boundary condition affects the matrix and the fixed flux boundary condition affects the RHS(Right hand of side) <span class="math notranslate nohighlight">\(B\)</span>.</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">Regular mesh</label><div class="tab-content docutils container">
+<figure class="align-center" id="fig-fvm-matrix" style="width: 100%">
+<img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" /><figcaption>
+<p><span class="caption-number">Fig. 43 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
+The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+<input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">Unstructured mesh</label><div class="tab-content docutils container">
+<figure class="align-center" id="fig-fvm-matrix-unstructured" style="width: 100%">
+<img alt="../../_images/matrix_FVM_unstructured.svg" src="../../_images/matrix_FVM_unstructured.svg" /><figcaption>
+<p><span class="caption-number">Fig. 44 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
+The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix-unstructured" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="mesh-connectivity-and-internal-data-storage">
+<h2>Mesh connectivity and internal data storage<a class="headerlink" href="#mesh-connectivity-and-internal-data-storage" title="Link to this heading"></a></h2>
+<p>Remember the mesh structure discussed above. The mesh connectivity is stored in the <code class="code docutils literal notranslate"><span class="pre">polyMesh</span></code> folder, which containes the <code class="code docutils literal notranslate"><span class="pre">neighbour</span></code> and <code class="code docutils literal notranslate"><span class="pre">owner</span></code> files. The normal vector of the face always points from the owner cell to the neighbour cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with the lower index to the cell with the larger index. Boundary faces have only an owner cell.</p>
+<p>Is is straightforward to find the indices for setting up the flux balance for each cell, as we did in <a class="reference internal" href="#equation-eq-fvm-matrix-form-internalcell">equation (58)</a>?</p>
+<p>No, it’s not because the owner/neighbor data structure does not provide the indices of all the cells that are connected to a given cell. Rather the owner/neighbor data structure is “face-centered” in that for each face, we now which cells are on each side. Hence, we can easily loop over all faces and compute the fluxes but we cannot easily loop over cells and compute the fluxes to/from the neighboring cells.</p>
+</section>
 </section>
 
 
