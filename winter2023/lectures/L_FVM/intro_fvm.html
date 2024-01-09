@@ -5,7 +5,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lecture overview &mdash; HydrothermalFoam Lecture  documentation</title>
+  <title>&lt;no title&gt; &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=3d3fbe02" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
@@ -24,13 +24,9 @@
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="../../_static/tabs.js?v=3ee01567"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Installation guide" href="Installation.html" />
-    <link rel="prev" title="Course details" href="../../general-info/course-details.html" /> 
+    <link rel="search" title="Search" href="../../search.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -69,11 +65,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="OpenFoam.html">Getting started with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="FirstCase.html">A first test case - heat diffusion</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul>
@@ -113,10 +109,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Implementation1.html">OpenFoam implementation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Advection1.html">The advection term</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">FVM and OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Implementation1.html">OpenFoam implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advection1.html">The advection term</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Projects</span></p>
 <ul>
@@ -167,9 +163,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Lecture overview</li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L01/Overview.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L_FVM/intro_fvm.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -201,18 +197,41 @@
     text-align: unset;
 }
 </style>
-<section id="lecture-overview">
-<h1>Lecture overview<a class="headerlink" href="#lecture-overview" title="Link to this heading"></a></h1>
-<p>In this lecture we will go through all the technical prerequisites and install OpenFoam, HydrothermalFoam and some helper software packages. In addition, we will run a first OpenFoam case and solve for 3-D transient heat conduction.</p>
-</section>
+<ul class="simple">
+<li><p>STart from governing equations</p></li>
+<li><p>ask how we can solve them</p></li>
+<li><p>explain that openFoam uses finite volume method, and that we need to discretize the equations on the computational mesh.</p></li>
+<li><p>Explain finite volume method:</p></li>
+</ul>
+<p>The Finite Volume Method (FVM) is a popular numerical technique used in computational fluid dynamics (CFD) and other areas of computational physics to solve partial differential equations (PDEs) that describe physical phenomena. It’s particularly well-suited for problems involving fluid flow, heat transfer, and associated physical processes. Here’s an overview of how FVM works:</p>
+<p>Basic Concept
+Domain Discretization: The computational domain (the area or volume where the physical problem occurs) is divided into small, discrete control volumes (cells). These control volumes cover the entire domain without overlapping.
+Integral Form of PDEs: FVM operates on the integral form of the governing PDEs, as opposed to the differential form used in methods like the Finite Difference Method (FDM). The equations are integrated over each control volume.
+Flux Calculations: The key aspect of FVM is the calculation of fluxes of the conserved quantities (like mass, momentum, energy) across the faces of each control volume. These fluxes are used to determine how these quantities change within each control volume over time.
+Boundary Conditions: The method also incorporates boundary conditions, which define how the field behaves at the boundaries of the computational domain (like the walls of a pipe, the surface of an object, etc.).
+Steps in FVM
+Represent the Physical Quantities: Variables like velocity, pressure, temperature are represented at discrete locations in each control volume - either at the cell centers or at the cell faces.
+Discretize the Governing Equations: The integral form of the governing PDEs is discretized for each control volume. This involves expressing the rate of change of a quantity in a control volume in terms of the fluxes through its faces.
+Approximate the Fluxes: The fluxes through the control volume faces are approximated using values of the variables at the centers or faces of the cells. Various schemes (like upwind, central difference) can be used for this approximation.
+Solve the Discretized Equations: The discretized equations form a system of algebraic equations. These equations are solved iteratively to find the field values (like pressure, velocity, etc.) throughout the domain.
+Iterate to Steady-State or March in Time: For steady-state problems, iterations continue until the solution converges. For transient problems, the solution is marched forward in time, updating the variables at each time step.
+Advantages
+Conservation: FVM ensures conservation of physical quantities locally (in each control volume) and globally (across the entire domain).
+Flexibility: It can handle complex geometries and irregular meshes.
+Applicability: Suitable for a wide range of problems in fluid dynamics and related fields.
+Applications
+Fluid Flow: Modeling airflow around objects, water flow in channels, etc.
+Heat Transfer: Simulating heat distribution and transfer in various media.
+Reactive Flows and Combustion: Used in chemical process simulations and combustion engines.
+In summary, FVM is a versatile and powerful tool for solving complex physical problems numerically. It is particularly notable for its ability to handle irregular geometries and ensure the local and global conservation of physical quantities.</p>
+<p>Openfoam uses what is called a cell centered finite volume method. This means that the variables are stored at the center of the cell. The fluxes are calculated at the cell faces. The fluxes are then used to update the variables at the cell centers.</p>
+<p>Let’s look at an example problem that solves for temperature diffusion, using the laplacianFoam solver. The governing equation is the heat diffusion equation, which is given by:</p>
+<p>Let’s start by making the mesh.</p>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../../general-info/course-details.html" class="btn btn-neutral float-left" title="Course details" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Installation.html" class="btn btn-neutral float-right" title="Installation guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

@@ -29,7 +29,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Exercise 1" href="Exercise1.html" />
+    <link rel="next" title="OpenFoam implementation" href="Implementation1.html" />
     <link rel="prev" title="Lecture overview" href="Overview.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
@@ -123,10 +123,16 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#spatial-discretization-the-diffusion-term">Spatial discretization: The diffusion term</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mesh-connectivity-and-internal-data-storage">Mesh connectivity and internal data storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#temporal-discretization-the-transient-term">Temporal Discretization: The Transient Term</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#first-order-implicit-euler-scheme">First order implicit Euler scheme</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#first-order-explicit-euler-scheme">First order explicit Euler scheme</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-matrix-mesh-connectivity-and-internal-data-storage">Building the matrix: Mesh connectivity and internal data storage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Implementation1.html">OpenFoam implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Advection1.html">The advection term</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Projects</span></p>
 <ul>
@@ -458,11 +464,258 @@ The coefficients of the selected cell <span class="math notranslate nohighlight"
 </div>
 </div>
 </section>
-<section id="mesh-connectivity-and-internal-data-storage">
-<h2>Mesh connectivity and internal data storage<a class="headerlink" href="#mesh-connectivity-and-internal-data-storage" title="Link to this heading"></a></h2>
+<section id="temporal-discretization-the-transient-term">
+<h2>Temporal Discretization: The Transient Term<a class="headerlink" href="#temporal-discretization-the-transient-term" title="Link to this heading"></a></h2>
+<p>After spatial discretization, the <a class="reference internal" href="#equation-eq-fvm-volume-int">equation (50)</a> can be expressed as,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-diffusioneq-spatial-dis">
+<span class="eqno">(72)<a class="headerlink" href="#equation-eq-fvm-diffusioneq-spatial-dis" title="Link to this equation"></a></span>\[\frac{\partial T}{\partial t} V_C - L(T_C^t) =0\]</div>
+<p>where <span class="math notranslate nohighlight">\(V_C\)</span> is the volume of the discretization cell and <span class="math notranslate nohighlight">\(L(T_C^t)\)</span> is the spatial discretization operator expressed at some reference time <span class="math notranslate nohighlight">\(t\)</span>, which can be written as algebraic form (see also <a class="reference internal" href="#equation-eq-fvm-matrix-form0">equation (70)</a>),</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-spatial-dis-algebraic">
+<span class="eqno">(73)<a class="headerlink" href="#equation-eq-fvm-spatial-dis-algebraic" title="Link to this equation"></a></span>\[L(T_C^t) = a_C T_C^t - \sum\limits_{F\sim NB(C)} a_F T_F^t + \sum\limits_{F\sim NB(C)} c_F\]</div>
+<p>where <span class="math notranslate nohighlight">\(a_C\)</span> is the diagonal coefficients of the matrix, <span class="math notranslate nohighlight">\(a_F\)</span> is the off-diagonal coefficients, and the <span class="math notranslate nohighlight">\(c_F\)</span> is the source coefficients as right hand side of matrix of system.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For specific cell <span class="math notranslate nohighlight">\(C\)</span>,
+* <span class="math notranslate nohighlight">\(a_F\)</span> has only contributed from internal faces.
+* <span class="math notranslate nohighlight">\(a_C\)</span> is the negative summation of <span class="math notranslate nohighlight">\(a_F\)</span>, contributed from all faces, but equation of the <span class="math notranslate nohighlight">\(a_F\)</span> for a boundary faces (<a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (65)</a> and <a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (67)</a>) is a little bit different from internal face.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(c_F\)</span> only comes from boundary faces of cell <span class="math notranslate nohighlight">\(C\)</span> if it has boundary face, see also <a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (65)</a> and <a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (67)</a>. <span class="math notranslate nohighlight">\(c_F\)</span> will contribute to RHS (<span class="math notranslate nohighlight">\(\mathbf{B}\)</span>) of the algebraic <a class="reference internal" href="#equation-fvm-matrix-form">equation (71)</a>.</p></li>
+</ul>
+</div>
+<p>Let’s do the temporal discretization for the first term of <a class="reference internal" href="#equation-eq-fvm-diffusioneq-spatial-dis">equation (72)</a>,</p>
+<div class="math notranslate nohighlight">
+\[\frac{T^{t+\Delta t/2} - T^{t - \Delta t/2}}{\Delta t} V_C + L(T_C^t) = 0\]</div>
+<p>To derive the full discretized equation, an interpolation profile expressing the face values at (<span class="math notranslate nohighlight">\(t-\Delta t/2\)</span>) and (<span class="math notranslate nohighlight">\(t+\Delta t\)</span>) in terms of the element values at (<span class="math notranslate nohighlight">\(t\)</span>), (<span class="math notranslate nohighlight">\(t-\Delta t\)</span>), etc., is needed.Independent of the profile used, the flux will be linearized based on old and new values as,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-temporal-linear">
+<span class="eqno">(74)<a class="headerlink" href="#equation-eq-fvm-temporal-linear" title="Link to this equation"></a></span>\[b_C = FluxC T_C + FluxC^o T_C^o + FluxV\]</div>
+<p>where the superscript <span class="math notranslate nohighlight">\(^{o}\)</span> refers to old values. With the format of the linearization,
+the coefficient <span class="math notranslate nohighlight">\(FluxC\)</span> will be <strong>added to diagonal element</strong> and the coefficient <span class="math notranslate nohighlight">\(FluxC^o T_C^o + FluxV\)</span> will be <strong>added to the source or RHS</strong> (<span class="math notranslate nohighlight">\(B\)</span>).</p>
+<section id="first-order-implicit-euler-scheme">
+<h3>First order implicit Euler scheme<a class="headerlink" href="#first-order-implicit-euler-scheme" title="Link to this heading"></a></h3>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-firstorder-euler-imp">
+<span class="eqno">(75)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-imp" title="Link to this equation"></a></span>\[\frac{T^t - T^{t-\Delta t}}{\Delta t} V_C - L(T^{t}) = 0\]</div>
+<p>Therefore the coefficients will be</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-firstorder-euler-imp-coeff">
+<span class="eqno">(76)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-imp-coeff" title="Link to this equation"></a></span>\[FluxC = \frac{V_C}{\Delta t}, ~ FluxC^o = - \frac{V_C}{\Delta t}, ~ FluxV =0\]</div>
+</section>
+<section id="first-order-explicit-euler-scheme">
+<h3>First order explicit Euler scheme<a class="headerlink" href="#first-order-explicit-euler-scheme" title="Link to this heading"></a></h3>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-firstorder-euler-exp">
+<span class="eqno">(77)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-exp" title="Link to this equation"></a></span>\[\frac{T^{t+\Delta t} - T^t}{\Delta t} V_C - L(T^{t}) = 0\]</div>
+<p>Note that now the new time is at <span class="math notranslate nohighlight">\(t+\Delta t\)</span> and that the spatial operator (<span class="math notranslate nohighlight">\(L\)</span>) of <a class="reference internal" href="#equation-eq-fvm-firstorder-euler-exp">equation (77)</a> has to be evaluated at time <span class="math notranslate nohighlight">\(t\)</span>.
+Therefore, in order to find the value of <span class="math notranslate nohighlight">\(T\)</span> at time <span class="math notranslate nohighlight">\(t+\Delta t\)</span>, we don’t need to solve a set of linear algebraic equations,</p>
+<div class="math notranslate nohighlight" id="equation-eq-fvm-firstorder-euler-exp-coef">
+<span class="eqno">(78)<a class="headerlink" href="#equation-eq-fvm-firstorder-euler-exp-coef" title="Link to this equation"></a></span>\[T^{t+\Delta t} = \frac{\Delta t}{V_C} L(T^{t}) + T^t\]</div>
+</section>
+</section>
+<section id="building-the-matrix-mesh-connectivity-and-internal-data-storage">
+<h2>Building the matrix: Mesh connectivity and internal data storage<a class="headerlink" href="#building-the-matrix-mesh-connectivity-and-internal-data-storage" title="Link to this heading"></a></h2>
 <p>Remember the mesh structure discussed above. The mesh connectivity is stored in the <code class="code docutils literal notranslate"><span class="pre">polyMesh</span></code> folder, which containes the <code class="code docutils literal notranslate"><span class="pre">neighbour</span></code> and <code class="code docutils literal notranslate"><span class="pre">owner</span></code> files. The normal vector of the face always points from the owner cell to the neighbour cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with the lower index to the cell with the larger index. Boundary faces have only an owner cell.</p>
 <p>Is is straightforward to find the indices for setting up the flux balance for each cell, as we did in <a class="reference internal" href="#equation-eq-fvm-matrix-form-internalcell">equation (58)</a>?</p>
-<p>No, it’s not because the owner/neighbor data structure does not provide the indices of all the cells that are connected to a given cell. Rather the owner/neighbor data structure is “face-centered” in that for each face, we now which cells are on each side. Hence, we can easily loop over all faces and compute the fluxes but we cannot easily loop over cells and compute the fluxes to/from the neighboring cells.</p>
+<p>No, because the owner/neighbor data structure does not provide the indices of all the cells that are connected to a given cell. Rather the owner/neighbor data structure is “face-centered” in that for each face, we know which cells are on each side. Hence, we can easily loop over all faces and compute the fluxes but we cannot easily loop over cells and compute the fluxes to/from the neighboring cells.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Check out how openfoam makes use of this face-centered logic to compute the average gradient of a field in the <code class="code docutils literal notranslate"><span class="pre">gaussGrad</span></code> function in <code class="code docutils literal notranslate"><span class="pre">src/finiteVolume/finiteVolume/gradSchemes/gaussGrad/gaussGrad.C</span></code> (see below). The forAll loop is on the faces and the owner and neighbour functions are used to get the indices of the cells that are connected to a given face.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-number">Listing 26 </span><span class="caption-text">src/finiteVolume/finiteVolume/gradSchemes/gaussGrad/gaussGrad.C</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="cm">/*---------------------------------------------------------------------------*\</span>
+<span class="linenos">  2</span><span class="cm">  =========                 |</span>
+<span class="linenos">  3</span><span class="cm">  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos">  4</span><span class="cm">   \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos">  5</span><span class="cm">    \\  /    A nd           | Copyright (C) 2011-2018 OpenFOAM Foundation</span>
+<span class="linenos">  6</span><span class="cm">     \\/     M anipulation  |</span>
+<span class="linenos">  7</span><span class="cm">-------------------------------------------------------------------------------</span>
+<span class="linenos">  8</span><span class="cm">License</span>
+<span class="linenos">  9</span><span class="cm">This file is part of OpenFOAM.</span>
+<span class="linenos"> 10</span>
+<span class="linenos"> 11</span><span class="cm">OpenFOAM is free software: you can redistribute it and/or modify it</span>
+<span class="linenos"> 12</span><span class="cm">under the terms of the GNU General Public License as published by</span>
+<span class="linenos"> 13</span><span class="cm">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="linenos"> 14</span><span class="cm">(at your option) any later version.</span>
+<span class="linenos"> 15</span>
+<span class="linenos"> 16</span><span class="cm">OpenFOAM is distributed in the hope that it will be useful, but WITHOUT</span>
+<span class="linenos"> 17</span><span class="cm">ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</span>
+<span class="linenos"> 18</span><span class="cm">FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License</span>
+<span class="linenos"> 19</span><span class="cm">for more details.</span>
+<span class="linenos"> 20</span>
+<span class="linenos"> 21</span><span class="cm">You should have received a copy of the GNU General Public License</span>
+<span class="linenos"> 22</span><span class="cm">along with OpenFOAM.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="linenos"> 23</span>
+<span class="linenos"> 24</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 25</span>
+<span class="linenos"> 26</span><span class="cp">#include</span> <span class="cpf">&quot;gaussGrad.H&quot;</span>
+<span class="linenos"> 27</span><span class="cp">#include</span> <span class="cpf">&quot;extrapolatedCalculatedFvPatchField.H&quot;</span>
+<span class="linenos"> 28</span>
+<span class="linenos"> 29</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos"> 30</span>
+<span class="linenos"> 31</span><span class="n">template</span><span class="o">&lt;</span><span class="kt">class</span> <span class="n">Type</span><span class="o">&gt;</span>
+<span class="linenos"> 32</span><span class="n">Foam</span><span class="o">::</span><span class="n">tmp</span>
+<span class="linenos"> 33</span><span class="o">&lt;</span>
+<span class="linenos"> 34</span>   <span class="n">Foam</span><span class="o">::</span><span class="n">GeometricField</span>
+<span class="linenos"> 35</span>   <span class="o">&lt;</span>
+<span class="linenos"> 36</span>      <span class="kr">typename</span> <span class="n">Foam</span><span class="o">::</span><span class="n">outerProduct</span><span class="o">&lt;</span><span class="n">Foam</span><span class="o">::</span><span class="n">vector</span><span class="p">,</span> <span class="n">Type</span><span class="o">&gt;::</span><span class="kt">type</span><span class="p">,</span>
+<span class="linenos"> 37</span>      <span class="n">Foam</span><span class="o">::</span><span class="n">fvPatchField</span><span class="p">,</span>
+<span class="linenos"> 38</span>      <span class="n">Foam</span><span class="o">::</span><span class="n">volMesh</span>
+<span class="linenos"> 39</span>   <span class="o">&gt;</span>
+<span class="linenos"> 40</span><span class="o">&gt;</span>
+<span class="linenos"> 41</span><span class="n">Foam</span><span class="o">::</span><span class="n">fv</span><span class="o">::</span><span class="n">gaussGrad</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;::</span><span class="n">gradf</span>
+<span class="linenos"> 42</span><span class="p">(</span>
+<span class="linenos"> 43</span>   <span class="k">const</span> <span class="n">GeometricField</span><span class="o">&lt;</span><span class="n">Type</span><span class="p">,</span> <span class="n">fvsPatchField</span><span class="p">,</span> <span class="n">surfaceMesh</span><span class="o">&gt;&amp;</span> <span class="n">ssf</span><span class="p">,</span>
+<span class="linenos"> 44</span>   <span class="k">const</span> <span class="n">word</span><span class="o">&amp;</span> <span class="n">name</span>
+<span class="linenos"> 45</span><span class="p">)</span>
+<span class="linenos"> 46</span><span class="p">{</span>
+<span class="linenos"> 47</span>   <span class="k">typedef</span> <span class="kr">typename</span> <span class="n">outerProduct</span><span class="o">&lt;</span><span class="n">vector</span><span class="p">,</span> <span class="n">Type</span><span class="o">&gt;::</span><span class="kt">type</span> <span class="n">GradType</span><span class="p">;</span>
+<span class="linenos"> 48</span>
+<span class="linenos"> 49</span>   <span class="k">const</span> <span class="n">fvMesh</span><span class="o">&amp;</span> <span class="n">mesh</span> <span class="o">=</span> <span class="n">ssf</span><span class="p">.</span><span class="n">mesh</span><span class="p">();</span>
+<span class="linenos"> 50</span>
+<span class="linenos"> 51</span>   <span class="n">tmp</span><span class="o">&lt;</span><span class="n">GeometricField</span><span class="o">&lt;</span><span class="n">GradType</span><span class="p">,</span> <span class="n">fvPatchField</span><span class="p">,</span> <span class="n">volMesh</span><span class="o">&gt;&gt;</span> <span class="n">tgGrad</span>
+<span class="linenos"> 52</span>   <span class="p">(</span>
+<span class="linenos"> 53</span>      <span class="n">new</span> <span class="n">GeometricField</span><span class="o">&lt;</span><span class="n">GradType</span><span class="p">,</span> <span class="n">fvPatchField</span><span class="p">,</span> <span class="n">volMesh</span><span class="o">&gt;</span>
+<span class="linenos"> 54</span>      <span class="p">(</span>
+<span class="linenos"> 55</span>            <span class="n">IOobject</span>
+<span class="linenos"> 56</span>            <span class="p">(</span>
+<span class="linenos"> 57</span>               <span class="n">name</span><span class="p">,</span>
+<span class="linenos"> 58</span>               <span class="n">ssf</span><span class="p">.</span><span class="n">instance</span><span class="p">(),</span>
+<span class="linenos"> 59</span>               <span class="n">mesh</span><span class="p">,</span>
+<span class="linenos"> 60</span>               <span class="n">IOobject</span><span class="o">::</span><span class="n">NO_READ</span><span class="p">,</span>
+<span class="linenos"> 61</span>               <span class="n">IOobject</span><span class="o">::</span><span class="n">NO_WRITE</span>
+<span class="linenos"> 62</span>            <span class="p">),</span>
+<span class="linenos"> 63</span>            <span class="n">mesh</span><span class="p">,</span>
+<span class="linenos"> 64</span>            <span class="n">dimensioned</span><span class="o">&lt;</span><span class="n">GradType</span><span class="o">&gt;</span>
+<span class="linenos"> 65</span>            <span class="p">(</span>
+<span class="linenos"> 66</span>               <span class="s">&quot;0&quot;</span><span class="p">,</span>
+<span class="linenos"> 67</span>               <span class="n">ssf</span><span class="p">.</span><span class="kt">dimensions</span><span class="p">()</span><span class="o">/</span><span class="n">dimLength</span><span class="p">,</span>
+<span class="linenos"> 68</span>               <span class="n">Zero</span>
+<span class="linenos"> 69</span>            <span class="p">),</span>
+<span class="linenos"> 70</span>            <span class="n">extrapolatedCalculatedFvPatchField</span><span class="o">&lt;</span><span class="n">GradType</span><span class="o">&gt;::</span><span class="n">typeName</span>
+<span class="linenos"> 71</span>      <span class="p">)</span>
+<span class="linenos"> 72</span>   <span class="p">);</span>
+<span class="linenos"> 73</span>   <span class="n">GeometricField</span><span class="o">&lt;</span><span class="n">GradType</span><span class="p">,</span> <span class="n">fvPatchField</span><span class="p">,</span> <span class="n">volMesh</span><span class="o">&gt;&amp;</span> <span class="n">gGrad</span> <span class="o">=</span> <span class="n">tgGrad</span><span class="p">.</span><span class="n">ref</span><span class="p">();</span>
+<span class="linenos"> 74</span>
+<span class="linenos"> 75</span>   <span class="k">const</span> <span class="n">labelUList</span><span class="o">&amp;</span> <span class="n">owner</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">.</span><span class="n">owner</span><span class="p">();</span>
+<span class="linenos"> 76</span>   <span class="k">const</span> <span class="n">labelUList</span><span class="o">&amp;</span> <span class="n">neighbour</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">.</span><span class="n">neighbour</span><span class="p">();</span>
+<span class="linenos"> 77</span>   <span class="k">const</span> <span class="n">vectorField</span><span class="o">&amp;</span> <span class="n">Sf</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">.</span><span class="n">Sf</span><span class="p">();</span>
+<span class="linenos"> 78</span>
+<span class="linenos"> 79</span>   <span class="n">Field</span><span class="o">&lt;</span><span class="n">GradType</span><span class="o">&gt;&amp;</span> <span class="n">igGrad</span> <span class="o">=</span> <span class="n">gGrad</span><span class="p">;</span>
+<span class="linenos"> 80</span>   <span class="k">const</span> <span class="n">Field</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;&amp;</span> <span class="n">issf</span> <span class="o">=</span> <span class="n">ssf</span><span class="p">;</span>
+<span class="linenos"> 81</span>
+<span class="hll"><span class="linenos"> 82</span>   <span class="n">forAll</span><span class="p">(</span><span class="n">owner</span><span class="p">,</span> <span class="n">facei</span><span class="p">)</span>
+</span><span class="hll"><span class="linenos"> 83</span>   <span class="p">{</span>
+</span><span class="hll"><span class="linenos"> 84</span>      <span class="n">GradType</span> <span class="n">Sfssf</span> <span class="o">=</span> <span class="n">Sf</span><span class="p">[</span><span class="n">facei</span><span class="p">]</span><span class="o">*</span><span class="n">issf</span><span class="p">[</span><span class="n">facei</span><span class="p">];</span>
+</span><span class="hll"><span class="linenos"> 85</span>
+</span><span class="hll"><span class="linenos"> 86</span>      <span class="n">igGrad</span><span class="p">[</span><span class="n">owner</span><span class="p">[</span><span class="n">facei</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">Sfssf</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos"> 87</span>      <span class="n">igGrad</span><span class="p">[</span><span class="n">neighbour</span><span class="p">[</span><span class="n">facei</span><span class="p">]]</span> <span class="o">-=</span> <span class="n">Sfssf</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos"> 88</span>   <span class="p">}</span>
+</span><span class="linenos"> 89</span>
+<span class="linenos"> 90</span>   <span class="n">forAll</span><span class="p">(</span><span class="n">mesh</span><span class="p">.</span><span class="k">boundary</span><span class="p">(),</span> <span class="n">patchi</span><span class="p">)</span>
+<span class="linenos"> 91</span>   <span class="p">{</span>
+<span class="linenos"> 92</span>      <span class="k">const</span> <span class="n">labelUList</span><span class="o">&amp;</span> <span class="n">pFaceCells</span> <span class="o">=</span>
+<span class="linenos"> 93</span>            <span class="n">mesh</span><span class="p">.</span><span class="k">boundary</span><span class="p">()[</span><span class="n">patchi</span><span class="p">].</span><span class="n">faceCells</span><span class="p">();</span>
+<span class="linenos"> 94</span>
+<span class="linenos"> 95</span>      <span class="k">const</span> <span class="n">vectorField</span><span class="o">&amp;</span> <span class="n">pSf</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">.</span><span class="n">Sf</span><span class="p">().</span><span class="k">boundaryField</span><span class="p">()[</span><span class="n">patchi</span><span class="p">];</span>
+<span class="linenos"> 96</span>
+<span class="linenos"> 97</span>      <span class="k">const</span> <span class="n">fvsPatchField</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;&amp;</span> <span class="n">pssf</span> <span class="o">=</span> <span class="n">ssf</span><span class="p">.</span><span class="k">boundaryField</span><span class="p">()[</span><span class="n">patchi</span><span class="p">];</span>
+<span class="linenos"> 98</span>
+<span class="linenos"> 99</span>      <span class="n">forAll</span><span class="p">(</span><span class="n">mesh</span><span class="p">.</span><span class="k">boundary</span><span class="p">()[</span><span class="n">patchi</span><span class="p">],</span> <span class="n">facei</span><span class="p">)</span>
+<span class="linenos">100</span>      <span class="p">{</span>
+<span class="linenos">101</span>            <span class="n">igGrad</span><span class="p">[</span><span class="n">pFaceCells</span><span class="p">[</span><span class="n">facei</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">pSf</span><span class="p">[</span><span class="n">facei</span><span class="p">]</span><span class="o">*</span><span class="n">pssf</span><span class="p">[</span><span class="n">facei</span><span class="p">];</span>
+<span class="linenos">102</span>      <span class="p">}</span>
+<span class="linenos">103</span>   <span class="p">}</span>
+<span class="linenos">104</span>
+<span class="linenos">105</span>   <span class="n">igGrad</span> <span class="o">/=</span> <span class="n">mesh</span><span class="p">.</span><span class="n">V</span><span class="p">();</span>
+<span class="linenos">106</span>
+<span class="linenos">107</span>   <span class="n">gGrad</span><span class="p">.</span><span class="n">correctBoundaryConditions</span><span class="p">();</span>
+<span class="linenos">108</span>
+<span class="linenos">109</span>   <span class="k">return</span> <span class="n">tgGrad</span><span class="p">;</span>
+<span class="linenos">110</span><span class="p">}</span>
+<span class="linenos">111</span>
+<span class="linenos">112</span>
+<span class="linenos">113</span><span class="n">template</span><span class="o">&lt;</span><span class="kt">class</span> <span class="n">Type</span><span class="o">&gt;</span>
+<span class="linenos">114</span><span class="n">Foam</span><span class="o">::</span><span class="n">tmp</span>
+<span class="linenos">115</span><span class="o">&lt;</span>
+<span class="linenos">116</span>   <span class="n">Foam</span><span class="o">::</span><span class="n">GeometricField</span>
+<span class="linenos">117</span>   <span class="o">&lt;</span>
+<span class="linenos">118</span>      <span class="kr">typename</span> <span class="n">Foam</span><span class="o">::</span><span class="n">outerProduct</span><span class="o">&lt;</span><span class="n">Foam</span><span class="o">::</span><span class="n">vector</span><span class="p">,</span> <span class="n">Type</span><span class="o">&gt;::</span><span class="kt">type</span><span class="p">,</span>
+<span class="linenos">119</span>      <span class="n">Foam</span><span class="o">::</span><span class="n">fvPatchField</span><span class="p">,</span>
+<span class="linenos">120</span>      <span class="n">Foam</span><span class="o">::</span><span class="n">volMesh</span>
+<span class="linenos">121</span>   <span class="o">&gt;</span>
+<span class="linenos">122</span><span class="o">&gt;</span>
+<span class="linenos">123</span><span class="n">Foam</span><span class="o">::</span><span class="n">fv</span><span class="o">::</span><span class="n">gaussGrad</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;::</span><span class="n">calcGrad</span>
+<span class="linenos">124</span><span class="p">(</span>
+<span class="linenos">125</span>   <span class="k">const</span> <span class="n">GeometricField</span><span class="o">&lt;</span><span class="n">Type</span><span class="p">,</span> <span class="n">fvPatchField</span><span class="p">,</span> <span class="n">volMesh</span><span class="o">&gt;&amp;</span> <span class="n">vsf</span><span class="p">,</span>
+<span class="linenos">126</span>   <span class="k">const</span> <span class="n">word</span><span class="o">&amp;</span> <span class="n">name</span>
+<span class="linenos">127</span><span class="p">)</span> <span class="k">const</span>
+<span class="linenos">128</span><span class="p">{</span>
+<span class="linenos">129</span>   <span class="k">typedef</span> <span class="kr">typename</span> <span class="n">outerProduct</span><span class="o">&lt;</span><span class="n">vector</span><span class="p">,</span> <span class="n">Type</span><span class="o">&gt;::</span><span class="kt">type</span> <span class="n">GradType</span><span class="p">;</span>
+<span class="linenos">130</span>
+<span class="linenos">131</span>   <span class="n">tmp</span><span class="o">&lt;</span><span class="n">GeometricField</span><span class="o">&lt;</span><span class="n">GradType</span><span class="p">,</span> <span class="n">fvPatchField</span><span class="p">,</span> <span class="n">volMesh</span><span class="o">&gt;&gt;</span> <span class="n">tgGrad</span>
+<span class="linenos">132</span>   <span class="p">(</span>
+<span class="linenos">133</span>      <span class="n">gradf</span><span class="p">(</span><span class="n">tinterpScheme_</span><span class="p">().</span><span class="n">interpolate</span><span class="p">(</span><span class="n">vsf</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+<span class="linenos">134</span>   <span class="p">);</span>
+<span class="linenos">135</span>   <span class="n">GeometricField</span><span class="o">&lt;</span><span class="n">GradType</span><span class="p">,</span> <span class="n">fvPatchField</span><span class="p">,</span> <span class="n">volMesh</span><span class="o">&gt;&amp;</span> <span class="n">gGrad</span> <span class="o">=</span> <span class="n">tgGrad</span><span class="p">.</span><span class="n">ref</span><span class="p">();</span>
+<span class="linenos">136</span>
+<span class="linenos">137</span>   <span class="n">correctBoundaryConditions</span><span class="p">(</span><span class="n">vsf</span><span class="p">,</span> <span class="n">gGrad</span><span class="p">);</span>
+<span class="linenos">138</span>
+<span class="linenos">139</span>   <span class="k">return</span> <span class="n">tgGrad</span><span class="p">;</span>
+<span class="linenos">140</span><span class="p">}</span>
+<span class="linenos">141</span>
+<span class="linenos">142</span>
+<span class="linenos">143</span><span class="n">template</span><span class="o">&lt;</span><span class="kt">class</span> <span class="n">Type</span><span class="o">&gt;</span>
+<span class="linenos">144</span><span class="kt">void</span> <span class="n">Foam</span><span class="o">::</span><span class="n">fv</span><span class="o">::</span><span class="n">gaussGrad</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;::</span><span class="n">correctBoundaryConditions</span>
+<span class="linenos">145</span><span class="p">(</span>
+<span class="linenos">146</span>   <span class="k">const</span> <span class="n">GeometricField</span><span class="o">&lt;</span><span class="n">Type</span><span class="p">,</span> <span class="n">fvPatchField</span><span class="p">,</span> <span class="n">volMesh</span><span class="o">&gt;&amp;</span> <span class="n">vsf</span><span class="p">,</span>
+<span class="linenos">147</span>   <span class="n">GeometricField</span>
+<span class="linenos">148</span>   <span class="o">&lt;</span>
+<span class="linenos">149</span>      <span class="kr">typename</span> <span class="n">outerProduct</span><span class="o">&lt;</span><span class="n">vector</span><span class="p">,</span> <span class="n">Type</span><span class="o">&gt;::</span><span class="kt">type</span><span class="p">,</span> <span class="n">fvPatchField</span><span class="p">,</span> <span class="n">volMesh</span>
+<span class="linenos">150</span>   <span class="o">&gt;&amp;</span> <span class="n">gGrad</span>
+<span class="linenos">151</span><span class="p">)</span>
+<span class="linenos">152</span><span class="p">{</span>
+<span class="linenos">153</span>   <span class="kr">typename</span> <span class="n">GeometricField</span>
+<span class="linenos">154</span>   <span class="o">&lt;</span>
+<span class="linenos">155</span>      <span class="kr">typename</span> <span class="n">outerProduct</span><span class="o">&lt;</span><span class="n">vector</span><span class="p">,</span> <span class="n">Type</span><span class="o">&gt;::</span><span class="kt">type</span><span class="p">,</span> <span class="n">fvPatchField</span><span class="p">,</span> <span class="n">volMesh</span>
+<span class="linenos">156</span>   <span class="o">&gt;::</span><span class="n">Boundary</span><span class="o">&amp;</span> <span class="n">gGradbf</span> <span class="o">=</span> <span class="n">gGrad</span><span class="p">.</span><span class="n">boundaryFieldRef</span><span class="p">();</span>
+<span class="linenos">157</span>
+<span class="linenos">158</span>   <span class="n">forAll</span><span class="p">(</span><span class="n">vsf</span><span class="p">.</span><span class="k">boundaryField</span><span class="p">(),</span> <span class="n">patchi</span><span class="p">)</span>
+<span class="linenos">159</span>   <span class="p">{</span>
+<span class="linenos">160</span>      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">vsf</span><span class="p">.</span><span class="k">boundaryField</span><span class="p">()[</span><span class="n">patchi</span><span class="p">].</span><span class="n">coupled</span><span class="p">())</span>
+<span class="linenos">161</span>      <span class="p">{</span>
+<span class="linenos">162</span>            <span class="k">const</span> <span class="n">vectorField</span> <span class="k">n</span>
+<span class="linenos">163</span>            <span class="p">(</span>
+<span class="linenos">164</span>               <span class="n">vsf</span><span class="p">.</span><span class="n">mesh</span><span class="p">().</span><span class="n">Sf</span><span class="p">().</span><span class="k">boundaryField</span><span class="p">()[</span><span class="n">patchi</span><span class="p">]</span>
+<span class="linenos">165</span>            <span class="o">/</span> <span class="n">vsf</span><span class="p">.</span><span class="n">mesh</span><span class="p">().</span><span class="n">magSf</span><span class="p">().</span><span class="k">boundaryField</span><span class="p">()[</span><span class="n">patchi</span><span class="p">]</span>
+<span class="linenos">166</span>            <span class="p">);</span>
+<span class="linenos">167</span>
+<span class="linenos">168</span>            <span class="n">gGradbf</span><span class="p">[</span><span class="n">patchi</span><span class="p">]</span> <span class="o">+=</span> <span class="k">n</span> <span class="o">*</span>
+<span class="linenos">169</span>            <span class="p">(</span>
+<span class="linenos">170</span>               <span class="n">vsf</span><span class="p">.</span><span class="k">boundaryField</span><span class="p">()[</span><span class="n">patchi</span><span class="p">].</span><span class="n">snGrad</span><span class="p">()</span>
+<span class="linenos">171</span>            <span class="o">-</span> <span class="p">(</span><span class="k">n</span> <span class="o">&amp;</span> <span class="n">gGradbf</span><span class="p">[</span><span class="n">patchi</span><span class="p">])</span>
+<span class="linenos">172</span>            <span class="p">);</span>
+<span class="linenos">173</span>      <span class="p">}</span>
+<span class="linenos">174</span>   <span class="p">}</span>
+<span class="linenos">175</span><span class="p">}</span>
+<span class="linenos">176</span>
+<span class="linenos">177</span>
+<span class="linenos">178</span><span class="c1">// ************************************************************************* //</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>OpenFoam uses a matrix format that is tightly integrated with the “face-centered” and the owner/neighbor structure. It is called the LDU matrix format. This format is a way of storing sparse matrices. A sparse matrix is one in which most elements are zero, which is a common case in CFD (check the example above). The LDU format is specifically tailored to store and manipulate these types of matrices efficiently.</p>
+<dl class="simple">
+<dt><strong>Components of LDU:</strong></dt><dd><ul class="simple">
+<li><p>L (Lower triangle): This part of the matrix stores the coefficients that are below the main diagonal.</p></li>
+<li><p>D (Diagonal): This represents the main diagonal of the matrix. In many algorithms, the diagonal elements play a crucial role and are treated separately for reasons of numerical stability and efficiency.</p></li>
+<li><p>U (Upper triangle): This stores the coefficients above the main diagonal.</p></li>
+</ul>
+</dd>
+</dl>
+<p>The LDU format is memory-efficient because it only stores non-zero elements. This is particularly beneficial in CFD where matrices can be very large, but only a small fraction of the elements are non-zero. OpenFOAM uses this structure to perform matrix operations like multiplication, addition, and especially the solving of linear systems, which is crucial in the iterative methods used in CFD simulations.</p>
+<p>The LDU format uses scalar fields representing the diagonal, upper, and lower coefficients. The diagonal coefficients are indexed using the cell index. The upper and lower coefficients use face indices. In order to get the indices to match, mapping arrays between the face and cell indices are provided.  The <code class="code docutils literal notranslate"><span class="pre">lowerAddr()</span></code>, and <code class="code docutils literal notranslate"><span class="pre">upperAddr()</span></code> functions of the lduAdressing class provide the owner and neighbor cell indices for each face.</p>
+<p>A nice summary of the LDU format can be found in the <a class="reference external" href="https://openfoamwiki.net/index.php/OpenFOAM_guide/Matrices_in_OpenFOAM">OpenFoam Wiki</a>.</p>
+<div class="admonition-summary admonition">
+<p class="admonition-title">Summary</p>
+<p>In summary, the LDU format is a way of storing sparse matrices. It is specifically tailored to store and manipulate these types of matrices efficiently. OpenFOAM uses this structure to perform matrix operations like multiplication, addition, and especially the solving of linear systems, which is crucial in the iterative methods used in CFD simulations. Most of this happens under the hood but if you ever want to perform an operation on all rows of an lduMatrix, you need to know abou lduAdressing.</p>
+</div>
 </section>
 </section>
 
@@ -471,7 +724,7 @@ The coefficients of the selected cell <span class="math notranslate nohighlight"
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="Overview.html" class="btn btn-neutral float-left" title="Lecture overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Exercise1.html" class="btn btn-neutral float-right" title="Exercise 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Implementation1.html" class="btn btn-neutral float-right" title="OpenFoam implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
