@@ -394,11 +394,299 @@ It should be noted that **the coefficients matrix of Laplacian term is a symmetr
       The coefficients of the selected cell :math:`C` (:numref:`fig:polyMesh_regularBox`) are marked by green rectangle.
 
 
-Mesh connectivity and internal data storage
--------------------------------------------
+Temporal Discretization: The Transient Term
+------------------------------------------------------
+
+After spatial discretization, the :eq:`eq:fvm_volume_int` can be expressed as,
+
+.. math::
+   :label: eq:fvm_diffusionEq_spatial_dis
+
+   \frac{\partial T}{\partial t} V_C - L(T_C^t) =0
+
+where :math:`V_C` is the volume of the discretization cell and :math:`L(T_C^t)` is the spatial discretization operator expressed at some reference time :math:`t`, which can be written as algebraic form (see also :eq:`eq:fvm_matrix_form0`),
+
+.. math::
+   :label: eq:fvm_spatial_dis_algebraic
+
+   L(T_C^t) = a_C T_C^t - \sum\limits_{F\sim NB(C)} a_F T_F^t + \sum\limits_{F\sim NB(C)} c_F
+
+where :math:`a_C` is the diagonal coefficients of the matrix, :math:`a_F` is the off-diagonal coefficients, and the :math:`c_F` is the source coefficients as right hand side of matrix of system. 
+
+.. Tip::
+
+   For specific cell :math:`C`, 
+   * :math:`a_F` has only contributed from internal faces. 
+   * :math:`a_C` is the negative summation of :math:`a_F`, contributed from all faces, but equation of the :math:`a_F` for a boundary faces (:eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue` and :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`) is a little bit different from internal face. 
+   
+   * :math:`c_F` only comes from boundary faces of cell :math:`C` if it has boundary face, see also :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue` and :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`. :math:`c_F` will contribute to RHS (:math:`\mathbf{B}`) of the algebraic :eq:`fvm_matrix_form`.
+   
+Let's do the temporal discretization for the first term of :eq:`eq:fvm_diffusionEq_spatial_dis`,
+
+.. math:: 
+
+   \frac{T^{t+\Delta t/2} - T^{t - \Delta t/2}}{\Delta t} V_C + L(T_C^t) = 0
+
+To derive the full discretized equation, an interpolation profile expressing the face values at (:math:`t-\Delta t/2`) and (:math:`t+\Delta t`) in terms of the element values at (:math:`t`), (:math:`t-\Delta t`), etc., is needed.Independent of the profile used, the flux will be linearized based on old and new values as,
+
+.. math::
+   :label: eq:fvm_temporal_linear 
+
+   b_C = FluxC T_C + FluxC^o T_C^o + FluxV
+
+where the superscript :math:`^{o}` refers to old values. With the format of the linearization, 
+the coefficient :math:`FluxC` will be **added to diagonal element** and the coefficient :math:`FluxC^o T_C^o + FluxV` will be **added to the source or RHS** (:math:`B`).
+
+First order implicit Euler scheme
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. math::
+   :label: eq:fvm_firstOrder_Euler_imp
+
+   \frac{T^t - T^{t-\Delta t}}{\Delta t} V_C - L(T^{t}) = 0
+
+Therefore the coefficients will be 
+
+.. math::
+   :label: eq:fvm_firstOrder_Euler_imp_coeff
+
+   FluxC = \frac{V_C}{\Delta t}, ~ FluxC^o = - \frac{V_C}{\Delta t}, ~ FluxV =0
+
+First order explicit Euler scheme
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. math:: 
+   :label: eq:fvm_firstOrder_Euler_exp
+
+   \frac{T^{t+\Delta t} - T^t}{\Delta t} V_C - L(T^{t}) = 0
+
+Note that now the new time is at :math:`t+\Delta t` and that the spatial operator (:math:`L`) of :eq:`eq:fvm_firstOrder_Euler_exp` has to be evaluated at time :math:`t`. 
+Therefore, in order to find the value of :math:`T` at time :math:`t+\Delta t`, we don't need to solve a set of linear algebraic equations,
+
+.. math::
+   :label: eq:fvm_firstOrder_Euler_exp_coef
+
+   T^{t+\Delta t} = \frac{\Delta t}{V_C} L(T^{t}) + T^t
+
+
+Building the matrix: Mesh connectivity and internal data storage
+----------------------------------------------------------------
 
 Remember the mesh structure discussed above. The mesh connectivity is stored in the :code:`polyMesh` folder, which containes the :code:`neighbour` and :code:`owner` files. The normal vector of the face always points from the owner cell to the neighbour cell. The numbering of the vertices that make up the face is again done using the right-hand rule and the face normal always points from the cell with the lower index to the cell with the larger index. Boundary faces have only an owner cell.
 
 Is is straightforward to find the indices for setting up the flux balance for each cell, as we did in :eq:`eq:fvm_matrix_form_internalCell`?
 
-No, it's not because the owner/neighbor data structure does not provide the indices of all the cells that are connected to a given cell. Rather the owner/neighbor data structure is "face-centered" in that for each face, we now which cells are on each side. Hence, we can easily loop over all faces and compute the fluxes but we cannot easily loop over cells and compute the fluxes to/from the neighboring cells. 
+No, because the owner/neighbor data structure does not provide the indices of all the cells that are connected to a given cell. Rather the owner/neighbor data structure is "face-centered" in that for each face, we know which cells are on each side. Hence, we can easily loop over all faces and compute the fluxes but we cannot easily loop over cells and compute the fluxes to/from the neighboring cells. 
+
+.. tip::
+   Check out how openfoam makes use of this face-centered logic to compute the average gradient of a field in the :code:`gaussGrad` function in :code:`src/finiteVolume/finiteVolume/gradSchemes/gaussGrad/gaussGrad.C` (see below). The forAll loop is on the faces and the owner and neighbour functions are used to get the indices of the cells that are connected to a given face.
+
+   .. code-block:: foam 
+      :caption: src/finiteVolume/finiteVolume/gradSchemes/gaussGrad/gaussGrad.C
+      :emphasize-lines: 82-88
+      :linenos:
+
+      /*---------------------------------------------------------------------------*\
+        =========                 |
+        \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+         \\    /   O peration     | Website:  https://openfoam.org
+          \\  /    A nd           | Copyright (C) 2011-2018 OpenFOAM Foundation
+           \\/     M anipulation  |
+      -------------------------------------------------------------------------------
+      License
+      This file is part of OpenFOAM.
+
+      OpenFOAM is free software: you can redistribute it and/or modify it
+      under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 3 of the License, or
+      (at your option) any later version.
+
+      OpenFOAM is distributed in the hope that it will be useful, but WITHOUT
+      ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+      FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+      for more details.
+
+      You should have received a copy of the GNU General Public License
+      along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
+
+      \*---------------------------------------------------------------------------*/
+
+      #include "gaussGrad.H"
+      #include "extrapolatedCalculatedFvPatchField.H"
+
+      // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+      template<class Type>
+      Foam::tmp
+      <
+         Foam::GeometricField
+         <
+            typename Foam::outerProduct<Foam::vector, Type>::type,
+            Foam::fvPatchField,
+            Foam::volMesh
+         >
+      >
+      Foam::fv::gaussGrad<Type>::gradf
+      (
+         const GeometricField<Type, fvsPatchField, surfaceMesh>& ssf,
+         const word& name
+      )
+      {
+         typedef typename outerProduct<vector, Type>::type GradType;
+
+         const fvMesh& mesh = ssf.mesh();
+
+         tmp<GeometricField<GradType, fvPatchField, volMesh>> tgGrad
+         (
+            new GeometricField<GradType, fvPatchField, volMesh>
+            (
+                  IOobject
+                  (
+                     name,
+                     ssf.instance(),
+                     mesh,
+                     IOobject::NO_READ,
+                     IOobject::NO_WRITE
+                  ),
+                  mesh,
+                  dimensioned<GradType>
+                  (
+                     "0",
+                     ssf.dimensions()/dimLength,
+                     Zero
+                  ),
+                  extrapolatedCalculatedFvPatchField<GradType>::typeName
+            )
+         );
+         GeometricField<GradType, fvPatchField, volMesh>& gGrad = tgGrad.ref();
+
+         const labelUList& owner = mesh.owner();
+         const labelUList& neighbour = mesh.neighbour();
+         const vectorField& Sf = mesh.Sf();
+
+         Field<GradType>& igGrad = gGrad;
+         const Field<Type>& issf = ssf;
+
+         forAll(owner, facei)
+         {
+            GradType Sfssf = Sf[facei]*issf[facei];
+
+            igGrad[owner[facei]] += Sfssf;
+            igGrad[neighbour[facei]] -= Sfssf;
+         }
+
+         forAll(mesh.boundary(), patchi)
+         {
+            const labelUList& pFaceCells =
+                  mesh.boundary()[patchi].faceCells();
+
+            const vectorField& pSf = mesh.Sf().boundaryField()[patchi];
+
+            const fvsPatchField<Type>& pssf = ssf.boundaryField()[patchi];
+
+            forAll(mesh.boundary()[patchi], facei)
+            {
+                  igGrad[pFaceCells[facei]] += pSf[facei]*pssf[facei];
+            }
+         }
+
+         igGrad /= mesh.V();
+
+         gGrad.correctBoundaryConditions();
+
+         return tgGrad;
+      }
+
+
+      template<class Type>
+      Foam::tmp
+      <
+         Foam::GeometricField
+         <
+            typename Foam::outerProduct<Foam::vector, Type>::type,
+            Foam::fvPatchField,
+            Foam::volMesh
+         >
+      >
+      Foam::fv::gaussGrad<Type>::calcGrad
+      (
+         const GeometricField<Type, fvPatchField, volMesh>& vsf,
+         const word& name
+      ) const
+      {
+         typedef typename outerProduct<vector, Type>::type GradType;
+
+         tmp<GeometricField<GradType, fvPatchField, volMesh>> tgGrad
+         (
+            gradf(tinterpScheme_().interpolate(vsf), name)
+         );
+         GeometricField<GradType, fvPatchField, volMesh>& gGrad = tgGrad.ref();
+
+         correctBoundaryConditions(vsf, gGrad);
+
+         return tgGrad;
+      }
+
+
+      template<class Type>
+      void Foam::fv::gaussGrad<Type>::correctBoundaryConditions
+      (
+         const GeometricField<Type, fvPatchField, volMesh>& vsf,
+         GeometricField
+         <
+            typename outerProduct<vector, Type>::type, fvPatchField, volMesh
+         >& gGrad
+      )
+      {
+         typename GeometricField
+         <
+            typename outerProduct<vector, Type>::type, fvPatchField, volMesh
+         >::Boundary& gGradbf = gGrad.boundaryFieldRef();
+
+         forAll(vsf.boundaryField(), patchi)
+         {
+            if (!vsf.boundaryField()[patchi].coupled())
+            {
+                  const vectorField n
+                  (
+                     vsf.mesh().Sf().boundaryField()[patchi]
+                  / vsf.mesh().magSf().boundaryField()[patchi]
+                  );
+
+                  gGradbf[patchi] += n *
+                  (
+                     vsf.boundaryField()[patchi].snGrad()
+                  - (n & gGradbf[patchi])
+                  );
+            }
+         }
+      }
+
+
+      // ************************************************************************* //
+
+
+
+
+OpenFoam uses a matrix format that is tightly integrated with the "face-centered" and the owner/neighbor structure. It is called the LDU matrix format. This format is a way of storing sparse matrices. A sparse matrix is one in which most elements are zero, which is a common case in CFD (check the example above). The LDU format is specifically tailored to store and manipulate these types of matrices efficiently.
+
+**Components of LDU:**
+   - L (Lower triangle): This part of the matrix stores the coefficients that are below the main diagonal.
+   - D (Diagonal): This represents the main diagonal of the matrix. In many algorithms, the diagonal elements play a crucial role and are treated separately for reasons of numerical stability and efficiency.
+   - U (Upper triangle): This stores the coefficients above the main diagonal.
+
+The LDU format is memory-efficient because it only stores non-zero elements. This is particularly beneficial in CFD where matrices can be very large, but only a small fraction of the elements are non-zero. OpenFOAM uses this structure to perform matrix operations like multiplication, addition, and especially the solving of linear systems, which is crucial in the iterative methods used in CFD simulations.
+
+The LDU format uses scalar fields representing the diagonal, upper, and lower coefficients. The diagonal coefficients are indexed using the cell index. The upper and lower coefficients use face indices. In order to get the indices to match, mapping arrays between the face and cell indices are provided.  The :code:`lowerAddr()`, and :code:`upperAddr()` functions of the lduAdressing class provide the owner and neighbor cell indices for each face. 
+
+A nice summary of the LDU format can be found in the `OpenFoam Wiki <https://openfoamwiki.net/index.php/OpenFOAM_guide/Matrices_in_OpenFOAM>`_.
+
+.. admonition:: Summary
+
+   In summary, the LDU format is a way of storing sparse matrices. It is specifically tailored to store and manipulate these types of matrices efficiently. OpenFOAM uses this structure to perform matrix operations like multiplication, addition, and especially the solving of linear systems, which is crucial in the iterative methods used in CFD simulations. Most of this happens under the hood but if you ever want to perform an operation on all rows of an lduMatrix, you need to know abou lduAdressing.
+
+
+
+
+
+
