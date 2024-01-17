@@ -225,18 +225,13 @@
 <p>We will use a 2D bos with dimensions <span class="math notranslate nohighlight">\(-0.5 &lt; x &lt; 0.5\)</span> and <span class="math notranslate nohighlight">\(-0.5 &lt; y &lt; 0.5\)</span>. You will need to modify the blockMeshDict file to set up the mesh. The mesh should be uniform with 100 cells in each direction. The mesh should be centered around the origin.</p>
 <p>The scalar field initial conditions are set in the file <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>. We will use a Gaussian distribution with a standard deviation of <span class="math notranslate nohighlight">\(\sigma = 0.1\)</span> and a maximum value of <span class="math notranslate nohighlight">\(T_0 = 2\)</span>. It should be centered at x.</p>
 <div class="math notranslate nohighlight">
-\[T(x,y) = T_0 \exp \left( - \frac{(x-x_0)^2 + (y-y0)^2}{\sigma^2} \right)\]</div>
-<p>We will look into two different velocity fields:</p>
+\[T(x,y) = T_0 \exp \left( - \frac{(x-x_0)^2 + (y-y_0)^2}{\sigma^2} \right)\]</div>
+<p>We will fist look into solid body rotation, in which the initial gaussian will be rotated in clockwise direction without any shearing. The respective velocity field is given by:</p>
 <div class="math notranslate nohighlight">
 \[Vx(x,y)=y\]</div>
 <div class="math notranslate nohighlight">
 \[Vy(x,y)=-x\]</div>
-<p>and</p>
-<div class="math notranslate nohighlight">
-\[Vx(x,y) = -sin(\pi*(X+0.5))*cos(\pi*(Y+0.5))\]</div>
-<div class="math notranslate nohighlight">
-\[Vy(x,y) = cos(\pi*(X+0.5))*sin(\pi*(Y+0.5))\]</div>
-<p>To implmenent the intitial conditions and prescribed velocity field, you will need to modify the files <code class="code docutils literal notranslate"><span class="pre">0/T</span></code> and <code class="code docutils literal notranslate"><span class="pre">0/U</span></code>. We will again use codestream statements for this.</p>
+<p>To implement the initial conditions and prescribed velocity field, you will need to modify the files <code class="code docutils literal notranslate"><span class="pre">0/T</span></code> and <code class="code docutils literal notranslate"><span class="pre">0/U</span></code>. We will again use codestream statements for this.</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -332,7 +327,175 @@
 <span class="linenos">93</span><span class="c1">// ************************************************************************* //</span>
 </pre></div>
 </div>
-<p>Try to implement somthing similar for the velocity and test different advection schemes.</p>
+<p>We can do something similar for the velocity field. The velocity field is set in the file <code class="code docutils literal notranslate"><span class="pre">0/U</span></code>. Again, we will use codestream statements to set the velocity field.</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">    \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="n">volVectorField</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;0&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="kt">object</span>      <span class="n">U</span><span class="p">;</span>
+<span class="linenos">15</span><span class="p">}</span>
+<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="kt">dimensions</span>      <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="kt">internalField</span> <span class="err">#</span><span class="n">codeStream</span>
+<span class="linenos">21</span><span class="p">{</span>
+<span class="linenos">22</span>    <span class="n">codeInclude</span>
+<span class="linenos">23</span>    <span class="cp">#{</span>
+<span class="linenos">24</span>        <span class="cp">#include</span> <span class="cpf">&quot;fvCFD.H&quot;</span>
+<span class="linenos">25</span>    <span class="cp">#};</span>
+<span class="linenos">26</span>    <span class="n">codeOptions</span>
+<span class="linenos">27</span>    <span class="cp">#{</span>
+<span class="linenos">28</span>        <span class="o">-</span><span class="n">I</span><span class="err">$</span><span class="p">(</span><span class="n">LIB_SRC</span><span class="p">)</span><span class="o">/</span><span class="n">finiteVolume</span><span class="o">/</span><span class="n">lnInclude</span> \
+<span class="linenos">29</span>        <span class="o">-</span><span class="n">I</span><span class="err">$</span><span class="p">(</span><span class="n">LIB_SRC</span><span class="p">)</span><span class="o">/</span><span class="n">meshTools</span><span class="o">/</span><span class="n">lnInclude</span>
+<span class="linenos">30</span>    <span class="cp">#};</span>
+<span class="linenos">31</span>    <span class="n">codeLibs</span>
+<span class="linenos">32</span>    <span class="cp">#{</span>
+<span class="linenos">33</span>        <span class="o">-</span><span class="n">lmeshTools</span> \
+<span class="linenos">34</span>        <span class="o">-</span><span class="n">lfiniteVolume</span>
+<span class="linenos">35</span>    <span class="cp">#};</span>
+<span class="hll"><span class="linenos">36</span>    <span class="n">code</span>
+</span><span class="hll"><span class="linenos">37</span>    <span class="cp">#{</span>
+</span><span class="hll"><span class="linenos">38</span>        <span class="k">const</span> <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.141592653589793</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">39</span>        <span class="k">const</span> <span class="n">IOdictionary</span><span class="o">&amp;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">static_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">IOdictionary</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">dict</span><span class="p">);</span>
+</span><span class="hll"><span class="linenos">40</span>        <span class="k">const</span> <span class="n">fvMesh</span><span class="o">&amp;</span> <span class="n">mesh</span> <span class="o">=</span> <span class="n">refCast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">fvMesh</span><span class="o">&gt;</span><span class="p">(</span><span class="n">d</span><span class="p">.</span><span class="n">db</span><span class="p">());</span>
+</span><span class="hll"><span class="linenos">41</span>        <span class="n">volVectorField</span><span class="o">&amp;</span> <span class="n">U</span> <span class="o">=</span> <span class="n">const_cast</span><span class="o">&lt;</span><span class="n">volVectorField</span><span class="o">&amp;&gt;</span><span class="p">(</span>
+</span><span class="hll"><span class="linenos">42</span>            <span class="n">mesh</span><span class="p">.</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volVectorField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;U&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="linenos">43</span>        <span class="p">);</span>
+</span><span class="hll"><span class="linenos">44</span>
+</span><span class="hll"><span class="linenos">45</span>        <span class="n">forAll</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">celli</span><span class="p">)</span>
+</span><span class="hll"><span class="linenos">46</span>        <span class="p">{</span>
+</span><span class="hll"><span class="linenos">47</span>            <span class="k">const</span> <span class="n">point</span><span class="o">&amp;</span> <span class="n">coord</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">.</span><span class="n">C</span><span class="p">()[</span><span class="n">celli</span><span class="p">];</span>
+</span><span class="hll"><span class="linenos">48</span>            <span class="n">U</span><span class="p">[</span><span class="n">celli</span><span class="p">].</span><span class="n">x</span><span class="p">()</span> <span class="o">=</span> <span class="o">???</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">49</span>            <span class="n">U</span><span class="p">[</span><span class="n">celli</span><span class="p">].</span><span class="n">y</span><span class="p">()</span> <span class="o">=</span> <span class="o">???</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">50</span>            <span class="n">U</span><span class="p">[</span><span class="n">celli</span><span class="p">].</span><span class="n">z</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">51</span>        <span class="p">}</span>
+</span><span class="hll"><span class="linenos">52</span>
+</span><span class="hll"><span class="linenos">53</span>        <span class="n">writeEntry</span><span class="p">(</span><span class="n">os</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">U</span><span class="p">);</span> <span class="c1">//</span>
+</span><span class="hll"><span class="linenos">54</span>    <span class="cp">#};</span>
+</span><span class="hll"><span class="linenos">55</span><span class="p">};</span>
+</span><span class="linenos">56</span>
+<span class="linenos">57</span>
+<span class="linenos">58</span><span class="k">boundaryField</span>
+<span class="linenos">59</span><span class="p">{</span>
+<span class="linenos">60</span>    <span class="n">left</span>
+<span class="linenos">61</span>    <span class="p">{</span>
+<span class="linenos">62</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+<span class="linenos">63</span>    <span class="p">}</span>
+<span class="linenos">64</span>    <span class="n">right</span>
+<span class="linenos">65</span>    <span class="p">{</span>
+<span class="linenos">66</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+<span class="linenos">67</span>    <span class="p">}</span>
+<span class="linenos">68</span>    <span class="n">top</span>
+<span class="linenos">69</span>    <span class="p">{</span>
+<span class="linenos">70</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+<span class="linenos">71</span>    <span class="p">}</span>
+<span class="linenos">72</span>    <span class="n">bottom</span>
+<span class="linenos">73</span>    <span class="p">{</span>
+<span class="linenos">74</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+<span class="linenos">75</span>    <span class="p">}</span>
+<span class="linenos">76</span>    <span class="n">frontAndBack</span>
+<span class="linenos">77</span>    <span class="p">{</span>
+<span class="linenos">78</span>        <span class="kt">type</span>            <span class="n">empty</span><span class="p">;</span>
+<span class="linenos">79</span>    <span class="p">}</span>
+<span class="linenos">80</span><span class="p">}</span>
+<span class="linenos">81</span>
+<span class="linenos">82</span>
+<span class="linenos">83</span><span class="c1">// ************************************************************************* //</span>
+</pre></div>
+</div>
+<p>Since we want to look at advection without any physical diffusion, we also need to set the diffusion coefficient to something small. This happens in <code class="code docutils literal notranslate"><span class="pre">constant/transportProperties</span></code>:</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">    \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;constant&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="kt">object</span>      <span class="k">transportProperties</span><span class="p">;</span>
+<span class="linenos">15</span><span class="p">}</span>
+<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="n">DT</span>              <span class="n">DT</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">2</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span> <span class="mf">1e-9</span><span class="p">;</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="c1">// ************************************************************************* //</span>
+</pre></div>
+</div>
+<p>Finally, we need to set the time step and simulation time. This happens in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>.</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">    \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="kt">object</span>      <span class="k">controlDict</span><span class="p">;</span>
+<span class="linenos">15</span><span class="p">}</span>
+<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="kt">application</span>     <span class="n">scalarTransportFoam</span><span class="p">;</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="kt">startFrom</span>       <span class="kt">startTime</span><span class="p">;</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="kt">startTime</span>       <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span><span class="kt">stopAt</span>          <span class="kt">endTime</span><span class="p">;</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="kt">endTime</span>         <span class="mi">20</span><span class="p">;</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span><span class="kt">deltaT</span>          <span class="mf">0.0025</span><span class="p">;</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="kt">writeControl</span>    <span class="n">timeStep</span><span class="p">;</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span><span class="kt">writeInterval</span>   <span class="mi">20</span><span class="p">;</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="kt">purgeWrite</span>      <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">35</span>
+<span class="hll"><span class="linenos">36</span><span class="kt">writeFormat</span>     <span class="k">ascii</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">37</span>
+</span><span class="hll"><span class="linenos">38</span><span class="kt">writePrecision</span>  <span class="mi">6</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">39</span>
+</span><span class="hll"><span class="linenos">40</span><span class="kt">writeCompression</span> <span class="k">off</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">41</span>
+</span><span class="hll"><span class="linenos">42</span><span class="kt">timeFormat</span>      <span class="k">general</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">43</span>
+</span><span class="hll"><span class="linenos">44</span><span class="kt">timePrecision</span>   <span class="mi">6</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">45</span>
+</span><span class="hll"><span class="linenos">46</span><span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">47</span>
+</span><span class="hll"><span class="linenos">48</span>
+</span><span class="hll"><span class="linenos">49</span><span class="c1">// ************************************************************************* //</span>
+</span></pre></div>
+</div>
+<p>We here use a constant rund time of 20 and a time step length of <span class="math notranslate nohighlight">\(\Delta t = 0.0025\)</span>; we save the output every 20 steps. To run the case, call <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> and then the solver <code class="code docutils literal notranslate"><span class="pre">scalarTransportFoam</span></code>.</p>
+<p>Finally, change the advection scheme (e.g. vanLeer, upwind, MUSCL) and compare the results in paraview!</p>
+<p>Now, change the velocity field to a shear shell and repeat the exercise.</p>
+<div class="math notranslate nohighlight">
+\[Vx(x,y) = -sin(\pi*(X+0.5))*cos(\pi*(Y+0.5))\]</div>
+<div class="math notranslate nohighlight">
+\[Vy(x,y) = cos(\pi*(X+0.5))*sin(\pi*(Y+0.5))\]</div>
 </section>
 </section>
 
