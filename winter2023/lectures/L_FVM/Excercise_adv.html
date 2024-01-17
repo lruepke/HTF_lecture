@@ -119,7 +119,15 @@
 <li class="toctree-l1"><a class="reference internal" href="Advection1.html">The advection term</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Excercise on advection schemes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#solver">Solver</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#initial-conditions">Initial conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mesh-and-initial-conditions">Mesh and initial conditions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mesh">Mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#temperature">Temperature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#velocity">Velocity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation">Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-the-case">Setting up the case</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#excercise">Excercise</a></li>
 </ul>
 </li>
 </ul>
@@ -220,17 +228,28 @@
 </div>
 <p>The solver is set up to solve the advection-diffusion equation for a scalar field called <code class="code docutils literal notranslate"><span class="pre">T</span></code>. The velocity field is prescribed in the file <code class="code docutils literal notranslate"><span class="pre">0/U</span></code> and the diffusion coefficient is set in <code class="code docutils literal notranslate"><span class="pre">constant/transportProperties</span></code>. The initial condition is set in <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>.</p>
 </section>
-<section id="initial-conditions">
-<h2>Initial conditions<a class="headerlink" href="#initial-conditions" title="Link to this heading"></a></h2>
-<p>We will use a 2D bos with dimensions <span class="math notranslate nohighlight">\(-0.5 &lt; x &lt; 0.5\)</span> and <span class="math notranslate nohighlight">\(-0.5 &lt; y &lt; 0.5\)</span>. You will need to modify the blockMeshDict file to set up the mesh. The mesh should be uniform with 100 cells in each direction. The mesh should be centered around the origin.</p>
-<p>The scalar field initial conditions are set in the file <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>. We will use a Gaussian distribution with a standard deviation of <span class="math notranslate nohighlight">\(\sigma = 0.1\)</span> and a maximum value of <span class="math notranslate nohighlight">\(T_0 = 2\)</span>. It should be centered at x.</p>
+<section id="mesh-and-initial-conditions">
+<h2>Mesh and initial conditions<a class="headerlink" href="#mesh-and-initial-conditions" title="Link to this heading"></a></h2>
+<section id="mesh">
+<h3>Mesh<a class="headerlink" href="#mesh" title="Link to this heading"></a></h3>
+<p>We will use a 2D box with dimensions <span class="math notranslate nohighlight">\(-0.5 &lt; x &lt; 0.5\)</span> and <span class="math notranslate nohighlight">\(-0.5 &lt; y &lt; 0.5\)</span>. You will need to modify the blockMeshDict file to set up the mesh. The mesh should be uniform with 100 cells in each direction. The mesh should be centered around the origin.</p>
+</section>
+<section id="temperature">
+<h3>Temperature<a class="headerlink" href="#temperature" title="Link to this heading"></a></h3>
+<p>The scalar field initial conditions are set in the file <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>. We will use a Gaussian distribution with a standard deviation of <span class="math notranslate nohighlight">\(\sigma = 0.1\)</span> and a maximum value of <span class="math notranslate nohighlight">\(T_0 = 2\)</span>. It should be centered at x. Let’s put the intitial gaussian at <span class="math notranslate nohighlight">\(x_0 = 0\)</span> and <span class="math notranslate nohighlight">\(y_0 = 0.25\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[T(x,y) = T_0 \exp \left( - \frac{(x-x_0)^2 + (y-y_0)^2}{\sigma^2} \right)\]</div>
+</section>
+<section id="velocity">
+<h3>Velocity<a class="headerlink" href="#velocity" title="Link to this heading"></a></h3>
 <p>We will fist look into solid body rotation, in which the initial gaussian will be rotated in clockwise direction without any shearing. The respective velocity field is given by:</p>
 <div class="math notranslate nohighlight">
 \[Vx(x,y)=y\]</div>
 <div class="math notranslate nohighlight">
 \[Vy(x,y)=-x\]</div>
+</section>
+<section id="implementation">
+<h3>Implementation<a class="headerlink" href="#implementation" title="Link to this heading"></a></h3>
 <p>To implement the initial conditions and prescribed velocity field, you will need to modify the files <code class="code docutils literal notranslate"><span class="pre">0/T</span></code> and <code class="code docutils literal notranslate"><span class="pre">0/U</span></code>. We will again use codestream statements for this.</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
@@ -413,6 +432,9 @@
 <span class="linenos">83</span><span class="c1">// ************************************************************************* //</span>
 </pre></div>
 </div>
+</section>
+<section id="setting-up-the-case">
+<h3>Setting up the case<a class="headerlink" href="#setting-up-the-case" title="Link to this heading"></a></h3>
 <p>Since we want to look at advection without any physical diffusion, we also need to set the diffusion coefficient to something small. This happens in <code class="code docutils literal notranslate"><span class="pre">constant/transportProperties</span></code>:</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
@@ -463,34 +485,38 @@
 <span class="linenos">23</span>
 <span class="linenos">24</span><span class="kt">stopAt</span>          <span class="kt">endTime</span><span class="p">;</span>
 <span class="linenos">25</span>
-<span class="linenos">26</span><span class="kt">endTime</span>         <span class="mi">20</span><span class="p">;</span>
-<span class="linenos">27</span>
-<span class="linenos">28</span><span class="kt">deltaT</span>          <span class="mf">0.0025</span><span class="p">;</span>
-<span class="linenos">29</span>
-<span class="linenos">30</span><span class="kt">writeControl</span>    <span class="n">timeStep</span><span class="p">;</span>
-<span class="linenos">31</span>
-<span class="linenos">32</span><span class="kt">writeInterval</span>   <span class="mi">20</span><span class="p">;</span>
-<span class="linenos">33</span>
+<span class="hll"><span class="linenos">26</span><span class="kt">endTime</span>         <span class="mi">20</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">27</span>
+</span><span class="hll"><span class="linenos">28</span><span class="kt">deltaT</span>          <span class="mf">0.0025</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">29</span>
+</span><span class="hll"><span class="linenos">30</span><span class="kt">writeControl</span>    <span class="n">timeStep</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">31</span>
+</span><span class="hll"><span class="linenos">32</span><span class="kt">writeInterval</span>   <span class="mi">20</span><span class="p">;</span>
+</span><span class="linenos">33</span>
 <span class="linenos">34</span><span class="kt">purgeWrite</span>      <span class="mi">0</span><span class="p">;</span>
 <span class="linenos">35</span>
-<span class="hll"><span class="linenos">36</span><span class="kt">writeFormat</span>     <span class="k">ascii</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">37</span>
-</span><span class="hll"><span class="linenos">38</span><span class="kt">writePrecision</span>  <span class="mi">6</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">39</span>
-</span><span class="hll"><span class="linenos">40</span><span class="kt">writeCompression</span> <span class="k">off</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">41</span>
-</span><span class="hll"><span class="linenos">42</span><span class="kt">timeFormat</span>      <span class="k">general</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">43</span>
-</span><span class="hll"><span class="linenos">44</span><span class="kt">timePrecision</span>   <span class="mi">6</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">45</span>
-</span><span class="hll"><span class="linenos">46</span><span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">47</span>
-</span><span class="hll"><span class="linenos">48</span>
-</span><span class="hll"><span class="linenos">49</span><span class="c1">// ************************************************************************* //</span>
-</span></pre></div>
+<span class="linenos">36</span><span class="kt">writeFormat</span>     <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span><span class="kt">writePrecision</span>  <span class="mi">6</span><span class="p">;</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span><span class="kt">writeCompression</span> <span class="k">off</span><span class="p">;</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span><span class="kt">timeFormat</span>      <span class="k">general</span><span class="p">;</span>
+<span class="linenos">43</span>
+<span class="linenos">44</span><span class="kt">timePrecision</span>   <span class="mi">6</span><span class="p">;</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span><span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span>
+<span class="linenos">49</span><span class="c1">// ************************************************************************* //</span>
+</pre></div>
 </div>
 <p>We here use a constant rund time of 20 and a time step length of <span class="math notranslate nohighlight">\(\Delta t = 0.0025\)</span>; we save the output every 20 steps. To run the case, call <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> and then the solver <code class="code docutils literal notranslate"><span class="pre">scalarTransportFoam</span></code>.</p>
-<p>Finally, change the advection scheme (e.g. vanLeer, upwind, MUSCL) and compare the results in paraview!</p>
+</section>
+</section>
+<section id="excercise">
+<h2>Excercise<a class="headerlink" href="#excercise" title="Link to this heading"></a></h2>
+<p>Finally, change the advection scheme (e.g. vanLeer, upwind, MUSCL) and compare the results in paraview! A good way is to make multiple directions for the individual cases.</p>
 <p>Now, change the velocity field to a shear shell and repeat the exercise.</p>
 <div class="math notranslate nohighlight">
 \[Vx(x,y) = -sin(\pi*(X+0.5))*cos(\pi*(Y+0.5))\]</div>
