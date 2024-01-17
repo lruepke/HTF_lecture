@@ -34,11 +34,11 @@ We will use a 2D bos with dimensions :math:`-0.5 < x < 0.5` and :math:`-0.5 < y 
 The scalar field initial conditions are set in the file :code:`0/T`. We will use a Gaussian distribution with a standard deviation of :math:`\sigma = 0.1` and a maximum value of :math:`T_0 = 2`. It should be centered at x. 
 
 .. math::
-    T(x,y) = T_0 \exp \left( - \frac{(x-x_0)^2 + (y-y0)^2}{\sigma^2} \right)    
+    T(x,y) = T_0 \exp \left( - \frac{(x-x_0)^2 + (y-y_0)^2}{\sigma^2} \right)    
 
 
 
-We will look into two different velocity fields:
+We will fist look into solid body rotation, in which the initial gaussian will be rotated in clockwise direction without any shearing. The respective velocity field is given by:
 
 .. math::
 
@@ -47,19 +47,8 @@ We will look into two different velocity fields:
 .. math::
     Vy(x,y)=-x 
 
-and
 
-.. math::
-    
-    Vx(x,y) = -sin(\pi*(X+0.5))*cos(\pi*(Y+0.5))
-    
-.. math:: 
-    
-    Vy(x,y) = cos(\pi*(X+0.5))*sin(\pi*(Y+0.5))
-
-
-
-To implmenent the intitial conditions and prescribed velocity field, you will need to modify the files :code:`0/T` and :code:`0/U`. We will again use codestream statements for this.
+To implement the initial conditions and prescribed velocity field, you will need to modify the files :code:`0/T` and :code:`0/U`. We will again use codestream statements for this.
 
 
 .. code-block:: foam
@@ -161,5 +150,198 @@ To implmenent the intitial conditions and prescribed velocity field, you will ne
     // ************************************************************************* //
 
 
-Try to implement somthing similar for the velocity and test different advection schemes. 
+We can do something similar for the velocity field. The velocity field is set in the file :code:`0/U`. Again, we will use codestream statements to set the velocity field.
+
+.. code-block:: foam
+    :linenos:
+    :emphasize-lines: 36-55
+
+    /*--------------------------------*- C++ -*----------------------------------*\
+    =========                 |
+    \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+     \\    /   O peration     | Website:  https://openfoam.org
+      \\  /    A nd           | Version:  7
+        \\/     M anipulation  |
+    \*---------------------------------------------------------------------------*/
+    FoamFile
+    {
+        version     2.0;
+        format      ascii;
+        class       volVectorField;
+        location    "0";
+        object      U;
+    }
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    dimensions      [0 1 -1 0 0 0 0];
+
+    internalField #codeStream
+    {
+        codeInclude
+        #{
+            #include "fvCFD.H"
+        #};
+        codeOptions
+        #{
+            -I$(LIB_SRC)/finiteVolume/lnInclude \
+            -I$(LIB_SRC)/meshTools/lnInclude
+        #};
+        codeLibs 
+        #{
+            -lmeshTools \
+            -lfiniteVolume 
+        #};
+        code 
+        #{
+            const double pi = 3.141592653589793;
+            const IOdictionary& d = static_cast<const IOdictionary&>(dict);
+            const fvMesh& mesh = refCast<const fvMesh>(d.db());
+            volVectorField& U = const_cast<volVectorField&>(
+                mesh.lookupObject<volVectorField>("U")
+            );
+
+            forAll(U, celli)
+            {
+                const point& coord = mesh.C()[celli];
+                U[celli].x() = ???;
+                U[celli].y() = ???;
+                U[celli].z() = 0;
+            }
+            
+            writeEntry(os, "", U); //
+        #};
+    };
+
+
+    boundaryField
+    {
+        left
+        {
+            type            zeroGradient;
+        }
+        right
+        {
+            type            zeroGradient;
+        }
+        top
+        {
+            type            zeroGradient;
+        }
+        bottom
+        {
+            type            zeroGradient;
+        }
+        frontAndBack
+        {
+            type            empty;
+        }
+    }
+
+
+    // ************************************************************************* //
+
+
+Since we want to look at advection without any physical diffusion, we also need to set the diffusion coefficient to something small. This happens in :code:`constant/transportProperties`:
+
+
+.. code-block:: foam
+    :linenos:
+    :emphasize-lines: 36-61
+
+    /*--------------------------------*- C++ -*----------------------------------*\
+    =========                 |
+    \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+     \\    /   O peration     | Website:  https://openfoam.org
+      \\  /    A nd           | Version:  7
+        \\/     M anipulation  |
+    \*---------------------------------------------------------------------------*/
+    FoamFile
+    {
+        version     2.0;
+        format      ascii;
+        class       dictionary;
+        location    "constant";
+        object      transportProperties;
+    }
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    DT              DT [0 2 -1 0 0 0 0] 1e-9;
+
+
+    // ************************************************************************* //
+
+
+
+Finally, we need to set the time step and simulation time. This happens in :code:`system/controlDict`.
+
+.. code-block:: foam
+    :linenos:
+    :emphasize-lines: 36-61
+
+
+    /*--------------------------------*- C++ -*----------------------------------*\
+    =========                 |
+    \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+     \\    /   O peration     | Website:  https://openfoam.org
+      \\  /    A nd           | Version:  7
+        \\/     M anipulation  |
+    \*---------------------------------------------------------------------------*/
+    FoamFile
+    {
+        version     2.0;
+        format      ascii;
+        class       dictionary;
+        location    "system";
+        object      controlDict;
+    }
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    application     scalarTransportFoam;
+
+    startFrom       startTime;
+
+    startTime       0;
+
+    stopAt          endTime;
+
+    endTime         20;
+
+    deltaT          0.0025;
+
+    writeControl    timeStep;
+
+    writeInterval   20;
+
+    purgeWrite      0;
+
+    writeFormat     ascii;
+
+    writePrecision  6;
+
+    writeCompression off;
+
+    timeFormat      general;
+
+    timePrecision   6;
+
+    runTimeModifiable true;
+
+
+    // ************************************************************************* //
+
+
+We here use a constant rund time of 20 and a time step length of :math:`\Delta t = 0.0025`; we save the output every 20 steps. To run the case, call :code:`blockMesh` and then the solver :code:`scalarTransportFoam`. 
+
+Finally, change the advection scheme (e.g. vanLeer, upwind, MUSCL) and compare the results in paraview!
+
+Now, change the velocity field to a shear shell and repeat the exercise. 
+
+.. math::
+    
+    Vx(x,y) = -sin(\pi*(X+0.5))*cos(\pi*(Y+0.5))
+    
+.. math:: 
+    
+    Vy(x,y) = cos(\pi*(X+0.5))*sin(\pi*(Y+0.5))
+
 
