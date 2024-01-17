@@ -415,11 +415,10 @@ where :math:`a_C` is the diagonal coefficients of the matrix, :math:`a_F` is the
 
 .. Tip::
 
-   For specific cell :math:`C`, 
-   * :math:`a_F` has only contributed from internal faces. 
-   * :math:`a_C` is the negative summation of :math:`a_F`, contributed from all faces, but equation of the :math:`a_F` for a boundary faces (:eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue` and :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`) is a little bit different from internal face. 
-   
-   * :math:`c_F` only comes from boundary faces of cell :math:`C` if it has boundary face, see also :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue` and :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`. :math:`c_F` will contribute to RHS (:math:`\mathbf{B}`) of the algebraic :eq:`fvm_matrix_form`.
+   For specific cell :math:`C`:
+      * :math:`a_F` has only contributed from internal faces.
+      * :math:`a_C` is the negative summation of :math:`a_F`, contributed from all faces, but equation of the :math:`a_F` for a boundary faces (:eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue` and :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`) is a little bit different from internal face.
+      * :math:`c_F` only comes from boundary faces of cell :math:`C` if it has boundary face, see also :eq:`eq:fvm_laplacian_coeff_boundary_fixedvalue` and :eq:`eq:fvm_laplacian_coeff_boundary_fixedflux`. :math:`c_F` will contribute to RHS (:math:`\mathbf{B}`) of the algebraic :eq:`fvm_matrix_form`.
    
 Let's do the temporal discretization for the first term of :eq:`eq:fvm_diffusionEq_spatial_dis`,
 

@@ -109,6 +109,7 @@ The majority of this course will be spent in front of a computer working on exer
     lectures/L_FVM/intro
     lectures/L_FVM/Implementation1
     lectures/L_FVM/Advection1
+    lectures/L_FVM/Excercise_adv
 
 .. toctree::
     :maxdepth: 2
