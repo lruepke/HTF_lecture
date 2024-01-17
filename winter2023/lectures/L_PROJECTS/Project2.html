@@ -117,6 +117,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/Implementation1.html">OpenFoam implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L_FVM/Advection1.html">The advection term</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Excercise_adv.html">Excercise on advection schemes</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Projects</span></p>
 <ul class="current">
@@ -243,11 +244,11 @@
 <p>The cooling of magmatic intrusions is associated with a latent effect of the crystallization process. A convenient way of accounting for this effect is to use an effective specific heat for the solid phase in the energy equation (see e.g. <span id="id10">[<a class="reference internal" href="../../refs.html#id16" title="I. Aarnes, H. Svensen, J.A.D Connolly, and Y.Y. Podladchikov. How contact metamorphism can trigger global climate changes: modeling gas generation around igneous sills in sedimentary basins. Geochimica Et Cosmochimica Acta, 2010. doi:10.1016/j.gca.2010.09.011.">Aarnes et al., 2010</a>]</span>).</p>
 <p>We can do this by modifying the transient term of the energy equation:</p>
 <div class="math notranslate nohighlight" id="equation-eq-e-eqn-eff">
-<span class="eqno">(79)<a class="headerlink" href="#equation-eq-e-eqn-eff" title="Link to this equation"></a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{eff})\frac{\partial T}{\partial t}  = ...\]</div>
+<span class="eqno">(81)<a class="headerlink" href="#equation-eq-e-eqn-eff" title="Link to this equation"></a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{eff})\frac{\partial T}{\partial t}  = ...\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-e-eqn-cp1">
-<span class="eqno">(80)<a class="headerlink" href="#equation-eq-e-eqn-cp1" title="Link to this equation"></a></span>\[C_{eff}  = C_p \left( 1+ \frac{L_c}{(T_L -T_S) C_p)}\right) \text{ for } (T_S &lt; T &lt; T_L)\]</div>
+<span class="eqno">(82)<a class="headerlink" href="#equation-eq-e-eqn-cp1" title="Link to this equation"></a></span>\[C_{eff}  = C_p \left( 1+ \frac{L_c}{(T_L -T_S) C_p)}\right) \text{ for } (T_S &lt; T &lt; T_L)\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-e-eqn-cp2">
-<span class="eqno">(81)<a class="headerlink" href="#equation-eq-e-eqn-cp2" title="Link to this equation"></a></span>\[C_{eff}  = C_P \text{ for } (T &lt; T_S)\]</div>
+<span class="eqno">(83)<a class="headerlink" href="#equation-eq-e-eqn-cp2" title="Link to this equation"></a></span>\[C_{eff}  = C_P \text{ for } (T &lt; T_S)\]</div>
 <p>These changes are implemented in a modified solver of HydrothermalFoam, which you can download from here (<a class="reference download internal" download="" href="../../_downloads/4244f629c23d2f901c5ad654af2abead/HydrothermalSinglePhaseDarcyFoam_Cpr.zip"><code class="xref download docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam_Cpr</span></code></a>).</p>
 <p>Check the <code class="code docutils literal notranslate"><span class="pre">updateProps.H</span></code> and <code class="code docutils literal notranslate"><span class="pre">createFields.H</span></code> files, how these changes are implemented.</p>
 </section>

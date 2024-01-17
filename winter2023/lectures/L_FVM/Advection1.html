@@ -29,7 +29,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Project 1: Flow along a detachment fault" href="../L_PROJECTS/Project1.html" />
+    <link rel="next" title="Excercise on advection schemes" href="Excercise_adv.html" />
     <link rel="prev" title="1. Read and plot mesh information" href="cases/jupyter/VisualizeResults.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
@@ -116,7 +116,14 @@
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro.html">FVM and OpenFoam</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Implementation1.html">OpenFoam implementation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">The advection term</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The advection term</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#resolving-advection">Resolving advection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#implementation-in-openfoam">Implementation in OpenFoam</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Excercise_adv.html">Excercise on advection schemes</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Projects</span></p>
 <ul>
@@ -203,10 +210,90 @@
 </style>
 <section id="the-advection-term">
 <span id="advection1"></span><h1>The advection term<a class="headerlink" href="#the-advection-term" title="Link to this heading"></a></h1>
-<p>In the previous sessions, we have explored in details how openFoam solves the diffusion equation. In this session, we will explore how openFoam solves the advection equation. Here is a basic advection diffusion equation:</p>
+<p>In the previous sessions, we have explored in details how openFoam solves the diffusion equation. In this session, we will explore how openFoam solves the advection equation.</p>
+<p>Do you remember the governing equations of hydrothermal convection?</p>
+<div class="math notranslate nohighlight" id="equation-eq-pressure-adv-fvm">
+<span class="eqno">(79)<a class="headerlink" href="#equation-eq-pressure-adv-fvm" title="Link to this equation"></a></span>\[\varepsilon \rho_f \left( \beta_f \frac{\partial p}{\partial t} - \alpha_f \frac{\partial T}{\partial t} \right) = \nabla \cdot \left( \rho_f \frac{k}{\mu_f} (\nabla p - \rho_f \vec{g}) \right)\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-temperature-adv-fvm">
+<span class="eqno">(80)<a class="headerlink" href="#equation-eq-temperature-adv-fvm" title="Link to this equation"></a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{pr})\textcolor{green}{\frac{\partial T}{\partial t}} = \textcolor{orange}{\nabla \cdot (\lambda_r \nabla T)} \textcolor{purple}{- \rho_f C_{pf} \vec{U}\cdot \nabla T} + \frac{\mu_f}{k} \parallel \vec{U} \parallel ^2 - \left( \frac{\partial ln \rho_f}{\partial ln T} \right)_p \frac{Dp}{Dt}\]</div>
+<p>We have already looked into the numerical FVM implementation of the time derivative (green term)and the diffusion term (orange term). The purple term is the transport, so-called advection term. It handles the transport of variable by the flowing fluid. In the hydrothermal convection case, we have transported the temperature, <span class="math notranslate nohighlight">\(T\)</span>, with the fluid.</p>
+<p>In a more general form, a transient advection diffusion equation can be written as:</p>
 <div class="math notranslate nohighlight">
 \[\frac{\partial T}{\partial t} = \nabla \cdot \left( D \nabla T \right) - \nabla \cdot \left( \vec{U} T \right)\]</div>
-<p>where <span class="math notranslate nohighlight">\(T\)</span> is the transported scalar, <span class="math notranslate nohighlight">\(D\)</span> is the diffusion coefficient and <span class="math notranslate nohighlight">\(\vec{U}\)</span> is the velocity field. We have already discussed the diffusion term (first term onthe RHS); now it’s time to discuss advection.</p>
+<p>where <span class="math notranslate nohighlight">\(T\)</span> is the transported scalar, <span class="math notranslate nohighlight">\(D\)</span> is the diffusion coefficient and <span class="math notranslate nohighlight">\(\vec{U}\)</span> is the velocity field.</p>
+<div class="admonition-forms-of-the-advection-term admonition">
+<p class="admonition-title">Forms of the advection term</p>
+<p>Did you notice the difference between the temperature equation for hydrothermal convection and the general advection equation? In the form given for hydrothermal convection, the specific heat <span class="math notranslate nohighlight">\(c_p\)</span>, the density <span class="math notranslate nohighlight">\(\rho\)</span>, and the velocity <span class="math notranslate nohighlight">\(\vec{u}\)</span> are outside the divergence, while in the general form they are inside (due to the conservative form of the equation). The advection term is also called the convective term.</p>
+<p>The reason is not that these variables are constant but lies in the way the energy conservation equation is derived. If it is written in terms of energy (e.g. enthalpy or internal energy), we would have the respective terms included in the divergence. If we use the temperature form, using the specific heat, those terms end up outside the divergence. You can check <span id="id1">[<a class="reference internal" href="../../refs.html#id30" title="Z. Guo, L. Rüpke, and C. Tao. Hydrothermalfoam v1.0: a 3-d hydro-thermo-transport model fornatural submarine hydrothermal systems. Geoscientific Model Development, 2020.">Guo et al., 2020</a>]</span> for details.</p>
+</div>
+<section id="resolving-advection">
+<h2>Resolving advection<a class="headerlink" href="#resolving-advection" title="Link to this heading"></a></h2>
+<p>The core of the advection or transport term solving process involves the discretization of the convective fluxes across the control volume faces. This discretization is crucial as it directly influences the stability and accuracy of the simulation. OpenFOAM provides a range of discretization schemes, such as the upwind, linear, and higher-order schemes like QUICK and cubic, which are discussed and presented in <span id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The choice of scheme can significantly affect the numerical diffusion and the overall solution’s fidelity.</p>
+<p>For instance, the upwind scheme, while robust and simple, can introduce considerable numerical diffusion, leading to a less accurate representation of sharp gradients. On the other hand, higher-order schemes offer improved accuracy but can lead to numerical instabilities if not handled properly. You can find an introduction to different advection scheme in the companian lecture on finite elements and general numerical methods (<a class="reference external" href="https://lruepke.github.io/HTF_lecture/winter2022/lecture1/fdm_advection.html">Link</a>)</p>
+<p>Moreover, OpenFOAM incorporates the concept of boundedness through the use of Total Variation Diminishing (TVD) schemes to ensure that the physical and numerical bounds are respected, especially in cases involving steep gradients or when dealing with scalar quantities like concentration or temperature.</p>
+<p>In essence, the numerics of solving the advection/transport term in OpenFOAM involve a careful balance between accuracy, stability, and computational efficiency, with the choice of discretization schemes and iterative solvers playing pivotal roles in the outcome of the CFD simulations.</p>
+<section id="implementation-in-openfoam">
+<h3>Implementation in OpenFoam<a class="headerlink" href="#implementation-in-openfoam" title="Link to this heading"></a></h3>
+<p>The way the advection term is solved is again handled in the file <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code>.</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm">\\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm"> \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">  \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>  <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>  <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>  <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos">13</span>  <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>  <span class="kt">object</span>      <span class="k">fvSchemes</span><span class="p">;</span>
+<span class="linenos">15</span><span class="p">}</span>
+<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="k">ddtSchemes</span>
+<span class="linenos">19</span><span class="p">{</span>
+<span class="linenos">20</span>  <span class="k">default</span>         <span class="n">Euler</span><span class="p">;</span>
+<span class="linenos">21</span><span class="p">}</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="k">gradSchemes</span>
+<span class="linenos">24</span><span class="p">{</span>
+<span class="linenos">25</span>  <span class="k">default</span>         <span class="n">Gauss</span> <span class="n">linear</span><span class="p">;</span>
+<span class="linenos">26</span><span class="p">}</span>
+<span class="linenos">27</span>
+<span class="hll"><span class="linenos">28</span><span class="k">divSchemes</span>
+</span><span class="hll"><span class="linenos">29</span><span class="p">{</span>
+</span><span class="hll"><span class="linenos">30</span>   <span class="k">default</span>         <span class="n">none</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">31</span>   <span class="n">div</span><span class="p">(</span><span class="k">phi</span><span class="p">,</span><span class="k">T</span><span class="p">)</span>      <span class="n">Gauss</span> <span class="n">MUSCL</span> <span class="n">grad</span><span class="p">(</span><span class="k">T</span><span class="p">);</span>
+</span><span class="hll"><span class="linenos">32</span><span class="p">}</span>
+</span><span class="linenos">33</span>
+<span class="hll"><span class="linenos">34</span><span class="k">laplacianSchemes</span>
+</span><span class="hll"><span class="linenos">35</span><span class="p">{</span>
+</span><span class="hll"><span class="linenos">36</span>  <span class="k">default</span>         <span class="n">none</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">37</span>  <span class="n">laplacian</span><span class="p">(</span><span class="n">DT</span><span class="p">,</span><span class="k">T</span><span class="p">)</span> <span class="n">Gauss</span> <span class="n">linear</span> <span class="n">corrected</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">38</span><span class="p">}</span>
+</span><span class="linenos">39</span>
+<span class="linenos">40</span> <span class="k">interpolationSchemes</span>
+<span class="linenos">41</span><span class="p">{</span>
+<span class="linenos">42</span>  <span class="k">default</span>         <span class="n">linear</span><span class="p">;</span>
+<span class="linenos">43</span><span class="p">}</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span><span class="k">snGradSchemes</span>
+<span class="linenos">46</span><span class="p">{</span>
+<span class="linenos">47</span>  <span class="k">default</span>         <span class="n">corrected</span><span class="p">;</span>
+<span class="linenos">48</span><span class="p">}</span>
+<span class="linenos">49</span>
+<span class="linenos">50</span>
+<span class="linenos">51</span><span class="c1">// ************************************************************************* //</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>There are many different advection schemes implemented in OpenFoam. You can get a list of all available schemes by changing the advection scheme to something invalid like <code class="code docutils literal notranslate"><span class="pre">abc</span></code>. Openfoam will throw an error and list all available schemes.</p>
+</div>
+</section>
+</section>
 </section>
 
 
@@ -214,7 +301,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="cases/jupyter/VisualizeResults.html" class="btn btn-neutral float-left" title="1. Read and plot mesh information" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../L_PROJECTS/Project1.html" class="btn btn-neutral float-right" title="Project 1: Flow along a detachment fault" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Excercise_adv.html" class="btn btn-neutral float-right" title="Excercise on advection schemes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

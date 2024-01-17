@@ -133,6 +133,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Implementation1.html">OpenFoam implementation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Advection1.html">The advection term</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Excercise_adv.html">Excercise on advection schemes</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Projects</span></p>
 <ul>
@@ -475,12 +476,14 @@ The coefficients of the selected cell <span class="math notranslate nohighlight"
 <p>where <span class="math notranslate nohighlight">\(a_C\)</span> is the diagonal coefficients of the matrix, <span class="math notranslate nohighlight">\(a_F\)</span> is the off-diagonal coefficients, and the <span class="math notranslate nohighlight">\(c_F\)</span> is the source coefficients as right hand side of matrix of system.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>For specific cell <span class="math notranslate nohighlight">\(C\)</span>,
-* <span class="math notranslate nohighlight">\(a_F\)</span> has only contributed from internal faces.
-* <span class="math notranslate nohighlight">\(a_C\)</span> is the negative summation of <span class="math notranslate nohighlight">\(a_F\)</span>, contributed from all faces, but equation of the <span class="math notranslate nohighlight">\(a_F\)</span> for a boundary faces (<a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (65)</a> and <a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (67)</a>) is a little bit different from internal face.</p>
-<ul class="simple">
+<dl class="simple">
+<dt>For specific cell <span class="math notranslate nohighlight">\(C\)</span>:</dt><dd><ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a_F\)</span> has only contributed from internal faces.</p></li>
+<li><p><span class="math notranslate nohighlight">\(a_C\)</span> is the negative summation of <span class="math notranslate nohighlight">\(a_F\)</span>, contributed from all faces, but equation of the <span class="math notranslate nohighlight">\(a_F\)</span> for a boundary faces (<a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (65)</a> and <a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (67)</a>) is a little bit different from internal face.</p></li>
 <li><p><span class="math notranslate nohighlight">\(c_F\)</span> only comes from boundary faces of cell <span class="math notranslate nohighlight">\(C\)</span> if it has boundary face, see also <a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (65)</a> and <a class="reference internal" href="#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (67)</a>. <span class="math notranslate nohighlight">\(c_F\)</span> will contribute to RHS (<span class="math notranslate nohighlight">\(\mathbf{B}\)</span>) of the algebraic <a class="reference internal" href="#equation-fvm-matrix-form">equation (71)</a>.</p></li>
 </ul>
+</dd>
+</dl>
 </div>
 <p>Let’s do the temporal discretization for the first term of <a class="reference internal" href="#equation-eq-fvm-diffusioneq-spatial-dis">equation (72)</a>,</p>
 <div class="math notranslate nohighlight">

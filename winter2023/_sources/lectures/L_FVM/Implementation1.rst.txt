@@ -2,7 +2,7 @@
 
 .. _Implementation1:
 
-.. warning::
+.. tip::
 
    Before we start the exercise 1, please download (:download:`test_laplacianFoam <cases/test_laplacianFoam.zip>`) the modified Laplacian solver first.
    Then put it in the shared folder and compile (:code:`wmake`) it in the docker container.
