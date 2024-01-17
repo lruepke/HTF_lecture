@@ -26,17 +26,24 @@ As always, a good starting point is find a suitable tutorial, copy it over to yo
 
 The solver is set up to solve the advection-diffusion equation for a scalar field called :code:`T`. The velocity field is prescribed in the file :code:`0/U` and the diffusion coefficient is set in :code:`constant/transportProperties`. The initial condition is set in :code:`0/T`.
 
-Initial conditions
+Mesh and initial conditions
 ------------------
 
-We will use a 2D bos with dimensions :math:`-0.5 < x < 0.5` and :math:`-0.5 < y < 0.5`. You will need to modify the blockMeshDict file to set up the mesh. The mesh should be uniform with 100 cells in each direction. The mesh should be centered around the origin.
+Mesh
+^^^^
+We will use a 2D box with dimensions :math:`-0.5 < x < 0.5` and :math:`-0.5 < y < 0.5`. You will need to modify the blockMeshDict file to set up the mesh. The mesh should be uniform with 100 cells in each direction. The mesh should be centered around the origin.
 
-The scalar field initial conditions are set in the file :code:`0/T`. We will use a Gaussian distribution with a standard deviation of :math:`\sigma = 0.1` and a maximum value of :math:`T_0 = 2`. It should be centered at x. 
+Temperature
+^^^^^^^^^^^^
+
+The scalar field initial conditions are set in the file :code:`0/T`. We will use a Gaussian distribution with a standard deviation of :math:`\sigma = 0.1` and a maximum value of :math:`T_0 = 2`. It should be centered at x. Let's put the intitial gaussian at :math:`x_0 = 0` and :math:`y_0 = 0.25`.
 
 .. math::
     T(x,y) = T_0 \exp \left( - \frac{(x-x_0)^2 + (y-y_0)^2}{\sigma^2} \right)    
 
 
+Velocity
+^^^^^^^^^
 
 We will fist look into solid body rotation, in which the initial gaussian will be rotated in clockwise direction without any shearing. The respective velocity field is given by:
 
@@ -48,6 +55,8 @@ We will fist look into solid body rotation, in which the initial gaussian will b
     Vy(x,y)=-x 
 
 
+Implementation
+^^^^^^^^^^^^^^
 To implement the initial conditions and prescribed velocity field, you will need to modify the files :code:`0/T` and :code:`0/U`. We will again use codestream statements for this.
 
 
@@ -241,6 +250,9 @@ We can do something similar for the velocity field. The velocity field is set in
     // ************************************************************************* //
 
 
+Setting up the case
+^^^^^^^^^^^^^^^^^^^
+
 Since we want to look at advection without any physical diffusion, we also need to set the diffusion coefficient to something small. This happens in :code:`constant/transportProperties`:
 
 
@@ -270,13 +282,11 @@ Since we want to look at advection without any physical diffusion, we also need 
 
     // ************************************************************************* //
 
-
-
 Finally, we need to set the time step and simulation time. This happens in :code:`system/controlDict`.
 
 .. code-block:: foam
     :linenos:
-    :emphasize-lines: 36-61
+    :emphasize-lines: 26-32
 
 
     /*--------------------------------*- C++ -*----------------------------------*\
@@ -332,7 +342,10 @@ Finally, we need to set the time step and simulation time. This happens in :code
 
 We here use a constant rund time of 20 and a time step length of :math:`\Delta t = 0.0025`; we save the output every 20 steps. To run the case, call :code:`blockMesh` and then the solver :code:`scalarTransportFoam`. 
 
-Finally, change the advection scheme (e.g. vanLeer, upwind, MUSCL) and compare the results in paraview!
+Excercise
+----------
+
+Finally, change the advection scheme (e.g. vanLeer, upwind, MUSCL) and compare the results in paraview! A good way is to make multiple directions for the individual cases.
 
 Now, change the velocity field to a shear shell and repeat the exercise. 
 
