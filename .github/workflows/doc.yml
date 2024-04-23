@@ -32,34 +32,34 @@ jobs:
       
       #simple version
       - name: Generate main pages and sphinx pages
-       run: |
+        run: |
          # fetch history lecture pages
-         git fetch origin gh-pages
-         git checkout gh-pages
-         mkdir ../history
-         cp -rf winter2020 ../history
-         cp -rf summer2021 ../history
-         cp -rf summer2022 ../history
-         cp -rf winter2022 ../history
-         cp -rf winter2023 ../history
+          git fetch origin gh-pages
+          git checkout gh-pages
+          mkdir ../history
+          cp -rf winter2020 ../history
+          cp -rf summer2021 ../history
+          cp -rf summer2022 ../history
+          cp -rf winter2022 ../history
+          cp -rf winter2023 ../history
 
-         git checkout main
-         # make home page
-         cd home
-         hugo
-         cd ..
-         cp -rf home/public/ .
-         # make new lecture pages
-         cd Summer2024
-         make html
-         cp -rf build/html/* ../public/summer2024
-         # copy history lecture pages
-         cd ..
-         cp -rf ../history/winter2020/* public/winter2020
-         cp -rf ../history/summer2021/* public/summer2021
-         cp -rf ../history/summer2022/* public/summer2022
-         cp -rf ../history/winter2022/* public/winter2022
-         cp -rf ../history/winter2023/* public/winter2023
+          git checkout main
+          # make home page
+          cd home
+          hugo
+          cd ..
+          cp -rf home/public/ .
+          # make new lecture pages
+          cd Summer2024
+          make html
+          cp -rf build/html/* ../public/summer2024
+          # copy history lecture pages
+          cd ..
+          cp -rf ../history/winter2020/* public/winter2020
+          cp -rf ../history/summer2021/* public/summer2021
+          cp -rf ../history/summer2022/* public/summer2022
+          cp -rf ../history/winter2022/* public/winter2022
+          cp -rf ../history/winter2023/* public/winter2023
 
       # # more automatic version
       # - name: Generate main pages and sphinx pages
