@@ -30,7 +30,7 @@ jobs:
       #   uses: mxschmitt/action-tmate@v3
 
       
-      simple version
+      #simple version
       - name: Generate main pages and sphinx pages
        run: |
          # fetch history lecture pages
