@@ -112,7 +112,7 @@ jobs:
             make html
             # write current commit ID to lecture folder
             echo `git log --format="%H" -n 1` >build/html/${commitIDFile_stored}
-            if [ ! -d "$lectureName_hugo" ]; then
+            if [ ! -d "../public/$lectureName_hugo" ]; then
               mkdir ../public/${lectureName_hugo}
             fi
             cp -rf build/html/* ../public/$lectureName_hugo
@@ -120,7 +120,7 @@ jobs:
           else
             echo $lecture " is not updated in this commit, keep the previous pages!"
             if [ ! -d "$lectureName_hugo" ]; then
-              mkdir ../public/${lectureName_hugo}
+              mkdir public/${lectureName_hugo}
             fi
             cp -rf ../history/${lectureName_hugo}/* public/${lectureName_hugo}
           fi
