@@ -64,7 +64,7 @@ weight = 3
 
 # Dropdown menu
 [[Languages.en.menu.main]]
-weight = 6
+weight = 5
 name = "Lectures"
 hasChildren = true
 
@@ -97,13 +97,6 @@ hasChildren = true
   name = "Summer2021"
   url = "summer2021"
   weight = 5
-
-  [[Languages.en.menu.main]]
-  parent = "Lectures"
-  name = "Winter 2020"
-  url = "winter2020"
-  weight = 6
-
 
 # banner
 [Languages.en.params.banner]
