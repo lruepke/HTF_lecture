@@ -119,7 +119,7 @@ jobs:
             cd ..
           else
             echo $lecture " is not updated in this commit, keep the previous pages!"
-            if [ ! -d "$lectureName_hugo" ]; then
+            if [ ! -d "public/$lectureName_hugo" ]; then
               mkdir public/${lectureName_hugo}
             fi
             cp -rf ../history/${lectureName_hugo}/* public/${lectureName_hugo}
