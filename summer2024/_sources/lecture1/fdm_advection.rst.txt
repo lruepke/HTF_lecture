@@ -44,9 +44,9 @@ Another option is to use what is called an upwind scheme, in which the gradient 
     \frac{C_i^{n+1}-C_i^n}{\Delta t}= -u_{x,i}  \begin{pmatrix} \frac{C_{i}^{n}-C_{i-1}^n}{\Delta x} \text{ , if $u_x \geq 0$} \\ \frac{C_{i+1}^{n}-C_{i}^n}{\Delta x} \text{ , if $u_x < 0$} \end{pmatrix} 
 
 
-There are many more schemes including much better ones (see e.g. Marc Spiegelmann's script on numerical methods  `<https://earth.usc.edu/~becker/teaching/557/reading/spiegelman_mmm.pdf>`_). We here look into these two basic types because we will come back to them when looking into finite elements for advection problems.
+There are many more schemes including much better ones. We here look into these two basic types because we will come back to them when looking into finite elements for advection problems.
 
-Excercise
+Exercise
 ^^^^^^^^^^
 
 Implement the different schemes using this jupyter notebook as a starting point. Notice how the FTCS scheme is always unstable and how the upwind scheme is very diffusive.

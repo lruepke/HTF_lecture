@@ -70,7 +70,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#fdm-advection-schemes">FDM advection schemes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#forward-in-time-central-in-space-ftcs">Forward in time, central in space (FTCS)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#upwind">Upwind</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#excercise">Excercise</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exercise">Exercise</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="jupyter/fdm_advection_schemes.html">Script for solving advection problems in 1D using FDM</a></li>
 </ul>
 </li>
@@ -207,10 +207,10 @@
 <p>Another option is to use what is called an upwind scheme, in which the gradient on the right-hand side is evaluated according to the direction of flow:</p>
 <div class="math notranslate nohighlight" id="equation-eq-advection-upwind">
 <span class="eqno">(53)<a class="headerlink" href="#equation-eq-advection-upwind" title="Link to this equation"></a></span>\[\begin{split}\frac{C_i^{n+1}-C_i^n}{\Delta t}= -u_{x,i}  \begin{pmatrix} \frac{C_{i}^{n}-C_{i-1}^n}{\Delta x} \text{ , if $u_x \geq 0$} \\ \frac{C_{i+1}^{n}-C_{i}^n}{\Delta x} \text{ , if $u_x &lt; 0$} \end{pmatrix}\end{split}\]</div>
-<p>There are many more schemes including much better ones (see e.g. Marc Spiegelmann’s script on numerical methods  <a class="reference external" href="https://earth.usc.edu/~becker/teaching/557/reading/spiegelman_mmm.pdf">https://earth.usc.edu/~becker/teaching/557/reading/spiegelman_mmm.pdf</a>). We here look into these two basic types because we will come back to them when looking into finite elements for advection problems.</p>
+<p>There are many more schemes including much better ones. We here look into these two basic types because we will come back to them when looking into finite elements for advection problems.</p>
 </section>
-<section id="excercise">
-<h3>Excercise<a class="headerlink" href="#excercise" title="Link to this heading"></a></h3>
+<section id="exercise">
+<h3>Exercise<a class="headerlink" href="#exercise" title="Link to this heading"></a></h3>
 <p>Implement the different schemes using this jupyter notebook as a starting point. Notice how the FTCS scheme is always unstable and how the upwind scheme is very diffusive.</p>
 <div class="toctree-wrapper compound">
 <ul>
