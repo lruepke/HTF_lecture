@@ -31,94 +31,94 @@ jobs:
 
       
       #simple version
-      - name: Generate main pages and sphinx pages
-        run: |
-         # fetch history lecture pages
-          git fetch origin gh-pages
-          git checkout gh-pages
-          mkdir ../history
-          cp -rf winter2020 ../history
-          cp -rf summer2021 ../history
-          cp -rf summer2022 ../history
-          cp -rf winter2022 ../history
-          cp -rf winter2023 ../history
-
-          git checkout main
-          # make home page
-          cd home
-          hugo
-          cd ..
-          cp -rf home/public/ .
-          # make new lecture pages
-          cd Summer2024
-          make html
-          mkdir ../public/summer2024
-          cp -rf build/html/* ../public/summer2024/
-          # copy history lecture pages
-          cd ..
-          cp -rf ../history/winter2020/* public/winter2020
-          cp -rf ../history/summer2021/* public/summer2021
-          cp -rf ../history/summer2022/* public/summer2022
-          cp -rf ../history/winter2022/* public/winter2022
-          cp -rf ../history/winter2023/* public/winter2023
-
-      # # more automatic version
       # - name: Generate main pages and sphinx pages
       #   run: |
-      #     # 0. set lectures 
-      #     lectures="Winter2020 Summer2021 Summer2022 Winter2022 Winter2023 Summer2024"
-      #     commitIDFile_stored=commit.ID
-      #      # 1. fetch history lecture pages and copy them to history folder as backup
+      #    # fetch history lecture pages
       #     git fetch origin gh-pages
       #     git checkout gh-pages
       #     mkdir ../history
-      #     for lecture in $lectures
-      #     do
-      #       # note that the folder name in Hugo pages is all in lower case
-      #       cp -rf `echo "$lecture" | awk '{print tolower($0)}'` ../history
-      #     done
+      #     cp -rf winter2020 ../history
+      #     cp -rf summer2021 ../history
+      #     cp -rf summer2022 ../history
+      #     cp -rf winter2022 ../history
+      #     cp -rf winter2023 ../history
+
       #     git checkout main
-      #     # 2. make home page
+      #     # make home page
       #     cd home
       #     hugo
       #     cd ..
       #     cp -rf home/public/ .
-      #     # 3. make lecture pages
-      #      # check is lecture source folder is updated or not, if updated then sphinx it, otherwise just copy the backup page files
-      #      # 3.1 get last commit id: note that the Github actions default use *** mode, `git log` can only get the latest commit, so need `git pull origin --unshallow` to get full log
-      #     git pull origin --unshallow
-      #     # 3.2 for loop lectures and process it
-      #     for lecture in $lectures
-      #     do
-      #     lectureName_hugo=`echo "$lecture" | awk '{print tolower($0)}'`
-      #     # 3.2.1 get last commit of the page source stored in the page folder
-      #     lastcommit=""
-      #     commitIDFile=../history/${lectureName_hugo}/${commitIDFile_stored}
-      #     if [ -f ${commitIDFile} ]; then 
-      #       cat ${commitIDFile}
-      #       lastcommit=`awk 'NR==1{print $1}' ${commitIDFile}`
-      #       echo "last commit ID of ${lecture}: " $lastcommit
-      #     else
-      #       echo "last commit ID of ${lecture} is not stored in pages folder, use the penultimate one"
-      #       lastcommits=(`git log --format="%H" -n 2`)
-      #       lastcommit=${lastcommits[1]}
-      #       echo "The penultimate one commit is " $lastcommit
-      #     fi
-      #     # 3.2.2 compare source of current commit and that of last build
-      #     if [[ -n $(git diff ${lastcommit} ${lecture}/) ]]
-      #     then
-      #       echo $lecture " is updated compare to the last sphinx, sphinx it!"
-      #       cd ${lecture}
-      #       make html
-      #       # write current commit ID to lecture folder
-      #       echo `git log --format="%H" -n 1` >build/html/${commitIDFile_stored}
-      #       cp -rf build/html/* ../public/$lectureName_hugo
-      #       cd ..
-      #     else
-      #       echo $lecture " is not updated in this commit, keep the previous pages!"
-      #       cp -rf ../history/${lectureName_hugo}/* public/${lectureName_hugo}
-      #     fi
-      #     done
+      #     # make new lecture pages
+      #     cd Summer2024
+      #     make html
+      #     mkdir ../public/summer2024
+      #     cp -rf build/html/* ../public/summer2024/
+      #     # copy history lecture pages
+      #     cd ..
+      #     cp -rf ../history/winter2020/* public/winter2020
+      #     cp -rf ../history/summer2021/* public/summer2021
+      #     cp -rf ../history/summer2022/* public/summer2022
+      #     cp -rf ../history/winter2022/* public/winter2022
+      #     cp -rf ../history/winter2023/* public/winter2023
+
+      # more automatic version
+      - name: Generate main pages and sphinx pages
+        run: |
+          # 0. set lectures 
+          lectures="Winter2020 Summer2021 Summer2022 Winter2022 Winter2023 Summer2024"
+          commitIDFile_stored=commit.ID
+           # 1. fetch history lecture pages and copy them to history folder as backup
+          git fetch origin gh-pages
+          git checkout gh-pages
+          mkdir ../history
+          for lecture in $lectures
+          do
+            # note that the folder name in Hugo pages is all in lower case
+            cp -rf `echo "$lecture" | awk '{print tolower($0)}'` ../history
+          done
+          git checkout main
+          # 2. make home page
+          cd home
+          hugo
+          cd ..
+          cp -rf home/public/ .
+          # 3. make lecture pages
+           # check is lecture source folder is updated or not, if updated then sphinx it, otherwise just copy the backup page files
+           # 3.1 get last commit id: note that the Github actions default use *** mode, `git log` can only get the latest commit, so need `git pull origin --unshallow` to get full log
+          git pull origin --unshallow
+          # 3.2 for loop lectures and process it
+          for lecture in $lectures
+          do
+          lectureName_hugo=`echo "$lecture" | awk '{print tolower($0)}'`
+          # 3.2.1 get last commit of the page source stored in the page folder
+          lastcommit=""
+          commitIDFile=../history/${lectureName_hugo}/${commitIDFile_stored}
+          if [ -f ${commitIDFile} ]; then 
+            cat ${commitIDFile}
+            lastcommit=`awk 'NR==1{print $1}' ${commitIDFile}`
+            echo "last commit ID of ${lecture}: " $lastcommit
+          else
+            echo "last commit ID of ${lecture} is not stored in pages folder, use the penultimate one"
+            lastcommits=(`git log --format="%H" -n 2`)
+            lastcommit=${lastcommits[1]}
+            echo "The penultimate one commit is " $lastcommit
+          fi
+          # 3.2.2 compare source of current commit and that of last build
+          if [[ -n $(git diff ${lastcommit} ${lecture}/) ]]
+          then
+            echo $lecture " is updated compare to the last sphinx, sphinx it!"
+            cd ${lecture}
+            make html
+            # write current commit ID to lecture folder
+            echo `git log --format="%H" -n 1` >build/html/${commitIDFile_stored}
+            cp -rf build/html/* ../public/$lectureName_hugo
+            cd ..
+          else
+            echo $lecture " is not updated in this commit, keep the previous pages!"
+            cp -rf ../history/${lectureName_hugo}/* public/${lectureName_hugo}
+          fi
+          done
 
       # # uncomment this segment to generate pdf file
       # - name: Generate latex and pdf
