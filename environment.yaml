@@ -1,0 +1,13 @@
+name: py312_teaching
+
+channels:
+  - conda-forge
+  - nodefaults
+
+dependencies:
+  - python=3.12
+  - ipykernel
+  - pip  # pip must be mentioned explicitly, or conda-lock will fail
+  - poetry  # or 1.1.*, or no version at all -- as you want
+  - conda-lock
+  - pandoc #somehow poetry install fails (cannot find pandoc) without this // 23.4.2024 LHR

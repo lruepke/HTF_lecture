@@ -1,0 +1,26 @@
+lc = 0.2;
+zmin=0;
+zmax=0.05;
+width=0.25;
+x0=0;
+y0=0;
+
+Point(1) = {x0, y0, zmin, lc};
+Point(2) = {x0-width, y0, zmin, lc};
+Point(3) = {x0-width, y0+width, zmin, lc};
+Point(4) = {x0+width, y0+width, zmin, lc};
+Point(5) = {x0+width, y0-width, zmin, lc};
+Point(6) = {x0, y0-width, zmin, lc};
+Line(1) = {6, 1};
+Line(2) = {1, 2};
+Line(3) = {2, 3};
+Line(4) = {3, 4};
+Line(5) = {4, 5};
+Line(6) = {5, 6};
+Curve Loop(1) = {4, 5, 6, 1, 2, 3};
+Plane Surface(1) = {1};
+Physical Surface("main")={1};
+Physical Line("bottom") = {6};
+Physical Line("right") = {5};
+Physical Line("top") = {4};
+Physical Line("left") = {3,2,1};

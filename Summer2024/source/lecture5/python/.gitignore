@@ -1,0 +1,5 @@
+__pycache__/
+Results/
+*.vtu
+*.h5
+*.xmf
