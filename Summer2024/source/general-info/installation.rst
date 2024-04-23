@@ -1,7 +1,7 @@
 Installation guide
 ==================
 
-We will use Python 3.12 for learning the basics of the finite element method. Later in the course, we will also use `FENICS <https://fenicsproject.org/>`_ to explore some more advanced concepts. Most of the work will be done in Jupyter notebooks. Let's get all of this to work.
+We will use Python for learning the basics of the finite element method. Later in the course, we will also use `FENICS <https://fenicsproject.org/>`_ to explore some more advanced concepts. Most of the work will be done in Jupyter notebooks. Let's get all of this to work.
 
 Visual Studio Code
 ------------------
@@ -18,7 +18,7 @@ In case you already have a working python environment, you can adapt it for this
 
     There are different sources, so-called channels, from where you can obtain the packages for your python environment. We will use the community channel *conda-forge*. 
 
-    Our recommended setup is to the use a very basic *base environment* that only cotains the necessarry packages to run *jupyter notebook* and/or *jupyter lab*. Everything else will be done from virtual enviroments, which you can activate from within jupyter. 
+    Our recommended setup is to the use a very basic *base environment* that only contains the necessary packages to run *jupyter notebook* and/or *jupyter lab*. Everything else will be done from virtual environments, which you can activate from within jupyter. 
 
     .. code-block:: bash
 
@@ -27,9 +27,9 @@ In case you already have a working python environment, you can adapt it for this
 
 Create a virtual environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-We will create a virtual environment with all the python packages we will use during this class. To not interfer with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation. 
+We will create a virtual environment with all the python packages we will use during this class. To not interfere with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation. 
 
-Make sure cour conda base environment is activated
+Make sure your conda base environment is activated
 
 .. code-block:: bash
 
@@ -61,13 +61,13 @@ You can activate and deactivate environments like this:
 Working with jupyter notebooks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We will do most excercises using jupyter notebooks. A good workflow is to start jupyter notebook in the conda base environment and then chose the the python kernel (the virtual environment) inside the notebook.
+We will do most exercises using jupyter notebooks. A good workflow is to start jupyter lab in the conda base environment and then chose the the python kernel (the virtual environment) inside the notebook.
 
 .. code-block:: bash
 
     cd "your working directory"
     conda activate base
-    jupyter notebook
+    jupyter lab
 
 
 Now create a new notebook and choose *py3_fem_class* as your kernel. Check that you can import e.g. pandas. 
@@ -77,6 +77,9 @@ Now create a new notebook and choose *py3_fem_class* as your kernel. Check that 
 
     If you have never used python or are new to jupyter notebooks, no worries! Things will become clear when we are doing the actual exercises. 
 
+
 Integration with Visual Studio Code
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You will need to install Microsoft's Python extension. Just search for Python under Extensions and chose the one from Microsoft (usually the first option). Finally, you will have to set the Python interpreter. Do this by pushing CMD/CTRL+SHIFT+P. Type Python: Select Interpretor and select our newly created anaconda environment. If it doesn't show up, close and re-open Visual Studio Code.
+You will need to install Microsoft's Python extension. Just search for Python under Extensions and chose the one from Microsoft (usually the first option). Finally, you will have to set the Python interpreter. Do this by pushing CMD/CTRL+SHIFT+P. Type Python: Select Interpreter and select our newly created anaconda environment. If it doesn't show up, close and re-open Visual Studio Code.
+
+We prefer running the jupyter notebooks in Visual Studio Code but you can also use jupyter lab.

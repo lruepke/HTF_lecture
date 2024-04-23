@@ -51,7 +51,7 @@ Try to implement the above prolem in python using the juypter notebook below as 
 
 .. code-block:: bash
  
-    conda activate py37_fem_lecture
+    conda activate py3_fem_lecture
     cd $your_working_directory$
     jupyter lab
     
