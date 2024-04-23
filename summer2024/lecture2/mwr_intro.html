@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction: Method of Weighted Residuals (MWR) &mdash; Finite Element Modeling in Geodynamics  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=3d3fbe02" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=379f3234" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MWR solutions of the steady advection-diffusion equation" href="mwr_examples.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/course-details.html">Course details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/installation.html">Installation guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_intro.html">Introduction: The Finite Differences Method (FDM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_1.html">Example 1: Cooling dike</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_2.html">Example 2: Cooling dike - implicit version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_3.html">Example 3: Periodic variations in seafloor temperature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_advection.html">Transport problems with FDM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction: Method of Weighted Residuals (MWR)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#collocation-method">Collocation Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sub-domain-method">Sub-domain Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#least-squares-method">Least Squares Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#galerkin-method">Galerkin Method</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mwr_examples.html">MWR solutions of the steady advection-diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="excercises.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html">Introduction Finite Element Method (FEM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html#fem-implementation">FEM implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_advection.html">FEM and advection problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html">2-D FEM - elliptic problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html#implementation">Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html">Triangles: unstructured meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html#excercise">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/transient_problems.html">Transient heat diffusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/turing_coupled_problem.html">Coupled diffusion problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/FEM_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Finite Element Modeling in Geodynamics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introduction: Method of Weighted Residuals (MWR)</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture2/mwr_intro.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="introduction-method-of-weighted-residuals-mwr">
+<h1>Introduction: Method of Weighted Residuals (MWR)<a class="headerlink" href="#introduction-method-of-weighted-residuals-mwr" title="Link to this heading"></a></h1>
+<div class="admonition-credit admonition">
+<p class="admonition-title">Credit!</p>
+<p>This chapter is based on lecture notes originally prepared by Prof. Keith A. Woodbury of The University of Alabama. Further details can also be found in the book by <span id="id1">[<a class="reference internal" href="../refs.html#id34" title="H. Grandin. Fundamentals of the Finite Element Method. Waveland Press, 1991. ISBN 9780881336030. URL: https://books.google.de/books?id=PJNRAAAAMAAJ.">Grandin, 1991</a>]</span>.</p>
+</div>
+<p>Suppose we have a linear differential operator <span class="math notranslate nohighlight">\(D\)</span> acting on a function <span class="math notranslate nohighlight">\(u\)</span>
+to produce a function <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-basic">
+<span class="eqno">(54)<a class="headerlink" href="#equation-eq-mwr-basic" title="Link to this equation"></a></span>\[D(u(x))=p(x).\]</div>
+<p>We wish to approximate <span class="math notranslate nohighlight">\(u\)</span> by a functions <span class="math notranslate nohighlight">\(\tilde{u}\)</span>, which is a linear
+combination of basis functions chosen from a linearly independent set. That
+is,</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-basic-2">
+<span class="eqno">(55)<a class="headerlink" href="#equation-eq-mwr-basic-2" title="Link to this equation"></a></span>\[u\cong \tilde{u}=\sum_{i=1}^na_i\varphi _i\]</div>
+<p>where <span class="math notranslate nohighlight">\(a\)</span> are the coefficients of the <span class="math notranslate nohighlight">\(n\)</span> basis functions <span class="math notranslate nohighlight">\(\varphi\)</span>. Now, when substituted into the differential operator, <span class="math notranslate nohighlight">\(D\)</span>, the result of the operations is not, in general, <span class="math notranslate nohighlight">\(p(x)\)</span>. Hence an error or residual will exist:</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-basic-3">
+<span class="eqno">(56)<a class="headerlink" href="#equation-eq-mwr-basic-3" title="Link to this equation"></a></span>\[E(x)=R(x)=D(\tilde{u}(x))-p(x)\neq 0.\]</div>
+<p>The notion in the MWR is to force the residual to zero in some average sense
+over the domain. That is</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-basic-4">
+<span class="eqno">(57)<a class="headerlink" href="#equation-eq-mwr-basic-4" title="Link to this equation"></a></span>\[\int_XR(x)W_idx=0\ \ \ \ \ \ \ i=1,2,...,n  \label{MWR}\]</div>
+<p>where the nuber of <em>weight functions</em> <span class="math notranslate nohighlight">\(W_i\)</span> is exactly equal the number
+of unknow constants <span class="math notranslate nohighlight">\(a_i\)</span> in <span class="math notranslate nohighlight">\(\tilde{u}\)</span>. The result is a set of <span class="math notranslate nohighlight">\(\ n\)</span>
+algebraic equations for the unknown constants <span class="math notranslate nohighlight">\(a_i\)</span>.There are several MWR sub-methods, which differ in their choices of the weighting functions <span class="math notranslate nohighlight">\(W\)</span>. Here are some popular examples:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Collocation method.</p></li>
+<li><p>Sub-domain Method.</p></li>
+<li><p>Least Squares method.</p></li>
+<li><p>Galerkin method.</p></li>
+</ul>
+</div></blockquote>
+<p>Each of these will be explained below. Afterwards we will apply some of them in an example to solve the steady-state advection diffusion equation.</p>
+<section id="collocation-method">
+<h2>Collocation Method<a class="headerlink" href="#collocation-method" title="Link to this heading"></a></h2>
+<p>In this method, the weighting functions are taken from the family of Dirac <span class="math notranslate nohighlight">\(\delta\)</span> functions in the domain. That is, <span class="math notranslate nohighlight">\(W_i(x)=\delta (x-x_i)\)</span>. The Dirac <span class="math notranslate nohighlight">\(\delta\)</span> function has the property that</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-collocation">
+<span class="eqno">(58)<a class="headerlink" href="#equation-eq-mwr-collocation" title="Link to this equation"></a></span>\[\begin{split}\delta (x-x_i)=\left\{
+\begin{array}{ccc}
+1 &amp;  &amp; x=x_i \\
+0 &amp;  &amp; \text{otherwise}
+\end{array}
+\right. .\end{split}\]</div>
+<p>Hence the integration of the weighted residual statement results in the
+forcing of the residual to zero at specific points in the domain. That is,
+integration of <a class="reference internal" href="#equation-eq-mwr-basic-4">equation (57)</a> with <span class="math notranslate nohighlight">\(W_i(x)=\delta (x-x_i)\)</span> results in</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-collocation-2">
+<span class="eqno">(59)<a class="headerlink" href="#equation-eq-mwr-collocation-2" title="Link to this equation"></a></span>\[R(x_i)=0\]</div>
+</section>
+<section id="sub-domain-method">
+<h2>Sub-domain Method<a class="headerlink" href="#sub-domain-method" title="Link to this heading"></a></h2>
+<p>This method doesn’t use weighting factors explicity, so it is not, strictly
+speaking, a member of the Weighted Residuals family. However, it can be
+considered a modification of the collocation method. The idea is to force
+the weighted residual to zero not just at fixed points in the domain, but
+over various subsections of the domain. To accomplish this, the weight
+functions are set to unity, and the integral over the entire domain is
+broken into a number of subdomains sufficient to evaluate all unknown
+parameters. That is</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-subdomain-1">
+<span class="eqno">(60)<a class="headerlink" href="#equation-eq-mwr-subdomain-1" title="Link to this equation"></a></span>\[\int_{X}R(x)W_{i}dx=\sum_{i}\left( \int_{X_{i}}R(x)dx\right) =0\ \ \ \ \ \ \
+i=1,2,...,n\]</div>
+</section>
+<section id="least-squares-method">
+<h2>Least Squares Method<a class="headerlink" href="#least-squares-method" title="Link to this heading"></a></h2>
+<p>If the continuous summation of all the squared residuals is minimized, the
+rationale behind the name can be seen. In other words, a minimum of</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-lsq-1">
+<span class="eqno">(61)<a class="headerlink" href="#equation-eq-mwr-lsq-1" title="Link to this equation"></a></span>\[S=\int_XR(x)R(x)dx=\int_XR^2(x)dx.\]</div>
+<p>In order to achieve a minimum of this scalar function, the derivatives of <span class="math notranslate nohighlight">\(S\)</span> with respect to all the unknown parameters must be zero. That is,</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-lsq-2">
+<span class="eqno">(62)<a class="headerlink" href="#equation-eq-mwr-lsq-2" title="Link to this equation"></a></span>\[\begin{split}\frac{\partial S}{\partial a_i} &amp;=&amp;0 \\
+&amp;=&amp;2\int_XR(x)\frac{\partial R}{\partial a_i}dx\end{split}\]</div>
+<p>Comparing with <a class="reference internal" href="#equation-eq-mwr-basic-4">equation (57)</a>, the weight functions are seen to be</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-lsq-3">
+<span class="eqno">(63)<a class="headerlink" href="#equation-eq-mwr-lsq-3" title="Link to this equation"></a></span>\[W_i=2\frac{\partial R}{\partial a_i}\]</div>
+<p>However, the <span class="math notranslate nohighlight">\(2\)</span> can be dropped, since it cancels out in the equation.
+Therefore the weight functions for the Least Squares Method are just the
+derivatives of the residual with respect to the unknown constants:</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-lsq-4">
+<span class="eqno">(64)<a class="headerlink" href="#equation-eq-mwr-lsq-4" title="Link to this equation"></a></span>\[W_i=\frac{\partial R}{\partial a_i}\]</div>
+</section>
+<section id="galerkin-method">
+<h2>Galerkin Method<a class="headerlink" href="#galerkin-method" title="Link to this heading"></a></h2>
+<p>This method may be viewed as a modification of the Least Squares Method.
+Rather than using the derivative of the <em>residual</em> with respect to the
+unknown <span class="math notranslate nohighlight">\(a_i\)</span>, the derivative of the approximating function is used. That
+is, if the function is approximated as in <a class="reference internal" href="#equation-eq-mwr-basic-2">equation (55)</a>, then the weight
+functions are</p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-galerkin-1">
+<span class="eqno">(65)<a class="headerlink" href="#equation-eq-mwr-galerkin-1" title="Link to this equation"></a></span>\[W_i=\frac{\partial \tilde{u}}{\partial a_i}\]</div>
+<p>Note that these are then identical to the original basis functions appearing
+in <a class="reference internal" href="#equation-eq-mwr-basic-2">equation (55)</a></p>
+<div class="math notranslate nohighlight" id="equation-eq-mwr-galerkin-2">
+<span class="eqno">(66)<a class="headerlink" href="#equation-eq-mwr-galerkin-2" title="Link to this equation"></a></span>\[W_i=\frac{\partial \tilde{u}}{\partial a_i}=\varphi _i(x)\]</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mwr_examples.html" class="btn btn-neutral float-right" title="MWR solutions of the steady advection-diffusion equation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+      
+        <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+          <span class="rst-current-version" data-toggle="rst-current-version">
+            <span class="fa fa-book"> Finite Element Modeling in Geodynamics</span>
+            v: latest
+            <span class="fa fa-caret-down"></span>
+          </span>
+          <div class="rst-other-versions">
+            <dl>
+              
+                
+                <dd><a href="https://lruepke.github.io/FEM_lecture/downloads/LectureNote.pdf">latest</a></dd>
+                
+                <dd><a href="#/LectureNote.pdf">2.0</a></dd>
+                
+              
+          </div>
+        </div>
+      
+    
+
+</body>
+</html>

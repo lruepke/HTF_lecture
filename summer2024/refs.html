@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>References &mdash; Finite Element Modeling in Geodynamics  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=3d3fbe02" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=379f3234" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/tabs.js?v=3ee01567"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Turing pattern using FDM." href="lecture6/jupyter/turing_fdm.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="general-info/course-details.html">Course details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="general-info/installation.html">Installation guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/fdm_intro.html">Introduction: The Finite Differences Method (FDM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/example_1.html">Example 1: Cooling dike</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/example_2.html">Example 2: Cooling dike - implicit version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/example_3.html">Example 3: Periodic variations in seafloor temperature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1/fdm_advection.html">Transport problems with FDM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/mwr_intro.html">Introduction: Method of Weighted Residuals (MWR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/mwr_examples.html">MWR solutions of the steady advection-diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture2/excercises.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/fem_intro.html">Introduction Finite Element Method (FEM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/fem_intro.html#fem-implementation">FEM implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3/fem_advection.html">FEM and advection problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture4/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture4/fem_in_2d.html">2-D FEM - elliptic problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture4/fem_in_2d.html#implementation">Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture5/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture5/FEM_triangles.html">Triangles: unstructured meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture5/FEM_triangles.html#excercise">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture6/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture6/transient_problems.html">Transient heat diffusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture6/turing_coupled_problem.html">Coupled diffusion problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li><a class="reference internal" href="#">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/FEM_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Finite Element Modeling in Geodynamics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">References</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/refs.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="references">
+<span id="refs"></span><h1>References<a class="headerlink" href="#references" title="Link to this heading"></a></h1>
+</section>
+<div class="docutils container" id="id1">
+<div role="list" class="citation-list">
+<div class="citation" id="id31" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Simpson, 2017<span class="fn-bracket">]</span></span>
+<p>Guy Simpson. <em>Practical Finite Element Modeling in Earth Science Using Matlab</em>. John Wiley &amp; Sons, Ltd, 2017. ISBN 9781119248644. URL: <a class="reference external" href="https://onlinelibrary.wiley.com/doi/abs/10.1002/9781119248644.part1">https://onlinelibrary.wiley.com/doi/abs/10.1002/9781119248644.part1</a>, <a class="reference external" href="https://arxiv.org/abs/https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781119248644.part1">arXiv:https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781119248644.part1</a>, <a class="reference external" href="https://doi.org/https://doi.org/10.1002/9781119248644.part1">doi:https://doi.org/10.1002/9781119248644.part1</a>.</p>
+</div>
+<div class="citation" id="id32" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Hughes, 2000<span class="fn-bracket">]</span></span>
+<p>Thomas J. R. Hughes. <em>The finite element method : linear static and dynamic finite element analysis</em>. Dover Publications, Mineola, NY, 2000. ISBN 0486411818 9780486411811.</p>
+</div>
+<div class="citation" id="id33" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Reddy &amp; Gartling, 2010<span class="fn-bracket">]</span></span>
+<p>J.N. Reddy and D.K. Gartling. <em>The Finite Element Method in Heat Transfer and Fluid Dynamics</em>. Applied and Computational Mechanics. CRC Press, 2010. ISBN 9781439882573. URL: <a class="reference external" href="https://books.google.de/books?id=h7TMBQAAQBAJ">https://books.google.de/books?id=h7TMBQAAQBAJ</a>.</p>
+</div>
+<div class="citation" id="id34" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Grandin, 1991<span class="fn-bracket">]</span></span>
+<p>H. Grandin. <em>Fundamentals of the Finite Element Method</em>. Waveland Press, 1991. ISBN 9780881336030. URL: <a class="reference external" href="https://books.google.de/books?id=PJNRAAAAMAAJ">https://books.google.de/books?id=PJNRAAAAMAAJ</a>.</p>
+</div>
+<div class="citation" id="id30" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Briggs et al., 2000<span class="fn-bracket">]</span></span>
+<p>William L. Briggs, Van Emden Henson, and Steve F. McCormick. <em>A Multigrid Tutorial (2nd Ed.)</em>. Society for Industrial and Applied Mathematics, USA, 2000. ISBN 0898714621.</p>
+</div>
+<div class="citation" id="id35" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Dabrowski et al., 2008<span class="fn-bracket">]</span></span>
+<p>M. Dabrowski, M. Krotkiewski, and D. W. Schmid. Milamin: matlab-based finite element method solver for large problems. <em>Geochemistry Geophysics Geosystems</em>, 2008. URL: <a class="reference external" href="&lt;Go to ISI&gt;://000255458100002 http://www.agu.org/journals/gc/gc0804/2007GC001719/2007GC001719.pdf">&lt;Go to ISI&gt;://000255458100002 http://www.agu.org/journals/gc/gc0804/2007GC001719/2007GC001719.pdf</a>, <a class="reference external" href="https://doi.org/10.1029/2007gc001719">doi:10.1029/2007gc001719</a>.</p>
+</div>
+<div class="citation" id="id36" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Turing, 1952<span class="fn-bracket">]</span></span>
+<p>A. M. Turing. The chemical basis of morphogenesis. <em>Philosophical Transactions of the Royal Society of London Series B-Biological Sciences</em>, 237(641):37–72, 1952. URL: <a class="reference external" href="&lt;Go to ISI&gt;://WOS:A1952YF90500001">&lt;Go to ISI&gt;://WOS:A1952YF90500001</a>, <a class="reference external" href="https://doi.org/10.1098/rstb.1952.0012">doi:10.1098/rstb.1952.0012</a>.</p>
+</div>
+<div class="citation" id="id37" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Maini et al., 2012<span class="fn-bracket">]</span></span>
+<p>Philip K. Maini, Thomas E. Woolley, Ruth E. Baker, Eamonn A. Gaffney, and S. Seirin Lee. Turing's model for biological pattern formation and the robustness problem. <em>Interface Focus</em>, 2(4):487–496, 2012. URL: <a class="reference external" href="https://doi.org/10.1098/rsfs.2011.0113">https://doi.org/10.1098/rsfs.2011.0113</a>, <a class="reference external" href="https://doi.org/10.1098/rsfs.2011.0113">doi:10.1098/rsfs.2011.0113</a>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lecture6/jupyter/turing_fdm.html" class="btn btn-neutral float-left" title="Turing pattern using FDM." accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+      
+        <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+          <span class="rst-current-version" data-toggle="rst-current-version">
+            <span class="fa fa-book"> Finite Element Modeling in Geodynamics</span>
+            v: latest
+            <span class="fa fa-caret-down"></span>
+          </span>
+          <div class="rst-other-versions">
+            <dl>
+              
+                
+                <dd><a href="https://lruepke.github.io/FEM_lecture/downloads/LectureNote.pdf">latest</a></dd>
+                
+                <dd><a href="#/LectureNote.pdf">2.0</a></dd>
+                
+              
+          </div>
+        </div>
+      
+    
+
+</body>
+</html>
