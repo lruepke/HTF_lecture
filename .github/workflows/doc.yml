@@ -52,6 +52,7 @@ jobs:
           # make new lecture pages
           cd Summer2024
           make html
+          mkdir ../public/summer2024
           cp -rf build/html/* ../public/summer2024
           # copy history lecture pages
           cd ..
