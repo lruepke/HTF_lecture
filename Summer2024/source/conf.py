@@ -18,7 +18,7 @@ sys.path.append(os.path.abspath('_extensions'))
 
 project = 'Finite Element Modeling in Geodynamics'
 latex_name='LectureNote'
-copyright = '2022, Lars Ruepke and Zhikui Guo'
+copyright = '2024, Lars Ruepke and Zhikui Guo'
 author = 'Lars Ruepke' 
 
 
@@ -33,8 +33,14 @@ extensions = [
     'sphinxcontrib.bibtex',
     'sphinx_inline_tabs',
     'matplotlib.sphinxext.plot_directive',
+    'sphinx_copybutton',
 ]
 bibtex_bibfiles = ['refs.bib']
+
+# Only copy the code, not the prompts or outputs, if using Jupyter Notebooks
+copybutton_prompt_text = r">>> |\.\.\. |In \[\d+\]: | {2,5}\.\.\.: "  # Adjust regex as needed
+copybutton_prompt_is_regexp = True
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
