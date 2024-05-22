@@ -108,7 +108,7 @@ and the contant :math:`a_2` is
 Least-squares method
 --------------------
 
-The weight function :math:`W_i`is just the derivative of :math:`R(x)` with respect to the unknown :math:`a_2`:
+The weight function :math:`W_i` is just the derivative of :math:`R(x)` with respect to the unknown :math:`a_2`:
 
 .. math::
     :label: eq:mwr_lsq_ex_1
