@@ -17,7 +17,7 @@ Let's go on and solve the elliptic 1-D heat diffusion equation with the Finite E
 
     \frac{\partial}{\partial x}k\frac{\partial T_{ex}}{\partial x}=0. 
 
-This is called the strong form of the governing equation and the function :math:`T_{ex}(x)`is the exact solution to it. We now follow our MWR recipe and replace the continuous function :math:`T_{ex}(x)` by a (simpler) approximation:
+This is called the strong form of the governing equation and the function :math:`T_{ex}(x)` is the exact solution to it. We now follow our MWR recipe and replace the continuous function :math:`T_{ex}(x)` by a (simpler) approximation:
 
 
 Approximate solution
