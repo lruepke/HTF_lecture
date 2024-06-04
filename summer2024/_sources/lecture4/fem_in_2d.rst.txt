@@ -191,7 +191,7 @@ The main problem with solving :eq:`eq:fem_2d_weak_num_int` is that the integral 
 
     \int_{\hat{\Omega}} F(\xi,\eta) d\xi d\eta = \int_{-1}^{1}\int_{-1}^{1}F(\xi,\eta)d\xi d\eta = \sum_{I=1}^{M} \sum_{J=1}^{N} F(\xi_I,\eta_J)W_I W_J = \sum_{ip}F(\xi_{ip},\eta_{ip})W_{ip},
 
-where M and N denote the number of Gauss points, :math:`(\xi,\eta)`denote the Gauss point coordinates, and :math:`W_I` and :math:`W_J` denote the corresponding Gauss weights. The selection of the number of Gauss points is based on the formula :math:`N=int[(p+1)/2]+1`, where p the polynomial degree to which the integrand is approximated. We will use linear shape functions so that we have 2 Gauss points (in every direction). In this case the local coordinates are :math:`\pm0.5773502692` and the weights are all :math:`1`.
+where M and N denote the number of Gauss points, :math:`(\xi,\eta)` denote the Gauss point coordinates, and :math:`W_I` and :math:`W_J` denote the corresponding Gauss weights. The selection of the number of Gauss points is based on the formula :math:`N=int[(p+1)/2]+1`, where p the polynomial degree to which the integrand is approximated. We will use linear shape functions so that we have 2 Gauss points (in every direction). In this case the local coordinates are :math:`\pm0.5773502692` and the weights are all :math:`1`.
 
 Gauss points
 ^^^^^^^^^^^^
@@ -357,15 +357,6 @@ The first excercise is about building the FEM mesh and element connectivity matr
     * Hint loop over all nodes and create their respective x and y coordinates. The node numbering should be like in :numref:`fig:mesh:2D:structured` (see jupyter notebook for a discussion).
     * Functions like ceil or floor might help you with the connectivity matrix; it might also help to first compute the row we are in and then compute the index of the lower left node and move on from there.
 
-.. tip::
-
-    We use a function called tabulate to format the output in the notebooks. You will probably have to install it into your virtual python environment.
-
-    .. code-block:: bash
-
-        conda activate py37_fem_class
-        conda install tabulate
-
 
 .. toctree::
     :maxdepth: 2
@@ -436,7 +427,7 @@ Python code
 
     # model parameters
     k1          = 1
-    k2          = 0.01
+    k2          = 0.001
     Ttop        = 0
     Tbot        = 1
     
@@ -501,14 +492,16 @@ Python code
             # 5. assemble right-hand side, no source terms, just here for completeness
             Rhs_el     = Rhs_el + np.zeros(nnodel)
         
-        # assemble coefficients
-        I[iel,:]  =  (EL2NOD[iel,:]*np.ones((nnodel,1), dtype=int)).T.reshape(nnodel*nnodel)
-        J[iel,:]  =  (EL2NOD[iel,:]*np.ones((nnodel,1), dtype=int)).reshape(nnodel*nnodel)
-        K[iel,:]  =  Ael.reshape(nnodel*nnodel)
+            # assemble coefficients
+            I[iel, :] = np.tile(EL2NOD[iel, :], (nnodel, 1)).T.ravel()
+            J[iel, :] = np.tile(EL2NOD[iel, :], (nnodel, 1)).ravel()
+            K[iel, :] = Ael.ravel()
         
-        Rhs_all[EL2NOD[iel,:]] += Rhs_el
+            Rhs_all[EL2NOD[iel,:]] += Rhs_el
 
-    A_all = csr_matrix((K.reshape(nel*nnodel*nnodel),(I.reshape(nel*nnodel*nnodel),J.reshape(nel*nnodel*nnodel))),shape=(nnod,nnod))
+
+    # Create the global stiffness matrix using a sparse representation
+    A_all = csr_matrix((K.ravel(), (I.ravel(), J.ravel())), shape=(nnod, nnod))
 
     # indices and values at top and bottom
     i_bot   = np.arange(0,nx, dtype=int)
@@ -567,14 +560,16 @@ Python code
     Y = np.reshape(GCOORD[:,1], (ny,nx))
     T = T.reshape((ny,nx))
 
-    cp = plt.contourf(X, Y, T)
+    cp = plt.contourf(X, Y, T, cmap='gist_yarg')
     plt.colorbar(cp)
-    plt.quiver(Ec_x, Ec_y, Q_x, Q_y, np.sqrt(np.square(Q_x) + np.square(Q_y)), cmap='autumn')
+    plt.quiver(Ec_x, Ec_y, Q_x, Q_y, np.sqrt(np.square(Q_x) + np.square(Q_y)), cmap='hot')
 
     ax.set_title('Temperature with heat flow vectors')
     ax.set_xlabel('x')
     ax.set_ylabel('y')
-    plt.show()import numpy as np
+    plt.show()
+
+
 
 The key components of the code are an element loop (which corresponds to the sum over the integrals in :eq:`eq:fem_2d_weak_3` and an integration loop (which corresponds to the loop over integration points in :eq:`eq:fem_2d_weak_3`). Most of the work is done inside the integration loop:
 

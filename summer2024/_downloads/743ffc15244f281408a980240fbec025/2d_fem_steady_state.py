@@ -84,14 +84,16 @@ for iel in range(0,nel):
         # 5. assemble right-hand side, no source terms, just here for completeness
         Rhs_el     = Rhs_el + np.zeros(nnodel)
     
-    # assemble coefficients
-    I[iel,:]  =  (EL2NOD[iel,:]*np.ones((nnodel,1), dtype=int)).T.reshape(nnodel*nnodel)
-    J[iel,:]  =  (EL2NOD[iel,:]*np.ones((nnodel,1), dtype=int)).reshape(nnodel*nnodel)
-    K[iel,:]  =  Ael.reshape(nnodel*nnodel)
+        # assemble coefficients
+        I[iel, :] = np.tile(EL2NOD[iel, :], (nnodel, 1)).T.ravel()
+        J[iel, :] = np.tile(EL2NOD[iel, :], (nnodel, 1)).ravel()
+        K[iel, :] = Ael.ravel()
     
-    Rhs_all[EL2NOD[iel,:]] += Rhs_el
+        Rhs_all[EL2NOD[iel,:]] += Rhs_el
 
-A_all = csr_matrix((K.reshape(nel*nnodel*nnodel),(I.reshape(nel*nnodel*nnodel),J.reshape(nel*nnodel*nnodel))),shape=(nnod,nnod))
+
+# Create the global stiffness matrix using a sparse representation
+A_all = csr_matrix((K.ravel(), (I.ravel(), J.ravel())), shape=(nnod, nnod))
 
 # indices and values at top and bottom
 i_bot   = np.arange(0,nx, dtype=int)
