@@ -3,12 +3,6 @@ The Finite Element Method in geodynamics
 Welcome to the course Numerical Fluid Dynamics II (FEM in earth sciences) taught at Kiel University within the Geophysics master.  The focus of this course is on learning how we can solve partial differential equations using the Finite Element Method (FEM). The Finite Element Method is one of the main numerical methods in mechanics and is also used in the popular geodynamics community code `ASPECT <https://aspect.geodynamics.org>`_. We will first learn about the basics before progressing towards solving several example problems ranging from heat diffusion, over reactive systems, to mantle convection. All examples will be implemented in Python.        
 
 
-.. important::
-
-   There is no lecture today (15.5.2024). The next lecture will be on 22.5.2024.
-
-
-
 Course content
 ------------------     
 These are the main topics:
