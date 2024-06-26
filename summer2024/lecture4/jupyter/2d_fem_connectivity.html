@@ -411,7 +411,7 @@ div.rendered_html tbody tr:hover {
 <section id="2-D-FEM-coordinate-and-connectivity-matrices">
 <h1>2-D FEM coordinate and connectivity matrices<a class="headerlink" href="#2-D-FEM-coordinate-and-connectivity-matrices" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -427,7 +427,7 @@ div.rendered_html tbody tr:hover {
 <p>Bottom line is, in python we should count in the row direction.</p>
 <p>Let’s make some simple examples:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -456,7 +456,6 @@ div.rendered_html tbody tr:hover {
   WRITEABLE : True
   ALIGNED : True
   WRITEBACKIFCOPY : False
-  UPDATEIFCOPY : False
 
 [[ 1  2  3  4]
  [ 5  6  7  8]
@@ -467,7 +466,6 @@ div.rendered_html tbody tr:hover {
   WRITEABLE : True
   ALIGNED : True
   WRITEBACKIFCOPY : False
-  UPDATEIFCOPY : False
 
 4
 </pre></div></div>
@@ -476,7 +474,7 @@ div.rendered_html tbody tr:hover {
 <p>Here are some useful links on indexing: <a class="reference external" href="https://kanoki.org/2020/07/05/numpy-index-array-with-another-array/">https://kanoki.org/2020/07/05/numpy-index-array-with-another-array/</a> <a class="reference external" href="https://realpython.com/numpy-array-programming/">https://realpython.com/numpy-array-programming/</a></p>
 <p>Alright, let’s do the coordinate vector. First node should have the index <strong>0</strong> and we count in row direction!</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -507,7 +505,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -560,6 +558,24 @@ div.rendered_html tbody tr:hover {
 <span class="c1">#print(tabulate(E2N, headers=[&#39;Element #&#39;, &#39;Node 1&#39;, &#39;Node 2&#39;, &#39;Node 3&#39;, &#39;Node 4&#39;], showindex=True))</span>
 </pre></div>
 </div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="mi">4</span><span class="o">//</span><span class="n">nex</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1
+</pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:

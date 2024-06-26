@@ -412,7 +412,7 @@ div.rendered_html tbody tr:hover {
 <h1>2-D FEM shape functions<a class="headerlink" href="#2-D-FEM-shape-functions" title="Link to this heading"></a></h1>
 <p>Compute the shape functions at try the interpolation at different “integration” pints within the element.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -421,7 +421,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -439,7 +439,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -448,26 +448,27 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># pseudo gcoord</span>
 <span class="n">GCOORD</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">GCOORD</span><span class="p">)</span>
+<span class="c1">#print(GCOORD)</span>
 <span class="c1"># pseudo nodal temperatures</span>
 <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+<span class="c1">#print(T)</span>
 <span class="c1"># interpolatin point</span>
-<span class="n">xi</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">eta</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">xi</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">0.3</span>
 
 <span class="c1"># shape functions at integration point</span>
-<span class="n">N</span><span class="p">,</span> <span class="n">dNds</span> <span class="o">=</span> <span class="n">shapes</span><span class="p">()</span>
+<span class="n">N</span><span class="p">,</span> <span class="n">dNds</span> <span class="o">=</span> <span class="n">shapes</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span><span class="n">eta</span><span class="p">)</span>
 
 <span class="c1">#interpolation</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">T</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">dNds</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span><span class="o">*</span><span class="n">T</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">T</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -476,11 +477,27 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[[-1  1  1 -1]
- [-1 -1  1  1]]
-[0 0 1 1]
+[0.   0.35 0.65 0.  ]
 0.5
-0.5
+0.65
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">sum</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1.0
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">

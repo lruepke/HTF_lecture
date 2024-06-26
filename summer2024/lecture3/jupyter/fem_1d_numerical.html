@@ -405,7 +405,7 @@ div.rendered_html tbody tr:hover {
 <section id="Numerical-1-D-FEM-solution-of-the-heat-diffusion-equation">
 <h1>Numerical 1-D FEM solution of the heat diffusion equation<a class="headerlink" href="#Numerical-1-D-FEM-solution-of-the-heat-diffusion-equation" title="Link to this heading"></a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -424,7 +424,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>First we define some numerical constants and define the problem</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -444,7 +444,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Now we make our FEM mesh and element connectivity</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -476,7 +476,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Now we spell out our analytically-derived element stiffness matrix (see previous sections):</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -486,7 +486,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -496,7 +496,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Now we need to loop over all elements and assemble the global stiffness matrix</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -512,7 +512,7 @@ div.rendered_html tbody tr:hover {
     <span class="c1"># Create connectivity indices for the current element</span>
     <span class="n">I</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:],</span> <span class="p">(</span><span class="n">nnodel</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
     <span class="n">J</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:],</span> <span class="p">(</span><span class="n">nnodel</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-    <span class="n">K</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Ael</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nnodel</span> <span class="o">*</span> <span class="n">nnodel</span><span class="p">)</span>
+    <span class="n">K</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">Ael</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
 
     <span class="c1"># Assemble the global right-hand side vector</span>
     <span class="n">Rhs_all</span><span class="p">[</span><span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">+=</span> <span class="n">Rhs_el</span>
@@ -540,7 +540,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -549,7 +549,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -586,6 +586,31 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <img alt="../../_images/lecture3_jupyter_fem_1d_numerical_14_0.png" src="../../_images/lecture3_jupyter_fem_1d_numerical_14_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">spy</span><span class="p">(</span><span class="n">A_all</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Iterate over the non-zero elements and add text annotations</span>
+<span class="n">nonzero_rows</span><span class="p">,</span> <span class="n">nonzero_cols</span> <span class="o">=</span> <span class="n">A_all</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nonzero_rows</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">nonzero_cols</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nonzero_rows</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">A_all</span><span class="p">[</span><span class="n">nonzero_rows</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nonzero_cols</span><span class="p">[</span><span class="n">i</span><span class="p">]]),</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/lecture3_jupyter_fem_1d_numerical_15_0.png" src="../../_images/lecture3_jupyter_fem_1d_numerical_15_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">

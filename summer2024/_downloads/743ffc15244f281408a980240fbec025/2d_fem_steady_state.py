@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 from shapes import shapes
 
 #geometry
-lx          = 1
-ly          = 1
-nx          = 51
-ny          = 51
+lx          = 2
+ly          = 2
+nx          = 101
+ny          = 101
 nnodel      = 4
 dx          = lx/(nx-1)
 dy          = ly/(ny-1)
@@ -19,7 +19,7 @@ h_i         = 0.2 # heigths inclusion
 
 # model parameters
 k1          = 1
-k2          = 0.001
+k2          = 10
 Ttop        = 0
 Tbot        = 1
  
@@ -85,11 +85,12 @@ for iel in range(0,nel):
         Rhs_el     = Rhs_el + np.zeros(nnodel)
     
         # assemble coefficients
-        I[iel, :] = np.tile(EL2NOD[iel, :], (nnodel, 1)).T.ravel()
-        J[iel, :] = np.tile(EL2NOD[iel, :], (nnodel, 1)).ravel()
-        K[iel, :] = Ael.ravel()
+        
+    I[iel, :] = np.tile(EL2NOD[iel, :], (nnodel, 1)).T.ravel()
+    J[iel, :] = np.tile(EL2NOD[iel, :], (nnodel, 1)).ravel()
+    K[iel, :] = Ael.ravel()
     
-        Rhs_all[EL2NOD[iel,:]] += Rhs_el
+    Rhs_all[EL2NOD[iel,:]] += Rhs_el
 
 
 # Create the global stiffness matrix using a sparse representation
