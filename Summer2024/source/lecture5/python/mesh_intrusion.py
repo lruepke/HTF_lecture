@@ -43,7 +43,8 @@ def make_inclusion(center_x, center_y, radius, points_inc, attribute):
 
 # generate input    
 make_box(-1.0, -1.0, 2, 2, 1)
-make_inclusion(0, 0, 0.2, 30, 100)
+make_inclusion(-1, 0, 0.2, 30, 100)
+make_inclusion(-1, -0.25, 0.2, 30, 100)
 
 A = dict(vertices=vertices, segments=segments, regions=regions)
 B = tr.triangulate(A, 'pq33Aa')

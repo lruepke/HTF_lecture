@@ -15,6 +15,7 @@ import triangle as tr
 vertices = []
 segments = []
 regions = []
+segment_markers = []
 
 # make a box with given dims and place given attribute at its center
 def make_box(x, y, w, h, attribute):
@@ -30,6 +31,8 @@ def make_box(x, y, w, h, attribute):
                      (i+2, i+3),
                      (i+3, i+0)])
     
+    segment_markers.extend([101, 102, 103, 104])
+
     regions.append([x+0.01*w, y+0.01*h, attribute,0.005])
 
 def make_inclusion(center_x, center_y, radius, points_inc, attribute):
@@ -44,7 +47,8 @@ def make_inclusion(center_x, center_y, radius, points_inc, attribute):
     Tmp = np.array([np.arange(i, i+points_inc), np.arange(i+1, i+points_inc+1)]).T
     Tmp[-1,1] = i
     segments.extend(Tmp)
-   
+    segment_markers.extend(1001*np.ones(len(Tmp)))
+
     regions.append([center_x, center_y, attribute,0.001])
 
 #geometry
@@ -70,7 +74,7 @@ make_inclusion(0, .75, radius, 20, 100)
 make_inclusion(-0.5, .05, radius, 20, 100)
 make_inclusion(0.5, -.75, radius, 20, 100)
 
-A = dict(vertices=vertices, segments=segments, regions=regions)
+A = dict(vertices=vertices, segments=segments, segment_markers=segment_markers, regions=regions)
 B = tr.triangulate(A, 'pq33Aa')
 #tr.compare(plt, A, B)
 #plt.show()
@@ -79,11 +83,13 @@ B = tr.triangulate(A, 'pq33Aa')
 GCOORD = B.get("vertices")
 EL2NOD = B.get("triangles")
 Phases = B.get("triangle_attributes")
+Markers= B.get("vertex_markers")
 
 nnodel = EL2NOD.shape[1]
 nel    = EL2NOD.shape[0]
 nnod   = GCOORD.shape[0]
 Phases = np.reshape(Phases,nel)
+Markers= np.reshape(Markers,nnod)
 
 # model parameters
 k1          = 1
@@ -95,7 +101,7 @@ T           = np.zeros(nnod) #initial T, not strictly needed
 
 # Gauss integration points for triangles
 nip   = 3
-gauss = np.array([[ 1/6, 2/3, 1/6], [1/6, 1/6, 2/3]]).T.copy()
+gauss = np.array([[ 1/6, 2/3, 1/6], [1/6, 1/6, 2/3]]).T
 weights = np.array([1/6, 1/6, 1/6])
 
 # Storage
@@ -143,9 +149,8 @@ A_all = csr_matrix((K.reshape(nel*nnodel*nnodel),(I.reshape(nel*nnodel*nnodel),J
 
 # indices and values at top and bottom
 tol = 1e-3
-i_bot = np.where(abs(GCOORD[:,1] - y0) < tol)[0]
-i_top = np.where(abs(GCOORD[:,1] - (y0+lx)) < tol)[0]
-
+i_bot = np.where(Markers == 101)[0] #np.where(abs(GCOORD[:,1] - y0) < tol)[0]
+i_top = np.where(Markers == 103)[0] # np.where(abs(GCOORD[:,1] - (y0+lx)) < tol)[0]
 
 Ind_bc  = np.concatenate((i_bot, i_top))
 Val_bc  = np.concatenate((np.ones(i_bot.shape)*Tbot, np.ones(i_top.shape)*Ttop ))

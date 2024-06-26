@@ -129,7 +129,7 @@ for t in range(0,nt):
             # 1. update shape functions
             xi      = gauss[ip,0]
             eta     = gauss[ip,1]
-            N, dNds = shapes_tri(xi, eta,nnodel)
+            N, dNds = shapes_tri(xi, eta)
             
             # 2. set up Jacobian, inverse of Jacobian, and determinant
             Jac     = np.matmul(dNds,ECOORD) #[2,nnodel]*[nnodel,2]
@@ -184,7 +184,7 @@ for t in range(0,nt):
         # 1. update shape functions
         xi      = 1/3
         eta     = 1/3
-        N, dNds = shapes_tri(xi, eta,nnodel)           
+        N, dNds = shapes_tri(xi, eta)           
         # 2. set up Jacobian, inverse of Jacobian, and determinant
         Jac     = np.matmul(dNds,ECOORD) #[2,nnodel]*[nnodel,2]
         invJ    = np.linalg.inv(Jac)    

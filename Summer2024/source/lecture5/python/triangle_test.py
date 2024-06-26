@@ -7,6 +7,7 @@ import triangle as tr
 vertices = []
 segments = []
 regions = []
+segment_markers = []
 
 # make a box with given dims and place given attribute at its center
 def make_box(x, y, w, h, attribute):
@@ -23,6 +24,7 @@ def make_box(x, y, w, h, attribute):
                      (i+2, i+3),
                      (i+3, i+0)])
     
+    segment_markers.extend([101, 102, 103, 104])
     regions.append([x+0.5*w, y+0.5*h, attribute, 0])
 
 # generate some input    
@@ -31,7 +33,7 @@ make_box(1, 1, 3, 1, 2)
 make_box(1, 3, 1, 1, 3)
 make_box(3, 3, 1, 1, 4)
 
-A = dict(vertices=vertices, segments=segments, regions=regions)
+A = dict(vertices=vertices, segments=segments, segment_markers=segment_markers, regions=regions)
 B = tr.triangulate(A, 'pA')
    
 tr.compare(plt, A, B)
