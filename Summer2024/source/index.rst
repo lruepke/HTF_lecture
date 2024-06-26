@@ -93,6 +93,13 @@ The majority of this course will be spent in front of a computer working on exer
     lecture6/turing_coupled_problem
 
 .. toctree::
+    :maxdepth: 2
+    :caption: Lecture 7
+
+    lecture7/overview
+    lecture7/intro-stokes
+
+.. toctree::
    :maxdepth: 2
    :caption: References
    
