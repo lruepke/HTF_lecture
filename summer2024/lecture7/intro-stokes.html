@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction to Stokes flow &mdash; Finite Element Modeling in Geodynamics  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=3d3fbe02" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=379f3234" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=9b54adf2"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="References" href="../refs.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/course-details.html">Course details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/installation.html">Installation guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_intro.html">Introduction: The Finite Differences Method (FDM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_1.html">Example 1: Cooling dike</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_2.html">Example 2: Cooling dike - implicit version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_3.html">Example 3: Periodic variations in seafloor temperature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_advection.html">Transport problems with FDM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_intro.html">Introduction: Method of Weighted Residuals (MWR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_examples.html">MWR solutions of the steady advection-diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/excercises.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html">Introduction Finite Element Method (FEM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html#fem-implementation">FEM implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_advection.html">FEM and advection problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html">2-D FEM - elliptic problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html#implementation">Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html">Triangles: unstructured meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html#excercise">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/transient_problems.html">Transient heat diffusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/turing_coupled_problem.html">Coupled diffusion problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction to Stokes flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#conservation-of-mass">Conservation of Mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conservation-of-momentum">Conservation of Momentum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#stress">Stress</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strain-and-strain-rate">Strain and strain rate</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#stress-balance">Stress balance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stress-strain-rate-relationships">Stress-strain rate relationships</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/FEM_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Finite Element Modeling in Geodynamics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introduction to Stokes flow</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture7/intro-stokes.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="introduction-to-stokes-flow">
+<span id="intro-stokes-equation"></span><h1>Introduction to Stokes flow<a class="headerlink" href="#introduction-to-stokes-flow" title="Link to this heading"></a></h1>
+<p>The Stokes equation describes the flow of a viscous fluid in a slow regime. It is a simplification of the Navier-Stokes equation, which describes the flow of a fluid in a fast regime. The Navier-Stokes equation is a non-linear partial differential equation and is difficult to solve. The Stokes equation is a linear partial differential equation and is easier to solve. The Stokes equation is often used in geodynamics to describe the flow of the Earth’s mantle.</p>
+<p>It’s derivation can be done based on conservation laws for mass and momentum.</p>
+<section id="conservation-of-mass">
+<h2>Conservation of Mass<a class="headerlink" href="#conservation-of-mass" title="Link to this heading"></a></h2>
+<p>Conservation of mass means that the amount of mass in our model space is always constant; no mass is created or destroyed. Mass <span class="math notranslate nohighlight">\(m\)</span> is directly related to density <span class="math notranslate nohighlight">\(\rho\)</span> by unit volume, and a change in mass will result in an equivalent change in density. The change in density in our model box is equal to the sum of the mass flux through all boundaries:</p>
+<div class="math notranslate nohighlight" id="equation-eqs-continuity-eulerian">
+<span class="eqno">(152)<a class="headerlink" href="#equation-eqs-continuity-eulerian" title="Link to this equation"></a></span>\[\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho v) = 0\]</div>
+<p>This describes the change of density in a fixed observation cell due to the in- and outflux of mass. Such a fixed node is called an <em>Euler</em> node and is formulated from the node’s point of view.</p>
+<p>Using Leibniz’s Law (<span class="math notranslate nohighlight">\(\frac{\partial}{\partial x} \left(u v\right) = \frac{\partial u}{\partial x} v + \frac{\partial v}{\partial x}  u\)</span>), the continuity equation can be extended:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho v) = \frac{\partial \rho}{\partial t} + \rho \nabla \cdot v + v \nabla \rho = 0\]</div>
+<p>One term (<span class="math notranslate nohighlight">\(v \nabla \rho\)</span>) describes the change of density in our observation volume due to mass flux through the boundaries with the same velocity but different density. This term describes <em>Advection</em> or <em>Advective transport</em>. The other term (<span class="math notranslate nohighlight">\(\rho \nabla \cdot v\)</span>) describes the change of density in the observational volume due to mass flux of constant density but varying velocity.</p>
+<p>For the case of constant density, it follows that <span class="math notranslate nohighlight">\(\frac{\partial \rho}{\partial t}=0\)</span>, <span class="math notranslate nohighlight">\(\nabla \rho=0\)</span> and <span class="math notranslate nohighlight">\(\frac{D \rho}{D t}=0\)</span>. This assumption is valid for <em>incompressible</em> material and is often used in geodynamics. The incompressible continuity equation in 2D looks like:</p>
+<div class="math notranslate nohighlight" id="equation-eqs-continuity">
+<span class="eqno">(153)<a class="headerlink" href="#equation-eqs-continuity" title="Link to this equation"></a></span>\[\nabla \cdot v = \frac{\partial v_x}{\partial x} + \frac{\partial v_y}{\partial y} = 0\]</div>
+<p>and describes the conservation of mass in an incompressible material.</p>
+</section>
+<section id="conservation-of-momentum">
+<h2>Conservation of Momentum<a class="headerlink" href="#conservation-of-momentum" title="Link to this heading"></a></h2>
+<section id="stress">
+<h3>Stress<a class="headerlink" href="#stress" title="Link to this heading"></a></h3>
+<p>Stress <span class="math notranslate nohighlight">\(\sigma\)</span> is the force acting on the side of a body. In a 2D square, we can have a force acting in the x-direction on both sides perpendicular to x: <span class="math notranslate nohighlight">\(\sigma_{xx}\)</span>. A second force <span class="math notranslate nohighlight">\(\sigma_{yy}\)</span> acts in the y-direction on the sides perpendicular to y. These forces can be understood as ‘pulling’ in both x- and y-directions.</p>
+<p>In addition, forces in the x-direction can also act on the sides parallel to x: shear stress <span class="math notranslate nohighlight">\(\sigma_{xy}\)</span>. A second shear stress acts in the y-direction on the sides parallel to y: <span class="math notranslate nohighlight">\(\sigma_{yx}\)</span>.</p>
+<p>To describe all these forces acting on a body with only one name, we will need a <em>tensor</em>. In 2D, the stress tensor has the following form:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\sigma_{ij} =
+\begin{pmatrix}
+\sigma_{xx} &amp; \sigma_{xy}\\
+\sigma_{yx} &amp; \sigma_{yy}
+\end{pmatrix}\end{split}\]</div>
+<p>In the absence of internal forces, the angular momentum has to be conserved. This means that shear stresses can only act on our body if they won’t create a rotational component. This can only be achieved if the following condition is fulfilled: <span class="math notranslate nohighlight">\(\sigma_{ij}=\sigma_{ji}\)</span>.</p>
+<p>The mean of all acting perpendicular stresses defines the pressure in our body. The minus sign appears because stresses are designed as pulling forces, while pressure is the force pushing into the body.</p>
+<div class="math notranslate nohighlight" id="equation-eqs-pressure-definition">
+<span class="eqno">(154)<a class="headerlink" href="#equation-eqs-pressure-definition" title="Link to this equation"></a></span>\[P = -(\sigma_{xx}+\sigma_{yy}+sigma_{zz})/3\]</div>
+<p>No shear forces are acting on a fluid at rest. The forces perpendicular to the body define the <em>hydrostatic pressure</em>. In addition, we can now define the <em>deviatoric stress</em> <span class="math notranslate nohighlight">\(\sigma'_{ij}\)</span>, which denotes the deviation in the stress state from hydrostatic pressure.</p>
+<div class="math notranslate nohighlight" id="equation-eqs-deviatoric-stress">
+<span class="eqno">(155)<a class="headerlink" href="#equation-eqs-deviatoric-stress" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
+\sigma'_{ij} = \sigma_{ij} - (-P) = \sigma_{ij} + \delta_{i,j} P\\
+\begin{pmatrix}
+\sigma'_{xx} &amp; \sigma'_{xy}\\
+\sigma'_{xy} &amp; \sigma'_{yy}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\sigma_{xx} &amp; \sigma_{xy}\\
+\sigma_{xy} &amp; \sigma_{yy}
+\end{pmatrix}
++
+\begin{pmatrix}
+P &amp; 0\\
+0 &amp; P
+\end{pmatrix}
+\end{split}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta_{i,j} P\)</span> denotes the hydrostatic pressure (making use of the Kronecker delta <span class="math notranslate nohighlight">\(\delta_{ij}\)</span> where <span class="math notranslate nohighlight">\(\delta_{i,j}=1\)</span> for <span class="math notranslate nohighlight">\(i=j\)</span> and <span class="math notranslate nohighlight">\(\delta_{ij}=0\)</span> for <span class="math notranslate nohighlight">\(i\neq j\)</span>, this selects the main diagonal of a matrix) and <span class="math notranslate nohighlight">\(\sigma'_{ij}\)</span> is the deviatoric stress component. This means that:</p>
+<div class="math notranslate nohighlight">
+\[\sigma_{xy} = \sigma_{yx} = \sigma'_{xy} = \sigma'_{yx}\]</div>
+</section>
+<section id="strain-and-strain-rate">
+<h3>Strain and strain rate<a class="headerlink" href="#strain-and-strain-rate" title="Link to this heading"></a></h3>
+<p>Strain describes the actual deformation of a body due to stress acting on it. Strain is also described as a tensor with components acting perpendicular to the x- and y-directions, and shear components acting parallel to the direction of deformation.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+\epsilon_{ij} =
+\begin{pmatrix}
+\epsilon_{xx} &amp; \epsilon_{xy}\\
+\epsilon_{yx} &amp; \epsilon_{yy}
+\end{pmatrix}
+\end{split}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> denotes the change of material displacement <span class="math notranslate nohighlight">\(u_x, u_y\)</span>, i.e., deformation.</p>
+<p>The deformation in each direction and all sides is denoted by the mean of the two deformations working opposite each other:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\epsilon_{ij} = \frac{1}{2} \left(\frac{\partial u_i}{x_j} + \frac{\partial u_j}{x_i}\right)
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+\epsilon_{xx} &amp;= \frac{1}{2} \left(\frac{\partial u_x}{x} + \frac{\partial u_x}{x}\right) = \frac{\partial u_x}{\partial x}\\
+\epsilon_{xy} &amp;= \frac{1}{2} \left(\frac{\partial u_x}{y} + \frac{\partial u_y}{x}\right) = \epsilon_{yx}\\
+\epsilon_{yx} &amp;= \frac{1}{2} \left(\frac{\partial u_y}{x} + \frac{\partial u_x}{y}\right) = \epsilon_{xy}\\
+\epsilon_{yy} &amp;= \frac{1}{2} \left(\frac{\partial u_y}{y} + \frac{\partial u_y}{y}\right) = \frac{\partial u_y}{\partial y}\\
+\end{split}\end{split}\]</div>
+<p>In fluids, and therefore in most convection problems in geodynamics, a constituative relationship between stress and strain rate is used and the equations are formulated as the <em>rate of change in material displacement</em> or the <em>strain rate</em> <span class="math notranslate nohighlight">\(\dot{\epsilon}_{ij}\)</span>, which is the change of strain <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> in time. For a displacement velocity <span class="math notranslate nohighlight">\(v_i = \frac{D u_i}{D t}\)</span>, the strain rate can be expressed as:</p>
+<div class="math notranslate nohighlight" id="equation-eqs-sym-strain-rate-tensor">
+<span class="eqno">(156)<a class="headerlink" href="#equation-eqs-sym-strain-rate-tensor" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
+\dot{\epsilon}_{ij} &amp;= \frac{1}{2} \left(\frac{\partial v_i}{\partial x_j} + \frac{\partial v_j}{\partial x_i}\right)\\
+\begin{pmatrix}
+\dot{\epsilon}_{xx} &amp; \dot{\epsilon}_{xy}\\
+\dot{\epsilon}_{yx} &amp; \dot{\epsilon}_{yy}
+\end{pmatrix}
+&amp;=
+\begin{pmatrix}
+\frac{\partial v_x}{\partial x} &amp;
+\frac{1}{2} \left(\frac{\partial v_y}{\partial x} + \frac{\partial v_x}{\partial y}\right)\\
+\frac{1}{2} \left(\frac{\partial v_x}{\partial y} + \frac{\partial v_y}{\partial x}\right) &amp;
+\frac{\partial v_y}{\partial y}
+\end{pmatrix}
+\end{split}\end{split}\]</div>
+<p>From this formulation, we can immediately recognize that <span class="math notranslate nohighlight">\(\dot{\epsilon}_{xy}=\dot{\epsilon}_{yx}\)</span>.</p>
+<p>Similar to the stress tensor, one can define a deviatoric strain rate tensor <span class="math notranslate nohighlight">\(\dot{\epsilon}'_{ij}\)</span> which describes the deviation from strain rate <span class="math notranslate nohighlight">\(\dot{\epsilon}_{ij}\)</span> due to net rotational forces or rigid body rotation. No shear strain rate acts on a rigid body (<span class="math notranslate nohighlight">\(\dot{\epsilon}'_{xy}=\dot{\epsilon}'_{yx}=0\)</span>), and the divergence of such a body is described as <span class="math notranslate nohighlight">\(\nabla \cdot v = \dot{\epsilon}'_{xx} + \dot{\epsilon}'_{yy} = \dot{\epsilon}'_{kk}\)</span>.</p>
+<div class="math notranslate nohighlight" id="equation-eqs-deviatoric-strain-rate">
+<span class="eqno">(157)<a class="headerlink" href="#equation-eqs-deviatoric-strain-rate" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
+\dot{\epsilon}'_{ij} &amp;= \dot{\epsilon}_{ij} - \delta_{ij} \frac{1}{3} \dot{\epsilon}_{kk}\\
+\begin{pmatrix}
+\dot{\epsilon}'_{xx} &amp; \dot{\epsilon}'_{xy}\\
+\dot{\epsilon}'_{xy} &amp; \dot{\epsilon}'_{yy}
+\end{pmatrix}
+&amp;=
+\begin{pmatrix}
+\dot{\epsilon}_{xx} &amp; \dot{\epsilon}_{xy}\\
+\dot{\epsilon}_{xy} &amp; \dot{\epsilon}_{yy}
+\end{pmatrix}
++
+\begin{pmatrix}
+-\frac{1}{3} \dot{\epsilon}_{kk} &amp; 0\\
+0 &amp; -\frac{1}{3} \dot{\epsilon}_{kk}
+\end{pmatrix}
+\end{split}\end{split}\]</div>
+</section>
+</section>
+<section id="stress-balance">
+<h2>Stress balance<a class="headerlink" href="#stress-balance" title="Link to this heading"></a></h2>
+<p>According to Newton’s second law of motion:</p>
+<div class="math notranslate nohighlight">
+\[f = m a\]</div>
+<p>the net force acting on a body is equal to its mass times its acceleration or change of velocity. To apply this in the x-direction, we will need to gather all forces acting on the body in the x-direction.</p>
+<div class="math notranslate nohighlight" id="equation-eqs-nexton-force-balance">
+<span class="eqno">(158)<a class="headerlink" href="#equation-eqs-nexton-force-balance" title="Link to this equation"></a></span>\[f_{x} = f_{xx1} + f_{xx2} + f_{xy1} + f_{xy2} + f_{xz1} + f_{xz2}  + m g_x = m a_x\]</div>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/3D_stress.png"><img alt="../_images/3D_stress.png" src="../_images/3D_stress.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Stresses acting on a 1D, 2D, or 3D test volume.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The forces can be described in terms of stresses:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+f_{xx1} = -\sigma_{xx1}\Delta y\Delta z\\
+f_{xx2} = \sigma_{xx2} \Delta y\Delta z\\
+f_{xy1} = -\sigma_{xy1}\Delta x\Delta z\\
+f_{xy2} = \sigma_{xy2}\Delta x\Delta z\\
+f_{xz1} = -\sigma_{xz1}\Delta x\Delta y\\
+f_{xz2} = \sigma_{xz2}\Delta x\Delta y\\
+\left(\sigma_{xx2} - \sigma_{xx1}\right)\Delta y \Delta z + \left(\sigma_{xy2} - \sigma_{xy1}\right) \Delta x \Delta z + \left(\sigma_{xz2} - \sigma_{xz1}\right) \Delta x \Delta y  + m g_x = m a_x
+\end{split}\end{split}\]</div>
+<p>Dividing equation <a class="reference internal" href="#equation-eqs-nexton-force-balance">equation (158)</a> by the volume of our test cube <span class="math notranslate nohighlight">\(V= \Delta x \Delta y \Delta z\)</span> then gives us:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+\frac{\left(\sigma_{xx2} - \sigma_{xx1}\right)}{\Delta x} + \frac{\left(\sigma_{xy2} - \sigma_{xy1}\right)}{\Delta y} + \frac{\left(\sigma_{xz2} - \sigma_{xz1}\right)}{\Delta z}  + \rho g_x = \rho a_x\\
+\frac{\partial \sigma_{xj}}{\partial x_j} + \rho g_x = \rho \frac{D v_x}{D t}
+\end{split}\end{split}\]</div>
+<p>Or in a more general form for all directions:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial \sigma_{ij}}{\partial x_j} + \rho g_i = \rho \frac{D v_i}{D t}
+\end{split}\]</div>
+<p>By making use of equation <a class="reference internal" href="#equation-eqs-deviatoric-stress">equation (155)</a> for the deviatoric stress, we arrive at the Navier-Stokes equation, which describes the conservation of momentum:</p>
+<div class="math notranslate nohighlight" id="equation-eqs-navier-stokes">
+<span class="eqno">(159)<a class="headerlink" href="#equation-eqs-navier-stokes" title="Link to this equation"></a></span>\[\frac{\partial \sigma_{ij}'}{\partial x_j} - \frac{\partial P}{\partial x_i} + \rho g_i = \rho \frac{D v_i}{D t}\]</div>
+<p>This equation makes use of the <em>Einstein notation</em> or <em>Einstein summation convention</em>. If an index appears twice in one term, this term actually stands for the sum of all possible values for this index. For example, the first term in the above equation <a class="reference internal" href="#equation-eqs-navier-stokes">equation (159)</a> in 2D formulated in x actually hides the following:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \sigma_{ij}'}{\partial x_j} = \frac{\partial \sigma_{xx}'}{\partial x} + \frac{\partial \sigma_{xy}}{\partial x}\]</div>
+<p>So the full Navier-Stokes equation in 2D actually has more terms and is a system of equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+\frac{\partial \sigma_{xx}'}{\partial x} + \frac{\partial \sigma_{xy}}{\partial y} - \frac{\partial P}{\partial x} + \rho g_x = \rho \frac{D v_x}{D t}\\
+\frac{\partial \sigma_{yx}}{\partial x} + \frac{\partial \sigma_{yy}'}{\partial y} - \frac{\partial P}{\partial y} + \rho g_y = \rho \frac{D v_y}{D t}
+\end{split}\end{split}\]</div>
+<p>The term <span class="math notranslate nohighlight">\(\rho \frac{D v_i}{D t}\)</span> describes inertia and can be neglected in most geodynamic applications as it is much smaller than the gravitational acceleration. For a typical plate velocity of several <span class="math notranslate nohighlight">\(\mathrm{cm/yr} \, (\sim 10^{-9} \mathrm{m/s})\)</span> and a typical time for change in mantle flow of a few million years (<span class="math notranslate nohighlight">\(\sim 10^{13} \mathrm{s}\)</span>), inertia is of the magnitude of <span class="math notranslate nohighlight">\(\sim 10^{-22} \mathrm{m/s^2}\)</span>. Compared to gravitational acceleration (<span class="math notranslate nohighlight">\(\sim 10 \mathrm{m/s^2}\)</span>), inertia is by a magnitude of <span class="math notranslate nohighlight">\(\sim 10^{-23}\)</span> smaller and can be safely neglected.</p>
+<p>The resulting equation:</p>
+<div class="math notranslate nohighlight" id="equation-eqs-stokes">
+<span class="eqno">(160)<a class="headerlink" href="#equation-eqs-stokes" title="Link to this equation"></a></span>\[\frac{\partial \sigma_{ij}'}{\partial x_j} - \frac{\partial P}{\partial x_i} + \rho g_i = 0\]</div>
+<p>is called the <em>Stokes equation of slow flow</em>.</p>
+</section>
+<section id="stress-strain-rate-relationships">
+<h2>Stress-strain rate relationships<a class="headerlink" href="#stress-strain-rate-relationships" title="Link to this heading"></a></h2>
+<p>In elasticity, the stress is related to the strain by the <em>Hooke’s Law</em>: <span class="math notranslate nohighlight">\(\sigma = C \epsilon\)</span>, where <span class="math notranslate nohighlight">\(C\)</span> is the stiffness tensor.</p>
+<p>In viscous materials, the stress-strain rate relationship is typically written in terms of deviatoric stresses, deviatoric strain rates, and the shear vicscosity <span class="math notranslate nohighlight">\(\eta\)</span>. The shear viscosity is a measure of the resistance of a fluid to flow. The shear viscosity is a scalar in isotropic materials and a tensor in anisotropic materials.</p>
+<p>The relationship between deviatoric stress and strain rates can be written as:</p>
+<div class="math notranslate nohighlight" id="equation-eqs-constitutive-relation-dev-stress-strain-rate">
+<span class="eqno">(161)<a class="headerlink" href="#equation-eqs-constitutive-relation-dev-stress-strain-rate" title="Link to this equation"></a></span>\[\sigma_{ij}' = 2 \eta \dot{\epsilon}_{ij}'\]</div>
+<p>The factor of 2 is introduced from the way the strain rate tensor is symmetrized in <span class="xref std std-ref">eqs:sym_strain_rate_tensor</span>.</p>
+<p>As our goal is to solve for the velocity field, we write the deviatoric strain rates as full strain rates using <span class="xref std std-ref">deviatoric_strain_rate</span>.</p>
+<div class="math notranslate nohighlight" id="equation-eqs-constitutive-relation-dev-stress-full-strain-rate">
+<span class="eqno">(162)<a class="headerlink" href="#equation-eqs-constitutive-relation-dev-stress-full-strain-rate" title="Link to this equation"></a></span>\[\sigma_{ij}' = 2 \eta \left ( \dot{\epsilon}_{ij} - \delta_{ij} \frac{1}{3} \dot{\epsilon}_{kk} \right)\]</div>
+<p>By using this onstituative relation and knowing that <span class="math notranslate nohighlight">\(\dot()\epsilon_{zz}') = 0\)</span>, we can write the equation in terms of full strain rates.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+\frac{\partial}{\partial x} \left ( \eta \left ( \frac{4}{3} \dot{\epsilon}_{xx} - \frac{2}{3}\dot{\epsilon}_{yy} \right ) \right ) + \frac{\partial}{\partial y} \left ( \eta \left ( \dot{\epsilon}_{xy} \right ) \right ) - \frac{\partial P}{\partial x} + \rho g_x = 0\\
+\frac{\partial}{\partial y} \left ( \eta \left ( \frac{4}{3} \dot{\epsilon}_{yy} - \frac{2}{3}\dot{\epsilon}_{xx} \right ) \right ) + \frac{\partial}{\partial x} \left ( \eta \left ( \dot{\epsilon}_{xy} \right ) \right ) - \frac{\partial P}{\partial y} + \rho g_y = 0\\
+\end{split}\end{split}\]</div>
+<p>And by substituting the defintion of the strain rates tensor, we arrive at the <em>Stokes equation</em> for slow flow in terms of velocities:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+\frac{\partial}{\partial x} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_x}{\partial x} - \frac{2}{3}\frac{\partial u_y}{\partial y} \right ) \right ) + \frac{\partial}{\partial y} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial x} + \rho g_x = 0\\
+\frac{\partial}{\partial y} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_y}{\partial y} - \frac{2}{3}\frac{\partial u_x}{\partial x} \right ) \right ) + \frac{\partial}{\partial x} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial y} + \rho g_y = 0\\\
+\end{split}\end{split}\]</div>
+<p>These two equations, for the x and y directions, have three unknowns: the x and y components of the velocity field and the pressure field. The pressure field is not directly solved for in the Stokes equation, but is determined by the incompressibility condition <a class="reference internal" href="#equation-eqs-continuity">equation (153)</a>.</p>
+<div class="math notranslate nohighlight" id="equation-eqs-stokes-equation-penalty">
+<span class="eqno">(163)<a class="headerlink" href="#equation-eqs-stokes-equation-penalty" title="Link to this equation"></a></span>\[\frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} = -\frac{p}{\kappa}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\kappa\)</span> is a penalty parameter, a large number. The incompressibility condition is often solved using a penalty method, where the pressure is determined by the velocity field. The pressure is then used to calculate the viscous forces acting on the fluid.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../refs.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+      
+        <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+          <span class="rst-current-version" data-toggle="rst-current-version">
+            <span class="fa fa-book"> Finite Element Modeling in Geodynamics</span>
+            v: latest
+            <span class="fa fa-caret-down"></span>
+          </span>
+          <div class="rst-other-versions">
+            <dl>
+              
+                
+                <dd><a href="https://lruepke.github.io/FEM_lecture/downloads/LectureNote.pdf">latest</a></dd>
+                
+                <dd><a href="#/LectureNote.pdf">2.0</a></dd>
+                
+              
+          </div>
+        </div>
+      
+    
+
+</body>
+</html>
