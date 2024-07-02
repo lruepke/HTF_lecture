@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finite Element Formulation &mdash; Finite Element Modeling in Geodynamics  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=3d3fbe02" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=379f3234" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=9b54adf2"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="References" href="../refs.html" />
+    <link rel="prev" title="Introduction to Stokes flow" href="intro-stokes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/course-details.html">Course details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/installation.html">Installation guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_intro.html">Introduction: The Finite Differences Method (FDM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_1.html">Example 1: Cooling dike</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_2.html">Example 2: Cooling dike - implicit version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_3.html">Example 3: Periodic variations in seafloor temperature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_advection.html">Transport problems with FDM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_intro.html">Introduction: Method of Weighted Residuals (MWR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_examples.html">MWR solutions of the steady advection-diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/excercises.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html">Introduction Finite Element Method (FEM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html#fem-implementation">FEM implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_advection.html">FEM and advection problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html">2-D FEM - elliptic problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html#implementation">Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html">Triangles: unstructured meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html#excercise">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/transient_problems.html">Transient heat diffusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/turing_coupled_problem.html">Coupled diffusion problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro-stokes.html">Introduction to Stokes flow</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Finite Element Formulation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#weak-form">Weak form</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#element-matrices">Element matrices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-b-matrix">The B matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-d-matrix">The D matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-coefficient-stiffness-matrix">The coefficient/stiffness matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#static-condensation">Static condensation</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/FEM_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Finite Element Modeling in Geodynamics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Finite Element Formulation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture7/fem_formulation.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="finite-element-formulation">
+<span id="fem-formulation"></span><h1>Finite Element Formulation<a class="headerlink" href="#finite-element-formulation" title="Link to this heading"></a></h1>
+<section id="weak-form">
+<h2>Weak form<a class="headerlink" href="#weak-form" title="Link to this heading"></a></h2>
+<p>To cast <span class="xref std std-ref">eqs:stokes_equation_penalty</span> and <span class="xref std std-ref">eqs:stokes_equation_divergence</span> into a finite element formulation, we need to define the trial and test spaces.  We follow the formulation in <span id="id1">[<a class="reference internal" href="../refs.html#id35" title="M. Dabrowski, M. Krotkiewski, and D. W. Schmid. Milamin: matlab-based finite element method solver for large problems. Geochemistry Geophysics Geosystems, 2008. URL: &lt;Go to ISI&gt;://000255458100002 http://www.agu.org/journals/gc/gc0804/2007GC001719/2007GC001719.pdf, doi:10.1029/2007gc001719.">Dabrowski et al., 2008</a>]</span> and use the the seven-node Crouzeix-Raviart triangle with quadratic velocity shape functions enhanced by a cubic bubble function and discontinuous linear interpolation for the pressure field. This element is stable and the velocity and pressure approximations are independent, which leads to the so-called mixed formulation of the finite element method.</p>
+<div class="math notranslate nohighlight" id="equation-eq-shape-function-stokes">
+<span class="eqno">(163)<a class="headerlink" href="#equation-eq-shape-function-stokes" title="Link to this equation"></a></span>\[\begin{split}\tilde{u}_x(x,y) = \sum_{i=1}^{\text{nnod}} N_i(x,y) u_x^i \\
+\tilde{u}_y(x,y) = \sum_{i=1}^{\text{nnod}} N_i(x,y) u_y^i \\
+\tilde{p}(x,y) = \sum_{i=1}^{\text{np}} \Pi_i(x,y) p^i\end{split}\]</div>
+<p>We can now use the Galerkin method to write the governing equations in their FEM weak form. These were the equations as derived in the previous sections:</p>
+<div class="math notranslate nohighlight" id="equation-eqs-stokes-equation-penalty">
+<span class="eqno">(164)<a class="headerlink" href="#equation-eqs-stokes-equation-penalty" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
+\frac{\partial}{\partial x} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_x}{\partial x} - \frac{2}{3}\frac{\partial u_y}{\partial y} \right ) \right ) + \frac{\partial}{\partial y} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial x} + \rho g_x = 0\\
+\frac{\partial}{\partial y} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_y}{\partial y} - \frac{2}{3}\frac{\partial u_x}{\partial x} \right ) \right ) + \frac{\partial}{\partial x} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial y} + \rho g_y = 0\\\
+\end{split}\end{split}\]</div>
+<p>And the continuity equation:</p>
+<div class="math notranslate nohighlight" id="equation-eqs-stokes-equation-penalty-divergence">
+<span class="eqno">(165)<a class="headerlink" href="#equation-eqs-stokes-equation-penalty-divergence" title="Link to this equation"></a></span>\[\frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} = -\frac{p}{\kappa}\]</div>
+<p>We now use the shapes functions <span class="xref std std-ref">eq:shape_function_stokes</span> to write the weak form of the equations. The weak form of the equations is obtained by multiplying the equations by a test function and integrating over the domain. The again use the Galerkin method, so that test functions are the same as the shape functions. We also do an integration by parts on the velocity equations. The weak form of the equations is then given by:</p>
+<div class="math notranslate nohighlight" id="equation-eq-weak-form">
+<span class="eqno">(166)<a class="headerlink" href="#equation-eq-weak-form" title="Link to this equation"></a></span>\[ \begin{align}\begin{aligned}\begin{split}\int_{\Omega} \left[ \frac{\partial N_i}{\partial x} \left( \eta \left( \frac{4}{3} \frac{\partial (N_j u_{x,j})}{\partial x} - \frac{2}{3} \frac{\partial (N_j u_{y,j})}{\partial y} \right) \right) + \frac{\partial N_i}{\partial y} \left( \eta \left( \frac{\partial (N_j u_{x,j})}{\partial y} + \frac{\partial (N_j u_{y,j})}{\partial x} \right) \right) - \frac{\partial N_i}{\partial x} (\Pi_j p_j) - N_i f_x \right] \, d\Omega = 0 \\\end{split}\\\begin{split}\int_{\Omega} \left[ \frac{\partial N_i}{\partial y} \left( \eta \left( \frac{4}{3} \frac{\partial (N_j u_{y,j})}{\partial y} - \frac{2}{3} \frac{\partial (N_j u_{x,j})}{\partial x} \right) \right) + \frac{\partial N_i}{\partial x} \left( \eta \left( \frac{\partial (N_j u_{x,j})}{\partial y} + \frac{\partial (N_j u_{y,j})}{\partial x} \right) \right) - \frac{\partial N_i}{\partial y} (\Pi_j p_j) - N_i f_y \right] \, d\Omega = 0 \\\end{split}\\\int_{\Omega} \Pi_i \left( \frac{\partial (N_j u_{x,j})}{\partial x} + \frac{\partial (N_j u_{y,j})}{\partial y} \right) \, d\Omega = 0\end{aligned}\end{align} \]</div>
+<p>Note that we obmitted the boundary terms and flipped the sign again after the integration by parts for better readability. The boundary terms contain the stresses acting on the domain. If we have stress free conditions, the terms are zero. If we want to apply a stress, we need to add the stress to the boundary terms and remember the sign flip.</p>
+</section>
+<section id="element-matrices">
+<h2>Element matrices<a class="headerlink" href="#element-matrices" title="Link to this heading"></a></h2>
+<section id="the-b-matrix">
+<h3>The B matrix<a class="headerlink" href="#the-b-matrix" title="Link to this heading"></a></h3>
+<p>We again split the integral in a sum of integrals over our triangular elements. We can then start to write the weak form in matrix form. We start with the matrix <span class="math notranslate nohighlight">\(B\)</span> that turns velocities into strain rates:</p>
+<div class="math notranslate nohighlight" id="equation-eq-b-matrix">
+<span class="eqno">(167)<a class="headerlink" href="#equation-eq-b-matrix" title="Link to this equation"></a></span>\[\begin{split}\begin{pmatrix}
+\dot{\epsilon}_{xx}(x,y) \\
+\dot{\epsilon}_{yy}(x,y) \\
+\dot{\gamma}_{xy}(x,y)
+\end{pmatrix}
+= \mathbf{B}(x,y) u^e = \begin{pmatrix}
+\frac{\partial N_1}{\partial x}(x,y) &amp; 0 &amp; \cdots \\
+0 &amp; \frac{\partial N_1}{\partial y}(x,y) &amp; \cdots \\
+\frac{\partial N_1}{\partial y}(x,y) &amp; \frac{\partial N_1}{\partial x}(x,y) &amp; \cdots
+\end{pmatrix}
+\begin{pmatrix}
+u_x^1 \\
+u_y^1 \\
+\vdots
+\end{pmatrix}\end{split}\]</div>
+<p>Note how the nodal velocities are ordered in the matrix.</p>
+</section>
+<section id="the-d-matrix">
+<h3>The D matrix<a class="headerlink" href="#the-d-matrix" title="Link to this heading"></a></h3>
+<p>We then use the matrix <span class="math notranslate nohighlight">\(D\)</span> to turn strain rates into stresses. Remember that deviatoric stresses are are related to deviatoric strain rates by the viscosity:</p>
+<div class="math notranslate nohighlight" id="equation-eq-deviatoric-strain-rates">
+<span class="eqno">(168)<a class="headerlink" href="#equation-eq-deviatoric-strain-rates" title="Link to this equation"></a></span>\[\begin{split}\begin{aligned}
+\epsilon_{xx}' &amp;= \epsilon_{xx} - \frac{1}{3}(\epsilon_{xx} + \epsilon_{yy} + \epsilon_{zz}) \\
+\epsilon_{yy}' &amp;= \epsilon_{yy} - \frac{1}{3}(\epsilon_{xx} + \epsilon_{yy} + \epsilon_{zz}) \\
+\epsilon_{xy}' &amp;= \epsilon_{xy}
+\end{aligned}\end{split}\]</div>
+<p>For a 2D plane strain condition, <span class="math notranslate nohighlight">\(\epsilon_{zz} = 0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\epsilon_{xx}' &amp;= \epsilon_{xx} - \frac{1}{3}(\epsilon_{xx} + \epsilon_{yy}) \\
+\epsilon_{yy}' &amp;= \epsilon_{yy} - \frac{1}{3}(\epsilon_{xx} + \epsilon_{yy}) \\
+\epsilon_{xy}' &amp;= \epsilon_{xy}
+\end{aligned}\end{split}\]</div>
+<p>Deviatoric strain rates can now be written as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix}
+\epsilon_{xx}' \\
+\epsilon_{yy}' \\
+\epsilon_{xy}'
+\end{pmatrix}
+=
+\begin{pmatrix}
+\frac{2}{3} &amp; -\frac{1}{3} &amp; 0 \\
+-\frac{1}{3} &amp; \frac{2}{3} &amp; 0 \\
+0 &amp; 0 &amp; 1
+\end{pmatrix}
+\begin{pmatrix}
+\epsilon_{xx} \\
+\epsilon_{yy} \\
+\epsilon_{xy}
+\end{pmatrix}\end{split}\]</div>
+<p>Now we can use viscosity to turn deviatoric strain rates into deviatoric stresses:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{pmatrix}
+\sigma_{xx}' \\
+\sigma_{yy}' \\
+\sigma_{xy}'
+\end{pmatrix}
+=
+2\eta
+\begin{pmatrix}
+\frac{2}{3} &amp; -\frac{1}{3} &amp; 0 \\
+-\frac{1}{3} &amp; \frac{2}{3} &amp; 0 \\
+0 &amp; 0 &amp; 1
+\end{pmatrix}
+\begin{pmatrix}
+\epsilon_{xx} \\
+\epsilon_{yy} \\
+\epsilon_{xy}
+\end{pmatrix}\end{split}\]</div>
+<p>And finally get the D matrix:</p>
+<div class="math notranslate nohighlight" id="equation-eq-d-matrix">
+<span class="eqno">(169)<a class="headerlink" href="#equation-eq-d-matrix" title="Link to this equation"></a></span>\[\begin{split}\mathbf{D} =
+\eta \begin{pmatrix}
+\frac{4}{3} &amp; -\frac{2}{3} &amp; 0 \\
+-\frac{2}{3} &amp; \frac{4}{3} &amp; 0 \\
+0 &amp; 0 &amp; 1
+\end{pmatrix}\end{split}\]</div>
+</section>
+<section id="the-coefficient-stiffness-matrix">
+<h3>The coefficient/stiffness matrix<a class="headerlink" href="#the-coefficient-stiffness-matrix" title="Link to this heading"></a></h3>
+<p>We can now write the first two terms of the weak form in matrix form:</p>
+<div class="math notranslate nohighlight" id="equation-eq-integral-b-tdbu">
+<span class="eqno">(171)<a class="headerlink" href="#equation-eq-integral-b-tdbu" title="Link to this equation"></a></span>\[A = \int_{\Omega_e} \eta \mathbf{B}^T \mathbf{D} \mathbf{B} \, d\Omega_e\]</div>
+<p>The third term of the weak form can be written as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-integral-b-tdbu">
+<span class="eqno">(171)<a class="headerlink" href="#equation-eq-integral-b-tdbu" title="Link to this equation"></a></span>\[Q^T = -\int_{\Omega_e} \mathbf{B_{vol}}^T \Pi^T \, d\Omega_e\]</div>
+<p>We can now write the final element matrix as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-stiffness-matrix">
+<span class="eqno">(172)<a class="headerlink" href="#equation-eq-stiffness-matrix" title="Link to this equation"></a></span>\[\begin{split}\mathbf{K}^e = \begin{pmatrix}
+\mathbf{A} &amp; \mathbf{Q}^T \\
+\mathbf{Q} &amp; -\kappa^{-1} \mathbf{M}
+\end{pmatrix}
+= \int_{\Omega^e} \begin{pmatrix}
+\mu^e \mathbf{B}^T \mathbf{D} \mathbf{B} &amp; -\mathbf{B}_{\text{vol}}^T \Pi^T \\
+-\Pi \mathbf{B}_{\text{vol}} &amp; -\kappa^{-1} \Pi \Pi^T
+\end{pmatrix} \, dx \, dy\end{split}\]</div>
+<p>Note that we flipped the sign again on the pressure equation to make the coefficient matrix symmetric.</p>
+</section>
+</section>
+<section id="static-condensation">
+<h2>Static condensation<a class="headerlink" href="#static-condensation" title="Link to this heading"></a></h2>
+<p>Since we use a discontinuous pressure formation, we can then eliminate the pressure field from the equations. This is called static condensation. We can write the pressure field in terms of the velocity field:</p>
+<div class="math notranslate nohighlight" id="equation-eq-pressure-static-condensation">
+<span class="eqno">(173)<a class="headerlink" href="#equation-eq-pressure-static-condensation" title="Link to this equation"></a></span>\[p(x, y) = \kappa \Pi^T(x, y) \mathbf{M}^{-1} \mathbf{Q} \mathbf{u}^e\]</div>
+<p>We can now substitute the pressure field in the velocity equations to get the final coefficient matrix:</p>
+<div class="math notranslate nohighlight" id="equation-eq-matrix-equation">
+<span class="eqno">(174)<a class="headerlink" href="#equation-eq-matrix-equation" title="Link to this equation"></a></span>\[\left( \mathbf{A} + \kappa \mathbf{Q}^T \mathbf{M}^{-1} \mathbf{Q} \right) \mathbf{u}^e = \mathbf{f}^e\]</div>
+<p>This is the final matrix equation that we need to solve for the velocity field.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro-stokes.html" class="btn btn-neutral float-left" title="Introduction to Stokes flow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../refs.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+      
+        <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+          <span class="rst-current-version" data-toggle="rst-current-version">
+            <span class="fa fa-book"> Finite Element Modeling in Geodynamics</span>
+            v: latest
+            <span class="fa fa-caret-down"></span>
+          </span>
+          <div class="rst-other-versions">
+            <dl>
+              
+                
+                <dd><a href="https://lruepke.github.io/FEM_lecture/downloads/LectureNote.pdf">latest</a></dd>
+                
+                <dd><a href="#/LectureNote.pdf">2.0</a></dd>
+                
+              
+          </div>
+        </div>
+      
+    
+
+</body>
+</html>
