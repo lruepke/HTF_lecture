@@ -310,7 +310,6 @@ And by substituting the defintion of the strain rates tensor, we arrive at the *
 These two equations, for the x and y directions, have three unknowns: the x and y components of the velocity field and the pressure field. The pressure field is not directly solved for in the Stokes equation, but is determined by the incompressibility condition :eq:`eqs:continuity`.
 
 .. math::
-    :label: eqs:stokes_equation_penalty
 
     \frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} = -\frac{p}{\kappa}
 

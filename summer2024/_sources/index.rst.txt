@@ -98,6 +98,7 @@ The majority of this course will be spent in front of a computer working on exer
 
     lecture7/overview
     lecture7/intro-stokes
+    lecture7/fem_formulation
 
 .. toctree::
    :maxdepth: 2

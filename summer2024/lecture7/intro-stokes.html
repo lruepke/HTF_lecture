@@ -390,8 +390,8 @@ f_{xz2} = \sigma_{xz2}\Delta x\Delta y\\
 \frac{\partial}{\partial y} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_y}{\partial y} - \frac{2}{3}\frac{\partial u_x}{\partial x} \right ) \right ) + \frac{\partial}{\partial x} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial y} + \rho g_y = 0\\\
 \end{split}\end{split}\]</div>
 <p>These two equations, for the x and y directions, have three unknowns: the x and y components of the velocity field and the pressure field. The pressure field is not directly solved for in the Stokes equation, but is determined by the incompressibility condition <a class="reference internal" href="#equation-eqs-continuity">equation (153)</a>.</p>
-<div class="math notranslate nohighlight" id="equation-eqs-stokes-equation-penalty">
-<span class="eqno">(163)<a class="headerlink" href="#equation-eqs-stokes-equation-penalty" title="Link to this equation"></a></span>\[\frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} = -\frac{p}{\kappa}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} = -\frac{p}{\kappa}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\kappa\)</span> is a penalty parameter, a large number. The incompressibility condition is often solved using a penalty method, where the pressure is determined by the velocity field. The pressure is then used to calculate the viscous forces acting on the fluid.</p>
 </section>
 </section>
