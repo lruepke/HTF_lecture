@@ -85,7 +85,7 @@ def make_mesh(x_min, x_max, y_min, y_max, c_inc, no_pts,radius, el_ids = (1,100)
 if __name__ == "__main__":
     
     # Define material properties
-    D           = np.array([1e-3,  1.])      #Viscosity
+    D           = np.array([1e0,  1e3])      #Viscosity
     Rho         = np.array([   1.,  2.])      #Density
     G           = np.array([   0.,  0.])      #Gravity
 
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     x_max		=  1
     y_min		= -1
     y_max		=  1
-    el_sizes    = (1e-3, 1e-3)
+    el_sizes    = (1e-4, 1e-4)
     el_ids      = (0,1)   
     write_files = True
 
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     #set boundary conditions
     #note that Bc_ind points to degree of freedeom and not node number!
     Bc_ind  = np.where(np.isin(Mesh.get('Node_ids'), [101, 102, 103, 104]))[0]
-    Bc_val  = np.hstack((Mesh.get('GCOORD')[Bc_ind,0],  -Mesh.get('GCOORD')[Bc_ind,1]))
+    Bc_val  = np.hstack((0.5*Mesh.get('GCOORD')[Bc_ind,0],  -0.5*Mesh.get('GCOORD')[Bc_ind,1]))
     Bc_ind  = np.hstack((2*Bc_ind, 2*Bc_ind+1))
 
     # and add to Mesh structure

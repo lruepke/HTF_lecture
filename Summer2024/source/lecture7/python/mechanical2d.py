@@ -142,7 +142,7 @@ def mechanical2d(Mesh, Materials, Solver):
 
 
     # ASSEMBLE GLOBAL MATRICES
-    A_all = csr_matrix((A_all.ravel(),(I.ravel(),J.ravel())),shape=(sdof,sdof))
+    A_all   = csr_matrix((A_all.ravel(),(I.ravel(),J.ravel())),shape=(sdof,sdof))
 
     # smart way of boundary conditions that keeps matrix symmetry
     Free    = np.arange(0,sdof)
@@ -151,7 +151,7 @@ def mechanical2d(Mesh, Materials, Solver):
     Rhs_all = Rhs_all - TMP.dot(Bc_val)
 
     # solve reduced system
-    Vel[Free] = spsolve(A_all[np.ix_(Free, Free)],Rhs_all[Free])
+    Vel[Free]   = spsolve(A_all[np.ix_(Free, Free)],Rhs_all[Free])
     Vel[Bc_ind] = Bc_val
 
     # compute big matrices for pressure update
@@ -160,19 +160,16 @@ def mechanical2d(Mesh, Materials, Solver):
     # element[1] -> pressure = [3,4,5]
     # The velocity dofs come from EL2DOF
 
-    Q_i = np.tile(np.arange(0, nel*np_edof, dtype=np.int32), (nedof,1)).T
-    Q_j = np.tile(EL2DOF, (1,np_edof))
-    Q_all = csr_matrix((Q_all.ravel(), (Q_i.ravel(), Q_j.ravel())), shape=(nel*np_edof, sdof))
+    Q_i     = np.tile(np.arange(0, nel*np_edof, dtype=np.int32), (nedof,1)).T
+    Q_j     = np.tile(EL2DOF, (1,np_edof))
+    Q_all   = csr_matrix((Q_all.ravel(), (Q_i.ravel(), Q_j.ravel())), shape=(nel*np_edof, sdof))
 
-    invM_i = np.tile(np.arange(0, nel*np_edof, dtype=np.int32), (np_edof, 1)).T
+    invM_i          = np.tile(np.arange(0, nel*np_edof, dtype=np.int32), (np_edof, 1)).T
     #invM_j = np.tile(np.arange(np_edof, dtype=np.int32), np_edof)...
-    # Create the base sequence for a single element's DOFs
-    base_sequence = np.tile(np.arange(np_edof), nel * np_edof)
-    # Offset each block for the number of elements
-    offsets = np.repeat(np.arange(nel) * np_edof, np_edof**2)
-    # Create the column indices by adding the base sequence and offsets
-    column_indices = base_sequence + offsets
-    invM_all = csr_matrix((invM_all.ravel(), (invM_i.ravel(), column_indices.ravel())), shape=(nel*np_edof, nel*np_edof))    
+    base_sequence   = np.tile(np.arange(np_edof), nel * np_edof)
+    offsets         = np.repeat(np.arange(nel) * np_edof, np_edof**2)
+    column_indices  = base_sequence + offsets
+    invM_all        = csr_matrix((invM_all.ravel(), (invM_i.ravel(), column_indices.ravel())), shape=(nel*np_edof, nel*np_edof))    
     
     #Pressure = (PF*invM_all.dot(Q_all.dot(Vel)))
     Pressure = (PF*invM_all @ (Q_all @ Vel))
