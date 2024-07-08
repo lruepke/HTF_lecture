@@ -4,6 +4,8 @@ import os
 import matplotlib.pyplot as plt
 import triangle as tr
 from mechanical2d import *
+from write_triangle_files import *
+import matplotlib.tri as tri
 
 def make_mesh(x_min, x_max, y_min, y_max, c_inc, no_pts,radius, el_ids = (1,100), el_sizes=(0.1, 0.01)):
     
@@ -36,7 +38,7 @@ def make_mesh(x_min, x_max, y_min, y_max, c_inc, no_pts,radius, el_ids = (1,100)
         Tmp = np.array([np.arange(i, i+no_pts), np.arange(i+1, i+no_pts+1)]).T
         Tmp[-1,1] = i
         segments.extend(Tmp)
-        segment_markers.extend(101*np.ones(len(Tmp)))
+        segment_markers.extend(1001*np.ones(len(Tmp)))
 
         regions.append([c_inc[0], c_inc[1], el_ids[1],el_sizes[1]])
 
@@ -65,7 +67,9 @@ def make_mesh(x_min, x_max, y_min, y_max, c_inc, no_pts,radius, el_ids = (1,100)
     GCOORD      = np.vstack((GCOORD, np.mean(GCOORD[EL2NOD[:,0:3]], axis=1))) #now we made a copy
     new_nodes   = np.arange(nnod, GCOORD.shape[0]).reshape(-1, 1)
     EL2NOD      = np.hstack((EL2NOD, new_nodes))
-
+    #    Node_ids    = np.hstack((Node_ids, 0*np.ones(new_nodes.shape[0])))
+    #Node_ids    = np.hstack((Node_ids, np.zeros(new_nodes.shape[0], dtype=int)))
+    Node_ids = np.hstack((Node_ids, np.zeros(new_nodes.shape[0]))).astype(int)
     #make new Mesh dict
     Mesh = dict(
         GCOORD=GCOORD, 
@@ -93,11 +97,21 @@ if __name__ == "__main__":
     x_max		=  1
     y_min		= -1
     y_max		=  1
-    el_sizes    = (0.01, 0.001)
+    el_sizes    = (1e-3, 1e-3)
     el_ids      = (0,1)   
+    write_files = True
 
     # and make it
     Mesh = make_mesh(x_min=x_min, x_max=x_max, y_min=y_min, y_max=y_max, c_inc=c_inc, no_pts=no_pts,radius=radius, el_sizes=el_sizes, el_ids=el_ids)
+
+    #write out number of nodes and elements
+    print(f"Number of nodes: {Mesh.get('nnod')}")
+    print(f"Number of elements: {Mesh.get('nel')}")
+
+    if write_files:
+        
+        model_name = 'model'
+        write_mesh_files(Mesh, model_name)
 
     #set boundary conditions
     #note that Bc_ind points to degree of freedeom and not node number!
@@ -114,19 +128,31 @@ if __name__ == "__main__":
     Solver = dict(nip=6)
 
     # now call solver
-    Vel = mechanical2d(Mesh=Mesh, Materials=Materials, Solver=Solver  )
+    Vel, Pressure = mechanical2d(Mesh=Mesh, Materials=Materials, Solver=Solver  )
 
     Vel_x = Vel[0::2]
     Vel_y = Vel[1::2]
 
-    #make quiver plot
+    #PLotting
+    #we make a new connectivity, so that each pressure value is at an independent node,
+    #this way we can see the discontinuous pressure field that varies lineraly in each element.
+    GC_BIG = np.vstack((Mesh.get('GCOORD')[Mesh.get('EL2NOD')[:,0:3],0].ravel(), Mesh.get('GCOORD')[Mesh.get('EL2NOD')[:,0:3],1].ravel())).reshape(2,-1).T
+    EN_BIG = np.arange(3*Mesh.get('nel')).reshape(-1,3)
+
     plt.figure()
-    plt.triplot(Mesh.get('GCOORD')[:,0], Mesh.get('GCOORD')[:,1], Mesh.get('EL2NOD')[:,0:3])
-    plt.quiver(Mesh.get('GCOORD')[:,0], Mesh.get('GCOORD')[:,1], Vel_x, Vel_y)
+    levels = np.linspace(Pressure.min(), Pressure.max(), num=100)
+    contours = plt.tricontourf(GC_BIG[:,0], GC_BIG[:,1], EN_BIG, Pressure, levels=levels, cmap='jet')
+    plt.triplot(Mesh.get('GCOORD')[:,0], Mesh.get('GCOORD')[:,1], Mesh.get('EL2NOD')[:,0:3], color='lightgrey', linewidth=0.1)
+    #plt.quiver(Mesh.get('GCOORD')[:,0], Mesh.get('GCOORD')[:,1], Vel_x, Vel_y)
+
+    plt.colorbar(contours, label='Pressure Values')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.axis('equal')
     plt.show()
 
+ 
 
-    #plt.figure()
-    #plt.triplot(Mesh.get('GCOORD')[:,0], Mesh.get('GCOORD')[:,1], Mesh.get('EL2NOD')[:,0:3])
-    #plt.plot(Mesh.get('GCOORD')[:,0], Mesh.get('GCOORD')[:,1], 'o')
-    #plt.show()
+
+
+
