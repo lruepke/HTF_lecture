@@ -2165,7 +2165,18 @@ files = [
     {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
 ]
 
+[[package]]
+name = "xlsxwriter"
+version = "3.2.0"
+description = "A Python module for creating Excel XLSX files."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "XlsxWriter-3.2.0-py3-none-any.whl", hash = "sha256:ecfd5405b3e0e228219bcaf24c2ca0915e012ca9464a14048021d21a995d490e"},
+    {file = "XlsxWriter-3.2.0.tar.gz", hash = "sha256:9977d0c661a72866a61f9f7a809e25ebbb0fb7036baa3b9fe74afcfca6b3cb8c"},
+]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "c16b7f0aa638b7fe07bc69a72556828eae4fdb969000ac8c7e1f022cba24113b"
+content-hash = "7bb34417c2a28940bd9fecd5ac18d1e6c3baa0375033273f2fdc6729ee9a243d"
