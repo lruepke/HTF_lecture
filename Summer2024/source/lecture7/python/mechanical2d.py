@@ -112,7 +112,6 @@ def mechanical2d(Mesh, Materials, Solver):
             #if np.absolute(dNdX - dNdX1).max()>1e-10:
             #    raise ValueError("Jacobian")
 
-
             # NUMERICAL INTEGRATION OF ELEMENT MATRICES
             weight = IP_w[ip] * detJ
             B[0,0::2] = dNdX[0]
