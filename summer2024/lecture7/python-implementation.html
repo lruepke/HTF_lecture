@@ -27,6 +27,8 @@
         <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
         <script src="../_static/copybutton.js?v=9b54adf2"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -106,7 +108,14 @@
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="intro-stokes.html">Introduction to Stokes flow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fem_formulation.html">Finite Element Formulation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Python implementation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python implementation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#global-degrees-of-freedom">Global degrees of freedom</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pressure-shape-functions">Pressure shape functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#assembly-of-global-matrices-and-pressure-numbering">Assembly of global matrices and pressure numbering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-problem">Test problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#excerices">Excerices</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
@@ -183,10 +192,108 @@
 </style>
 <section id="python-implementation">
 <span id="id1"></span><h1>Python implementation<a class="headerlink" href="#python-implementation" title="Link to this heading"></a></h1>
-<p><a class="reference download internal" download="" href="../_downloads/154725ec4a9c5d96798fc0e71ffe755b/ip_triangle.py"><code class="xref download docutils literal notranslate"><span class="pre">ip_triangle.py</span></code></a>
-<a class="reference download internal" download="" href="../_downloads/140ef2b663477ac9079a03b0c83cdd2f/shp_deriv_triangle.py"><code class="xref download docutils literal notranslate"><span class="pre">shp_deriv_triangle.py</span></code></a>
-<a class="reference download internal" download="" href="../_downloads/a9cc556daacdc05c3e3cca9bddece462/mechanical2d_driver.py"><code class="xref download docutils literal notranslate"><span class="pre">mechanical2d_driver.py</span></code></a>
-<a class="reference download internal" download="" href="../_downloads/42118240c1294aae964117a73425fba8/mechanical2d.py"><code class="xref download docutils literal notranslate"><span class="pre">mechanical2d.py</span></code></a></p>
+<p>We will use our previously developed 2d FEM code for steady-state diffusion as a starting point and modify it to solve for Stokes flow. There are a number of extra complications in the Stokes flow problem that we need to address:</p>
+<section id="global-degrees-of-freedom">
+<h2>Global degrees of freedom<a class="headerlink" href="#global-degrees-of-freedom" title="Link to this heading"></a></h2>
+<p>In the steady-state diffusion problem, we had one degree of freedom per node. In the Stokes flow problem, we have two degrees of freedom per node: one for the x-velocity and one for the y-velocity. We will therefor have to double the number of degrees of freedom in the global stiffness matrix and the global force vector. We use a numberung where the 0th node has the degree of freedom 0 (x-velocity) and the degree of freedom 1 (y-velocity), the 1st node has the degrees of freedom 2 and 3, and so on. We will have to modify the code to account for this new numbering.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># MAKE ELDOF</span>
+<span class="n">EL2DOF</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nel</span><span class="p">,</span><span class="n">nedof</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">EL2DOF</span><span class="p">[:,</span><span class="mi">0</span><span class="p">::</span><span class="n">ndim</span><span class="p">]</span> <span class="o">=</span> <span class="n">ndim</span> <span class="o">*</span> <span class="n">EL2NOD</span>
+<span class="n">EL2DOF</span><span class="p">[:,</span><span class="mi">1</span><span class="p">::</span><span class="n">ndim</span><span class="p">]</span> <span class="o">=</span> <span class="n">ndim</span> <span class="o">*</span> <span class="n">EL2NOD</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>We will use this matrix <span class="math notranslate nohighlight">\(EL2DOF\)</span> to construct the global stiffness matrix and the global force vector.</p>
+</section>
+<section id="pressure-shape-functions">
+<h2>Pressure shape functions<a class="headerlink" href="#pressure-shape-functions" title="Link to this heading"></a></h2>
+<p>Step one is to spell out what the pressure shape functions are. In our derivation, we just stated that pressure is discontinuous and varies linearly over the element. We therefor have three unknown pressures per element. But what are those shape functions?</p>
+<p>We start with the assumption that pressure varies linearly as a function of global x,y coordinates.</p>
+<div class="math notranslate nohighlight">
+\[p(x,y) = a + bx + cy\]</div>
+<p>Where <span class="math notranslate nohighlight">\(a\)</span>,:math:<cite>b</cite>,:math:<cite>c</cite> are coefficients to be determined. The simplest linear shape function for a triangle with vertices at <span class="math notranslate nohighlight">\((x_1,y_1)\)</span>, <span class="math notranslate nohighlight">\((x_2,y_2)\)</span>, <span class="math notranslate nohighlight">\((x_3,y_3)\)</span> can be defined using barycentric coordinates or directly in terms of x and y coordinates.</p>
+<p>We will find those shape functions by solving a linear system of equations. Let’s define a matrix <span class="math notranslate nohighlight">\(P\)</span> and a vector <span class="math notranslate nohighlight">\(Pb\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}P = \begin{bmatrix}
+1 &amp; x_1 &amp; y_1 \\
+1 &amp; x_2 &amp; y_2 \\
+1 &amp; x_3 &amp; y_3
+\end{bmatrix}\end{split}\]</div>
+<p>and a vector <span class="math notranslate nohighlight">\(Pb\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}Pb = \begin{bmatrix}
+1 \\
+x \\
+y
+\end{bmatrix}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are the coordinates of an integration point (or any point in the element). The interpolation functions (or shape functions) can now be found for solving the following linear system of equations:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}P \begin{bmatrix}
+\Pi_1 \\
+\Pi_2 \\
+\Pi_3
+\end{bmatrix} = Pb\end{split}\]</div>
+<p>And we can find the shape functions as follows:</p>
+<div class="math notranslate nohighlight">
+\[\Pi = P^{-1} Pb\]</div>
+<p>In the python FEM implementation, we will spell out the matrix <span class="math notranslate nohighlight">\(P\)</span> and the vector <span class="math notranslate nohighlight">\(Pb\)</span> using the coordinates of the vertices of the element and the coordinates of the integration point; solving the matrix equation above will give us the pressure shape functions.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># np_edof is the number of pressure degrees of freedom (here 3)</span>
+<span class="c1"># ECOORD_X is a 7x2 matrix constructed ECOORD_X = GCOORD[EL2NOD[iel,:],:], holding the x and y coordinates of the element vertices</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">np_edof</span><span class="p">))</span>
+<span class="n">P</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ECOORD_X</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<p>Inside the integratin loop, we construct <span class="math notranslate nohighlight">\(Pb\)</span> and solve for the pressure shape functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nip</span><span class="p">):</span>
+    <span class="c1"># Ni is [7,] and holds the velocity shape functions</span>
+    <span class="c1"># Ni @ ECOORD_X is then [2,] and holds the x and y coordinates of the integration point</span>
+    <span class="c1"># Pi is [3,] and holds the pressure shape functions</span>
+
+    <span class="n">Pb</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">Ni</span> <span class="o">@</span> <span class="n">ECOORD_X</span>
+    <span class="n">Pi</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Pb</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="assembly-of-global-matrices-and-pressure-numbering">
+<h2>Assembly of global matrices and pressure numbering<a class="headerlink" href="#assembly-of-global-matrices-and-pressure-numbering" title="Link to this heading"></a></h2>
+<p>Finally, we need to assemble the global matrices. This includes the global <span class="math notranslate nohighlight">\(Q\)</span> and <span class="math notranslate nohighlight">\(invM\)</span> matrices, which we will use to reconstruct pressure from the velocity solution <span class="xref std std-ref">eq:pressure_static_condensation</span> .</p>
+<p>As the pressure is discontinuous, each element has three independent pressure unknowns. The numbering is therefore that element 0 has unknown pressures 0,1,2 and element 1 has unknown pressures 3,4,5, and so on. For the global <span class="math notranslate nohighlight">\(Q\)</span> matrix, the rows (i index) are therefore given by this continuous pressure numbering and the columns (j-index) by the matrix <span class="math notranslate nohighlight">\(EL2DOF\)</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># logic is that each element as three pressure dofs, as the pressure is dicsontinuous, we make ad-hoc numbering.</span>
+<span class="c1"># element[0] -&gt; pressure = [0,1,2]</span>
+<span class="c1"># element[1] -&gt; pressure = [3,4,5]</span>
+<span class="c1"># The velocity dofs come from EL2DOF</span>
+
+<span class="n">Q_i</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="p">(</span><span class="n">nedof</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="n">Q_j</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">EL2DOF</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">np_edof</span><span class="p">))</span>
+<span class="n">Q_all</span>   <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">((</span><span class="n">Q_all</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="p">(</span><span class="n">Q_i</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Q_j</span><span class="o">.</span><span class="n">ravel</span><span class="p">())),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">sdof</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The assembly of the global <span class="math notranslate nohighlight">\(invM\)</span> matrix is similar. The rows and columns are both given by the continuous pressure numbering.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">invM_i</span>          <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="p">(</span><span class="n">np_edof</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="n">base_sequence</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np_edof</span><span class="p">),</span> <span class="n">nel</span> <span class="o">*</span> <span class="n">np_edof</span><span class="p">)</span>
+<span class="n">offsets</span>         <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nel</span><span class="p">)</span> <span class="o">*</span> <span class="n">np_edof</span><span class="p">,</span> <span class="n">np_edof</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">column_indices</span>  <span class="o">=</span> <span class="n">base_sequence</span> <span class="o">+</span> <span class="n">offsets</span>
+<span class="n">invM_all</span>        <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">((</span><span class="n">invM_all</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="p">(</span><span class="n">invM_i</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">column_indices</span><span class="o">.</span><span class="n">ravel</span><span class="p">())),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>There might be a more elegant solution to this; we’d be happy to hear about it!</p>
+</section>
+<section id="test-problem">
+<h2>Test problem<a class="headerlink" href="#test-problem" title="Link to this heading"></a></h2>
+<p>We will use a test problem from structural geology to test our implementation. The problem is a pure shear problem with velocity boundary conditions at the sides and one (or multiple) inclusions of variable viscosity inside the modeling domain. Depending on the viscosity contrast, these inclusions will result in pressure anomalies. The problem has been explored analytically in <span id="id2">[<a class="reference internal" href="../refs.html#id38" title="Daniel W. Schmid and Yuri Yu Podladchikov. Analytical solutions for deformable elliptical inclusions in general shear. Geophysical Journal International, 155(1):269-288, 2003. URL: https://doi.org/10.1046/j.1365-246X.2003.02042.x, doi:10.1046/j.1365-246X.2003.02042.x.">Schmid &amp; Podladchikov, 2003</a>]</span>.</p>
+<figure class="align-center" id="fig-pressure-inclusion">
+<img alt="_figures/pressure_field.png" src="_figures/pressure_field.png" />
+</figure>
+<p>You can download the code for this lecture here: <a class="reference download internal" download="" href="../_downloads/154725ec4a9c5d96798fc0e71ffe755b/ip_triangle.py"><code class="xref download docutils literal notranslate"><span class="pre">ip_triangle.py</span></code></a>, <a class="reference download internal" download="" href="../_downloads/140ef2b663477ac9079a03b0c83cdd2f/shp_deriv_triangle.py"><code class="xref download docutils literal notranslate"><span class="pre">shp_deriv_triangle.py</span></code></a>, <a class="reference download internal" download="" href="../_downloads/a9cc556daacdc05c3e3cca9bddece462/mechanical2d_driver.py"><code class="xref download docutils literal notranslate"><span class="pre">mechanical2d_driver.py</span></code></a>, and <a class="reference download internal" download="" href="../_downloads/42118240c1294aae964117a73425fba8/mechanical2d.py"><code class="xref download docutils literal notranslate"><span class="pre">mechanical2d.py</span></code></a>.</p>
+</section>
+<section id="excerices">
+<h2>Excerices<a class="headerlink" href="#excerices" title="Link to this heading"></a></h2>
+<p>Get the code to work and try to solve the following exercises:</p>
+<ol class="arabic simple">
+<li><p>Modify the code to solve for a different problem, e.g., the pure shear problem with inclusions of different viscosity.</p></li>
+<li><p>Modify the code to resolve inclusions of different shape</p></li>
+<li><p>Modify the code to resolve inclusions of different densiy. This involves changes the boundary conditions to no slip. If you want, add a pseudo time loop in which GCOORD is updated using the computed velocities. This will give you a time-dependent problem with a moving inclusion.</p></li>
+</ol>
+</section>
 </section>
 
 
