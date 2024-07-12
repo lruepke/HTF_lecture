@@ -64,7 +64,7 @@ We again split the integral in a sum of integrals over our triangular elements. 
    \begin{pmatrix}
    \dot{\epsilon}_{xx}(x,y) \\
    \dot{\epsilon}_{yy}(x,y) \\
-   \dot{\gamma}_{xy}(x,y)
+   \dot{\epsilon}_{xy}(x,y)
    \end{pmatrix}
    = \mathbf{B}(x,y) u^e = \begin{pmatrix}
    \frac{\partial N_1}{\partial x}(x,y) & 0 & \cdots \\

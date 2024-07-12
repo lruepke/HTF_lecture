@@ -4,7 +4,6 @@ import os
 import matplotlib.pyplot as plt
 import triangle as tr
 from mechanical2d import *
-from write_triangle_files import *
 import matplotlib.tri as tri
 
 def make_mesh(x_min, x_max, y_min, y_max, c_inc, no_pts,radius, el_ids = (1,100), el_sizes=(0.1, 0.01)):
@@ -87,17 +86,17 @@ if __name__ == "__main__":
     # Define material properties
     D           = np.array([1e0,  1e3])      #Viscosity
     Rho         = np.array([   1.,  2.])      #Density
-    G           = np.array([   0.,  0.])      #Gravity
+    G           = np.array([   0.,  0])      #Gravity
 
     # Define mesh properties 
     no_pts      =  60
     radius      =  0.2
-    c_inc       =  (0,0)
+    c_inc       =  (0.,0.)
     x_min		= -1
     x_max		=  1
     y_min		= -1
     y_max		=  1
-    el_sizes    = (1e-4, 1e-4)
+    el_sizes    = (1e-3, 1e-3)
     el_ids      = (0,1)   
     write_files = True
 
@@ -108,10 +107,6 @@ if __name__ == "__main__":
     print(f"Number of nodes: {Mesh.get('nnod')}")
     print(f"Number of elements: {Mesh.get('nel')}")
 
-    if write_files:
-        
-        model_name = 'model'
-        write_mesh_files(Mesh, model_name)
 
     #set boundary conditions
     #note that Bc_ind points to degree of freedeom and not node number!
@@ -130,9 +125,6 @@ if __name__ == "__main__":
     # now call solver
     Vel, Pressure = mechanical2d(Mesh=Mesh, Materials=Materials, Solver=Solver  )
 
-    Vel_x = Vel[0::2]
-    Vel_y = Vel[1::2]
-
     #PLotting
     #we make a new connectivity, so that each pressure value is at an independent node,
     #this way we can see the discontinuous pressure field that varies lineraly in each element.
@@ -142,14 +134,19 @@ if __name__ == "__main__":
     plt.figure()
     levels = np.linspace(Pressure.min(), Pressure.max(), num=100)
     contours = plt.tricontourf(GC_BIG[:,0], GC_BIG[:,1], EN_BIG, Pressure, levels=levels, cmap='jet')
-    plt.triplot(Mesh.get('GCOORD')[:,0], Mesh.get('GCOORD')[:,1], Mesh.get('EL2NOD')[:,0:3], color='lightgrey', linewidth=0.1)
-    #plt.quiver(Mesh.get('GCOORD')[:,0], Mesh.get('GCOORD')[:,1], Vel_x, Vel_y)
+    plt.triplot(Mesh.get('GCOORD')[:,0], Mesh.get('GCOORD')[:,1], Mesh.get('EL2NOD')[:,0:3], color='black', linewidth=0.1)
+    #plt.quiver(Mesh.get('GCOORD')[:,0], Mesh.get('GCOORD')[:,1], Vel_x, Vel_y, scale=5)
 
     plt.colorbar(contours, label='Pressure Values')
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.axis('equal')
+    plt.savefig('pressure_field.png', dpi=600)
     plt.show()
+
+    #save figure
+
+
 
  
 
