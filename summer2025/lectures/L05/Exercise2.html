@@ -1,0 +1,361 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exercise 2: Fluxibility and Tvent &mdash; HydrothermalFoam Lecture  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Exercise 3: Permeability and Tvent" href="Exercise3.html" />
+    <link rel="prev" title="Thermodynamic properties of pure water" href="plot_water_properties.html" /> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1: Fluid properties</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 2: Fluxibility and Tvent</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#model-setup-and-running-the-case">Model setup and running the case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-modifications-and-local-rayleigh-number">Code modifications and local Rayleigh number</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#post-processing">Post-processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#plotting-temperature">Plotting temperature</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise3.html">Exercise 3: Permeability and Tvent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Implementation1.html">OpenFoam implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Advection1.html">The advection term</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Excercise_adv.html">Excercise on advection schemes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project1.html">Project 1: Flow along a detachment fault</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project3.html">Project 3: Hydrofracturing and localized venting above sill intrusion?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydrothermalFoam Lecture</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Exercise 2: Fluxibility and Tvent</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L05/Exercise2.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="exercise-2-fluxibility-and-tvent">
+<span id="l05-exercise2"></span><h1>Exercise 2: Fluxibility and Tvent<a class="headerlink" href="#exercise-2-fluxibility-and-tvent" title="Link to this heading"></a></h1>
+<p>Before going into more detail, let’s have a closer into the case we explored last week.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Load the homogeneous or layered case with constant</p></li>
+<li><p>Use the paraview calculator to create a new variable T_Celsius (by doing T_Celsius = T - 273.15)</p></li>
+<li><p>Make a z-normal slice</p></li>
+<li><p>And explore the 100,200,300,400,500 °C contours through time?</p></li>
+</ul>
+</div></blockquote>
+<figure class="align-center" id="fig-fluxibility-postprocess-fig">
+<img alt="../../_images/Fluxibility_postprocess.png" src="../../_images/Fluxibility_postprocess.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 29 </span><span class="caption-text">Notice how the diffusive thermal boundary layer becomes unstable between the 300°C and 400°C isotherms. This is what concept of fluxibility tells us!</span><a class="headerlink" href="#fig-fluxibility-postprocess-fig" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><span id="id1">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> concept of fluxibility was later extended to explore interrelations between permeability on vent temperatures <span id="id2">[<a class="reference internal" href="../../refs.html#id9" title="T. Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132-141, 2010. URL: &lt;Go to ISI&gt;://WOS:000277410200010, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010a</a>]</span>, the structure of hydrothermal flow zone <span id="id3">[<a class="reference internal" href="../../refs.html#id10" title="D. Coumou, T. Driesner, and C. A. Heinrich. The structure and dynamics of mid-ocean ridge hydrothermal systems. Science, 321(5897):1825-1828, 2008. URL: &lt;Go to ISI&gt;://000259501300035 http://www.sciencemag.org/cgi/reprint/321/5897/1825.pdf, doi:10.1126/science.1159582.">Coumou et al., 2008</a>]</span>, and fault-controlled off-axis hydrothermal system <span id="id4">[<a class="reference internal" href="../../refs.html#id11" title="C. Andersen, LH Rüpke, J. Hasenclever, I. Grevemeyer, and S. Petersen. Fault geometry and permeability contrast control vent temperatures at the logatchev 1 hydrothermal field, mid-atlantic ridge. Geology, 43(1):51-54, 2015. doi:doi:10.1130/G36113.1.">Andersen et al., 2015</a>]</span>. Some of these papers are available in the e-learning site of this course for registered CAU students.</p>
+<p>Let’s look into the original setup! We will  try to reproduce the results presented by <span id="id5">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span>. The setup is very similar to the simple single plume driven by a gaussian heat source we had simulated previously.</p>
+<section id="model-setup-and-running-the-case">
+<h2>Model setup and running the case<a class="headerlink" href="#model-setup-and-running-the-case" title="Link to this heading"></a></h2>
+<p>We are simulating a 3700 x 1000m sized box with a gaussian constant temperature boundary condition at the bottom. The general model setup is shown in the Figure below. The OpenFoam case can be downloaded from here: <a class="reference download internal" download="" href="../../_downloads/c6c0169b1aec999a19982b66aef06751/Jupp_Schultz.zip"><code class="xref download docutils literal notranslate"><span class="pre">Jupp_Schultz</span></code></a>.</p>
+<p>(<a class="reference download internal" download="" href="../../_downloads/58c3513614a226c09387735341fcea57/Exercise2-1.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="../../_downloads/160db9a53806a147015faee7766af7d1/Exercise2-1.svg"><code class="xref download docutils literal notranslate"><span class="pre">svg</span></code></a>, <a class="reference download internal" download="" href="../../_downloads/6387a6f3812c2ac3338cf065b847921e/Exercise2-1.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
+<figure class="align-default">
+<img alt="../../_images/Exercise2-1.svg" class="plot-directive" src="../../_images/Exercise2-1.svg" />
+</figure>
+<p>Download the case file, unzip it and copy it into your shared folder that is accessible both from your local system and from the docker container. Check out the usual files like <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>, <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code>, <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>. Make sure you understand the setup!</p>
+</section>
+<section id="code-modifications-and-local-rayleigh-number">
+<h2>Code modifications and local Rayleigh number<a class="headerlink" href="#code-modifications-and-local-rayleigh-number" title="Link to this heading"></a></h2>
+<p>We have learned about “fluxibility” but let’s go one step back and first think about the vigor of convection in general. The tendency of a fluid to convect and the vigor/regime of free convection is often expressed by a dimensionless number, the famous Rayleigh number, <span class="math notranslate nohighlight">\(Ra\)</span>. It naturally shows up as the driving force of convection, when the governing equations are non-dimensionalized, or one can follow a more classic derivation. There is a good explanation on <a class="reference external" href="https://en.wikipedia.org/wiki/Rayleigh_number">wikipedia</a> .</p>
+<p>Formally <span class="math notranslate nohighlight">\(Ra\)</span> is the ratio between the time scales of heat transport by diffusion and convection.</p>
+<p>Let’s have a quick look and do a quick dimensional analysis. Simple heat diffusion looks like this:</p>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-1">
+<span class="eqno">(32)<a class="headerlink" href="#equation-eq-dim-ana-1" title="Link to this equation"></a></span>\[\frac{\partial T}{\partial t} = \kappa \frac{\partial^2 T}{\partial x^2}\]</div>
+<p>Let’s make the variables dimensionless by introducing characteristic scales:</p>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-2">
+<span class="eqno">(33)<a class="headerlink" href="#equation-eq-dim-ana-2" title="Link to this equation"></a></span>\[T' = \frac{T}{\Delta T}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-3">
+<span class="eqno">(34)<a class="headerlink" href="#equation-eq-dim-ana-3" title="Link to this equation"></a></span>\[x' = \frac{x}{L}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-4">
+<span class="eqno">(35)<a class="headerlink" href="#equation-eq-dim-ana-4" title="Link to this equation"></a></span>\[t' = \frac{t}{\frac{L^2}{\kappa}}\]</div>
+<p>There we have it. The characteristic time of diffusion is <span class="math notranslate nohighlight">\(\tau_{diff} =\frac{L^2}{\kappa}\)</span> with units of <span class="math notranslate nohighlight">\(s\)</span>.</p>
+<p>Alright, let’s look at convection. In Darcy flow the velocity is proportional to the density difference according to <span class="math notranslate nohighlight">\(u \sim \frac{\Delta \rho g k}{\mu}\)</span>. If we express the density difference via the thermal expansion and divide the characteristic length, <span class="math notranslate nohighlight">\(L\)</span> by this velocity, we get <span class="math notranslate nohighlight">\(\tau_{conv} =\frac{L \mu}{\Delta T \alpha \rho g k}\)</span>, which again has units of <span class="math notranslate nohighlight">\(s\)</span>.</p>
+<p>So the Rayleigh number is:</p>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-5">
+<span class="eqno">(36)<a class="headerlink" href="#equation-eq-dim-ana-5" title="Link to this equation"></a></span>\[Ra = \frac{\frac{L^2}{\kappa}}{\frac{L \mu}{\Delta T \alpha \rho g k}}\]</div>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-6">
+<span class="eqno">(38)<a class="headerlink" href="#equation-eq-dim-ana-6" title="Link to this equation"></a></span>\[Ra = \lvert \frac{\rho \Delta T \alpha g k L}{\kappa \mu} \rvert\]</div>
+<p>With this analysis in mind, we probably expect that the local Rayleigh number is highest, where also the fluxibility is high. The Rayleigh number derived above is a measure for the vigor of convection in the entire domain. We can follow <span id="id6">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> and derive a local Rayleigh number by relating convective and diffusive fluxes:</p>
+<div class="math notranslate nohighlight" id="equation-eq-dim-ana-6">
+<span class="eqno">(38)<a class="headerlink" href="#equation-eq-dim-ana-6" title="Link to this equation"></a></span>\[Ra_L = \lvert \frac{\nabla \cdot (\vec{u} \rho h)}{\lambda \nabla^2 T} \rvert\]</div>
+<p>The convective energy transport, <span class="math notranslate nohighlight">\(\nabla \cdot (\vec{u} \rho h)\)</span> term is back! If you read <span id="id7">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> carefully, you find a dimensional analysis that shows that <span class="math notranslate nohighlight">\(Ra_L\)</span> becomes maximum where that transport term is maximum and we are back to the fluxibility concept.</p>
+<p>Enough theory, let’s put this into a model. The compute local Rayleigh numbers, we have to add something to the code. There is a dynamic code section within <code class="code docutils literal notranslate"><span class="pre">system/conrolDict</span></code> that allows outputting more variables including the thermodynamic properties of water. Look how easy it is to evaluate the local convective and diffusive fluxes.</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">functions</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span>    <span class="n">calPlumeT</span>
+<span class="linenos"> 4</span>    <span class="p">{</span>
+<span class="linenos"> 5</span>        <span class="kt">libs</span>                <span class="p">(</span><span class="s">&quot;libutilityFunctionObjects.so&quot;</span><span class="p">);</span>
+<span class="linenos"> 6</span>        <span class="kt">type</span>                <span class="n">coded</span><span class="p">;</span>
+<span class="linenos"> 7</span>        <span class="n">enabled</span>             <span class="nb">true</span><span class="p">;</span>
+<span class="linenos"> 8</span>        <span class="kt">writeControl</span>        <span class="n">adjustableRunTime</span><span class="p">;</span>
+<span class="linenos"> 9</span>        <span class="kt">writeInterval</span>       <span class="k">$</span><span class="kt">writeInterval</span><span class="p">;</span>
+<span class="linenos">10</span>        <span class="n">name</span>                <span class="n">plumeTemperature</span><span class="p">;</span>
+<span class="linenos">11</span>        <span class="n">codeWrite</span>
+<span class="linenos">12</span>        <span class="cp">#{</span>
+<span class="linenos">13</span>            <span class="c1">//get maximum tempeature on the top boundary</span>
+<span class="linenos">14</span>            <span class="n">label</span> <span class="n">patchID</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">boundaryMesh</span><span class="p">().</span><span class="n">findPatchID</span><span class="p">(</span><span class="s">&quot;top&quot;</span><span class="p">);</span>
+<span class="linenos">15</span>            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="k">T</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;T&quot;</span><span class="p">);</span>
+<span class="linenos">16</span>            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;mu&quot;</span><span class="p">);</span>
+<span class="linenos">17</span>            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">Cp</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Cp&quot;</span><span class="p">);</span>
+<span class="linenos">18</span>            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">rho</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;rho&quot;</span><span class="p">);</span>
+<span class="linenos">19</span>            <span class="k">const</span> <span class="n">surfaceScalarField</span><span class="o">&amp;</span> <span class="k">phi</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">surfaceScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;phi&quot;</span><span class="p">);</span>
+<span class="linenos">20</span>            <span class="k">const</span> <span class="n">volScalarField</span><span class="o">&amp;</span> <span class="n">h</span> <span class="o">=</span> <span class="n">mesh</span><span class="p">().</span><span class="n">lookupObject</span><span class="o">&lt;</span><span class="n">volScalarField</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;enthalpy&quot;</span><span class="p">);</span>
+<span class="linenos">21</span>            <span class="kt">double</span> <span class="n">kr</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">22</span>            <span class="c1">// calculate local Rayleigh number</span>
+<span class="linenos">23</span>            <span class="n">volScalarField</span> <span class="nf">Ra_L</span><span class="p">(</span><span class="s">&quot;LocalRayleigh&quot;</span><span class="p">,</span><span class="n">mag</span><span class="p">(</span><span class="n">fvc</span><span class="o">::</span><span class="n">div</span><span class="p">(</span><span class="k">phi</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">kr</span><span class="o">*</span><span class="n">fvc</span><span class="o">::</span><span class="n">laplacian</span><span class="p">(</span><span class="k">T</span><span class="p">))));</span>
+<span class="linenos">24</span>            <span class="c1">// write properties to output files</span>
+<span class="linenos">25</span>            <span class="n">mu</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">Cp</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">h</span><span class="p">.</span><span class="n">write</span><span class="p">();</span> <span class="n">Ra_L</span><span class="p">.</span><span class="n">write</span><span class="p">();</span>
+<span class="linenos">26</span>            <span class="c1">// write vent temperature</span>
+<span class="linenos">27</span>            <span class="n">std</span><span class="o">::</span><span class="n">ofstream</span> <span class="n">fout</span><span class="p">(</span><span class="s">&quot;ventT.txt&quot;</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">ofstream</span><span class="o">::</span><span class="n">app</span><span class="p">);</span>
+<span class="linenos">28</span>            <span class="c1">// Info&lt;&lt;&quot;Plume Temperature: &quot;&lt;&lt;mesh().time().value()/31536000&lt;&lt;&quot;\t&quot;&lt;&lt;Foam::gMax(T.boundaryField()[patchID])-273.15&lt;&lt;&quot; C&quot;&lt;&lt;endl;</span>
+<span class="linenos">29</span>            <span class="n">fout</span><span class="o">&lt;&lt;</span><span class="n">mesh</span><span class="p">().</span><span class="n">time</span><span class="p">().</span><span class="kt">value</span><span class="p">()</span><span class="o">/</span><span class="mi">31536000</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span><span class="o">&lt;&lt;</span><span class="n">Foam</span><span class="o">::</span><span class="n">gMax</span><span class="p">(</span><span class="k">T</span><span class="p">.</span><span class="k">boundaryField</span><span class="p">()[</span><span class="n">patchID</span><span class="p">])</span><span class="o">-</span><span class="mf">273.15</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="linenos">30</span>            <span class="n">fout</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+<span class="linenos">31</span>        <span class="cp">#};</span>
+<span class="linenos">32</span>    <span class="p">}</span>
+<span class="linenos">33</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition-update-hydrothermalfoam admonition">
+<p class="admonition-title">Update hydrothermalFoam</p>
+<p>Some early version of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> did not have access to the specific enthalpy. If you get an error due to this, you can easily update to the latest version. Go into the docker container shell and</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>
+./getHydrothermalFoam_latest.sh
+</pre></div>
+</div>
+<p>This will update the source code of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and recompile it. Just wait for it to complete. Now you can run the case!</p>
+</div>
+<p>It’s possible that we have been a bit overambitious in our chosen numerical resolution. In case the run-time is too long, just reduce the horizontal and vertical resolution. Make the mesh with <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> and call the solver; or execute the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script. If you are feeling courages today, you can also try our running it in parallel! Check out the <code class="code docutils literal notranslate"><span class="pre">run_par.sh</span></code> script for that.
+You can also shorten the total run-time (to say 40 yrs) in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>; we are mainly interested in the early stages anyway.</p>
+</section>
+<section id="post-processing">
+<h2>Post-processing<a class="headerlink" href="#post-processing" title="Link to this heading"></a></h2>
+<section id="plotting-temperature">
+<h3>Plotting temperature<a class="headerlink" href="#plotting-temperature" title="Link to this heading"></a></h3>
+<p>After running the case, check it out in paraview and make sure you understand the results and that everything looks fine. While paraview is great for 3-D processing, sometimes python can be more powerfull in detailed post-processing.</p>
+<p>The figure below shows an example plot of the final temperature solution. It basically does the same thing as paraview, but let’s walk through it.</p>
+<figure class="align-center" id="fig-t-jupp-schultz-steady">
+<img alt="../../_images/T_Jupp_Schultz_steady.svg" src="../../_images/T_Jupp_Schultz_steady.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 30 </span><span class="caption-text">The steady-state temperature distribution. See <a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Temperature-+-velocity-field-(quiver)"><span class="std std-ref">Temperature + velocity field (quiver)</span></a> in the notebook.</span><a class="headerlink" href="#fig-t-jupp-schultz-steady" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Click on the link in the figure caption and go through the notebook. Safest way of getting this to work is to copy the steps into local notebooks (see <a class="reference internal" href="../L01/Installation.html#installation-guide"><span class="std std-ref">Installation guide</span></a>).</p>
+<p>You can also start up paraview and explore everything there! Check which temperature contours become unstable first, plot vectors and local Rayleigh numbers.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="plot_water_properties.html" class="btn btn-neutral float-left" title="Thermodynamic properties of pure water" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Exercise3.html" class="btn btn-neutral float-right" title="Exercise 3: Permeability and Tvent" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

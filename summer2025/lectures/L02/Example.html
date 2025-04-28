@@ -1,0 +1,457 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navier-Stokes flow with OpenFoam &mdash; HydrothermalFoam Lecture  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Excercise" href="Exercise.html" />
+    <link rel="prev" title="Lecture overview" href="Overview.html" /> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Navier-Stokes flow with OpenFoam</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#d-cavity-flow">2D cavity flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#preparing-the-case">Preparing the case</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#making-the-mesh">Making the mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-controls">Run controls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualization">Visualization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise.html">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise1.html">Exercise 1: Fluid properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise2.html">Exercise 2: Fluxibility and Tvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise3.html">Exercise 3: Permeability and Tvent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Implementation1.html">OpenFoam implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Advection1.html">The advection term</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Excercise_adv.html">Excercise on advection schemes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project1.html">Project 1: Flow along a detachment fault</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project3.html">Project 3: Hydrofracturing and localized venting above sill intrusion?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydrothermalFoam Lecture</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Navier-Stokes flow with OpenFoam</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L02/Example.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="navier-stokes-flow-with-openfoam">
+<h1>Navier-Stokes flow with OpenFoam<a class="headerlink" href="#navier-stokes-flow-with-openfoam" title="Link to this heading"></a></h1>
+<p>In this lecture we will solve the famous Navier-Stokes equation for flow. At this point, we will not worry about the detailed equations we are solving. Let’s just accept that the Navier-Stokes equation(s) allow us to solve for the motion of a fluid subject to boundary conditions (simply speaking).</p>
+<section id="d-cavity-flow">
+<h2>2D cavity flow<a class="headerlink" href="#d-cavity-flow" title="Link to this heading"></a></h2>
+<p>Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a kinematic boundary condition at one side, while all other sides are walls with zero velocity. The model setup is shown in <a class="reference internal" href="#fig-2dcavity-setup"><span class="std std-numref">Fig. 3</span></a> .</p>
+<figure class="align-center" id="fig-2dcavity-setup">
+<img alt="../../_images/2d_cavity_setup.png" src="../../_images/2d_cavity_setup.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Two-dimensional cavity model geometry and boundary conditions.</span><a class="headerlink" href="#fig-2dcavity-setup" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="preparing-the-case">
+<h3>Preparing the case<a class="headerlink" href="#preparing-the-case" title="Link to this heading"></a></h3>
+<p>Two-dimensional cavity flow is included in the official tutorials of OpenFoam. We get started by copying the tutorial case into our work directory. You need to do this from your docker shell.</p>
+<div class="highlight-bash notranslate" id="lst-cp2dcavitytoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp<span class="w"> </span><span class="nv">$FOAM_TUTORIALS</span>/incompressible/icoFoam/cavity/cavity<span class="w"> </span>./cavity2D
+</pre></div>
+</div>
+<p>Check the directory structure:</p>
+<div class="highlight-bash notranslate" id="lst-2dcavity-dir"><div class="highlight"><pre><span></span>.
+<span class="hll">├──<span class="w"> </span><span class="m">0</span>
+</span>│<span class="w">   </span>├──<span class="w"> </span>U
+│<span class="w">   </span>└──<span class="w"> </span>p
+├──<span class="w"> </span>a.foam
+├──<span class="w"> </span>clean.sh
+<span class="hll">├──<span class="w"> </span>constant
+</span>│<span class="w">   </span>└──<span class="w"> </span>transportProperties
+<span class="hll">└──<span class="w"> </span>system
+</span><span class="w">    </span>├──<span class="w"> </span>blockMeshDict
+<span class="w">    </span>├──<span class="w"> </span>controlDict
+<span class="w">    </span>├──<span class="w"> </span>fvSchemes
+<span class="w">    </span>└──<span class="w"> </span>fvSolution
+</pre></div>
+</div>
+<p>The 0 directory now contains the boundary and initial conditions for pressure and velocity (our primary variables), the constant directory has the transport properties (here viscosity), and the system directory contains information on the mesh, time steps, numerical schemes etc.</p>
+<p>The two files <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> and <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code> are actually not included and we need to create them. These files are usually part of every OpenFoam case; <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> includes all commands that need to executed to run the case and <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code> cleans the case (removes mesh and output directories).</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">The run.sh file.</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/sh</span>
+<span class="linenos"> 2</span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="w">    </span><span class="c1"># Run from this directory</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="c1"># Source tutorial run functions</span>
+<span class="linenos"> 5</span>.<span class="w"> </span><span class="nv">$WM_PROJECT_DIR</span>/bin/tools/RunFunctions
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="nv">application</span><span class="o">=</span><span class="sb">`</span>getApplication<span class="sb">`</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>./clean.sh
+<span class="linenos">10</span>runApplication<span class="w"> </span>blockMesh
+<span class="linenos">11</span>runApplication<span class="w"> </span><span class="nv">$application</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="lst-2dcav-clean-tree">
+<div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">The clean.sh file.</span><a class="headerlink" href="#lst-2dcav-clean-tree" title="Link to this code"></a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="ch">#!/bin/sh</span>
+<span class="linenos">2</span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1"># run from this directory</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span><span class="c1"># Source tutorial run functions</span>
+<span class="linenos">5</span>.<span class="w"> </span><span class="nv">$WM_PROJECT_DIR</span>/bin/tools/CleanFunctions
+</pre></div>
+</div>
+</div>
+<p>Make the scripts executable.</p>
+<div class="highlight-bash notranslate" id="lst-2dcavitychmod"><div class="highlight"><pre><span></span>chmod<span class="w"> </span>u+x<span class="w"> </span>clean.sh<span class="w"> </span>run.sh
+</pre></div>
+</div>
+</section>
+<section id="making-the-mesh">
+<h3>Making the mesh<a class="headerlink" href="#making-the-mesh" title="Link to this heading"></a></h3>
+<p>We will use OpenFoam’s blockMesh utility to make a simple 2D mesh. The corresponding <code class="code docutils literal notranslate"><span class="pre">blockMeshDict</span></code> file that has all the meshing information is located in the system folder.</p>
+<figure class="align-center" id="fig-cavity2d-bm">
+<img alt="../../_images/cavity2d_bm.png" src="../../_images/cavity2d_bm.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Structure of the blockMeshDict</span><a class="headerlink" href="#fig-cavity2d-bm" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>First we need to define the vertices of the mesh, the nodes.</p>
+<figure class="align-center" id="fig-cavity2d-vertices">
+<img alt="../../_images/cavity2d_vertices.png" src="../../_images/cavity2d_vertices.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Numbering of the vertices.</span><a class="headerlink" href="#fig-cavity2d-vertices" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The next step is define the connectivity between the vertices in order to describe the modeling domain.</p>
+<figure class="align-center" id="fig-cavity2d-vorder">
+<img alt="../../_images/cavity2d_vorder.png" src="../../_images/cavity2d_vorder.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">The order by which the vertices are passed to the hex command matters!</span><a class="headerlink" href="#fig-cavity2d-vorder" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition-order-of-vertices admonition">
+<p class="admonition-title">Order of vertices</p>
+<p>The OpenFoam documentation provides a nice description of the vertices ordering.</p>
+<ul class="simple">
+<li><p>the axis origin is the first entry in the block definition, vertex 0 in our example</p></li>
+<li><p>the x direction is described by moving from vertex 0 to vertex 1</p></li>
+<li><p>the y direction is described by moving from vertex 1 to vertex 2</p></li>
+<li><p>vertices 0, 1, 2, 3 define the plane z = 0</p></li>
+<li><p>vertex 4 is found by moving from vertex 0 in the z direction</p></li>
+<li><p>vertices 5,6 and 7 are similarly found by moving in the z direction from vertices 1,2 and 3 respectively.</p></li>
+</ul>
+</div>
+<p>Next boundary patches are defined and labeled in the blockMeshDict. Also here care must be take to provide the vertices in a consistent order (right-hand coordinate system). Two easy ways to remember this is to:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>apply the right-hand rule, which means if the thumb of your right hand points to the outside of a face, the numbering has to follow your fingers.</p></li>
+<li><p>or, looking onto a face and starting from any vertex, the numbering has to be counter-clockwise.</p></li>
+</ul>
+</div></blockquote>
+<figure class="align-center" id="fig-cavity2d-bounds">
+<img alt="../../_images/cavity2d_bounds.png" src="../../_images/cavity2d_bounds.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Assigning boundary labels and types.</span><a class="headerlink" href="#fig-cavity2d-bounds" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Now we are ready to run the <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> utility and create the mesh</p>
+<div class="highlight-bash notranslate" id="lst-2dcavityrbm"><div class="highlight"><pre><span></span>blockMesh
+</pre></div>
+</div>
+<p>You can visualize the mesh using paraview</p>
+<div class="highlight-bash notranslate" id="lst-2dcavity-vizm"><div class="highlight"><pre><span></span>touch<span class="w"> </span>a.foam
+paraview<span class="w"> </span>a.foam
+</pre></div>
+</div>
+</section>
+<section id="boundary-conditions">
+<h3>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading"></a></h3>
+<p>We now have velocity and pressure as primary variables and need to set initial and boundary conditions for them. First we look at the velocity boundary conditions:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/u
+</pre></div>
+</div>
+<figure class="align-center" id="fig-cavity2d-u-fig">
+<img alt="../../_images/cavity2d_u.png" src="../../_images/cavity2d_u.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Velocity boundary conditions. The front and back sides are set to empty because we are doing a 2D calculation.</span><a class="headerlink" href="#fig-cavity2d-u-fig" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Next we look into the pressure boundary conditions.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/p
+</pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="lst-2dcavity-p">
+<div class="code-block-caption"><span class="caption-number">Listing 8 </span><span class="caption-text">Pressure boundary conditions. Front and back are of type “emtpy” for 2-D runs.</span><a class="headerlink" href="#lst-2dcavity-p" title="Link to this code"></a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="n">volScalarField</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">object</span>      <span class="k">p</span><span class="p">;</span>
+<span class="linenos">14</span><span class="p">}</span>
+<span class="linenos">15</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">16</span>
+<span class="hll"><span class="linenos">17</span><span class="kt">dimensions</span>      <span class="p">[</span><span class="mi">0</span> <span class="mi">2</span> <span class="o">-</span><span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">];</span>
+</span><span class="linenos">18</span>
+<span class="linenos">19</span><span class="kt">internalField</span>   <span class="k">uniform</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="k">boundaryField</span>
+<span class="linenos">22</span><span class="p">{</span>
+<span class="linenos">23</span>    <span class="n">movingWall</span>
+<span class="linenos">24</span>    <span class="p">{</span>
+<span class="linenos">25</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+<span class="linenos">26</span>    <span class="p">}</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="n">fixedWalls</span>
+<span class="linenos">29</span>    <span class="p">{</span>
+<span class="linenos">30</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
+<span class="linenos">31</span>    <span class="p">}</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span>    <span class="n">frontAndBack</span>
+<span class="linenos">34</span>    <span class="p">{</span>
+<span class="linenos">35</span>        <span class="kt">type</span>            <span class="n">empty</span><span class="p">;</span>
+<span class="linenos">36</span>    <span class="p">}</span>
+<span class="linenos">37</span><span class="p">}</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span><span class="c1">// ************************************************************************* //</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>One has to be careful about the dimensions of pressure in OpenFoam. In incompressible runs, like we are doing here, the pressure is usually the relative pressure <span class="math notranslate nohighlight">\(\frac{p}{\rho}\)</span> and has units <span class="math notranslate nohighlight">\(\frac{m^2}{s^2}\)</span></p>
+</div>
+</section>
+<section id="run-controls">
+<h3>Run controls<a class="headerlink" href="#run-controls" title="Link to this heading"></a></h3>
+<p>The time stepping, run time, and output frequency are again set in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>. Open it and check that you understand the entires.</p>
+<p>In case you wondered how OpenFoam is solving the equations. We will cover the details later in the course, but you can have a preview by opening the <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code> file. In this dictionary, the various discretization schemes can be set. <a class="reference internal" href="#fig-cavity2d-num-fig"><span class="std std-numref">Fig. 9</span></a> gives some further explanations.</p>
+<figure class="align-center" id="fig-cavity2d-num-fig">
+<img alt="../../_images/cavity2_num.png" src="../../_images/cavity2_num.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">The exact discretization schemes can be set in <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code>.</span><a class="headerlink" href="#fig-cavity2d-num-fig" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Time to run the case! Just start the solver</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>icoFoam
+</pre></div>
+</div>
+</section>
+<section id="visualization">
+<h3>Visualization<a class="headerlink" href="#visualization" title="Link to this heading"></a></h3>
+<p>Open paraview and look at the results.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Overview.html" class="btn btn-neutral float-left" title="Lecture overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Exercise.html" class="btn btn-neutral float-right" title="Excercise" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

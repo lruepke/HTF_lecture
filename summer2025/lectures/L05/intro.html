@@ -1,0 +1,306 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upflow temperatures in submarine hydrothermal systems &mdash; HydrothermalFoam Lecture  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Exercise 1: Fluid properties" href="Exercise1.html" />
+    <link rel="prev" title="Lecture overview" href="Overview.html" /> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Upflow temperatures in submarine hydrothermal systems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mechanism-to-limit-black-smoker-temperature">Mechanism to limit black smoker temperature</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1: Fluid properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise2.html">Exercise 2: Fluxibility and Tvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise3.html">Exercise 3: Permeability and Tvent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Implementation1.html">OpenFoam implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Advection1.html">The advection term</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Excercise_adv.html">Excercise on advection schemes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project1.html">Project 1: Flow along a detachment fault</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project3.html">Project 3: Hydrofracturing and localized venting above sill intrusion?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydrothermalFoam Lecture</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Upflow temperatures in submarine hydrothermal systems</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L05/intro.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="upflow-temperatures-in-submarine-hydrothermal-systems">
+<span id="l04-postprocess"></span><h1>Upflow temperatures in submarine hydrothermal systems<a class="headerlink" href="#upflow-temperatures-in-submarine-hydrothermal-systems" title="Link to this heading"></a></h1>
+<p>During the last session we have explored free hydrothermal convection in a porous medium heated from below. That 2-D setting can be thought of as hydrothermal convection in an along axis slice above a stable melt lens - for example at a fast spreading ridge. Two things are striking about our initial results. First, in the homogenous permeability case, vent temperatures never exceed 400°C although the bottom boundary condition was set to 800°C. Shouldn’t it be the hottest and most buoyant fluids that rise in free convection? Second, in the layered case, mixing at the interface to the higher permeability layer resulted in a reduction in vent temperature. What is controlling this reduction in the upwelling temperature?</p>
+<p>If we turn to observations to adress these question, we notice another striking feature of submarine hydrothermal systems. Global compilations of vent fluid exit temperatures demonstrate that these rarely exceed approx. 400°C (<a class="reference internal" href="#fig-vent-t-fig"><span class="std std-numref">Fig. 22</span></a> ).</p>
+<figure class="align-center" id="fig-vent-t-fig" style="width: 70%">
+<img alt="../../_images/vent_T_deoth.jpg" src="../../_images/vent_T_deoth.jpg" />
+<figcaption>
+<p><span class="caption-number">Fig. 22 </span><span class="caption-text">Figure taken from <span id="id1">[<a class="reference internal" href="../../refs.html#id7" title="Kentaro Nakamura and Ken Takai. Theoretical constraints of physical and chemical properties of hydrothermal fluids on variations in chemolithotrophic microbial communities in seafloor hydrothermal systems. Progress in Earth and Planetary Science, 1(1):5, 2014. URL: https://doi.org/10.1186/2197-4284-1-5, doi:10.1186/2197-4284-1-5.">Nakamura &amp; Takai, 2014</a>]</span> showing measured vent fluid temperatures.</span><a class="headerlink" href="#fig-vent-t-fig" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>So, what controls the upflow temperature in submarine hydrothermal systems? This question was adressed by <span id="id2">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> in a landmark paper. They showed that the thermodynamic properties of water control the upflow temperature and can explain the observed upper limit of vent fluid temperatures. In this lecture we will have a detailed look into the underlying mechanisms.</p>
+<section id="mechanism-to-limit-black-smoker-temperature">
+<h2>Mechanism to limit black smoker temperature<a class="headerlink" href="#mechanism-to-limit-black-smoker-temperature" title="Link to this heading"></a></h2>
+<p>We recommend reading the original papers by <span id="id3">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> and <span id="id4">[<a class="reference internal" href="../../refs.html#id8" title="T. E. Jupp and A. Schultz. Physical balances in subseafloor hydrothermal convection cells. Journal of Geophysical Research-Solid Earth, 2004. URL: &lt;Go to ISI&gt;://WOS:000221911900002, doi:10.1029/2003jb002697.">Jupp &amp; Schultz, 2004</a>]</span>; here we only provide a very short summary. The underlying idea is to determine from the pure water equation-of-state the optimum temperature for buoyant upwelling. Within the energy conservation equation, advective heat transport is described by a divergence term:</p>
+<div class="math notranslate nohighlight" id="equation-eq-div-e">
+<span class="eqno">(29)<a class="headerlink" href="#equation-eq-div-e" title="Link to this equation"></a></span>\[\nabla \cdot (\rho h \vec{U})\]</div>
+<p>Following <span id="id5">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span>, we can assume that the pressure gradient, driving upflow, can be approximated as cold hydrostatic so that we can express the upflow velocity as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-upflow-js">
+<span class="eqno">(30)<a class="headerlink" href="#equation-eq-upflow-js" title="Link to this equation"></a></span>\[U_z = -\frac{k}{\mu} \left( \nabla P - \rho g_z \right) \approx -\frac{k}{\mu}(\rho_0 g_z - \rho g_z) = -g_z \frac{k}{\mu} (\rho_0 - \rho)\]</div>
+<p>Now we plug this expression into <a class="reference internal" href="#equation-eq-div-e">equation (29)</a> to get:</p>
+<div class="math notranslate nohighlight" id="equation-eq-udiv-e2">
+<span class="eqno">(31)<a class="headerlink" href="#equation-eq-udiv-e2" title="Link to this equation"></a></span>\[\nabla \cdot (\rho h \vec{U}) = -\frac{\partial}{\partial z} \left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right) g_z k\]</div>
+<p>The minus on the left-hand term is a bit irritating. We can continue by assuming that <span class="math notranslate nohighlight">\(g=9.81\)</span>, so is positive. <span id="id6">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> called the term within the large brackets, <span class="math notranslate nohighlight">\(F=\left(\frac{(\rho_0 - \rho) \rho h}{\mu}\right)\)</span> , fluxibility. Fluxibility is a function of fluid properties only and those properties are pressure and temperature dependent. To first order, advective heat transport is maximized, where <span class="math notranslate nohighlight">\(\nabla \cdot F\)</span> is maximum and this divergence can be approximated within the bottom thermal boundary as <span class="math notranslate nohighlight">\(\nabla \cdot F \approx \frac{\partial}{\partial z} F\)</span> and this term is to first-order proportional to <span class="math notranslate nohighlight">\(\frac{\partial}{\partial T} F\)</span> .</p>
+<p><a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 23</span></a> a shows fluxibility as a function of pressure and temperature. It is clear that this function has a distinct peak at temperature of approximately 400°C. <a class="reference internal" href="#fig-fluxibility-water"><span class="std std-numref">Fig. 23</span></a> b shows sections of constant pressure and also the derivative of F with temperature. The peaks in these functions mark the temperature for which buoyant heat transport is most efficient for a given pressure. Later we will explore this further in numerical convection experiments.</p>
+<figure class="align-center" id="fig-fluxibility-water">
+<img alt="../../_images/Fluxibility_Water.svg" src="../../_images/Fluxibility_Water.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 23 </span><span class="caption-text">Fluxibility F as a function of temperature and pressure (a), profile of F along temperature with constant pressure (b).</span><a class="headerlink" href="#fig-fluxibility-water" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Let’s have a look into the controlling fluid properties density, specific enthalpy, and dynamic viscosity in P,T space.</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">P-T H2O phase diagram</label><div class="tab-content docutils container">
+<figure class="align-center" id="id7">
+<img alt="../../_images/sphx_glr_plot_PhaseDiagram_pT_003_2_0x.svg" src="../../_images/sphx_glr_plot_PhaseDiagram_pT_003_2_0x.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 24 </span><span class="caption-text">Phase regions of pure water in P-T space. We are mainly interested in the supercritical region above the critical end point, when water is always in the single phase regime.</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Density</label><div class="tab-content docutils container">
+<figure class="align-center" id="id8" style="width: 60%">
+<img alt="../../_images/sphx_glr_plot_Density_pT_001_2_0x.svg" src="../../_images/sphx_glr_plot_Density_pT_001_2_0x.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 25 </span><span class="caption-text">Density (<span class="math notranslate nohighlight">\(Kg/m^3\)</span>) as a function of pressure and temperature. There is a monotonic rise in density with increasing pressure and and decreasing temperature - just as intuition would tell us.</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">Specific enthalpy</label><div class="tab-content docutils container">
+<figure class="align-center" id="id9" style="width: 60%">
+<img alt="../../_images/sphx_glr_plot_Enthalpy_pT_001_2_0x.svg" src="../../_images/sphx_glr_plot_Enthalpy_pT_001_2_0x.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 26 </span><span class="caption-text">Specific enthalpy (<span class="math notranslate nohighlight">\(J/Kg\)</span>) as a function of pressure and temperature. The energy “stored” in a kilogram of water rises with increasing tempeature - also no surprises here.</span><a class="headerlink" href="#id9" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+<input class="tab-input" id="tab-set--0-input--4" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--4">Dynamic viscosity</label><div class="tab-content docutils container">
+<figure class="align-center" id="id10" style="width: 60%">
+<img alt="../../_images/sphx_glr_plot_Viscosity_pT_001_2_0x.svg" src="../../_images/sphx_glr_plot_Viscosity_pT_001_2_0x.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Viscosity (<span class="math notranslate nohighlight">\(Pa s\)</span>) as a function of pressure and temperature. Here things get interesting; the viscosity is first going down with increasing temperature (as expected) but then increases again within the vapor phase field.</span><a class="headerlink" href="#id10" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Looks like viscosity may play a big role in determining flow dynamics and upwelling temperatures. Let’s explore this in more detail.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Overview.html" class="btn btn-neutral float-left" title="Lecture overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Exercise1.html" class="btn btn-neutral float-right" title="Exercise 1: Fluid properties" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
