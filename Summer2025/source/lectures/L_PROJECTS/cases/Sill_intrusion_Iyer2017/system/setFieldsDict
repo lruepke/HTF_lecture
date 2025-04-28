@@ -1,0 +1,110 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      setFieldsDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+defaultFieldValues
+(
+    volScalarFieldValue T 278.15
+    volScalarFieldValue permeability 1E-15
+);
+T_sill 1273;
+permeability_sill 1E-20;
+regions
+(
+    zoneToCell
+    {
+        name "layer1";
+        fieldValues
+        (
+            volScalarFieldValue permeability 1e-13
+        );
+    }
+    zoneToCell
+    {
+        name "layer2";
+        fieldValues
+        (
+            volScalarFieldValue permeability 1e-14
+        );
+    }
+    zoneToCell
+    {
+        name "layer3";
+        fieldValues
+        (
+            volScalarFieldValue permeability 1e-15
+        );
+    }
+
+    surfaceToCell
+    {
+        file "stl/sills_sill1.stl";
+        outsidePoints ((1000 -100 0)); // definition of outside
+        includeCut true; includeInside yes;  includeOutside no; nearDistance -1; curvature 0.9; 
+        fieldValues
+        (
+            volScalarFieldValue T $T_sill
+            volScalarFieldValue permeability $permeability_sill
+        ); 
+    }
+    surfaceToCell
+    {
+        file "stl/sills_sill2.stl";
+        outsidePoints ((1000 -100 0)); // definition of outside
+        includeCut true; includeInside yes;  includeOutside no; nearDistance -1; curvature 0.9; 
+        fieldValues
+        (
+            volScalarFieldValue T $T_sill
+            volScalarFieldValue permeability $permeability_sill
+        ); 
+    }
+    surfaceToCell
+    {
+        file "stl/sills_sill3.stl";
+        outsidePoints ((1000 -100 0)); // definition of outside
+        includeCut true; includeInside yes;  includeOutside no; nearDistance -1; curvature 0.9; 
+        fieldValues
+        (
+            volScalarFieldValue T $T_sill
+            volScalarFieldValue permeability $permeability_sill
+        ); 
+    }
+    surfaceToCell
+    {
+        file "stl/sills_sill4.stl";
+        outsidePoints ((1000 -100 0)); // definition of outside
+        includeCut true; includeInside yes;  includeOutside no; nearDistance -1; curvature 0.9; 
+        fieldValues
+        (
+            volScalarFieldValue T $T_sill
+            volScalarFieldValue permeability $permeability_sill
+        ); 
+    }
+    surfaceToCell
+    {
+        file "stl/sills_sill5.stl";
+        outsidePoints ((1000 -100 0)); // definition of outside
+        includeCut true; includeInside yes;  includeOutside no; nearDistance -1; curvature 0.9; 
+        fieldValues
+        (
+            volScalarFieldValue T $T_sill
+            volScalarFieldValue permeability $permeability_sill
+        ); 
+    }
+);
+
+// ************************************************************************* //

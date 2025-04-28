@@ -1,0 +1,48 @@
+.. define short name variables
+
+.. _OpenFOAM: https://openfoam.org
+
+.. _gaussLaplacianScheme.C: https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047
+
+.. _EulerDdtScheme.C: https://cpp.openfoam.org/v6/EulerDdtScheme_8C_source.html#l00350
+.. docker: https://www.docker.com
+
+.. _Gmsh: http://gmsh.info
+
+.. _freesteam: http://freesteam.sourceforge.net
+
+.. _ParaView: https://www.paraview.org
+
+.. _Tecplot: https://www.tecplot.com
+
+.. _tmux: https://github.com/tmux/tmux/wiki
+
+.. _HydrothermalFoam: https://gitlab.com/gmdpapers/hydrothermalfoam
+
+.. _scons: https://scons.org
+
+.. _python 2: https://www.python.org/downloads/release/python-272/
+
+.. _GSL: https://www.gnu.org/software/gsl/doc/html/
+
+.. _freesteam-2.1: http://freesteam.sourceforge.net
+
+.. _IAPWS-IF97: http://www.iapws.org/relguide/IF97-Rev.html
+
+.. _iapws: https://iapws.readthedocs.io/en/latest/#
+
+.. _Ansys: https://www.ansys.com
+
+.. _execrises/flange: https://gitlab.com/gmdpapers/hydrothermalfoam/-/tree/master/cookbooks/helloworld
+
+.. |execrises| replace:: `execrises/flange`_
+
+
+.. |foam| replace:: HydrothermalFoam_
+
+.. |darcyfoam| replace:: HydrothermalSinglePhaseDarcyFoam
+
+.. |degC| replace:: :math:`^{\circ}\text{C}`
+
+
+
