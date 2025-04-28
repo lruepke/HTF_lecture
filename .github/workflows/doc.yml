@@ -66,7 +66,7 @@ jobs:
       - name: Generate main pages and sphinx pages
         run: |
           # 0. set lectures 
-          lectures="Winter2020 Summer2021 Summer2022 Winter2022 Winter2023 Summer2024 Summer2025"
+          lectures="Winter2020 Summer2021 Summer2022 Winter2022 Winter2023 Summer2024"
           commitIDFile_stored=commit.ID
            # 1. fetch history lecture pages and copy them to history folder as backup
           git fetch origin gh-pages
@@ -74,8 +74,12 @@ jobs:
           mkdir ../history
           for lecture in $lectures
           do
-            # note that the folder name in Hugo pages is all in lower case
-            cp -rf `echo "$lecture" | awk '{print tolower($0)}'` ../history
+            lecture_lc=`echo "$lecture" | awk '{print tolower($0)}'`
+            if [ -d "$lecture_lc" ]; then
+              cp -rf "$lecture_lc" ../history
+            else
+              echo "Lecture folder $lecture_lc does not exist on gh-pages, skipping."
+            fi
           done
           git checkout main
           # 2. make home page
