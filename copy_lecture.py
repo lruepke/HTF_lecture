@@ -2,6 +2,7 @@ import shutil
 import os
 import re
 import sys
+from datetime import datetime
 
 def copy_lecture(source_dir, destination_dir):
     if not os.path.exists(source_dir):
@@ -19,14 +20,12 @@ def update_config(config_path, new_name):
     with open(config_path, 'r') as file:
         lines = file.readlines()
 
-    # Check if lecture already exists in config
     lecture_exists = any(f'name = "{new_name.replace("_", " ")}"' in line or f'name = "{new_name}"' in line for line in lines)
     
     if lecture_exists:
         print(f"Lecture '{new_name}' already exists in config.toml. Skipping adding it again.")
         return
 
-    # Find max weight
     last_weight = 0
     for line in lines:
         if "weight" in line and "Lectures" in "".join(lines[max(0, lines.index(line)-5):lines.index(line)]):
@@ -37,7 +36,6 @@ def update_config(config_path, new_name):
 
     new_weight = last_weight + 1
 
-    # Find where to insert
     insert_index = None
     for i in range(len(lines)-1, -1, -1):
         if 'parent = "Lectures"' in lines[i]:
@@ -48,7 +46,6 @@ def update_config(config_path, new_name):
         print("Could not find 'Lectures' section in config.toml!")
         return
 
-    # Create new menu block
     new_block = f"""
 [[Languages.en.menu.main]]
 parent = "Lectures"
@@ -88,8 +85,39 @@ def update_workflow(workflow_path, new_lecture):
 
     print(f"Added '{new_lecture}' to the lectures list in {workflow_path}.")
 
+def create_homepage_tile(new_name):
+    content_dir = os.path.join("home", "content", new_name)
+    os.makedirs(content_dir, exist_ok=True)
+
+    index_md_path = os.path.join(content_dir, "_index.en.md")
+    if os.path.exists(index_md_path):
+        print(f"_index.en.md for '{new_name}' already exists. Skipping creation.")
+        return
+
+    pretty_title = re.sub(r'(\D+)(\d+)', r'\1 \2', new_name)
+
+    today = datetime.today().strftime('%Y-%m-%dT00:00:00+00:00')
+
+    index_md_content = f"""---
+title: "{pretty_title}"
+date: {today}
+icon: "fas fa-landmark"
+description: "Lecture notes for {pretty_title}: Advanced OpenFOAM, fluid modeling, geophysical flows."
+type: "docs"
+color: "73, 147, 65"
+---
+
+<script type="text/javascript">
+  window.open("/{new_name.lower()}/", "_self");
+</script>
+"""
+
+    with open(index_md_path, 'w') as f:
+        f.write(index_md_content)
+
+    print(f"Created homepage tile at {index_md_path}.")
+
 if __name__ == "__main__":
-    # Default values for testing
     default_source = "Winter2023"
     default_destination = "Summer2025"
 
@@ -108,3 +136,4 @@ if __name__ == "__main__":
     if copy_lecture(source, destination):
         update_config(config_file, destination)
         update_workflow(workflow_file, destination)
+        create_homepage_tile(destination)

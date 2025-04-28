@@ -316,5 +316,5 @@ Now we are finally ready to run our first test case. Just type this into your do
 
     laplacianFoam
 
-Notice how several directories are appearing, which contain the intermediate results. You can postprocess the case by simply opening the :code:`a.foam` file from paraview.
+Notice how several directories are appearing, which contain the intermediate results. You can postprocess the case by simply opening the :code:`a.foam` file from Paraview.
 
