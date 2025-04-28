@@ -19,6 +19,14 @@ def update_config(config_path, new_name):
     with open(config_path, 'r') as file:
         lines = file.readlines()
 
+    # Check if lecture already exists in config
+    lecture_exists = any(f'name = "{new_name.replace("_", " ")}"' in line or f'name = "{new_name}"' in line for line in lines)
+    
+    if lecture_exists:
+        print(f"Lecture '{new_name}' already exists in config.toml. Skipping adding it again.")
+        return
+
+    # Find max weight
     last_weight = 0
     for line in lines:
         if "weight" in line and "Lectures" in "".join(lines[max(0, lines.index(line)-5):lines.index(line)]):
@@ -29,6 +37,7 @@ def update_config(config_path, new_name):
 
     new_weight = last_weight + 1
 
+    # Find where to insert
     insert_index = None
     for i in range(len(lines)-1, -1, -1):
         if 'parent = "Lectures"' in lines[i]:
@@ -39,6 +48,7 @@ def update_config(config_path, new_name):
         print("Could not find 'Lectures' section in config.toml!")
         return
 
+    # Create new menu block
     new_block = f"""
 [[Languages.en.menu.main]]
 parent = "Lectures"
@@ -79,11 +89,10 @@ def update_workflow(workflow_path, new_lecture):
     print(f"Added '{new_lecture}' to the lectures list in {workflow_path}.")
 
 if __name__ == "__main__":
-    # Default values
+    # Default values for testing
     default_source = "Winter2023"
     default_destination = "Summer2025"
 
-    # Read command-line arguments if provided
     if len(sys.argv) == 3:
         source = sys.argv[1]
         destination = sys.argv[2]
