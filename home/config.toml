@@ -64,7 +64,7 @@ weight = 3
 
 # Dropdown menu
 [[Languages.en.menu.main]]
-weight = 5
+weight = 6
 name = "Lectures"
 hasChildren = true
 
@@ -98,19 +98,13 @@ hasChildren = true
   url = "summer2021"
   weight = 5
 
-
-[[Languages.en.menu.main]]
-parent = "Lectures"
-name = "Summer2025"
-url = "summer2025"
-weight = 6
+  [[Languages.en.menu.main]]
+  parent = "Lectures"
+  name = "Summer2025"
+  url = "summer2025"
+  weight = 6
 # banner
 
-[[Languages.en.menu.main]]
-parent = "Lectures"
-name = "Summer2025"
-url = "summer2025"
-weight = 7
 [Languages.en.params.banner]
 title = "Lectures on numerical fluid dynamics in geophysics"
 subtitle = "Welcome to the course notes on the numerical fluid dynamics lecture series taught in the geophysics master at Kiel University"
