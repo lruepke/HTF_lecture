@@ -32,8 +32,14 @@ extensions = [
     'sphinxcontrib.bibtex',
     'sphinx_inline_tabs',
     'matplotlib.sphinxext.plot_directive',
+    'sphinx_copybutton',
+
 ]
 bibtex_bibfiles = ['refs.bib']
+
+# Only copy the code, not the prompts or outputs, if using Jupyter Notebooks
+copybutton_prompt_text = r">>> |\.\.\. |In \[\d+\]: | {2,5}\.\.\.: "  # Adjust regex as needed
+copybutton_prompt_is_regexp = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
