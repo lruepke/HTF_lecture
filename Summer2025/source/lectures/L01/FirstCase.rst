@@ -78,7 +78,7 @@ The 0 directory contains all initial and boundary conditions, the system folder 
 Mesh generation
 ---------------
 
-The mesh of flange case is prepared as Ansys_ format (see line 8 of :numref:`lst:flange:tree`), you can use OpenFOAM mesh convert utility of :code:`ansysToFoam` to convert the ansys format to OpenFOAM format, the command is shown below,
+The mesh of flange case is prepared as Ansys_ format (see line 8 of :numref:`lst:flange:tree`), you can use OpenFOAM mesh convert utility of :code:`ansysToFoam` to convert the ansys format to OpenFOAM format. Inside the docker container, type and execute the command below:
 
 .. code-block:: bash 
 
@@ -113,16 +113,13 @@ Again, you can use command of :code:`tree` to explore what changes in the case f
         ├── fvSchemes
         └── fvSolution
 
-After converting the mesh, you can use Paraview_ to visualize the mesh,
+After converting the mesh, you can use Paraview_ to visualize the mesh. Create a new file named :code:`a.foam` in your working directory. This is a dummy file that Paraview uses to open OpenFOAM cases. You can do this by typing the command below in your docker or local shell:
 
 .. code-block:: bash
 
     touch a.foam
-    paraview a.foam 
 
-.. note:: 
-
-    :code:`touch a.foam` means create a empty file named :code:`a.foam`. You might might have the :code:`touch` command in windows; then create the empty file inside the docker shell.
+Then open Paraview and load the :code:`a.foam` file. You can find the file in your working directory. In the left-hand panel, you can see the mesh files. Select the :code:`a.foam` mesh and click on :code:`Apply`. You should be able to see the mesh in Paraview.
 
 .. only:: html
 

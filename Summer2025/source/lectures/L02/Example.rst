@@ -24,7 +24,7 @@ Two-dimensional cavity flow is included in the official tutorials of OpenFoam. W
     :name: lst:cp2dCavityToWorkDir
 
     cd $HOME/HydrothermalFoam_runs
-    cp $FOAM_TUTORIALS/incompressible/icoFoam/cavity/cavity ./cavity2D
+    cp -r $FOAM_TUTORIALS/incompressible/icoFoam/cavity/cavity ./cavity2D
 
 Check the directory structure:
 
@@ -77,6 +77,9 @@ The two files :code:`run.sh` and :code:`clean.sh` are actually not included and 
 
     # Source tutorial run functions
     . $WM_PROJECT_DIR/bin/tools/CleanFunctions
+
+    # Clean the case
+    cleanCase
 
 Make the scripts executable.
 

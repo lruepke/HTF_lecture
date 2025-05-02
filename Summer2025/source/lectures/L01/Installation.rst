@@ -5,34 +5,34 @@
 Installation guide
 ==================
 
-We will be using the Foundation version of OpenFOAM_ and our own hydrothermal flow solver HydrothermalFoam_ , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don't like virtual environments, you will need to go through the `"install from source" <https://www.hydrothermalfoam.info/manual/en/Installation/index.html#build-from-source>`_ instructions of HydrothermalFoam and read the installation instructions of OpenFoam. 
+We will be using the Foundation version of OpenFOAM_ and our own hydrothermal flow solver HydrothermalFoam_ , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. 
 
 .. _sec:install_docker:
 
 Docker
 ------
-We will rely on docker_ and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. For this purpose we have modified the official OpenFoam docker image, so that it also contains all components of HydrothermalFoam. The way docker works is that a so-called docker image is downloaded and from this image a so-called docker container is built, which is the actual virtual environment. These are the necessary steps:
+We will rely on docker_ and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. The image is based on a clean Ubuntu 22.04 LTS and OpenFOAM_ 9 build from source. HydrothermalFoam_ and out own implementation of the :cite:`Driesner2007` equation-of-state for the system H\ :sub:`2`\ O-NaCl. Docker images are lightweight, standalone, and immutable templates for creating containers, while containers are runtime instances of these images that include the application and its dependencies. These are the necessary steps:
 
 1. **Install** `docker desktop <https://www.docker.com/products/docker-desktop>`_ and keep it running.
 2. **Register** an account with `docker hub <https://hub.docker.com/>`_, a marketplace for docker images.
 3. **Log-into** your newly created account from your docker desktop application.
 
 .. tip::
-    Turns out that steps 2 and 3 are actually optional and you should be able to download the docker image also without a docker hub account.
+    Steps 2 and 3 are  optional and you should be able to download the docker image also without a docker hub account.
 
-Now we are ready to pull the provided docker image, which can be found here `zguo/hydrothermalfoam <https://hub.docker.com/repository/docker/zguo/hydrothermalfoam>`_.
+Now we are ready to pull the provided docker image, which can be found here `lruepke/hydrothermalfoam-openfoam9:latest <https://hub.docker.com/repository/docker/lruepke/hydrothermalfoam-openfoam9/general>`_.
 
 Open a shell (powershell under windows or a terminal under MacOS) and pull the image by typing this command.
 
 .. code-block:: bash
 
-      docker pull zguo/hydrothermalfoam
+      docker pull hydrothermalfoam-openfoam9:latest
 
-This can take a while. After the download is finished, you can build the docker container. Use this command:
+The image is about 4GB, so this can take a while. The ":latest" tag points to a multiplatform image and you should get the right image regardless whether you are on an Intel/AMD or ARM/M-chip machine. After the download is finished, you can build the docker container. Use this command:
 
 .. code-block:: bash
 
-    docker run -it -d --name hydrothermalfoam --workdir="/home/openfoam" -v="$HOME/HydrothermalFoam_runs":"/home/openfoam/HydrothermalFoam_runs" zguo/hydrothermalfoam
+    docker run -it -d --name hydrothermalfoam9 -v="$HOME/HydrothermalFoam_runs":"/home/openfoam/HydrothermalFoam_runs" lruepke/hydrothermalfoam-openfoam9:latest
 
 This complicated looking command builds the docker container and creates a “shared” folder called HydrothermalFoam_runs in your home directory (this is what the -v option does). If you want it somewhere else, you can change this "$HOME/HydrothermalFoam_runs" part of the above statement. Please do not uses path and directory names with spaces or special characters in it (if you are on windows).
 
@@ -40,10 +40,9 @@ This complicated looking command builds the docker container and creates a “sh
     Just in case you do not like to type statement that you don’t fully understand – this is what the other options do:
         * -it allocate a pseudo-TTY connected to the container’s stdin; creating an interactive bash shell in the container (plain language, this allows you to interact with (type inside) the container)
         * -- name hydrothermalfoam give the container its name
-        * --workdir is the path to the working/home directory inside the container (don’t change it!)
         * -v makes a shared file system
-        * -d run container in background (detached)
-
+        * -d starts the container in detached mode (in the background)
+        * lruepke/hydrothermalfoam-openfoam9:latest is the name of the image we just downloaded
 
 Now that you have built the docker container you can use these basic docker commands to interact with it:
 

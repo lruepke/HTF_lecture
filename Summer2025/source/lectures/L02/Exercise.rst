@@ -39,13 +39,13 @@ Unfortunately, theree is no file :code:`system/decomposeParDict` in our example 
 
 .. code-block:: bash 
     
-    cd      
-    find  . -name "decomposeParDict"
-    ./hydrothermalfoam-master/cookbooks/parallel_serial/fixedTfixedFluxPressure/2d_par/system/decomposeParDict
-    ./hydrothermalfoam-master/cookbooks/parallel_serial/fixedTnoFlux/2d_par/system/decomposeParDict
-    ./hydrothermalfoam-master/cookbooks/3Dbox_par/system/decomposeParDict
-    ./hydrothermalfoam-master/cookbooks/helloworld_par/system/decomposeParDict
-    cp ./hydrothermalfoam-master/cookbooks/helloworld_par/system/decomposeParDict $HOME/HydrothermalFoam_runs/cavity3D_par
+    find  $FOAM_TUTORIALS -name "decomposeParDict"
+    /opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/fluid/decomposeParDict
+    /opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/decomposeParDict
+    /opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/metal/decomposeParDict
+    /opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/externalCoupledCavity/system/decomposeParDict
+    /opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/iglooWithFridges/system/decomposeParDict
+    cp /opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/iglooWithFridges/system/decomposeParDict $HOME/HydrothermalFoam_runs/cavity3D_par
 
 Now open this file and edit it; it should look like this
 
