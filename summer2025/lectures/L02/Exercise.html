@@ -236,13 +236,13 @@
 </pre></div>
 </div>
 <p>Unfortunately, theree is no file <code class="code docutils literal notranslate"><span class="pre">system/decomposeParDict</span></code> in our example case… Fortunately, there is probably an example file somewhere in all the provided tutorials. A simple way to find and copy one is this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span>
-find<span class="w">  </span>.<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;decomposeParDict&quot;</span>
-./hydrothermalfoam-master/cookbooks/parallel_serial/fixedTfixedFluxPressure/2d_par/system/decomposeParDict
-./hydrothermalfoam-master/cookbooks/parallel_serial/fixedTnoFlux/2d_par/system/decomposeParDict
-./hydrothermalfoam-master/cookbooks/3Dbox_par/system/decomposeParDict
-./hydrothermalfoam-master/cookbooks/helloworld_par/system/decomposeParDict
-cp<span class="w"> </span>./hydrothermalfoam-master/cookbooks/helloworld_par/system/decomposeParDict<span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs/cavity3D_par
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find<span class="w">  </span><span class="nv">$FOAM_TUTORIALS</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;decomposeParDict&quot;</span>
+/opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/fluid/decomposeParDict
+/opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/decomposeParDict
+/opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/metal/decomposeParDict
+/opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/externalCoupledCavity/system/decomposeParDict
+/opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/iglooWithFridges/system/decomposeParDict
+cp<span class="w"> </span>/opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/iglooWithFridges/system/decomposeParDict<span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs/cavity3D_par
 </pre></div>
 </div>
 <p>Now open this file and edit it; it should look like this</p>

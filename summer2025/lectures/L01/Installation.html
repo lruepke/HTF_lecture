@@ -218,10 +218,10 @@
 </style>
 <section id="installation-guide">
 <span id="id1"></span><h1>Installation guide<a class="headerlink" href="#installation-guide" title="Link to this heading"></a></h1>
-<p>We will be using the Foundation version of <a class="reference external" href="https://openfoam.org">OpenFOAM</a> and our own hydrothermal flow solver <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container. If you don’t like virtual environments, you will need to go through the <a class="reference external" href="https://www.hydrothermalfoam.info/manual/en/Installation/index.html#build-from-source">“install from source”</a> instructions of HydrothermalFoam and read the installation instructions of OpenFoam.</p>
+<p>We will be using the Foundation version of <a class="reference external" href="https://openfoam.org">OpenFOAM</a> and our own hydrothermal flow solver <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container.</p>
 <section id="docker">
 <span id="sec-install-docker"></span><h2>Docker<a class="headerlink" href="#docker" title="Link to this heading"></a></h2>
-<p>We will rely on <a class="reference internal" href="#docker">docker</a> and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. For this purpose we have modified the official OpenFoam docker image, so that it also contains all components of HydrothermalFoam. The way docker works is that a so-called docker image is downloaded and from this image a so-called docker container is built, which is the actual virtual environment. These are the necessary steps:</p>
+<p>We will rely on <a class="reference internal" href="#docker">docker</a> and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. The image is based on a clean Ubuntu 22.04 LTS and <a class="reference external" href="https://openfoam.org">OpenFOAM</a> 9 build from source. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and out own implementation of the <span id="id2">[<a class="reference internal" href="../../refs.html#id31" title="T. Driesner and C. A. Heinrich. The system h2o-nacl. part i: correlation formulae for phase relations in temperature-pressure-composition space from 0 to 1000 degrees c, 0 to 5000 bar, and 0 to 1 x-nacl. Geochimica Et Cosmochimica Acta, 71(20):4880-4901, 2007. Driesner, Thomas Heinrich, Christoph A. URL: &lt;Go to ISI&gt;://000250948100006, doi:10.1016/i.gca.2006.01.033.">Driesner &amp; Heinrich, 2007</a>]</span> equation-of-state for the system H<sub>2</sub>O-NaCl. Docker images are lightweight, standalone, and immutable templates for creating containers, while containers are runtime instances of these images that include the application and its dependencies. These are the necessary steps:</p>
 <ol class="arabic simple">
 <li><p><strong>Install</strong> <a class="reference external" href="https://www.docker.com/products/docker-desktop">docker desktop</a> and keep it running.</p></li>
 <li><p><strong>Register</strong> an account with <a class="reference external" href="https://hub.docker.com/">docker hub</a>, a marketplace for docker images.</p></li>
@@ -229,15 +229,15 @@
 </ol>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Turns out that steps 2 and 3 are actually optional and you should be able to download the docker image also without a docker hub account.</p>
+<p>Steps 2 and 3 are  optional and you should be able to download the docker image also without a docker hub account.</p>
 </div>
-<p>Now we are ready to pull the provided docker image, which can be found here <a class="reference external" href="https://hub.docker.com/repository/docker/zguo/hydrothermalfoam">zguo/hydrothermalfoam</a>.</p>
+<p>Now we are ready to pull the provided docker image, which can be found here <a class="reference external" href="https://hub.docker.com/repository/docker/lruepke/hydrothermalfoam-openfoam9/general">lruepke/hydrothermalfoam-openfoam9:latest</a>.</p>
 <p>Open a shell (powershell under windows or a terminal under MacOS) and pull the image by typing this command.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>zguo/hydrothermalfoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>hydrothermalfoam-openfoam9:latest
 </pre></div>
 </div>
-<p>This can take a while. After the download is finished, you can build the docker container. Use this command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>hydrothermalfoam<span class="w"> </span>--workdir<span class="o">=</span><span class="s2">&quot;/home/openfoam&quot;</span><span class="w"> </span>-v<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/HydrothermalFoam_runs&quot;</span>:<span class="s2">&quot;/home/openfoam/HydrothermalFoam_runs&quot;</span><span class="w"> </span>zguo/hydrothermalfoam
+<p>The image is about 4GB, so this can take a while. The “:latest” tag points to a multiplatform image and you should get the right image regardless whether you are on an Intel/AMD or ARM/M-chip machine. After the download is finished, you can build the docker container. Use this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>hydrothermalfoam9<span class="w"> </span>-v<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/HydrothermalFoam_runs&quot;</span>:<span class="s2">&quot;/home/openfoam/HydrothermalFoam_runs&quot;</span><span class="w"> </span>lruepke/hydrothermalfoam-openfoam9:latest
 </pre></div>
 </div>
 <p>This complicated looking command builds the docker container and creates a “shared” folder called HydrothermalFoam_runs in your home directory (this is what the -v option does). If you want it somewhere else, you can change this “$HOME/HydrothermalFoam_runs” part of the above statement. Please do not uses path and directory names with spaces or special characters in it (if you are on windows).</p>
@@ -247,9 +247,9 @@
 <dt>Just in case you do not like to type statement that you don’t fully understand – this is what the other options do:</dt><dd><ul class="simple">
 <li><p>-it allocate a pseudo-TTY connected to the container’s stdin; creating an interactive bash shell in the container (plain language, this allows you to interact with (type inside) the container)</p></li>
 <li><p>– name hydrothermalfoam give the container its name</p></li>
-<li><p>–workdir is the path to the working/home directory inside the container (don’t change it!)</p></li>
 <li><p>-v makes a shared file system</p></li>
-<li><p>-d run container in background (detached)</p></li>
+<li><p>-d starts the container in detached mode (in the background)</p></li>
+<li><p>lruepke/hydrothermalfoam-openfoam9:latest is the name of the image we just downloaded</p></li>
 </ul>
 </dd>
 </dl>
@@ -262,10 +262,10 @@ docker<span class="w"> </span>stop<span class="w"> </span>hydrothermalfoam
 </div>
 <p>The first command starts the container and the second one attaches it to the current shell. As you will see below, you will typically run these two commands from the right-hand side shell in your VS code when you start your work. To stop the container, just run the stop command from another shell.</p>
 <p>While we recommend to use the command line to interact with docker, there is als a GUI that you can use to check on your docker containers and images. Just right-click on the icon in the task bar and chose dashboard.</p>
-<figure class="align-center" id="id3" style="width: 70%">
+<figure class="align-center" id="id4" style="width: 70%">
 <img alt="../../_images/docker_desktop.png" src="../../_images/docker_desktop.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Docker dashboard showing your images and containers.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Docker dashboard showing your images and containers.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -292,7 +292,7 @@ docker<span class="w"> </span>attach<span class="w"> </span>hydrothermalfoam
 </div>
 </section>
 <section id="sec-install-paraview">
-<span id="id2"></span><h2>Paraview<a class="headerlink" href="#sec-install-paraview" title="Link to this heading"></a></h2>
+<span id="id3"></span><h2>Paraview<a class="headerlink" href="#sec-install-paraview" title="Link to this heading"></a></h2>
 <p>We will use Kiteware’s <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize the modeling results. Download and install the latest version. It also really helps to add paraview to the system path, so that it can be called from the command line.</p>
 </section>
 <section id="python">

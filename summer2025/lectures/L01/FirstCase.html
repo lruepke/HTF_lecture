@@ -270,7 +270,7 @@ cp<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$FOAM_TUTO
 </section>
 <section id="mesh-generation">
 <h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Link to this heading"></a></h2>
-<p>The mesh of flange case is prepared as <a class="reference external" href="https://www.ansys.com">Ansys</a> format (see line 8 of <a class="reference internal" href="#lst-flange-tree"><span class="std std-numref">Listing 1</span></a>), you can use OpenFOAM mesh convert utility of <code class="code docutils literal notranslate"><span class="pre">ansysToFoam</span></code> to convert the ansys format to OpenFOAM format, the command is shown below,</p>
+<p>The mesh of flange case is prepared as <a class="reference external" href="https://www.ansys.com">Ansys</a> format (see line 8 of <a class="reference internal" href="#lst-flange-tree"><span class="std std-numref">Listing 1</span></a>), you can use OpenFOAM mesh convert utility of <code class="code docutils literal notranslate"><span class="pre">ansysToFoam</span></code> to convert the ansys format to OpenFOAM format. Inside the docker container, type and execute the command below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ansysToFoam<span class="w"> </span>flange.ans<span class="w"> </span>-scale<span class="w"> </span><span class="m">0</span>.001
 </pre></div>
 </div>
@@ -300,15 +300,11 @@ Again, you can use command of <code class="code docutils literal notranslate"><s
 </pre></div>
 </div>
 </div>
-<p>After converting the mesh, you can use <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize the mesh,</p>
+<p>After converting the mesh, you can use <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize the mesh. Create a new file named <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> in your working directory. This is a dummy file that Paraview uses to open OpenFOAM cases. You can do this by typing the command below in your docker or local shell:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>a.foam
-paraview<span class="w"> </span>a.foam
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code class="code docutils literal notranslate"><span class="pre">touch</span> <span class="pre">a.foam</span></code> means create a empty file named <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code>. You might might have the <code class="code docutils literal notranslate"><span class="pre">touch</span></code> command in windows; then create the empty file inside the docker shell.</p>
-</div>
+<p>Then open Paraview and load the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> file. You can find the file in your working directory. In the left-hand panel, you can see the mesh files. Select the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> mesh and click on <code class="code docutils literal notranslate"><span class="pre">Apply</span></code>. You should be able to see the mesh in Paraview.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Mesh of flange</label><div class="tab-content docutils container">
 <figure class="align-center" id="id1">

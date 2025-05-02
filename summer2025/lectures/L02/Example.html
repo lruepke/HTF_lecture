@@ -229,7 +229,7 @@
 <h3>Preparing the case<a class="headerlink" href="#preparing-the-case" title="Link to this heading"></a></h3>
 <p>Two-dimensional cavity flow is included in the official tutorials of OpenFoam. We get started by copying the tutorial case into our work directory. You need to do this from your docker shell.</p>
 <div class="highlight-bash notranslate" id="lst-cp2dcavitytoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
-cp<span class="w"> </span><span class="nv">$FOAM_TUTORIALS</span>/incompressible/icoFoam/cavity/cavity<span class="w"> </span>./cavity2D
+cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$FOAM_TUTORIALS</span>/incompressible/icoFoam/cavity/cavity<span class="w"> </span>./cavity2D
 </pre></div>
 </div>
 <p>Check the directory structure:</p>
@@ -273,6 +273,9 @@ cp<span class="w"> </span><span class="nv">$FOAM_TUTORIALS</span>/incompressible
 <span class="linenos">3</span>
 <span class="linenos">4</span><span class="c1"># Source tutorial run functions</span>
 <span class="linenos">5</span>.<span class="w"> </span><span class="nv">$WM_PROJECT_DIR</span>/bin/tools/CleanFunctions
+<span class="linenos">6</span>
+<span class="linenos">7</span><span class="c1"># Clean the case</span>
+<span class="linenos">8</span>cleanCase
 </pre></div>
 </div>
 </div>
