@@ -80,7 +80,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Excercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Excercise 2</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul>
@@ -281,7 +282,7 @@
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">zoneToCell</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-setfdict">
-<div class="code-block-caption"><span class="caption-number">Listing 22 </span><span class="caption-text">Use the setFieldsDict to assign different permeabilities.</span><a class="headerlink" href="#lst-2dbox-setfdict" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 24 </span><span class="caption-text">Use the setFieldsDict to assign different permeabilities.</span><a class="headerlink" href="#lst-2dbox-setfdict" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -324,7 +325,7 @@
 </div>
 <input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">boxToCell</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-boxtocell">
-<div class="code-block-caption"><span class="caption-number">Listing 23 </span><span class="caption-text">Use boxToCell to simply set permeability for two-layer model.</span><a class="headerlink" href="#lst-2dbox-boxtocell" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 25 </span><span class="caption-text">Use boxToCell to simply set permeability for two-layer model.</span><a class="headerlink" href="#lst-2dbox-boxtocell" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -368,14 +369,14 @@
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Alternately, one can also set permeability of two layers by using <code class="code docutils literal notranslate"><span class="pre">boxToCell</span></code> based on one layer mesh (see <a class="reference internal" href="#lst-2dbox-boxtocell"><span class="std std-numref">Listing 23</span></a>), which is similar to <code class="code docutils literal notranslate"><span class="pre">zoneToCell</span></code> shown in <a class="reference internal" href="#lst-2dbox-setfdict"><span class="std std-numref">Listing 22</span></a>.</p>
+<p>Alternately, one can also set permeability of two layers by using <code class="code docutils literal notranslate"><span class="pre">boxToCell</span></code> based on one layer mesh (see <a class="reference internal" href="#lst-2dbox-boxtocell"><span class="std std-numref">Listing 25</span></a>), which is similar to <code class="code docutils literal notranslate"><span class="pre">zoneToCell</span></code> shown in <a class="reference internal" href="#lst-2dbox-setfdict"><span class="std std-numref">Listing 24</span></a>.</p>
 </div>
 </section>
 <section id="run-the-case">
 <h3>Run the case<a class="headerlink" href="#run-the-case" title="Link to this heading"></a></h3>
 <p>Now we are using the <code class="code docutils literal notranslate"><span class="pre">setFields</span></code> utility to set the permeability. Therefore we need to change the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script to also include the setFields command.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-setrun">
-<div class="code-block-caption"><span class="caption-number">Listing 24 </span><span class="caption-text">Modified run.sh file that also includes the setFields command.</span><a class="headerlink" href="#lst-2dbox-setrun" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 26 </span><span class="caption-text">Modified run.sh file that also includes the setFields command.</span><a class="headerlink" href="#lst-2dbox-setrun" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/sh</span>
 <span class="linenos"> 2</span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="w">    </span><span class="c1"># Run from this directory</span>
 <span class="linenos"> 3</span>

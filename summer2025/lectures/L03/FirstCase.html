@@ -80,7 +80,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Excercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Excercise 2</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul class="current">
@@ -232,7 +233,7 @@
 </figure>
 <p>To compute permeability, we will apply constant pressure boundary conditions and evaluate the flow rate through the sample. Once we have that, we can re-arrange Darcy’s law to solve for permeability:</p>
 <div class="math notranslate nohighlight" id="equation-eq-darcy-perm">
-<span class="eqno">(7)<a class="headerlink" href="#equation-eq-darcy-perm" title="Link to this equation"></a></span>\[    K_{i,j} \, = \, \mu \Biggl( \frac{ \Delta P}{ \Delta x_j} \Biggr)^{-1} \, \Biggl( \frac{1}{V} \int_V u_i \, dV \Biggr) \; .\]</div>
+<span class="eqno">(15)<a class="headerlink" href="#equation-eq-darcy-perm" title="Link to this equation"></a></span>\[    K_{i,j} \, = \, \mu \Biggl( \frac{ \Delta P}{ \Delta x_j} \Biggr)^{-1} \, \Biggl( \frac{1}{V} \int_V u_i \, dV \Biggr) \; .\]</div>
 <p>Ok, let’s do it!</p>
 </section>
 <section id="mesh-generation">
@@ -271,9 +272,9 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
 </div>
 <p>Now we are good to go and it’s time to download the data. The complete openFOAM case can be downloaded from <a class="reference download internal" download="" href="../../_downloads/65ca8e602751cf5a43c9c804c6623d86/DRP_permeability_2D.zip"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a> .</p>
 <p>Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup).</p>
-<p>Check out the directory structure shown in <a class="reference internal" href="#lst-drp-case-tree"><span class="std std-numref">Listing 11</span></a>.</p>
+<p>Check out the directory structure shown in <a class="reference internal" href="#lst-drp-case-tree"><span class="std std-numref">Listing 13</span></a>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-drp-case-tree">
-<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">File tree structure of the Digital Rock Physics case.</span><a class="headerlink" href="#lst-drp-case-tree" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">File tree structure of the Digital Rock Physics case.</span><a class="headerlink" href="#lst-drp-case-tree" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.
 ├──<span class="w"> </span><span class="m">0</span>
 │<span class="w">   </span>├──<span class="w"> </span>U
@@ -419,7 +420,7 @@ jupyter<span class="w"> </span>notebook
 <h3>Making the mesh<a class="headerlink" href="#making-the-mesh" title="Link to this heading"></a></h3>
 <p>Great, back to openfoam for the final mesh making! Making the mesh with SHM is a two-step process. First we make a standard blockMesh background mesh. This is, as usual, controlled by <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-number">Listing 12 </span><span class="caption-text">blockMeshDict</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">blockMeshDict</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -539,7 +540,7 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-bc-p">
-<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-p" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-p" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -600,7 +601,7 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-bc-u">
-<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-u" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-u" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -656,12 +657,12 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 </section>
 <section id="transport-properties">
 <h3>Transport properties<a class="headerlink" href="#transport-properties" title="Link to this heading"></a></h3>
-<p>Final step is to set the remaining free parameter (viscosity) in <a class="reference internal" href="intro.html#equation-eq-mom-con">equation (5)</a>.</p>
+<p>Final step is to set the remaining free parameter (viscosity) in <a class="reference internal" href="intro.html#equation-eq-mom-con">equation (13)</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>constant/transportProperties
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-tp">
-<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-drp-tp" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-drp-tp" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -695,7 +696,7 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-cdict">
-<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">controlDict of the DRP case.</span><a class="headerlink" href="#lst-drp-cdict" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">controlDict of the DRP case.</span><a class="headerlink" href="#lst-drp-cdict" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -783,7 +784,7 @@ End
 </section>
 <section id="post-processing-effective-permeability">
 <h3>Post-processing / Effective permeability<a class="headerlink" href="#post-processing-effective-permeability" title="Link to this heading"></a></h3>
-<p>Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve <a class="reference internal" href="#equation-eq-darcy-perm">equation (7)</a>, which requires are few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM’s <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/">postProcess</a> functionality handy. Just do this:</p>
+<p>Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve <a class="reference internal" href="#equation-eq-darcy-perm">equation (15)</a>, which requires are few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM’s <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/">postProcess</a> functionality handy. Just do this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>postProcess<span class="w"> </span>-func<span class="w"> </span>writeCellVolumes
 </pre></div>
 </div>

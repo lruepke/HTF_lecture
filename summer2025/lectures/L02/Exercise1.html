@@ -1,0 +1,416 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Excercise 1 &mdash; HydrothermalFoam Lecture  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=9b54adf2"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Excercise 2" href="Exercise2.html" />
+    <link rel="prev" title="Navier-Stokes flow with OpenFoam" href="Example.html" /> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Example.html">Navier-Stokes flow with OpenFoam</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Excercise 1</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#transient-flow-in-a-lid-driven-cavity">Transient flow in a lid-driven cavity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#time-scales-and-regimes-of-viscous-flow">Time scales and regimes of viscous flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reynolds-number">Reynolds number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#time-scales">Time scales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#courant-number-and-numerical-stability">Courant number and numerical stability</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exploration-framework">Exploration Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#expected-observations">Expected Observations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise2.html">Excercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise1.html">Exercise 1: Fluid properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise2.html">Exercise 2: Fluxibility and Tvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise3.html">Exercise 3: Permeability and Tvent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Implementation1.html">OpenFoam implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Advection1.html">The advection term</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Excercise_adv.html">Excercise on advection schemes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project1.html">Project 1: Flow along a detachment fault</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project3.html">Project 3: Hydrofracturing and localized venting above sill intrusion?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydrothermalFoam Lecture</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Excercise 1</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L02/Exercise1.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="excercise-1">
+<span id="l02-exercise1"></span><h1>Excercise 1<a class="headerlink" href="#excercise-1" title="Link to this heading"></a></h1>
+<section id="transient-flow-in-a-lid-driven-cavity">
+<h2>Transient flow in a lid-driven cavity<a class="headerlink" href="#transient-flow-in-a-lid-driven-cavity" title="Link to this heading"></a></h2>
+<p>In this section, we explore how the fluid flow in a lid-driven cavity develops over time, and how the <em>behavoir</em> and <em>time scales</em> of the simulation are influenced by model parameters. Understanding this helps to interpret simulation results and perform meaningful parametric studies.</p>
+</section>
+<section id="time-scales-and-regimes-of-viscous-flow">
+<h2>Time scales and regimes of viscous flow<a class="headerlink" href="#time-scales-and-regimes-of-viscous-flow" title="Link to this heading"></a></h2>
+<section id="reynolds-number">
+<h3>Reynolds number<a class="headerlink" href="#reynolds-number" title="Link to this heading"></a></h3>
+<p>One important dimensionless number in fluid dynamics is the <strong>Reynolds number</strong>. It is defined as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-re-cavity">
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-re-cavity" title="Link to this equation"></a></span>\[Re = \frac{UL}{\nu}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(U\)</span> is the characteristic velocity (e.g., lid speed),</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span> is the characteristic length scale of the domain (e.g., cavity height or width),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\nu\)</span> is the kinematic viscosity.</p></li>
+</ul>
+<p>The Reynolds number indicates the relative importance of inertial forces (which cause the fluid to keep moving) to viscous forces (which resist motion) in the flow. In the case of a lid-driven cavity, a low Reynolds number (e.g., <span class="math notranslate nohighlight">\(Re &lt; 1\)</span>) indicates that viscous forces dominate, leading to laminar flow. A moderate Reynolds number of  <span class="math notranslate nohighlight">\(100 &lt; Re &lt; 2000\)</span> indicates that inertial forces start to compete with viscous forces, and the flow may still be laminar but with more complex patterns. A high Reynolds number (e.g., <span class="math notranslate nohighlight">\(Re &gt; 2000\)</span>) indicates that inertial forces dominate, leading to turbulent flow.</p>
+<p>Let’s carefully check our base case. The spatial dimensions are set in <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="lst-2dcavity-blockmeshdict">
+<div class="code-block-caption"><span class="caption-number">Listing 10 </span><span class="caption-text">blockMeshDict of the cavity flow tutorial.</span><a class="headerlink" href="#lst-2dcavity-blockmeshdict" title="Link to this code"></a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  9</span>
+<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="hll"><span class="linenos">12</span>    <span class="kt">object</span>      <span class="n">blockMeshDict</span><span class="p">;</span>
+</span><span class="linenos">13</span><span class="p">}</span>
+<span class="linenos">14</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span><span class="k">convertToMeters</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="k">vertices</span>
+<span class="linenos">19</span><span class="p">(</span>
+<span class="hll"><span class="linenos">20</span>    <span class="p">(</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="hll"><span class="linenos">21</span>    <span class="p">(</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="linenos">22</span>    <span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">23</span>    <span class="p">(</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">24</span>    <span class="p">(</span><span class="mi">0</span> <span class="mi">0</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="linenos">25</span>    <span class="p">(</span><span class="mi">1</span> <span class="mi">0</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="linenos">26</span>    <span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="linenos">27</span>    <span class="p">(</span><span class="mi">0</span> <span class="mi">1</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="linenos">28</span><span class="p">);</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="k">blocks</span>
+<span class="linenos">32</span><span class="p">(</span>
+<span class="hll"><span class="linenos">33</span>    <span class="k">hex</span> <span class="p">(</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">)</span> <span class="p">(</span><span class="mi">20</span> <span class="mi">20</span> <span class="mi">1</span><span class="p">)</span> <span class="k">simpleGrading</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class="linenos">34</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>We are defining a 3-D mesh with a width and height of 0.1 m and a thickness of 0.01 m.  A potential pitfall is line 12, where a global scaling of the spatial dimensions is introduced. The 3rd dimension does not matter here, as we are running the simulation in 2d mode (boundary faces are set to <code class="docutils literal notranslate"><span class="pre">empty</span></code>). The lid velocity is set in <code class="code docutils literal notranslate"><span class="pre">0/U</span></code> to 1 m/s. The kinematic viscosity is set in <code class="code docutils literal notranslate"><span class="pre">constant/transportProperties</span></code> to 0.01 m^2/s. The numerical resolution is set in <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code> to 20 cells in the x and y direction, which gives us a grid spacing of 0.005 m.</p>
+<p>The Reynolds number for this case is:</p>
+<div class="math notranslate nohighlight" id="equation-eq-re-cavity-num">
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-re-cavity-num" title="Link to this equation"></a></span>\[Re = \frac{UL}{\nu} = \frac{1~\text{m/s} \cdot 0.1~\text{m}}{0.01~\text{m}^2/\text{s}} = 10\]</div>
+<p>This indicates that the flow is laminar, as the Reynolds number is below 1000.</p>
+</section>
+<section id="time-scales">
+<h3>Time scales<a class="headerlink" href="#time-scales" title="Link to this heading"></a></h3>
+<blockquote>
+<div><p>Let’s check the time scales of the problem. One time scale of interest is the <strong>convection time scale</strong>, which is given by:</p>
+</div></blockquote>
+<div class="math notranslate nohighlight" id="equation-eq-t-conv">
+<span class="eqno">(6)<a class="headerlink" href="#equation-eq-t-conv" title="Link to this equation"></a></span>\[t_\text{conv} \sim \frac{L}{U}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(L\)</span> is the characteristic length scale of the domain (e.g., cavity height),</p></li>
+<li><p><span class="math notranslate nohighlight">\(U\)</span> is the characteristic velocity (e.g., lid speed).</p></li>
+</ul>
+<p>This relation tells us how long it takes for a fluid parcel to travel the length of the domain. For our case, this is:</p>
+<div class="math notranslate nohighlight" id="equation-eq-t-conv-num">
+<span class="eqno">(7)<a class="headerlink" href="#equation-eq-t-conv-num" title="Link to this equation"></a></span>\[t_\text{conv} \sim \frac{0.1~\text{m}}{1~\text{m/s}} = 0.1~\text{s}\]</div>
+<p>Another important time scale is the <strong>viscous diffusion time scale</strong>, which is given by:</p>
+<div class="math notranslate nohighlight" id="equation-eq-t-visc">
+<span class="eqno">(8)<a class="headerlink" href="#equation-eq-t-visc" title="Link to this equation"></a></span>\[t_\text{visc} \sim \frac{L^2}{\nu}\]</div>
+<p>This relation tells us how quickly momentum spreads through the fluid. Higher viscosity or smaller domains lead to faster development of flow patterns. For our case, this is:</p>
+<div class="math notranslate nohighlight" id="equation-eq-t-visc-num">
+<span class="eqno">(9)<a class="headerlink" href="#equation-eq-t-visc-num" title="Link to this equation"></a></span>\[t_\text{visc} \sim \frac{(0.1~\text{m})^2}{0.01~\text{m}^2/\text{s}} = 1~\text{s}\]</div>
+<p>With these time scales, we can see that the convection time scale is  shorter than the viscous diffusion time scale. This means that the flow will develop quickly and reach a steady state in a short time. That’s why we don’t see any significant changes in the flow pattern in our base case, which runs at <span class="math notranslate nohighlight">\(\delta t = 0.005 s\)</span> until 0.5 s, outputting results every 0.1 s.</p>
+</section>
+<section id="courant-number-and-numerical-stability">
+<h3>Courant number and numerical stability<a class="headerlink" href="#courant-number-and-numerical-stability" title="Link to this heading"></a></h3>
+<p>Finally, we need to check the <strong>Courant number</strong>, which is a measure of the stability of the numerical scheme (we will get to the details later). The Courant number is defined as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-co">
+<span class="eqno">(10)<a class="headerlink" href="#equation-eq-co" title="Link to this equation"></a></span>\[Co = \frac{U \Delta t}{\Delta x}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(U\)</span> is the characteristic velocity (e.g., lid speed),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Delta t\)</span> is the time step size,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Delta x\)</span> is the grid spacing (e.g., cell size).</p></li>
+</ul>
+<p>The Courant number indicates how far a fluid parcel moves in one time step relative to the grid spacing. A Courant number less than 1 indicates that the numerical scheme is stable, while a Courant number greater than 1 indicates that the scheme may become unstable.
+For our case, the Courant number is:</p>
+<div class="math notranslate nohighlight" id="equation-eq-co-num">
+<span class="eqno">(11)<a class="headerlink" href="#equation-eq-co-num" title="Link to this equation"></a></span>\[Co = \frac{1~\text{m/s} \cdot 0.005~\text{s}}{0.005~\text{m}} = 1\]</div>
+<p>This indicates that the numerical scheme is stable (just about), as the Courant number is less than 1. However, if we were to increase the lid speed or decrease the grid spacing, we would need to decrease the time step size to maintain a stable Courant number.</p>
+</section>
+</section>
+<section id="exploration-framework">
+<h2>Exploration Framework<a class="headerlink" href="#exploration-framework" title="Link to this heading"></a></h2>
+<p>Let’s modify the base case and explore how the flow develops under different physical and numerical conditions.</p>
+<ol class="arabic">
+<li><p><strong>Baseline Case</strong>
+- Use the standard lid-driven cavity example with:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Domain size: <span class="math notranslate nohighlight">\(L = 0.1~\text{m}\)</span></p></li>
+<li><p>Viscosity: <span class="math notranslate nohighlight">\(\nu = 0.01~\text{m}^2/\text{s}\)</span></p></li>
+<li><p>Lid speed: <span class="math notranslate nohighlight">\(U = 1~\text{m/s}\)</span></p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Observe flow development over time.</p></li>
+<li><p>Questions to explore:
+- How long does it take for the flow to reach a steady state? Change the output interval and total run time to check the transient flow development.
+- What is the shape of the vortex?
+- How does the velocity field look like?</p></li>
+</ul>
+</li>
+<li><p><strong>Vary Viscosity</strong>
+- Change <span class="math notranslate nohighlight">\(\nu\)</span> to <span class="math notranslate nohighlight">\(1 \times 10^{-1}\)</span> and <span class="math notranslate nohighlight">\(1 \times 10^{-3}\)</span>.
+- Questions to explore:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>How fast does the vortex form?</p></li>
+<li><p>How does the flow pattern change?</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>Change Lid Velocity</strong>
+- Keep <span class="math notranslate nohighlight">\(\nu\)</span> fixed and vary lid velocity <span class="math notranslate nohighlight">\(U\)</span>.
+- Questions to explore:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Does a higher velocity lead to a longer or shorter transient?</p></li>
+<li><p>Does the vortex strength or location change?</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<ol class="arabic simple" start="5">
+<li><p><strong>Mesh Sensitivity</strong>
+- Increase mesh resolution (e.g., from 20x20 to 40x40).
+- Observe differences in vortex shape and location.
+- Discuss numerical vs physical convergence.</p></li>
+</ol>
+</section>
+<section id="expected-observations">
+<h2>Expected Observations<a class="headerlink" href="#expected-observations" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>High viscosity</strong>: Flow develops quickly and becomes smooth and laminar.</p></li>
+<li><p><strong>Low viscosity</strong>: Transient lasts longer, possible oscillations or instabilities.</p></li>
+<li><p><strong>High lid velocity</strong>: Stronger vortices, higher Reynolds number, more complex flow.</p></li>
+<li><p><strong>Fine mesh</strong>: Captures finer details (e.g., secondary vortices), more accurate but slower to compute.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Example.html" class="btn btn-neutral float-left" title="Navier-Stokes flow with OpenFoam" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Exercise2.html" class="btn btn-neutral float-right" title="Excercise 2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

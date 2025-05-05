@@ -80,7 +80,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Excercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Excercise 2</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul>
@@ -244,7 +245,7 @@ This modified solver writes out detailed information on matrix coefficients into
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">laplacianFoam.C</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-source-laplacianfoam">
-<div class="code-block-caption"><span class="caption-number">Listing 27 </span><span class="caption-text">Source code of laplacianFoam</span><a class="headerlink" href="#lst-source-laplacianfoam" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 29 </span><span class="caption-text">Source code of laplacianFoam</span><a class="headerlink" href="#lst-source-laplacianfoam" title="Link to this code"></a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;fvCFD.H&quot;</span><span class="c1">               // Basic head file of OF</span>
 <span class="linenos"> 2</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;simpleControl.H&quot;</span><span class="c1">       // Basic head file of OF</span>
 <span class="linenos"> 3</span><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span><span class="w"> </span><span class="c1">// Typical c++ main control function</span>
@@ -293,20 +294,20 @@ This modified solver writes out detailed information on matrix coefficients into
 <td><p><span class="math notranslate nohighlight">\(\frac{\partial T}{\partial t}\)</span></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">fvm::ddt(T)</span></code></p></td>
 <td><p>d(<span class="math notranslate nohighlight">\(FluxC\)</span>), b(<span class="math notranslate nohighlight">\(FluxC^o\)</span>)</p></td>
-<td><p><a class="reference internal" href="intro.html#equation-eq-fvm-firstorder-euler-exp-coef">equation (78)</a></p></td>
+<td><p><a class="reference internal" href="intro.html#equation-eq-fvm-firstorder-euler-exp-coef">equation (86)</a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Laplacian</p></td>
 <td><p><span class="math notranslate nohighlight">\(\nabla \cdot D \nabla T\)</span></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">fvm::laplacian(DT,</span> <span class="pre">T)</span></code></p></td>
 <td><p>d(<span class="math notranslate nohighlight">\(\sum\limits_{F\sim NB(C)}a_F\)</span>), u(<span class="math notranslate nohighlight">\(a_F\)</span> only internal faces)</p></td>
-<td><p><a class="reference internal" href="intro.html#equation-eq-fvm-matrix-form-internalcell">equation (58)</a>, <a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (65)</a>, <a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (67)</a></p></td>
+<td><p><a class="reference internal" href="intro.html#equation-eq-fvm-matrix-form-internalcell">equation (66)</a>, <a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (73)</a>, <a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (75)</a></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">createFields.H</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-createfields">
-<div class="code-block-caption"><span class="caption-number">Listing 28 </span><span class="caption-text">createFields.H</span><a class="headerlink" href="#lst-createfields" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 30 </span><span class="caption-text">createFields.H</span><a class="headerlink" href="#lst-createfields" title="Link to this code"></a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">volScalarField</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="c1">//Read input data of T, include ICs and BCs</span>
 <span class="linenos"> 2</span><span class="p">(</span>
 <span class="linenos"> 3</span><span class="w">   </span><span class="n">IOobject</span>
@@ -341,7 +342,7 @@ This modified solver writes out detailed information on matrix coefficients into
 </div>
 <input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">Input data 1</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-transportproperties">
-<div class="code-block-caption"><span class="caption-number">Listing 29 </span><span class="caption-text">constant/transportProperties</span><a class="headerlink" href="#lst-transportproperties" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 31 </span><span class="caption-text">constant/transportProperties</span><a class="headerlink" href="#lst-transportproperties" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">FoamFile</span>
 <span class="linenos">2</span><span class="p">{</span>
 <span class="linenos">3</span>   <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
@@ -357,7 +358,7 @@ This modified solver writes out detailed information on matrix coefficients into
 </div>
 <input class="tab-input" id="tab-set--0-input--4" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--4">Input data 2</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-0-t">
-<div class="code-block-caption"><span class="caption-number">Listing 30 </span><span class="caption-text">0/T</span><a class="headerlink" href="#lst-0-t" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 32 </span><span class="caption-text">0/T</span><a class="headerlink" href="#lst-0-t" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">FoamFile</span>
 <span class="linenos"> 2</span><span class="p">{</span>
 <span class="linenos"> 3</span>   <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
@@ -398,7 +399,7 @@ Here we use the OpenFOAM utility <code class="code docutils literal notranslate"
 </div>
 <input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--2">OpenFOAM script</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-blockmesh-regularbox">
-<div class="code-block-caption"><span class="caption-number">Listing 31 </span><span class="caption-text">blockMeshDict of a regular box mesh we shown above</span><a class="headerlink" href="#lst-blockmesh-regularbox" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 33 </span><span class="caption-text">blockMeshDict of a regular box mesh we shown above</span><a class="headerlink" href="#lst-blockmesh-regularbox" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -509,20 +510,20 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 <td><p><span class="math notranslate nohighlight">\(1/\delta_{C\leftrightarrow F}\)</span></p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">mesh.deltaCoeffs()</span></code></p></td>
 <td><p>All faces</p></td>
-<td><p><a class="reference internal" href="intro.html#equation-eq-fvm-matrix-form-internalcell">equation (58)</a>, <a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (65)</a>, <a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (67)</a></p></td>
+<td><p><a class="reference internal" href="intro.html#equation-eq-fvm-matrix-form-internalcell">equation (66)</a>, <a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (73)</a>, <a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (75)</a></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">T</span></code></p></td>
 <td><p>Dependents on BCs type</p></td>
 <td><p><code class="code docutils literal notranslate"><span class="pre">gradientInternalCoeffs</span></code> (diagonal), <code class="code docutils literal notranslate"><span class="pre">gradientBoundaryCoeffs</span></code> (source)</p></td>
 <td><p>Boundary patch/faces</p></td>
-<td><p><a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (65)</a>, <a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (67)</a></p></td>
+<td><p><a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedvalue">equation (73)</a>, <a class="reference internal" href="intro.html#equation-eq-fvm-laplacian-coeff-boundary-fixedflux">equation (75)</a></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <input class="tab-input" id="tab-set--3-input--2" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--2">Access mesh and field properties</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-access-mesh">
-<div class="code-block-caption"><span class="caption-number">Listing 32 </span><span class="caption-text">Access mesh properties and field boundary properties</span><a class="headerlink" href="#lst-access-mesh" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 34 </span><span class="caption-text">Access mesh properties and field boundary properties</span><a class="headerlink" href="#lst-access-mesh" title="Link to this code"></a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1">// (1). read data</span>
 <span class="linenos"> 2</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;createMesh.H&quot;</span>
 <span class="linenos"> 3</span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;createFields.H&quot;</span>
@@ -570,7 +571,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 </div>
 <input class="tab-input" id="tab-set--3-input--3" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--3">Internal mesh</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-internalmesh">
-<div class="code-block-caption"><span class="caption-number">Listing 33 </span><span class="caption-text">Internal mesh properties of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-internalmesh" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 35 </span><span class="caption-text">Internal mesh properties of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-internalmesh" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="m">46</span>:<span class="w"> </span>coeff<span class="o">(</span>D*magSf*deltacoeff<span class="o">)</span><span class="w"> </span><span class="o">((</span><span class="m">100</span>*DT<span class="o">)</span>*0.0001<span class="o">)</span><span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>-1<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="o">]</span><span class="w"> </span>4e-07Access<span class="w"> </span>internal<span class="w"> </span>mesh
 <span class="linenos">  2</span><span class="m">0</span>:<span class="w"> </span>face<span class="w"> </span>center<span class="w"> </span><span class="o">(</span>-0.04<span class="w"> </span>-0.01<span class="w"> </span><span class="m">0</span>.005<span class="o">)</span>
 <span class="linenos">  3</span><span class="m">0</span>:<span class="w"> </span>face<span class="w"> </span>area<span class="w"> </span>vector<span class="w"> </span><span class="o">(</span><span class="m">0</span>.0001<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="o">)</span>
@@ -813,7 +814,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 </div>
 <input class="tab-input" id="tab-set--3-input--4" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--4">Boundary mesh</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-boundarymesh">
-<div class="code-block-caption"><span class="caption-number">Listing 34 </span><span class="caption-text">Boundary mesh properties of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-boundarymesh" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 36 </span><span class="caption-text">Boundary mesh properties of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-boundarymesh" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span>Patch<span class="w"> </span>bottom<span class="w"> </span>face<span class="w"> </span><span class="m">9</span>:<span class="w"> </span>owner<span class="w"> </span>cell<span class="w"> </span>9Access<span class="w"> </span>boundary<span class="w"> </span>mesh
 <span class="linenos">  2</span>Patch<span class="w"> </span>left<span class="w"> </span>face<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>face<span class="w"> </span>center<span class="w"> </span><span class="o">(</span>-0.05<span class="w"> </span>-0.01<span class="w"> </span><span class="m">0</span>.005<span class="o">)</span>
 <span class="linenos">  3</span>Patch<span class="w"> </span>left<span class="w"> </span>face<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>face<span class="w"> </span>area<span class="w"> </span>vector<span class="w"> </span><span class="o">(</span>-0.0001<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="o">)</span>
@@ -951,7 +952,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 </div>
 <input class="tab-input" id="tab-set--3-input--5" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--5">Boundary T</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-boundaryt">
-<div class="code-block-caption"><span class="caption-number">Listing 35 </span><span class="caption-text">Boundary properties of field T of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-boundaryt" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 37 </span><span class="caption-text">Boundary properties of field T of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-boundaryt" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="m">0</span><span class="o">()</span>Boundary<span class="w"> </span>patch:<span class="w"> </span>left
 <span class="linenos"> 2</span>Is<span class="w"> </span>coupled<span class="w"> </span>?<span class="w"> </span><span class="m">0</span>
 <span class="linenos"> 3</span>gradientInternalCoeffs<span class="w"> </span>of<span class="w"> </span>field<span class="w"> </span>T<span class="w"> </span>
@@ -1017,12 +1018,12 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--5-input--1" name="tab-set--5" type="radio"><label class="tab-label" for="tab-set--5-input--1">discretize Laplacian term</label><div class="tab-content docutils container">
 <p>Because discretization coefficients matrix of Laplacian term is a symmetric matrix, so <code class="code docutils literal notranslate"><span class="pre">fvm::Laplacian(DT,</span> <span class="pre">T)</span></code> will return a fvMatrix object only has diagonal and upper.
-What <code class="code docutils literal notranslate"><span class="pre">fvm::Laplacian</span></code> actually did is evaluate (1) <span class="math notranslate nohighlight">\(a_F\)</span> (see <a class="reference internal" href="intro.html#equation-eq-fvm-matrix-form-internalcell">equation (58)</a>) for each internal faces, (2) <span class="math notranslate nohighlight">\(a_C\)</span> for each cells, which is the negative summation of <span class="math notranslate nohighlight">\(a_F\)</span>, (3) store the field BCs-related coefficients as <code class="code docutils literal notranslate"><span class="pre">internalCoeffs</span></code> and <code class="code docutils literal notranslate"><span class="pre">boundaryCoeffs</span></code>, respectively.
+What <code class="code docutils literal notranslate"><span class="pre">fvm::Laplacian</span></code> actually did is evaluate (1) <span class="math notranslate nohighlight">\(a_F\)</span> (see <a class="reference internal" href="intro.html#equation-eq-fvm-matrix-form-internalcell">equation (66)</a>) for each internal faces, (2) <span class="math notranslate nohighlight">\(a_C\)</span> for each cells, which is the negative summation of <span class="math notranslate nohighlight">\(a_F\)</span>, (3) store the field BCs-related coefficients as <code class="code docutils literal notranslate"><span class="pre">internalCoeffs</span></code> and <code class="code docutils literal notranslate"><span class="pre">boundaryCoeffs</span></code>, respectively.
 All of these are implemented in <a class="reference external" href="https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047">gaussLaplacianScheme.C</a> . <strong>Note that</strong> the <code class="code docutils literal notranslate"><span class="pre">Gaussian</span></code> scheme is the only choice for Laplacian discretization in OF.</p>
 </div>
 <input class="tab-input" id="tab-set--5-input--2" name="tab-set--5" type="radio"><label class="tab-label" for="tab-set--5-input--2">Access Laplacian coeffs</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-access-laplacian">
-<div class="code-block-caption"><span class="caption-number">Listing 36 </span><span class="caption-text">Access fvm::Laplacian discretization</span><a class="headerlink" href="#lst-access-laplacian" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 38 </span><span class="caption-text">Access fvm::Laplacian discretization</span><a class="headerlink" href="#lst-access-laplacian" title="Link to this code"></a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">fvScalarMatrix</span><span class="w"> </span><span class="nf">Laplacian</span><span class="p">(</span><span class="n">fvm</span><span class="o">::</span><span class="n">laplacian</span><span class="p">(</span><span class="n">DT</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">));</span>
 <span class="linenos">2</span><span class="n">Info</span><span class="o">&lt;&lt;</span><span class="s">&quot;fvm::laplacian(DT, T): &quot;</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
 <span class="linenos">3</span><span class="w">   </span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">Lower&quot;</span><span class="o">&lt;&lt;</span><span class="n">Laplacian</span><span class="p">.</span><span class="n">lower</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
@@ -1045,7 +1046,7 @@ There is a protected member function named <code class="code docutils literal no
 </div>
 <input class="tab-input" id="tab-set--5-input--3" name="tab-set--5" type="radio"><label class="tab-label" for="tab-set--5-input--3">Source code of Laplacian</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-source-fvm-laplacian">
-<div class="code-block-caption"><span class="caption-number">Listing 37 </span><span class="caption-text">Key source code of fvm::Laplacian (<a class="reference external" href="https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047">gaussLaplacianScheme.C</a> before nonOrthogonal correcting)</span><a class="headerlink" href="#lst-source-fvm-laplacian" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 39 </span><span class="caption-text">Key source code of fvm::Laplacian (<a class="reference external" href="https://cpp.openfoam.org/v6/gaussLaplacianScheme_8C_source.html#l00047">gaussLaplacianScheme.C</a> before nonOrthogonal correcting)</span><a class="headerlink" href="#lst-source-fvm-laplacian" title="Link to this code"></a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Type</span><span class="p">,</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">GType</span><span class="o">&gt;</span>
 <span class="linenos"> 2</span><span class="n">tmp</span><span class="o">&lt;</span><span class="n">fvMatrix</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;&gt;</span>
 <span class="linenos"> 3</span><span class="n">gaussLaplacianScheme</span><span class="o">&lt;</span><span class="n">Type</span><span class="p">,</span><span class="w"> </span><span class="n">GType</span><span class="o">&gt;::</span><span class="n">fvmLaplacianUncorrected</span>
@@ -1097,7 +1098,7 @@ There is a protected member function named <code class="code docutils literal no
 </div>
 <input class="tab-input" id="tab-set--5-input--4" name="tab-set--5" type="radio"><label class="tab-label" for="tab-set--5-input--4">Laplacian coefficients</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-fvm-laplacian">
-<div class="code-block-caption"><span class="caption-number">Listing 38 </span><span class="caption-text">fvm::Laplacian Coefficients  of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-fvm-laplacian" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 40 </span><span class="caption-text">fvm::Laplacian Coefficients  of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-fvm-laplacian" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="o">)</span>
 <span class="linenos">  2</span>fvm::laplacian<span class="o">(</span>DT,<span class="w"> </span>T<span class="o">)</span>:<span class="w"> </span>
 <span class="linenos">  3</span><span class="w">	</span>Lower
@@ -1361,7 +1362,7 @@ There is a protected member function named <code class="code docutils literal no
 <input checked="True" class="tab-input" id="tab-set--6-input--1" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--1">discretize Laplacian term</label><div class="tab-content docutils container">
 <p>For implicit discretization, <code class="code docutils literal notranslate"><span class="pre">fvm::ddt(T)</span></code> will return a fvMatrix object contains diagonal coefficients and source.
 The coefficients depend on discretization scheme.
-For example Euler scheme, the diagonal coefficients are calculated from <a class="reference internal" href="intro.html#equation-eq-fvm-temporal-linear">equation (74)</a> and <a class="reference internal" href="intro.html#equation-eq-fvm-firstorder-euler-imp-coeff">equation (76)</a>.
+For example Euler scheme, the diagonal coefficients are calculated from <a class="reference internal" href="intro.html#equation-eq-fvm-temporal-linear">equation (82)</a> and <a class="reference internal" href="intro.html#equation-eq-fvm-firstorder-euler-imp-coeff">equation (84)</a>.
 All these are implemented in <a class="reference external" href="https://cpp.openfoam.org/v6/EulerDdtScheme_8C_source.html#l00350">EulerDdtScheme.C</a>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1380,7 +1381,7 @@ All these are implemented in <a class="reference external" href="https://cpp.ope
 </div>
 <input class="tab-input" id="tab-set--6-input--2" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--2">Access fvm::ddt coeffs</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-access-ddt">
-<div class="code-block-caption"><span class="caption-number">Listing 39 </span><span class="caption-text">Access fvm::ddt discretization</span><a class="headerlink" href="#lst-access-ddt" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 41 </span><span class="caption-text">Access fvm::ddt discretization</span><a class="headerlink" href="#lst-access-ddt" title="Link to this code"></a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">Info</span><span class="o">&lt;&lt;</span><span class="s">&quot;fvm::ddt(T): &quot;</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
 <span class="linenos">2</span><span class="w">   </span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">Lower&quot;</span><span class="o">&lt;&lt;</span><span class="n">ddt</span><span class="p">.</span><span class="n">lower</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
 <span class="linenos">3</span><span class="w">   </span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">Diagonal&quot;</span><span class="o">&lt;&lt;</span><span class="n">ddt</span><span class="p">.</span><span class="n">diag</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
@@ -1395,7 +1396,7 @@ All these are implemented in <a class="reference external" href="https://cpp.ope
 </div>
 <input class="tab-input" id="tab-set--6-input--3" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--3">Source code of fvm::ddt</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-source-fvm-ddt">
-<div class="code-block-caption"><span class="caption-number">Listing 40 </span><span class="caption-text">Key source code of fvm::ddt (<a class="reference external" href="https://cpp.openfoam.org/v6/EulerDdtScheme_8C_source.html#l00350">EulerDdtScheme.C</a> )</span><a class="headerlink" href="#lst-source-fvm-ddt" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 42 </span><span class="caption-text">Key source code of fvm::ddt (<a class="reference external" href="https://cpp.openfoam.org/v6/EulerDdtScheme_8C_source.html#l00350">EulerDdtScheme.C</a> )</span><a class="headerlink" href="#lst-source-fvm-ddt" title="Link to this code"></a></div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="nc">Type</span><span class="o">&gt;</span>
 <span class="linenos"> 2</span><span class="n">tmp</span><span class="o">&lt;</span><span class="n">fvMatrix</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;&gt;</span>
 <span class="linenos"> 3</span><span class="n">EulerDdtScheme</span><span class="o">&lt;</span><span class="n">Type</span><span class="o">&gt;::</span><span class="n">fvmDdt</span>
@@ -1436,7 +1437,7 @@ All these are implemented in <a class="reference external" href="https://cpp.ope
 <input class="tab-input" id="tab-set--6-input--4" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--4">fvm::ddt coefficients</label><div class="tab-content docutils container">
 <p><span class="math notranslate nohighlight">\(\Delta t = 0.05\ s\)</span></p>
 <div class="literal-block-wrapper docutils container" id="lst-log-fvm-ddt">
-<div class="code-block-caption"><span class="caption-number">Listing 41 </span><span class="caption-text">fvm::ddt Coefficients  of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-fvm-ddt" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 43 </span><span class="caption-text">fvm::ddt Coefficients  of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-fvm-ddt" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="o">)</span>fvm::ddt<span class="o">(</span>T<span class="o">)</span>:<span class="w"> </span>
 <span class="linenos"> 2</span><span class="w">	</span>Lower47<span class="o">{</span><span class="m">0</span><span class="o">}</span>
 <span class="linenos"> 3</span><span class="w">	</span>Diagonal
@@ -1548,7 +1549,7 @@ All these are implemented in <a class="reference external" href="https://cpp.ope
 </div>
 <input class="tab-input" id="tab-set--7-input--2" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--2">Coefficients at the first time step</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-fvm-teqn">
-<div class="code-block-caption"><span class="caption-number">Listing 42 </span><span class="caption-text">Final matrix coefficients of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a> at the first time step.</span><a class="headerlink" href="#lst-log-fvm-teqn" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 44 </span><span class="caption-text">Final matrix coefficients of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a> at the first time step.</span><a class="headerlink" href="#lst-log-fvm-teqn" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="o">)</span>TEqn:<span class="w"> </span>
 <span class="linenos">  2</span><span class="w">	</span>Lower
 <span class="linenos">  3</span><span class="m">47</span>

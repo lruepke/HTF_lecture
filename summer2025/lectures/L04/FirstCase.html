@@ -80,7 +80,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Excercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Excercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Excercise 2</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul>
@@ -221,9 +222,9 @@
 cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$HOME</span>/hydrothermalfoam-master/cookbooks/2d/Regular2DBox<span class="w"> </span>.
 </pre></div>
 </div>
-<p>Check out the directory structure shown in <a class="reference internal" href="#lst-2dbox-tree"><span class="std std-numref">Listing 17</span></a>.</p>
+<p>Check out the directory structure shown in <a class="reference internal" href="#lst-2dbox-tree"><span class="std std-numref">Listing 19</span></a>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-tree">
-<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">File tree structure of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-tree" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 19 </span><span class="caption-text">File tree structure of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-tree" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>.
 <span class="linenos"> 2</span><span class="p">|</span>--<span class="w"> </span><span class="m">0</span>
 <span class="hll"><span class="linenos"> 3</span><span class="p">|</span><span class="w">   </span><span class="p">|</span>--<span class="w"> </span>T
@@ -269,7 +270,7 @@ paraview<span class="w"> </span>a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-bc">
-<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 20 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -340,7 +341,7 @@ paraview<span class="w"> </span>a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-bc-p">
-<div class="code-block-caption"><span class="caption-number">Listing 19 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc-p" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 21 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-2dbox-bc-p" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -399,7 +400,7 @@ paraview<span class="w"> </span>a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-perm">
-<div class="code-block-caption"><span class="caption-number">Listing 20 </span><span class="caption-text">Permeability on hydrothermal flow simulations.</span><a class="headerlink" href="#lst-2dbox-perm" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 22 </span><span class="caption-text">Permeability on hydrothermal flow simulations.</span><a class="headerlink" href="#lst-2dbox-perm" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
@@ -437,7 +438,7 @@ paraview<span class="w"> </span>a.foam
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-2dbox-cdict">
-<div class="code-block-caption"><span class="caption-number">Listing 21 </span><span class="caption-text">controlDict of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-cdict" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 23 </span><span class="caption-text">controlDict of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-cdict" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
 <span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>

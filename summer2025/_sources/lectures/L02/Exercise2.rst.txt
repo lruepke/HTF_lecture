@@ -1,9 +1,10 @@
 .. include:: /include.rst_
 
-.. _L02_Exercise:
+.. _L02_Exercise2:
 
-Excercise
-==========
+Excercise 2
+===========
+
 After we have mananged to solve for 2-D cavity flow, it's time to try 3-D. And parralel proccessing!
 
 3-D cavity flow

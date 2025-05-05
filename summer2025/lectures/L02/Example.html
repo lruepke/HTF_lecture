@@ -30,7 +30,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Excercise" href="Exercise.html" />
+    <link rel="next" title="Excercise 1" href="Exercise1.html" />
     <link rel="prev" title="Lecture overview" href="Overview.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
@@ -90,7 +90,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Exercise.html">Excercise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Excercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise2.html">Excercise 2</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul>
@@ -215,7 +216,27 @@
 </style>
 <section id="navier-stokes-flow-with-openfoam">
 <h1>Navier-Stokes flow with OpenFoam<a class="headerlink" href="#navier-stokes-flow-with-openfoam" title="Link to this heading"></a></h1>
-<p>In this lecture we will solve the famous Navier-Stokes equation for flow. At this point, we will not worry about the detailed equations we are solving. Let’s just accept that the Navier-Stokes equation(s) allow us to solve for the motion of a fluid subject to boundary conditions (simply speaking).</p>
+<p>In this lecture we will solve the famous Navier-Stokes equation for flow. There are many different forms of the Navier-Stokes equations, depending on the assumptions made. Her we solve the form that is treated in the <code class="docutils literal notranslate"><span class="pre">icoFoam</span></code> solver in OpenFOAM. It treats <strong>incompressible</strong>, <strong>laminar</strong>, and <strong>transient</strong> fluid flow and solves the following equations:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathbf{U}}{\partial t} + (\mathbf{U} \cdot \nabla)\mathbf{U} = -\nabla p + \nu \nabla^2 \mathbf{U}\]</div>
+<div class="math notranslate nohighlight">
+\[\nabla \cdot \mathbf{U} = 0\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{U}\)</span> is the velocity vector field,</p></li>
+<li><p><span class="math notranslate nohighlight">\(p\)</span> is the kinematic pressure (i.e., pressure divided by density),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\nu\)</span> is the kinematic viscosity,</p></li>
+<li><p><span class="math notranslate nohighlight">\(t\)</span> is time.</p></li>
+</ul>
+<p>The first equation is the <strong>momentum conservation equation</strong>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\partial \mathbf{U} / \partial t\)</span> represents unsteady acceleration (how velocity changes over time),</p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{U} \cdot \nabla)\mathbf{U}\)</span> is the advection (fluid moving itself),</p></li>
+<li><p><span class="math notranslate nohighlight">\(-\nabla p\)</span> is the pressure gradient force,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\nu \nabla^2 \mathbf{U}\)</span> is the viscous diffusion of momentum.</p></li>
+</ul>
+<p>The second equation enforces <strong>incompressibility</strong>, meaning the volume of fluid elements does not change over time.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">icoFoam</span></code>, these equations are solved using the <strong>finite volume method</strong> and the <strong>PISO algorithm</strong> (Pressure Implicit with Splitting of Operators) to ensure pressure–velocity coupling and divergence-free velocity fields at each time step. We will get into the details of the numerical methods later in the course. For now, we will just use the solver and its capabilities.</p>
 <section id="d-cavity-flow">
 <h2>2D cavity flow<a class="headerlink" href="#d-cavity-flow" title="Link to this heading"></a></h2>
 <p>Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a kinematic boundary condition at one side, while all other sides are walls with zero velocity. The model setup is shown in <a class="reference internal" href="#fig-2dcavity-setup"><span class="std std-numref">Fig. 3</span></a> .</p>
@@ -409,7 +430,79 @@ paraview<span class="w"> </span>a.foam
 </section>
 <section id="run-controls">
 <h3>Run controls<a class="headerlink" href="#run-controls" title="Link to this heading"></a></h3>
-<p>The time stepping, run time, and output frequency are again set in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>. Open it and check that you understand the entires.</p>
+<p>The time stepping, run time, and output frequency are again set in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>. Open it and check that you understand the entries.</p>
+<div class="literal-block-wrapper docutils container" id="lst-2dcavity-controldict">
+<div class="code-block-caption"><span class="caption-number">Listing 9 </span><span class="caption-text">controlDict of the cavity flow tutorial.</span><a class="headerlink" href="#lst-2dcavity-controldict" title="Link to this code"></a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">=========                 |</span>
+<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  9</span>
+<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">object</span>      <span class="k">controlDict</span><span class="p">;</span>
+<span class="linenos">14</span><span class="p">}</span>
+<span class="linenos">15</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="kt">application</span>     <span class="n">icoFoam</span><span class="p">;</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="kt">startFrom</span>       <span class="kt">startTime</span><span class="p">;</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="kt">startTime</span>       <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="kt">stopAt</span>          <span class="kt">endTime</span><span class="p">;</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="kt">endTime</span>         <span class="mf">0.5</span><span class="p">;</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="kt">deltaT</span>          <span class="mf">0.005</span><span class="p">;</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span><span class="kt">writeControl</span>    <span class="n">timeStep</span><span class="p">;</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span><span class="kt">writeInterval</span>   <span class="mi">20</span><span class="p">;</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span><span class="kt">purgeWrite</span>      <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span><span class="kt">writeFormat</span>     <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span><span class="kt">writePrecision</span>  <span class="mi">6</span><span class="p">;</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span><span class="kt">writeCompression</span> <span class="k">off</span><span class="p">;</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span><span class="kt">timeFormat</span>      <span class="k">general</span><span class="p">;</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span><span class="kt">timePrecision</span>   <span class="mi">6</span><span class="p">;</span>
+<span class="linenos">44</span>
+<span class="linenos">45</span><span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span><span class="c1">// ************************************************************************* //</span>
+</pre></div>
+</div>
+</div>
+<p>Here is a short explanation of the most important entries:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">application</span></code>: Solver used (here, <code class="docutils literal notranslate"><span class="pre">icoFoam</span></code> for incompressible laminar flow).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">startFrom</span></code>: Start method (<code class="docutils literal notranslate"><span class="pre">startTime</span></code> = use value from <code class="docutils literal notranslate"><span class="pre">startTime</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">startTime</span></code>: Initial simulation time.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stopAt</span></code>: Stop method (<code class="docutils literal notranslate"><span class="pre">endTime</span></code> = use value from <code class="docutils literal notranslate"><span class="pre">endTime</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">endTime</span></code>: Final simulation time.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deltaT</span></code>: Time step size.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">writeControl</span></code>: When to write output (<code class="docutils literal notranslate"><span class="pre">timeStep</span></code> = every N time steps).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">writeInterval</span></code>: Write output every N time steps.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">purgeWrite</span></code>: Max number of saved time steps (<code class="docutils literal notranslate"><span class="pre">0</span></code> = keep all).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">writeFormat</span></code>: Output file format (<code class="docutils literal notranslate"><span class="pre">ascii</span></code> or <code class="docutils literal notranslate"><span class="pre">binary</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">writePrecision</span></code>: Number of digits in numerical output.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">writeCompression</span></code>: Compress output files (<code class="docutils literal notranslate"><span class="pre">off</span></code> or <code class="docutils literal notranslate"><span class="pre">on</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timeFormat</span></code>: Time label format (e.g., <code class="docutils literal notranslate"><span class="pre">general</span></code>, <code class="docutils literal notranslate"><span class="pre">fixed</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">timePrecision</span></code>: Precision of time labels.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">runTimeModifiable</span></code>: Allow runtime dictionary edits (<code class="docutils literal notranslate"><span class="pre">true</span></code> = yes).</p></li>
+</ul>
+<p>These are the most important entries. There are many more options available, which can be found in the <a class="reference external" href="https://doc.cfd.direct/openfoam/user-guide-v9/controldict#x19-1410004.4">OpenFoam User Guide</a></p>
 <p>In case you wondered how OpenFoam is solving the equations. We will cover the details later in the course, but you can have a preview by opening the <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code> file. In this dictionary, the various discretization schemes can be set. <a class="reference internal" href="#fig-cavity2d-num-fig"><span class="std std-numref">Fig. 9</span></a> gives some further explanations.</p>
 <figure class="align-center" id="fig-cavity2d-num-fig">
 <img alt="../../_images/cavity2_num.png" src="../../_images/cavity2_num.png" />
@@ -424,7 +517,7 @@ paraview<span class="w"> </span>a.foam
 </section>
 <section id="visualization">
 <h3>Visualization<a class="headerlink" href="#visualization" title="Link to this heading"></a></h3>
-<p>Open paraview and look at the results.</p>
+<p>Open paraview and look at the results. They are actually quite boring because the flow is steady and laminar; and because we have not first thought about the expected results. Let’s do that better in the the next excercise.</p>
 </section>
 </section>
 </section>
@@ -434,7 +527,7 @@ paraview<span class="w"> </span>a.foam
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="Overview.html" class="btn btn-neutral float-left" title="Lecture overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Exercise.html" class="btn btn-neutral float-right" title="Excercise" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Exercise1.html" class="btn btn-neutral float-right" title="Excercise 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
