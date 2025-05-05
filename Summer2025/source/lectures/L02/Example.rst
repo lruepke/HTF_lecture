@@ -1,7 +1,33 @@
 Navier-Stokes flow with OpenFoam
 ================================
 
-In this lecture we will solve the famous Navier-Stokes equation for flow. At this point, we will not worry about the detailed equations we are solving. Let's just accept that the Navier-Stokes equation(s) allow us to solve for the motion of a fluid subject to boundary conditions (simply speaking). 
+In this lecture we will solve the famous Navier-Stokes equation for flow. There are many different forms of the Navier-Stokes equations, depending on the assumptions made. Her we solve the form that is treated in the ``icoFoam`` solver in OpenFOAM. It treats **incompressible**, **laminar**, and **transient** fluid flow and solves the following equations:
+
+.. math::
+
+    \frac{\partial \mathbf{U}}{\partial t} + (\mathbf{U} \cdot \nabla)\mathbf{U} = -\nabla p + \nu \nabla^2 \mathbf{U}
+
+.. math::
+
+    \nabla \cdot \mathbf{U} = 0
+
+where:
+
+- :math:`\mathbf{U}` is the velocity vector field,
+- :math:`p` is the kinematic pressure (i.e., pressure divided by density),
+- :math:`\nu` is the kinematic viscosity,
+- :math:`t` is time.
+
+The first equation is the **momentum conservation equation**:
+
+- :math:`\partial \mathbf{U} / \partial t` represents unsteady acceleration (how velocity changes over time),
+- :math:`(\mathbf{U} \cdot \nabla)\mathbf{U}` is the advection (fluid moving itself),
+- :math:`-\nabla p` is the pressure gradient force,
+- :math:`\nu \nabla^2 \mathbf{U}` is the viscous diffusion of momentum.
+
+The second equation enforces **incompressibility**, meaning the volume of fluid elements does not change over time.
+
+In ``icoFoam``, these equations are solved using the **finite volume method** and the **PISO algorithm** (Pressure Implicit with Splitting of Operators) to ensure pressure–velocity coupling and divergence-free velocity fields at each time step. We will get into the details of the numerical methods later in the course. For now, we will just use the solver and its capabilities.
 
 
 2D cavity flow
@@ -227,7 +253,84 @@ Next we look into the pressure boundary conditions.
 Run controls
 ^^^^^^^^^^^^^^^^^^^
 
-The time stepping, run time, and output frequency are again set in :code:`system/controlDict`. Open it and check that you understand the entires. 
+The time stepping, run time, and output frequency are again set in :code:`system/controlDict`. Open it and check that you understand the entries. 
+
+.. code-block:: foam 
+    :name: lst:2dcavity_controlDict
+    :linenos:
+    :caption: controlDict of the cavity flow tutorial. 
+
+    /*--------------------------------*- C++ -*----------------------------------*\
+    =========                 |
+    \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+     \\    /   O peration     | Website:  https://openfoam.org
+      \\  /    A nd           | Version:  9
+       \\/     M anipulation  |
+    \*---------------------------------------------------------------------------*/
+    FoamFile
+    {
+        format      ascii;
+        class       dictionary;
+        location    "system";
+        object      controlDict;
+    }
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+    application     icoFoam;
+
+    startFrom       startTime;
+
+    startTime       0;
+
+    stopAt          endTime;
+
+    endTime         0.5;
+
+    deltaT          0.005;
+
+    writeControl    timeStep;
+
+    writeInterval   20;
+
+    purgeWrite      0;
+
+    writeFormat     ascii;
+
+    writePrecision  6;
+
+    writeCompression off;
+
+    timeFormat      general;
+
+    timePrecision   6;
+
+    runTimeModifiable true;
+
+
+    // ************************************************************************* //
+
+Here is a short explanation of the most important entries:
+
+
+- ``application``: Solver used (here, ``icoFoam`` for incompressible laminar flow).
+- ``startFrom``: Start method (``startTime`` = use value from ``startTime``).
+- ``startTime``: Initial simulation time.
+- ``stopAt``: Stop method (``endTime`` = use value from ``endTime``).
+- ``endTime``: Final simulation time.
+- ``deltaT``: Time step size.
+- ``writeControl``: When to write output (``timeStep`` = every N time steps).
+- ``writeInterval``: Write output every N time steps.
+- ``purgeWrite``: Max number of saved time steps (``0`` = keep all).
+- ``writeFormat``: Output file format (``ascii`` or ``binary``).
+- ``writePrecision``: Number of digits in numerical output.
+- ``writeCompression``: Compress output files (``off`` or ``on``).
+- ``timeFormat``: Time label format (e.g., ``general``, ``fixed``).
+- ``timePrecision``: Precision of time labels.
+- ``runTimeModifiable``: Allow runtime dictionary edits (``true`` = yes).
+
+
+These are the most important entries. There are many more options available, which can be found in the `OpenFoam User Guide <https://doc.cfd.direct/openfoam/user-guide-v9/controldict#x19-1410004.4>`_
+
 
 In case you wondered how OpenFoam is solving the equations. We will cover the details later in the course, but you can have a preview by opening the :code:`system/fvSchemes` file. In this dictionary, the various discretization schemes can be set. :numref:`fig:cavity2d_num_fig` gives some further explanations.
 
@@ -247,4 +350,5 @@ Time to run the case! Just start the solver
 
 Visualization
 ^^^^^^^^^^^^^^^^^^^
-Open paraview and look at the results.
+Open paraview and look at the results. They are actually quite boring because the flow is steady and laminar; and because we have not first thought about the expected results. Let's do that better in the the next excercise.
+
