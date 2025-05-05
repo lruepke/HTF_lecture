@@ -35,7 +35,7 @@ The first case is the **flange** case from OpenFOAM tutorials, which illustrates
     
     \frac{\partial T}{\partial t} = D \nabla^2 T   
 
-Here  :math:`\rho` is density, :math:`C_{cp}` the specific heat,  :math:`\lambda_r` the heat conduction coefficient, and :math:`D=\frac{\lambda_r}{\rho C_{cp}}` the thermal diffusivity.
+Here  :math:`\rho` is density, :math:`C_{p}` the specific heat,  :math:`\lambda_r` the heat conduction coefficient, and :math:`D=\frac{\lambda_r}{\rho C_{p}}` the thermal diffusivity.
 
 Prepare case files
 ------------------

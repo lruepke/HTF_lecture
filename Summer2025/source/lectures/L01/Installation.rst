@@ -11,7 +11,7 @@ We will be using the Foundation version of OpenFOAM_ and our own hydrothermal fl
 
 Docker
 ------
-We will rely on docker_ and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. The image is based on a clean Ubuntu 22.04 LTS and OpenFOAM_ 9 build from source. HydrothermalFoam_ and out own implementation of the :cite:`Driesner2007` equation-of-state for the system H\ :sub:`2`\ O-NaCl. Docker images are lightweight, standalone, and immutable templates for creating containers, while containers are runtime instances of these images that include the application and its dependencies. These are the necessary steps:
+We will rely on docker_ and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. The image is based on a clean Ubuntu 22.04 LTS and OpenFOAM_ 9 build from source. HydrothermalFoam_ is our hydrothermal flow solver and xthermo our  implementation of the :cite:`Driesner2007` equation-of-state for the system H\ :sub:`2`\ O-NaCl. Docker images are lightweight, standalone, and immutable templates for creating containers, while containers are runtime instances of these images that include the application and its dependencies. These are the necessary steps:
 
 1. **Install** `docker desktop <https://www.docker.com/products/docker-desktop>`_ and keep it running.
 2. **Register** an account with `docker hub <https://hub.docker.com/>`_, a marketplace for docker images.
@@ -26,7 +26,7 @@ Open a shell (powershell under windows or a terminal under MacOS) and pull the i
 
 .. code-block:: bash
 
-      docker pull hydrothermalfoam-openfoam9:latest
+      docker pull lruepke/hydrothermalfoam-openfoam9:latest
 
 The image is about 4GB, so this can take a while. The ":latest" tag points to a multiplatform image and you should get the right image regardless whether you are on an Intel/AMD or ARM/M-chip machine. After the download is finished, you can build the docker container. Use this command:
 
@@ -48,9 +48,9 @@ Now that you have built the docker container you can use these basic docker comm
 
 .. code-block:: bash
 
-      docker start hydrothermalfoam
-      docker attach hydrothermalfoam
-      docker stop hydrothermalfoam
+      docker start hydrothermalfoam9
+      docker attach hydrothermalfoam9
+      docker stop hydrothermalfoam9
 
 The first command starts the container and the second one attaches it to the current shell. As you will see below, you will typically run these two commands from the right-hand side shell in your VS code when you start your work. To stop the container, just run the stop command from another shell.
 
@@ -74,8 +74,8 @@ Start and attach the docker container to the right-hand-side shell by typing
 
 .. code-block:: bash
 
-    docker start hydrothermalfoam
-    docker attach hydrothermalfoam
+    docker start hydrothermalfoam9
+    docker attach hydrothermalfoam9
 
 If you want things to be pretty, try starting a z-shell (instead of the default bash):
 
@@ -87,7 +87,7 @@ You can stop the container whenever you want and your files will remain intact, 
 
 .. code-block:: bash
     
-    docker stop hydrothermalfoam
+    docker stop hydrothermalfoam9
 
 .. tip::
     It really helps to have syntax highlighting when manipulating OpenFoam files. To get it search for openfoam in the Extensions Tab of Visual Studio Code and you will find an extension provided by Zhikui Guo. Install the plug-in and copy the file associations into the settings.json file. To do so, type CMD/CTRL + SHIFT + P and search for "Open Settings (JSON)".

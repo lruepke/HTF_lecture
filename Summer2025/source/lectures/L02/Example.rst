@@ -38,7 +38,7 @@ Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. F
    :align: center
    :name: fig:2dcavity_setup
 
-   Two-dimensional cavity model geometry and boundary conditions.
+   Two-dimensional cavity model geometry and boundary conditions. Note a mistake in the figure: the domain size is actually 0.1 m by 0.1 m in the tutorial.
 
 
 Preparing the case
