@@ -9,7 +9,7 @@ Excercise 1
 Transient flow in a lid-driven cavity
 --------------------------------------
 
-In this section, we explore how the fluid flow in a lid-driven cavity develops over time, and how the *behavoir* and *time scales* of the simulation are influenced by model parameters. Understanding this helps to interpret simulation results and perform meaningful parametric studies.
+In this section, we explore how the fluid flow in a lid-driven cavity develops over time, and how the *behavior* and *time scales* of the simulation are influenced by model parameters. Understanding this helps to interpret simulation results and perform meaningful parametric studies.
 
 Time scales and regimes of viscous flow
 ------------------------------------------
@@ -41,7 +41,7 @@ Let's carefully check our base case. The spatial dimensions are set in :code:`sy
 .. code-block:: foam 
     :name: lst:2dcavity_blockMeshDict
     :linenos:
-    :emphasize-lines: 12, 20, 21, 33
+    :emphasize-lines: 16, 21, 22, 33
     :caption: blockMeshDict of the cavity flow tutorial. 
 
     /*--------------------------------*- C++ -*----------------------------------*\
@@ -81,7 +81,7 @@ Let's carefully check our base case. The spatial dimensions are set in :code:`sy
 
 
 
-We are defining a 3-D mesh with a width and height of 0.1 m and a thickness of 0.01 m.  A potential pitfall is line 12, where a global scaling of the spatial dimensions is introduced. The 3rd dimension does not matter here, as we are running the simulation in 2d mode (boundary faces are set to ``empty``). The lid velocity is set in :code:`0/U` to 1 m/s. The kinematic viscosity is set in :code:`constant/transportProperties` to 0.01 m^2/s. The numerical resolution is set in :code:`system/blockMeshDict` to 20 cells in the x and y direction, which gives us a grid spacing of 0.005 m. 
+We are defining a 3-D mesh with a width and height of 0.1 m and a thickness of 0.01 m.  A potential pitfall is line 16, where a global scaling of the spatial dimensions is introduced. The 3rd dimension does not matter here, as we are running the simulation in 2d mode (boundary faces are set to ``empty``). The lid velocity is set in :code:`0/U` to 1 m/s. The kinematic viscosity is set in :code:`constant/transportProperties` to 0.01 m^2/s. The numerical resolution is set in :code:`system/blockMeshDict` to 20 cells in the x and y direction, which gives us a grid spacing of 0.005 m. 
 
 The Reynolds number for this case is:
 
@@ -107,7 +107,7 @@ Time scales
 
 where:
 
-- :math:`L` is the characteristic length scale of the domain (e.g., cavity height),
+- :math:`L` is the characteristic length scale of the domain (e.g., cavity height or length),
 - :math:`U` is the characteristic velocity (e.g., lid speed).
 
 
@@ -165,7 +165,7 @@ For our case, the Courant number is:
     Co = \frac{1~\text{m/s} \cdot 0.005~\text{s}}{0.005~\text{m}} = 1
 
 
-This indicates that the numerical scheme is stable (just about), as the Courant number is less than 1. However, if we were to increase the lid speed or decrease the grid spacing, we would need to decrease the time step size to maintain a stable Courant number.
+This indicates that the numerical scheme is stable (just about), as the Courant number is equal to 1. However, if we were to increase the lid speed or decrease the grid spacing, we would need to decrease the time step size to maintain a stable Courant number.
 
 
 
@@ -176,32 +176,59 @@ Let's modify the base case and explore how the flow develops under different phy
 
 
 1. **Baseline Case**
+   
    - Use the standard lid-driven cavity example with:
+     
      - Domain size: :math:`L = 0.1~\text{m}`
      - Viscosity: :math:`\nu = 0.01~\text{m}^2/\text{s}`
      - Lid speed: :math:`U = 1~\text{m/s}`
+
    - Observe flow development over time.
+
    - Questions to explore:
+
      - How long does it take for the flow to reach a steady state? Change the output interval and total run time to check the transient flow development.
      - What is the shape of the vortex?
      - How does the velocity field look like?
 
 2. **Vary Viscosity**
-   - Change :math:`\nu` to :math:`1 \times 10^{-1}` and :math:`1 \times 10^{-3}`.
+   
+   - Change :math:`\nu` to :math:`1 \times 10^{-1}` and :math:`1 \times 10^{-3}` :math:`\nu = 0.01~\text{m}^2/\text{s}`.
+
    - Questions to explore:
+
      - How fast does the vortex form?
      - How does the flow pattern change?
 
 3. **Change Lid Velocity**
+   
    - Keep :math:`\nu` fixed and vary lid velocity :math:`U`.
+
    - Questions to explore:
+
      - Does a higher velocity lead to a longer or shorter transient?
      - Does the vortex strength or location change?
 
-5. **Mesh Sensitivity**
+4. **Mesh Sensitivity**
+   
    - Increase mesh resolution (e.g., from 20x20 to 40x40).
+
    - Observe differences in vortex shape and location.
+
    - Discuss numerical vs physical convergence.
+
+
+
+.. admonition:: Things to keep in mind
+
+        - You may have to adjust the time step size to maintain a stable Courant number. 
+        - When changing time step size, make sure to adjust the output interval accordingly.
+        - Make copies of the case for each variation to keep track of different simulations.
+        - You can visualize mulitple simulations in Paraview by loading multiple case folders at once.
+        - Use the "plot over line" filter in Paraview to extract velocity profiles and compare different cases
+        - Use the "stream tracer" filter in Paraview to visualize the flow field and vortex structure.
+
+
 
 
 Expected Observations

@@ -222,7 +222,7 @@
 <p>We will be using the Foundation version of <a class="reference external" href="https://openfoam.org">OpenFOAM</a> and our own hydrothermal flow solver <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container.</p>
 <section id="docker">
 <span id="sec-install-docker"></span><h2>Docker<a class="headerlink" href="#docker" title="Link to this heading"></a></h2>
-<p>We will rely on <a class="reference internal" href="#docker">docker</a> and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. The image is based on a clean Ubuntu 22.04 LTS and <a class="reference external" href="https://openfoam.org">OpenFOAM</a> 9 build from source. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and out own implementation of the <span id="id2">[<a class="reference internal" href="../../refs.html#id31" title="T. Driesner and C. A. Heinrich. The system h2o-nacl. part i: correlation formulae for phase relations in temperature-pressure-composition space from 0 to 1000 degrees c, 0 to 5000 bar, and 0 to 1 x-nacl. Geochimica Et Cosmochimica Acta, 71(20):4880-4901, 2007. Driesner, Thomas Heinrich, Christoph A. URL: &lt;Go to ISI&gt;://000250948100006, doi:10.1016/i.gca.2006.01.033.">Driesner &amp; Heinrich, 2007</a>]</span> equation-of-state for the system H<sub>2</sub>O-NaCl. Docker images are lightweight, standalone, and immutable templates for creating containers, while containers are runtime instances of these images that include the application and its dependencies. These are the necessary steps:</p>
+<p>We will rely on <a class="reference internal" href="#docker">docker</a> and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. The image is based on a clean Ubuntu 22.04 LTS and <a class="reference external" href="https://openfoam.org">OpenFOAM</a> 9 build from source. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> is our hydrothermal flow solver and xthermo our  implementation of the <span id="id2">[<a class="reference internal" href="../../refs.html#id31" title="T. Driesner and C. A. Heinrich. The system h2o-nacl. part i: correlation formulae for phase relations in temperature-pressure-composition space from 0 to 1000 degrees c, 0 to 5000 bar, and 0 to 1 x-nacl. Geochimica Et Cosmochimica Acta, 71(20):4880-4901, 2007. Driesner, Thomas Heinrich, Christoph A. URL: &lt;Go to ISI&gt;://000250948100006, doi:10.1016/i.gca.2006.01.033.">Driesner &amp; Heinrich, 2007</a>]</span> equation-of-state for the system H<sub>2</sub>O-NaCl. Docker images are lightweight, standalone, and immutable templates for creating containers, while containers are runtime instances of these images that include the application and its dependencies. These are the necessary steps:</p>
 <ol class="arabic simple">
 <li><p><strong>Install</strong> <a class="reference external" href="https://www.docker.com/products/docker-desktop">docker desktop</a> and keep it running.</p></li>
 <li><p><strong>Register</strong> an account with <a class="reference external" href="https://hub.docker.com/">docker hub</a>, a marketplace for docker images.</p></li>
@@ -234,7 +234,7 @@
 </div>
 <p>Now we are ready to pull the provided docker image, which can be found here <a class="reference external" href="https://hub.docker.com/repository/docker/lruepke/hydrothermalfoam-openfoam9/general">lruepke/hydrothermalfoam-openfoam9:latest</a>.</p>
 <p>Open a shell (powershell under windows or a terminal under MacOS) and pull the image by typing this command.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>hydrothermalfoam-openfoam9:latest
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>lruepke/hydrothermalfoam-openfoam9:latest
 </pre></div>
 </div>
 <p>The image is about 4GB, so this can take a while. The “:latest” tag points to a multiplatform image and you should get the right image regardless whether you are on an Intel/AMD or ARM/M-chip machine. After the download is finished, you can build the docker container. Use this command:</p>
@@ -256,9 +256,9 @@
 </dl>
 </div>
 <p>Now that you have built the docker container you can use these basic docker commands to interact with it:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>hydrothermalfoam
-docker<span class="w"> </span>attach<span class="w"> </span>hydrothermalfoam
-docker<span class="w"> </span>stop<span class="w"> </span>hydrothermalfoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>hydrothermalfoam9
+docker<span class="w"> </span>attach<span class="w"> </span>hydrothermalfoam9
+docker<span class="w"> </span>stop<span class="w"> </span>hydrothermalfoam9
 </pre></div>
 </div>
 <p>The first command starts the container and the second one attaches it to the current shell. As you will see below, you will typically run these two commands from the right-hand side shell in your VS code when you start your work. To stop the container, just run the stop command from another shell.</p>
@@ -275,8 +275,8 @@ docker<span class="w"> </span>stop<span class="w"> </span>hydrothermalfoam
 <p>Working with OpenFoam involves a lot of editing of text files and you can use your favorite text editor for this. However, we strongly recommend to use <a class="reference external" href="https://code.visualstudio.com/">Microsoft’s Visual Studio Code</a>.</p>
 <p>Open Visual Studio Code and open two shells side-by-side at the bottom (powershell on Windows and terminal on Mac). We will use the convention that we use the terminal to the right-hand side as our “virtual machine (docker) shell” and the terminal to the left as our local shell.</p>
 <p>Start and attach the docker container to the right-hand-side shell by typing</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>hydrothermalfoam
-docker<span class="w"> </span>attach<span class="w"> </span>hydrothermalfoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>hydrothermalfoam9
+docker<span class="w"> </span>attach<span class="w"> </span>hydrothermalfoam9
 </pre></div>
 </div>
 <p>If you want things to be pretty, try starting a z-shell (instead of the default bash):</p>
@@ -284,7 +284,7 @@ docker<span class="w"> </span>attach<span class="w"> </span>hydrothermalfoam
 </pre></div>
 </div>
 <p>You can stop the container whenever you want and your files will remain intact, just like in any other virtual machine. To stop the container type</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>hydrothermalfoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>hydrothermalfoam9
 </pre></div>
 </div>
 <div class="admonition tip">

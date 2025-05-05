@@ -39,5 +39,5 @@ There are many good online resources on OpenFOAM, HydrothermalFoam, and numerica
 - Cyprien Soulaine's teaching material `<http://cypriensoulaine.com>`_
 - Official OpenFoam documentation  `<https://cfd.direct/openfoam/documentation/>`_
 - Material shared by Tobias Holzmann  `<https://holzmann-cfd.com>`_ 
-- OpenFoam code documentation `<https://cpp.openfoam.org/v7/>`_
+- OpenFoam code documentation `<https://cpp.openfoam.org/v9/>`_
 - CFD Forum `<https://www.cfd-online.com/Forums/>`_

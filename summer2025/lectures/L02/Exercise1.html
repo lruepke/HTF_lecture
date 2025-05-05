@@ -219,7 +219,7 @@
 <span id="l02-exercise1"></span><h1>Excercise 1<a class="headerlink" href="#excercise-1" title="Link to this heading"></a></h1>
 <section id="transient-flow-in-a-lid-driven-cavity">
 <h2>Transient flow in a lid-driven cavity<a class="headerlink" href="#transient-flow-in-a-lid-driven-cavity" title="Link to this heading"></a></h2>
-<p>In this section, we explore how the fluid flow in a lid-driven cavity develops over time, and how the <em>behavoir</em> and <em>time scales</em> of the simulation are influenced by model parameters. Understanding this helps to interpret simulation results and perform meaningful parametric studies.</p>
+<p>In this section, we explore how the fluid flow in a lid-driven cavity develops over time, and how the <em>behavior</em> and <em>time scales</em> of the simulation are influenced by model parameters. Understanding this helps to interpret simulation results and perform meaningful parametric studies.</p>
 </section>
 <section id="time-scales-and-regimes-of-viscous-flow">
 <h2>Time scales and regimes of viscous flow<a class="headerlink" href="#time-scales-and-regimes-of-viscous-flow" title="Link to this heading"></a></h2>
@@ -249,18 +249,18 @@
 <span class="linenos"> 9</span><span class="p">{</span>
 <span class="linenos">10</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
 <span class="linenos">11</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
-<span class="hll"><span class="linenos">12</span>    <span class="kt">object</span>      <span class="n">blockMeshDict</span><span class="p">;</span>
-</span><span class="linenos">13</span><span class="p">}</span>
+<span class="linenos">12</span>    <span class="kt">object</span>      <span class="n">blockMeshDict</span><span class="p">;</span>
+<span class="linenos">13</span><span class="p">}</span>
 <span class="linenos">14</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
 <span class="linenos">15</span>
-<span class="linenos">16</span><span class="k">convertToMeters</span> <span class="mf">0.1</span><span class="p">;</span>
-<span class="linenos">17</span>
+<span class="hll"><span class="linenos">16</span><span class="k">convertToMeters</span> <span class="mf">0.1</span><span class="p">;</span>
+</span><span class="linenos">17</span>
 <span class="linenos">18</span><span class="k">vertices</span>
 <span class="linenos">19</span><span class="p">(</span>
-<span class="hll"><span class="linenos">20</span>    <span class="p">(</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class="hll"><span class="linenos">21</span>    <span class="p">(</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class="linenos">22</span>    <span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">)</span>
-<span class="linenos">23</span>    <span class="p">(</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos">20</span>    <span class="p">(</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
+<span class="hll"><span class="linenos">21</span>    <span class="p">(</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="hll"><span class="linenos">22</span>    <span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class="linenos">23</span>    <span class="p">(</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">)</span>
 <span class="linenos">24</span>    <span class="p">(</span><span class="mi">0</span> <span class="mi">0</span> <span class="mf">0.1</span><span class="p">)</span>
 <span class="linenos">25</span>    <span class="p">(</span><span class="mi">1</span> <span class="mi">0</span> <span class="mf">0.1</span><span class="p">)</span>
 <span class="linenos">26</span>    <span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mf">0.1</span><span class="p">)</span>
@@ -275,7 +275,7 @@
 </pre></div>
 </div>
 </div>
-<p>We are defining a 3-D mesh with a width and height of 0.1 m and a thickness of 0.01 m.  A potential pitfall is line 12, where a global scaling of the spatial dimensions is introduced. The 3rd dimension does not matter here, as we are running the simulation in 2d mode (boundary faces are set to <code class="docutils literal notranslate"><span class="pre">empty</span></code>). The lid velocity is set in <code class="code docutils literal notranslate"><span class="pre">0/U</span></code> to 1 m/s. The kinematic viscosity is set in <code class="code docutils literal notranslate"><span class="pre">constant/transportProperties</span></code> to 0.01 m^2/s. The numerical resolution is set in <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code> to 20 cells in the x and y direction, which gives us a grid spacing of 0.005 m.</p>
+<p>We are defining a 3-D mesh with a width and height of 0.1 m and a thickness of 0.01 m.  A potential pitfall is line 16, where a global scaling of the spatial dimensions is introduced. The 3rd dimension does not matter here, as we are running the simulation in 2d mode (boundary faces are set to <code class="docutils literal notranslate"><span class="pre">empty</span></code>). The lid velocity is set in <code class="code docutils literal notranslate"><span class="pre">0/U</span></code> to 1 m/s. The kinematic viscosity is set in <code class="code docutils literal notranslate"><span class="pre">constant/transportProperties</span></code> to 0.01 m^2/s. The numerical resolution is set in <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code> to 20 cells in the x and y direction, which gives us a grid spacing of 0.005 m.</p>
 <p>The Reynolds number for this case is:</p>
 <div class="math notranslate nohighlight" id="equation-eq-re-cavity-num">
 <span class="eqno">(5)<a class="headerlink" href="#equation-eq-re-cavity-num" title="Link to this equation"></a></span>\[Re = \frac{UL}{\nu} = \frac{1~\text{m/s} \cdot 0.1~\text{m}}{0.01~\text{m}^2/\text{s}} = 10\]</div>
@@ -290,7 +290,7 @@
 <span class="eqno">(6)<a class="headerlink" href="#equation-eq-t-conv" title="Link to this equation"></a></span>\[t_\text{conv} \sim \frac{L}{U}\]</div>
 <p>where:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(L\)</span> is the characteristic length scale of the domain (e.g., cavity height),</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span> is the characteristic length scale of the domain (e.g., cavity height or length),</p></li>
 <li><p><span class="math notranslate nohighlight">\(U\)</span> is the characteristic velocity (e.g., lid speed).</p></li>
 </ul>
 <p>This relation tells us how long it takes for a fluid parcel to travel the length of the domain. For our case, this is:</p>
@@ -319,57 +319,73 @@
 For our case, the Courant number is:</p>
 <div class="math notranslate nohighlight" id="equation-eq-co-num">
 <span class="eqno">(11)<a class="headerlink" href="#equation-eq-co-num" title="Link to this equation"></a></span>\[Co = \frac{1~\text{m/s} \cdot 0.005~\text{s}}{0.005~\text{m}} = 1\]</div>
-<p>This indicates that the numerical scheme is stable (just about), as the Courant number is less than 1. However, if we were to increase the lid speed or decrease the grid spacing, we would need to decrease the time step size to maintain a stable Courant number.</p>
+<p>This indicates that the numerical scheme is stable (just about), as the Courant number is equal to 1. However, if we were to increase the lid speed or decrease the grid spacing, we would need to decrease the time step size to maintain a stable Courant number.</p>
 </section>
 </section>
 <section id="exploration-framework">
 <h2>Exploration Framework<a class="headerlink" href="#exploration-framework" title="Link to this heading"></a></h2>
 <p>Let’s modify the base case and explore how the flow develops under different physical and numerical conditions.</p>
-<ol class="arabic">
-<li><p><strong>Baseline Case</strong>
-- Use the standard lid-driven cavity example with:</p>
-<blockquote>
-<div><ul class="simple">
+<ol class="arabic simple">
+<li><p><strong>Baseline Case</strong></p>
+<ul class="simple">
+<li><p>Use the standard lid-driven cavity example with:</p>
+<ul>
 <li><p>Domain size: <span class="math notranslate nohighlight">\(L = 0.1~\text{m}\)</span></p></li>
 <li><p>Viscosity: <span class="math notranslate nohighlight">\(\nu = 0.01~\text{m}^2/\text{s}\)</span></p></li>
 <li><p>Lid speed: <span class="math notranslate nohighlight">\(U = 1~\text{m/s}\)</span></p></li>
 </ul>
-</div></blockquote>
-<ul class="simple">
+</li>
 <li><p>Observe flow development over time.</p></li>
-<li><p>Questions to explore:
-- How long does it take for the flow to reach a steady state? Change the output interval and total run time to check the transient flow development.
-- What is the shape of the vortex?
-- How does the velocity field look like?</p></li>
+<li><p>Questions to explore:</p>
+<ul>
+<li><p>How long does it take for the flow to reach a steady state? Change the output interval and total run time to check the transient flow development.</p></li>
+<li><p>What is the shape of the vortex?</p></li>
+<li><p>How does the velocity field look like?</p></li>
 </ul>
 </li>
-<li><p><strong>Vary Viscosity</strong>
-- Change <span class="math notranslate nohighlight">\(\nu\)</span> to <span class="math notranslate nohighlight">\(1 \times 10^{-1}\)</span> and <span class="math notranslate nohighlight">\(1 \times 10^{-3}\)</span>.
-- Questions to explore:</p>
-<blockquote>
-<div><ul class="simple">
+</ul>
+</li>
+<li><p><strong>Vary Viscosity</strong></p>
+<ul class="simple">
+<li><p>Change <span class="math notranslate nohighlight">\(\nu\)</span> to <span class="math notranslate nohighlight">\(1 \times 10^{-1}\)</span> and <span class="math notranslate nohighlight">\(1 \times 10^{-3}\)</span> <span class="math notranslate nohighlight">\(\nu = 0.01~\text{m}^2/\text{s}\)</span>.</p></li>
+<li><p>Questions to explore:</p>
+<ul>
 <li><p>How fast does the vortex form?</p></li>
 <li><p>How does the flow pattern change?</p></li>
 </ul>
-</div></blockquote>
 </li>
-<li><p><strong>Change Lid Velocity</strong>
-- Keep <span class="math notranslate nohighlight">\(\nu\)</span> fixed and vary lid velocity <span class="math notranslate nohighlight">\(U\)</span>.
-- Questions to explore:</p>
-<blockquote>
-<div><ul class="simple">
+</ul>
+</li>
+<li><p><strong>Change Lid Velocity</strong></p>
+<ul class="simple">
+<li><p>Keep <span class="math notranslate nohighlight">\(\nu\)</span> fixed and vary lid velocity <span class="math notranslate nohighlight">\(U\)</span>.</p></li>
+<li><p>Questions to explore:</p>
+<ul>
 <li><p>Does a higher velocity lead to a longer or shorter transient?</p></li>
 <li><p>Does the vortex strength or location change?</p></li>
 </ul>
-</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>Mesh Sensitivity</strong></p>
+<ul class="simple">
+<li><p>Increase mesh resolution (e.g., from 20x20 to 40x40).</p></li>
+<li><p>Observe differences in vortex shape and location.</p></li>
+<li><p>Discuss numerical vs physical convergence.</p></li>
+</ul>
 </li>
 </ol>
-<ol class="arabic simple" start="5">
-<li><p><strong>Mesh Sensitivity</strong>
-- Increase mesh resolution (e.g., from 20x20 to 40x40).
-- Observe differences in vortex shape and location.
-- Discuss numerical vs physical convergence.</p></li>
-</ol>
+<div class="admonition-things-to-keep-in-mind admonition">
+<p class="admonition-title">Things to keep in mind</p>
+<ul class="simple">
+<li><p>You may have to adjust the time step size to maintain a stable Courant number.</p></li>
+<li><p>When changing time step size, make sure to adjust the output interval accordingly.</p></li>
+<li><p>Make copies of the case for each variation to keep track of different simulations.</p></li>
+<li><p>You can visualize mulitple simulations in Paraview by loading multiple case folders at once.</p></li>
+<li><p>Use the “plot over line” filter in Paraview to extract velocity profiles and compare different cases</p></li>
+<li><p>Use the “stream tracer” filter in Paraview to visualize the flow field and vortex structure.</p></li>
+</ul>
+</div>
 </section>
 <section id="expected-observations">
 <h2>Expected Observations<a class="headerlink" href="#expected-observations" title="Link to this heading"></a></h2>
