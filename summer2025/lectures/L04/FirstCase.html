@@ -491,16 +491,16 @@ paraview<span class="w"> </span>a.foam
 <span class="linenos">14</span><span class="p">}</span>
 <span class="linenos">15</span>
 <span class="hll"><span class="linenos">16</span><span class="kt">application</span> <span class="n">HydrothermalSinglePhaseDarcyFoam_xThermo</span><span class="p">;</span>
-</span><span class="linenos">17</span><span class="kt">startFrom</span> <span class="kt">startTime</span><span class="p">;</span>
-<span class="linenos">18</span><span class="kt">startTime</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos">17</span><span class="kt">startFrom</span> <span class="kt">startTime</span><span class="p">;</span>
+</span><span class="linenos">18</span><span class="kt">startTime</span> <span class="mi">0</span><span class="p">;</span>
 <span class="linenos">19</span><span class="kt">stopAt</span> <span class="kt">endTime</span><span class="p">;</span>
-<span class="linenos">20</span><span class="kt">endTime</span> <span class="mi">16912000000</span><span class="p">;</span> <span class="c1">//86400000000</span>
-<span class="linenos">21</span><span class="kt">deltaT</span> <span class="mi">864000</span><span class="p">;</span>
-<span class="linenos">22</span><span class="kt">adjustTimeStep</span> <span class="n">yes</span><span class="p">;</span>
+<span class="hll"><span class="linenos">20</span><span class="kt">endTime</span> <span class="mf">1.577e+10</span><span class="p">;</span> <span class="c1">//86400000000</span>
+</span><span class="hll"><span class="linenos">21</span><span class="kt">deltaT</span> <span class="mi">864000</span><span class="p">;</span>
+</span><span class="linenos">22</span><span class="kt">adjustTimeStep</span> <span class="n">yes</span><span class="p">;</span>
 <span class="linenos">23</span><span class="kt">maxCo</span>           <span class="mf">0.8</span><span class="p">;</span>
-<span class="linenos">24</span><span class="kt">maxDeltaT</span>       <span class="mi">86400000</span><span class="p">;</span>
+<span class="linenos">24</span><span class="kt">maxDeltaT</span>       <span class="mf">1.577e+8</span><span class="p">;</span>
 <span class="linenos">25</span><span class="kt">writeControl</span> <span class="n">adjustableRunTime</span><span class="p">;</span>
-<span class="linenos">26</span><span class="kt">writeInterval</span> <span class="mi">86400000</span><span class="p">;</span>
+<span class="linenos">26</span><span class="kt">writeInterval</span> <span class="mf">1.577e+8</span><span class="p">;</span>
 <span class="linenos">27</span><span class="kt">purgeWrite</span> <span class="mi">0</span><span class="p">;</span>
 <span class="linenos">28</span><span class="kt">writeFormat</span> <span class="k">ascii</span><span class="p">;</span>
 <span class="linenos">29</span><span class="kt">writePrecision</span> <span class="mi">6</span><span class="p">;</span>
@@ -510,14 +510,12 @@ paraview<span class="w"> </span>a.foam
 <span class="linenos">33</span><span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
 <span class="linenos">34</span><span class="kt">libs</span>
 <span class="linenos">35</span><span class="p">(</span>
-<span class="linenos">36</span>
-<span class="hll"><span class="linenos">37</span>    <span class="s">&quot;libHydrothermalBoundaryConditions.so&quot;</span>
-</span><span class="hll"><span class="linenos">38</span>    <span class="s">&quot;libHydroThermoPhysicalModels.so&quot;</span>
-</span><span class="linenos">39</span><span class="p">);</span>
+<span class="hll"><span class="linenos">36</span>    <span class="s">&quot;libHydrothermalBoundaryConditions.so&quot;</span>
+</span><span class="linenos">37</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<p>The solver we are using is called HydrothermalSinglePhaseDarcyFoam_xThermo. In addition, we are including two libraries “libHydrothermalBoundaryConditions.so”; these are part of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and provide special boundary conditions for submarine hydrothermal flow calculations.</p>
+<p>The solver we are using is called HydrothermalSinglePhaseDarcyFoam_xThermo. In addition, we are including the library “libHydrothermalBoundaryConditions.so”, which provides special boundary conditions for submarine hydrothermal flow calculations.</p>
 </section>
 <section id="running-the-case">
 <h2>Running the case<a class="headerlink" href="#running-the-case" title="Link to this heading"></a></h2>

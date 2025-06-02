@@ -28,6 +28,7 @@ Now we will explore permeability contrasts!
     - make a copy of the 1-layer case directory
     - change the mesh to have two layers
     - assign different permeabilities to the two layers
+    - change the bottom boundary conditions to constant temperature (1000 °C)
 
 
 Change the mesh
