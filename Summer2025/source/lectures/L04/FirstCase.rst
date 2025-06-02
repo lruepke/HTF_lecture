@@ -325,7 +325,7 @@ Finally, we need to set some control parameters like the time step, run time, ou
 
 .. code-block:: foam 
     :linenos:
-    :emphasize-lines: 16, 37-38
+    :emphasize-lines: 16,17,20,21, 36
     :name: lst:2dbox:cdict
     :caption: controlDict of the Regular2DBox case.
 
@@ -348,13 +348,13 @@ Finally, we need to set some control parameters like the time step, run time, ou
     startFrom startTime;
     startTime 0;
     stopAt endTime;
-    endTime 16912000000; //86400000000
+    endTime 1.577e+10; //86400000000
     deltaT 864000;
     adjustTimeStep yes;
     maxCo           0.8; 
-    maxDeltaT       86400000; 
+    maxDeltaT       1.577e+8; 
     writeControl adjustableRunTime;
-    writeInterval 86400000;
+    writeInterval 1.577e+8;
     purgeWrite 0;
     writeFormat ascii;
     writePrecision 6;
@@ -364,13 +364,11 @@ Finally, we need to set some control parameters like the time step, run time, ou
     runTimeModifiable true;
     libs 
     ( 
-        
         "libHydrothermalBoundaryConditions.so"
-        "libHydroThermoPhysicalModels.so"
     );
 
 
-The solver we are using is called HydrothermalSinglePhaseDarcyFoam_xThermo. In addition, we are including two libraries "libHydrothermalBoundaryConditions.so"; these are part of |foam| and provide special boundary conditions for submarine hydrothermal flow calculations.
+The solver we are using is called HydrothermalSinglePhaseDarcyFoam_xThermo. In addition, we are including the library "libHydrothermalBoundaryConditions.so", which provides special boundary conditions for submarine hydrothermal flow calculations.
 
 Running the case
 ----------------
