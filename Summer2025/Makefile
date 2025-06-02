@@ -22,6 +22,7 @@ casesPackage = bash source/lectures/$1/cases/casePackage.sh \
 %: Makefile
 	@if [ $@ = "html" ]; then\
 		$(call casesPackage,L03,DRP_permeability_2D) ;\
+		$(call casesPackage,L03,RandomDisks) ;\
 		$(call casesPackage,L05,Jupp_Schultz) ;\
 		$(call casesPackage,L_FVM,regularBox) ;\
 		$(call casesPackage,L_PROJECTS,fault_flow) ;\

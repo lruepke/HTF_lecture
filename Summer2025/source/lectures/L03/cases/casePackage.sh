@@ -8,3 +8,4 @@ function zipCase()
     zip -r ${caseDir}.zip $caseDir -x ${caseDir}/*00\* ${caseDir}/jupyter/data*\* ${caseDir}/ventT.* ${caseDir}/VTK\*
 }
 zipCase DRP_permeability_2D
+zipCase RandomDisks
