@@ -52,58 +52,54 @@ jobs:
           cp -rf home/public/ .
 
           # 3. Build each lecture
-          git pull origin --unshallow
+          git pull origin --unshallow || true  # avoid error if already full
 
           for lecture in $lectures
           do
             lectureName_hugo=$(echo "$lecture" | awk '{print tolower($0)}')
 
-            # find last commit ID
-            lastcommit=""
+            # Try to get last commit ID from stored file
             commitIDFile=../history/${lectureName_hugo}/${commitIDFile_stored}
-            if [ -f ${commitIDFile} ]; then 
-              cat ${commitIDFile}
-              lastcommit=$(awk 'NR==1{print $1}' ${commitIDFile})
-              echo "last commit ID of ${lecture}: $lastcommit"
+            if [ -f "${commitIDFile}" ]; then
+              lastcommit=$(head -n 1 "${commitIDFile}")
+              echo "Last commit ID for ${lecture}: ${lastcommit}"
             else
-              echo "last commit ID of ${lecture} is not stored, use the penultimate one"
-              lastcommits=($(git log --format="%H" -n 2))
-              lastcommit=${lastcommits[1]}
-              echo "The penultimate one commit is $lastcommit"
+              echo "No stored commit ID for ${lecture}, will force rebuild"
+              lastcommit=""
             fi
 
-            # decide what to do
-            if [[ -n $(git diff ${lastcommit} ${lecture}/) ]]
-            then
-              echo "$lecture is updated compared to last sphinx build, rebuilding!"
-              cd ${lecture}
-              make html
-              echo $(git log --format="%H" -n 1) > build/html/${commitIDFile_stored}
-              if [ ! -d "../public/${lectureName_hugo}" ]; then
-                mkdir ../public/${lectureName_hugo}
-              fi
-              cp -rf build/html/* ../public/${lectureName_hugo}
-              cd ..
-            else
+            # Check if lastcommit is valid
+            build_lecture="no"
+            if [[ -n "$lastcommit" ]] && git cat-file -e ${lastcommit}^{commit} 2>/dev/null; then
+              echo "Valid commit found. Checking for changes..."
+              if git diff --quiet ${lastcommit} -- ${lecture}/; then
               echo "$lecture is not updated."
               if [ -d "../history/${lectureName_hugo}" ]; then
                 echo "Copying previous pages from history."
-                if [ ! -d "public/${lectureName_hugo}" ]; then
-                  mkdir public/${lectureName_hugo}
+                  mkdir -p public/${lectureName_hugo}
+                  cp -rf ../history/${lectureName_hugo}/* public/${lectureName_hugo}
+                else
+                  echo "No history available for ${lecture}, forcing build!"
+                  build_lecture="yes"
                 fi
-                cp -rf ../history/${lectureName_hugo}/* public/${lectureName_hugo}
               else
-                echo "No history available for ${lectureName_hugo}, forcing build!"
+                echo "$lecture has changed since $lastcommit. Rebuilding!"
+                build_lecture="yes"
+                fi
+              else
+              echo "Invalid or missing lastcommit for ${lecture}. Rebuilding!"
+              build_lecture="yes"
+            fi
+
+            # Build if needed
+            if [[ "$build_lecture" == "yes" ]]; then
                 cd ${lecture}
                 make html
                 echo $(git log --format="%H" -n 1) > build/html/${commitIDFile_stored}
-                if [ ! -d "../public/${lectureName_hugo}" ]; then
-                  mkdir ../public/${lectureName_hugo}
-                fi
+              mkdir -p ../public/${lectureName_hugo}
                 cp -rf build/html/* ../public/${lectureName_hugo}
                 cd ..
               fi
-            fi
           done
 
       - name: Deploy
