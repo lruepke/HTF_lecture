@@ -98,9 +98,14 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Hydrothermal convection test case</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#prepare-case-files">Prepare case files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#update-equation-of-state-and-thermophysical-properties">Update: Equation of state and thermophysical properties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xthermoproperties">xThermoProperties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transportproperties">transportProperties</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#mesh-generation">Mesh generation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#transport-properties">Transport properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#permeability">Permeability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#case-control">Case control</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-the-case">Running the case</a></li>
 </ul>
@@ -196,7 +201,7 @@
 <p>To get started we will run the <strong>Regular2DBox</strong> case from the cookbook directory of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a>. This cookbooks describes how we can simulate a simple hydrothermal convection cell. It resolves hydrothermal convection driven by a gaussian-shaped constant temperature boundary condition at the bottom.</p>
 <p>Copy the  case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:</p>
 <div class="highlight-bash notranslate" id="lst-cp2dboxtoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
-cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$HOME</span>/hydrothermalfoam-master/cookbooks/2d/Regular2DBox<span class="w"> </span>.
+cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam/cookbooks/2d/Regular2DBox<span class="w"> </span>.
 </pre></div>
 </div>
 <p>Check out the directory structure shown in <a class="reference internal" href="#lst-2dbox-tree"><span class="std std-numref">Listing 19</span></a>.</p>
@@ -211,8 +216,8 @@ cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$HOME</span
 <span class="linenos"> 7</span><span class="p">|</span>--<span class="w"> </span>clean.sh
 <span class="linenos"> 8</span><span class="p">|</span>--<span class="w"> </span>constant
 <span class="linenos"> 9</span><span class="p">|</span><span class="w">   </span><span class="p">|</span>--<span class="w"> </span>g
-<span class="hll"><span class="linenos">10</span><span class="p">|</span><span class="w">    </span>--<span class="w"> </span>thermophysicalProperties
-</span><span class="linenos">11</span><span class="p">|</span>--<span class="w"> </span>run.sh
+<span class="linenos">10</span><span class="p">|</span><span class="w">    </span>--<span class="w"> </span>thermophysicalProperties
+<span class="linenos">11</span><span class="p">|</span>--<span class="w"> </span>run.sh
 <span class="linenos">12</span><span class="w"> </span>--<span class="w"> </span>system
 <span class="linenos">13</span><span class="w">    </span><span class="p">|</span>--<span class="w"> </span>blockMeshDict
 <span class="linenos">14</span><span class="w">    </span><span class="p">|</span>--<span class="w"> </span>controlDict
@@ -221,12 +226,71 @@ cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$HOME</span
 </pre></div>
 </div>
 </div>
-<p>The 0 directory now has entries for T (temperature) and p (pressure) our new primary variables, and for permeability, which we will discuss later. In addition, the constant directory has an entry thermophysicalProperties, which describes the solid properties.</p>
+<p>The 0 directory now has entries for T (temperature) and p (pressure) our new primary variables, and for permeability, which we will discuss later.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Most OpenFoam cases include scripts like <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> and <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code>. The <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script is a good starting point for “understanding” a case. It lists all commands that have to be executed (e.g. meshing, setting of properties, etc.) to run a case. The <code class="code docutils literal notranslate"><span class="pre">clean.sh</span></code> script cleans up the case and deletes e.g. the mesh and all output directories. Have a look into these files and see if you understand them!</p>
 </div>
 <p>The 0 directory contains all initial and boundary conditions, the system folder contains all controlling parameter files, and the constant folder contains constant properties like the mesh - which we will create next.</p>
+</section>
+<section id="update-equation-of-state-and-thermophysical-properties">
+<h2>Update: Equation of state and thermophysical properties<a class="headerlink" href="#update-equation-of-state-and-thermophysical-properties" title="Link to this heading"></a></h2>
+<p>The current docker image contains a development version of the main hydrothermal solver HydrothermalSinglePhaseDarcyFoam_xthermo. Xthermo refers to a novel implementation of the H2O-NaCl equation-of-state by <span id="id1">[<a class="reference internal" href="../../refs.html#id31" title="T. Driesner and C. A. Heinrich. The system h2o-nacl. part i: correlation formulae for phase relations in temperature-pressure-composition space from 0 to 1000 degrees c, 0 to 5000 bar, and 0 to 1 x-nacl. Geochimica Et Cosmochimica Acta, 71(20):4880-4901, 2007. Driesner, Thomas Heinrich, Christoph A. URL: &lt;Go to ISI&gt;://000250948100006, doi:10.1016/i.gca.2006.01.033.">Driesner &amp; Heinrich, 2007</a>]</span>. We need to make a few changes, so that the old cookbooks are working with this new solver.</p>
+<section id="xthermoproperties">
+<h3>xThermoProperties<a class="headerlink" href="#xthermoproperties" title="Link to this heading"></a></h3>
+<p>We need to create a dictionary file called <code class="code docutils literal notranslate"><span class="pre">xThermoProperties</span></code> in the constant directory. This file contains the equation of state (EOS) parameters. Create the file and open it with your editor:</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="cm">| =========                 |                                                 |</span>
+<span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
+<span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
+<span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
+<span class="cm">|    \\/     M anipulation  |                                                 |</span>
+<span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="k">FoamFile</span>
+<span class="p">{</span>
+    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+    <span class="kt">location</span>    <span class="s">&quot;constant&quot;</span><span class="p">;</span>
+    <span class="kt">object</span>      <span class="n">xThermoProperties</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">fluid</span> <span class="n">H2O</span><span class="o">-</span><span class="n">NaCl</span><span class="p">;</span> <span class="c1">//H2O, H2O-NaCl</span>
+<span class="n">backend</span> <span class="n">IAPS84</span><span class="p">;</span> <span class="c1">//IAPS84, IAPWS95, IAPWS95_CoolProp</span>
+
+<span class="n">H2O</span><span class="o">-</span><span class="n">NaCl</span>
+<span class="p">{</span>
+    <span class="n">constX</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="transportproperties">
+<h3>transportProperties<a class="headerlink" href="#transportproperties" title="Link to this heading"></a></h3>
+<p>Next we need to create a file called <code class="code docutils literal notranslate"><span class="pre">transportProperties</span></code> in the constant directory. This file contains the solid matrix properties. Create the file and open it with your editor:</p>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="cm">| =========                 |                                                 |</span>
+<span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
+<span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
+<span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
+<span class="cm">|    \\/     M anipulation  |                                                 |</span>
+<span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="k">FoamFile</span>
+<span class="p">{</span>
+    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+    <span class="kt">location</span>    <span class="s">&quot;constant&quot;</span><span class="p">;</span>
+    <span class="kt">object</span>      <span class="k">transportProperties</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">porosity</span> <span class="n">porosity</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span> <span class="mf">0.1</span><span class="p">;</span>
+<span class="n">kr</span> <span class="n">kr</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span> <span class="o">-</span><span class="mi">3</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span> <span class="mf">1.5</span><span class="p">;</span>
+<span class="n">cp_rock</span> <span class="n">cp_rock</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">2</span> <span class="o">-</span><span class="mi">2</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span> <span class="mi">880</span><span class="p">;</span>
+<span class="n">rho_rock</span> <span class="n">rho_rock</span> <span class="p">[</span><span class="mi">1</span> <span class="o">-</span><span class="mi">3</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span> <span class="mi">3000</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="mesh-generation">
 <h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Link to this heading"></a></h2>
@@ -370,8 +434,8 @@ paraview<span class="w"> </span>a.foam
 </div>
 <p>The <code class="code docutils literal notranslate"><span class="pre">noFlux</span></code> boundary conditions, sets the pressure gradient to zero (horizontal direction) and hydrostatic (vertical direction), so that no flow occurs through these boundaries. The <code class="code docutils literal notranslate"><span class="pre">submarinePressure</span></code> boundary condition is provided by <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and sets the pressure according to water depth. Change it to fixedValue; we will discuss the special boundary conditions later.</p>
 </section>
-<section id="transport-properties">
-<h2>Transport properties<a class="headerlink" href="#transport-properties" title="Link to this heading"></a></h2>
+<section id="permeability">
+<h2>Permeability<a class="headerlink" href="#permeability" title="Link to this heading"></a></h2>
 <p>In hydrothermal convection simulations, the fluid properties are given by the used EOS (details on this in the next lecture). What we need to set are the solid properties like permeability, solid density, solid specific heat, and porosity. These are set in two different files. Permeabilty is treated as a variable and is set in the 0 directory.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/permeability
 </pre></div>
@@ -402,15 +466,10 @@ paraview<span class="w"> </span>a.foam
 </div>
 </div>
 <p>Again, check that you understand the units, which here add up to m^2.</p>
-<p>Next we look at the solid properties:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>constant/thermophysicalProperties
-</pre></div>
-</div>
-<p>Check that you understand the units! Details can be found in the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> documentation.</p>
 </section>
 <section id="case-control">
 <h2>Case control<a class="headerlink" href="#case-control" title="Link to this heading"></a></h2>
-<p>Finally, we need to set some control parameters like the time step, run time, output writing. These kind of parameters are set in system/controlDict. Open it and explore the values</p>
+<p>Finally, we need to set some control parameters like the time step, run time, output writing. These kind of parameters are set in system/controlDict. Open it and explore the values. You will need to change the application to the new solver HydrothermalSinglePhaseDarcyFoam_xThermo.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>system/controlDict
 </pre></div>
 </div>
@@ -431,8 +490,8 @@ paraview<span class="w"> </span>a.foam
 <span class="linenos">13</span>    <span class="kt">object</span>      <span class="k">controlDict</span><span class="p">;</span>
 <span class="linenos">14</span><span class="p">}</span>
 <span class="linenos">15</span>
-<span class="hll"><span class="linenos">16</span><span class="kt">application</span> <span class="n">HydrothermalSinglePhaseDarcyFoam</span><span class="p">;</span>
-</span><span class="linenos">17</span><span class="kt">startFrom</span> <span class="k">latestTime</span><span class="p">;</span>
+<span class="hll"><span class="linenos">16</span><span class="kt">application</span> <span class="n">HydrothermalSinglePhaseDarcyFoam_xThermo</span><span class="p">;</span>
+</span><span class="linenos">17</span><span class="kt">startFrom</span> <span class="kt">startTime</span><span class="p">;</span>
 <span class="linenos">18</span><span class="kt">startTime</span> <span class="mi">0</span><span class="p">;</span>
 <span class="linenos">19</span><span class="kt">stopAt</span> <span class="kt">endTime</span><span class="p">;</span>
 <span class="linenos">20</span><span class="kt">endTime</span> <span class="mi">16912000000</span><span class="p">;</span> <span class="c1">//86400000000</span>
@@ -458,12 +517,12 @@ paraview<span class="w"> </span>a.foam
 </pre></div>
 </div>
 </div>
-<p>The solver we are using is called HydrothermalSinglePhaseDarcyFoam. In addition, we are including two libraries “libHydrothermalBoundaryConditions.so”; these are part of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and provide special boundary conditions for submarine hydrothermal flow calculations.</p>
+<p>The solver we are using is called HydrothermalSinglePhaseDarcyFoam_xThermo. In addition, we are including two libraries “libHydrothermalBoundaryConditions.so”; these are part of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> and provide special boundary conditions for submarine hydrothermal flow calculations.</p>
 </section>
 <section id="running-the-case">
 <h2>Running the case<a class="headerlink" href="#running-the-case" title="Link to this heading"></a></h2>
 <p>Now we are finally ready to run our first test case. Just type this into your docker shell:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>HydrothermalSinglePhaseDarcyFoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>HydrothermalSinglePhaseDarcyFoam_xThermo
 </pre></div>
 </div>
 <p>Notice how several directories are appearing, which contain the intermediate results. You can postprocess the case by simply opening the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> file from paraview.</p>
