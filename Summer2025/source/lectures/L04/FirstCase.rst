@@ -15,13 +15,13 @@ Copy the  case into your shared working directory (probably $HOME/HydrothermalFo
     :name: lst:cp2dBoxToWorkDir
 
     cd $HOME/HydrothermalFoam_runs
-    cp -r $HOME/hydrothermalfoam-master/cookbooks/2d/Regular2DBox . 
+    cp -r $HOME/HydrothermalFoam/cookbooks/2d/Regular2DBox . 
 
 Check out the directory structure shown in :numref:`lst:2dbox:tree`.
 
 .. code-block:: bash 
     :linenos:
-    :emphasize-lines: 3-5,10
+    :emphasize-lines: 3-5
     :name: lst:2dbox:tree
     :caption: File tree structure of the Regular2DBox case.
 
@@ -42,12 +42,79 @@ Check out the directory structure shown in :numref:`lst:2dbox:tree`.
         |-- fvSchemes
          -- fvSolution.
  
-The 0 directory now has entries for T (temperature) and p (pressure) our new primary variables, and for permeability, which we will discuss later. In addition, the constant directory has an entry thermophysicalProperties, which describes the solid properties.
+The 0 directory now has entries for T (temperature) and p (pressure) our new primary variables, and for permeability, which we will discuss later.
 
 .. tip::
     Most OpenFoam cases include scripts like :code:`run.sh` and :code:`clean.sh`. The :code:`run.sh` script is a good starting point for "understanding" a case. It lists all commands that have to be executed (e.g. meshing, setting of properties, etc.) to run a case. The :code:`clean.sh` script cleans up the case and deletes e.g. the mesh and all output directories. Have a look into these files and see if you understand them!
 
 The 0 directory contains all initial and boundary conditions, the system folder contains all controlling parameter files, and the constant folder contains constant properties like the mesh - which we will create next. 
+
+
+Update: Equation of state and thermophysical properties
+------------------------------------------------
+The current docker image contains a development version of the main hydrothermal solver HydrothermalSinglePhaseDarcyFoam_xthermo. Xthermo refers to a novel implementation of the H2O-NaCl equation-of-state by :cite:`Driesner2007`. We need to make a few changes, so that the old cookbooks are working with this new solver. 
+
+xThermoProperties
+^^^^^^^^^^^^^^^^^^
+We need to create a dictionary file called :code:`xThermoProperties` in the constant directory. This file contains the equation of state (EOS) parameters. Create the file and open it with your editor:
+
+
+.. code-block:: foam 
+
+    /*--------------------------------*- C++ -*----------------------------------*\
+    | =========                 |                                                 |
+    | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+    |  \\    /   O peration     | Version:  5                                     |
+    |   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+    |    \\/     M anipulation  |                                                 |
+    \*---------------------------------------------------------------------------*/
+    FoamFile
+    {
+        version     2.0;
+        format      ascii;
+        class       dictionary;
+        location    "constant";
+        object      xThermoProperties;
+    }
+
+    fluid H2O-NaCl; //H2O, H2O-NaCl
+    backend IAPS84; //IAPS84, IAPWS95, IAPWS95_CoolProp
+
+    H2O-NaCl
+    {
+        constX 0.0;
+    }
+
+
+transportProperties
+^^^^^^^^^^^^^^^^^^^^
+Next we need to create a file called :code:`transportProperties` in the constant directory. This file contains the solid matrix properties. Create the file and open it with your editor:
+
+
+.. code-block:: foam 
+
+    /*--------------------------------*- C++ -*----------------------------------*\
+    | =========                 |                                                 |
+    | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+    |  \\    /   O peration     | Version:  5                                     |
+    |   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+    |    \\/     M anipulation  |                                                 |
+    \*---------------------------------------------------------------------------*/
+    FoamFile
+    {
+        version     2.0;
+        format      ascii;
+        class       dictionary;
+        location    "constant";
+        object      transportProperties;
+    }
+
+    porosity porosity [0 0 0 0 0 0 0] 0.1;
+    kr kr [1 1 -3 -1 0 0 0] 1.5;
+    cp_rock cp_rock [0 2 -2 -1 0 0 0] 880;
+    rho_rock rho_rock [1 -3 0 0 0 0 0] 3000;
+
+
 
 Mesh generation
 ---------------
@@ -208,7 +275,7 @@ We also need to set boundary conditions for pressure.
 The :code:`noFlux` boundary conditions, sets the pressure gradient to zero (horizontal direction) and hydrostatic (vertical direction), so that no flow occurs through these boundaries. The :code:`submarinePressure` boundary condition is provided by |foam| and sets the pressure according to water depth. Change it to fixedValue; we will discuss the special boundary conditions later.
 
 
-Transport properties
+Permeability
 --------------------
 
 In hydrothermal convection simulations, the fluid properties are given by the used EOS (details on this in the next lecture). What we need to set are the solid properties like permeability, solid density, solid specific heat, and porosity. These are set in two different files. Permeabilty is treated as a variable and is set in the 0 directory.
@@ -247,18 +314,10 @@ In hydrothermal convection simulations, the fluid properties are given by the us
 Again, check that you understand the units, which here add up to m^2. 
 
 
-Next we look at the solid properties:
-
-.. code-block:: bash 
-
-    code constant/thermophysicalProperties
-
-Check that you understand the units! Details can be found in the |foam| documentation.
-
 Case control
 ------------
 
-Finally, we need to set some control parameters like the time step, run time, output writing. These kind of parameters are set in system/controlDict. Open it and explore the values
+Finally, we need to set some control parameters like the time step, run time, output writing. These kind of parameters are set in system/controlDict. Open it and explore the values. You will need to change the application to the new solver HydrothermalSinglePhaseDarcyFoam_xThermo.
 
 .. code-block:: bash 
 
@@ -285,8 +344,8 @@ Finally, we need to set some control parameters like the time step, run time, ou
         object      controlDict;
     }
 
-    application HydrothermalSinglePhaseDarcyFoam;
-    startFrom latestTime;
+    application HydrothermalSinglePhaseDarcyFoam_xThermo;
+    startFrom startTime;
     startTime 0;
     stopAt endTime;
     endTime 16912000000; //86400000000
@@ -311,7 +370,7 @@ Finally, we need to set some control parameters like the time step, run time, ou
     );
 
 
-The solver we are using is called HydrothermalSinglePhaseDarcyFoam. In addition, we are including two libraries "libHydrothermalBoundaryConditions.so"; these are part of |foam| and provide special boundary conditions for submarine hydrothermal flow calculations.
+The solver we are using is called HydrothermalSinglePhaseDarcyFoam_xThermo. In addition, we are including two libraries "libHydrothermalBoundaryConditions.so"; these are part of |foam| and provide special boundary conditions for submarine hydrothermal flow calculations.
 
 Running the case
 ----------------
@@ -319,7 +378,7 @@ Now we are finally ready to run our first test case. Just type this into your do
 
 .. code-block:: bash 
 
-    HydrothermalSinglePhaseDarcyFoam
+    HydrothermalSinglePhaseDarcyFoam_xThermo
 
 Notice how several directories are appearing, which contain the intermediate results. You can postprocess the case by simply opening the :code:`a.foam` file from paraview.
 
