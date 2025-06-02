@@ -89,6 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise_disks.html">Exercise - Permeability of randomly packed disks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -196,31 +197,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="fvm-and-openfoam">
+  <section id="fvm-and-openfoam">
 <span id="l-fvm-intro"></span><h1>FVM and OpenFoam<a class="headerlink" href="#fvm-and-openfoam" title="Link to this heading"></a></h1>
 <p>In the previous session, we have used openFoam to resolve hydrothermal convection in oceanic crust. In this lecture, we will have a deeper look into how openFoam solves the governing equations and how the numerical schemes work.</p>
 <p>OpenFoam uses the Finite Volume Method (FVM), which is a popular numerical technique used in computational fluid dynamics (CFD) and other areas of computational physics to solve partial differential equations (PDEs) that describe physical phenomena. It’s particularly well-suited for problems involving fluid flow, heat transfer, and associated physical processes. Here’s an overview of how FVM works:</p>
@@ -249,7 +226,7 @@
 <figure class="align-center" id="fvm-geometry-bcs-regularbox" style="width: 100%">
 <img alt="../../_images/boundaryConditions_FVM_regularBox.svg" src="../../_images/boundaryConditions_FVM_regularBox.svg" />
 <figcaption>
-<p><span class="caption-number">Fig. 39 </span><span class="caption-text">Model geometry, boundary conditions and initial condition.</span><a class="headerlink" href="#fvm-geometry-bcs-regularbox" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 41 </span><span class="caption-text">Model geometry, boundary conditions and initial condition.</span><a class="headerlink" href="#fvm-geometry-bcs-regularbox" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition-what-we-need-to-solve admonition">
@@ -268,7 +245,7 @@ therefore <span class="math notranslate nohighlight">\(T\)</span> is the only un
 <figure class="align-center" id="fig-polymesh-regularbox" style="width: 100%">
 <img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" />
 <figcaption>
-<p><span class="caption-number">Fig. 40 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#fig-polymesh-regularbox" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 42 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#fig-polymesh-regularbox" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -276,7 +253,7 @@ therefore <span class="math notranslate nohighlight">\(T\)</span> is the only un
 <figure class="align-center" id="fig-polymesh-unstructured" style="width: 100%">
 <img alt="../../_images/mesh_FVM_unstructured.svg" src="../../_images/mesh_FVM_unstructured.svg" />
 <figcaption>
-<p><span class="caption-number">Fig. 41 </span><span class="caption-text">2D unstructured mesh topology information (<a class="reference download internal" download="" href="../../_downloads/511a4a1fe2a54b529f96db7ce8318cd3/unstructured.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</span><a class="headerlink" href="#fig-polymesh-unstructured" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 43 </span><span class="caption-text">2D unstructured mesh topology information (<a class="reference download internal" download="" href="../../_downloads/511a4a1fe2a54b529f96db7ce8318cd3/unstructured.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</span><a class="headerlink" href="#fig-polymesh-unstructured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -298,7 +275,7 @@ therefore <span class="math notranslate nohighlight">\(T\)</span> is the only un
 <p>Transform partial differential <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">equation (57)</a> into a set of algebraic equations: <span class="math notranslate nohighlight">\(\mathbf{A} T = \mathbf{b}\)</span>.</p>
 </div>
 <ol class="arabic simple">
-<li><p>Integrate <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">equation (57)</a> over element <span class="math notranslate nohighlight">\(C\)</span> (the green cell in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>) that enables recovering its integral balance form as,</p></li>
+<li><p>Integrate <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">equation (57)</a> over element <span class="math notranslate nohighlight">\(C\)</span> (the green cell in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>) that enables recovering its integral balance form as,</p></li>
 </ol>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-volume-int">
 <span class="eqno">(58)<a class="headerlink" href="#equation-eq-fvm-volume-int" title="Link to this equation"></a></span>\[\iiint\limits_{V_C} \frac{\partial T}{\partial t} dV - \iiint\limits_{V_C} \nabla \cdot D\nabla T dV = 0\]</div>
@@ -327,7 +304,7 @@ It is basically the integral form of the original partial differential equation 
 All faces of a internal cell are internal faces. The remain cells are boundary cells which contain at least one boundary face.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--1">Internal cell</label><div class="tab-content docutils container">
-<p>For a specific internal cell <span class="math notranslate nohighlight">\(C\)</span>, e.g. cell 12, shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>,
+<p>For a specific internal cell <span class="math notranslate nohighlight">\(C\)</span>, e.g. cell 12, shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>,
 the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (61)</a> can be expanded as,</p>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-surface-sum-expand">
 <span class="eqno">(62)<a class="headerlink" href="#equation-eq-fvm-surface-sum-expand" title="Link to this equation"></a></span>\[\color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} + \iint_{f_{24}}\vec{J}^{T,D}_{f_{24}} \cdot \vec{S}_{f_{24}} + \iint_{f_{21}}\vec{J}^{T,D}_{f_{21}} \cdot \vec{S}_{f_{21}}  + \iint_{f_{5}}\vec{J}^{T,D}_{f_{5}} \cdot \vec{S}_{f_{5}} = 0\]</div>
@@ -340,12 +317,12 @@ the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (
 <a class="reference internal image-reference" href="../../_images/Fig5.2_RedBook.svg"><img alt="../../_images/Fig5.2_RedBook.svg" src="../../_images/Fig5.2_RedBook.svg" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 42 </span><span class="caption-text">Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points <span id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The total flux <span class="math notranslate nohighlight">\(FluxT_f\)</span> is computed as linear combinations of the two cell values plus a source term.</span><a class="headerlink" href="#fig-fig5-2" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 44 </span><span class="caption-text">Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points <span id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The total flux <span class="math notranslate nohighlight">\(FluxT_f\)</span> is computed as linear combinations of the two cell values plus a source term.</span><a class="headerlink" href="#fig-fig5-2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Only the <strong>one integration point scheme</strong>, i.e. <a class="reference internal" href="#fig-fig5-2"><span class="std std-numref">Fig. 42</span></a> (a), is implemented in OpenFOAM (at least before version 8).
+<p>Only the <strong>one integration point scheme</strong>, i.e. <a class="reference internal" href="#fig-fig5-2"><span class="std std-numref">Fig. 44</span></a> (a), is implemented in OpenFOAM (at least before version 8).
 Therefore the first keyword of Laplacian scheme in <code class="code docutils literal notranslate"><span class="pre">system/fvScheme</span></code> dictionary file of a case has only one option, it is <code class="code docutils literal notranslate"><span class="pre">Gauss</span></code>.</p>
 </div>
 <p>4.2 Choose integral scheme or integral points</p>
@@ -356,7 +333,7 @@ Therefore the first keyword of Laplacian scheme in <code class="code docutils li
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(S_{f_{23}} = \Delta y_{f_{23}}\)</span>  is the area of face  <span class="math notranslate nohighlight">\(f_{23}\)</span> by assuming <span class="math notranslate nohighlight">\(\Delta z = 1\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\vec{S}_{f_{23}} = S_{f_{23}} \vec{n}_{f_{23}}\)</span> is the surface vector of face <span class="math notranslate nohighlight">\(f_{23}\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\vec{n}_{f_{23}} = \vec{i}\)</span> is the normal vector of the face <span class="math notranslate nohighlight">\(f_{23}\)</span> directed out of the cell <span class="math notranslate nohighlight">\(C\)</span> (see <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{n}_{f_{23}} = \vec{i}\)</span> is the normal vector of the face <span class="math notranslate nohighlight">\(f_{23}\)</span> directed out of the cell <span class="math notranslate nohighlight">\(C\)</span> (see <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>).</p></li>
 </ul>
 <p>4.3 Calculate gradient of <span class="math notranslate nohighlight">\(T\)</span> at face centroid, here introduce <strong>the second approximation</strong>, e.g. assuming linear variation of T and then the gradient term in the <a class="reference internal" href="#equation-eq-fvm-surface-term-f1">equation (64)</a> can be approximated as,</p>
 <div class="math notranslate nohighlight">
@@ -389,11 +366,11 @@ a_{C} &amp; = &amp; -(a_{23} + a_{24} + a_{21}  + a_{5}) \\
 <span class="eqno">(67)<a class="headerlink" href="#equation-eq-fvm-matrix-form-internalcell12" title="Link to this equation"></a></span>\[\mathbf{A}_{N\times N}[12,:] \mathbf{T}_{N\times 1} =  0\]</div>
 </div>
 <input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--2">Boundary cell</label><div class="tab-content docutils container">
-<p>For a specific boundary cell, e.g. <strong>cell 19</strong> shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>, the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (61)</a> can be rewritten as,</p>
+<p>For a specific boundary cell, e.g. <strong>cell 19</strong> shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>, the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (61)</a> can be rewritten as,</p>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-surface-sum-expand-boundary">
 <span class="eqno">(68)<a class="headerlink" href="#equation-eq-fvm-surface-sum-expand-boundary" title="Link to this equation"></a></span>\[\iint_{f_{18}}\vec{J}^{T,D}_{f_{18}} \cdot \vec{S}_{f_{18}} + \iint_{f_{35}}\vec{J}^{T,D}_{f_{35}} \cdot \vec{S}_{f_{35}} +\iint_{f_{37}}\vec{J}^{T,D}_{f_{37}} \cdot \vec{S}_{f_{37}} + \color{red}{\iint_{f_{51}}\vec{J}^{T,D}_{f_{51}} \cdot \vec{S}_{f_{51}}} = 0\]</div>
 <p>The first three terms are normal fluxes across internal faces, so there is nothing special and we can just calculate them following steps for internal faces as before. The special thing is the boundary face <span class="math notranslate nohighlight">\(f_{52}\)</span>, we can call it <span class="math notranslate nohighlight">\(f_b\)</span> for a general case. <strong>Now the problem is how to evaluate flux on the boundary face</strong> <span class="math notranslate nohighlight">\(f_b\)</span>.</p>
-<p>The fluxes on the interior faces are discretized as before, while <strong>the boundary flux is discretized with the aim of constructing a linearization with respect to</strong> the cell field <span class="math notranslate nohighlight">\(T_C\)</span>, e.g. <span class="math notranslate nohighlight">\(T_{C_{19}}\)</span> of cell <span class="math notranslate nohighlight">\(C_{19}\)</span> shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>, thus</p>
+<p>The fluxes on the interior faces are discretized as before, while <strong>the boundary flux is discretized with the aim of constructing a linearization with respect to</strong> the cell field <span class="math notranslate nohighlight">\(T_C\)</span>, e.g. <span class="math notranslate nohighlight">\(T_{C_{19}}\)</span> of cell <span class="math notranslate nohighlight">\(C_{19}\)</span> shown in <a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>, thus</p>
 <div class="math notranslate nohighlight" id="equation-eq-fvm-surface-flux-boundary">
 <span class="eqno">(69)<a class="headerlink" href="#equation-eq-fvm-surface-flux-boundary" title="Link to this equation"></a></span>\[\color{red}{\iint_{f_{b}}\vec{J}^{T,D}_{f_{b}} \cdot d\vec{S}_{f_{b}}} = a_{F_b} T_C + c_{F_b}\]</div>
 <p>All right, <strong>now out goal is to determine the coefficients of</strong> <span class="math notranslate nohighlight">\(a_{F_b}\)</span> and <span class="math notranslate nohighlight">\(c_{F_b}\)</span> according to the boundary conditions. Generally there are two basic kinds of boundary conditions, they are <strong>Dirichlet boundary condition</strong> (also called the first type or fixed value boundary condition) and <strong>Von Neumann boundary condition</strong> (all called the second type or fixed flux boundary condition), respectively.</p>
@@ -450,15 +427,15 @@ b_{C_{19}} &amp; =  &amp; a_{F_{18}} (T_{F_{18}} - T_C) + a_{F_{35}} (T_{F_{35}}
 <span class="eqno">(79)<a class="headerlink" href="#equation-fvm-matrix-form" title="Link to this equation"></a></span>\[\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{B}_{N\times1}\]</div>
 <p>here <span class="math notranslate nohighlight">\(N\)</span> is the number of cell, <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> is a sparse matrix of coefficients,
 <span class="math notranslate nohighlight">\(\mathbf{T}\)</span> is cell-centered temperature field.
-The matrix is visualized as <a class="reference internal" href="#fig-fvm-matrix"><span class="std std-numref">Fig. 43</span></a>.
+The matrix is visualized as <a class="reference internal" href="#fig-fvm-matrix"><span class="std std-numref">Fig. 45</span></a>.
 It should be noted that <strong>the coefficients matrix of Laplacian term is a symmetric matrix and the boundary conditions only affect diagonal entry of the coefficients matrix</strong>. Further, only the fixed value boundary condition affects the matrix and the fixed flux boundary condition affects the RHS(Right hand of side) <span class="math notranslate nohighlight">\(B\)</span>.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">Regular mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-fvm-matrix" style="width: 100%">
 <img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" />
 <figcaption>
-<p><span class="caption-number">Fig. 43 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
-The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 45 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
+The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -466,8 +443,8 @@ The coefficients of the selected cell <span class="math notranslate nohighlight"
 <figure class="align-center" id="fig-fvm-matrix-unstructured" style="width: 100%">
 <img alt="../../_images/matrix_FVM_unstructured.svg" src="../../_images/matrix_FVM_unstructured.svg" />
 <figcaption>
-<p><span class="caption-number">Fig. 44 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
-The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix-unstructured" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 46 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
+The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix-unstructured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>

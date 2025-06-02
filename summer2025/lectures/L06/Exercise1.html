@@ -89,6 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise_disks.html">Exercise - Permeability of randomly packed disks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -185,31 +186,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="exercise-1">
+  <section id="exercise-1">
 <span id="l06-exercise1"></span><h1>Exercise 1<a class="headerlink" href="#exercise-1" title="Link to this heading"></a></h1>
 <p>We will first explore a simple setup of 2-D flow along a pressure gradient in the presence of permeability contrasts.</p>
 <div class="admonition-goals admonition">
@@ -226,7 +203,7 @@
 <figure class="align-center" id="setup-l5-1-fig" style="width: 80%">
 <img alt="../../_images/lecture_plot.png" src="../../_images/lecture_plot.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 35 </span><span class="caption-text">Setup of our 2D test case for flow in a porous medium with variable permeability.</span><a class="headerlink" href="#setup-l5-1-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 37 </span><span class="caption-text">Setup of our 2D test case for flow in a porous medium with variable permeability.</span><a class="headerlink" href="#setup-l5-1-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>A good starting point for setting up new case is always to take an existing similar case. Here we can use one of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> benchmark cases. It’s located in <code class="code docutils literal notranslate"><span class="pre">$HOME/hydrothermalfoam-master/benchmarks/HydrothermalFoam/1d/h1</span></code>.</p>
@@ -284,7 +261,7 @@ cp<span class="w"> </span>-r<span class="w"> </span>/home/openfoam/hydrothermalf
 <figure class="align-center" id="flow-l5-1-fig" style="width: 80%">
 <img alt="../../_images/hetero_perm_flow.png" src="../../_images/hetero_perm_flow.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 36 </span><span class="caption-text">Porous flow in the presence of permeability variations.</span><a class="headerlink" href="#flow-l5-1-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 38 </span><span class="caption-text">Porous flow in the presence of permeability variations.</span><a class="headerlink" href="#flow-l5-1-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>

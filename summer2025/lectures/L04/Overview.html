@@ -89,6 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise_disks.html">Exercise - Permeability of randomly packed disks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -180,37 +181,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="lecture-overview">
+  <section id="lecture-overview">
 <h1>Lecture overview<a class="headerlink" href="#lecture-overview" title="Link to this heading"></a></h1>
 <p>In this lecture we will explore flow in porous media and use the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> solvers to solve for flow in submarine hydrothermal systems.</p>
 <figure class="align-center" id="fig-hts-cartoon">
 <img alt="../../_images/hts_cartoon.svg" src="../../_images/hts_cartoon.svg" />
 <figcaption>
-<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Cartoon illustrating flow in a submarine hydrothermal circulation system <span id="id1">[<a class="reference internal" href="../../refs.html#id5" title="S. E. Ingebritsen, S. Geiger, S. Hurwitz, and T. Driesner. Numerical simulation of magmatic hydrothermal systems. Reviews of Geophysics, 2010. doi:10.1029/2009RG000287.">Ingebritsen et al., 2010</a>]</span>.</span><a class="headerlink" href="#fig-hts-cartoon" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Cartoon illustrating flow in a submarine hydrothermal circulation system <span id="id1">[<a class="reference internal" href="../../refs.html#id5" title="S. E. Ingebritsen, S. Geiger, S. Hurwitz, and T. Driesner. Numerical simulation of magmatic hydrothermal systems. Reviews of Geophysics, 2010. doi:10.1029/2009RG000287.">Ingebritsen et al., 2010</a>]</span>.</span><a class="headerlink" href="#fig-hts-cartoon" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>A numerical of hydrothermal flow at the East Pacific Rise at 9N by <span id="id2">[<a class="reference internal" href="../../refs.html#id6" title="Jörg Hasenclever, Sonja Theissen-Krah, Lars H Rüpke, Jason P Morgan, Karthik Iyer, Sven Petersen, and Colin W Devey. Hybrid shallow on-axis and deep off-axis hydrothermal circulation at fast-spreading ridges. Nature, 508(7497):508–512, 2014. doi:10.1038/nature13174.">Hasenclever et al., 2014</a>]</span>.</p>

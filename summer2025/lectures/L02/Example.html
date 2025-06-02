@@ -99,6 +99,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise_disks.html">Exercise - Permeability of randomly packed disks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -190,31 +191,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="navier-stokes-flow-with-openfoam">
+  <section id="navier-stokes-flow-with-openfoam">
 <h1>Navier-Stokes flow with OpenFoam<a class="headerlink" href="#navier-stokes-flow-with-openfoam" title="Link to this heading"></a></h1>
 <p>In this lecture we will solve the famous Navier-Stokes equation for flow. There are many different forms of the Navier-Stokes equations, depending on the assumptions made. Her we solve the form that is treated in the <code class="docutils literal notranslate"><span class="pre">icoFoam</span></code> solver in OpenFOAM. It treats <strong>incompressible</strong>, <strong>laminar</strong>, and <strong>transient</strong> fluid flow and solves the following equations:</p>
 <div class="math notranslate nohighlight">

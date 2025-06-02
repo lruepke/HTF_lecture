@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
@@ -6,26 +8,22 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FVM and OpenFoam &mdash; HydrothermalFoam Lecture  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=3d3fbe02" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../../_static/tabs.js?v=3ee01567"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -194,31 +192,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="fvm-and-openfoam">
+  <section id="fvm-and-openfoam">
 <span id="l-fvm-intro"></span><h1>FVM and OpenFoam<a class="headerlink" href="#fvm-and-openfoam" title="Link to this heading"></a></h1>
 <p>In the previous session, we have used openFoam to resolve hydrothermal convection in oceanic crust. In this lecture, we will have a deeper look into how openFoam solves the governing equations and how the numerical schemes work.</p>
 <p>OpenFoam uses the Finite Volume Method (FVM), which is a popular numerical technique used in computational fluid dynamics (CFD) and other areas of computational physics to solve partial differential equations (PDEs) that describe physical phenomena. It’s particularly well-suited for problems involving fluid flow, heat transfer, and associated physical processes. Here’s an overview of how FVM works:</p>
@@ -245,7 +219,8 @@
 <p><span class="math notranslate nohighlight">\(k\)</span> is the thermal conductivity and <span class="math notranslate nohighlight">\(D\)</span> is the thermal diffusivity <span class="math notranslate nohighlight">\(\frac{k}{\rho c_p}\)</span> . We here assume that <span class="math notranslate nohighlight">\(D\)</span> is a constant value. See also <a class="reference internal" href="../L01/FirstCase.html#theory-heat-diffusion"><span class="std std-ref">Theory</span></a>.</p>
 <p>Below is a simple 2D setup for a heat diffusion test case. We will use it to learn about the details of how openFOAM’s FV method works.</p>
 <figure class="align-center" id="fvm-geometry-bcs-regularbox" style="width: 100%">
-<img alt="../../_images/boundaryConditions_FVM_regularBox.svg" src="../../_images/boundaryConditions_FVM_regularBox.svg" /><figcaption>
+<img alt="../../_images/boundaryConditions_FVM_regularBox.svg" src="../../_images/boundaryConditions_FVM_regularBox.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 39 </span><span class="caption-text">Model geometry, boundary conditions and initial condition.</span><a class="headerlink" href="#fvm-geometry-bcs-regularbox" title="Link to this image"></a></p>
 </figcaption>
 </figure>
@@ -263,14 +238,16 @@ therefore <span class="math notranslate nohighlight">\(T\)</span> is the only un
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Regular mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-polymesh-regularbox" style="width: 100%">
-<img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" /><figcaption>
+<img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 40 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#fig-polymesh-regularbox" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-polymesh-unstructured" style="width: 100%">
-<img alt="../../_images/mesh_FVM_unstructured.svg" src="../../_images/mesh_FVM_unstructured.svg" /><figcaption>
+<img alt="../../_images/mesh_FVM_unstructured.svg" src="../../_images/mesh_FVM_unstructured.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 41 </span><span class="caption-text">2D unstructured mesh topology information (<a class="reference download internal" download="" href="../../_downloads/511a4a1fe2a54b529f96db7ce8318cd3/unstructured.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</span><a class="headerlink" href="#fig-polymesh-unstructured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
@@ -332,7 +309,8 @@ the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (
 <span class="eqno">(55)<a class="headerlink" href="#equation-fvm-flux-gaussian-integral" title="Link to this equation"></a></span>\[\color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} = \iint_{f_{23}} (\vec{J}^{T,D}_{f_{23}} \cdot \vec{n}_{f_{23}}) dS_{f_{23}} \approx \color{orange}{\sum\limits_{ip\sim ip(f_{23})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega_{ip} S_{f_{23}}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(S_f\)</span> is the area of face <span class="math notranslate nohighlight">\(f_{23}\)</span>, <span class="math notranslate nohighlight">\(ip\)</span> refers to a integration point and <span class="math notranslate nohighlight">\(ip(f_{23})\)</span> the number of integration points along surface <span class="math notranslate nohighlight">\(f_{23}\)</span>, <span class="math notranslate nohighlight">\(\omega_{ip}\)</span> is the integral weights.</p>
 <figure class="align-center" id="fig-fig5-2">
-<a class="reference internal image-reference" href="../../_images/Fig5.2_RedBook.svg"><img alt="../../_images/Fig5.2_RedBook.svg" src="../../_images/Fig5.2_RedBook.svg" width="100%" /></a>
+<a class="reference internal image-reference" href="../../_images/Fig5.2_RedBook.svg"><img alt="../../_images/Fig5.2_RedBook.svg" src="../../_images/Fig5.2_RedBook.svg" style="width: 100%;" />
+</a>
 <figcaption>
 <p><span class="caption-number">Fig. 42 </span><span class="caption-text">Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points <span id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The total flux <span class="math notranslate nohighlight">\(FluxT_f\)</span> is computed as linear combinations of the two cell values plus a source term.</span><a class="headerlink" href="#fig-fig5-2" title="Link to this image"></a></p>
 </figcaption>
@@ -449,7 +427,8 @@ It should be noted that <strong>the coefficients matrix of Laplacian term is a s
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">Regular mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-fvm-matrix" style="width: 100%">
-<img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" /><figcaption>
+<img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 43 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
 The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix" title="Link to this image"></a></p>
 </figcaption>
@@ -457,7 +436,8 @@ The coefficients of the selected cell <span class="math notranslate nohighlight"
 </div>
 <input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-fvm-matrix-unstructured" style="width: 100%">
-<img alt="../../_images/matrix_FVM_unstructured.svg" src="../../_images/matrix_FVM_unstructured.svg" /><figcaption>
+<img alt="../../_images/matrix_FVM_unstructured.svg" src="../../_images/matrix_FVM_unstructured.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 44 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
 The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix-unstructured" title="Link to this image"></a></p>
 </figcaption>

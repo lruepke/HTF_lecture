@@ -1,29 +1,29 @@
 
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2-D FEM - elliptic problems &mdash; Finite Element Modeling in Geodynamics  documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/style.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=379f3234" />
+
   
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../_static/tabs.js?v=3ee01567"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/tabs.js?v=3ee01567"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -177,31 +177,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="d-fem-elliptic-problems">
+  <section id="d-fem-elliptic-problems">
 <h1>2-D FEM - elliptic problems<a class="headerlink" href="#d-fem-elliptic-problems" title="Link to this heading"></a></h1>
 <p>Let’s move on to 2D! We will again use our steady-state heat diffusion equation as an example and will follow basically the same steps as during the 1-D example.</p>
 <section id="governing-equation-strong-form">
@@ -223,14 +199,16 @@
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--1">Four‐Node Bilinear Quadrilateral</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-linear">
-<img alt="../_images/shapeFunction_2D_Q1.svg" src="../_images/shapeFunction_2D_Q1.svg" /><figcaption>
+<img alt="../_images/shapeFunction_2D_Q1.svg" src="../_images/shapeFunction_2D_Q1.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 5 </span><span class="caption-text">Example of 2D linear finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-linear" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--2">Nine‐Node Biquadratic Quadrilateral</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-quad-q2">
-<img alt="../_images/shapeFunction_2D_Q2.svg" src="../_images/shapeFunction_2D_Q2.svg" /><figcaption>
+<img alt="../_images/shapeFunction_2D_Q2.svg" src="../_images/shapeFunction_2D_Q2.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 6 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-quad-q2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
@@ -239,21 +217,24 @@
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Three‐Node Triangle Element</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-tri-q1">
-<img alt="../_images/shapeFunction_2D_triangle_Q1.svg" src="../_images/shapeFunction_2D_triangle_Q1.svg" /><figcaption>
+<img alt="../_images/shapeFunction_2D_triangle_Q1.svg" src="../_images/shapeFunction_2D_triangle_Q1.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 7 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-tri-q1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Six‐Node Quadratic Triangle</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-tri-q2">
-<img alt="../_images/shapeFunction_2D_triangle_Q2.svg" src="../_images/shapeFunction_2D_triangle_Q2.svg" /><figcaption>
+<img alt="../_images/shapeFunction_2D_triangle_Q2.svg" src="../_images/shapeFunction_2D_triangle_Q2.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 8 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-tri-q2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">Ten‐Node Qubic Triangle</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-tri-q3">
-<img alt="../_images/shapeFunction_2D_triangle_Q3.svg" src="../_images/shapeFunction_2D_triangle_Q3.svg" /><figcaption>
+<img alt="../_images/shapeFunction_2D_triangle_Q3.svg" src="../_images/shapeFunction_2D_triangle_Q3.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 9 </span><span class="caption-text">Example of 2D finite element shape functions</span><a class="headerlink" href="#fig-shapefunc-2d-tri-q3" title="Link to this image"></a></p>
 </figcaption>
 </figure>
@@ -296,21 +277,24 @@ Every element has an element number and a certain number of nodes. We will initi
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">Structured mesh 1</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-mesh-2d-structured">
-<img alt="../_images/mesh2D_structured.svg" src="../_images/mesh2D_structured.svg" /><figcaption>
+<img alt="../_images/mesh2D_structured.svg" src="../_images/mesh2D_structured.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 10 </span><span class="caption-text">Structured mesh example of 2D finite element</span><a class="headerlink" href="#fig-mesh-2d-structured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">Structured mesh 2</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-mesh-2d-structured-usi">
-<img alt="../_images/mesh2D_structured_usi.svg" src="../_images/mesh2D_structured_usi.svg" /><figcaption>
+<img alt="../_images/mesh2D_structured_usi.svg" src="../_images/mesh2D_structured_usi.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 11 </span><span class="caption-text"><a class="reference download internal" download="" href="../_downloads/06175368e0da1f39153a96c18d7cef8b/structure.msh"><code class="xref download docutils literal notranslate"><span class="pre">Structured</span> <span class="pre">mesh</span></code></a> example of 2D finite element</span><a class="headerlink" href="#fig-mesh-2d-structured-usi" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--2-input--3" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--3">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-mesh-2d-unstructured">
-<img alt="../_images/mesh2D_unstructured.svg" src="../_images/mesh2D_unstructured.svg" /><figcaption>
+<img alt="../_images/mesh2D_unstructured.svg" src="../_images/mesh2D_unstructured.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 12 </span><span class="caption-text"><a class="reference download internal" download="" href="../_downloads/4c3ddbe4b1640134939545f76313c427/unstructure.msh"><code class="xref download docutils literal notranslate"><span class="pre">Unstructured</span> <span class="pre">mesh</span></code></a> example of 2D finite element</span><a class="headerlink" href="#fig-mesh-2d-unstructured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
@@ -320,21 +304,24 @@ Every element has an element number and a certain number of nodes. We will initi
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--3-input--1" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--1">Structured mesh 1</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-matrix-2d-structured">
-<img alt="../_images/Matrix2D_structured.svg" src="../_images/Matrix2D_structured.svg" /><figcaption>
+<img alt="../_images/Matrix2D_structured.svg" src="../_images/Matrix2D_structured.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 13 </span><span class="caption-text">Connectivity example of 2D finite element with structured mesh</span><a class="headerlink" href="#fig-matrix-2d-structured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--3-input--2" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--2">Structured mesh 2</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-matrix-2d-structured-usi">
-<img alt="../_images/Matrix2D_structured_usi.svg" src="../_images/Matrix2D_structured_usi.svg" /><figcaption>
+<img alt="../_images/Matrix2D_structured_usi.svg" src="../_images/Matrix2D_structured_usi.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 14 </span><span class="caption-text">Connectivity example of 2D finite element with structured mesh</span><a class="headerlink" href="#fig-matrix-2d-structured-usi" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--3-input--3" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--3">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-matrix-2d-unstructured">
-<img alt="../_images/Matrix2D_unstructured.svg" src="../_images/Matrix2D_unstructured.svg" /><figcaption>
+<img alt="../_images/Matrix2D_unstructured.svg" src="../_images/Matrix2D_unstructured.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 15 </span><span class="caption-text">Connectivity example of 2D finite element with unstructured mesh</span><a class="headerlink" href="#fig-matrix-2d-unstructured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
@@ -537,13 +524,13 @@ N_4 &amp; = 0.25(1-\xi)(1+\eta) \\
 <h2>Python code<a class="headerlink" href="#python-code" title="Link to this heading"></a></h2>
 <div class="literal-block-wrapper docutils container" id="lst-2d-fem-ss">
 <div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">2-D FEM diffusion, steady-state.</span><a class="headerlink" href="#lst-2d-fem-ss" title="Link to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="linenos">  2</span><span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
-<span class="linenos">  3</span><span class="kn">from</span> <span class="nn">scipy.sparse.linalg</span> <span class="kn">import</span> <span class="n">spsolve</span>
-<span class="linenos">  4</span><span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">csr_matrix</span>
-<span class="linenos">  5</span><span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-<span class="linenos">  6</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="linenos">  7</span><span class="kn">from</span> <span class="nn">shapes</span> <span class="kn">import</span> <span class="n">shapes</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos">  2</span><span class="kn">from</span><span class="w"> </span><span class="nn">tabulate</span><span class="w"> </span><span class="kn">import</span> <span class="n">tabulate</span>
+<span class="linenos">  3</span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse.linalg</span><span class="w"> </span><span class="kn">import</span> <span class="n">spsolve</span>
+<span class="linenos">  4</span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">csr_matrix</span>
+<span class="linenos">  5</span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mpl</span>
+<span class="linenos">  6</span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="linenos">  7</span><span class="kn">from</span><span class="w"> </span><span class="nn">shapes</span><span class="w"> </span><span class="kn">import</span> <span class="n">shapes</span>
 <span class="linenos">  8</span>
 <span class="linenos">  9</span><span class="c1">#geometry</span>
 <span class="linenos"> 10</span><span class="n">lx</span>          <span class="o">=</span> <span class="mi">1</span>
@@ -696,7 +683,7 @@ N_4 &amp; = 0.25(1-\xi)(1+\eta) \\
 <span class="linenos">157</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Temperature with heat flow vectors&#39;</span><span class="p">)</span>
 <span class="linenos">158</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="linenos">159</span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
-<span class="linenos">160</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos">160</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 </pre></div>
 </div>
 </div>

@@ -89,6 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise_disks.html">Exercise - Permeability of randomly packed disks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -189,31 +190,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="excercises">
+  <section id="excercises">
 <span id="l04-exercise"></span><h1>Excercises<a class="headerlink" href="#excercises" title="Link to this heading"></a></h1>
 <p>In this exercise we will investigate how permeability contrast affect hydrothermal flow and vent temperatures. We will first modify the Regular2DBox case to have constant temperature boundary condition and afterwards add a second layer to our mesh, so that we can explore permeability constrasts.</p>
 <section id="constant-temperature-1-layer-system">
@@ -228,7 +205,7 @@
 <figure class="align-center" id="fig-regularbox2d-constantt-fig">
 <img alt="../../_images/RegularBox2D_constantT.png" src="../../_images/RegularBox2D_constantT.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Constant temperature boundary condition.</span><a class="headerlink" href="#fig-regularbox2d-constantt-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 22 </span><span class="caption-text">Constant temperature boundary condition.</span><a class="headerlink" href="#fig-regularbox2d-constantt-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -249,7 +226,7 @@
 <figure class="align-center" id="fig-exercise-2layer-fig">
 <img alt="../../_images/exercise_2layer.png" src="../../_images/exercise_2layer.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Starting point for the two layer system.</span><a class="headerlink" href="#fig-exercise-2layer-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 23 </span><span class="caption-text">Starting point for the two layer system.</span><a class="headerlink" href="#fig-exercise-2layer-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>The easiest way is start with the blockMeshDict file of the 1-layer case and then add a second layer on top. A good way of getting this right, is to draw the node numbering and then add the vertices to the blockMeshDict file. Notice how we give labels layer_bot and layer_top to the two blocks.</p>

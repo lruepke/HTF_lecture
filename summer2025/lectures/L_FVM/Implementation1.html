@@ -89,6 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise_disks.html">Exercise - Permeability of randomly packed disks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -197,31 +198,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<div class="admonition tip" id="implementation1">
+  <div class="admonition tip" id="implementation1">
 <p class="admonition-title">Tip</p>
 <p>Before we start the exercise 1, please download (<a class="reference download internal" download="" href="../../_downloads/5cadc0ff36497aaf1c4155bb17c6dc5e/test_laplacianFoam.zip"><code class="xref download docutils literal notranslate"><span class="pre">test_laplacianFoam</span></code></a>) the modified Laplacian solver first.
 Then put it in the shared folder and compile (<code class="code docutils literal notranslate"><span class="pre">wmake</span></code>) it in the docker container.
@@ -395,7 +372,7 @@ This modified solver writes out detailed information on matrix coefficients into
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--1">Generate mesh</label><div class="tab-content docutils container">
 <p>Nothing special, just a meshing process.
-Here we use the OpenFOAM utility <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> to generate a regular mesh (<a class="reference download internal" download="" href="../../_downloads/182fc0c7918b295146e8ff66ee704105/regularBox.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>) same as <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</p>
+Here we use the OpenFOAM utility <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> to generate a regular mesh (<a class="reference download internal" download="" href="../../_downloads/182fc0c7918b295146e8ff66ee704105/regularBox.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>) same as <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>.</p>
 </div>
 <input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--2">OpenFOAM script</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-blockmesh-regularbox">
@@ -571,7 +548,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 </div>
 <input class="tab-input" id="tab-set--3-input--3" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--3">Internal mesh</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-internalmesh">
-<div class="code-block-caption"><span class="caption-number">Listing 35 </span><span class="caption-text">Internal mesh properties of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-internalmesh" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 35 </span><span class="caption-text">Internal mesh properties of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>.</span><a class="headerlink" href="#lst-log-internalmesh" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="m">46</span>:<span class="w"> </span>coeff<span class="o">(</span>D*magSf*deltacoeff<span class="o">)</span><span class="w"> </span><span class="o">((</span><span class="m">100</span>*DT<span class="o">)</span>*0.0001<span class="o">)</span><span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>-1<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="o">]</span><span class="w"> </span>4e-07Access<span class="w"> </span>internal<span class="w"> </span>mesh
 <span class="linenos">  2</span><span class="m">0</span>:<span class="w"> </span>face<span class="w"> </span>center<span class="w"> </span><span class="o">(</span>-0.04<span class="w"> </span>-0.01<span class="w"> </span><span class="m">0</span>.005<span class="o">)</span>
 <span class="linenos">  3</span><span class="m">0</span>:<span class="w"> </span>face<span class="w"> </span>area<span class="w"> </span>vector<span class="w"> </span><span class="o">(</span><span class="m">0</span>.0001<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="o">)</span>
@@ -814,7 +791,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 </div>
 <input class="tab-input" id="tab-set--3-input--4" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--4">Boundary mesh</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-boundarymesh">
-<div class="code-block-caption"><span class="caption-number">Listing 36 </span><span class="caption-text">Boundary mesh properties of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-boundarymesh" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 36 </span><span class="caption-text">Boundary mesh properties of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>.</span><a class="headerlink" href="#lst-log-boundarymesh" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span>Patch<span class="w"> </span>bottom<span class="w"> </span>face<span class="w"> </span><span class="m">9</span>:<span class="w"> </span>owner<span class="w"> </span>cell<span class="w"> </span>9Access<span class="w"> </span>boundary<span class="w"> </span>mesh
 <span class="linenos">  2</span>Patch<span class="w"> </span>left<span class="w"> </span>face<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>face<span class="w"> </span>center<span class="w"> </span><span class="o">(</span>-0.05<span class="w"> </span>-0.01<span class="w"> </span><span class="m">0</span>.005<span class="o">)</span>
 <span class="linenos">  3</span>Patch<span class="w"> </span>left<span class="w"> </span>face<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>face<span class="w"> </span>area<span class="w"> </span>vector<span class="w"> </span><span class="o">(</span>-0.0001<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="o">)</span>
@@ -952,7 +929,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 </div>
 <input class="tab-input" id="tab-set--3-input--5" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--5">Boundary T</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-boundaryt">
-<div class="code-block-caption"><span class="caption-number">Listing 37 </span><span class="caption-text">Boundary properties of field T of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-boundaryt" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 37 </span><span class="caption-text">Boundary properties of field T of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>.</span><a class="headerlink" href="#lst-log-boundaryt" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="m">0</span><span class="o">()</span>Boundary<span class="w"> </span>patch:<span class="w"> </span>left
 <span class="linenos"> 2</span>Is<span class="w"> </span>coupled<span class="w"> </span>?<span class="w"> </span><span class="m">0</span>
 <span class="linenos"> 3</span>gradientInternalCoeffs<span class="w"> </span>of<span class="w"> </span>field<span class="w"> </span>T<span class="w"> </span>
@@ -998,7 +975,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 <a class="reference internal image-reference" href="../../_images/Coordinate_delta_internalcell_regularBox.svg"><img alt="../../_images/Coordinate_delta_internalcell_regularBox.svg" src="../../_images/Coordinate_delta_internalcell_regularBox.svg" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 45 </span><span class="caption-text">Information of internal cell (<span class="math notranslate nohighlight">\(C_{12}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-internalcell" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 47 </span><span class="caption-text">Information of internal cell (<span class="math notranslate nohighlight">\(C_{12}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-internalcell" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1007,7 +984,7 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 <a class="reference internal image-reference" href="../../_images/Coordinate_delta_boundary_regularBox.svg"><img alt="../../_images/Coordinate_delta_boundary_regularBox.svg" src="../../_images/Coordinate_delta_boundary_regularBox.svg" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 46 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{19}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-boundarycell" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 48 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{19}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-boundarycell" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1098,7 +1075,7 @@ There is a protected member function named <code class="code docutils literal no
 </div>
 <input class="tab-input" id="tab-set--5-input--4" name="tab-set--5" type="radio"><label class="tab-label" for="tab-set--5-input--4">Laplacian coefficients</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-fvm-laplacian">
-<div class="code-block-caption"><span class="caption-number">Listing 40 </span><span class="caption-text">fvm::Laplacian Coefficients  of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-fvm-laplacian" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 40 </span><span class="caption-text">fvm::Laplacian Coefficients  of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>.</span><a class="headerlink" href="#lst-log-fvm-laplacian" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="o">)</span>
 <span class="linenos">  2</span>fvm::laplacian<span class="o">(</span>DT,<span class="w"> </span>T<span class="o">)</span>:<span class="w"> </span>
 <span class="linenos">  3</span><span class="w">	</span>Lower
@@ -1305,7 +1282,7 @@ There is a protected member function named <code class="code docutils literal no
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg" src="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 47 </span><span class="caption-text">Information of internal cell (<span class="math notranslate nohighlight">\(C_{12}\)</span>)</span><a class="headerlink" href="#fig-laplaciancoeff-internalcell" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 49 </span><span class="caption-text">Information of internal cell (<span class="math notranslate nohighlight">\(C_{12}\)</span>)</span><a class="headerlink" href="#fig-laplaciancoeff-internalcell" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1314,7 +1291,7 @@ There is a protected member function named <code class="code docutils literal no
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 48 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{19}\)</span>)</span><a class="headerlink" href="#fig-laplaciancoeff-boundarycell" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{19}\)</span>)</span><a class="headerlink" href="#fig-laplaciancoeff-boundarycell" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1323,7 +1300,7 @@ There is a protected member function named <code class="code docutils literal no
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 49 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{9}\)</span>)</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 51 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{9}\)</span>)</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1332,7 +1309,7 @@ There is a protected member function named <code class="code docutils literal no
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{0}\)</span>)</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 52 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{0}\)</span>)</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1341,7 +1318,7 @@ There is a protected member function named <code class="code docutils literal no
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 51 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{10}\)</span>)</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 53 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{10}\)</span>)</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1350,7 +1327,7 @@ There is a protected member function named <code class="code docutils literal no
 <a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg" style="width: 100%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 52 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{5}\)</span>)</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 54 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{5}\)</span>)</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
@@ -1437,7 +1414,7 @@ All these are implemented in <a class="reference external" href="https://cpp.ope
 <input class="tab-input" id="tab-set--6-input--4" name="tab-set--6" type="radio"><label class="tab-label" for="tab-set--6-input--4">fvm::ddt coefficients</label><div class="tab-content docutils container">
 <p><span class="math notranslate nohighlight">\(\Delta t = 0.05\ s\)</span></p>
 <div class="literal-block-wrapper docutils container" id="lst-log-fvm-ddt">
-<div class="code-block-caption"><span class="caption-number">Listing 43 </span><span class="caption-text">fvm::ddt Coefficients  of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a>.</span><a class="headerlink" href="#lst-log-fvm-ddt" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 43 </span><span class="caption-text">fvm::ddt Coefficients  of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a>.</span><a class="headerlink" href="#lst-log-fvm-ddt" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="o">)</span>fvm::ddt<span class="o">(</span>T<span class="o">)</span>:<span class="w"> </span>
 <span class="linenos"> 2</span><span class="w">	</span>Lower47<span class="o">{</span><span class="m">0</span><span class="o">}</span>
 <span class="linenos"> 3</span><span class="w">	</span>Diagonal
@@ -1549,7 +1526,7 @@ All these are implemented in <a class="reference external" href="https://cpp.ope
 </div>
 <input class="tab-input" id="tab-set--7-input--2" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--2">Coefficients at the first time step</label><div class="tab-content docutils container">
 <div class="literal-block-wrapper docutils container" id="lst-log-fvm-teqn">
-<div class="code-block-caption"><span class="caption-number">Listing 44 </span><span class="caption-text">Final matrix coefficients of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 40</span></a> at the first time step.</span><a class="headerlink" href="#lst-log-fvm-teqn" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 44 </span><span class="caption-text">Final matrix coefficients of the regular mesh shown in <a class="reference internal" href="intro.html#fig-polymesh-regularbox"><span class="std std-numref">Fig. 42</span></a> at the first time step.</span><a class="headerlink" href="#lst-log-fvm-teqn" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="o">)</span>TEqn:<span class="w"> </span>
 <span class="linenos">  2</span><span class="w">	</span>Lower
 <span class="linenos">  3</span><span class="m">47</span>

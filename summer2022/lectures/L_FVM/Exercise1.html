@@ -1,29 +1,29 @@
 
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exercise 1 &mdash; HydrothermalFoam Lecture  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
+
   
-        <script src="../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script src="../../_static/tabs.js?v=3ee01567"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -209,31 +209,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<div class="admonition warning" id="l-fvm-exercise1">
+  <div class="admonition warning" id="l-fvm-exercise1">
 <p class="admonition-title">Warning</p>
 <p>Before we start the exercise 1, please download (<a class="reference download internal" download="" href="../../_downloads/5cadc0ff36497aaf1c4155bb17c6dc5e/test_laplacianFoam.zip"><code class="xref download docutils literal notranslate"><span class="pre">test_laplacianFoam</span></code></a>) the modified Laplacian solver first.
 Then put it in the shared folder and compile (<code class="code docutils literal notranslate"><span class="pre">wmake</span></code>) it in the docker container.
@@ -261,7 +237,8 @@ This modified solver writes out detailed information on matrix coefficients into
 see also <a class="reference internal" href="../L01/FirstCase.html#theory-heat-diffusion"><span class="std std-ref">Theory</span></a>.</p>
 <p>Below is a simple 2D setup for a heat diffusion test case. We will use it to learn about the details of how openFOAM’s FV method works.</p>
 <figure class="align-center" id="fvm-geometry-bcs-regularbox" style="width: 100%">
-<img alt="../../_images/boundaryConditions_FVM_regularBox.svg" src="../../_images/boundaryConditions_FVM_regularBox.svg" /><figcaption>
+<img alt="../../_images/boundaryConditions_FVM_regularBox.svg" src="../../_images/boundaryConditions_FVM_regularBox.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 38 </span><span class="caption-text">Model geometry, boundary conditions and initial condition.</span><a class="headerlink" href="#fvm-geometry-bcs-regularbox" title="Link to this image"></a></p>
 </figcaption>
 </figure>
@@ -280,14 +257,16 @@ Therefore, the mesh topology shown below is the same as OpenFOAM polyMesh.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Regular mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-polymesh-regularbox" style="width: 100%">
-<img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" /><figcaption>
+<img alt="../../_images/mesh_FVM_regularBox.svg" src="../../_images/mesh_FVM_regularBox.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 39 </span><span class="caption-text">2D regular mesh structure and topology information of OpenFOAM polyMesh (See <a class="reference internal" href="cases/jupyter/VisualizeResults.html#1.-Read-and-plot-mesh-information"><span class="std std-ref">1. Read and plot mesh information</span></a> in the notebook).</span><a class="headerlink" href="#fig-polymesh-regularbox" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-polymesh-unstructured" style="width: 100%">
-<img alt="../../_images/mesh_FVM_unstructured.svg" src="../../_images/mesh_FVM_unstructured.svg" /><figcaption>
+<img alt="../../_images/mesh_FVM_unstructured.svg" src="../../_images/mesh_FVM_unstructured.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 40 </span><span class="caption-text">2D unstructured mesh topology information (<a class="reference download internal" download="" href="../../_downloads/511a4a1fe2a54b529f96db7ce8318cd3/unstructured.zip"><code class="xref download docutils literal notranslate"><span class="pre">Regular</span> <span class="pre">box</span> <span class="pre">case</span></code></a>).</span><a class="headerlink" href="#fig-polymesh-unstructured" title="Link to this image"></a></p>
 </figcaption>
 </figure>
@@ -350,7 +329,8 @@ the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (
 <span class="eqno">(55)<a class="headerlink" href="#equation-fvm-flux-gaussian-integral" title="Link to this equation"></a></span>\[\color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} = \iint_{f_{23}} (\vec{J}^{T,D}_{f_{23}} \cdot \vec{n}_{f_{23}}) dS_{f_{23}} \approx \color{orange}{\sum\limits_{ip\sim ip(f_{23})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega_{ip} S_{f_{23}}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(S_f\)</span> is the area of face <span class="math notranslate nohighlight">\(f_{23}\)</span>, <span class="math notranslate nohighlight">\(ip\)</span> refers to a integration point and <span class="math notranslate nohighlight">\(ip(f_{23})\)</span> the number of integration points along surface <span class="math notranslate nohighlight">\(f_{23}\)</span>, <span class="math notranslate nohighlight">\(\omega_{ip}\)</span> is the integral weights.</p>
 <figure class="align-center" id="fig-fig5-2">
-<a class="reference internal image-reference" href="../../_images/Fig5.2_RedBook.svg"><img alt="../../_images/Fig5.2_RedBook.svg" src="../../_images/Fig5.2_RedBook.svg" width="100%" /></a>
+<a class="reference internal image-reference" href="../../_images/Fig5.2_RedBook.svg"><img alt="../../_images/Fig5.2_RedBook.svg" src="../../_images/Fig5.2_RedBook.svg" style="width: 100%;" />
+</a>
 <figcaption>
 <p><span class="caption-number">Fig. 41 </span><span class="caption-text">Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points <span id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The total flux <span class="math notranslate nohighlight">\(FluxT_f\)</span> is computed as linear combinations of the two cell values plus a source term.</span><a class="headerlink" href="#fig-fig5-2" title="Link to this image"></a></p>
 </figcaption>
@@ -467,7 +447,8 @@ It should be noted that <strong>the coefficients matrix of Laplacian term is a s
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">Regular mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-fvm-matrix" style="width: 100%">
-<img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" /><figcaption>
+<img alt="../../_images/matrix_FVM_regularBox.svg" src="../../_images/matrix_FVM_regularBox.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 42 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
 The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix" title="Link to this image"></a></p>
 </figcaption>
@@ -475,7 +456,8 @@ The coefficients of the selected cell <span class="math notranslate nohighlight"
 </div>
 <input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-fvm-matrix-unstructured" style="width: 100%">
-<img alt="../../_images/matrix_FVM_unstructured.svg" src="../../_images/matrix_FVM_unstructured.svg" /><figcaption>
+<img alt="../../_images/matrix_FVM_unstructured.svg" src="../../_images/matrix_FVM_unstructured.svg" />
+<figcaption>
 <p><span class="caption-number">Fig. 43 </span><span class="caption-text">Visualization of <span class="math notranslate nohighlight">\(\mathbf{A}_{N \times N} \mathbf{T}_{N\times1} = \mathbf{b}_{N\times1}\)</span>.
 The coefficients of the selected cell <span class="math notranslate nohighlight">\(C\)</span> (<a class="reference internal" href="#fig-polymesh-regularbox"><span class="std std-numref">Fig. 39</span></a>) are marked by green rectangle.</span><a class="headerlink" href="#fig-fvm-matrix-unstructured" title="Link to this image"></a></p>
 </figcaption>
@@ -1302,7 +1284,8 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--5-input--1" name="tab-set--5" type="radio"><label class="tab-label" for="tab-set--5-input--1">Internal cell</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-deltacoeff-internalcell">
-<a class="reference internal image-reference" href="../../_images/Coordinate_delta_internalcell_regularBox.svg"><img alt="../../_images/Coordinate_delta_internalcell_regularBox.svg" src="../../_images/Coordinate_delta_internalcell_regularBox.svg" width="100%" /></a>
+<a class="reference internal image-reference" href="../../_images/Coordinate_delta_internalcell_regularBox.svg"><img alt="../../_images/Coordinate_delta_internalcell_regularBox.svg" src="../../_images/Coordinate_delta_internalcell_regularBox.svg" style="width: 100%;" />
+</a>
 <figcaption>
 <p><span class="caption-number">Fig. 44 </span><span class="caption-text">Information of internal cell (<span class="math notranslate nohighlight">\(C_{12}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-internalcell" title="Link to this image"></a></p>
 </figcaption>
@@ -1310,7 +1293,8 @@ It means that after calling <code class="code docutils literal notranslate"><spa
 </div>
 <input class="tab-input" id="tab-set--5-input--2" name="tab-set--5" type="radio"><label class="tab-label" for="tab-set--5-input--2">Boundary cell</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-deltacoeff-boundarycell">
-<a class="reference internal image-reference" href="../../_images/Coordinate_delta_boundary_regularBox.svg"><img alt="../../_images/Coordinate_delta_boundary_regularBox.svg" src="../../_images/Coordinate_delta_boundary_regularBox.svg" width="100%" /></a>
+<a class="reference internal image-reference" href="../../_images/Coordinate_delta_boundary_regularBox.svg"><img alt="../../_images/Coordinate_delta_boundary_regularBox.svg" src="../../_images/Coordinate_delta_boundary_regularBox.svg" style="width: 100%;" />
+</a>
 <figcaption>
 <p><span class="caption-number">Fig. 45 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{19}\)</span>)</span><a class="headerlink" href="#fig-deltacoeff-boundarycell" title="Link to this image"></a></p>
 </figcaption>
@@ -1607,7 +1591,8 @@ There is a protected member function named <code class="code docutils literal no
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--7-input--1" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--1">Internal cell</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-laplaciancoeff-internalcell">
-<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg" src="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg" width="100%" /></a>
+<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg" src="../../_images/Coordinate_Laplacian_internalcell_regularBox.svg" style="width: 100%;" />
+</a>
 <figcaption>
 <p><span class="caption-number">Fig. 46 </span><span class="caption-text">Information of internal cell (<span class="math notranslate nohighlight">\(C_{12}\)</span>)</span><a class="headerlink" href="#fig-laplaciancoeff-internalcell" title="Link to this image"></a></p>
 </figcaption>
@@ -1615,7 +1600,8 @@ There is a protected member function named <code class="code docutils literal no
 </div>
 <input class="tab-input" id="tab-set--7-input--2" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--2">Boundary cell 19</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-laplaciancoeff-boundarycell">
-<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg" width="100%" /></a>
+<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C19_regularBox.svg" style="width: 100%;" />
+</a>
 <figcaption>
 <p><span class="caption-number">Fig. 47 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{19}\)</span>)</span><a class="headerlink" href="#fig-laplaciancoeff-boundarycell" title="Link to this image"></a></p>
 </figcaption>
@@ -1623,7 +1609,8 @@ There is a protected member function named <code class="code docutils literal no
 </div>
 <input class="tab-input" id="tab-set--7-input--3" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--3">Boundary cell 9</label><div class="tab-content docutils container">
 <figure class="align-center" id="id5">
-<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg" width="100%" /></a>
+<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C9_regularBox.svg" style="width: 100%;" />
+</a>
 <figcaption>
 <p><span class="caption-number">Fig. 48 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{9}\)</span>)</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
 </figcaption>
@@ -1631,7 +1618,8 @@ There is a protected member function named <code class="code docutils literal no
 </div>
 <input class="tab-input" id="tab-set--7-input--4" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--4">Boundary cell 0</label><div class="tab-content docutils container">
 <figure class="align-center" id="id6">
-<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg" width="100%" /></a>
+<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C0_regularBox.svg" style="width: 100%;" />
+</a>
 <figcaption>
 <p><span class="caption-number">Fig. 49 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{0}\)</span>)</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
 </figcaption>
@@ -1639,7 +1627,8 @@ There is a protected member function named <code class="code docutils literal no
 </div>
 <input class="tab-input" id="tab-set--7-input--5" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--5">Boundary cell 10</label><div class="tab-content docutils container">
 <figure class="align-center" id="id7">
-<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg" width="100%" /></a>
+<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C10_regularBox.svg" style="width: 100%;" />
+</a>
 <figcaption>
 <p><span class="caption-number">Fig. 50 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{10}\)</span>)</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
 </figcaption>
@@ -1647,7 +1636,8 @@ There is a protected member function named <code class="code docutils literal no
 </div>
 <input class="tab-input" id="tab-set--7-input--6" name="tab-set--7" type="radio"><label class="tab-label" for="tab-set--7-input--6">Boundary cell 5</label><div class="tab-content docutils container">
 <figure class="align-center" id="id8">
-<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg" width="100%" /></a>
+<a class="reference internal image-reference" href="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg"><img alt="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg" src="../../_images/Coordinate_Laplacian_boundary_C5_regularBox.svg" style="width: 100%;" />
+</a>
 <figcaption>
 <p><span class="caption-number">Fig. 51 </span><span class="caption-text">Information of boundary cell (<span class="math notranslate nohighlight">\(C_{5}\)</span>)</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
 </figcaption>

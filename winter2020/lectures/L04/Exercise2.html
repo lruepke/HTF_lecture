@@ -1,28 +1,29 @@
 
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exercise 2 &mdash; HydrothermalFoam Lecture  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
+
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/tabs.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -45,12 +46,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../_static/htf_picto2.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/htf_picto2.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -165,8 +170,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Exercise 2</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Exercise 2</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L04/Exercise2.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -176,32 +181,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="exercise-2">
-<span id="l04-exercise2"></span><h1>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline"></a></h1>
+  <section id="exercise-2">
+<span id="l04-exercise2"></span><h1>Exercise 2<a class="headerlink" href="#exercise-2" title="Link to this heading"></a></h1>
 <p><span id="id1">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> published a landmark paper on how A landmark paper on how the thermodynamic properties of water determine temperatures in hydrothermal upflow zones. Their concept of “fluxibility” was later extended to explore interrelations between permeability on vent temperatures <span id="id2">[<a class="reference internal" href="../../refs.html#id9" title="T. Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132-141, 2010. URL: &lt;Go to ISI&gt;://WOS:000277410200010, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010a</a>]</span>, the structure of hydrothermal flow zone <span id="id3">[<a class="reference internal" href="../../refs.html#id10" title="D. Coumou, T. Driesner, and C. A. Heinrich. The structure and dynamics of mid-ocean ridge hydrothermal systems. Science, 321(5897):1825-1828, 2008. URL: &lt;Go to ISI&gt;://000259501300035 http://www.sciencemag.org/cgi/reprint/321/5897/1825.pdf, doi:10.1126/science.1159582.">Coumou et al., 2008</a>]</span>, and fault-controlled off-axis hydrothermal system <span id="id4">[<a class="reference internal" href="../../refs.html#id11" title="C. Andersen, LH Rüpke, J. Hasenclever, I. Grevemeyer, and S. Petersen. Fault geometry and permeability contrast control vent temperatures at the logatchev 1 hydrothermal field, mid-atlantic ridge. Geology, 43(1):51-54, 2015. doi:doi:10.1130/G36113.1.">Andersen et al., 2015</a>]</span>. Some of these papers are available in the e-learning site of this course for registered CAU students.</p>
 <div class="admonition-objectives-of-this-exercise admonition">
 <p class="admonition-title">Objectives of this exercise</p>
@@ -212,11 +193,12 @@
 </div>
 <p>We will now try to reproduce the results presented by <span id="id5">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span>. The setup is very similar to the simple single plume driven by a gaussian heat source we had simulated previously.</p>
 <section id="model-setup-and-running-the-case">
-<h2>Model setup and running the case<a class="headerlink" href="#model-setup-and-running-the-case" title="Permalink to this headline"></a></h2>
+<h2>Model setup and running the case<a class="headerlink" href="#model-setup-and-running-the-case" title="Link to this heading"></a></h2>
 <p>We are simulating a 3700 x 1000m sized box with a gaussian constant temperature boundary condition at the bottom. The general model setup is shown in the Figure below. The OpenFoam case can be downloaded from here: <a class="reference download internal" download="" href="../../_downloads/048bba973a7a2271dcec03612292cb06/Jupp_Schultz.zip"><code class="xref download docutils literal notranslate"><span class="pre">Jupp_Schultz</span></code></a>.</p>
-<p>(<a class="reference external" href="../../lectures/L04/Exercise2-1.py">Source code</a>, <a class="reference external" href="../../lectures/L04/Exercise2-1.svg">svg</a>, <a class="reference external" href="../../lectures/L04/Exercise2-1.pdf">pdf</a>)</p>
+<p>(<a class="reference download internal" download="" href="../../_downloads/1ff5e29191bc47e148e151d287c56a73/Exercise2-1.py"><code class="xref download docutils literal notranslate"><span class="pre">Source</span> <span class="pre">code</span></code></a>, <a class="reference download internal" download="" href="../../_downloads/575ad86e2c77a8c764b6b1a45ffb603a/Exercise2-1.svg"><code class="xref download docutils literal notranslate"><span class="pre">svg</span></code></a>, <a class="reference download internal" download="" href="../../_downloads/bef22b6abfda09f3f2688438672a8eab/Exercise2-1.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>)</p>
 <figure class="align-default">
-<img alt="../../_images/Exercise2-1.svg" class="plot-directive" src="../../_images/Exercise2-1.svg" /></figure>
+<img alt="../../_images/Exercise2-1.svg" class="plot-directive" src="../../_images/Exercise2-1.svg" />
+</figure>
 <p>Download the case file, unzip it and copy it into your shared folder that is accessible both from your local system and from the docker container. Check out the usual files like <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>, <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code>, <code class="code docutils literal notranslate"><span class="pre">0/T</span></code>. Make sure you understand the setup!</p>
 <p>There is a dynamic code section within <code class="code docutils literal notranslate"><span class="pre">system/conrolDict</span></code> that allows outputting more variables including the thermodynamic properties of water.</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">functions</span>
@@ -255,7 +237,7 @@
 </pre></div>
 </div>
 <p>That code block requires the specific enthalpy to be accessible by the code. The version of <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> we are using does not have that activated. Therefore we need to update it to the newest version. Thankfully that’s easy to do; go into the docker container shell and</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>
 ./getHydrothermalFoam_latest.sh
 </pre></div>
 </div>
@@ -263,9 +245,9 @@
 <p>It’s possible that we have been a bit overambitious in our chosen numerical resolution. In case the run-time is too long, just reduce the horizontal and vertical resolution. Make the mesh with <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> and call the solver; or execute the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script. If you are feeling courages today, you can also try our running it in parallel! Check out the <code class="code docutils literal notranslate"><span class="pre">run_par.sh</span></code> script for that.</p>
 </section>
 <section id="post-processing">
-<h2>Post-processing<a class="headerlink" href="#post-processing" title="Permalink to this headline"></a></h2>
+<h2>Post-processing<a class="headerlink" href="#post-processing" title="Link to this heading"></a></h2>
 <section id="plotting-temperature">
-<h3>Plotting temperature<a class="headerlink" href="#plotting-temperature" title="Permalink to this headline"></a></h3>
+<h3>Plotting temperature<a class="headerlink" href="#plotting-temperature" title="Link to this heading"></a></h3>
 <p>After running the case, check it out in paraview and make sure you understand the results and that everything looks fine. While paraview is great for 3-D processing, sometimes python can be more powerfull in detailed post-processing.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -273,8 +255,9 @@
 </div>
 <p>The figure below shows an example plot of the final temperature solution. It basically does the same thing as paraview, but let’s walk through it.</p>
 <figure class="align-center" id="fig-t-jupp-schultz-steady">
-<img alt="../../_images/T_Jupp_Schultz_steady.svg" src="../../_images/T_Jupp_Schultz_steady.svg" /><figcaption>
-<p><span class="caption-number">Fig. 20 </span><span class="caption-text">The steady-state temperature distribution. See <a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Temperature-+-velocity-field-(quiver)"><span class="std std-ref">Temperature + velocity field (quiver)</span></a> in the notebook.</span><a class="headerlink" href="#fig-t-jupp-schultz-steady" title="Permalink to this image"></a></p>
+<img alt="../../_images/T_Jupp_Schultz_steady.svg" src="../../_images/T_Jupp_Schultz_steady.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">The steady-state temperature distribution. See <a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Temperature-+-velocity-field-(quiver)"><span class="std std-ref">Temperature + velocity field (quiver)</span></a> in the notebook.</span><a class="headerlink" href="#fig-t-jupp-schultz-steady" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Click on the link in the figure caption and go through the notebook. Safest way of getting this to work is to copy the steps into local notebooks (see <a class="reference internal" href="../L01/Installation.html#installation-guide"><span class="std std-ref">Installation guide</span></a>).</p>
@@ -284,34 +267,38 @@
 <p>Copy the sections into your local notebook, try to execute the sections (press SHIFT+RETURN), add some markdown sections with comments.</p>
 </section>
 <section id="exploring-the-parameter-space">
-<h3>Exploring the parameter space<a class="headerlink" href="#exploring-the-parameter-space" title="Permalink to this headline"></a></h3>
+<h3>Exploring the parameter space<a class="headerlink" href="#exploring-the-parameter-space" title="Link to this heading"></a></h3>
 <p>Effect of cell size (<strong>CS</strong>) and full width at half maximum (<strong>FWHM</strong>),</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">CS=10,FWHM=300</label><div class="tab-content docutils container">
 <figure class="align-center" id="id6">
-<img alt="../../_images/T_Jupp_Schultz300_steady.svg" src="../../_images/T_Jupp_Schultz300_steady.svg" /><figcaption>
-<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Cell size = 10 m, FWHM = 300 m.</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+<img alt="../../_images/T_Jupp_Schultz300_steady.svg" src="../../_images/T_Jupp_Schultz300_steady.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Cell size = 10 m, FWHM = 300 m.</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">CS=10,FWHM=400</label><div class="tab-content docutils container">
 <figure class="align-center" id="id7">
-<img alt="../../_images/T_Jupp_Schultz400_steady.svg" src="../../_images/T_Jupp_Schultz400_steady.svg" /><figcaption>
-<p><span class="caption-number">Fig. 22 </span><span class="caption-text">Cell size = 10 m, FWHM = 400 m.</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+<img alt="../../_images/T_Jupp_Schultz400_steady.svg" src="../../_images/T_Jupp_Schultz400_steady.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 22 </span><span class="caption-text">Cell size = 10 m, FWHM = 400 m.</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 <input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">CS=2.5,FWHM=300</label><div class="tab-content docutils container">
 <figure class="align-center" id="id8">
-<img alt="../../_images/T_Jupp_Schultz300_2.5_steady.svg" src="../../_images/T_Jupp_Schultz300_2.5_steady.svg" /><figcaption>
-<p><span class="caption-number">Fig. 23 </span><span class="caption-text">Cell size = 2.5 m, FWHM = 300 m.</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+<img alt="../../_images/T_Jupp_Schultz300_2.5_steady.svg" src="../../_images/T_Jupp_Schultz300_2.5_steady.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 23 </span><span class="caption-text">Cell size = 2.5 m, FWHM = 300 m.</span><a class="headerlink" href="#id8" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </div>
 </div>
 <figure class="align-center" id="fig-jupp-schultz-early">
-<img alt="../../_images/Jupp_Schultz_early.svg" src="../../_images/Jupp_Schultz_early.svg" /><figcaption>
-<p><span class="caption-number">Fig. 24 </span><span class="caption-text">Early stages of the simulation. See <a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Early-stage"><span class="std std-ref">Early stage</span></a> in the notebook.</span><a class="headerlink" href="#fig-jupp-schultz-early" title="Permalink to this image"></a></p>
+<img alt="../../_images/Jupp_Schultz_early.svg" src="../../_images/Jupp_Schultz_early.svg" />
+<figcaption>
+<p><span class="caption-number">Fig. 24 </span><span class="caption-text">Early stages of the simulation. See <a class="reference internal" href="cases/Jupp_Schultz/jupyter/Plot_CaseResults.html#Early-stage"><span class="std std-ref">Early stage</span></a> in the notebook.</span><a class="headerlink" href="#fig-jupp-schultz-early" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <div class="toctree-wrapper compound">

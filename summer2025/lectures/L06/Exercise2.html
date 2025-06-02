@@ -89,6 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise_disks.html">Exercise - Permeability of randomly packed disks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -185,31 +186,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="exercise-2">
+  <section id="exercise-2">
 <span id="l06-exercise2"></span><h1>Exercise 2<a class="headerlink" href="#exercise-2" title="Link to this heading"></a></h1>
 <p>Ok, time to put our new knowledge to work! Let’s explore a more realistic case and investigate how a more permeable fault zone can deviate hydrothermal upflow. You can find background on such a setup in <span id="id1">[<a class="reference internal" href="../../refs.html#id11" title="C. Andersen, LH Rüpke, J. Hasenclever, I. Grevemeyer, and S. Petersen. Fault geometry and permeability contrast control vent temperatures at the logatchev 1 hydrothermal field, mid-atlantic ridge. Geology, 43(1):51-54, 2015. doi:doi:10.1130/G36113.1.">Andersen et al., 2015</a>]</span>.</p>
 <div class="admonition-steps admonition">
@@ -235,7 +212,7 @@ cp<span class="w"> </span>-r<span class="w"> </span>/home/openfoam/hydrothermalf
 <figure class="align-center" id="setup-l5-2-fig" style="width: 80%">
 <img alt="../../_images/perm_fault.png" src="../../_images/perm_fault.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 37 </span><span class="caption-text">Permeability structure of our detachment fault example cause.</span><a class="headerlink" href="#setup-l5-2-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 39 </span><span class="caption-text">Permeability structure of our detachment fault example cause.</span><a class="headerlink" href="#setup-l5-2-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>We can use the <code class="code docutils literal notranslate"><span class="pre">rotatedBoxToCell</span></code> function in the <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> for this. Check the <a class="reference external" href="https://cpp.openfoam.org/v11/classFoam_1_1rotatedBoxToCell.html">openfoam documentation</a> !</p>
@@ -293,7 +270,7 @@ cp<span class="w"> </span>-r<span class="w"> </span>/home/openfoam/hydrothermalf
 <figure class="align-center" id="flow-fault-fig" style="width: 80%">
 <img alt="../../_images/flow_fault.png" src="../../_images/flow_fault.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 38 </span><span class="caption-text">Hydrothermal flow along a preferential pathway.</span><a class="headerlink" href="#flow-fault-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 40 </span><span class="caption-text">Hydrothermal flow along a preferential pathway.</span><a class="headerlink" href="#flow-fault-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition tip">

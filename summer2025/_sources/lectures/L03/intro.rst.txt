@@ -5,7 +5,7 @@ Digital Rock Physics - Effective Permeability of Rocks
 
 .. admonition:: Further info
 
-    Have a look at the `digital rock portal <https://digitalporousmedia.org>`_ to get a better idea of what Digital Rock Physics is all about! 
+    Have a look at the `digital porous media portal <https://digitalporousmedia.org>`_ to get a better idea of what Digital Rock Physics is all about! 
 
 
 Theoretical Background

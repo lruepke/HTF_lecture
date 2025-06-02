@@ -89,6 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise_disks.html">Exercise - Permeability of randomly packed disks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -185,31 +186,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="porous-flow-submarine-hydrothermal-systems">
+  <section id="porous-flow-submarine-hydrothermal-systems">
 <h1>Porous Flow - Submarine Hydrothermal Systems<a class="headerlink" href="#porous-flow-submarine-hydrothermal-systems" title="Link to this heading"></a></h1>
 <section id="theoretical-background">
 <h2>Theoretical background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
@@ -234,21 +211,21 @@ mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti-l04
 </section>
 <section id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Link to this heading"></a></h2>
-<p>The details of the OpenFoam implementation can be found in the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> documentation. Here we only show a brief summary. <a class="reference internal" href="#fig-htf-solution"><span class="std std-numref">Fig. 17</span></a> shows how the energy equation is solved within the OpenFoam framework.</p>
+<p>The details of the OpenFoam implementation can be found in the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> documentation. Here we only show a brief summary. <a class="reference internal" href="#fig-htf-solution"><span class="std std-numref">Fig. 19</span></a> shows how the energy equation is solved within the OpenFoam framework.</p>
 <figure class="align-center" id="fig-htf-solution">
 <img alt="../../_images/solution_algorithm.svg" src="../../_images/solution_algorithm.svg" />
 <figcaption>
-<p><span class="caption-number">Fig. 17 </span><span class="caption-text">Implementation of the energy conservation equation.</span><a class="headerlink" href="#fig-htf-solution" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Implementation of the energy conservation equation.</span><a class="headerlink" href="#fig-htf-solution" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="equation-of-state">
 <h2>Equation-of-state<a class="headerlink" href="#equation-of-state" title="Link to this heading"></a></h2>
-<p>The fluid properties like density, viscosity, specific heat are determined from the equation-of-state of pure water. <a class="reference internal" href="#fig-phase-diagram"><span class="std std-numref">Fig. 18</span></a> shows the phase diagram of pure water. At sub-critical conditions (P&lt; 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems.</p>
+<p>The fluid properties like density, viscosity, specific heat are determined from the equation-of-state of pure water. <a class="reference internal" href="#fig-phase-diagram"><span class="std std-numref">Fig. 20</span></a> shows the phase diagram of pure water. At sub-critical conditions (P&lt; 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems.</p>
 <figure class="align-center" id="fig-phase-diagram">
 <img alt="../../_images/PhaseDiagram.svg" src="../../_images/PhaseDiagram.svg" />
 <figcaption>
-<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Phase diagram of pure water.</span><a class="headerlink" href="#fig-phase-diagram" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Phase diagram of pure water.</span><a class="headerlink" href="#fig-phase-diagram" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>

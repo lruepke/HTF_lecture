@@ -89,6 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise_disks.html">Exercise - Permeability of randomly packed disks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
@@ -187,37 +188,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="exercise-1-fluid-properties">
+  <section id="exercise-1-fluid-properties">
 <span id="l05-exercise1"></span><h1>Exercise 1: Fluid properties<a class="headerlink" href="#exercise-1-fluid-properties" title="Link to this heading"></a></h1>
 <p>Let’s start by computing some properties of pure water as a function of pressure and temperature.</p>
 <figure class="align-center" id="fig-properties-water">
 <img alt="../../_images/density_pt.svg" src="../../_images/density_pt.svg" />
 <figcaption>
-<p><span class="caption-number">Fig. 28 </span><span class="caption-text">Pure water density as a function of temperature and pressure. Plot was made using the python package of <a class="reference external" href="https://iapws.readthedocs.io/en/latest/#">iapws</a>.</span><a class="headerlink" href="#fig-properties-water" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 30 </span><span class="caption-text">Pure water density as a function of temperature and pressure. Plot was made using the python package of <a class="reference external" href="https://iapws.readthedocs.io/en/latest/#">iapws</a>.</span><a class="headerlink" href="#fig-properties-water" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>We can use the python package iapws to compute the fluid properties. One way to do this is to call the IAPWS97 class and to specify the temperature and pressure. The class then returns a build-in datatype that holds all the properties.</p>

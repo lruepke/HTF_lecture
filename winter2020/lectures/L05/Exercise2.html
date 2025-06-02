@@ -1,28 +1,29 @@
 
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exercise 2 &mdash; HydrothermalFoam Lecture  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/tabs.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
+
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/tabs.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -45,12 +46,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> HydrothermalFoam Lecture
-            <img src="../../_static/htf_picto2.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/htf_picto2.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -159,8 +164,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Exercise 2</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Exercise 2</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lectures/L05/Exercise2.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -170,32 +175,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="exercise-2">
-<span id="l05-exercise2"></span><h1>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline"></a></h1>
+  <section id="exercise-2">
+<span id="l05-exercise2"></span><h1>Exercise 2<a class="headerlink" href="#exercise-2" title="Link to this heading"></a></h1>
 <p>Ok, time to put our new knowledge to work! Let’s explore a more realistic case and investigate how a more permeable fault zone can deviate hydrothermal upflow. You can find background on such a setup in <span id="id1">[<a class="reference internal" href="../../refs.html#id11" title="C. Andersen, LH Rüpke, J. Hasenclever, I. Grevemeyer, and S. Petersen. Fault geometry and permeability contrast control vent temperatures at the logatchev 1 hydrothermal field, mid-atlantic ridge. Geology, 43(1):51-54, 2015. doi:doi:10.1130/G36113.1.">Andersen et al., 2015</a>]</span>.</p>
 <div class="admonition-steps admonition">
 <p class="admonition-title">Steps</p>
@@ -207,20 +188,20 @@
 </ul>
 </div>
 <section id="step-1">
-<h2>Step 1<a class="headerlink" href="#step-1" title="Permalink to this headline"></a></h2>
+<h2>Step 1<a class="headerlink" href="#step-1" title="Link to this heading"></a></h2>
 <p>Copy the <code class="code docutils literal notranslate"><span class="pre">$HOME/hydrothermalfoam-master/cookbooks/2d/Regular2DBox/</span></code> into your working directory.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> <span class="nv">$HOME</span>/HydrothermalFoam_runs
-cp -r /home/openfoam/hydrothermalfoam-master/cookbooks/2d/Regular2DBox/ ./Fault_zone_2D
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp<span class="w"> </span>-r<span class="w"> </span>/home/openfoam/hydrothermalfoam-master/cookbooks/2d/Regular2DBox/<span class="w"> </span>./Fault_zone_2D
 </pre></div>
 </div>
 </section>
 <section id="step-2">
-<h2>Step 2<a class="headerlink" href="#step-2" title="Permalink to this headline"></a></h2>
+<h2>Step 2<a class="headerlink" href="#step-2" title="Link to this heading"></a></h2>
 <p>Now modify the case and setup the permeability structure. It should look like this:</p>
 <figure class="align-center" id="setup-l5-2-fig" style="width: 80%">
 <img alt="../../_images/perm_fault.png" src="../../_images/perm_fault.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 32 </span><span class="caption-text">Permeability structure of our detachment fault example cause.</span><a class="headerlink" href="#setup-l5-2-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 32 </span><span class="caption-text">Permeability structure of our detachment fault example cause.</span><a class="headerlink" href="#setup-l5-2-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>We can use the <code class="code docutils literal notranslate"><span class="pre">rotatedBoxToCell</span></code> function in the <code class="code docutils literal notranslate"><span class="pre">setFieldsDict</span></code> for this. Check the <a class="reference external" href="https://cpp.openfoam.org/v3/a02202.html">openfoam documentation</a> !</p>
@@ -250,12 +231,12 @@ cp -r /home/openfoam/hydrothermalfoam-master/cookbooks/2d/Regular2DBox/ ./Fault_
 </div>
 </section>
 <section id="step-3">
-<h2>Step 3<a class="headerlink" href="#step-3" title="Permalink to this headline"></a></h2>
+<h2>Step 3<a class="headerlink" href="#step-3" title="Link to this heading"></a></h2>
 <p>Explore the results in paraview! And investigate how the results change for different fault widths and permeability contrasts.</p>
 <figure class="align-center" id="flow-fault-fig" style="width: 80%">
 <img alt="../../_images/flow_fault.png" src="../../_images/flow_fault.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 33 </span><span class="caption-text">Hydrothermal flow along a preferential pathway.</span><a class="headerlink" href="#flow-fault-fig" title="Permalink to this image"></a></p>
+<p><span class="caption-number">Fig. 33 </span><span class="caption-text">Hydrothermal flow along a preferential pathway.</span><a class="headerlink" href="#flow-fault-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition tip">
