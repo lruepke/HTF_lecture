@@ -93,7 +93,7 @@ The workflow to generate the model input is the same as in the previous exercise
 * Post-process the results to compute the permeability and visualize the flow field
 
 
-You can download an example case from here: :download:`here <cases/RandomDisks.zip>`
+You can download an example case from here: :download:`here <cases/RandomDisks.zip>`. The scripts to generate the model input at in `geometry` and `python` directories. 
 
 
 .. admonition:: Exercise
