@@ -1,0 +1,50 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      createPatchDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+pointSync false;
+
+patches
+(
+    {
+        name inlet;
+        patchInfo { type wall; }
+        constructFrom set;
+        set inletFaceSet;
+    }
+
+    {
+        name outlet;
+        patchInfo { type patch; }
+        constructFrom set;
+        set outletFaceSet;
+    }
+
+    {
+        name bottom;
+        patchInfo { type symmetryPlane; }
+        constructFrom set;
+        set bottomFaceSet;
+    }
+
+    {
+        name top;
+        patchInfo { type symmetryPlane; }
+        constructFrom set;
+        set topFaceSet;
+    }
+);

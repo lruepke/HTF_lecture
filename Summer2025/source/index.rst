@@ -71,7 +71,8 @@ The majority of this course will be spent in front of a computer working on exer
     lectures/L03/Overview
     lectures/L03/intro  
     lectures/L03/FirstCase  
-    lectures/L03/Exercise  
+    lectures/L03/Exercise
+    lectures/L03/Exercise_disks.rst  
     lectures/L03/Theory  
 
 .. toctree::
