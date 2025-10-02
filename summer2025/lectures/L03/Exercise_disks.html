@@ -259,6 +259,7 @@
 <li><p>Use paraview to segment the image file (vti) and generate triangulated stl file of the grains</p></li>
 <li><p>Use the <cite>blockMesh</cite> utility to generate the underlying regular mesh</p></li>
 <li><p>Run the <cite>snappyHexMesh</cite> utility to generate a mesh from the triangulated stl file</p></li>
+<li><p>Remember to set <cite>locationInMesh</cite> to a point inside the pores space in <cite>system/snappyHexMeshDict`</cite></p></li>
 <li><p>Scale the mesh by a factor of 1e-6</p></li>
 <li><p>Calculate the flow field using the <cite>simpleFoam</cite> solver</p></li>
 <li><p>Post-process the results to compute the permeability and visualize the flow field</p></li>
