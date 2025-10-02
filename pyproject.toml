@@ -25,6 +25,7 @@ setuptools = "^70.0.0"
 meshio = "^5.3.5"
 h5py = "^3.11.0"
 xlsxwriter = "^3.2.0"
+iapws = "^1.5.4"
 
 
 [build-system]

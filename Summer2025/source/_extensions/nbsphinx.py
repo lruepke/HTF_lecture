@@ -810,6 +810,8 @@ class Exporter(nbconvert.RSTExporter):
             })
 
     def from_notebook_node(self, nb, resources=None, **kw):
+        print("### from_notebook_node called on notebook:", resources.get("metadata", {}).get("name", "UNKNOWN"))
+
         # check if some cell need to delete
         # =====option 1 complete remove
         # cells_keep=[]

@@ -563,6 +563,19 @@ files = [
 ]
 
 [[package]]
+name = "iapws"
+version = "1.5.4"
+description = "Python implementation of standards from The InternationalAssociation for the Properties of Water and Steam"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
+files = [
+    {file = "iapws-1.5.4.tar.gz", hash = "sha256:9f0faa39a967d76fc5e5f95f61d922e135453192e02bf875d07242f13d6eaa55"},
+]
+
+[package.dependencies]
+scipy = ">=1.2"
+
+[[package]]
 name = "idna"
 version = "3.7"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -2179,4 +2192,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "7bb34417c2a28940bd9fecd5ac18d1e6c3baa0375033273f2fdc6729ee9a243d"
+content-hash = "582f3c81f36d4389268e06bbb9b4bd68beebf8528b6895e1ce4b695a55a08392"
