@@ -47,12 +47,11 @@ The 0 directory now has entries for T (temperature) and p (pressure) our new pri
 .. tip::
     Most OpenFoam cases include scripts like :code:`run.sh` and :code:`clean.sh`. The :code:`run.sh` script is a good starting point for "understanding" a case. It lists all commands that have to be executed (e.g. meshing, setting of properties, etc.) to run a case. The :code:`clean.sh` script cleans up the case and deletes e.g. the mesh and all output directories. Have a look into these files and see if you understand them!
 
-The 0 directory contains all initial and boundary conditions, the system folder contains all controlling parameter files, and the constant folder contains constant properties like the mesh - which we will create next. 
+The 0 directory contains all initial and boundary conditions, the system folder contains all controlling parameter files, and the constant folder contains constant properties like the mesh - which we will create next.
 
-
-Update: Equation of state and thermophysical properties
+Equation of state and thermophysical properties
 ------------------------------------------------
-The current docker image contains a development version of the main hydrothermal solver HydrothermalSinglePhaseDarcyFoam_xthermo. Xthermo refers to a novel implementation of the H2O-NaCl equation-of-state by :cite:`Driesner2007`. We need to make a few changes, so that the old cookbooks are working with this new solver. 
+To compute the thermodynamic properties of water, we use Xthermo, a a novel implementation of the H2O-NaCl equation-of-state by :cite:`Driesner2007`. We need to make a few changes, so that the old cookbooks are working with this new solver. 
 
 xThermoProperties
 ^^^^^^^^^^^^^^^^^^

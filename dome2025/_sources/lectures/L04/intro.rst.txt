@@ -3,13 +3,26 @@
 Porous Flow - Submarine Hydrothermal Systems
 ============================================
 
-Theoretical background
+What is the permeability of seafloor?
+--------------------------------------
+We have just learned how to compute the effective permeability of a rock sample from direct numerical simulations of flow on the pore scale. It is one way of getting the permeability of a rock sample. However, often the effective permeability of a rock sample is not sufficient to describe the flow behavior in a larger geological context, such the hydrothermal circulation pattern that feed black smoker vent sites at the seafloor.
+
+But what is the permeability of the seafloor? The answer is, of course, that depends... It depends on the rock type, the scales we are interested in, and and many other factors. Popular methods of estimating the permeability of the seafloor include:
+
+- laboratory measurements on rock samples,
+- field measurements of in-situ permeability using packer tests on IODP :cite:`Fisher1998_permeability`
+- seismic methods that infer porosity and relate it to permeability using empirical relations :cite:`Marjanovic2019_permeability`.
+- and even methods that use the ocean tides to estimate the bulk permeability of the oceanic crust from phase lags between the tidal forcing and the response of the hydrothermal system :cite:`Barreyre2018_permeability`
+
+Do you remember what we said about scales and homogenization in porous media? The permeability of a rock sample is not a constant, but depends on the scale we are looking at and all these methods look at different scales. A rock sample may have a permeability of 10^-12 m^2, but the bulk permeability of the seafloor may be 10^-14 m^2 or even lower.
+
+This is why there are endless debates about what the "correct" permeability of the seafloor is. The truth is, there is no single correct answer. It depends on the context and the scales we are interested in.
+
+
+Theory: Hydrothermal convection
 -------------------------------------
 
-In the last lecture, we had made Navier-Stokes simulations on the pore-scale, which resolved the full dynamics of fluid flow. As we have already learned, in porous media studies flow is often approximated by Darcy's, in which flow is proportional to the pressure gradient. The invovled constants are viscosity and permeability. 
-
-During this lecture we will study single-phase hydrothermal flow in submarine hydrothermal systems. The respective solver is named :code:`HydrothermalSinglePhaseDarcyFoam`. The hydrothermal fluid flow is governed by Darcy's law (Eqn. :eq:`eq:darcy_l04`), 
-mass continuity (Eqn. :eq:`eq:conti_l04`) and energy conservation (Eqn. :eq:`eq:temperature`) equations shown below, 
+Let's proceed and assume that we have agreed on a permeability structure and now want to explore how hydrothermal convection actually looks like. During this lecture we will study single-phase hydrothermal flow in submarine hydrothermal systems. The respective solver is named :code:`HTFoam`. The hydrothermal fluid flow is governed by Darcy's law (Eqn. :eq:`eq:darcy_l04`), mass continuity (Eqn. :eq:`eq:conti_l04`) and energy conservation (Eqn. :eq:`eq:temperature`) equations shown below, 
 
 .. math::
     :label: eq:darcy_l04 

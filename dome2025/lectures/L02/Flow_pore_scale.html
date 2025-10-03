@@ -29,7 +29,9 @@
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Exercises" href="Exercise.html" />
+    <link rel="prev" title="Intro to flow in porous media" href="Introduction.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -71,11 +73,27 @@
 <li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Introduction.html">Intro to flow in porous media</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Flow_pore_scale.html">Flow on the pore scale</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Exercises</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Intro to flow in porous media</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Flow on the pore scale</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#digital-rock-physics-effective-permeability-of-rocks">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mesh-generation">Mesh generation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python-pre-processing">Python pre-processing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#openfoam-case">OpenFOAM case</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#making-the-mesh">Making the mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transport-properties">Transport properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#case-control">Case control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-case">Running the case</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#post-processing-effective-permeability">Post-processing / Effective permeability</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise.html">Exercises</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul>
@@ -129,7 +147,7 @@
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Flow on the pore scale</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L03/FirstCase.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L02/Flow_pore_scale.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -138,24 +156,25 @@
            <div itemprop="articleBody">
              
   <section id="flow-on-the-pore-scale">
-<span id="l03-firstcase"></span><h1>Flow on the pore scale<a class="headerlink" href="#flow-on-the-pore-scale" title="Link to this heading"></a></h1>
-<section id="objective">
-<h2>Objective<a class="headerlink" href="#objective" title="Link to this heading"></a></h2>
-<p>Starting from a digital representation of a sample’s pore space (typically an image produced by a cT-scan), we want to compute the permeability of the sample. Put differently, we will make a <strong>direct</strong> simulation of flow on the pore level and post-process it for extracting the permeability to be used, for example, in simplified <strong>continuum</strong> simulations using Darcy’s law.</p>
+<span id="l02-porescale"></span><h1>Flow on the pore scale<a class="headerlink" href="#flow-on-the-pore-scale" title="Link to this heading"></a></h1>
+<section id="digital-rock-physics-effective-permeability-of-rocks">
+<h2>Digital Rock Physics - Effective Permeability of Rocks<a class="headerlink" href="#digital-rock-physics-effective-permeability-of-rocks" title="Link to this heading"></a></h2>
+<p>We will start by exploring concepts of <em>Digital Rock Physics</em> (DRP) and how to compute the effective permeability of a porous rock sample from direct numerical simulations of flow on the pore scale. One way is to scan (e.g. using cT) a rock sample, segment the pore space, and then perform direct numerical simulations of flow through the pore space. From the resulting flow field, we can compute the effective permeability of the sample. This effective permeability can then be used in larger-scale continuum simulations of flow in porous media using Darcy’s law. Have a look at the <a class="reference external" href="https://digitalporousmedia.org">digital porous media portal</a> to get a better idea of what Digital Rock Physics is all about!</p>
+<p>We will start by making a <strong>direct</strong> simulation of flow on the pore level and post-process it for extracting the effective permeability.</p>
 <figure class="align-center" id="fig-porousmodel-fig" style="width: 70%">
 <img alt="../../_images/porousModel.png" src="../../_images/porousModel.png" />
 <figcaption>
-<p><span class="caption-text">Synthetic image of the pore geometry. Pores are white; solids are black.</span><a class="headerlink" href="#fig-porousmodel-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">Synthetic image of the pore geometry. Pores are white; solids are black.</span><a class="headerlink" href="#fig-porousmodel-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>To compute permeability, we will apply constant pressure boundary conditions and evaluate the flow rate through the sample. Once we have that, we can re-arrange Darcy’s law to solve for permeability:</p>
 <div class="math notranslate nohighlight" id="equation-eq-darcy-perm">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-darcy-perm" title="Link to this equation"></a></span>\[    K_{i,j} \, = \, \mu \Biggl( \frac{ \Delta P}{ \Delta x_j} \Biggr)^{-1} \, \Biggl( \frac{1}{V} \int_V u_i \, dV \Biggr) \; .\]</div>
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-darcy-perm" title="Link to this equation"></a></span>\[    K_{i,j} \, = \, \mu \Biggl( \frac{ \Delta P}{ \Delta x_j} \Biggr)^{-1} \, \Biggl( \frac{1}{V} \int_V u_i \, dV \Biggr) \; .\]</div>
 <p>Ok, let’s do it!</p>
 </section>
 <section id="mesh-generation">
 <h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Link to this heading"></a></h2>
-<p>The first major step is to generate a mesh of the pore space (<code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:porousModel_fig</span></code>). For this purpose, we will use <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4">OpenFOAM’s snappyHexMesh tool</a>. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
+<p>The first major step is to generate a mesh of the pore space (<code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:porousModel_fig</span></code>). For this purpose, we will use <a class="reference external" href="https://doc.cfd.direct/openfoam/user-guide-v10/snappyhexmesh#x27-1970005.4">OpenFOAM’s snappyHexMesh tool</a>. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>We will not go into the details of snappyHexMesh (SHM) works. If you want to use and/or understand it, a good starting point is the user guide linked above. Another great resource is the <a class="reference external" href="https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic">Rock Vapor Classic tutorial series</a>.</p>
@@ -164,7 +183,7 @@
 <figure class="align-center" id="fig-figure-workflow-fig" style="width: 85%">
 <img alt="../../_images/figure_workflow.jpg" src="../../_images/figure_workflow.jpg" />
 <figcaption>
-<p><span class="caption-text">Workflow illustrating the meshing process.</span><a class="headerlink" href="#fig-figure-workflow-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Workflow illustrating the meshing process.</span><a class="headerlink" href="#fig-figure-workflow-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>The steps involved are shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:figure_workflow_fig</span></code> . Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters and the workflow is this.</p>
@@ -178,20 +197,12 @@
 </div></blockquote>
 <section id="python-pre-processing">
 <h3>Python pre-processing<a class="headerlink" href="#python-pre-processing" title="Link to this heading"></a></h3>
-<p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:figure_workflow_fig</span></code> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it and the first step is to install porespy into our python virtual environment (we should already have PIL, which is also needed).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span><span class="s2">&quot;your_environment_name&quot;</span>
-conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>porespy
-</pre></div>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>If conda install fails, you can also use <code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">porespy</span></code></p>
-</div>
-<p>Now we are good to go and it’s time to download the data. The complete openFOAM case can be downloaded from <a class="reference download internal" download="" href="../../_downloads/65ca8e602751cf5a43c9c804c6623d86/DRP_permeability_2D.zip"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a> .</p>
+<p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:figure_workflow_fig</span></code> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it; make sure it is available in your pyhton environment.</p>
+<p>The complete openFOAM case can be downloaded from <code class="xref download docutils literal notranslate"><span class="pre">here</span></code> .</p>
 <p>Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup).</p>
 <p>Check out the directory structure shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:drp_case:tree</span></code>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-drp-case-tree">
-<div class="code-block-caption"><span class="caption-text">File tree structure of the Digital Rock Physics case.</span><a class="headerlink" href="#lst-drp-case-tree" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">File tree structure of the Digital Rock Physics case.</span><a class="headerlink" href="#lst-drp-case-tree" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.
 ├──<span class="w"> </span><span class="m">0</span>
 │<span class="w">   </span>├──<span class="w"> </span>U
@@ -277,7 +288,7 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
 <figure class="align-center" id="fig-paraview-figure-fig" style="width: 85%">
 <img alt="../../_images/paraview_python.png" src="../../_images/paraview_python.png" />
 <figcaption>
-<p><span class="caption-text">Using the paraview python shell.</span><a class="headerlink" href="#fig-paraview-figure-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Using the paraview python shell.</span><a class="headerlink" href="#fig-paraview-figure-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Here is some python code that uses the paraview python bindings. You can save it into your case directory. Or, you use the paraview GUI to create the stl file.</p>
@@ -337,7 +348,7 @@ jupyter<span class="w"> </span>notebook
 <h3>Making the mesh<a class="headerlink" href="#making-the-mesh" title="Link to this heading"></a></h3>
 <p>Great, back to openfoam for the final mesh making! Making the mesh with SHM is a two-step process. First we make a standard blockMesh background mesh. This is, as usual, controlled by <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">blockMeshDict</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">blockMeshDict</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -457,7 +468,7 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-bc-p">
-<div class="code-block-caption"><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-p" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 8 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-p" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -518,7 +529,7 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-bc-u">
-<div class="code-block-caption"><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-u" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 9 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-u" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -574,12 +585,12 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 </section>
 <section id="transport-properties">
 <h3>Transport properties<a class="headerlink" href="#transport-properties" title="Link to this heading"></a></h3>
-<p>Final step is to set the remaining free parameter (viscosity) in <a class="reference internal" href="intro.html#equation-eq-mom-con">equation ()</a>.</p>
+<p>Final step is to set the remaining free parameter (viscosity) in <a class="reference internal" href="../L03/intro.html#equation-eq-mom-con">equation ()</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>constant/transportProperties
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-tp">
-<div class="code-block-caption"><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-drp-tp" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 10 </span><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-drp-tp" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -613,7 +624,7 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-cdict">
-<div class="code-block-caption"><span class="caption-text">controlDict of the DRP case.</span><a class="headerlink" href="#lst-drp-cdict" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">controlDict of the DRP case.</span><a class="headerlink" href="#lst-drp-cdict" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -695,13 +706,13 @@ End
 <figure class="align-center" id="fig-porousmodel-solution-fig" style="width: 100%">
 <img alt="../../_images/paraview_DRP_solution.png" src="../../_images/paraview_DRP_solution.png" />
 <figcaption>
-<p><span class="caption-text">Predicted velocity field.</span><a class="headerlink" href="#fig-porousmodel-solution-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Predicted velocity field.</span><a class="headerlink" href="#fig-porousmodel-solution-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="post-processing-effective-permeability">
 <h3>Post-processing / Effective permeability<a class="headerlink" href="#post-processing-effective-permeability" title="Link to this heading"></a></h3>
-<p>Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve <a class="reference internal" href="#equation-eq-darcy-perm">equation ()</a>, which requires are few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM’s <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/">postProcess</a> functionality handy. Just do this:</p>
+<p>Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve <a class="reference internal" href="../L03/FirstCase.html#equation-eq-darcy-perm">equation ()</a>, which requires are few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM’s <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/">postProcess</a> functionality handy. Just do this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>postProcess<span class="w"> </span>-func<span class="w"> </span>writeCellVolumes
 </pre></div>
 </div>
@@ -770,7 +781,10 @@ End
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Introduction.html" class="btn btn-neutral float-left" title="Intro to flow in porous media" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Exercise.html" class="btn btn-neutral float-right" title="Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

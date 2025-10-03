@@ -29,7 +29,9 @@
       <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Lecture overview" href="../L04/Overview.html" />
+    <link rel="prev" title="Flow on the pore scale" href="Flow_pore_scale.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -71,11 +73,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Introduction.html">Intro to flow in porous media</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Flow_pore_scale.html">Flow on the pore scale</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise.html">Exercises</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Introduction.html">Intro to flow in porous media</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Flow_pore_scale.html">Flow on the pore scale</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vertical-versus-horizontal-permeability">Vertical versus horizontal permeability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changes-to-the-geometry">Changes to the geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-scalar-transport">Adding scalar transport</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul>
@@ -129,7 +136,7 @@
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Exercises</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L03/Exercise.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L02/Exercise.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -154,7 +161,7 @@
 <figure class="align-center" id="fig-rp-vert-perm-fig" style="width: 100%">
 <img alt="../../_images/DRP_vert_perm.png" src="../../_images/DRP_vert_perm.png" />
 <figcaption>
-<p><span class="caption-text">Pore-level flow in the vertical direction.</span><a class="headerlink" href="#fig-rp-vert-perm-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Pore-level flow in the vertical direction.</span><a class="headerlink" href="#fig-rp-vert-perm-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -174,7 +181,7 @@
 <p>In the next session, we will progress towards submarine hydrothermal systems and will explore Darcy flow in detail. In preparation for that, let’s explore how scalar transport (like advecting temperature) would look like in our synthetic pore model.</p>
 <p>OpenFOAM’s scalarTransportFoam application solves the 3-D advection-diffusion equation for a given velocity field:</p>
 <div class="math notranslate nohighlight" id="equation-eq-scalar-transport">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-scalar-transport" title="Link to this equation"></a></span>\[    \frac{\partial T}{\partial t} = -\nabla \cdot ( \vec{U} T ) + \nabla \cdot (D_T \nabla T) + S_T,\]</div>
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-scalar-transport" title="Link to this equation"></a></span>\[    \frac{\partial T}{\partial t} = -\nabla \cdot ( \vec{U} T ) + \nabla \cdot (D_T \nabla T) + S_T,\]</div>
 <p>with <code class="code docutils literal notranslate"><span class="pre">T</span></code> being the transported scalar, <code class="code docutils literal notranslate"><span class="pre">DT</span></code> the diffusivity with units of <span class="math notranslate nohighlight">\(m^2/s\)</span> , and <code class="code docutils literal notranslate"><span class="pre">ST</span></code> is a source term. Note that it is tempting to think of T as temperature but here it is simply a transported scalar (like a solute in groundwater flow). The energy conservation equation written in terms of temperature looks slightly different, as we will learn in the next chapter.</p>
 <p>The key source code of <a class="reference external" href="https://cpp.openfoam.org/v9/scalarTransportFoam_8C_source.html">scalarTransportFoam</a> looks like this:</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="p">...</span>
@@ -222,7 +229,10 @@ cp<span class="w"> </span>./DRP_permeability_2D/0/U<span class="w"> </span>./DRP
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Flow_pore_scale.html" class="btn btn-neutral float-left" title="Flow on the pore scale" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../L04/Overview.html" class="btn btn-neutral float-right" title="Lecture overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

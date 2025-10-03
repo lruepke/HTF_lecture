@@ -1,0 +1,236 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intro to flow in porous media &mdash; HydrothermalFoam Lecture  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/tabs.js?v=3ee01567"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=9b54adf2"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Flow on the pore scale" href="Flow_pore_scale.html" />
+    <link rel="prev" title="Lecture overview" href="Overview.html" /> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Intro to flow in porous media</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#direct-simulations">Direct simulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#continuum-approach">Continuum approach</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Flow_pore_scale.html">Flow on the pore scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise.html">Exercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydrothermalFoam Lecture</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Intro to flow in porous media</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L02/Introduction.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="intro-to-flow-in-porous-media">
+<h1>Intro to flow in porous media<a class="headerlink" href="#intro-to-flow-in-porous-media" title="Link to this heading"></a></h1>
+<p>In this lecture, we will introduce the physical processes and equations governing flow in porous media. We will also discuss how these equations are implemented in HydrothermalFoam, the custom OpenFOAM solver we will be using throughout this course.</p>
+<section id="direct-simulations">
+<h2>Direct simulations<a class="headerlink" href="#direct-simulations" title="Link to this heading"></a></h2>
+<p>Flow in porous media is all about scales and homogenization. On a microscopic level, fluids flow through a complex network of pores and fractures. The governing equations are the Navier-Stokes equations, which describe the motion of viscous fluids.</p>
+<p>There are many different forms of the Navier-Stokes equations, depending on the assumptions made. A simplified form is implemented in the <code class="docutils literal notranslate"><span class="pre">icoFoam</span></code> solver in OpenFOAM. It treats <strong>incompressible</strong>, <strong>laminar</strong>, and <strong>transient</strong> fluid flow and solves the following equations:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathbf{U}}{\partial t} + (\mathbf{U} \cdot \nabla)\mathbf{U} = -\nabla p + \nu \nabla^2 \mathbf{U}\]</div>
+<div class="math notranslate nohighlight">
+\[\nabla \cdot \mathbf{U} = 0\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{U}\)</span> is the velocity vector field,</p></li>
+<li><p><span class="math notranslate nohighlight">\(p\)</span> is the kinematic pressure (i.e., pressure divided by density),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\nu\)</span> is the kinematic viscosity,</p></li>
+<li><p><span class="math notranslate nohighlight">\(t\)</span> is time.</p></li>
+</ul>
+<p>The first equation is the <strong>momentum conservation equation</strong>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\partial \mathbf{U} / \partial t\)</span> represents unsteady acceleration (how velocity changes over time),</p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{U} \cdot \nabla)\mathbf{U}\)</span> is the advection (fluid moving itself),</p></li>
+<li><p><span class="math notranslate nohighlight">\(-\nabla p\)</span> is the pressure gradient force,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\nu \nabla^2 \mathbf{U}\)</span> is the viscous diffusion of momentum.</p></li>
+</ul>
+<p>The second equation enforces <strong>incompressibility</strong>, meaning the volume of fluid elements does not change over time.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">icoFoam</span></code>, these equations are solved using the <strong>finite volume method</strong> and the <strong>PISO algorithm</strong> (Pressure Implicit with Splitting of Operators) to ensure pressure–velocity coupling and divergence-free velocity fields at each time step.</p>
+<p>OpenFOAM also includes other solvers for different forms of the Navier-Stokes equations, such as <code class="docutils literal notranslate"><span class="pre">pisoFoam</span></code> for compressible flow and <code class="docutils literal notranslate"><span class="pre">simpleFoam</span></code> for steady-state flow.</p>
+<p>If we wanted to directly simulate flow in a porous medium, we would need to resolve the pore space geometry and apply the Navier-Stokes equations at that scale. This is computationally very expensive and typically only feasible for small domains or simple geometries. The figure below shows an example of such a direct numerical simulation of flow through a porous medium, where the pore space is explicitly resolved.</p>
+<figure class="align-center" id="fig-disk-flow-fig" style="width: 100%">
+<img alt="../../_images/disk_flow.png" src="../../_images/disk_flow.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Example calculations for different disk packings. Notice how flow organizes into dominant flow paths.</span><a class="headerlink" href="#fig-disk-flow-fig" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="continuum-approach">
+<h2>Continuum approach<a class="headerlink" href="#continuum-approach" title="Link to this heading"></a></h2>
+<p>To model flow in porous media on larger scales, we use a continuum approach. Instead of resolving the pore space, we treat the porous medium as a homogenized continuum and describe flow using Darcy’s law. Darcy’s law states that the volumetric flow rate through a porous medium is proportional to the pressure gradient (that deviates from hydrostatic) and inversely proportional to the fluid viscosity:</p>
+<div class="math notranslate nohighlight">
+\[\vec{u} = \epsilon \vec{v} = - \frac{k}{\mu_f} (\nabla p - \rho \vec{g})\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(\vec{u}\)</span> is the <strong>Darcy velocity</strong>, which is the volume-averaged flow velocity through the porous medium. It is related to the <strong>pore velocity</strong> <span class="math notranslate nohighlight">\(\vec{v}\)</span>, the actual speed at which fluids are moving, by the porosity <span class="math notranslate nohighlight">\(\epsilon\)</span>. The parameters <span class="math notranslate nohighlight">\(\mu_f\)</span> and <span class="math notranslate nohighlight">\(k\)</span> are the fluid’s dynamic viscosity and the medium’s permeability, respectively.</p>
+<figure class="align-center" id="fig-regularbox2d-constantt-fig">
+<img alt="../../_images/RegularBox2D_constantT.png" src="../../_images/RegularBox2D_constantT.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Example of convection in porous media with an effective permeability.</span><a class="headerlink" href="#fig-regularbox2d-constantt-fig" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Darcy’s law is valid for laminar flow in porous media, where inertial effects are negligible. It assumes that the flow is slow enough that viscous forces dominate over inertial forces, which is typically the case in groundwater flow and hydrothermal systems.</p>
+<p>Notice how Darcy’s law is a linear relationship between the Darcy velocity and the pressure gradient, in contrast to the nonlinear Navier-Stokes equations. This linearity makes Darcy’s law much simpler to solve numerically, allowing us to model flow in porous media over larger spatial and temporal scales.</p>
+<p>Notice also how we now have two extra parameters that encapsulate all the complexity of the flow: the porosity <span class="math notranslate nohighlight">\(\epsilon\)</span> and the permeability <span class="math notranslate nohighlight">\(k\)</span>. It is important to note that the <strong>absolute values</strong> of <strong>porosity</strong> and <strong>permeability</strong> in porous media are not universal constants but depend on the <strong>choice of the Representative Elementary Volume (REV)</strong>. The REV is the scale over which microscale heterogeneities are averaged, different choices can lead to significantly different estimates of these effective properties. This scale dependence means that <strong>porosity and permeability are not always independently observable</strong> — observational data often reflect a combined, scale-dependent response of the medium, making it difficult to infer one property without assumptions about the other. In media with strong heterogeneities or multi-scale structures, identifying a meaningful REV is particularly challenging. We need to keep these limitations in mind when applying continuum-scale flow models like Darcy’s law to natural systems.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>There are many resources on the derivation of the Navier–Stokes equations, including several tailored to OpenFOAM. We particularly recommend <a class="reference external" href="https://holzmann-cfd.com/community/publications/mathematics-numerics-derivations-and-openfoam">Tobias Holzmann’s book</a>. Also see the new <a class="reference external" href="https://doc.cfd.direct/notes/cfd-general-principles/contents">book by CFD Direct</a>.
+There is also a great pdf on the relationship between Navier-Stokes and Darcy flow on the webpages of <a class="reference external" href="https://www.cypriensoulaine.com/publications-copy">Cyprien Soulaine</a>.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Overview.html" class="btn btn-neutral float-left" title="Lecture overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Flow_pore_scale.html" class="btn btn-neutral float-right" title="Flow on the pore scale" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
