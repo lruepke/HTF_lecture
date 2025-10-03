@@ -1,56 +1,60 @@
-.. HTF_lecture documentation master file, created by
-   sphinx-quickstart on Sat Nov 28 21:47:26 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. HTF_lecture documentation master file
+
 .. include:: /include.rst_
 
 Introduction to OpenFOAM and HydrothermalFoam
 =============================================
-Welcome to the website for the course Numerical Fluid Dynamics I (flow in porous media) taught at Kiel University within the Geophysics master.  The course introduces methods and tools in geophysical fluid dynamics. The goal is to learn about the complete workflow from formulating a geoscientific hypothesis to testing it using numerical techniques. For this we will use the popular Computational Fluid Dynamics (CFD) package OpenFOAM_ . In terms of numerical methods, we will learn about finite-differences and finite-volumes including their respective strengths and limitations. Topic-wise, we will focus on porous flow processes with a special emphasis on hydrothermal flow problems like submarine black smoker systems and hydrothermal cooling of magmatic intrusions. For these topics we will use the 3-D hydrothermal flow model HydrothermalFoam_, which is also based on OpenFOAM.
+Welcome to the DOME short course on hydrothermal flow modeling. The course intends to provide you with a hands-on experience on how we can use numerical methods to investigate the inner workings of submarine hydrothermal systems. For this we will use the popular Computational Fluid Dynamics (CFD) package OpenFOAM_ , which mainly adresses Navier-Stokes-type fluiddynamic problems. In addition, we will have a look at HydrothermalFoam_, a custom solver for flow in porous media developed at GEOMAR, which allows resolving hydrothermal convection in submarine settings.
      
 
 Course content
 --------------
 These are the main topics:
 
-1. Introduction to computational fluids dynamics /  Navier-Stokes, Stokes, Darcy
-2. Numerical methods / finite differences and finite volumes (Python)
-3. Computational Fluid Dynamics with OpenFOAM 
-4. Visualization with Paraview
-5. Hydrothermal systems
-6. Project work on transport in porous media
+1. Getting started with OpenFOAM and HydrothermalFoam
+2. Direct simulations of flow on the pore scale
+3. Upscaled porous flow modeling and submarine hydrothermal systems 
 
-Course goals
---------------
-
-1. Develop the ability to perform independent modeling work on geoscientific problems.
-2. Learn numerical techniques and of how to solve partial differential equations using numerical methods.
-3. Obtain in-depth knowledge of OpenFOAM (problem setup, meshing, solvers, 2D -> 3D, visualization). 
-4. Perform independent project work.
-
-
-Course format
--------------
-
-The majority of this course will be spent in front of a computer working on exercises related to (porous) flow problems in marine geodynamics.
 
 .. admonition:: Open access!
 
-    Note that the materials for this course are **open to everyone**; the course is, however, taught as an on-site class for registered students at Kiel University. 
+    Note that OpenFOAM_ and HydrothermalFoam_ are open source and can be freely used for your research.
 
 
-.. toctree::
-    :maxdepth: 2
-    :caption: Course information
+Instructors
+-----------
 
-    general-info/course-details
+**Prof. Lars Ruepke**
+
+- Email: lruepke@geomar.de
+- `Institute webpage <https://www.geomar.de/en/research/fb4/fb4-muhs/research-topics/modelings>`_
+
+
+Course website
+---------------
+
+You can find additional lectures and information on our teaching website:
+
+- Public site : https://lruepke.github.io/HTF_lecture/
+
+
+Further readings
+----------------
+
+There are many good online resources on OpenFOAM, HydrothermalFoam, and numerical modeling in marine geosciences:
+
+- Cyprien Soulaine's teaching material `<http://cypriensoulaine.com>`_
+- Official OpenFoam documentation  `<https://cfd.direct/openfoam/documentation/>`_
+- Material shared by Tobias Holzmann  `<https://holzmann-cfd.com>`_ 
+- OpenFoam code documentation `<https://cpp.openfoam.org/v10/>`_
+- CFD Forum `<https://www.cfd-online.com/Forums/>`_
+
 
 .. toctree::
     :maxdepth: 2
     :caption: Lecture 1
 
-    lectures/L01/Overview
-    
+    lectures/L01/Overview   
     lectures/L01/Installation
     lectures/L01/OpenFoam
     lectures/L01/FirstCase
@@ -60,66 +64,19 @@ The majority of this course will be spent in front of a computer working on exer
     :caption: Lecture 2
 
     lectures/L02/Overview
-    lectures/L02/Example
-    lectures/L02/Exercise1
-    lectures/L02/Exercise2  
+    lectures/L02/Introduction
+    lectures/L02/Flow_pore_scale
+    lectures/L02/Exercise
 
 .. toctree::
     :maxdepth: 2
     :caption: Lecture 3
-
-    lectures/L03/Overview
-    lectures/L03/intro  
-    lectures/L03/FirstCase  
-    lectures/L03/Exercise
-    lectures/L03/Exercise_disks.rst  
-    lectures/L03/Theory  
-
-.. toctree::
-    :maxdepth: 2
-    :caption: Lecture 4
 
     lectures/L04/Overview
     lectures/L04/intro  
     lectures/L04/FirstCase  
     lectures/L04/Exercise  
 
-.. toctree::
-    :maxdepth: 2
-    :caption: Lecture 5
-
-    lectures/L05/Overview
-    lectures/L05/intro
-    lectures/L05/Exercise1
-    lectures/L05/Exercise2
-    lectures/L05/Exercise3
-
-.. toctree::
-    :maxdepth: 2
-    :caption: Lecture 6
-
-    lectures/L06/Overview
-    lectures/L06/intro
-    lectures/L06/Exercise1
-    lectures/L06/Exercise2
-
-.. toctree::
-    :maxdepth: 2
-    :caption: Lecture 7
-
-    lectures/L_FVM/Overview
-    lectures/L_FVM/intro
-    lectures/L_FVM/Implementation1
-    lectures/L_FVM/Advection1
-    lectures/L_FVM/Excercise_adv
-
-.. toctree::
-    :maxdepth: 2
-    :caption: Projects
-
-    lectures/L_PROJECTS/Project1
-    lectures/L_PROJECTS/Project2
-    lectures/L_PROJECTS/Project3
 
 .. toctree::
    :maxdepth: 2

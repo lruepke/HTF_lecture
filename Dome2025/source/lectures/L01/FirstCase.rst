@@ -39,7 +39,7 @@ Here  :math:`\rho` is density, :math:`C_{p}` the specific heat,  :math:`\lambda_
 
 Prepare case files
 ------------------
-Our first case is the **flange** case from the `OpenFoam tutorials <https://cfd.direct/openfoam/user-guide/>`_, which illustrates how to solve for 3-D heat conduction in a complex-shaped solid.
+Our first case is the **flange** case from the `OpenFoam tutorials <https://doc.cfd.direct/openfoam/user-guide-v10/index>`_, which illustrates how to solve for 3-D heat conduction in a complex-shaped solid.
 
 .. tip::
     It is good practice to never change the original tutorials, which reside in $FOAM_TUTORIALS but to always make a copy to your working directory.
