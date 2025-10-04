@@ -93,7 +93,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#mesh-generation">Mesh generation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#permeability">Permeability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#case-control">Case control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#case-control">Case control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#solver-controls">Solver controls</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#running-the-case">Running the case</a></li>
 </ul>
 </li>
@@ -193,40 +196,41 @@ cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$HOME</span
 </section>
 <section id="equation-of-state-and-thermophysical-properties">
 <h2>Equation of state and thermophysical properties<a class="headerlink" href="#equation-of-state-and-thermophysical-properties" title="Link to this heading"></a></h2>
-<p>To compute the thermodynamic properties of water, we use Xthermo, a a novel implementation of the H2O-NaCl equation-of-state by <span id="id1">[<a class="reference internal" href="../../refs.html#id31" title="T. Driesner and C. A. Heinrich. The system h2o-nacl. part i: correlation formulae for phase relations in temperature-pressure-composition space from 0 to 1000 degrees c, 0 to 5000 bar, and 0 to 1 x-nacl. Geochimica Et Cosmochimica Acta, 71(20):4880-4901, 2007. Driesner, Thomas Heinrich, Christoph A. URL: &lt;Go to ISI&gt;://000250948100006, doi:10.1016/i.gca.2006.01.033.">Driesner &amp; Heinrich, 2007</a>]</span>. We need to make a few changes, so that the old cookbooks are working with this new solver.</p>
+<p>To compute the thermodynamic properties of water, we use Xthermo, a a novel implementation of the H2O-NaCl equation-of-state by <span id="id1">[<a class="reference internal" href="../../refs.html#id31" title="T. Driesner and C. A. Heinrich. The system h2o-nacl. part i: correlation formulae for phase relations in temperature-pressure-composition space from 0 to 1000 degrees c, 0 to 5000 bar, and 0 to 1 x-nacl. Geochimica Et Cosmochimica Acta, 71(20):4880-4901, 2007. Driesner, Thomas Heinrich, Christoph A. URL: &lt;Go to ISI&gt;://000250948100006, doi:10.1016/i.gca.2006.01.033.">Driesner &amp; Heinrich, 2007</a>]</span>.</p>
 <section id="xthermoproperties">
 <h3>xThermoProperties<a class="headerlink" href="#xthermoproperties" title="Link to this heading"></a></h3>
-<p>We need to create a dictionary file called <code class="code docutils literal notranslate"><span class="pre">xThermoProperties</span></code> in the constant directory. This file contains the equation of state (EOS) parameters. Create the file and open it with your editor:</p>
-<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
-<span class="cm">| =========                 |                                                 |</span>
-<span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
-<span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
-<span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
-<span class="cm">|    \\/     M anipulation  |                                                 |</span>
-<span class="cm">\*---------------------------------------------------------------------------*/</span>
-<span class="k">FoamFile</span>
-<span class="p">{</span>
-    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
-    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
-    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
-    <span class="kt">location</span>    <span class="s">&quot;constant&quot;</span><span class="p">;</span>
-    <span class="kt">object</span>      <span class="n">xThermoProperties</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="n">fluid</span> <span class="n">H2O</span><span class="o">-</span><span class="n">NaCl</span><span class="p">;</span> <span class="c1">//H2O, H2O-NaCl</span>
-<span class="n">backend</span> <span class="n">IAPS84</span><span class="p">;</span> <span class="c1">//IAPS84, IAPWS95, IAPWS95_CoolProp</span>
-
-<span class="n">H2O</span><span class="o">-</span><span class="n">NaCl</span>
-<span class="p">{</span>
-    <span class="n">constX</span> <span class="mf">0.0</span><span class="p">;</span>
-<span class="p">}</span>
+<p>Just like everthing else, the paramters of the equation-of-state are set in a dictionary. Within the <code class="code docutils literal notranslate"><span class="pre">constant</span></code> folder, there is a dictionary called <code class="code docutils literal notranslate"><span class="pre">xThermoProperties</span></code>. It’s structure is shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:2dbox:xThermoProps</span></code>.</p>
+<div class="highlight-foam notranslate" id="lst-2dbox-xthermoprops"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
+<span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
+<span class="linenos"> 4</span><span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
+<span class="linenos"> 5</span><span class="cm">|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |</span>
+<span class="linenos"> 6</span><span class="cm">|    \\/     M anipulation  |                                                 |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;constant&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="kt">object</span>      <span class="n">xThermoProperties</span><span class="p">;</span>
+<span class="linenos">15</span><span class="p">}</span>
+<span class="linenos">16</span>
+<span class="hll"><span class="linenos">17</span><span class="n">fluid</span> <span class="n">H2O</span><span class="o">-</span><span class="n">NaCl</span><span class="p">;</span> <span class="c1">//H2O, H2O-NaCl</span>
+</span><span class="hll"><span class="linenos">18</span><span class="n">backend</span> <span class="n">IAPS84</span><span class="p">;</span> <span class="c1">//IAPS84, IAPWS95, IAPWS95_CoolProp</span>
+</span><span class="linenos">19</span>
+<span class="linenos">20</span><span class="n">H2O</span><span class="o">-</span><span class="n">NaCl</span>
+<span class="linenos">21</span><span class="p">{</span>
+<span class="hll"><span class="linenos">22</span>    <span class="n">constX</span> <span class="mf">0.0</span><span class="p">;</span>
+</span><span class="linenos">23</span><span class="p">}</span>
 </pre></div>
 </div>
+<p>The key properties are the choice of fluid (H2O or H2O-NaCl) and the backend (IAPS84, IAPWS95, IAPWS95_CoolProp). The backend defines the implementation of the equation-of-state. The constX parameter sets the constant salinity of the fluid in mass fraction (no phase separation phenomena are implemented in this version, so that the salinity is a constant). Here we set it to zero, so that we simulate pure water.</p>
 </section>
 <section id="transportproperties">
 <h3>transportProperties<a class="headerlink" href="#transportproperties" title="Link to this heading"></a></h3>
-<p>Next we need to create a file called <code class="code docutils literal notranslate"><span class="pre">transportProperties</span></code> in the constant directory. This file contains the solid matrix properties. Create the file and open it with your editor:</p>
-<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<p>Next we can review the properties of the solid matrix, which are set within the  <code class="code docutils literal notranslate"><span class="pre">constant/transportProperties</span></code> dictionary. Its structure is shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:2dbox:transProps</span></code>.</p>
+<div class="highlight-foam notranslate" id="lst-2dbox-transprops"><div class="highlight"><pre><span></span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="cm">| =========                 |                                                 |</span>
 <span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
 <span class="cm">|  \\    /   O peration     | Version:  5                                     |</span>
@@ -448,37 +452,135 @@ paraview<span class="w"> </span>a.foam
 <span class="linenos">13</span>    <span class="kt">object</span>      <span class="k">controlDict</span><span class="p">;</span>
 <span class="linenos">14</span><span class="p">}</span>
 <span class="linenos">15</span>
-<span class="hll"><span class="linenos">16</span><span class="kt">application</span> <span class="n">HydrothermalSinglePhaseDarcyFoam_xThermo</span><span class="p">;</span>
+<span class="hll"><span class="linenos">16</span><span class="kt">application</span> <span class="n">HTFoam</span><span class="p">;</span>
 </span><span class="hll"><span class="linenos">17</span><span class="kt">startFrom</span> <span class="kt">startTime</span><span class="p">;</span>
 </span><span class="linenos">18</span><span class="kt">startTime</span> <span class="mi">0</span><span class="p">;</span>
 <span class="linenos">19</span><span class="kt">stopAt</span> <span class="kt">endTime</span><span class="p">;</span>
-<span class="hll"><span class="linenos">20</span><span class="kt">endTime</span> <span class="mf">1.577e+10</span><span class="p">;</span> <span class="c1">//86400000000</span>
+<span class="hll"><span class="linenos">20</span><span class="kt">endTime</span> <span class="mi">86400000000</span><span class="p">;</span>
 </span><span class="hll"><span class="linenos">21</span><span class="kt">deltaT</span> <span class="mi">864000</span><span class="p">;</span>
 </span><span class="linenos">22</span><span class="kt">adjustTimeStep</span> <span class="n">yes</span><span class="p">;</span>
-<span class="linenos">23</span><span class="kt">maxCo</span>           <span class="mf">0.8</span><span class="p">;</span>
-<span class="linenos">24</span><span class="kt">maxDeltaT</span>       <span class="mf">1.577e+8</span><span class="p">;</span>
-<span class="linenos">25</span><span class="kt">writeControl</span> <span class="n">adjustableRunTime</span><span class="p">;</span>
-<span class="linenos">26</span><span class="kt">writeInterval</span> <span class="mf">1.577e+8</span><span class="p">;</span>
-<span class="linenos">27</span><span class="kt">purgeWrite</span> <span class="mi">0</span><span class="p">;</span>
-<span class="linenos">28</span><span class="kt">writeFormat</span> <span class="k">ascii</span><span class="p">;</span>
-<span class="linenos">29</span><span class="kt">writePrecision</span> <span class="mi">6</span><span class="p">;</span>
-<span class="linenos">30</span><span class="kt">writeCompression</span> <span class="k">off</span><span class="p">;</span>
-<span class="linenos">31</span><span class="kt">timeFormat</span> <span class="k">general</span><span class="p">;</span>
-<span class="linenos">32</span><span class="kt">timePrecision</span> <span class="mi">14</span><span class="p">;</span>
-<span class="linenos">33</span><span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
-<span class="linenos">34</span><span class="kt">libs</span>
-<span class="linenos">35</span><span class="p">(</span>
-<span class="hll"><span class="linenos">36</span>    <span class="s">&quot;libHydrothermalBoundaryConditions.so&quot;</span>
-</span><span class="linenos">37</span><span class="p">);</span>
+<span class="linenos">23</span><span class="kt">maxCo</span>           <span class="mf">0.5</span><span class="p">;</span>
+<span class="linenos">24</span><span class="n">maxPorousCo</span>     <span class="mf">0.5</span><span class="p">;</span>
+<span class="linenos">25</span><span class="kt">maxDeltaT</span>       <span class="mi">86400000</span><span class="p">;</span>
+<span class="linenos">26</span><span class="kt">writeControl</span> <span class="n">adjustableRunTime</span><span class="p">;</span>
+<span class="linenos">27</span><span class="kt">writeInterval</span> <span class="mi">864000000</span><span class="p">;</span>
+<span class="linenos">28</span><span class="kt">purgeWrite</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">29</span><span class="kt">writeFormat</span> <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">30</span><span class="kt">writePrecision</span> <span class="mi">6</span><span class="p">;</span>
+<span class="linenos">31</span><span class="kt">writeCompression</span> <span class="k">off</span><span class="p">;</span>
+<span class="linenos">32</span><span class="kt">timeFormat</span> <span class="k">general</span><span class="p">;</span>
+<span class="linenos">33</span><span class="kt">timePrecision</span> <span class="mi">14</span><span class="p">;</span>
+<span class="linenos">34</span><span class="kt">runTimeModifiable</span> <span class="nb">true</span><span class="p">;</span>
+<span class="linenos">35</span><span class="kt">libs</span>
+<span class="linenos">36</span><span class="p">(</span>
+<span class="hll"><span class="linenos">37</span>    <span class="s">&quot;libHydrothermalBoundaryConditions.so&quot;</span>
+</span><span class="linenos">38</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <p>The solver we are using is called HydrothermalSinglePhaseDarcyFoam_xThermo. In addition, we are including the library “libHydrothermalBoundaryConditions.so”, which provides special boundary conditions for submarine hydrothermal flow calculations.</p>
+<section id="solver-controls">
+<h3>Solver controls<a class="headerlink" href="#solver-controls" title="Link to this heading"></a></h3>
+<p>The numerical schemes and solver settings are set in the files fvSchemes and fvSolution, which are located in the system directory. Open them and check that you understand the settings. You can leave them as they are for now.</p>
+<div class="literal-block-wrapper docutils container" id="lst-2dbox-fvsolution">
+<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">fvSolution of the Regular2DBox case.</span><a class="headerlink" href="#lst-2dbox-fvsolution" title="Link to this code"></a></div>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos"> 2</span><span class="cm">| =========                 |                                                 |</span>
+<span class="linenos"> 3</span><span class="cm">| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |</span>
+<span class="linenos"> 4</span><span class="cm">|  \\    /   O peration     | Version:  10 (modern style)                      |</span>
+<span class="linenos"> 5</span><span class="cm">|   \\  /    A nd           |                                                 |</span>
+<span class="linenos"> 6</span><span class="cm">|    \\/     M anipulation  |                                                 |</span>
+<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos"> 8</span><span class="k">FoamFile</span>
+<span class="linenos"> 9</span><span class="p">{</span>
+<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="kt">object</span>      <span class="k">fvSolution</span><span class="p">;</span>
+<span class="linenos">15</span><span class="p">}</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>    <span class="c1">// ------------------------------------------------------------------------- //</span>
+<span class="linenos">18</span>    <span class="c1">// Linear solvers</span>
+<span class="linenos">19</span>    <span class="c1">// ------------------------------------------------------------------------- //</span>
+<span class="linenos">20</span>    <span class="k">solvers</span>
+<span class="linenos">21</span>    <span class="p">{</span>
+<span class="linenos">22</span>        <span class="c1">// Pressure</span>
+<span class="linenos">23</span>        <span class="k">p</span>
+<span class="linenos">24</span>        <span class="p">{</span>
+<span class="linenos">25</span>            <span class="k">solver</span>          <span class="n">GAMG</span><span class="p">;</span>
+<span class="linenos">26</span>            <span class="n">tolerance</span>       <span class="mf">1e-10</span><span class="p">;</span>       <span class="c1">// linear solve absolute stop</span>
+<span class="linenos">27</span>            <span class="k">relTol</span>          <span class="mf">0.01</span><span class="p">;</span>        <span class="c1">// linear relative reduction (per solve)</span>
+<span class="linenos">28</span>            <span class="n">smoother</span>        <span class="n">DICGaussSeidel</span><span class="p">;</span>
+<span class="linenos">29</span>        <span class="p">}</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span>        <span class="n">pFinal</span>
+<span class="linenos">32</span>        <span class="p">{</span>
+<span class="linenos">33</span>            <span class="k">$p</span><span class="p">;</span>
+<span class="linenos">34</span>            <span class="n">tolerance</span>       <span class="mf">1e-10</span><span class="p">;</span>
+<span class="linenos">35</span>            <span class="k">relTol</span>          <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">36</span>        <span class="p">}</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>        <span class="c1">// Temperature</span>
+<span class="linenos">39</span>        <span class="k">T</span>
+<span class="linenos">40</span>        <span class="p">{</span>
+<span class="linenos">41</span>            <span class="k">solver</span>          <span class="n">GAMG</span><span class="p">;</span>
+<span class="linenos">42</span>            <span class="n">tolerance</span>       <span class="mf">1e-08</span><span class="p">;</span>
+<span class="linenos">43</span>            <span class="k">relTol</span>          <span class="mf">0.01</span><span class="p">;</span>
+<span class="linenos">44</span>            <span class="n">smoother</span>        <span class="n">DILUGaussSeidel</span><span class="p">;</span>
+<span class="linenos">45</span>        <span class="p">}</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span>        <span class="n">TFinal</span>
+<span class="linenos">48</span>        <span class="p">{</span>
+<span class="linenos">49</span>            <span class="k">$T</span><span class="p">;</span>
+<span class="linenos">50</span>            <span class="n">tolerance</span>       <span class="mf">1e-08</span><span class="p">;</span>
+<span class="linenos">51</span>            <span class="k">relTol</span>          <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">52</span>        <span class="p">}</span>
+<span class="linenos">53</span>    <span class="p">}</span>
+<span class="linenos">54</span>
+<span class="linenos">55</span>    <span class="n">relaxationFactors</span>
+<span class="linenos">56</span>    <span class="p">{</span>
+<span class="linenos">57</span>        <span class="n">equations</span>
+<span class="linenos">58</span>        <span class="p">{</span>
+<span class="linenos">59</span>            <span class="k">p</span> <span class="mi">1</span><span class="p">;</span>
+<span class="linenos">60</span>            <span class="k">T</span> <span class="mi">1</span><span class="p">;</span>
+<span class="linenos">61</span>        <span class="p">}</span>
+<span class="linenos">62</span>    <span class="p">}</span>
+<span class="linenos">63</span>
+<span class="linenos">64</span>    <span class="k">PIMPLE</span>
+<span class="linenos">65</span>    <span class="p">{</span>
+<span class="linenos">66</span>        <span class="k">nOuterCorrectors</span>         <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">67</span>        <span class="k">nCorrectors</span>              <span class="mi">1</span><span class="p">;</span>
+<span class="linenos">68</span>        <span class="k">nNonOrthogonalCorrectors</span> <span class="mi">1</span><span class="p">;</span>
+<span class="linenos">69</span>
+<span class="linenos">70</span>        <span class="c1">// Foundation OF expects single values here:</span>
+<span class="linenos">71</span>        <span class="n">residualControl</span>
+<span class="linenos">72</span>        <span class="p">{</span>
+<span class="linenos">73</span>            <span class="k">p</span> <span class="mf">1e-4</span><span class="p">;</span>
+<span class="linenos">74</span>            <span class="k">T</span> <span class="mf">1e-4</span><span class="p">;</span>
+<span class="linenos">75</span>        <span class="p">}</span>
+<span class="linenos">76</span>
+<span class="linenos">77</span>        <span class="c1">// (Optional) you can keep other PIMPLE keys here, but NOT dict-style RC.</span>
+<span class="linenos">78</span>    <span class="p">}</span>
+<span class="linenos">79</span>
+<span class="linenos">80</span>    <span class="n">PTCOUPLING</span>
+<span class="linenos">81</span>    <span class="p">{</span>
+<span class="linenos">82</span>        <span class="c1">// Physical coupling criteria used by your init loop (custom)</span>
+<span class="linenos">83</span>        <span class="n">maxDeltaP</span>         <span class="mi">10</span><span class="p">;</span>    <span class="c1">// [Pa] absolute pressure change</span>
+<span class="linenos">84</span>        <span class="n">maxInitOuterIters</span> <span class="mi">200</span><span class="p">;</span>
+<span class="linenos">85</span>        <span class="c1">// number of iterations in main loop</span>
+<span class="linenos">86</span>        <span class="n">tightCouplingIters</span> <span class="mi">3</span><span class="p">;</span>    <span class="c1">// K: number of mini Picard iterations per time step (0..3 typical)</span>
+<span class="linenos">87</span>
+<span class="linenos">88</span>    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</section>
 </section>
 <section id="running-the-case">
 <h2>Running the case<a class="headerlink" href="#running-the-case" title="Link to this heading"></a></h2>
 <p>Now we are finally ready to run our first test case. Just type this into your docker shell:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>HydrothermalSinglePhaseDarcyFoam_xThermo
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>HTFoam
 </pre></div>
 </div>
 <p>Notice how several directories are appearing, which contain the intermediate results. You can postprocess the case by simply opening the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> file from paraview.</p>
