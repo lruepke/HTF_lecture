@@ -51,14 +51,18 @@ The 0 directory contains all initial and boundary conditions, the system folder 
 
 Equation of state and thermophysical properties
 ------------------------------------------------
-To compute the thermodynamic properties of water, we use Xthermo, a a novel implementation of the H2O-NaCl equation-of-state by :cite:`Driesner2007`. We need to make a few changes, so that the old cookbooks are working with this new solver. 
+To compute the thermodynamic properties of water, we use Xthermo, a a novel implementation of the H2O-NaCl equation-of-state by :cite:`Driesner2007`. 
 
 xThermoProperties
 ^^^^^^^^^^^^^^^^^^
-We need to create a dictionary file called :code:`xThermoProperties` in the constant directory. This file contains the equation of state (EOS) parameters. Create the file and open it with your editor:
+Just like everthing else, the paramters of the equation-of-state are set in a dictionary. Within the :code:`constant` folder, there is a dictionary called :code:`xThermoProperties`. It's structure is shown in :numref:`lst:2dbox:xThermoProps`.
 
 
 .. code-block:: foam 
+    :name: lst:2dbox:xThermoProps
+    :linenos:
+    :emphasize-lines: 17, 18, 22
+
 
     /*--------------------------------*- C++ -*----------------------------------*\
     | =========                 |                                                 |
@@ -84,13 +88,15 @@ We need to create a dictionary file called :code:`xThermoProperties` in the cons
         constX 0.0;
     }
 
+The key properties are the choice of fluid (H2O or H2O-NaCl) and the backend (IAPS84, IAPWS95, IAPWS95_CoolProp). The backend defines the implementation of the equation-of-state. The constX parameter sets the constant salinity of the fluid in mass fraction (no phase separation phenomena are implemented in this version, so that the salinity is a constant). Here we set it to zero, so that we simulate pure water.
+
 
 transportProperties
 ^^^^^^^^^^^^^^^^^^^^
-Next we need to create a file called :code:`transportProperties` in the constant directory. This file contains the solid matrix properties. Create the file and open it with your editor:
+Next we can review the properties of the solid matrix, which are set within the  :code:`constant/transportProperties` dictionary. Its structure is shown in :numref:`lst:2dbox:transProps`.
 
-
-.. code-block:: foam 
+.. code-block:: foam
+    :name: lst:2dbox:transProps
 
     /*--------------------------------*- C++ -*----------------------------------*\
     | =========                 |                                                 |
@@ -324,7 +330,7 @@ Finally, we need to set some control parameters like the time step, run time, ou
 
 .. code-block:: foam 
     :linenos:
-    :emphasize-lines: 16,17,20,21, 36
+    :emphasize-lines: 16,17,20,21, 37
     :name: lst:2dbox:cdict
     :caption: controlDict of the Regular2DBox case.
 
@@ -343,17 +349,18 @@ Finally, we need to set some control parameters like the time step, run time, ou
         object      controlDict;
     }
 
-    application HydrothermalSinglePhaseDarcyFoam_xThermo;
+    application HTFoam;
     startFrom startTime;
     startTime 0;
     stopAt endTime;
-    endTime 1.577e+10; //86400000000
+    endTime 86400000000;
     deltaT 864000;
     adjustTimeStep yes;
-    maxCo           0.8; 
-    maxDeltaT       1.577e+8; 
+    maxCo           0.5;
+    maxPorousCo     0.5; 
+    maxDeltaT       86400000; 
     writeControl adjustableRunTime;
-    writeInterval 1.577e+8;
+    writeInterval 864000000;
     purgeWrite 0;
     writeFormat ascii;
     writePrecision 6;
@@ -367,7 +374,111 @@ Finally, we need to set some control parameters like the time step, run time, ou
     );
 
 
+
 The solver we are using is called HydrothermalSinglePhaseDarcyFoam_xThermo. In addition, we are including the library "libHydrothermalBoundaryConditions.so", which provides special boundary conditions for submarine hydrothermal flow calculations.
+
+
+Solver controls
+^^^^^^^^^^^^^^^
+The numerical schemes and solver settings are set in the files fvSchemes and fvSolution, which are located in the system directory. Open them and check that you understand the settings. You can leave them as they are for now.
+
+.. code-block:: foam 
+    :linenos:
+    :name: lst:2dbox:fvSolution
+    :caption: fvSolution of the Regular2DBox case.
+
+
+    /*--------------------------------*- C++ -*----------------------------------*\
+    | =========                 |                                                 |
+    | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+    |  \\    /   O peration     | Version:  10 (modern style)                      |
+    |   \\  /    A nd           |                                                 |
+    |    \\/     M anipulation  |                                                 |
+    \*---------------------------------------------------------------------------*/
+    FoamFile
+    {
+        version     2.0;
+        format      ascii;
+        class       dictionary;
+        location    "system";
+        object      fvSolution;
+    }
+
+        // ------------------------------------------------------------------------- //
+        // Linear solvers
+        // ------------------------------------------------------------------------- //
+        solvers
+        {
+            // Pressure
+            p
+            {
+                solver          GAMG;
+                tolerance       1e-10;       // linear solve absolute stop
+                relTol          0.01;        // linear relative reduction (per solve)
+                smoother        DICGaussSeidel;
+            }
+
+            pFinal
+            {
+                $p;
+                tolerance       1e-10;       
+                relTol          0;
+            }
+
+            // Temperature
+            T
+            {
+                solver          GAMG;
+                tolerance       1e-08;
+                relTol          0.01;
+                smoother        DILUGaussSeidel;
+            }
+
+            TFinal
+            {
+                $T;
+                tolerance       1e-08;
+                relTol          0;
+            }
+        }
+
+        relaxationFactors
+        {
+            equations
+            {
+                p 1;
+                T 1;
+            }
+        }
+
+        PIMPLE
+        {
+            nOuterCorrectors         0;        
+            nCorrectors              1;         
+            nNonOrthogonalCorrectors 1;
+
+            // Foundation OF expects single values here:
+            residualControl
+            {
+                p 1e-4;
+                T 1e-4;         
+            }
+
+            // (Optional) you can keep other PIMPLE keys here, but NOT dict-style RC.
+        }
+
+        PTCOUPLING
+        {
+            // Physical coupling criteria used by your init loop (custom)
+            maxDeltaP         10;    // [Pa] absolute pressure change
+            maxInitOuterIters 200;
+            // number of iterations in main loop
+            tightCouplingIters 3;    // K: number of mini Picard iterations per time step (0..3 typical)
+
+        }
+
+
+
 
 Running the case
 ----------------
@@ -375,7 +486,7 @@ Now we are finally ready to run our first test case. Just type this into your do
 
 .. code-block:: bash 
 
-    HydrothermalSinglePhaseDarcyFoam_xThermo
+    HTFoam
 
 Notice how several directories are appearing, which contain the intermediate results. You can postprocess the case by simply opening the :code:`a.foam` file from paraview.
 
