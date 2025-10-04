@@ -377,6 +377,10 @@ Finally, we need to set some control parameters like the time step, run time, ou
 
 The solver we are using is called HydrothermalSinglePhaseDarcyFoam_xThermo. In addition, we are including the library "libHydrothermalBoundaryConditions.so", which provides special boundary conditions for submarine hydrothermal flow calculations.
 
+.. warning::
+    We have tuned the tutorials for runtime, so that you can run them on a standard laptop. However, the settings are not necessarily optimal for accuracy. For example, the time step is quite large and the maximum time step size if lmited by a Courant number computed for the Darcy velocity, while it should really be the pore velocity. If you want to do more accurate simulations, you should reduce the time step and the Courant number.
+
+
 
 Solver controls
 ^^^^^^^^^^^^^^^
@@ -497,3 +501,6 @@ Notice how several directories are appearing, which contain the intermediate res
 
    Results of the Regular2DBox example calculation.
 
+
+.. warning::
+    We have recently changed the solver settings and equation-of-state logic. Most of the tutorials in the cookbook directory are not yet updated and are missing, e.g., the new xThermoProperties dictionary. If you want to run these cases, you need to add this dictionary and set the parameters as shown above. We will update the cookbook in the near future.

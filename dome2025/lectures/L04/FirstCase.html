@@ -479,6 +479,10 @@ paraview<span class="w"> </span>a.foam
 </div>
 </div>
 <p>The solver we are using is called HydrothermalSinglePhaseDarcyFoam_xThermo. In addition, we are including the library “libHydrothermalBoundaryConditions.so”, which provides special boundary conditions for submarine hydrothermal flow calculations.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>We have tuned the tutorials for runtime, so that you can run them on a standard laptop. However, the settings are not necessarily optimal for accuracy. For example, the time step is quite large and the maximum time step size if lmited by a Courant number computed for the Darcy velocity, while it should really be the pore velocity. If you want to do more accurate simulations, you should reduce the time step and the Courant number.</p>
+</div>
 <section id="solver-controls">
 <h3>Solver controls<a class="headerlink" href="#solver-controls" title="Link to this heading"></a></h3>
 <p>The numerical schemes and solver settings are set in the files fvSchemes and fvSolution, which are located in the system directory. Open them and check that you understand the settings. You can leave them as they are for now.</p>
@@ -590,6 +594,10 @@ paraview<span class="w"> </span>a.foam
 <p><span class="caption-number">Fig. 14 </span><span class="caption-text">Results of the Regular2DBox example calculation.</span><a class="headerlink" href="#fig-regular2dbox-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>We have recently changed the solver settings and equation-of-state logic. Most of the tutorials in the cookbook directory are not yet updated and are missing, e.g., the new xThermoProperties dictionary. If you want to run these cases, you need to add this dictionary and set the parameters as shown above. We will update the cookbook in the near future.</p>
+</div>
 </section>
 </section>
 
