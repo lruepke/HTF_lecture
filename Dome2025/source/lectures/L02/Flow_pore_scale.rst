@@ -13,7 +13,7 @@ We will start by making a **direct** simulation of flow on the pore level and po
 
 .. figure:: /_figures/porousModel.*
    :align: center
-   :name: fig:porousModel_fig
+   :name: fig:porousModel_fig_dome
    :figwidth: 70%
 
    Synthetic image of the pore geometry. Pores are white; solids are black.
@@ -32,7 +32,7 @@ Ok, let's do it!
 Mesh generation
 ---------------
 
-The first major step is to generate a mesh of the pore space (:numref:`fig:porousModel_fig`). For this purpose, we will use `OpenFOAM's snappyHexMesh tool <https://doc.cfd.direct/openfoam/user-guide-v10/snappyhexmesh#x27-1970005.4>`_. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made. 
+The first major step is to generate a mesh of the pore space (:numref:`fig:porousModel_fig_dome`). For this purpose, we will use `OpenFOAM's snappyHexMesh tool <https://doc.cfd.direct/openfoam/user-guide-v10/snappyhexmesh#x27-1970005.4>`_. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made. 
 
 .. tip::
     We will not go into the details of snappyHexMesh (SHM) works. If you want to use and/or understand it, a good starting point is the user guide linked above. Another great resource is the `Rock Vapor Classic tutorial series <https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic>`_.
@@ -42,13 +42,13 @@ In a nutshell, snappyHexMesh (SHM) is about starting from a blockMesh (as in the
 
 .. figure:: /_figures/figure_workflow.*
    :align: center
-   :name: fig:figure_workflow_fig
+   :name: fig:figure_workflow_fig_dome
    :figwidth: 85%
 
    Workflow illustrating the meshing process.
 
 
-The steps involved are shown in :numref:`fig:figure_workflow_fig` . Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters and the workflow is this.
+The steps involved are shown in :numref:`fig:figure_workflow_fig_dome` . Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters and the workflow is this.
 
     #. Start with an image (A).
     #. Save it as a .vti file that is easily understood by Paraview. We use `porespy <https://porespy.org/>`_ for this step.
@@ -59,7 +59,7 @@ The steps involved are shown in :numref:`fig:figure_workflow_fig` . Starting fro
 Python pre-processing
 ^^^^^^^^^^^^^^^^^^^^^
 
-Let's work through the steps involved and assume we received a 2-D image of scanned pore space ( :numref:`fig:figure_workflow_fig` A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it; make sure it is available in your pyhton environment.
+Let's work through the steps involved and assume we received a 2-D image of scanned pore space ( :numref:`fig:figure_workflow_fig_dome` A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it; make sure it is available in your pyhton environment.
 
 The complete openFOAM case can be downloaded from :download:`here <cases/DRP_permeability_2D.zip>` . 
 

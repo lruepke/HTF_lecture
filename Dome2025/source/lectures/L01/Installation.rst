@@ -28,7 +28,17 @@ Open a shell (powershell under windows or a terminal under MacOS) and pull the i
 
       docker pull lruepke/hydrothermalfoam-openfoam10:latest
 
-The image is about 4GB, so this can take a while. The ":latest" tag points to a multiplatform image and you should get the right image regardless whether you are on an Intel/AMD or ARM/M-chip machine. After the download is finished, you can build the docker container. Use this command:
+The image is about 4GB, so this can take a while. The ":latest" tag points to a multiplatform image and you should get the right image regardless whether you are on an Intel/AMD or ARM/M-chip machine. After the download is finished, you can build the docker container. As we will share a folder between your host machine and the docker container, we first create a folder in your home directory. You can call it whatever you want, but we will use HydrothermalFoam_runs in this example.
+
+.. code-block:: bash
+
+    mkdir $HOME/HydrothermalFoam_runs
+    # on Windows use
+    mkdir %HOMEPATH%\HydrothermalFoam_runs
+
+Now we can build the docker container.
+
+Use this command:
 
 .. code-block:: bash
 
