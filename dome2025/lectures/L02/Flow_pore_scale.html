@@ -210,13 +210,16 @@
 ├──<span class="w"> </span>constant
 │<span class="w">   </span>├──<span class="w"> </span>transportProperties
 │<span class="w">   </span>├──<span class="w"> </span>triSurface
+│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>porous_model.stl
 │<span class="w">   </span>└──<span class="w"> </span>turbulenceProperties
 ├──<span class="w"> </span>geometry
 │<span class="w">   </span>└──<span class="w"> </span>porousModel.png
 ├──<span class="w"> </span>run.sh
 └──<span class="w"> </span>system
 <span class="w">    </span>├──<span class="w"> </span>blockMeshDict
+<span class="w">    </span>├──<span class="w"> </span>changeDictionaryDict
 <span class="w">    </span>├──<span class="w"> </span>controlDict
+<span class="w">    </span>├──<span class="w"> </span>extrudeMeshDict
 <span class="w">    </span>├──<span class="w"> </span>fvSchemes
 <span class="w">    </span>├──<span class="w"> </span>fvSolution
 <span class="w">    </span>├──<span class="w"> </span>meshQualityDict
@@ -698,16 +701,16 @@ changeDictionaryDict
 <p>Notice how one new directory is appearing, which contains the steady-state solution. Check that the solution has converged by looking at the <code class="code docutils literal notranslate"><span class="pre">log.simpleFoam</span></code> file.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tail<span class="w"> </span>-15<span class="w"> </span>tail<span class="w"> </span>-15<span class="w"> </span>log.simpleFoam
 
-<span class="nv">Time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">537</span>
+<span class="nv">Time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>536s
 
-smoothSolver:<span class="w">  </span>Solving<span class="w"> </span><span class="k">for</span><span class="w"> </span>Ux,<span class="w"> </span>Initial<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9</span>.48718063e-10,<span class="w"> </span>Final<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9</span>.48718063e-10,<span class="w"> </span>No<span class="w"> </span>Iterations<span class="w"> </span><span class="m">0</span>
-smoothSolver:<span class="w">  </span>Solving<span class="w"> </span><span class="k">for</span><span class="w"> </span>Uy,<span class="w"> </span>Initial<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9</span>.93804308e-10,<span class="w"> </span>Final<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9</span>.93804308e-10,<span class="w"> </span>No<span class="w"> </span>Iterations<span class="w"> </span><span class="m">0</span>
-GAMG:<span class="w">  </span>Solving<span class="w"> </span><span class="k">for</span><span class="w"> </span>p,<span class="w"> </span>Initial<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9</span>.71539045e-09,<span class="w"> </span>Final<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9</span>.71539045e-09,<span class="w"> </span>No<span class="w"> </span>Iterations<span class="w"> </span><span class="m">0</span>
-<span class="nb">time</span><span class="w"> </span>step<span class="w"> </span>continuity<span class="w"> </span>errors<span class="w"> </span>:<span class="w"> </span>sum<span class="w"> </span><span class="nb">local</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">7</span>.1290424e-07,<span class="w"> </span><span class="nv">global</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>-1.41776643e-07,<span class="w"> </span><span class="nv">cumulative</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span>.8954571
-<span class="nv">ExecutionTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">30</span>.24<span class="w"> </span>s<span class="w">  </span><span class="nv">ClockTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">30</span><span class="w"> </span>s
+smoothSolver:<span class="w">  </span>Solving<span class="w"> </span><span class="k">for</span><span class="w"> </span>Ux,<span class="w"> </span>Initial<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">8</span>.33332294e-10,<span class="w"> </span>Final<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">8</span>.33332294e-10,<span class="w"> </span>No<span class="w"> </span>Iterations<span class="w"> </span><span class="m">0</span>
+smoothSolver:<span class="w">  </span>Solving<span class="w"> </span><span class="k">for</span><span class="w"> </span>Uy,<span class="w"> </span>Initial<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9</span>.84562833e-10,<span class="w"> </span>Final<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9</span>.84562833e-10,<span class="w"> </span>No<span class="w"> </span>Iterations<span class="w"> </span><span class="m">0</span>
+GAMG:<span class="w">  </span>Solving<span class="w"> </span><span class="k">for</span><span class="w"> </span>p,<span class="w"> </span>Initial<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9</span>.67603673e-09,<span class="w"> </span>Final<span class="w"> </span><span class="nv">residual</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9</span>.67603673e-09,<span class="w"> </span>No<span class="w"> </span>Iterations<span class="w"> </span><span class="m">0</span>
+<span class="nb">time</span><span class="w"> </span>step<span class="w"> </span>continuity<span class="w"> </span>errors<span class="w"> </span>:<span class="w"> </span>sum<span class="w"> </span><span class="nb">local</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">7</span>.10016507e-07,<span class="w"> </span><span class="nv">global</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>-1.23478036e-07,<span class="w"> </span><span class="nv">cumulative</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span>.09450688
+<span class="nv">ExecutionTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">24</span>.158663<span class="w"> </span>s<span class="w">  </span><span class="nv">ClockTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">25</span><span class="w"> </span>s
 
 
-SIMPLE<span class="w"> </span>solution<span class="w"> </span>converged<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">537</span><span class="w"> </span>iterations
+SIMPLE<span class="w"> </span>solution<span class="w"> </span>converged<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">536</span><span class="w"> </span>iterations
 
 End
 </pre></div>
@@ -738,7 +741,7 @@ End
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># load VTK data</span>
-<span class="n">vtkFile</span> <span class="o">=</span> <span class="s1">&#39;VTK/DRP_permeability_2D_537.vtk&#39;</span>
+<span class="n">vtkFile</span> <span class="o">=</span> <span class="s1">&#39;VTK/DRP_permeability_2D_536.vtk&#39;</span>
 <span class="n">reader</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkUnstructuredGridReader</span><span class="p">()</span>
 <span class="n">reader</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">vtkFile</span><span class="p">)</span>
 <span class="n">reader</span><span class="o">.</span><span class="n">ReadAllScalarsOn</span><span class="p">()</span>

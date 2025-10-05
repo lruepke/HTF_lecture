@@ -80,19 +80,20 @@ Check out the directory structure shown in :numref:`lst:drp_case_dome:tree`.
     ├── constant
     │   ├── transportProperties
     │   ├── triSurface
+    │   │   └── porous_model.stl
     │   └── turbulenceProperties
     ├── geometry
     │   └── porousModel.png
     ├── run.sh
     └── system
         ├── blockMeshDict
+        ├── changeDictionaryDict
         ├── controlDict
+        ├── extrudeMeshDict
         ├── fvSchemes
         ├── fvSolution
         ├── meshQualityDict
         └── snappyHexMeshDict
-
-
 
 .. tip::
     Most OpenFoam cases include scripts like :code:`run.sh` and :code:`clean.sh`. The :code:`run.sh` script is a good starting point for "understanding" a case. It lists all commands that have to be executed (e.g. meshing, setting of properties, etc.) to run a case. The :code:`clean.sh` script cleans up the case and deletes e.g. the mesh and all output directories. Have a look into these files and see if you understand them!
@@ -637,18 +638,19 @@ Notice how one new directory is appearing, which contains the steady-state solut
 
     tail -15 tail -15 log.simpleFoam
 
-    Time = 537
+    Time = 536s
 
-    smoothSolver:  Solving for Ux, Initial residual = 9.48718063e-10, Final residual = 9.48718063e-10, No Iterations 0
-    smoothSolver:  Solving for Uy, Initial residual = 9.93804308e-10, Final residual = 9.93804308e-10, No Iterations 0
-    GAMG:  Solving for p, Initial residual = 9.71539045e-09, Final residual = 9.71539045e-09, No Iterations 0
-    time step continuity errors : sum local = 7.1290424e-07, global = -1.41776643e-07, cumulative = 3.8954571
-    ExecutionTime = 30.24 s  ClockTime = 30 s
+    smoothSolver:  Solving for Ux, Initial residual = 8.33332294e-10, Final residual = 8.33332294e-10, No Iterations 0
+    smoothSolver:  Solving for Uy, Initial residual = 9.84562833e-10, Final residual = 9.84562833e-10, No Iterations 0
+    GAMG:  Solving for p, Initial residual = 9.67603673e-09, Final residual = 9.67603673e-09, No Iterations 0
+    time step continuity errors : sum local = 7.10016507e-07, global = -1.23478036e-07, cumulative = 4.09450688
+    ExecutionTime = 24.158663 s  ClockTime = 25 s
 
 
-    SIMPLE solution converged in 537 iterations
+    SIMPLE solution converged in 536 iterations
 
-    End 
+    End
+
 
 
 And explore the solution in Paraview!
@@ -691,7 +693,7 @@ Here is an example script for computing permeability. You can turn it into a jup
     import matplotlib.pyplot as plt 
 
     # load VTK data
-    vtkFile = 'VTK/DRP_permeability_2D_537.vtk'
+    vtkFile = 'VTK/DRP_permeability_2D_536.vtk'
     reader = vtk.vtkUnstructuredGridReader()
     reader.SetFileName(vtkFile)
     reader.ReadAllScalarsOn()
