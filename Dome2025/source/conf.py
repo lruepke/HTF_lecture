@@ -17,7 +17,7 @@ sys.path.append(os.path.abspath('_extensions'))
 # -- Project information -----------------------------------------------------
 
 project = 'HydrothermalFoam Lecture'
-copyright = '2022, Lars Ruepke and Zhikui Guo'
+copyright = '2025, Lars Ruepke and Zhikui Guo'
 author = 'Lars Ruepke'
 
 
@@ -120,10 +120,6 @@ html_context = {
         (
             '<i class="fa fa-home fa-fw"></i> Public site',
             "https://lruepke.github.io/HTF_lecture/",
-        ),
-        (
-            '<i class="fa fa-home fa-fw"></i> University site',
-            "https://lms.uni-kiel.de/url/RepositoryEntry/3664576582",
         ),
     ],
 }
