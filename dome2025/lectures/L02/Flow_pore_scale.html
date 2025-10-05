@@ -252,14 +252,14 @@
 <span class="n">ps</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">to_vtk</span><span class="p">(</span><span class="n">arr_stacked</span><span class="p">,</span> <span class="s1">&#39;geometry/porous_model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You can put this little script into a jupyter notebook or save it as .py (e.g. png2vti.py), then activate the right kernel (e.g. <code class="code docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">py3_htf_class</span></code>), and do this:</p>
+<p>You can put this little script into a jupyter notebook or save it as .py (e.g. png2vti.py), then activate the right kernel (e.g. <code class="code docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">py312_dome_workshop</span></code>), and do this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>png2vti.py
 </pre></div>
 </div>
 <p>After running it, you should  have a file <code class="code docutils literal notranslate"><span class="pre">porous_model.vti</span></code> in the geometry folder.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If you are interested in the vti file format, this is what we have just written to porous_model.vti</p>
+<p>If you are interested in the vti file format, this is what we have just written to porous_model.vti. There is a non-zero chance that porespy will write out a binary file and not ascii. If that is the case, you can open it in paraview.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;VTKFile<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;ImageData&quot;</span><span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="w"> </span><span class="nv">byte_order</span><span class="o">=</span><span class="s2">&quot;LittleEndian&quot;</span><span class="w"> </span><span class="nv">header_type</span><span class="o">=</span><span class="s2">&quot;UInt64&quot;</span>&gt;
 <span class="w">    </span>&lt;ImageData<span class="w"> </span><span class="nv">WholeExtent</span><span class="o">=</span><span class="s2">&quot;0 1196 0 1494 0 2&quot;</span><span class="w"> </span><span class="nv">Origin</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span><span class="w"> </span><span class="nv">Spacing</span><span class="o">=</span><span class="s2">&quot;1 1 1&quot;</span><span class="w"> </span><span class="nv">Direction</span><span class="o">=</span><span class="s2">&quot;1 0 0 0 1 0 0 0 1&quot;</span>&gt;
 <span class="w">        </span>&lt;Piece<span class="w"> </span><span class="nv">Extent</span><span class="o">=</span><span class="s2">&quot;0 1196 0 1494 0 2&quot;</span>&gt;
@@ -280,18 +280,18 @@
 <div><ol class="arabic simple">
 <li><p>use paraview’s graphical user interface</p></li>
 <li><p>use paraview’s inbuild python shell</p></li>
-<li><p>install paraview into a conda environment and use a jupyter notebook</p></li>
+<li><p>install paraview into a conda environment and do everything in python scripts or notebooks (the paraview python bindings are called <code class="code docutils literal notranslate"><span class="pre">paraview.simple</span></code> but are sometimes a pain to install).</p></li>
 </ol>
 </div></blockquote>
-<figure class="align-center" id="fig-paraview-figure-fig" style="width: 85%">
+<figure class="align-center" id="fig-paraview-figure-fig-dome" style="width: 85%">
 <img alt="../../_images/paraview_python.png" src="../../_images/paraview_python.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Using the paraview python shell.</span><a class="headerlink" href="#fig-paraview-figure-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Using the paraview python shell.</span><a class="headerlink" href="#fig-paraview-figure-fig-dome" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Here is some python code that uses the paraview python bindings. You can save it into your case directory. Or, you use the paraview GUI to create the stl file.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># workflow as python code using the paraview.simple module</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">paraview.simple</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="c1"># from paraview.simple import * #not needed in paraview&#39;s python shell</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">):</span>
@@ -308,13 +308,13 @@
     <span class="n">SaveData</span><span class="p">(</span><span class="n">stl_file</span><span class="p">,</span> <span class="n">proxy</span> <span class="o">=</span> <span class="n">triangulate1</span><span class="p">)</span>
 
 <span class="c1"># main part</span>
-<span class="n">vti_file</span> <span class="o">=</span> <span class="s1">&#39;porous_model.vti&#39;</span>      <span class="c1"># input .vti file</span>
-<span class="n">stl_file</span> <span class="o">=</span> <span class="s1">&#39;porous_model.stl&#39;</span>  <span class="c1"># output .stl file</span>
+<span class="n">vti_file</span> <span class="o">=</span> <span class="s1">&#39;./geometry/porous_model.vti&#39;</span>      <span class="c1"># input .vti file</span>
+<span class="n">stl_file</span> <span class="o">=</span> <span class="s1">&#39;./constant/triSurface/porous_model.stl&#39;</span>  <span class="c1"># output .stl file</span>
 <span class="c1"># call function</span>
 <span class="n">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>An easy way to exectute the python scrip is to call it from the python shell in paraview <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:paraview_figure_fig</span></code>. Within the shell, you first make sure that you are in your case directory; then you make the correct folder to hold the .stl file that we will create (<code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>).</p>
+<p>An easy way to exectute the python scrip is to save the above code into a file (e.g. write_stl.py) and call it from the python shell in paraview <a class="reference internal" href="#fig-paraview-figure-fig-dome"><span class="std std-numref">Fig. 8</span></a>. Within the shell, you first make sure that you are in your case directory; then you make the correct folder to hold the .stl file that we will create (<code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;your_case_directory&quot;</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;constant/triSurface&#39;</span><span class="p">)</span>
@@ -322,21 +322,10 @@
 </pre></div>
 </div>
 <p>This will create a .stl file, which we will use in the meshing process.</p>
-<p>If you used the paraview GUI, you might have to do some cleanup, so that the files are in the correct location. Move the vti file into <code class="code docutils literal notranslate"><span class="pre">./geometry</span></code> and the stl file into <code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>, where openFOAM expects it. This assumes that you are in the case directory.</p>
+<p>If you did not use the python script but did everything step-by-step using the paraview GUI, you might have to do some cleanup, so that the files are in the correct location. Move the vti file into <code class="code docutils literal notranslate"><span class="pre">./geometry</span></code> and the stl file into <code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>, where openFOAM expects it. This assumes that you are in the case directory.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mv<span class="w"> </span>./porous_model.vti<span class="w"> </span>./geometry/
 mv<span class="w"> </span>./porous_model.stl<span class="w"> </span>./constant/triSurface/
 </pre></div>
-</div>
-<div class="admonition-doing-it-the-proper-way admonition">
-<p class="admonition-title">Doing it the proper way</p>
-<p>The more elegant way would have been to avoid the in-build paraview shell and do everything in a jupyter notebook or a stand-alone python file. Unfortunately, installing the <code class="code docutils literal notranslate"><span class="pre">paraview.simple</span></code> module can be a pain - and even the paraview conda package is incompatible with other packages (like vtk, which we will need later in the class).</p>
-<p>Here is a way to get this to work: make a clean conda environment that has paraview and some other useful things, activate the base environment, startup jupyter and choose the newly created py3_htf_paraview kernel for a new notebook, and finally copy and paste the code above into notebook. Try it!</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>py3_htf_paraview<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span><span class="w"> </span>numpy<span class="w"> </span>pandas<span class="w"> </span>matplotlib<span class="w"> </span>paraview<span class="w"> </span>scipy<span class="w"> </span>ipykernel
-
-conda<span class="w"> </span>activate<span class="w"> </span>base
-jupyter<span class="w"> </span>notebook
-</pre></div>
-</div>
 </div>
 </section>
 </section>
@@ -347,116 +336,130 @@ jupyter<span class="w"> </span>notebook
 <p>Great, back to openfoam for the final mesh making! Making the mesh with SHM is a two-step process. First we make a standard blockMesh background mesh. This is, as usual, controlled by <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">blockMeshDict</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
-<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
-<span class="linenos"> 2</span><span class="cm">=========                 |</span>
-<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
-<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
-<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
-<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
-<span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
-<span class="linenos"> 8</span><span class="k">FoamFile</span>
-<span class="linenos"> 9</span><span class="p">{</span>
-<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
-<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
-<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
-<span class="linenos">13</span>    <span class="kt">object</span>      <span class="n">blockMeshDict</span><span class="p">;</span>
-<span class="linenos">14</span><span class="p">}</span>
-<span class="linenos">15</span>
-<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
-<span class="linenos">17</span>
-<span class="linenos">18</span><span class="k">convertToMeters</span> <span class="mi">1</span><span class="p">;</span>
-<span class="linenos">19</span>
-<span class="linenos">20</span><span class="n">lx0</span> <span class="mi">0</span><span class="p">;</span>
-<span class="linenos">21</span><span class="n">ly0</span> <span class="mi">0</span><span class="p">;</span>
-<span class="linenos">22</span><span class="n">lz0</span> <span class="mi">0</span><span class="p">;</span>
-<span class="linenos">23</span>
-<span class="hll"><span class="linenos">24</span><span class="n">lx1</span> <span class="mi">1196</span><span class="p">;</span>
-</span><span class="hll"><span class="linenos">25</span><span class="n">ly1</span> <span class="mi">1494</span><span class="p">;</span>
-</span><span class="linenos">26</span><span class="n">lz1</span> <span class="mi">1</span><span class="p">;</span>
-<span class="linenos">27</span>
-<span class="linenos">28</span><span class="k">vertices</span>
-<span class="linenos">29</span><span class="p">(</span>
-<span class="linenos">30</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//0</span>
-<span class="linenos">31</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//1</span>
-<span class="linenos">32</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//2</span>
-<span class="linenos">33</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//3</span>
-<span class="linenos">34</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//4</span>
-<span class="linenos">35</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//5</span>
-<span class="linenos">36</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//6</span>
-<span class="linenos">37</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//7</span>
-<span class="linenos">38</span><span class="p">);</span>
-<span class="linenos">39</span>
-<span class="hll"><span class="linenos">40</span><span class="k">blocks</span>
-</span><span class="linenos">41</span><span class="p">(</span>
-<span class="linenos">42</span>    <span class="k">hex</span> <span class="p">(</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">)</span> <span class="p">(</span><span class="mi">315</span> <span class="mi">390</span> <span class="mi">1</span><span class="p">)</span> <span class="k">simpleGrading</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
-<span class="linenos">43</span><span class="p">);</span>
-<span class="linenos">44</span>
-<span class="linenos">45</span><span class="k">edges</span>
-<span class="linenos">46</span><span class="p">(</span>
-<span class="linenos">47</span><span class="p">);</span>
-<span class="linenos">48</span>
-<span class="hll"><span class="linenos">49</span><span class="k">boundary</span>
-</span><span class="linenos">50</span><span class="p">(</span>
-<span class="linenos">51</span>    <span class="n">top</span>
-<span class="linenos">52</span>    <span class="p">{</span>
-<span class="linenos">53</span>        <span class="kt">type</span> <span class="n">symmetryPlane</span><span class="p">;</span>
-<span class="linenos">54</span>        <span class="k">faces</span>
-<span class="linenos">55</span>        <span class="p">(</span>
-<span class="linenos">56</span>            <span class="p">(</span><span class="mi">7</span> <span class="mi">6</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">)</span>
-<span class="linenos">57</span>        <span class="p">);</span>
-<span class="linenos">58</span>    <span class="p">}</span>
-<span class="linenos">59</span>
-<span class="linenos">60</span>    <span class="n">inlet</span>
-<span class="linenos">61</span>    <span class="p">{</span>
-<span class="linenos">62</span>        <span class="kt">type</span> <span class="n">wall</span><span class="p">;</span>
-<span class="linenos">63</span>        <span class="k">faces</span>
-<span class="linenos">64</span>        <span class="p">(</span>
-<span class="linenos">65</span>            <span class="p">(</span><span class="mi">0</span> <span class="mi">4</span> <span class="mi">7</span> <span class="mi">3</span><span class="p">)</span>
-<span class="linenos">66</span>        <span class="p">);</span>
-<span class="linenos">67</span>    <span class="p">}</span>
-<span class="linenos">68</span>
-<span class="linenos">69</span>    <span class="n">bottom</span>
-<span class="linenos">70</span>    <span class="p">{</span>
-<span class="linenos">71</span>        <span class="kt">type</span> <span class="n">symmetryPlane</span><span class="p">;</span>
-<span class="linenos">72</span>        <span class="k">faces</span>
-<span class="linenos">73</span>        <span class="p">(</span>
-<span class="linenos">74</span>            <span class="p">(</span><span class="mi">1</span> <span class="mi">5</span> <span class="mi">4</span> <span class="mi">0</span><span class="p">)</span>
-<span class="linenos">75</span>        <span class="p">);</span>
-<span class="linenos">76</span>    <span class="p">}</span>
-<span class="linenos">77</span>
-<span class="linenos">78</span>    <span class="n">outlet</span>
-<span class="linenos">79</span>    <span class="p">{</span>
-<span class="linenos">80</span>        <span class="kt">type</span> <span class="n">patch</span><span class="p">;</span>
-<span class="linenos">81</span>        <span class="k">faces</span>
-<span class="linenos">82</span>        <span class="p">(</span>
-<span class="linenos">83</span>            <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">6</span> <span class="mi">5</span><span class="p">)</span>
-<span class="linenos">84</span>        <span class="p">);</span>
-<span class="linenos">85</span>    <span class="p">}</span>
-<span class="linenos">86</span>
-<span class="linenos">87</span>
-<span class="linenos">88</span>    <span class="n">frontAndBack</span>
-<span class="linenos">89</span>    <span class="p">{</span>
-<span class="linenos">90</span>        <span class="kt">type</span> <span class="n">empty</span><span class="p">;</span>
-<span class="linenos">91</span>        <span class="k">faces</span>
-<span class="linenos">92</span>        <span class="p">(</span>
-<span class="linenos">93</span>            <span class="p">(</span><span class="mi">0</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">)</span>
-<span class="linenos">94</span>            <span class="p">(</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">)</span>
-<span class="linenos">95</span>        <span class="p">);</span>
-<span class="linenos">96</span>    <span class="p">}</span>
-<span class="linenos">97</span><span class="p">);</span>
+<div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
+<span class="linenos">  2</span><span class="cm">=========                 |</span>
+<span class="linenos">  3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos">  4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos">  5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos">  6</span><span class="cm">   \\/     M anipulation  |</span>
+<span class="linenos">  7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
+<span class="linenos">  8</span><span class="k">FoamFile</span>
+<span class="linenos">  9</span><span class="p">{</span>
+<span class="linenos"> 10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
+<span class="linenos"> 11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos"> 12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos"> 13</span>    <span class="kt">object</span>      <span class="n">blockMeshDict</span><span class="p">;</span>
+<span class="linenos"> 14</span><span class="p">}</span>
+<span class="linenos"> 15</span>
+<span class="linenos"> 16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos"> 17</span>
+<span class="linenos"> 18</span><span class="k">convertToMeters</span> <span class="mi">1</span><span class="p">;</span>
+<span class="linenos"> 19</span>
+<span class="linenos"> 20</span><span class="n">lx0</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 21</span><span class="n">ly0</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 22</span><span class="n">lz0</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos"> 23</span>
+<span class="hll"><span class="linenos"> 24</span><span class="n">lx1</span> <span class="mi">1196</span><span class="p">;</span>
+</span><span class="hll"><span class="linenos"> 25</span><span class="n">ly1</span> <span class="mi">1494</span><span class="p">;</span>
+</span><span class="linenos"> 26</span><span class="n">lz1</span> <span class="mi">1</span><span class="p">;</span>
+<span class="linenos"> 27</span>
+<span class="linenos"> 28</span><span class="k">vertices</span>
+<span class="linenos"> 29</span><span class="p">(</span>
+<span class="linenos"> 30</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//0</span>
+<span class="linenos"> 31</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//1</span>
+<span class="linenos"> 32</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//2</span>
+<span class="linenos"> 33</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz0</span><span class="p">)</span>   <span class="c1">//3</span>
+<span class="linenos"> 34</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//4</span>
+<span class="linenos"> 35</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly0</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//5</span>
+<span class="linenos"> 36</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx1</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//6</span>
+<span class="linenos"> 37</span>    <span class="p">(</span><span class="k">$</span><span class="n">lx0</span> <span class="k">$</span><span class="n">ly1</span> <span class="k">$</span><span class="n">lz1</span><span class="p">)</span>   <span class="c1">//7</span>
+<span class="linenos"> 38</span><span class="p">);</span>
+<span class="linenos"> 39</span>
+<span class="hll"><span class="linenos"> 40</span><span class="k">blocks</span>
+</span><span class="linenos"> 41</span><span class="p">(</span>
+<span class="linenos"> 42</span>    <span class="k">hex</span> <span class="p">(</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">)</span> <span class="p">(</span><span class="mi">315</span> <span class="mi">390</span> <span class="mi">1</span><span class="p">)</span> <span class="k">simpleGrading</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 43</span><span class="p">);</span>
+<span class="linenos"> 44</span>
+<span class="linenos"> 45</span><span class="k">edges</span>
+<span class="linenos"> 46</span><span class="p">(</span>
+<span class="linenos"> 47</span><span class="p">);</span>
+<span class="linenos"> 48</span>
+<span class="hll"><span class="linenos"> 49</span><span class="k">boundary</span>
+</span><span class="linenos"> 50</span><span class="p">(</span>
+<span class="linenos"> 51</span>    <span class="n">top</span>
+<span class="linenos"> 52</span>    <span class="p">{</span>
+<span class="linenos"> 53</span>        <span class="kt">type</span> <span class="n">symmetryPlane</span><span class="p">;</span>
+<span class="linenos"> 54</span>        <span class="k">faces</span>
+<span class="linenos"> 55</span>        <span class="p">(</span>
+<span class="linenos"> 56</span>            <span class="p">(</span><span class="mi">7</span> <span class="mi">6</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos"> 57</span>        <span class="p">);</span>
+<span class="linenos"> 58</span>    <span class="p">}</span>
+<span class="linenos"> 59</span>
+<span class="linenos"> 60</span>    <span class="n">inlet</span>
+<span class="linenos"> 61</span>    <span class="p">{</span>
+<span class="linenos"> 62</span>        <span class="kt">type</span> <span class="n">wall</span><span class="p">;</span>
+<span class="linenos"> 63</span>        <span class="k">faces</span>
+<span class="linenos"> 64</span>        <span class="p">(</span>
+<span class="linenos"> 65</span>            <span class="p">(</span><span class="mi">0</span> <span class="mi">4</span> <span class="mi">7</span> <span class="mi">3</span><span class="p">)</span>
+<span class="linenos"> 66</span>        <span class="p">);</span>
+<span class="linenos"> 67</span>    <span class="p">}</span>
+<span class="linenos"> 68</span>
+<span class="linenos"> 69</span>    <span class="n">bottom</span>
+<span class="linenos"> 70</span>    <span class="p">{</span>
+<span class="linenos"> 71</span>        <span class="kt">type</span> <span class="n">symmetryPlane</span><span class="p">;</span>
+<span class="linenos"> 72</span>        <span class="k">faces</span>
+<span class="linenos"> 73</span>        <span class="p">(</span>
+<span class="linenos"> 74</span>            <span class="p">(</span><span class="mi">1</span> <span class="mi">5</span> <span class="mi">4</span> <span class="mi">0</span><span class="p">)</span>
+<span class="linenos"> 75</span>        <span class="p">);</span>
+<span class="linenos"> 76</span>    <span class="p">}</span>
+<span class="linenos"> 77</span>
+<span class="linenos"> 78</span>    <span class="n">outlet</span>
+<span class="linenos"> 79</span>    <span class="p">{</span>
+<span class="linenos"> 80</span>        <span class="kt">type</span> <span class="n">patch</span><span class="p">;</span>
+<span class="linenos"> 81</span>        <span class="k">faces</span>
+<span class="linenos"> 82</span>        <span class="p">(</span>
+<span class="linenos"> 83</span>            <span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">6</span> <span class="mi">5</span><span class="p">)</span>
+<span class="linenos"> 84</span>        <span class="p">);</span>
+<span class="linenos"> 85</span>    <span class="p">}</span>
+<span class="linenos"> 86</span>
+<span class="linenos"> 87</span>    <span class="n">front</span>
+<span class="linenos"> 88</span>    <span class="p">{</span>
+<span class="linenos"> 89</span>        <span class="kt">type</span> <span class="n">patch</span><span class="p">;</span>
+<span class="linenos"> 90</span>        <span class="k">faces</span>
+<span class="linenos"> 91</span>        <span class="p">(</span>
+<span class="linenos"> 92</span>            <span class="p">(</span><span class="mi">0</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos"> 93</span>        <span class="p">);</span>
+<span class="linenos"> 94</span>    <span class="p">}</span>
+<span class="linenos"> 95</span>    <span class="n">back</span>
+<span class="linenos"> 96</span>    <span class="p">{</span>
+<span class="linenos"> 97</span>        <span class="kt">type</span> <span class="n">patch</span><span class="p">;</span>
+<span class="linenos"> 98</span>        <span class="k">faces</span>
+<span class="linenos"> 99</span>        <span class="p">(</span>
+<span class="linenos">100</span>            <span class="p">(</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">)</span>
+<span class="linenos">101</span>        <span class="p">);</span>
+<span class="linenos">102</span>    <span class="p">}</span>
+<span class="linenos">103</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<p>Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions.</p>
+<p>Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions. Note how this is actually a 3D mesh, with one cell in the third dimension.</p>
 <p>Now have a look at <code class="code docutils literal notranslate"><span class="pre">system/snappyHexMeshDict</span></code>. We will not go into details here, just explore the general structure yourself if you are interested using the resources linked above.</p>
 <p>Time to make the mesh! Run each of the steps below individually and check out the results in paraview.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>blockMesh
 snappyHexMesh<span class="w"> </span>-overwrite
-checkMesh<span class="w"> </span>-allTopology<span class="w"> </span>-allGeometry
-transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class="s2">&quot;(1e-6 1e-6 1e-6)&quot;</span>
 </pre></div>
 </div>
-<p>The final conversion turns everything in micrometer (<span class="math notranslate nohighlight">\(10^{-6} m\)</span>). Check out the final mesh in paraview!</p>
+<p>Create a temporary file <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> to load the case into paraview. Also load the stl file to see how well the mesh fits the geometry.</p>
+<p>Now we need to make the mesh 2D again for our simulation. This is done by taking the front surface of the 3D mesh and extruding it. Afterwards, we need to set the front and back surface to empty, so that the mesh is truly 2D. This is a bit of a hack, but snappyHexMesh does not do 2D meshes directly.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>extrudeMesh
+changeDictionaryDict
+</pre></div>
+</div>
+<p>Both commands read the respective dictionary files from <code class="code docutils literal notranslate"><span class="pre">system</span></code>. The first command extrudes the front surface of the mesh by 1 cell in the z-direction. The second command changes the front and back patches to empty.</p>
+<p>Finally, we need to scale the mesh to physical dimensions. We will assume that each pixel in the image is 1 micrometer (<span class="math notranslate nohighlight">\(10^{-6} m\)</span>). This is done using the <code class="code docutils literal notranslate"><span class="pre">transformPoints</span></code> utility.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>transformPoints<span class="w"> </span><span class="s2">&quot;scale=(1e-6 1e-6 1e-6)&quot;</span>
+</pre></div>
+</div>
 </section>
 <section id="boundary-conditions">
 <h3>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading"></a></h3>
@@ -513,14 +516,19 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 <span class="hll"><span class="linenos">44</span>        <span class="kt">type</span>            <span class="k">zeroGradient</span><span class="p">;</span>
 </span><span class="linenos">45</span>    <span class="p">}</span>
 <span class="linenos">46</span>    <span class="n">frontAndBack</span>
-<span class="linenos">47</span>    <span class="p">{</span>
-<span class="hll"><span class="linenos">48</span>        <span class="kt">type</span>            <span class="n">empty</span><span class="p">;</span>
-</span><span class="linenos">49</span>    <span class="p">}</span>
-<span class="linenos">50</span><span class="p">}</span>
+<span class="linenos">47</span>    <span class="n">front</span>
+<span class="hll"><span class="linenos">48</span>    <span class="p">{</span>
+</span><span class="linenos">49</span>        <span class="kt">type</span>            <span class="n">empty</span><span class="p">;</span>
+<span class="linenos">50</span>    <span class="p">}</span>
+<span class="linenos">51</span>    <span class="n">back</span>
+<span class="linenos">52</span>    <span class="p">{</span>
+<span class="linenos">53</span>        <span class="kt">type</span>            <span class="n">empty</span><span class="p">;</span>
+<span class="linenos">54</span>    <span class="p">}</span>
+<span class="linenos">55</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
-<p>The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the sides have constant values. The top and bottom are symmetry planes and the internal boundaries with the solid grains get a <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> condition. As we are performing a 2-D simulations, the frontAndBack faces are set to <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
+<p>The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the sides have constant values. The top and bottom are symmetry planes and the internal boundaries with the solid grains get a <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> condition. As we are performing a 2-D simulations, the front and back faces are set to <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
 <p>Remember that units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a 2 in the second and third column, we get the correct units for the kinematic pressure.</p>
 <p>We also need to set boundary conditions for the velocity.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/U
@@ -571,15 +579,19 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 <span class="linenos">41</span>    <span class="p">{</span>
 <span class="hll"><span class="linenos">42</span>        <span class="kt">type</span>            <span class="n">noSlip</span><span class="p">;</span>
 </span><span class="linenos">43</span>    <span class="p">}</span>
-<span class="linenos">44</span>    <span class="n">frontAndBack</span>
+<span class="linenos">44</span>    <span class="n">front</span>
 <span class="linenos">45</span>    <span class="p">{</span>
 <span class="linenos">46</span>        <span class="kt">type</span>            <span class="n">empty</span><span class="p">;</span>
 <span class="linenos">47</span>    <span class="p">}</span>
-<span class="linenos">48</span><span class="p">}</span>
+<span class="linenos">48</span>    <span class="n">back</span>
+<span class="linenos">49</span>    <span class="p">{</span>
+<span class="linenos">50</span>        <span class="kt">type</span>            <span class="n">empty</span><span class="p">;</span>
+<span class="linenos">51</span>    <span class="p">}</span>
+<span class="linenos">52</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
-<p>The top and bottom are again symmetry planes and the <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> condition ensure that fluids can freely flow in and out. The contacts with the solid grains get <code class="code docutils literal notranslate"><span class="pre">noSlip</span></code>, which makes the velocity go to zero; frontAndBack are again set tp <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
+<p>The top and bottom are again symmetry planes and the <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> condition ensure that fluids can freely flow in and out. The contacts with the solid grains get <code class="code docutils literal notranslate"><span class="pre">noSlip</span></code>, which makes the velocity go to zero; front and back are again set to <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
 </section>
 <section id="transport-properties">
 <h3>Transport properties<a class="headerlink" href="#transport-properties" title="Link to this heading"></a></h3>

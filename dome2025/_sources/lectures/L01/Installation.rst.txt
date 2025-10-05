@@ -157,6 +157,7 @@ An easy way to create the environment is to use an environment.yaml file. This f
     - numpy
     - pandas
     - vtk
+    - pyevtk
     - h5py
     - scipy
     - ipykernel
