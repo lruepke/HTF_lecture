@@ -28,7 +28,7 @@ You should get something like this:
 
 Changes to the geometry
 ------------------------------------
-Check if/how the solution changes if you distort the mesh. For example, squeeze it a bit in the vertical direction by modifying the :code:`transformPoints -scale "(1e-6 1e-6 1e-6)"` statement. Also check if the absolute dimensions matter!
+Check if/how the solution changes if you distort the mesh. For example, squeeze it a bit in the vertical direction by modifying the :code:`transformPoints "scale=(1e-6 1e-6 1e-6)"` statement. Also check if the absolute dimensions matter!
 
 Numerical models should (usually) not surprise us. So before running the different case, ask yourself what you expect.
 
