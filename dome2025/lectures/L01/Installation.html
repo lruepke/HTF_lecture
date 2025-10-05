@@ -171,7 +171,14 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>lruepke/hydrothermalfoam-openfoam10:latest
 </pre></div>
 </div>
-<p>The image is about 4GB, so this can take a while. The “:latest” tag points to a multiplatform image and you should get the right image regardless whether you are on an Intel/AMD or ARM/M-chip machine. After the download is finished, you can build the docker container. Use this command:</p>
+<p>The image is about 4GB, so this can take a while. The “:latest” tag points to a multiplatform image and you should get the right image regardless whether you are on an Intel/AMD or ARM/M-chip machine. After the download is finished, you can build the docker container. As we will share a folder between your host machine and the docker container, we first create a folder in your home directory. You can call it whatever you want, but we will use HydrothermalFoam_runs in this example.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
+<span class="c1"># on Windows use</span>
+mkdir<span class="w"> </span>%HOMEPATH%<span class="se">\H</span>ydrothermalFoam_runs
+</pre></div>
+</div>
+<p>Now we can build the docker container.</p>
+<p>Use this command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>hydrothermalfoam10<span class="w"> </span>-v<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/HydrothermalFoam_runs&quot;</span>:<span class="s2">&quot;/home/openfoam/HydrothermalFoam_runs&quot;</span><span class="w"> </span>lruepke/hydrothermalfoam-openfoam10:latest
 </pre></div>
 </div>

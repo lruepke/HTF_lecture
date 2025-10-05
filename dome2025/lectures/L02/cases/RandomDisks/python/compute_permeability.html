@@ -1,0 +1,251 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; HydrothermalFoam Lecture  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/style.css?v=379f3234" />
+
+  
+      <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../../_static/tabs.js?v=3ee01567"></script>
+      <script src="../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../../_static/copybutton.js?v=9b54adf2"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../../../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L01/FirstCase.html">A first test case - heat diffusion</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Introduction.html">Intro to flow in porous media</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Flow_pore_scale.html">Flow on the pore scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Exercise.html">Exercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../L04/Exercise.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">HydrothermalFoam Lecture</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Summer2022/source/lectures/L02/cases/RandomDisks/python/compute_permeability.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">vtk</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">vtk.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">numpy_support</span> <span class="k">as</span> <span class="n">VN</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulation parameters</span>
+<span class="n">DP</span> <span class="o">=</span> <span class="mi">1</span>                       <span class="c1"># pressure drop [Pa]</span>
+<span class="n">nu</span> <span class="o">=</span> <span class="mf">1e-06</span>                   <span class="c1"># kinematic viscosity [m²/s²]</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="mi">1000</span>                   <span class="c1"># density [kg/m³]</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">nu</span> <span class="o">*</span> <span class="n">rho</span>                <span class="c1"># dynamic viscosity [kg/(m*s)]</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="mi">1256</span><span class="o">*</span><span class="mf">1e-6</span>                <span class="c1"># model length x [m]</span>
+<span class="n">dy</span> <span class="o">=</span> <span class="mi">1256</span><span class="o">*</span><span class="mf">1e-6</span>                <span class="c1"># model width y [m]</span>
+<span class="n">dz</span> <span class="o">=</span> <span class="mf">1e-6</span>                    <span class="c1"># model thickness z [m]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">dz</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">A</span>
+
+
+
+<span class="c1"># load VTK data</span>
+<span class="n">vtkFile</span> <span class="o">=</span> <span class="s1">&#39;../VTK/phi_05_945.vtk&#39;</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkUnstructuredGridReader</span><span class="p">()</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">vtkFile</span><span class="p">)</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">ReadAllScalarsOn</span><span class="p">()</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">ReadAllVectorsOn</span><span class="p">()</span>
+<span class="n">reader</span><span class="o">.</span><span class="n">Update</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">GetOutput</span><span class="p">()</span>
+
+
+<span class="c1"># extract velocity arrays</span>
+<span class="n">Vcells</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">&#39;V&#39;</span><span class="p">))</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">))</span>
+<span class="n">Umag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">U</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">U</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">U</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Ux</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Uy</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">Uz</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># calculate volume fluxes</span>
+<span class="n">qx</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">qy</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Vcells</span><span class="p">)):</span>
+    <span class="n">q1</span> <span class="o">=</span> <span class="n">Vcells</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="n">Ux</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+    <span class="n">q2</span> <span class="o">=</span> <span class="n">Vcells</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">*</span> <span class="n">Uy</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+    <span class="n">qx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q1</span><span class="p">)</span>
+    <span class="n">qy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q2</span><span class="p">)</span>
+
+<span class="c1"># calculate Darcy velocity</span>
+<span class="n">U_Darcy_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">qx</span><span class="p">)</span><span class="o">/</span><span class="n">V</span>
+
+<span class="n">kxx</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">U_Darcy_x</span><span class="o">/</span><span class="n">DP</span>
+<span class="n">porosity</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">Vcells</span><span class="p">)</span><span class="o">/</span><span class="n">V</span>
+
+<span class="c1"># print permeability and porosity</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bulk permeability: </span><span class="si">%5.2e</span><span class="s1"> m2, Porosity: </span><span class="si">%3.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">kxx</span><span class="p">,</span> <span class="n">porosity</span><span class="p">))</span>
+<br/><br/><br/><br/><br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Bulk permeability: 1.05e-11 m2, Porosity: 0.56
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
