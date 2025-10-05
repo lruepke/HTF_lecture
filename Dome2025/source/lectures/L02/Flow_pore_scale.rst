@@ -65,10 +65,10 @@ The complete openFOAM case can be downloaded from :download:`here <cases/DRP_per
 
 Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup).
 
-Check out the directory structure shown in :numref:`lst:drp_case:tree`.
+Check out the directory structure shown in :numref:`lst:drp_case_dome:tree`.
 
 .. code-block:: bash 
-    :name: lst:drp_case:tree
+    :name: lst:drp_case_dome:tree
     :caption: File tree structure of the Digital Rock Physics case.
 
     .
