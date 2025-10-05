@@ -92,7 +92,7 @@ html_context = {
     # Format Template: https://{{ github_host|default("github.com") }}/{{ github_user }}/{{ github_repo }}/blob/{{ github_version }}{{ conf_py_path }}{{ pagename }}{{ suffix }}
     'github_user': 'lruepke',
     'github_repo': 'HTF_lecture',
-    'github_version': 'main/Summer2022/',
+    'github_version': 'main/Dome2025/',
     'conf_py_path': 'source/',
     "menu_links": [
         (
