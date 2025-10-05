@@ -181,6 +181,9 @@ Now create the environment by typing
     conda env create -f environment.yaml
 
 If everything works, you should see something like this at the end of the output:
+
+.. code-block:: bash
+
     #
     # To activate this environment, use
     #
@@ -235,6 +238,6 @@ First, let's check that VS Code finds our new kernel:
     :figwidth: 70%
 
 
-    
+
 
 
