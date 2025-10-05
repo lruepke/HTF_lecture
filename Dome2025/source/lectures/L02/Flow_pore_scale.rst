@@ -124,7 +124,7 @@ Next we import the .png file from the :code:`geometry` folder and convert it to 
     # 3.2 save as vti using porespy                                              
     ps.io.to_vtk(arr_stacked, 'geometry/porous_model') 
 
-You can put this little script into a jupyter notebook or save it as .py (e.g. png2vti.py), then activate the right kernel (e.g. :code:`conda activate py3_htf_class`), and do this:
+You can put this little script into a jupyter notebook or save it as .py (e.g. png2vti.py), then activate the right kernel (e.g. :code:`conda activate py312_dome_workshop`), and do this:
 
 .. code-block:: bash
 
@@ -134,7 +134,7 @@ You can put this little script into a jupyter notebook or save it as .py (e.g. p
 After running it, you should  have a file :code:`porous_model.vti` in the geometry folder. 
 
 .. tip::
-    If you are interested in the vti file format, this is what we have just written to porous_model.vti
+    If you are interested in the vti file format, this is what we have just written to porous_model.vti. There is a non-zero chance that porespy will write out a binary file and not ascii. If that is the case, you can open it in paraview.
 
     .. code-block:: bash
 
@@ -157,11 +157,11 @@ Now comes the segmentation and triangulation part to make an stl file that openF
 
     #. use paraview's graphical user interface
     #. use paraview's inbuild python shell
-    #. install paraview into a conda environment and use a jupyter notebook
+    #. install paraview into a conda environment and do everything in python scripts or notebooks (the paraview python bindings are called :code:`paraview.simple` but are sometimes a pain to install).
 
 .. figure:: /_figures/paraview_python.*
    :align: center
-   :name: fig:paraview_figure_fig
+   :name: fig:paraview_figure_fig_dome
    :figwidth: 85%
 
    Using the paraview python shell.
@@ -172,7 +172,7 @@ Here is some python code that uses the paraview python bindings. You can save it
 .. code-block:: python
 
     # workflow as python code using the paraview.simple module
-    from paraview.simple import *
+    # from paraview.simple import * #not needed in paraview's python shell
     import os
 
     def write_stl(vti_file, stl_file):
@@ -189,13 +189,13 @@ Here is some python code that uses the paraview python bindings. You can save it
         SaveData(stl_file, proxy = triangulate1)
     
     # main part
-    vti_file = 'porous_model.vti'      # input .vti file
-    stl_file = 'porous_model.stl'  # output .stl file
+    vti_file = './geometry/porous_model.vti'      # input .vti file
+    stl_file = './constant/triSurface/porous_model.stl'  # output .stl file
     # call function
     write_stl(vti_file, stl_file)
 
 
-An easy way to exectute the python scrip is to call it from the python shell in paraview :numref:`fig:paraview_figure_fig`. Within the shell, you first make sure that you are in your case directory; then you make the correct folder to hold the .stl file that we will create (:code:`./constant/triSurface`).
+An easy way to exectute the python scrip is to save the above code into a file (e.g. write_stl.py) and call it from the python shell in paraview :numref:`fig:paraview_figure_fig_dome`. Within the shell, you first make sure that you are in your case directory; then you make the correct folder to hold the .stl file that we will create (:code:`./constant/triSurface`).
 
 .. code:: python
 
@@ -207,25 +207,12 @@ An easy way to exectute the python scrip is to call it from the python shell in 
 
 This will create a .stl file, which we will use in the meshing process.
 
-If you used the paraview GUI, you might have to do some cleanup, so that the files are in the correct location. Move the vti file into :code:`./geometry` and the stl file into :code:`./constant/triSurface`, where openFOAM expects it. This assumes that you are in the case directory.
+If you did not use the python script but did everything step-by-step using the paraview GUI, you might have to do some cleanup, so that the files are in the correct location. Move the vti file into :code:`./geometry` and the stl file into :code:`./constant/triSurface`, where openFOAM expects it. This assumes that you are in the case directory.
 
 .. code:: bash
 
     mv ./porous_model.vti ./geometry/
     mv ./porous_model.stl ./constant/triSurface/
-
-.. admonition:: Doing it the proper way
-
-    The more elegant way would have been to avoid the in-build paraview shell and do everything in a jupyter notebook or a stand-alone python file. Unfortunately, installing the :code:`paraview.simple` module can be a pain - and even the paraview conda package is incompatible with other packages (like vtk, which we will need later in the class). 
-
-    Here is a way to get this to work: make a clean conda environment that has paraview and some other useful things, activate the base environment, startup jupyter and choose the newly created py3_htf_paraview kernel for a new notebook, and finally copy and paste the code above into notebook. Try it!
-
-    .. code-block:: bash
-
-        conda create -n py3_htf_paraview python=3 numpy pandas matplotlib paraview scipy ipykernel
-
-        conda activate base 
-        jupyter notebook
 
 
 OpenFOAM case
@@ -328,20 +315,27 @@ Great, back to openfoam for the final mesh making! Making the mesh with SHM is a
             );
         }
 
-
-        frontAndBack
+        front
         {
-            type empty;
+            type patch;
             faces
             (
                 (0 3 2 1)
+            );
+        }
+        back
+        {
+            type patch;
+            faces
+            (
                 (4 5 6 7)
             );
         }
     );
 
 
-Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions.
+Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions. Note how this is actually a 3D mesh, with one cell in the third dimension.
+
 
 Now have a look at :code:`system/snappyHexMeshDict`. We will not go into details here, just explore the general structure yourself if you are interested using the resources linked above.
 
@@ -351,10 +345,25 @@ Time to make the mesh! Run each of the steps below individually and check out th
 
     blockMesh
     snappyHexMesh -overwrite
-    checkMesh -allTopology -allGeometry
-    transformPoints -scale "(1e-6 1e-6 1e-6)"
 
-The final conversion turns everything in micrometer (:math:`10^{-6} m`). Check out the final mesh in paraview!
+
+Create a temporary file :code:`a.foam` to load the case into paraview. Also load the stl file to see how well the mesh fits the geometry.
+
+Now we need to make the mesh 2D again for our simulation. This is done by taking the front surface of the 3D mesh and extruding it. Afterwards, we need to set the front and back surface to empty, so that the mesh is truly 2D. This is a bit of a hack, but snappyHexMesh does not do 2D meshes directly.
+
+.. code:: bash
+
+    extrudeMesh
+    changeDictionaryDict
+
+Both commands read the respective dictionary files from :code:`system`. The first command extrudes the front surface of the mesh by 1 cell in the z-direction. The second command changes the front and back patches to empty. 
+
+Finally, we need to scale the mesh to physical dimensions. We will assume that each pixel in the image is 1 micrometer (:math:`10^{-6} m`). This is done using the :code:`transformPoints` utility.
+
+.. code:: bash
+
+    transformPoints "scale=(1e-6 1e-6 1e-6)"
+
 
 
 Boundary conditions
@@ -420,12 +429,17 @@ Open the file p inside the 0 directory from your local left-hand shell.
             type            zeroGradient;
         }
         frontAndBack
+        front
+        {
+            type            empty;
+        }
+        back
         {
             type            empty;
         }
     }
 
-The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the sides have constant values. The top and bottom are symmetry planes and the internal boundaries with the solid grains get a :code:`zeroGradient` condition. As we are performing a 2-D simulations, the frontAndBack faces are set to :code:`empty`. 
+The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the sides have constant values. The top and bottom are symmetry planes and the internal boundaries with the solid grains get a :code:`zeroGradient` condition. As we are performing a 2-D simulations, the front and back faces are set to :code:`empty`. 
 
 Remember that units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a 2 in the second and third column, we get the correct units for the kinematic pressure. 
 
@@ -484,13 +498,17 @@ We also need to set boundary conditions for the velocity.
         {
             type            noSlip;
         }
-        frontAndBack
+        front
+        {
+            type            empty;
+        }
+        back
         {
             type            empty;
         }
     }
 
-The top and bottom are again symmetry planes and the :code:`zeroGradient` condition ensure that fluids can freely flow in and out. The contacts with the solid grains get :code:`noSlip`, which makes the velocity go to zero; frontAndBack are again set tp :code:`empty`.
+The top and bottom are again symmetry planes and the :code:`zeroGradient` condition ensure that fluids can freely flow in and out. The contacts with the solid grains get :code:`noSlip`, which makes the velocity go to zero; front and back are again set to :code:`empty`.
 
 
 Transport properties

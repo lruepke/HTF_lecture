@@ -41,7 +41,11 @@ boundaryField
     {
         type            noSlip;
     }
-    frontAndBack
+    front
+    {
+        type            empty;
+    }
+    back
     {
         type            empty;
     }
