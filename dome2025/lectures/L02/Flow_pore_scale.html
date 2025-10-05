@@ -196,11 +196,11 @@
 <section id="python-pre-processing">
 <h3>Python pre-processing<a class="headerlink" href="#python-pre-processing" title="Link to this heading"></a></h3>
 <p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <a class="reference internal" href="#fig-figure-workflow-fig-dome"><span class="std std-numref">Fig. 7</span></a> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it; make sure it is available in your pyhton environment.</p>
-<p>The complete openFOAM case can be downloaded from <code class="xref download docutils literal notranslate"><span class="pre">here</span></code> .</p>
+<p>The complete openFOAM case can be downloaded from <a class="reference download internal" download="" href="../../_downloads/baf702b937d91a302164ec058067d8af/DRP_permeability_2D.zip"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a> .</p>
 <p>Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup).</p>
-<p>Check out the directory structure shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">lst:drp_case:tree</span></code>.</p>
-<div class="literal-block-wrapper docutils container" id="lst-drp-case-tree">
-<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">File tree structure of the Digital Rock Physics case.</span><a class="headerlink" href="#lst-drp-case-tree" title="Link to this code"></a></div>
+<p>Check out the directory structure shown in <a class="reference internal" href="#lst-drp-case-dome-tree"><span class="std std-numref">Listing 6</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="lst-drp-case-dome-tree">
+<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">File tree structure of the Digital Rock Physics case.</span><a class="headerlink" href="#lst-drp-case-dome-tree" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.
 ├──<span class="w"> </span><span class="m">0</span>
 │<span class="w">   </span>├──<span class="w"> </span>U
