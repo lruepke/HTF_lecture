@@ -15,7 +15,7 @@ Copy the  case into your shared working directory (probably $HOME/HydrothermalFo
     :name: lst:cp2dBoxToWorkDir
 
     cd $HOME/HydrothermalFoam_runs
-    cp -r $HOME/HydrothermalFoam/cookbooks/2d/Regular2DBox . 
+    cp -r $HOME/HydrothermalFoam/tutorials/cookbooks/2d/Regular2DBox .
 
 Check out the directory structure shown in :numref:`lst:2dbox:tree`.
 
