@@ -5,6 +5,7 @@ icon: "fas fa-book-open"
 description: "PDEs, FEM, Python, heat diffusion, reactive systems, mantle convection."
 type : "docs"
 color: "73, 147, 65"
+draft: true
 ---
 
 <script type="text/javascript">
