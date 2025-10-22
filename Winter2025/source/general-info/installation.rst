@@ -1,7 +1,9 @@
+.. _Installation guide:
+
 Installation guide
 ==================
 
-We will use Python for learning the basics of the finite element method. Later in the course, we will also use `FENICS <https://fenicsproject.org/>`_ to explore some more advanced concepts. Most of the work will be done in Jupyter notebooks. Let's get all of this to work.
+We will use Python for learning the basics of the finite element method. Most of the work will be done in Jupyter notebooks. Let's get all of this to work.
 
 Visual Studio Code
 ------------------
@@ -12,40 +14,90 @@ Python
 
 Download and install miniconda
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In case you already have a working python environment, you can adapt it for this course (e.g. by creating a new virtual environment). If not, we recommend `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose "no". It's usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.
+In case you already have a working python environment, you can adapt it for this course (e.g. by creating a new virtual environment). If not, we recommend `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. 
 
 .. admonition:: conda-forge setup
 
     There are different sources, so-called channels, from where you can obtain the packages for your python environment. We will use the community channel *conda-forge*. 
 
-    Our recommended setup is to the use a very basic *base environment* that only contains the necessary packages to run *jupyter notebook* and/or *jupyter lab*. Everything else will be done from virtual environments, which you can activate from within jupyter. 
-
-    .. code-block:: bash
-
-        conda install -n base -c conda-forge jupyterlab notebook nb_conda_kernels
-
 
 Create a virtual environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-We will create a virtual environment with all the python packages we will use during this class. To not interfere with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation. 
+We will create a so-called virtual environment with all the python packages we will use during this class. To not interfere with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation. 
 
-Make sure your conda base environment is activated
+.. admonition:: Starting python
+
+    If you are on Windows, start an Anaconda Powershell Prompt from the start menu.
+
+    On MacOS / Linux, open a terminal and type
+
+    .. code-block:: bash
+
+        conda activate base
+
+    You can also do that in the terminal within Visual Studio Code (on MacOS).
+
+
+An easy way to create the environment is to use an [environment.yaml](/files/environment.yaml) file. This file contains all the necessary information to create the environment. Just copy it into a file and save it as environment.yaml.
+
+.. code-block:: yaml
+
+    name: py312_fem_class
+
+    channels:
+    - conda-forge
+    - nodefaults
+
+    dependencies:
+    - python=3.12
+    - ipykernel
+    - matplotlib
+    - numpy
+    - pandas
+    - vtk
+    - pyevtk
+    - h5py
+    - scipy
+    - ipykernel
+    - pip
+
+    - pip:
+        - meshio
+        - triangle
+
+
+.. admonition:: Python versions
+
+    In Summer 2025, conda already supports python 3.13. However, some packages are not working with the newest python and we therefore use python 3.12. Please keep this in mind, if you are working with your own python installation.
+
+
+Now create the environment by typing
 
 .. code-block:: bash
 
-    conda activate base
+    conda env create -f environment.yaml
 
-Now we are ready to create a virtual environment. We can create it with this command:
-
-.. code-block:: bash
-
-    conda create -n py3_fem_class numpy pandas matplotlib scipy ipykernel
-
-Activate the new environment
+If everything works, you should see something like this at the end of the output:
 
 .. code-block:: bash
 
-    conda activate py3_fem_class
+    #
+    # To activate this environment, use
+    #
+    #     conda activate py312_fem_class
+    #
+    # To deactivate an active environment, use
+    #
+    #     conda deactivate
+    #
+
+Activate the environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+You can now activate the environment by typing
+
+.. code-block:: bash
+
+    conda activate py312_fem_class
 
 
 Switching between environments
@@ -55,27 +107,8 @@ You can activate and deactivate environments like this:
 
 .. code-block:: bash
 
-    conda activate py3_fem_class
+    conda activate py312_fem_class
     conda deactivate 
-
-Working with jupyter notebooks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-We will do most exercises using jupyter notebooks. A good workflow is to start jupyter lab in the conda base environment and then chose the the python kernel (the virtual environment) inside the notebook.
-
-.. code-block:: bash
-
-    cd "your working directory"
-    conda activate base
-    jupyter lab
-
-
-Now create a new notebook and choose *py3_fem_class* as your kernel. Check that you can import e.g. pandas. 
- 
-
-.. admonition:: Confused?
-
-    If you have never used python or are new to jupyter notebooks, no worries! Things will become clear when we are doing the actual exercises. 
 
 
 Integration with Visual Studio Code
