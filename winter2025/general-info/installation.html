@@ -61,8 +61,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#python">Python</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#download-and-install-miniconda">Download and install miniconda</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#create-a-virtual-environment">Create a virtual environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#activate-the-environment">Activate the environment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#switching-between-environments">Switching between environments</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#working-with-jupyter-notebooks">Working with jupyter notebooks</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#integration-with-visual-studio-code">Integration with Visual Studio Code</a></li>
 </ul>
 </li>
@@ -167,8 +167,8 @@
            <div itemprop="articleBody">
              
   <section id="installation-guide">
-<h1>Installation guide<a class="headerlink" href="#installation-guide" title="Link to this heading"></a></h1>
-<p>We will use Python for learning the basics of the finite element method. Later in the course, we will also use <a class="reference external" href="https://fenicsproject.org/">FENICS</a> to explore some more advanced concepts. Most of the work will be done in Jupyter notebooks. Let’s get all of this to work.</p>
+<span id="id1"></span><h1>Installation guide<a class="headerlink" href="#installation-guide" title="Link to this heading"></a></h1>
+<p>We will use Python for learning the basics of the finite element method. Most of the work will be done in Jupyter notebooks. Let’s get all of this to work.</p>
 <section id="visual-studio-code">
 <h2>Visual Studio Code<a class="headerlink" href="#visual-studio-code" title="Link to this heading"></a></h2>
 <p>We will do a lot of editing of text files and you can use your favorite text editor for this. However, we  recommend to use <a class="reference external" href="https://code.visualstudio.com/">Microsoft’s Visual Studio Code</a>, which also nicely integrates with python.</p>
@@ -177,52 +177,83 @@
 <h2>Python<a class="headerlink" href="#python" title="Link to this heading"></a></h2>
 <section id="download-and-install-miniconda">
 <h3>Download and install miniconda<a class="headerlink" href="#download-and-install-miniconda" title="Link to this heading"></a></h3>
-<p>In case you already have a working python environment, you can adapt it for this course (e.g. by creating a new virtual environment). If not, we recommend <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose “no”. It’s usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.</p>
+<p>In case you already have a working python environment, you can adapt it for this course (e.g. by creating a new virtual environment). If not, we recommend <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>. Follow the miniconda installation instructions and afterwards create a virtual environment for this course.</p>
 <div class="admonition-conda-forge-setup admonition">
 <p class="admonition-title">conda-forge setup</p>
 <p>There are different sources, so-called channels, from where you can obtain the packages for your python environment. We will use the community channel <em>conda-forge</em>.</p>
-<p>Our recommended setup is to the use a very basic <em>base environment</em> that only contains the necessary packages to run <em>jupyter notebook</em> and/or <em>jupyter lab</em>. Everything else will be done from virtual environments, which you can activate from within jupyter.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-n<span class="w"> </span>base<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>jupyterlab<span class="w"> </span>notebook<span class="w"> </span>nb_conda_kernels
-</pre></div>
-</div>
 </div>
 </section>
 <section id="create-a-virtual-environment">
 <h3>Create a virtual environment<a class="headerlink" href="#create-a-virtual-environment" title="Link to this heading"></a></h3>
-<p>We will create a virtual environment with all the python packages we will use during this class. To not interfere with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation.</p>
-<p>Make sure your conda base environment is activated</p>
+<p>We will create a so-called virtual environment with all the python packages we will use during this class. To not interfere with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation.</p>
+<div class="admonition-starting-python admonition">
+<p class="admonition-title">Starting python</p>
+<p>If you are on Windows, start an Anaconda Powershell Prompt from the start menu.</p>
+<p>On MacOS / Linux, open a terminal and type</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>base
 </pre></div>
 </div>
-<p>Now we are ready to create a virtual environment. We can create it with this command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>py3_fem_class<span class="w"> </span>numpy<span class="w"> </span>pandas<span class="w"> </span>matplotlib<span class="w"> </span>scipy<span class="w"> </span>ipykernel
+<p>You can also do that in the terminal within Visual Studio Code (on MacOS).</p>
+</div>
+<p>An easy way to create the environment is to use an [environment.yaml](/files/environment.yaml) file. This file contains all the necessary information to create the environment. Just copy it into a file and save it as environment.yaml.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">py312_fem_class</span>
+
+<span class="nt">channels</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodefaults</span>
+
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.12</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipykernel</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">matplotlib</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">numpy</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pandas</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vtk</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pyevtk</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h5py</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scipy</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipykernel</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip</span>
+
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pip</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">meshio</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">triangle</span>
 </pre></div>
 </div>
-<p>Activate the new environment</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>py3_fem_class
+<div class="admonition-python-versions admonition">
+<p class="admonition-title">Python versions</p>
+<p>In Summer 2025, conda already supports python 3.13. However, some packages are not working with the newest python and we therefore use python 3.12. Please keep this in mind, if you are working with your own python installation.</p>
+</div>
+<p>Now create the environment by typing</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yaml
+</pre></div>
+</div>
+<p>If everything works, you should see something like this at the end of the output:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># To activate this environment, use</span>
+<span class="c1">#</span>
+<span class="c1">#     conda activate py312_fem_class</span>
+<span class="c1">#</span>
+<span class="c1"># To deactivate an active environment, use</span>
+<span class="c1">#</span>
+<span class="c1">#     conda deactivate</span>
+<span class="c1">#</span>
+</pre></div>
+</div>
+</section>
+<section id="activate-the-environment">
+<h3>Activate the environment<a class="headerlink" href="#activate-the-environment" title="Link to this heading"></a></h3>
+<p>You can now activate the environment by typing</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>py312_fem_class
 </pre></div>
 </div>
 </section>
 <section id="switching-between-environments">
 <h3>Switching between environments<a class="headerlink" href="#switching-between-environments" title="Link to this heading"></a></h3>
 <p>You can activate and deactivate environments like this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>py3_fem_class
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>py312_fem_class
 conda<span class="w"> </span>deactivate
 </pre></div>
-</div>
-</section>
-<section id="working-with-jupyter-notebooks">
-<h3>Working with jupyter notebooks<a class="headerlink" href="#working-with-jupyter-notebooks" title="Link to this heading"></a></h3>
-<p>We will do most exercises using jupyter notebooks. A good workflow is to start jupyter lab in the conda base environment and then chose the the python kernel (the virtual environment) inside the notebook.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;your working directory&quot;</span>
-conda<span class="w"> </span>activate<span class="w"> </span>base
-jupyter<span class="w"> </span>lab
-</pre></div>
-</div>
-<p>Now create a new notebook and choose <em>py3_fem_class</em> as your kernel. Check that you can import e.g. pandas.</p>
-<div class="admonition-confused admonition">
-<p class="admonition-title">Confused?</p>
-<p>If you have never used python or are new to jupyter notebooks, no worries! Things will become clear when we are doing the actual exercises.</p>
 </div>
 </section>
 <section id="integration-with-visual-studio-code">
