@@ -1,0 +1,4 @@
+Overview
+============================================
+
+In this lecture we will go through all the technical prerequisites and will explore some simple finite-differences examples. First, we will learn about the explicit finite differences discretization by solving for the cooling of a hot intrusion into colder country rock. We will discuss the strengths and limitations of explicit methods. Afterwards, we will derive and implement the implicit form, which involves solving a system of equations. Finally, we will learn about different boundary conditions and will test those on the example of how periodic changes in seafloor temperatures propagate into the seafloor.

@@ -25,7 +25,7 @@ jobs:
       - name: Generate main pages and sphinx pages
         run: |
           # 0. Set lectures
-          lectures="Winter2020 Summer2021 Summer2022 Winter2022 Winter2023 Summer2024 Summer2025 Dome2025"
+          lectures="Winter2020 Summer2021 Summer2022 Winter2022 Winter2023 Summer2024 Summer2025 Dome2025 Winter2025"
           commitIDFile_stored=commit.ID
 
           # 1. Fetch history
