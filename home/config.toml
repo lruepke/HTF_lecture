@@ -80,43 +80,43 @@ hasChildren = true
   url = "winter2023"
   weight = 2
   
-  [[Languages.en.menu.main]]
-  parent = "Lectures"
-  name = "Winter 2022"
-  url = "winter2022"
-  weight = 3
+  #[[Languages.en.menu.main]]
+  #parent = "Lectures"
+  #name = "Winter 2022"
+  #url = "winter2022"
+  #weight = 3
 
-  [[Languages.en.menu.main]]
-  parent = "Lectures"
-  name = "Summer 2022"
-  url = "summer2022"
-  weight = 4
+  #[[Languages.en.menu.main]]
+  #parent = "Lectures"
+  #name = "Summer 2022"
+  #url = "summer2022"
+  #weight = 4
 
-  [[Languages.en.menu.main]]
-  parent = "Lectures"
-  name = "Summer2021"
-  url = "summer2021"
-  weight = 5
+  #[[Languages.en.menu.main]]
+  #parent = "Lectures"
+  #name = "Summer2021"
+  #url = "summer2021"
+  #weight = 5
 
   [[Languages.en.menu.main]]
   parent = "Lectures"
   name = "Summer2025"
   url = "summer2025"
-  weight = 6
+  weight = 3
 # banner
 
-[[Languages.en.menu.main]]
-parent = "Lectures"
-name = "Dome2025"
-url = "dome2025"
-weight = 7
+  [[Languages.en.menu.main]]
+  parent = "Lectures"
+  name = "Dome2025"
+  url = "dome2025"
+  weight = 4
 
+  [[Languages.en.menu.main]]
+  parent = "Lectures"
+  name = "Winter2025"
+  url = "winter2025"
+  weight = 5
 
-[[Languages.en.menu.main]]
-parent = "Lectures"
-name = "Winter2025"
-url = "winter2025"
-weight = 8
 [Languages.en.params.banner]
 title = "Lectures on numerical fluid dynamics in geophysics"
 subtitle = "Welcome to the course notes on the numerical fluid dynamics lecture series taught in the geophysics master at Kiel University"
@@ -128,7 +128,7 @@ placeholder = "Have a question? Try to ask here or enter terms"
 [[Languages.en.params.social]]
 fa="fab fa-gitlab"
 fa_title="Hydrothermalfoam" #show as tooltip
-link = "https://gitlab.com/gmdpapers/hydrothermalfoam"
+link = "https://github.com/lruepke/HydrothermalFoam"
   
 [[Languages.en.params.social]]
 fa="fab fa-github"
@@ -138,12 +138,7 @@ link = "https://github.com/lruepke/HTF_lecture"
 [[Languages.en.params.social]]
 fa="fab fa-docker"
 fa_title="Docker Hub" #show as tooltip
-link = "https://hub.docker.com/r/zguo/hydrothermalfoam"
-
-[[Languages.en.params.social]]
-fa="fab fa-youtube"
-fa_title="YouTube" #show as tooltip
-link = "https://www.youtube.com/playlist?list=PLnufTNcP1C4iiwSZeSQTGvnocA3e08fzv"
+link = "https://hub.docker.com/u/lruepke"
 
 
 # call to action
