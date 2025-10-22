@@ -38,7 +38,7 @@ We will create a so-called virtual environment with all the python packages we w
     You can also do that in the terminal within Visual Studio Code (on MacOS).
 
 
-An easy way to create the environment is to use an :download:`environment.yaml <_static/files/environment.yaml>` file. This file contains all the necessary information to create the environment. Just copy it into a file and save it as environment.yaml.
+An easy way to create the environment is to use an :download:`environment.yaml <files/environment.yaml>` file. This file contains all the necessary information to create the environment. Just copy it into a file and save it as environment.yaml.
 
 .. code-block:: yaml
 
