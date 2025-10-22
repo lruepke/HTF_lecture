@@ -2,10 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://lruepke.github.io/HTF_lecture/dome2025/</loc>
-    <lastmod>2025-10-02T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://lruepke.github.io/HTF_lecture/</loc>
+    <lastmod>2025-10-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://lruepke.github.io/HTF_lecture/winter2025/</loc>
+    <lastmod>2025-10-22T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://lruepke.github.io/HTF_lecture/dome2025/</loc>
     <lastmod>2025-10-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://lruepke.github.io/HTF_lecture/summer2025/</loc>
