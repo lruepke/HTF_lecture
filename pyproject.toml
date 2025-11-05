@@ -27,6 +27,7 @@ h5py = "^3.11.0"
 xlsxwriter = "^3.2.0"
 iapws = "^1.5.4"
 nbsphinx = "^0.9.7"
+ipympl = "^0.9.8"
 
 
 [build-system]
