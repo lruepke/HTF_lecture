@@ -251,10 +251,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide</span>
-<span class="n">Ael</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">k</span><span class="o">/</span><span class="n">dx</span><span class="p">,</span> <span class="o">-</span><span class="n">k</span><span class="o">/</span><span class="n">dx</span><span class="p">],[</span><span class="o">-</span><span class="n">k</span><span class="o">/</span><span class="n">dx</span><span class="p">,</span> <span class="n">k</span><span class="o">/</span><span class="n">dx</span><span class="p">]])</span>
-<span class="n">Rhs_el</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">Q</span><span class="o">*</span><span class="n">dx</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">Q</span><span class="o">*</span><span class="n">dx</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span>
-<br/></pre></div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide: the code in this cell is hidden by the author</span>
+</pre></div>
 </div>
 </div>
 <p>Now we need to loop over all elements and assemble the global stiffness matrix</p>
@@ -303,15 +301,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide</span>
-<span class="c1">#Apply boundary conditions</span>
-<span class="n">A_all</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>       <span class="o">=</span> <span class="mi">1</span>
-<span class="n">A_all</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>       <span class="o">=</span> <span class="mi">0</span>
-<span class="n">A_all</span><span class="p">[</span><span class="n">nnod</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">nnod</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">A_all</span><span class="p">[</span><span class="n">nnod</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">nnod</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">Rhs_all</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tleft</span>
-<span class="n">Rhs_all</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Trite</span>
-<br/></pre></div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide: the code in this cell is hidden by the author</span>
+</pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -397,7 +388,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Lars Ruepke and Zhikui Guo.</p>
+    <p>&#169; Copyright 2025, Lars Ruepke and Zhikui Guo.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

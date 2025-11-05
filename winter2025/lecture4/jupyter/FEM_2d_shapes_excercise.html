@@ -206,38 +206,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">shapes</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">eta</span><span class="p">):</span>
-
-    <span class="c1">#shape functions</span>
-
-    <span class="n">N1</span> <span class="o">=</span> <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">xi</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">eta</span><span class="p">)</span>
-    <span class="n">N2</span> <span class="o">=</span> <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">xi</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">eta</span><span class="p">)</span>
-    <span class="n">N3</span> <span class="o">=</span> <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">xi</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">eta</span><span class="p">)</span>
-    <span class="n">N4</span> <span class="o">=</span> <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">xi</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">eta</span><span class="p">)</span>
-
-    <span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">N1</span><span class="p">,</span> <span class="n">N2</span><span class="p">,</span> <span class="n">N3</span><span class="p">,</span> <span class="n">N4</span><span class="p">])</span>
-
-    <span class="c1"># and their derivatives</span>
-    <span class="n">dNds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-
-    <span class="n">dNds</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>   <span class="o">=</span>  <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span>  <span class="o">+</span> <span class="n">eta</span><span class="p">)</span> <span class="c1">#derivative with xi</span>
-    <span class="n">dNds</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>   <span class="o">=</span>  <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="n">xi</span>  <span class="o">-</span>  <span class="mi">1</span><span class="p">)</span> <span class="c1">#derivative with eta</span>
-
-    <span class="c1">#derivatives of second shape function with local coordinates</span>
-    <span class="n">dNds</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>   <span class="o">=</span>  <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span>   <span class="o">-</span> <span class="n">eta</span><span class="p">)</span>
-    <span class="n">dNds</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>   <span class="o">=</span>  <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="n">xi</span> <span class="o">-</span>  <span class="mi">1</span><span class="p">)</span>
-
-    <span class="c1">#derivatives of third shape function with local coordinates</span>
-    <span class="n">dNds</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>   <span class="o">=</span>  <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="n">eta</span>  <span class="o">+</span>  <span class="mi">1</span><span class="p">)</span>
-    <span class="n">dNds</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>   <span class="o">=</span>  <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="n">xi</span>  <span class="o">+</span>  <span class="mi">1</span><span class="p">)</span>
-
-    <span class="c1">#derivatives of fourth shape function with local coordinates</span>
-    <span class="n">dNds</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>   <span class="o">=</span>  <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="n">eta</span> <span class="o">-</span>  <span class="mi">1</span><span class="p">)</span>
-    <span class="n">dNds</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>   <span class="o">=</span>  <span class="mf">0.25</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span>   <span class="o">-</span> <span class="n">xi</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">N</span><span class="p">,</span> <span class="n">dNds</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide: the code in this cell is hidden by the author</span>
 </pre></div>
 </div>
 </div>
@@ -313,7 +282,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Lars Ruepke and Zhikui Guo.</p>
+    <p>&#169; Copyright 2025, Lars Ruepke and Zhikui Guo.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

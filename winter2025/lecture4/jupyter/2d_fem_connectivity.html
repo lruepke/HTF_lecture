@@ -269,30 +269,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide</span>
-<span class="n">lx</span>          <span class="o">=</span> <span class="mi">1</span>
-<span class="n">ly</span>          <span class="o">=</span> <span class="mi">1</span>
-<span class="n">nx</span>          <span class="o">=</span> <span class="mi">5</span>
-<span class="n">ny</span>          <span class="o">=</span> <span class="mi">4</span>
-<span class="n">nnodel</span>      <span class="o">=</span> <span class="mi">4</span>
-<span class="n">dx</span>          <span class="o">=</span> <span class="n">lx</span><span class="o">/</span><span class="p">(</span><span class="n">nx</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">dy</span>          <span class="o">=</span> <span class="n">ly</span><span class="o">/</span><span class="p">(</span><span class="n">ny</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">nex</span>         <span class="o">=</span> <span class="n">nx</span><span class="o">-</span><span class="mi">1</span>
-<span class="n">ney</span>         <span class="o">=</span> <span class="n">ny</span><span class="o">-</span><span class="mi">1</span>
-<span class="n">nnod</span>        <span class="o">=</span> <span class="n">nx</span><span class="o">*</span><span class="n">ny</span>
-<span class="n">nel</span>         <span class="o">=</span> <span class="n">nex</span><span class="o">*</span><span class="n">ney</span>
-<span class="n">GCOORD</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nnod</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
-
-<span class="nb">id</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ny</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nx</span><span class="p">):</span>
-        <span class="n">GCOORD</span><span class="p">[</span><span class="nb">id</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span><span class="o">*</span><span class="n">dx</span><span class="p">;</span>
-        <span class="n">GCOORD</span><span class="p">[</span><span class="nb">id</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="n">dy</span><span class="p">;</span>
-        <span class="nb">id</span>          <span class="o">=</span> <span class="nb">id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">GCOORD</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Node #&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide: the code in this cell is hidden by the author</span>
 </pre></div>
 </div>
 </div>
@@ -362,15 +339,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide</span>
-<span class="n">E2N</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nel</span><span class="p">,</span><span class="n">nnodel</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="c1"># connectivity matrix</span>
-
-<span class="k">for</span> <span class="n">iel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nel</span><span class="p">):</span>
-    <span class="n">row</span>        <span class="o">=</span> <span class="n">iel</span><span class="o">//</span><span class="n">nex</span>
-    <span class="n">ind</span>        <span class="o">=</span> <span class="n">iel</span> <span class="o">+</span> <span class="n">row</span>
-    <span class="n">E2N</span><span class="p">[</span><span class="n">iel</span><span class="p">,:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">ind</span><span class="p">,</span> <span class="n">ind</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ind</span><span class="o">+</span><span class="n">nx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">ind</span><span class="o">+</span><span class="n">nx</span><span class="p">]</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">E2N</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Element #&#39;</span><span class="p">,</span> <span class="s1">&#39;Node 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Node 2&#39;</span><span class="p">,</span> <span class="s1">&#39;Node 3&#39;</span><span class="p">,</span> <span class="s1">&#39;Node 4&#39;</span><span class="p">],</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#hide: the code in this cell is hidden by the author</span>
 </pre></div>
 </div>
 </div>
@@ -437,7 +406,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Lars Ruepke and Zhikui Guo.</p>
+    <p>&#169; Copyright 2025, Lars Ruepke and Zhikui Guo.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

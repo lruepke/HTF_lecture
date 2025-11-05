@@ -301,23 +301,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide</span>
-<span class="c1"># least squares</span>
-<span class="n">a2</span><span class="p">,</span><span class="n">x</span>    <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;a2 x&#39;</span><span class="p">)</span>
-<span class="n">Ri</span>      <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">a2</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">a2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">K</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">a2</span>         <span class="c1">#definition of residual</span>
-<span class="n">Wi</span>      <span class="o">=</span> <span class="n">diff</span><span class="p">(</span><span class="n">Ri</span><span class="p">,</span><span class="n">a2</span><span class="p">)</span>                        <span class="c1">#weight function is derivative of R with a2</span>
-<span class="n">a2</span>      <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">integrate</span><span class="p">(</span><span class="n">Wi</span><span class="o">*</span><span class="n">Ri</span><span class="p">,(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span><span class="n">a2</span><span class="p">)</span> <span class="c1">#symbolic solution</span>
-
-<span class="n">a2</span>      <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">a2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">n</span><span class="p">())</span> <span class="c1"># convert result to float</span>
-
-<span class="n">a1</span>     <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">a2</span><span class="p">;</span>
-<span class="n">a0</span>     <span class="o">=</span> <span class="mi">0</span>
-
-<span class="n">u_ls</span>    <span class="o">=</span> <span class="n">a0</span> <span class="o">+</span> <span class="n">a1</span><span class="o">*</span><span class="n">X</span> <span class="o">+</span> <span class="n">a2</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
-
-<span class="c1">#compute the RMS error</span>
-<span class="n">E_rms_ls</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">u_ex</span> <span class="o">-</span> <span class="n">u_ls</span><span class="p">))</span><span class="o">/</span><span class="n">nx</span><span class="p">)</span>
-<span class="n">E_x_ls</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">u_ex</span> <span class="o">-</span> <span class="n">u_ls</span><span class="p">)</span><span class="o">/</span><span class="n">nx</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide: the code in this cell is hidden by the author</span>
 </pre></div>
 </div>
 </div>
@@ -348,22 +332,7 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide</span>
-<span class="c1"># Galerkin</span>
-<span class="n">a2</span><span class="p">,</span><span class="n">x</span>    <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;a2 x&#39;</span><span class="p">)</span>
-<span class="n">Ri</span>      <span class="o">=</span> <span class="n">c</span><span class="o">*</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">a2</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">a2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">K</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">a2</span>       <span class="c1">#definition of residual</span>
-<span class="n">Wi</span>      <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">x</span><span class="p">)</span>                         <span class="c1">#weight function is derivative of R with a2</span>
-<span class="n">a2</span>      <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">integrate</span><span class="p">(</span><span class="n">Wi</span><span class="o">*</span><span class="n">Ri</span><span class="p">,(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span><span class="n">a2</span><span class="p">)</span> <span class="c1">#symbolic solution</span>
-<span class="n">a2</span>      <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">a2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">n</span><span class="p">())</span> <span class="c1"># convert result to float</span>
-
-<span class="n">a1</span>     <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">a2</span><span class="p">;</span>
-<span class="n">a0</span>     <span class="o">=</span> <span class="mi">0</span>
-
-<span class="n">u_g</span>    <span class="o">=</span> <span class="n">a0</span> <span class="o">+</span> <span class="n">a1</span><span class="o">*</span><span class="n">X</span> <span class="o">+</span> <span class="n">a2</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
-
-<span class="c1">#compute the RMS error</span>
-<span class="n">E_rms_g</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">u_ex</span> <span class="o">-</span> <span class="n">u_g</span><span class="p">))</span><span class="o">/</span><span class="n">nx</span><span class="p">)</span>
-<span class="n">E_x_g</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">u_ex</span> <span class="o">-</span> <span class="n">u_g</span><span class="p">)</span><span class="o">/</span><span class="n">nx</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hide: the code in this cell is hidden by the author</span>
 </pre></div>
 </div>
 </div>
@@ -471,7 +440,7 @@ Text(0, 0.5, &#39;RMS Error&#39;)
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Lars Ruepke and Zhikui Guo.</p>
+    <p>&#169; Copyright 2025, Lars Ruepke and Zhikui Guo.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
