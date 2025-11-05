@@ -767,10 +767,20 @@ class Exporter(nbconvert.RSTExporter):
         #         cells_keep.append(i)
         # nb.cells = [nb.cells[i] for i in cells_keep]
         # ===option 2: only keep the comments
+        print('nbsphinx: check for hidden cells')
         for i in range(0,len(nb.cells)):
-            split_source=nb.cells[i].source.split('\n')
-            if('hide' in split_source[0]):
-                nb.cells[i].source=split_source[0]+': the code in this cell is hidden by the author'
+            if nb.cells[i].source:  # Check if cell has content
+                split_source=nb.cells[i].source.split('\n')
+                if split_source and 'hide' in split_source[0]:
+                    print('nbsphinx: found hidden cells')
+                    # Keep the comment and add explanation
+                    hidden_message = split_source[0] + ': the code in this cell is hidden by the author'
+                    nb.cells[i].source = hidden_message
+                    # Convert to markdown cell and clear outputs to avoid rendering issues / LHR: I took this out as it renders the cells ugly
+                    #if nb.cells[i].cell_type == 'code':
+                    #    nb.cells[i].cell_type = 'markdown'
+                    #    nb.cells[i].outputs = []
+                    #    nb.cells[i].execution_count = None
         # ---------------------------
         nb = copy.deepcopy(nb)
         if resources is None:
