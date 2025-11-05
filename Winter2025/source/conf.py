@@ -11,14 +11,35 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import sys, os
+from traitlets.config import Config
+
 sys.path.append(os.path.abspath('_extensions'))
 
+# --- Inject the preprocessor by wrapping the exporter method ---
+from nbconvert.exporters.rst import RSTExporter
+from hide_by_comment_preprocessor import HideByCommentPreprocessor
+
+_ORIG_from_notebook_node = RSTExporter.from_notebook_node
+
+def _patched_from_notebook_node(self, nb, resources=None, **kw):
+    # run our preprocessor once on the notebook before export
+    pp = HideByCommentPreprocessor()
+    nb, resources = pp.preprocess(nb, resources or {})
+    return _ORIG_from_notebook_node(self, nb, resources=resources, **kw)
+
+RSTExporter.from_notebook_node = _patched_from_notebook_node
+print("[conf] RSTExporter.from_notebook_node patched to run HBCP")
+
+import inspect
+import nbsphinx
+
+print("[conf] Using nbsphinx from:", inspect.getfile(nbsphinx))
 
 # -- Project information -----------------------------------------------------
 
 project = 'Finite Element Modeling in Geodynamics'
 latex_name='LectureNote'
-copyright = '2024, Lars Ruepke and Zhikui Guo'
+copyright = '2025, Lars Ruepke and Zhikui Guo'
 author = 'Lars Ruepke' 
 
 
@@ -41,6 +62,16 @@ bibtex_bibfiles = ['refs.bib']
 copybutton_prompt_text = r">>> |\.\.\. |In \[\d+\]: | {2,5}\.\.\.: "  # Adjust regex as needed
 copybutton_prompt_is_regexp = True
 
+# 3) tell nbsphinx/nbconvert to run our preprocessor on every notebook
+#nbsphinx_nbconvert_config = Config()
+#nbsphinx_nbconvert_config.Exporter.preprocessors = [
+#    'hide_by_comment_preprocessor.HideByCommentPreprocessor'
+#]
+
+# 4) fix your regex warning (use raw string or escape the backslash)
+import re
+_nonalnum_pattern = re.compile(r'[^A-Za-z0-9 \-]+', re.UNICODE)
+# or: _onalnum_pattern = re.compile('[^A-Za-z0-9 \\-]+', re.UNICODE)
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -178,7 +209,8 @@ import unicodedata
 
 from pybtex.style.labels import BaseLabelStyle
 
-_nonalnum_pattern = re.compile('[^A-Za-z0-9 \-]+', re.UNICODE)
+#_nonalnum_pattern = re.compile('[^A-Za-z0-9 \-]+', re.UNICODE)
+_nonalnum_pattern = re.compile(r'[^A-Za-z0-9 \-]+', re.UNICODE)
 
 def _strip_accents(s):
     return "".join(
