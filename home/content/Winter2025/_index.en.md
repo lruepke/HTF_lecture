@@ -2,7 +2,7 @@
 title: "Winter 2025"
 date: 2025-10-22T00:00:00+00:00
 icon: "fas fa-landmark"
-description: "Lecture notes for Winter 2025: Advanced OpenFOAM, fluid modeling, geophysical flows."
+description: "Lecture notes for Winter 2025: PDEs, FEM, Python, heat diffusion, reactive systems, mantle convection."
 type: "docs"
 color: "73, 147, 65"
 ---
