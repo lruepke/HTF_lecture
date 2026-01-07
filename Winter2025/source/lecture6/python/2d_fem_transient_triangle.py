@@ -148,8 +148,9 @@ for t in range(0,nt):
             Ael += (rho*cp*Me + dt*Kel[iel]*Ke) * detJ * weights[ip]
             
             # 5. assemble right-hand side
-            Rhs_el     = Rhs_el + rho*cp*np.matmul(np.outer(N,N), np.take(T, EL2NOD[iel,:], axis=0 ))*detJ*weights[ip] 
-        
+            #Rhs_el     = Rhs_el + rho*cp*np.matmul(np.outer(N,N), np.take(T, EL2NOD[iel,:], axis=0 ))*detJ*weights[ip] 
+            Rhs_el += rho*cp * (Me @ T[EL2NOD[iel, :]]) * detJ * weights[ip]
+
         # assemble coefficients
         I[iel,:]  =  (EL2NOD[iel,:]*np.ones((nnodel,1), dtype=int)).T.reshape(nnodel*nnodel)
         J[iel,:]  =  (EL2NOD[iel,:]*np.ones((nnodel,1), dtype=int)).reshape(nnodel*nnodel)
