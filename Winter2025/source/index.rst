@@ -90,6 +90,7 @@ The majority of this course will be spent in front of a computer working on exer
 
     lecture6/overview
     lecture6/transient_problems
+    lecture6/code_optimization
     lecture6/turing_coupled_problem
 
 .. toctree::
