@@ -76,7 +76,7 @@ The matrix :math:`M` is called the mass matrix. The terms in brackets on the LHS
 Implementation
 --------------
 
-We implement the transient behavior into our triangle script from the previous lecture. If you didn't complete it, you can download it from here (:download:`2d_fem_steady_state_triangle.py <python/2d_fem_steady_state_triangle.py>`).
+We implement the transient behavior into our triangle script from the previous lecture. If you didn't complete it, you can download it from here (:download:`2d_fem_steady_state_triangle.py <python/2d_fem_steady_state_triangle.py>`) and the shape function definitions from here (:download:`shapes_tri.py <python/shapes_tri.py>`).
 
 We will have to make several changes to the code:
 
