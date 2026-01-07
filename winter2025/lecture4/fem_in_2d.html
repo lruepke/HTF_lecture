@@ -207,7 +207,7 @@
 <p>Never forget that the shape functions <span class="math notranslate nohighlight">\(N(x,y)\)</span> are defined over the entire modeling domain in global coordinates. We will just evaluate them per element using local coordinates.</p>
 </div>
 <div class="tab-set docutils container">
-<input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--1">Four‐Node Bilinear Quadrilateral</label><div class="tab-content docutils container">
+<input checked="True" class="tab-input" id="tab-set--1-input--1" name="tab-set--1" type="radio" /><label class="tab-label" for="tab-set--1-input--1">Four‐Node Bilinear Quadrilateral</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-linear">
 <img alt="../_images/shapeFunction_2D_Q1.svg" src="../_images/shapeFunction_2D_Q1.svg" />
 <figcaption>
@@ -215,7 +215,7 @@
 </figcaption>
 </figure>
 </div>
-<input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio"><label class="tab-label" for="tab-set--1-input--2">Nine‐Node Biquadratic Quadrilateral</label><div class="tab-content docutils container">
+<input class="tab-input" id="tab-set--1-input--2" name="tab-set--1" type="radio" /><label class="tab-label" for="tab-set--1-input--2">Nine‐Node Biquadratic Quadrilateral</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-quad-q2">
 <img alt="../_images/shapeFunction_2D_Q2.svg" src="../_images/shapeFunction_2D_Q2.svg" />
 <figcaption>
@@ -225,7 +225,7 @@
 </div>
 </div>
 <div class="tab-set docutils container">
-<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Three‐Node Triangle Element</label><div class="tab-content docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio" /><label class="tab-label" for="tab-set--0-input--1">Three‐Node Triangle Element</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-tri-q1">
 <img alt="../_images/shapeFunction_2D_triangle_Q1.svg" src="../_images/shapeFunction_2D_triangle_Q1.svg" />
 <figcaption>
@@ -233,7 +233,7 @@
 </figcaption>
 </figure>
 </div>
-<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">Six‐Node Quadratic Triangle</label><div class="tab-content docutils container">
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio" /><label class="tab-label" for="tab-set--0-input--2">Six‐Node Quadratic Triangle</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-tri-q2">
 <img alt="../_images/shapeFunction_2D_triangle_Q2.svg" src="../_images/shapeFunction_2D_triangle_Q2.svg" />
 <figcaption>
@@ -241,7 +241,7 @@
 </figcaption>
 </figure>
 </div>
-<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--3">Ten‐Node Qubic Triangle</label><div class="tab-content docutils container">
+<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio" /><label class="tab-label" for="tab-set--0-input--3">Ten‐Node Qubic Triangle</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-shapefunc-2d-tri-q3">
 <img alt="../_images/shapeFunction_2D_triangle_Q3.svg" src="../_images/shapeFunction_2D_triangle_Q3.svg" />
 <figcaption>
@@ -285,7 +285,7 @@
 Every element has an element number and a certain number of nodes. We will initially use quadratic elements with four nodes.</p>
 <p>For a FEM mesh with bi-linear quad elements, we will need two matrices: a matrix we will call CGCOORD that contains the global coordinates of each grid point (it therefore has the size [nnod,2], where 2 is the number of dimensions (x,y) and nnod is the total number of nodes) and a matris so we call ELEM2NODE, which contains for each element the indices of the four nodes that belong to it (it therefore has the size [nel, nnodel], where nel is the total number of elements and nnodel is the number of nodes per element). See <a class="reference internal" href="#fig-mesh-2d-structured"><span class="std std-numref">Fig. 10</span></a> for more details. We had already used these matrices in 1-D but now their meanings become clear.</p>
 <div class="tab-set docutils container">
-<input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--1">Structured mesh 1</label><div class="tab-content docutils container">
+<input checked="True" class="tab-input" id="tab-set--2-input--1" name="tab-set--2" type="radio" /><label class="tab-label" for="tab-set--2-input--1">Structured mesh 1</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-mesh-2d-structured">
 <img alt="../_images/mesh2D_structured.svg" src="../_images/mesh2D_structured.svg" />
 <figcaption>
@@ -293,7 +293,7 @@ Every element has an element number and a certain number of nodes. We will initi
 </figcaption>
 </figure>
 </div>
-<input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--2">Structured mesh 2</label><div class="tab-content docutils container">
+<input class="tab-input" id="tab-set--2-input--2" name="tab-set--2" type="radio" /><label class="tab-label" for="tab-set--2-input--2">Structured mesh 2</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-mesh-2d-structured-usi">
 <img alt="../_images/mesh2D_structured_usi.svg" src="../_images/mesh2D_structured_usi.svg" />
 <figcaption>
@@ -301,7 +301,7 @@ Every element has an element number and a certain number of nodes. We will initi
 </figcaption>
 </figure>
 </div>
-<input class="tab-input" id="tab-set--2-input--3" name="tab-set--2" type="radio"><label class="tab-label" for="tab-set--2-input--3">Unstructured mesh</label><div class="tab-content docutils container">
+<input class="tab-input" id="tab-set--2-input--3" name="tab-set--2" type="radio" /><label class="tab-label" for="tab-set--2-input--3">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-mesh-2d-unstructured">
 <img alt="../_images/mesh2D_unstructured.svg" src="../_images/mesh2D_unstructured.svg" />
 <figcaption>
@@ -312,7 +312,7 @@ Every element has an element number and a certain number of nodes. We will initi
 </div>
 <p>We will use a connectivity as shown in <a class="reference internal" href="#fig-matrix-2d-structured"><span class="std std-numref">Fig. 13</span></a>. Element 0 has, for example, the global nodes 0, 1, 6, 5. Note that the local element numbering is always counterclockwise (in this class). It therefore contributes to the calculations of those four temperatures. The element stiffness matrix will now be [4,4]. The contribution of all elements is added/assembled into the glob</p>
 <div class="tab-set docutils container">
-<input checked="True" class="tab-input" id="tab-set--3-input--1" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--1">Structured mesh 1</label><div class="tab-content docutils container">
+<input checked="True" class="tab-input" id="tab-set--3-input--1" name="tab-set--3" type="radio" /><label class="tab-label" for="tab-set--3-input--1">Structured mesh 1</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-matrix-2d-structured">
 <img alt="../_images/Matrix2D_structured.svg" src="../_images/Matrix2D_structured.svg" />
 <figcaption>
@@ -320,7 +320,7 @@ Every element has an element number and a certain number of nodes. We will initi
 </figcaption>
 </figure>
 </div>
-<input class="tab-input" id="tab-set--3-input--2" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--2">Structured mesh 2</label><div class="tab-content docutils container">
+<input class="tab-input" id="tab-set--3-input--2" name="tab-set--3" type="radio" /><label class="tab-label" for="tab-set--3-input--2">Structured mesh 2</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-matrix-2d-structured-usi">
 <img alt="../_images/Matrix2D_structured_usi.svg" src="../_images/Matrix2D_structured_usi.svg" />
 <figcaption>
@@ -328,7 +328,7 @@ Every element has an element number and a certain number of nodes. We will initi
 </figcaption>
 </figure>
 </div>
-<input class="tab-input" id="tab-set--3-input--3" name="tab-set--3" type="radio"><label class="tab-label" for="tab-set--3-input--3">Unstructured mesh</label><div class="tab-content docutils container">
+<input class="tab-input" id="tab-set--3-input--3" name="tab-set--3" type="radio" /><label class="tab-label" for="tab-set--3-input--3">Unstructured mesh</label><div class="tab-content docutils container">
 <figure class="align-center" id="fig-matrix-2d-unstructured">
 <img alt="../_images/Matrix2D_unstructured.svg" src="../_images/Matrix2D_unstructured.svg" />
 <figcaption>
