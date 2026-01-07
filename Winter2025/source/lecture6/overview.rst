@@ -1,4 +1,4 @@
 Overview
 ========
 
-In this lecture we will look at parabolic PDEs and explore how can include transient effects, i.e. how discretize the time derivative. In addition, we will look into coupled problems, where we have more than one unknown at the grid points.
+In this lecture, we study parabolic PDEs and learn how to incorporate transient effects by discretizing the time derivative. We also introduce coupled problems, in which each grid point carries more than one unknown.
