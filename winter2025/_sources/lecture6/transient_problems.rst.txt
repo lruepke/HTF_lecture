@@ -84,6 +84,8 @@ Time loop and output writing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 For transient problems, we will need a time loop over all time steps and a way to store/visualize the evolving solution. So far, we have plotted only steady-state solutions that we could directly plot using :code:`matplotlib`. Now we will have to come up with a different strategy as we want to visualize and analyze the complete transient solution. One good way is to use the :code:`meshio` python package to save the solution in XDMF/HDF5 (VTK) format and then analyze it using `ParaView <https://www.paraview.org>`_. If you don't have ParaView installed, now is the time ;)
 
+Load the :code:`transient.xmf` file in ParaView (with the Xdmf3 Reader S) and use the play button to see the transient evolution of the temperature field.
+
 Here is a minimal code snippet that illustrates the logic:
 
 .. code-block:: python 
