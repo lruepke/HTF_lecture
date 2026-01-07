@@ -31,7 +31,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Turing pattern using FDM." href="jupyter/turing_fdm.html" />
-    <link rel="prev" title="Transient heat diffusion" href="transient_problems.html" /> 
+    <link rel="prev" title="Code Refactoring and Performance Optimization" href="code_optimization.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -99,6 +99,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="transient_problems.html">Transient heat diffusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_optimization.html">Code Refactoring and Performance Optimization</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Coupled diffusion problems</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#governing-equations">Governing equations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#fem-discretization">FEM discretization</a></li>
@@ -263,7 +264,7 @@ B_3^{n+1}\\
 </dl>
 <p>Key pieces of the code are:</p>
 <div class="literal-block-wrapper docutils container" id="lst-2d-fem-turing-3">
-<div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text">Initial conditions</span><a class="headerlink" href="#lst-2d-fem-turing-3" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">Initial conditions</span><a class="headerlink" href="#lst-2d-fem-turing-3" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nnodel</span> <span class="o">=</span> <span class="n">EL2NOD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">nel</span>    <span class="o">=</span> <span class="n">EL2NOD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">nnod</span>   <span class="o">=</span> <span class="n">GCOORD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -281,7 +282,7 @@ B_3^{n+1}\\
 </div>
 <p>This is how the initial conditions are set using random noise. Notice also how we define a variable <code class="code docutils literal notranslate"><span class="pre">sdof</span></code> that refers to the number of equations, while <code class="code docutils literal notranslate"><span class="pre">nnod</span></code> refers to the number of nodes in the mesh.</p>
 <div class="literal-block-wrapper docutils container" id="lst-2d-fem-turing-1">
-<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">Matrix assembly</span><a class="headerlink" href="#lst-2d-fem-turing-1" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">Matrix assembly</span><a class="headerlink" href="#lst-2d-fem-turing-1" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nt</span><span class="p">):</span>
 
 <span class="c1"># Storage</span>
@@ -332,7 +333,7 @@ B_3^{n+1}\\
 </div>
 <p>Notice how the node numbering is different to the equation numbering! Each node has two degrees of freedom, the concentration of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>. All concentrations of <span class="math notranslate nohighlight">\(A\)</span> are stored at <code class="code docutils literal notranslate"><span class="pre">2*EL2NOD[iel,:]</span></code> for the element, iel, and the concentrations of <span class="math notranslate nohighlight">\(B\)</span> at <code class="code docutils literal notranslate"><span class="pre">2*EL2NOD[iel,:]+1</span></code>. This is a typical way of numbering the equations and we will see the same pattern when solving for viscous flow (when each node has two velocities).</p>
 <div class="literal-block-wrapper docutils container" id="lst-2d-fem-turing-2">
-<div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">Non-linear iterations and solution</span><a class="headerlink" href="#lst-2d-fem-turing-2" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">Non-linear iterations and solution</span><a class="headerlink" href="#lst-2d-fem-turing-2" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># update right hand side in iterations</span>
 
 <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span>
@@ -414,7 +415,7 @@ B_3^{n+1}\\
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="transient_problems.html" class="btn btn-neutral float-left" title="Transient heat diffusion" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="code_optimization.html" class="btn btn-neutral float-left" title="Code Refactoring and Performance Optimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="jupyter/turing_fdm.html" class="btn btn-neutral float-right" title="Turing pattern using FDM." accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

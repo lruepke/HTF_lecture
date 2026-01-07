@@ -1,0 +1,861 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Refactoring and Performance Optimization &mdash; Finite Element Modeling in Geodynamics  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=379f3234" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/tabs.js?v=3ee01567"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=9b54adf2"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Coupled diffusion problems" href="turing_coupled_problem.html" />
+    <link rel="prev" title="Transient heat diffusion" href="transient_problems.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/course-details.html">Course details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/installation.html">Installation guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_intro.html">Introduction: The Finite Differences Method (FDM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_1.html">Example 1: Cooling dike</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_2.html">Example 2: Cooling dike - implicit version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_3.html">Example 3: Periodic variations in seafloor temperature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_advection.html">Transport problems with FDM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_intro.html">Introduction: Method of Weighted Residuals (MWR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_examples.html">MWR solutions of the steady advection-diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/excercises.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html">Introduction Finite Element Method (FEM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html#fem-implementation">FEM implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_advection.html">FEM and advection problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html">2-D FEM - elliptic problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html#implementation">Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html">Triangles: unstructured meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html#excercise">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transient_problems.html">Transient heat diffusion</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Code Refactoring and Performance Optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#code-refactoring-from-original-to-v2">Code Refactoring: From Original to v2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#why-refactor">Why Refactor?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-dataclasses-for-data-organization">Using Dataclasses for Data Organization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#function-signatures-with-type-hints">Function Signatures with Type Hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structured-main-function">Structured Main Function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-optimization-from-v2-to-v3">Performance Optimization: From v2 to v3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#performance-profiling">Performance Profiling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimization-strategy-1-pre-computation">Optimization Strategy 1: Pre-computation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimization-strategy-2-numba-jit-compilation">Optimization Strategy 2: Numba JIT Compilation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-numba-optimized-functions">Creating Numba-Optimized Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conditional-dispatch">Conditional Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimization-strategy-3-on-demand-computation">Optimization Strategy 3: On-Demand Computation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-results">Performance Results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#summary-of-optimization-impact">Summary of Optimization Impact</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#detailed-timing-breakdown">Detailed Timing Breakdown</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#educational-value">Educational Value</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#code-quality-vs-performance">Code Quality vs Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#choosing-when-to-optimize">Choosing When to Optimize</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#exercises">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#additional-resources">Additional Resources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="turing_coupled_problem.html">Coupled diffusion problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture7/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture7/intro-stokes.html">Introduction to Stokes flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture7/fem_formulation.html">Finite Element Formulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture7/python-implementation.html">Python implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/FEM_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Finite Element Modeling in Geodynamics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Code Refactoring and Performance Optimization</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture6/code_optimization.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="code-refactoring-and-performance-optimization">
+<h1>Code Refactoring and Performance Optimization<a class="headerlink" href="#code-refactoring-and-performance-optimization" title="Link to this heading"></a></h1>
+<p>In this section, we’ll explore how to improve our FEM code through refactoring and performance optimization. We’ll take the transient heat diffusion solver from <a class="reference download internal" download="" href="../_downloads/5ea8b5ce96749a30d75b2bcc04c7bd29/2d_fem_transient_triangle.py"><code class="xref download docutils literal notranslate"><span class="pre">2d_fem_transient_triangle.py</span></code></a> and progressively improve it in two stages:</p>
+<ol class="arabic simple">
+<li><p><strong>Refactoring (v2)</strong>: Improving code organization and readability using modern Python features</p></li>
+<li><p><strong>Optimization (v3)</strong>: Accelerating performance using numba JIT compilation and algorithmic improvements</p></li>
+</ol>
+<p>This demonstrates important software engineering practices: write clear code first, then optimize where needed.</p>
+<section id="code-refactoring-from-original-to-v2">
+<h2>Code Refactoring: From Original to v2<a class="headerlink" href="#code-refactoring-from-original-to-v2" title="Link to this heading"></a></h2>
+<section id="why-refactor">
+<h3>Why Refactor?<a class="headerlink" href="#why-refactor" title="Link to this heading"></a></h3>
+<p>The original implementation works correctly but has several characteristics common in research code:</p>
+<ul class="simple">
+<li><p>Many global or scattered variables</p></li>
+<li><p>Function signatures with many positional arguments</p></li>
+<li><p>Limited type information</p></li>
+<li><p>Implicit data relationships</p></li>
+</ul>
+<p>As projects grow, these patterns make code harder to maintain, debug, and extend. Let’s improve this systematically.</p>
+</section>
+<section id="using-dataclasses-for-data-organization">
+<h3>Using Dataclasses for Data Organization<a class="headerlink" href="#using-dataclasses-for-data-organization" title="Link to this heading"></a></h3>
+<p>Python’s <code class="code docutils literal notranslate"><span class="pre">dataclass</span></code> decorator (Python 3.7+) provides a clean way to group related data. Instead of passing many individual parameters:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-number">Listing 5 </span><span class="caption-text">Original approach - many parameters</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">solve_fem</span><span class="p">(</span><span class="n">GCOORD</span><span class="p">,</span> <span class="n">EL2NOD</span><span class="p">,</span> <span class="n">Phases</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span>
+              <span class="n">Ttop</span><span class="p">,</span> <span class="n">Tbot</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">nt</span><span class="p">,</span> <span class="n">nip</span><span class="p">,</span> <span class="n">gauss</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+    <span class="c1"># Too many parameters to track!</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<p>We organize data into logical groups:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-number">Listing 6 </span><span class="caption-text">Refactored approach - dataclasses</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Mesh</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for mesh data.&quot;&quot;&quot;</span>
+    <span class="n">GCOORD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>  <span class="c1"># Node coordinates, shape (nnod, 2)</span>
+    <span class="n">EL2NOD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>  <span class="c1"># Element connectivity, shape (nel, nnodel)</span>
+    <span class="n">Phases</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>  <span class="c1"># Phase/material ID per element</span>
+    <span class="n">nnod</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>       <span class="c1"># Number of nodes</span>
+    <span class="n">nel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>        <span class="c1"># Number of elements</span>
+    <span class="n">nnodel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>     <span class="c1"># Number of nodes per element</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MaterialParams</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for material properties.&quot;&quot;&quot;</span>
+    <span class="n">rho</span><span class="p">:</span> <span class="nb">float</span>   <span class="c1"># Density</span>
+    <span class="n">cp</span><span class="p">:</span> <span class="nb">float</span>    <span class="c1"># Heat capacity</span>
+    <span class="n">k1</span><span class="p">:</span> <span class="nb">float</span>    <span class="c1"># Thermal conductivity (matrix)</span>
+    <span class="n">k2</span><span class="p">:</span> <span class="nb">float</span>    <span class="c1"># Thermal conductivity (inclusions)</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BoundaryConditions</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for boundary conditions.&quot;&quot;&quot;</span>
+    <span class="n">Ttop</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Temperature at top boundary</span>
+    <span class="n">Tbot</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Temperature at bottom boundary</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TimeParams</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for time stepping parameters.&quot;&quot;&quot;</span>
+    <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span>    <span class="c1"># Time step</span>
+    <span class="n">nt</span><span class="p">:</span> <span class="nb">int</span>      <span class="c1"># Number of time steps</span>
+</pre></div>
+</div>
+</div>
+<p>This organization provides several benefits:</p>
+<ul class="simple">
+<li><p><strong>Self-documenting</strong>: Clear what data belongs together</p></li>
+<li><p><strong>Type hints</strong>: IDEs can provide better autocomplete and error checking</p></li>
+<li><p><strong>Validation</strong>: Can add constraints (e.g., <code class="code docutils literal notranslate"><span class="pre">dt</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>)</p></li>
+<li><p><strong>Immutability</strong>: Can use <code class="code docutils literal notranslate"><span class="pre">frozen=True</span></code> for immutable data</p></li>
+<li><p><strong>Default values</strong>: Easy to specify defaults</p></li>
+</ul>
+</section>
+<section id="function-signatures-with-type-hints">
+<h3>Function Signatures with Type Hints<a class="headerlink" href="#function-signatures-with-type-hints" title="Link to this heading"></a></h3>
+<p>Modern Python supports type hints that make code more readable and enable better tooling:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-number">Listing 7 </span><span class="caption-text">Function with type hints and dataclasses</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">solve_2d_temperature_fem</span><span class="p">(</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Mesh</span><span class="p">,</span>
+    <span class="n">material</span><span class="p">:</span> <span class="n">MaterialParams</span><span class="p">,</span>
+    <span class="n">bc</span><span class="p">:</span> <span class="n">BoundaryConditions</span><span class="p">,</span>
+    <span class="n">time_params</span><span class="p">:</span> <span class="n">TimeParams</span><span class="p">,</span>
+    <span class="n">integration</span><span class="p">:</span> <span class="n">IntegrationParams</span><span class="p">,</span>
+    <span class="n">geom</span><span class="p">:</span> <span class="n">GeometryParams</span><span class="p">,</span>
+    <span class="nb">vars</span><span class="p">:</span> <span class="n">Variables</span><span class="p">,</span>
+    <span class="n">writer</span><span class="p">:</span> <span class="n">meshio</span><span class="o">.</span><span class="n">xdmf</span><span class="o">.</span><span class="n">TimeSeriesWriter</span><span class="p">,</span>
+    <span class="n">t</span><span class="p">:</span> <span class="nb">int</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Variables</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Solve 2D transient heat diffusion using FEM.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mesh : Mesh</span>
+<span class="sd">        Mesh object containing coordinates and connectivity</span>
+<span class="sd">    material : MaterialParams</span>
+<span class="sd">        Material properties</span>
+<span class="sd">    bc : BoundaryConditions</span>
+<span class="sd">        Boundary condition values</span>
+<span class="sd">    ... [additional parameters]</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Variables</span>
+<span class="sd">        Updated temperature and conductivity fields</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Implementation here</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<p>Benefits of this approach:</p>
+<ul class="simple">
+<li><p><strong>Clear intent</strong>: Immediately see what data is needed</p></li>
+<li><p><strong>Better errors</strong>: Type checkers can catch mistakes before runtime</p></li>
+<li><p><strong>IDE support</strong>: Autocomplete knows the structure of <code class="code docutils literal notranslate"><span class="pre">mesh.GCOORD</span></code>, etc.</p></li>
+<li><p><strong>Documentation</strong>: Types serve as inline documentation</p></li>
+</ul>
+</section>
+<section id="structured-main-function">
+<h3>Structured Main Function<a class="headerlink" href="#structured-main-function" title="Link to this heading"></a></h3>
+<p>The refactored <code class="code docutils literal notranslate"><span class="pre">main()</span></code> function becomes much more readable:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-number">Listing 8 </span><span class="caption-text">Organized main function</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main driver for 2D transient heat diffusion FEM simulation.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Define all parameters using dataclasses</span>
+    <span class="n">geom</span> <span class="o">=</span> <span class="n">GeometryParams</span><span class="p">(</span><span class="n">x0</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y0</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">lx</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">ly</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+                         <span class="n">n_incl</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+
+    <span class="n">time_params</span> <span class="o">=</span> <span class="n">TimeParams</span><span class="p">(</span><span class="n">dt</span><span class="o">=</span><span class="mf">0.015</span><span class="p">,</span> <span class="n">nt</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+
+    <span class="n">material</span> <span class="o">=</span> <span class="n">MaterialParams</span><span class="p">(</span><span class="n">rho</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">cp</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">k1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+    <span class="n">bc</span> <span class="o">=</span> <span class="n">BoundaryConditions</span><span class="p">(</span><span class="n">Ttop</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">Tbot</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="n">integration</span> <span class="o">=</span> <span class="n">IntegrationParams</span><span class="p">(</span>
+        <span class="n">nip</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">gauss</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">]])</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+        <span class="n">weights</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Create mesh</span>
+    <span class="n">mesh</span> <span class="o">=</span> <span class="n">make_mesh</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>
+
+    <span class="c1"># Initialize variables</span>
+    <span class="nb">vars</span> <span class="o">=</span> <span class="n">Variables</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">nnod</span><span class="p">),</span> <span class="n">Kel</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># Time loop</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">time_params</span><span class="o">.</span><span class="n">nt</span><span class="p">):</span>
+        <span class="nb">vars</span> <span class="o">=</span> <span class="n">solve_2d_temperature_fem</span><span class="p">(</span>
+            <span class="n">mesh</span><span class="o">=</span><span class="n">mesh</span><span class="p">,</span>
+            <span class="n">material</span><span class="o">=</span><span class="n">material</span><span class="p">,</span>
+            <span class="n">bc</span><span class="o">=</span><span class="n">bc</span><span class="p">,</span>
+            <span class="n">time_params</span><span class="o">=</span><span class="n">time_params</span><span class="p">,</span>
+            <span class="n">integration</span><span class="o">=</span><span class="n">integration</span><span class="p">,</span>
+            <span class="n">geom</span><span class="o">=</span><span class="n">geom</span><span class="p">,</span>
+            <span class="nb">vars</span><span class="o">=</span><span class="nb">vars</span><span class="p">,</span>
+            <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span>
+            <span class="n">t</span><span class="o">=</span><span class="n">t</span>
+        <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The complete refactored code is available here: <a class="reference download internal" download="" href="../_downloads/2834d7bfa2bde8d304ec0139be13145f/2d_fem_transient_triangle_v2.py"><code class="xref download docutils literal notranslate"><span class="pre">2d_fem_transient_triangle_v2.py</span></code></a>.</p>
+</section>
+</section>
+<section id="performance-optimization-from-v2-to-v3">
+<h2>Performance Optimization: From v2 to v3<a class="headerlink" href="#performance-optimization-from-v2-to-v3" title="Link to this heading"></a></h2>
+<section id="performance-profiling">
+<h3>Performance Profiling<a class="headerlink" href="#performance-profiling" title="Link to this heading"></a></h3>
+<p>Before optimizing, we must measure where time is spent. Adding timing instrumentation to v2 reveals:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-number">Listing 9 </span><span class="caption-text">Adding performance timing</span><a class="headerlink" href="#id5" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_2d_temperature_fem</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+    <span class="n">t_start_total</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+    <span class="c1"># Element assembly</span>
+    <span class="n">t_start_assembly</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">iel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nel</span><span class="p">):</span>
+        <span class="c1"># ... element loop ...</span>
+    <span class="n">t_assembly</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_start_assembly</span>
+
+    <span class="c1"># ... more timing sections ...</span>
+
+    <span class="c1"># Report timings</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Element assembly: </span><span class="si">{</span><span class="n">t_assembly</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ms (</span><span class="si">{</span><span class="n">t_assembly</span><span class="o">/</span><span class="n">t_total</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Running the profiled v2 code shows:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Time step 10/80 - Performance breakdown:
+======================================================================
+  Element assembly:    117 ms (75.7%)  ← Primary bottleneck
+  Postprocessing:       33 ms (22.4%)  ← Secondary bottleneck
+  Sparse matrix:         0.15 ms (0.1%)
+  Linear solve:          2.3 ms (1.5%)
+  ──────────────────────────────────────
+  Total time:          155 ms
+</pre></div>
+</div>
+<p><strong>Key finding</strong>: Over 98% of time is spent in Python loops (element assembly and postprocessing). These are prime candidates for optimization.</p>
+</section>
+<section id="optimization-strategy-1-pre-computation">
+<h3>Optimization Strategy 1: Pre-computation<a class="headerlink" href="#optimization-strategy-1-pre-computation" title="Link to this heading"></a></h3>
+<p>For triangular elements with fixed Gauss integration points, the shape functions <span class="math notranslate nohighlight">\(N_i\)</span> and their local derivatives <span class="math notranslate nohighlight">\(\frac{\partial N_i}{\partial \xi}\)</span> are <strong>constant</strong> at each integration point.</p>
+<p>Original code computes these 7,635 times per timestep:</p>
+<div class="math notranslate nohighlight">
+\[\text{Function calls} = n_{\text{elements}} \times n_{\text{integration points}} = 2545 \times 3 = 7635\]</div>
+<p>We can pre-compute them once:</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-number">Listing 10 </span><span class="caption-text">Pre-computing shape functions</span><a class="headerlink" href="#id6" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">precompute_shape_functions</span><span class="p">(</span><span class="n">integration</span><span class="p">:</span> <span class="n">IntegrationParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IntegrationParams</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pre-compute shape functions at all integration points.</span>
+
+<span class="sd">    For triangular elements, N and dNds are constant at each</span>
+<span class="sd">    integration point - no need to recompute every timestep.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">nip</span> <span class="o">=</span> <span class="n">integration</span><span class="o">.</span><span class="n">nip</span>
+    <span class="n">nnodel</span> <span class="o">=</span> <span class="mi">3</span>
+
+    <span class="n">N_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nip</span><span class="p">,</span> <span class="n">nnodel</span><span class="p">))</span>
+    <span class="n">dNds_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nip</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">nnodel</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nip</span><span class="p">):</span>
+        <span class="n">xi</span> <span class="o">=</span> <span class="n">integration</span><span class="o">.</span><span class="n">gauss</span><span class="p">[</span><span class="n">ip</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">eta</span> <span class="o">=</span> <span class="n">integration</span><span class="o">.</span><span class="n">gauss</span><span class="p">[</span><span class="n">ip</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">N</span><span class="p">,</span> <span class="n">dNds</span> <span class="o">=</span> <span class="n">shapes_tri</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">eta</span><span class="p">)</span>
+        <span class="n">N_all</span><span class="p">[</span><span class="n">ip</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">N</span>
+        <span class="n">dNds_all</span><span class="p">[</span><span class="n">ip</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">dNds</span>
+
+    <span class="n">integration</span><span class="o">.</span><span class="n">N_all</span> <span class="o">=</span> <span class="n">N_all</span>
+    <span class="n">integration</span><span class="o">.</span><span class="n">dNds_all</span> <span class="o">=</span> <span class="n">dNds_all</span>
+    <span class="k">return</span> <span class="n">integration</span>
+</pre></div>
+</div>
+</div>
+<p>Usage in element loop:</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">Using pre-computed values</span><a class="headerlink" href="#id7" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># OLD: Compute every time</span>
+<span class="n">N</span><span class="p">,</span> <span class="n">dNds</span> <span class="o">=</span> <span class="n">shapes_tri</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">eta</span><span class="p">)</span>
+
+<span class="c1"># NEW: Lookup pre-computed values</span>
+<span class="n">N</span> <span class="o">=</span> <span class="n">integration</span><span class="o">.</span><span class="n">N_all</span><span class="p">[</span><span class="n">ip</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">dNds</span> <span class="o">=</span> <span class="n">integration</span><span class="o">.</span><span class="n">dNds_all</span><span class="p">[</span><span class="n">ip</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<p><strong>Impact</strong>: 5-10% speedup with zero algorithm change—just avoiding redundant computation.</p>
+</section>
+<section id="optimization-strategy-2-numba-jit-compilation">
+<h3>Optimization Strategy 2: Numba JIT Compilation<a class="headerlink" href="#optimization-strategy-2-numba-jit-compilation" title="Link to this heading"></a></h3>
+<p><a class="reference external" href="https://numba.pydata.org/">Numba</a> is a just-in-time (JIT) compiler that translates Python code to optimized machine code. It excels at accelerating numerical loops.</p>
+<p>Setting up Numba with a toggle:</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-number">Listing 12 </span><span class="caption-text">Numba configuration at top of file</span><a class="headerlink" href="#id8" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ============================================================================</span>
+<span class="c1"># PERFORMANCE CONFIGURATION</span>
+<span class="c1"># ============================================================================</span>
+<span class="n">USE_NUMBA</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Set to False to disable numba optimization</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="c1"># ... other imports ...</span>
+
+<span class="c1"># Try to import numba</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">njit</span>
+    <span class="n">NUMBA_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">NUMBA_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">USE_NUMBA</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: Numba not available, falling back to pure Python&quot;</span><span class="p">)</span>
+    <span class="n">USE_NUMBA</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<p>This provides:</p>
+<ul class="simple">
+<li><p><strong>Easy toggle</strong>: Students can enable/disable with one line</p></li>
+<li><p><strong>Graceful fallback</strong>: Works without numba installation</p></li>
+<li><p><strong>Educational value</strong>: Can compare implementations side-by-side</p></li>
+</ul>
+</section>
+<section id="creating-numba-optimized-functions">
+<h3>Creating Numba-Optimized Functions<a class="headerlink" href="#creating-numba-optimized-functions" title="Link to this heading"></a></h3>
+<p>We create numba-compiled versions of our computational kernels:</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">Numba-optimized element assembly</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">assemble_system_numba</span><span class="p">(</span>
+    <span class="n">GCOORD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">EL2NOD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">Kel</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">T</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">N_all</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">dNds_all</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">weights</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">rho</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">cp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Numba-optimized element assembly loop.&quot;&quot;&quot;</span>
+    <span class="n">nel</span> <span class="o">=</span> <span class="n">EL2NOD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">nnodel</span> <span class="o">=</span> <span class="n">EL2NOD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">nnod</span> <span class="o">=</span> <span class="n">GCOORD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">nip</span> <span class="o">=</span> <span class="n">N_all</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Storage arrays</span>
+    <span class="n">Rhs_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nnod</span><span class="p">)</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nel</span><span class="p">,</span> <span class="n">nnodel</span> <span class="o">*</span> <span class="n">nnodel</span><span class="p">))</span>
+    <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nel</span><span class="p">,</span> <span class="n">nnodel</span> <span class="o">*</span> <span class="n">nnodel</span><span class="p">))</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nel</span><span class="p">,</span> <span class="n">nnodel</span> <span class="o">*</span> <span class="n">nnodel</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">iel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nel</span><span class="p">):</span>
+        <span class="n">ECOORD</span> <span class="o">=</span> <span class="n">GCOORD</span><span class="p">[</span><span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:],</span> <span class="p">:]</span>
+        <span class="n">Ael</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nnodel</span><span class="p">,</span> <span class="n">nnodel</span><span class="p">))</span>
+        <span class="n">Rhs_el</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nnodel</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nip</span><span class="p">):</span>
+            <span class="n">N</span> <span class="o">=</span> <span class="n">N_all</span><span class="p">[</span><span class="n">ip</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">dNds</span> <span class="o">=</span> <span class="n">dNds_all</span><span class="p">[</span><span class="n">ip</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+
+            <span class="c1"># Jacobian</span>
+            <span class="n">Jac</span> <span class="o">=</span> <span class="n">dNds</span> <span class="o">@</span> <span class="n">ECOORD</span>
+            <span class="n">invJ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Jac</span><span class="p">)</span>
+            <span class="n">detJ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">Jac</span><span class="p">)</span>
+            <span class="n">dNdx</span> <span class="o">=</span> <span class="n">invJ</span> <span class="o">@</span> <span class="n">dNds</span>
+
+            <span class="c1"># Element matrices</span>
+            <span class="n">Me</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+            <span class="n">Ke_local</span> <span class="o">=</span> <span class="n">dNdx</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">dNdx</span>
+
+            <span class="n">Ael</span> <span class="o">+=</span> <span class="p">(</span><span class="n">rho</span> <span class="o">*</span> <span class="n">cp</span> <span class="o">*</span> <span class="n">Me</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">Kel</span><span class="p">[</span><span class="n">iel</span><span class="p">]</span> <span class="o">*</span> <span class="n">Ke_local</span><span class="p">)</span> <span class="o">*</span> <span class="n">detJ</span> <span class="o">*</span> <span class="n">weights</span><span class="p">[</span><span class="n">ip</span><span class="p">]</span>
+
+            <span class="n">T_el</span> <span class="o">=</span> <span class="n">T</span><span class="p">[</span><span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:]]</span>
+            <span class="n">Rhs_el</span> <span class="o">+=</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">cp</span> <span class="o">*</span> <span class="p">(</span><span class="n">Me</span> <span class="o">@</span> <span class="n">T_el</span><span class="p">)</span> <span class="o">*</span> <span class="n">detJ</span> <span class="o">*</span> <span class="n">weights</span><span class="p">[</span><span class="n">ip</span><span class="p">]</span>
+
+        <span class="c1"># Store sparse matrix entries</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nnodel</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nnodel</span><span class="p">):</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">nnodel</span> <span class="o">+</span> <span class="n">j</span>
+                <span class="n">I</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+                <span class="n">J</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+                <span class="n">K</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">Ael</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nnodel</span><span class="p">):</span>
+            <span class="n">Rhs_all</span><span class="p">[</span><span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="n">i</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">Rhs_el</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">I</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Rhs_all</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="code docutils literal notranslate"><span class="pre">&#64;njit(cache=True)</span></code> decorator:</p>
+<ul class="simple">
+<li><p>Compiles the function to machine code on first call (slow first run)</p></li>
+<li><p>Caches compiled version for subsequent runs (fast afterward)</p></li>
+<li><p>Enforces type consistency for optimization</p></li>
+</ul>
+</section>
+<section id="conditional-dispatch">
+<h3>Conditional Dispatch<a class="headerlink" href="#conditional-dispatch" title="Link to this heading"></a></h3>
+<p>We keep both Python and Numba code paths for comparison:</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">Dual implementation paths</span><a class="headerlink" href="#id10" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">solve_2d_temperature_fem</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+    <span class="c1"># ... setup code ...</span>
+
+    <span class="k">if</span> <span class="n">USE_NUMBA</span> <span class="ow">and</span> <span class="n">NUMBA_AVAILABLE</span><span class="p">:</span>
+        <span class="c1"># ========== NUMBA PATH ==========</span>
+        <span class="n">I</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Rhs_all</span> <span class="o">=</span> <span class="n">assemble_system_numba</span><span class="p">(</span>
+            <span class="n">mesh</span><span class="o">.</span><span class="n">GCOORD</span><span class="p">,</span> <span class="n">mesh</span><span class="o">.</span><span class="n">EL2NOD</span><span class="p">,</span> <span class="n">Kel</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span>
+            <span class="n">integration</span><span class="o">.</span><span class="n">N_all</span><span class="p">,</span> <span class="n">integration</span><span class="o">.</span><span class="n">dNds_all</span><span class="p">,</span>
+            <span class="n">integration</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="n">material</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="n">material</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span>
+            <span class="n">time_params</span><span class="o">.</span><span class="n">dt</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># ========== PYTHON PATH ==========</span>
+        <span class="c1"># Original implementation (unchanged)</span>
+        <span class="k">for</span> <span class="n">iel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nel</span><span class="p">):</span>
+            <span class="c1"># ... element loop ...</span>
+
+    <span class="c1"># ... rest of solver ...</span>
+</pre></div>
+</div>
+</div>
+<p>This design:</p>
+<ul class="simple">
+<li><p>Preserves original code for teaching/debugging</p></li>
+<li><p>Allows easy performance comparison</p></li>
+<li><p>Students can see both implementations</p></li>
+</ul>
+</section>
+<section id="optimization-strategy-3-on-demand-computation">
+<h3>Optimization Strategy 3: On-Demand Computation<a class="headerlink" href="#optimization-strategy-3-on-demand-computation" title="Link to this heading"></a></h3>
+<p>Profiling the numba-optimized code reveals a surprising result:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Time step 10/80 - Performance breakdown (Mode: NUMBA):
+======================================================================
+  Element assembly:     8.5 ms (35.1%)
+  Postprocessing:      12.8 ms (52.3%)  ← Now the bottleneck!
+  Linear solve:         2.5 ms (10.4%)
+  ──────────────────────────────────────
+  Total time:          24.4 ms
+</pre></div>
+</div>
+<p><strong>Problem</strong>: Postprocessing (computing heat flux for visualization) takes more time than assembly! But we only write output every 10 timesteps.</p>
+<p><strong>Solution</strong>: Compute flux only when actually writing output:</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">On-demand postprocessing</span><a class="headerlink" href="#id11" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TimeParams</span><span class="p">:</span>
+    <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">nt</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">output_freq</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># Write output every N timesteps</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_2d_temperature_fem</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+    <span class="c1"># ... solve system ...</span>
+
+    <span class="c1"># Check if we should write output</span>
+    <span class="n">write_output</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">%</span> <span class="n">time_params</span><span class="o">.</span><span class="n">output_freq</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="n">time_params</span><span class="o">.</span><span class="n">nt</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">write_output</span><span class="p">:</span>
+        <span class="c1"># Only compute flux when needed</span>
+        <span class="n">Q_x</span><span class="p">,</span> <span class="n">Q_y</span> <span class="o">=</span> <span class="n">compute_heat_flux_numba</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">point_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="n">T</span><span class="p">},</span>
+                        <span class="n">cell_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;U&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">U</span><span class="p">],</span> <span class="s2">&quot;K&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">Kel</span><span class="p">]})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Skip postprocessing entirely</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<p>This algorithmic optimization provides massive speedup:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Non-output steps (90% of timesteps):
+  Element assembly:     7.5 ms (76.5%)
+  Linear solve:         2.1 ms (21.4%)
+  Postprocessing:       SKIPPED
+  ──────────────────────────────────────
+  Total time:           9.8 ms
+</pre></div>
+</div>
+<p><strong>Lesson</strong>: Sometimes the best optimization is <em>not computing</em> something at all!</p>
+</section>
+</section>
+<section id="performance-results">
+<h2>Performance Results<a class="headerlink" href="#performance-results" title="Link to this heading"></a></h2>
+<section id="summary-of-optimization-impact">
+<h3>Summary of Optimization Impact<a class="headerlink" href="#summary-of-optimization-impact" title="Link to this heading"></a></h3>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Performance Evolution</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Version</p></th>
+<th class="head"><p>Time/step</p></th>
+<th class="head"><p>Speedup</p></th>
+<th class="head"><p>Key Features</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Original Python</p></td>
+<td><p>159 ms</p></td>
+<td><p>1.0×</p></td>
+<td><p>Baseline implementation</p></td>
+</tr>
+<tr class="row-odd"><td><p>v2 (Refactored)</p></td>
+<td><p>155 ms</p></td>
+<td><p>1.03×</p></td>
+<td><p>Better code organization</p></td>
+</tr>
+<tr class="row-even"><td><p>v3 (Pre-compute)</p></td>
+<td><p>145 ms</p></td>
+<td><p>1.10×</p></td>
+<td><p>Shape function caching</p></td>
+</tr>
+<tr class="row-odd"><td><p>v3 (+ Numba)</p></td>
+<td><p>24 ms</p></td>
+<td><p>6.6×</p></td>
+<td><p>JIT compilation</p></td>
+</tr>
+<tr class="row-even"><td><p>v3 (+ On-demand)</p></td>
+<td><p>11 ms</p></td>
+<td><p>14.5×</p></td>
+<td><p>Skip unnecessary work</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="detailed-timing-breakdown">
+<h3>Detailed Timing Breakdown<a class="headerlink" href="#detailed-timing-breakdown" title="Link to this heading"></a></h3>
+<figure class="align-center" id="id13">
+<a class="reference internal image-reference" href="lecture6/_static/figures/performance_comparison.png"><img alt="lecture6/_static/figures/performance_comparison.png" src="lecture6/_static/figures/performance_comparison.png" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Time distribution across different implementations. Note how bottlenecks shift: assembly dominates initially, then postprocessing becomes critical after numba optimization, finally resolved by on-demand computation.</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The cumulative effect is dramatic:</p>
+<div class="math notranslate nohighlight">
+\[\text{Total simulation time (80 steps)}:\ \ 12.7\,\text{s} \rightarrow 0.9\,\text{s}\]</div>
+</section>
+</section>
+<section id="educational-value">
+<h2>Educational Value<a class="headerlink" href="#educational-value" title="Link to this heading"></a></h2>
+<section id="code-quality-vs-performance">
+<h3>Code Quality vs Performance<a class="headerlink" href="#code-quality-vs-performance" title="Link to this heading"></a></h3>
+<p>This progression teaches important lessons:</p>
+<ol class="arabic simple">
+<li><p><strong>Refactor first, optimize second</strong></p>
+<ul class="simple">
+<li><p>v2 improves maintainability with no performance cost</p></li>
+<li><p>Clean code is easier to optimize later</p></li>
+<li><p>Type hints and dataclasses help catch bugs</p></li>
+</ul>
+</li>
+<li><p><strong>Measure before optimizing</strong></p>
+<ul class="simple">
+<li><p>Timing revealed postprocessing bottleneck</p></li>
+<li><p>Intuition about bottlenecks is often wrong</p></li>
+<li><p>Profile-guided optimization is essential</p></li>
+</ul>
+</li>
+<li><p><strong>Multiple optimization strategies</strong></p>
+<ul class="simple">
+<li><p>Algorithmic (pre-computation, on-demand)</p></li>
+<li><p>Compilation (numba)</p></li>
+<li><p>Each has different impact and complexity</p></li>
+</ul>
+</li>
+<li><p><strong>Trade-offs matter</strong></p>
+<ul class="simple">
+<li><p>On-demand: less frequent output vs faster simulation</p></li>
+<li><p>Numba: compilation time vs runtime speed</p></li>
+<li><p>Code complexity vs performance gain</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="choosing-when-to-optimize">
+<h3>Choosing When to Optimize<a class="headerlink" href="#choosing-when-to-optimize" title="Link to this heading"></a></h3>
+<p>Not all code needs optimization. Consider:</p>
+<table class="docutils align-default" id="id14">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">When to Optimize</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Situation</p></th>
+<th class="head"><p>Recommendation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Exploratory research</p></td>
+<td><p>Prioritize code clarity (v2)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Production runs</p></td>
+<td><p>Full optimization (v3)</p></td>
+</tr>
+<tr class="row-even"><td><p>Teaching/debugging</p></td>
+<td><p>Keep both paths, toggle as needed</p></td>
+</tr>
+<tr class="row-odd"><td><p>Quick prototyping</p></td>
+<td><p>Start with v2, optimize if slow</p></td>
+</tr>
+</tbody>
+</table>
+<p>The complete optimized code is available here: <a class="reference download internal" download="" href="../_downloads/5f6b5db4b27251f5fd5b8254c6aa283f/2d_fem_transient_triangle_v3.py"><code class="xref download docutils literal notranslate"><span class="pre">2d_fem_transient_triangle_v3.py</span></code></a>.</p>
+</section>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p><strong>Profiling practice</strong></p>
+<p>Add timing to your own FEM code. What fraction of time is spent in each section? Are the bottlenecks where you expected?</p>
+</li>
+<li><p><strong>Numba exploration</strong></p>
+<p>Modify <code class="code docutils literal notranslate"><span class="pre">USE_NUMBA</span></code> to compare Python vs numba performance. Run multiple times to see the impact of JIT compilation caching.</p>
+</li>
+<li><p><strong>Output frequency experiment</strong></p>
+<p>Change <code class="code docutils literal notranslate"><span class="pre">output_freq</span></code> in v3. How does simulation time scale with output frequency? Plot the relationship.</p>
+</li>
+<li><p><strong>Code refactoring</strong></p>
+<p>Take your steady-state FEM code and refactor it using dataclasses. Does it improve readability?</p>
+</li>
+<li><p><strong>Further optimization</strong></p>
+<p>The element assembly loop could be parallelized using <code class="code docutils literal notranslate"><span class="pre">numba.prange</span></code>. What speedup would you expect on a 4-core CPU? (Hint: Amdahl’s law)</p>
+</li>
+</ol>
+</section>
+<section id="additional-resources">
+<h2>Additional Resources<a class="headerlink" href="#additional-resources" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/dataclasses.html">Python dataclasses documentation</a></p></li>
+<li><p><a class="reference external" href="https://numba.readthedocs.io/">Numba user guide</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/profile.html">Performance profiling with cProfile</a></p></li>
+<li><p><code class="xref download docutils literal notranslate"><span class="pre">Performance</span> <span class="pre">analysis</span> <span class="pre">summary</span></code></p></li>
+<li><p><code class="xref download docutils literal notranslate"><span class="pre">Optimization</span> <span class="pre">strategy</span> <span class="pre">guide</span></code></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="transient_problems.html" class="btn btn-neutral float-left" title="Transient heat diffusion" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="turing_coupled_problem.html" class="btn btn-neutral float-right" title="Coupled diffusion problems" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+      
+        <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+          <span class="rst-current-version" data-toggle="rst-current-version">
+            <span class="fa fa-book"> Finite Element Modeling in Geodynamics</span>
+            v: latest
+            <span class="fa fa-caret-down"></span>
+          </span>
+          <div class="rst-other-versions">
+            <dl>
+              
+                
+                <dd><a href="https://lruepke.github.io/FEM_lecture/downloads/LectureNote.pdf">latest</a></dd>
+                
+                <dd><a href="#/LectureNote.pdf">2.0</a></dd>
+                
+              
+          </div>
+        </div>
+      
+    
+
+</body>
+</html>
