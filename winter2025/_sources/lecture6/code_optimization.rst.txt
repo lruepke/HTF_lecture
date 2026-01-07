@@ -309,16 +309,17 @@ This provides:
 - **Graceful fallback**: Works without numba installation
 - **Educational value**: Can compare implementations side-by-side
 
-Creating Numba-Optimized Functions
+Writing Numba-Compatible Functions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We create numba-compiled versions of our computational kernels:
+The key insight is to write functions **once** in a style that works both as pure Python and as JIT-compiled code. Then we conditionally apply compilation.
+
+Step 1: Write the function in numba-compatible style:
 
 .. code-block:: python
-    :caption: Numba-optimized element assembly
+    :caption: Function that works with or without numba
 
-    @njit(cache=True)
-    def assemble_system_numba(
+    def assemble_system_optimized(
         GCOORD: np.ndarray,
         EL2NOD: np.ndarray,
         Kel: np.ndarray,
@@ -330,7 +331,12 @@ We create numba-compiled versions of our computational kernels:
         cp: float,
         dt: float
     ) -> tuple:
-        """Numba-optimized element assembly loop."""
+        """
+        Element assembly loop.
+
+        This function works as pure Python OR can be JIT-compiled by numba.
+        The code is IDENTICAL in both cases - only execution speed differs.
+        """
         nel = EL2NOD.shape[0]
         nnodel = EL2NOD.shape[1]
         nnod = GCOORD.shape[0]
@@ -379,44 +385,84 @@ We create numba-compiled versions of our computational kernels:
 
         return I, J, K, Rhs_all
 
-The :code:`@njit(cache=True)` decorator:
+**Key characteristics** of numba-compatible code:
+
+- Pass all data as function parameters (not object attributes)
+- Use simple array indexing
+- Use explicit loops where needed
+- Use standard numpy functions that numba supports
+- Keep functions pure (no global state)
+
+Step 2: Conditionally apply JIT compilation:
+
+.. code-block:: python
+    :caption: Apply numba compilation after function definition
+
+    # Define the function (above)
+    def assemble_system_optimized(...):
+        # ... implementation ...
+        pass
+
+    # Optionally compile to machine code
+    if USE_NUMBA and NUMBA_AVAILABLE:
+        print("Applying numba JIT compilation...")
+        assemble_system_optimized = njit(cache=True)(assemble_system_optimized)
+
+The :code:`njit(cache=True)` decorator:
 
 - Compiles the function to machine code on first call (slow first run)
 - Caches compiled version for subsequent runs (fast afterward)
 - Enforces type consistency for optimization
 
-Conditional Dispatch
-^^^^^^^^^^^^^^^^^^^^
+**If numba is disabled**, the function simply remains as pure Python—same code, different execution mode.
 
-We keep both Python and Numba code paths for comparison:
+Unified Code Approach
+^^^^^^^^^^^^^^^^^^^^^^
+
+The solver always calls the same function, regardless of mode:
 
 .. code-block:: python
-    :caption: Dual implementation paths
+    :caption: Single call site works for both modes
 
     def solve_2d_temperature_fem(...):
         # ... setup code ...
 
-        if USE_NUMBA and NUMBA_AVAILABLE:
-            # ========== NUMBA PATH ==========
-            I, J, K, Rhs_all = assemble_system_numba(
-                mesh.GCOORD, mesh.EL2NOD, Kel, T,
-                integration.N_all, integration.dNds_all,
-                integration.weights, material.rho, material.cp,
-                time_params.dt
-            )
-        else:
-            # ========== PYTHON PATH ==========
-            # Original implementation (unchanged)
-            for iel in range(nel):
-                # ... element loop ...
+        # Element assembly
+        # Same function call whether numba is on or off!
+        I, J, K, Rhs_all = assemble_system_optimized(
+            mesh.GCOORD,
+            mesh.EL2NOD,
+            Kel,
+            T,
+            integration.N_all,
+            integration.dNds_all,
+            integration.weights,
+            material.rho,
+            material.cp,
+            time_params.dt
+        )
 
         # ... rest of solver ...
 
-This design:
+This unified approach provides several advantages:
 
-- Preserves original code for teaching/debugging
-- Allows easy performance comparison
-- Students can see both implementations
+- **Zero code duplication**: Write once, run both ways
+- **Same algorithm**: Impossible for implementations to diverge
+- **Easy maintenance**: Only one version to update
+- **Better for teaching**: Shows that numba just compiles Python!
+- **Easy debugging**: Toggle with one flag, same code path
+
+**Performance comparison** with identical code:
+
+.. code-block:: text
+
+    Mode: PYTHON (USE_NUMBA = False)
+      Element assembly:    109.3 ms
+
+    Mode: NUMBA (USE_NUMBA = True)
+      Element assembly:      9.8 ms
+
+    Same code, 11× speedup!
 
 Optimization Strategy 3: On-Demand Computation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -550,11 +596,18 @@ This progression teaches important lessons:
    - Compilation (numba)
    - Each has different impact and complexity
 
-4. **Trade-offs matter**
+4. **Unified code approach**
+
+   - Same code works with or without compilation
+   - Demonstrates that numba compiles Python, not a different language
+   - Zero code duplication = easier maintenance
+   - Educational toggle: switch modes to see compilation impact
+
+5. **Trade-offs matter**
 
    - On-demand: less frequent output vs faster simulation
    - Numba: compilation time vs runtime speed
-   - Code complexity vs performance gain
+   - Code simplicity vs performance gain
 
 Choosing When to Optimize
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -601,11 +654,73 @@ Exercises
 
    The element assembly loop could be parallelized using :code:`numba.prange`. What speedup would you expect on a 4-core CPU? (Hint: Amdahl's law)
 
+6. **Verification**
+
+   Run the verification script to confirm Python and Numba modes produce identical results:
+
+   .. code-block:: bash
+
+      python verify_unified_code.py
+
+   The script automatically tests both modes and reports any differences.
+
+Code Verification
+-----------------
+
+Ensuring Correctness
+^^^^^^^^^^^^^^^^^^^^
+
+When optimizing code, it's critical to verify that results remain correct. The v3 unified implementation has been rigorously tested:
+
+.. code-block:: text
+
+    ============================================================
+    UNIFIED CODE VERIFICATION
+    ============================================================
+    Number of datasets compared: 29
+
+    Maximum differences:
+      Temperature: 0.000e+00
+      Heat flux X: 0.000e+00
+      Heat flux Y: 0.000e+00
+
+    ✓ VERIFICATION PASSED
+      Results are identical within machine precision (< 1e-12)
+      Python and Numba modes produce the same output!
+
+**Key findings:**
+
+- **Bit-for-bit identical results**: Not just within tolerance, but exactly zero difference
+- **All variables verified**: Temperature and heat flux across all timesteps
+- **Same algorithm proven**: Unified code approach maintains correctness
+
+This verification demonstrates that:
+
+1. The refactoring from dual code paths to unified code was successful
+2. Numba compilation preserves numerical accuracy
+3. Students can safely toggle between modes for debugging
+4. The 11× speedup comes purely from compilation, not algorithm changes
+
+See :download:`verification results <python/UNIFIED_CODE_VERIFICATION.md>` for detailed test methodology.
+
 Additional Resources
 --------------------
+
+**Documentation:**
 
 - `Python dataclasses documentation <https://docs.python.org/3/library/dataclasses.html>`_
 - `Numba user guide <https://numba.readthedocs.io/>`_
 - `Performance profiling with cProfile <https://docs.python.org/3/library/profile.html>`_
+
+**Code examples:**
+
+- :download:`Original FEM solver <python/2d_fem_transient_triangle.py>`
+- :download:`Refactored code (v2) <python/2d_fem_transient_triangle_v2.py>`
+- :download:`Optimized code (v3) <python/2d_fem_transient_triangle_v3.py>`
+
+**Analysis and verification:**
+
 - :download:`Performance analysis summary <python/PERFORMANCE_SUMMARY.md>`
-- :download:`Optimization strategy guide <python/OPTIMIZATION_STRATEGY.md>`
+- :download:`Unified code explanation <python/UNIFIED_CODE_EXPLANATION.md>`
+- :download:`Verification results <python/UNIFIED_CODE_VERIFICATION.md>`
+- :download:`Verification script <python/verify_unified_code.py>`

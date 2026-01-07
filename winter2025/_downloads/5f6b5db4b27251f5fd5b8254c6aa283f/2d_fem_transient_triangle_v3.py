@@ -2,7 +2,7 @@
 # ============================================================================
 # PERFORMANCE CONFIGURATION
 # ============================================================================
-USE_NUMBA = True  # Set to False to disable numba optimization
+USE_NUMBA = True
 
 from dataclasses import dataclass
 import numpy as np
@@ -213,164 +213,182 @@ def make_mesh(geom: GeometryParams) -> Mesh:
 
 
 # ============================================================================
-# NUMBA-OPTIMIZED FUNCTIONS
+# ASSEMBLY FUNCTIONS (Same code, optionally JIT-compiled by numba)
 # ============================================================================
 
-if USE_NUMBA and NUMBA_AVAILABLE:
-    @njit(cache=True)
-    def assemble_system_numba(
-        GCOORD: np.ndarray,
-        EL2NOD: np.ndarray,
-        Kel: np.ndarray,
-        T: np.ndarray,
-        N_all: np.ndarray,
-        dNds_all: np.ndarray,
-        weights: np.ndarray,
-        rho: float,
-        cp: float,
-        dt: float
-    ) -> tuple:
-        """
-        Numba-optimized element assembly loop.
+def assemble_system_optimized(
+    GCOORD: np.ndarray,
+    EL2NOD: np.ndarray,
+    Kel: np.ndarray,
+    T: np.ndarray,
+    N_all: np.ndarray,
+    dNds_all: np.ndarray,
+    weights: np.ndarray,
+    rho: float,
+    cp: float,
+    dt: float
+) -> tuple:
+    """
+    Element assembly loop.
 
-        Parameters
-        ----------
-        GCOORD : np.ndarray
-            Node coordinates, shape (nnod, 2)
-        EL2NOD : np.ndarray
-            Element connectivity, shape (nel, nnodel)
-        Kel : np.ndarray
-            Element conductivities, shape (nel,)
-        T : np.ndarray
-            Temperature field, shape (nnod,)
-        N_all : np.ndarray
-            Pre-computed shape functions, shape (nip, nnodel)
-        dNds_all : np.ndarray
-            Pre-computed derivatives, shape (nip, 2, nnodel)
-        weights : np.ndarray
-            Integration weights, shape (nip,)
-        rho : float
-            Density
-        cp : float
-            Heat capacity
-        dt : float
-            Time step
+    This function works as pure Python OR can be JIT-compiled by numba.
+    The code is IDENTICAL in both cases - only execution speed differs.
 
-        Returns
-        -------
-        I, J, K : np.ndarray
-            Sparse matrix triplet format
-        Rhs_all : np.ndarray
-            Right-hand side vector
-        """
-        nel = EL2NOD.shape[0]
-        nnodel = EL2NOD.shape[1]
-        nnod = GCOORD.shape[0]
-        nip = N_all.shape[0]
+    Parameters
+    ----------
+    GCOORD : np.ndarray
+        Node coordinates, shape (nnod, 2)
+    EL2NOD : np.ndarray
+        Element connectivity, shape (nel, nnodel)
+    Kel : np.ndarray
+        Element conductivities, shape (nel,)
+    T : np.ndarray
+        Temperature field, shape (nnod,)
+    N_all : np.ndarray
+        Pre-computed shape functions, shape (nip, nnodel)
+    dNds_all : np.ndarray
+        Pre-computed derivatives, shape (nip, 2, nnodel)
+    weights : np.ndarray
+        Integration weights, shape (nip,)
+    rho : float
+        Density
+    cp : float
+        Heat capacity
+    dt : float
+        Time step
 
-        # Storage
-        Rhs_all = np.zeros(nnod)
-        I = np.zeros((nel, nnodel * nnodel))
-        J = np.zeros((nel, nnodel * nnodel))
-        K = np.zeros((nel, nnodel * nnodel))
+    Returns
+    -------
+    I, J, K : np.ndarray
+        Sparse matrix triplet format
+    Rhs_all : np.ndarray
+        Right-hand side vector
+    """
+    nel = EL2NOD.shape[0]
+    nnodel = EL2NOD.shape[1]
+    nnod = GCOORD.shape[0]
+    nip = N_all.shape[0]
 
-        for iel in range(nel):
-            # Get element coordinates
-            ECOORD = GCOORD[EL2NOD[iel, :], :]
-            Ael = np.zeros((nnodel, nnodel))
-            Rhs_el = np.zeros(nnodel)
+    # Storage
+    Rhs_all = np.zeros(nnod)
+    I = np.zeros((nel, nnodel * nnodel))
+    J = np.zeros((nel, nnodel * nnodel))
+    K = np.zeros((nel, nnodel * nnodel))
 
-            for ip in range(nip):
-                # Get pre-computed shape functions
-                N = N_all[ip, :]
-                dNds = dNds_all[ip, :, :]
+    for iel in range(nel):
+        # Get element coordinates
+        ECOORD = GCOORD[EL2NOD[iel, :], :]
+        Ael = np.zeros((nnodel, nnodel))
+        Rhs_el = np.zeros(nnodel)
 
-                # Jacobian, inverse, and determinant
-                Jac = dNds @ ECOORD
-                invJ = np.linalg.inv(Jac)
-                detJ = np.linalg.det(Jac)
+        for ip in range(nip):
+            # Get pre-computed shape functions
+            N = N_all[ip, :]
+            dNds = dNds_all[ip, :, :]
 
-                # Global derivatives
-                dNdx = invJ @ dNds
-
-                # Element matrices
-                Me = np.outer(N, N)
-                Ke_local = dNdx.T @ dNdx
-
-                # Assemble element matrix
-                Ael += (rho * cp * Me + dt * Kel[iel] * Ke_local) * detJ * weights[ip]
-
-                # Assemble right-hand side
-                T_el = T[EL2NOD[iel, :]]
-                Rhs_el += rho * cp * (Me @ T_el) * detJ * weights[ip]
-
-            # Store coefficients for sparse matrix
-            for i in range(nnodel):
-                for j in range(nnodel):
-                    idx = i * nnodel + j
-                    I[iel, idx] = EL2NOD[iel, i]
-                    J[iel, idx] = EL2NOD[iel, j]
-                    K[iel, idx] = Ael[i, j]
-
-            # Add to global RHS
-            for i in range(nnodel):
-                Rhs_all[EL2NOD[iel, i]] += Rhs_el[i]
-
-        return I, J, K, Rhs_all
-
-    @njit(cache=True)
-    def compute_heat_flux_numba(
-        GCOORD: np.ndarray,
-        EL2NOD: np.ndarray,
-        Kel: np.ndarray,
-        T: np.ndarray,
-        N_centroid: np.ndarray,
-        dNds_centroid: np.ndarray
-    ) -> tuple:
-        """
-        Numba-optimized heat flux computation.
-
-        Parameters
-        ----------
-        GCOORD : np.ndarray
-            Node coordinates, shape (nnod, 2)
-        EL2NOD : np.ndarray
-            Element connectivity, shape (nel, nnodel)
-        Kel : np.ndarray
-            Element conductivities, shape (nel,)
-        T : np.ndarray
-            Temperature field, shape (nnod,)
-        N_centroid : np.ndarray
-            Shape functions at centroid, shape (nnodel,)
-        dNds_centroid : np.ndarray
-            Derivatives at centroid, shape (2, nnodel)
-
-        Returns
-        -------
-        Q_x, Q_y : np.ndarray
-            Heat flux components, shape (nel,)
-        """
-        nel = EL2NOD.shape[0]
-        Q_x = np.zeros(nel)
-        Q_y = np.zeros(nel)
-
-        for iel in range(nel):
-            # Get element coordinates
-            ECOORD = GCOORD[EL2NOD[iel, :], :]
-
-            # Jacobian and inverse
-            Jac = dNds_centroid @ ECOORD
+            # Jacobian, inverse, and determinant
+            Jac = dNds @ ECOORD
             invJ = np.linalg.inv(Jac)
+            detJ = np.linalg.det(Jac)
 
             # Global derivatives
-            dNdx = invJ @ dNds_centroid
+            dNdx = invJ @ dNds
 
-            # Heat flux
+            # Element matrices
+            Me = np.outer(N, N)
+            Ke_local = dNdx.T @ dNdx
+
+            # Assemble element matrix
+            Ael += (rho * cp * Me + dt * Kel[iel] * Ke_local) * detJ * weights[ip]
+
+            # Assemble right-hand side
             T_el = T[EL2NOD[iel, :]]
-            Q_x[iel] = -Kel[iel] * (dNdx[0, :] @ T_el)
-            Q_y[iel] = -Kel[iel] * (dNdx[1, :] @ T_el)
+            Rhs_el += rho * cp * (Me @ T_el) * detJ * weights[ip]
 
-        return Q_x, Q_y
+        # Store coefficients for sparse matrix
+        for i in range(nnodel):
+            for j in range(nnodel):
+                idx = i * nnodel + j
+                I[iel, idx] = EL2NOD[iel, i]
+                J[iel, idx] = EL2NOD[iel, j]
+                K[iel, idx] = Ael[i, j]
+
+        # Add to global RHS
+        for i in range(nnodel):
+            Rhs_all[EL2NOD[iel, i]] += Rhs_el[i]
+
+    return I, J, K, Rhs_all
+
+
+def compute_heat_flux_optimized(
+    GCOORD: np.ndarray,
+    EL2NOD: np.ndarray,
+    Kel: np.ndarray,
+    T: np.ndarray,
+    N_centroid: np.ndarray,
+    dNds_centroid: np.ndarray
+) -> tuple:
+    """
+    Heat flux computation.
+
+    This function works as pure Python OR can be JIT-compiled by numba.
+    The code is IDENTICAL in both cases - only execution speed differs.
+
+    Parameters
+    ----------
+    GCOORD : np.ndarray
+        Node coordinates, shape (nnod, 2)
+    EL2NOD : np.ndarray
+        Element connectivity, shape (nel, nnodel)
+    Kel : np.ndarray
+        Element conductivities, shape (nel,)
+    T : np.ndarray
+        Temperature field, shape (nnod,)
+    N_centroid : np.ndarray
+        Shape functions at centroid, shape (nnodel,)
+    dNds_centroid : np.ndarray
+        Derivatives at centroid, shape (2, nnodel)
+
+    Returns
+    -------
+    Q_x, Q_y : np.ndarray
+        Heat flux components, shape (nel,)
+    """
+    nel = EL2NOD.shape[0]
+    Q_x = np.zeros(nel)
+    Q_y = np.zeros(nel)
+
+    for iel in range(nel):
+        # Get element coordinates
+        ECOORD = GCOORD[EL2NOD[iel, :], :]
+
+        # Jacobian and inverse
+        Jac = dNds_centroid @ ECOORD
+        invJ = np.linalg.inv(Jac)
+
+        # Global derivatives
+        dNdx = invJ @ dNds_centroid
+
+        # Heat flux
+        T_el = T[EL2NOD[iel, :]]
+        Q_x[iel] = -Kel[iel] * (dNdx[0, :] @ T_el)
+        Q_y[iel] = -Kel[iel] * (dNdx[1, :] @ T_el)
+
+    return Q_x, Q_y
+
+
+# ============================================================================
+# APPLY NUMBA JIT COMPILATION (if enabled)
+# ============================================================================
+# The functions above are written in a numba-compatible style.
+# If USE_NUMBA is True, we compile them to machine code for 10-20x speedup.
+# If False, they run as normal Python functions.
+# THE CODE IS IDENTICAL - only the execution speed differs!
+
+if USE_NUMBA and NUMBA_AVAILABLE:
+    print("Applying numba JIT compilation to assembly functions...")
+    assemble_system_optimized = njit(cache=True)(assemble_system_optimized)
+    compute_heat_flux_optimized = njit(cache=True)(compute_heat_flux_optimized)
 
 
 def solve_2d_temperature_fem(
@@ -424,72 +442,22 @@ def solve_2d_temperature_fem(
     nel = mesh.EL2NOD.shape[0]
     nnod = mesh.GCOORD.shape[0]
 
-    # Conditional dispatch based on USE_NUMBA flag
-    if USE_NUMBA and NUMBA_AVAILABLE:
-        # ========== NUMBA PATH ==========
-        # Element assembly loop
-        t_start_assembly = time.perf_counter()
-        I, J, K, Rhs_all = assemble_system_numba(
-            mesh.GCOORD,
-            mesh.EL2NOD,
-            Kel,
-            T,
-            integration.N_all,
-            integration.dNds_all,
-            integration.weights,
-            material.rho,
-            material.cp,
-            time_params.dt
-        )
-        t_assembly = time.perf_counter() - t_start_assembly
-
-    else:
-        # ========== PYTHON PATH ==========
-        # Storage
-        Rhs_all = np.zeros(nnod)
-        I = np.zeros((nel, nnodel*nnodel))
-        J = np.zeros((nel, nnodel*nnodel))
-        K = np.zeros((nel, nnodel*nnodel))
-
-        # Element assembly loop
-        t_start_assembly = time.perf_counter()
-        for iel in range(0, nel):
-            ECOORD = np.take(mesh.GCOORD, mesh.EL2NOD[iel, :], axis=0)
-            Ael = np.zeros((nnodel, nnodel))
-            Rhs_el = np.zeros(nnodel)
-
-            for ip in range(0, integration.nip):
-                # 1. get pre-computed shape functions
-                N = integration.N_all[ip, :]
-                dNds = integration.dNds_all[ip, :, :]
-
-                # 2. set up Jacobian, inverse of Jacobian, and determinant
-                Jac = np.matmul(dNds, ECOORD)  # [2,nnodel]*[nnodel,2]
-                invJ = np.linalg.inv(Jac)
-                detJ = np.linalg.det(Jac)
-
-                # 3. get global derivatives
-                dNdx = np.matmul(invJ, dNds)  # [2,2]*[2,nnodel]
-
-                # 4. compute element stiffness matrix
-                # mass matrix
-                Me = np.outer(N, N)
-                # diffusion stiffness matrix
-                Ke = dNdx.T @ dNdx
-                # assemble element matrix
-                Ael += (material.rho*material.cp*Me + time_params.dt*Kel[iel]*Ke) * detJ * integration.weights[ip]
-
-                # 5. assemble right-hand side
-                Rhs_el += material.rho*material.cp * (Me @ T[mesh.EL2NOD[iel, :]]) * detJ * integration.weights[ip]
-
-            # assemble coefficients
-            I[iel, :] = (mesh.EL2NOD[iel, :]*np.ones((nnodel, 1), dtype=int)).T.reshape(nnodel*nnodel)
-            J[iel, :] = (mesh.EL2NOD[iel, :]*np.ones((nnodel, 1), dtype=int)).reshape(nnodel*nnodel)
-            K[iel, :] = Ael.reshape(nnodel*nnodel)
-
-            Rhs_all[mesh.EL2NOD[iel, :]] += Rhs_el
-
-        t_assembly = time.perf_counter() - t_start_assembly
+    # Element assembly
+    # Same code runs whether numba is on or off - only execution speed differs!
+    t_start_assembly = time.perf_counter()
+    I, J, K, Rhs_all = assemble_system_optimized(
+        mesh.GCOORD,
+        mesh.EL2NOD,
+        Kel,
+        T,
+        integration.N_all,
+        integration.dNds_all,
+        integration.weights,
+        material.rho,
+        material.cp,
+        time_params.dt
+    )
+    t_assembly = time.perf_counter() - t_start_assembly
 
     # Create sparse matrix
     t_start_sparse = time.perf_counter()
@@ -526,45 +494,25 @@ def solve_2d_temperature_fem(
     if write_output:
         t_start_postproc = time.perf_counter()
 
-        # Pre-compute shape functions at element centroid for postprocessing
+        # Pre-compute shape functions at element centroid
         N_centroid, dNds_centroid = shapes_tri(1/3, 1/3)
 
-        if USE_NUMBA and NUMBA_AVAILABLE:
-            # ========== NUMBA PATH ==========
-            Q_x, Q_y = compute_heat_flux_numba(
-                mesh.GCOORD,
-                mesh.EL2NOD,
-                Kel,
-                T,
-                N_centroid,
-                dNds_centroid
-            )
-        else:
-            # ========== PYTHON PATH ==========
-            Q_x = np.zeros(nel)
-            Q_y = np.zeros(nel)
+        # Compute heat flux
+        # Same code runs whether numba is on or off - only execution speed differs!
+        Q_x, Q_y = compute_heat_flux_optimized(
+            mesh.GCOORD,
+            mesh.EL2NOD,
+            Kel,
+            T,
+            N_centroid,
+            dNds_centroid
+        )
 
-            for iel in range(0, nel):
-                # 0. get element coordinates
-                ECOORD = np.take(mesh.GCOORD, mesh.EL2NOD[iel, :], axis=0)
-                # 1. use pre-computed shape functions at centroid
-                N = N_centroid
-                dNds = dNds_centroid
-                # 2. set up Jacobian, inverse of Jacobian, and determinant
-                Jac = np.matmul(dNds, ECOORD)  # [2,nnodel]*[nnodel,2]
-                invJ = np.linalg.inv(Jac)
-                detJ = np.linalg.det(Jac)
-                # 3. get global derivatives
-                dNdx = np.matmul(invJ, dNds)  # [2,2]*[2,nnodel]
-                # 4. heat flux per element
-                Q_x[iel] = -Kel[iel]*np.matmul(dNdx[0, :], np.take(T, mesh.EL2NOD[iel, :]))
-                Q_y[iel] = -Kel[iel]*np.matmul(dNdx[1, :], np.take(T, mesh.EL2NOD[iel, :]))
-
-        # Compute element centroids (same for both paths)
+        # Compute element centroids
         Ec_x = np.zeros(nel)
         Ec_y = np.zeros(nel)
         for iel in range(0, nel):
-            ECOORD = np.take(mesh.GCOORD, mesh.EL2NOD[iel, :], axis=0)
+            ECOORD = mesh.GCOORD[mesh.EL2NOD[iel, :], :]
             Ec_x[iel] = np.mean(ECOORD[:, 0])
             Ec_y[iel] = np.mean(ECOORD[:, 1])
 

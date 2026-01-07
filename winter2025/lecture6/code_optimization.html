@@ -111,8 +111,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#performance-profiling">Performance Profiling</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#optimization-strategy-1-pre-computation">Optimization Strategy 1: Pre-computation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#optimization-strategy-2-numba-jit-compilation">Optimization Strategy 2: Numba JIT Compilation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#creating-numba-optimized-functions">Creating Numba-Optimized Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#conditional-dispatch">Conditional Dispatch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#writing-numba-compatible-functions">Writing Numba-Compatible Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unified-code-approach">Unified Code Approach</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#optimization-strategy-3-on-demand-computation">Optimization Strategy 3: On-Demand Computation</a></li>
 </ul>
 </li>
@@ -127,6 +127,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#exercises">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-verification">Code Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ensuring-correctness">Ensuring Correctness</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#additional-resources">Additional Resources</a></li>
 </ul>
 </li>
@@ -485,13 +489,13 @@
 <li><p><strong>Educational value</strong>: Can compare implementations side-by-side</p></li>
 </ul>
 </section>
-<section id="creating-numba-optimized-functions">
-<h3>Creating Numba-Optimized Functions<a class="headerlink" href="#creating-numba-optimized-functions" title="Link to this heading"></a></h3>
-<p>We create numba-compiled versions of our computational kernels:</p>
+<section id="writing-numba-compatible-functions">
+<h3>Writing Numba-Compatible Functions<a class="headerlink" href="#writing-numba-compatible-functions" title="Link to this heading"></a></h3>
+<p>The key insight is to write functions <strong>once</strong> in a style that works both as pure Python and as JIT-compiled code. Then we conditionally apply compilation.</p>
+<p>Step 1: Write the function in numba-compatible style:</p>
 <div class="literal-block-wrapper docutils container" id="id9">
-<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">Numba-optimized element assembly</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">assemble_system_numba</span><span class="p">(</span>
+<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">Function that works with or without numba</span><a class="headerlink" href="#id9" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">assemble_system_optimized</span><span class="p">(</span>
     <span class="n">GCOORD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">EL2NOD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">Kel</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
@@ -503,7 +507,12 @@
     <span class="n">cp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Numba-optimized element assembly loop.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Element assembly loop.</span>
+
+<span class="sd">    This function works as pure Python OR can be JIT-compiled by numba.</span>
+<span class="sd">    The code is IDENTICAL in both cases - only execution speed differs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">nel</span> <span class="o">=</span> <span class="n">EL2NOD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">nnodel</span> <span class="o">=</span> <span class="n">EL2NOD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">nnod</span> <span class="o">=</span> <span class="n">GCOORD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -554,45 +563,82 @@
 </pre></div>
 </div>
 </div>
-<p>The <code class="code docutils literal notranslate"><span class="pre">&#64;njit(cache=True)</span></code> decorator:</p>
+<p><strong>Key characteristics</strong> of numba-compatible code:</p>
+<ul class="simple">
+<li><p>Pass all data as function parameters (not object attributes)</p></li>
+<li><p>Use simple array indexing</p></li>
+<li><p>Use explicit loops where needed</p></li>
+<li><p>Use standard numpy functions that numba supports</p></li>
+<li><p>Keep functions pure (no global state)</p></li>
+</ul>
+<p>Step 2: Conditionally apply JIT compilation:</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">Apply numba compilation after function definition</span><a class="headerlink" href="#id10" title="Link to this code"></a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the function (above)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">assemble_system_optimized</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+    <span class="c1"># ... implementation ...</span>
+    <span class="k">pass</span>
+
+<span class="c1"># Optionally compile to machine code</span>
+<span class="k">if</span> <span class="n">USE_NUMBA</span> <span class="ow">and</span> <span class="n">NUMBA_AVAILABLE</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Applying numba JIT compilation...&quot;</span><span class="p">)</span>
+    <span class="n">assemble_system_optimized</span> <span class="o">=</span> <span class="n">njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">assemble_system_optimized</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="code docutils literal notranslate"><span class="pre">njit(cache=True)</span></code> decorator:</p>
 <ul class="simple">
 <li><p>Compiles the function to machine code on first call (slow first run)</p></li>
 <li><p>Caches compiled version for subsequent runs (fast afterward)</p></li>
 <li><p>Enforces type consistency for optimization</p></li>
 </ul>
+<p><strong>If numba is disabled</strong>, the function simply remains as pure Python—same code, different execution mode.</p>
 </section>
-<section id="conditional-dispatch">
-<h3>Conditional Dispatch<a class="headerlink" href="#conditional-dispatch" title="Link to this heading"></a></h3>
-<p>We keep both Python and Numba code paths for comparison:</p>
-<div class="literal-block-wrapper docutils container" id="id10">
-<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">Dual implementation paths</span><a class="headerlink" href="#id10" title="Link to this code"></a></div>
+<section id="unified-code-approach">
+<h3>Unified Code Approach<a class="headerlink" href="#unified-code-approach" title="Link to this heading"></a></h3>
+<p>The solver always calls the same function, regardless of mode:</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">Single call site works for both modes</span><a class="headerlink" href="#id11" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">solve_2d_temperature_fem</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
     <span class="c1"># ... setup code ...</span>
 
-    <span class="k">if</span> <span class="n">USE_NUMBA</span> <span class="ow">and</span> <span class="n">NUMBA_AVAILABLE</span><span class="p">:</span>
-        <span class="c1"># ========== NUMBA PATH ==========</span>
-        <span class="n">I</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Rhs_all</span> <span class="o">=</span> <span class="n">assemble_system_numba</span><span class="p">(</span>
-            <span class="n">mesh</span><span class="o">.</span><span class="n">GCOORD</span><span class="p">,</span> <span class="n">mesh</span><span class="o">.</span><span class="n">EL2NOD</span><span class="p">,</span> <span class="n">Kel</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span>
-            <span class="n">integration</span><span class="o">.</span><span class="n">N_all</span><span class="p">,</span> <span class="n">integration</span><span class="o">.</span><span class="n">dNds_all</span><span class="p">,</span>
-            <span class="n">integration</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="n">material</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="n">material</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span>
-            <span class="n">time_params</span><span class="o">.</span><span class="n">dt</span>
-        <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># ========== PYTHON PATH ==========</span>
-        <span class="c1"># Original implementation (unchanged)</span>
-        <span class="k">for</span> <span class="n">iel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nel</span><span class="p">):</span>
-            <span class="c1"># ... element loop ...</span>
+    <span class="c1"># Element assembly</span>
+    <span class="c1"># Same function call whether numba is on or off!</span>
+    <span class="n">I</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">Rhs_all</span> <span class="o">=</span> <span class="n">assemble_system_optimized</span><span class="p">(</span>
+        <span class="n">mesh</span><span class="o">.</span><span class="n">GCOORD</span><span class="p">,</span>
+        <span class="n">mesh</span><span class="o">.</span><span class="n">EL2NOD</span><span class="p">,</span>
+        <span class="n">Kel</span><span class="p">,</span>
+        <span class="n">T</span><span class="p">,</span>
+        <span class="n">integration</span><span class="o">.</span><span class="n">N_all</span><span class="p">,</span>
+        <span class="n">integration</span><span class="o">.</span><span class="n">dNds_all</span><span class="p">,</span>
+        <span class="n">integration</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">cp</span><span class="p">,</span>
+        <span class="n">time_params</span><span class="o">.</span><span class="n">dt</span>
+    <span class="p">)</span>
 
     <span class="c1"># ... rest of solver ...</span>
 </pre></div>
 </div>
 </div>
-<p>This design:</p>
+<p>This unified approach provides several advantages:</p>
 <ul class="simple">
-<li><p>Preserves original code for teaching/debugging</p></li>
-<li><p>Allows easy performance comparison</p></li>
-<li><p>Students can see both implementations</p></li>
+<li><p><strong>Zero code duplication</strong>: Write once, run both ways</p></li>
+<li><p><strong>Same algorithm</strong>: Impossible for implementations to diverge</p></li>
+<li><p><strong>Easy maintenance</strong>: Only one version to update</p></li>
+<li><p><strong>Better for teaching</strong>: Shows that numba just compiles Python!</p></li>
+<li><p><strong>Easy debugging</strong>: Toggle with one flag, same code path</p></li>
 </ul>
+<p><strong>Performance comparison</strong> with identical code:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Mode: PYTHON (USE_NUMBA = False)
+  Element assembly:    109.3 ms
+
+Mode: NUMBA (USE_NUMBA = True)
+  Element assembly:      9.8 ms
+
+Same code, 11× speedup!
+</pre></div>
+</div>
 </section>
 <section id="optimization-strategy-3-on-demand-computation">
 <h3>Optimization Strategy 3: On-Demand Computation<a class="headerlink" href="#optimization-strategy-3-on-demand-computation" title="Link to this heading"></a></h3>
@@ -608,8 +654,8 @@
 </div>
 <p><strong>Problem</strong>: Postprocessing (computing heat flux for visualization) takes more time than assembly! But we only write output every 10 timesteps.</p>
 <p><strong>Solution</strong>: Compute flux only when actually writing output:</p>
-<div class="literal-block-wrapper docutils container" id="id11">
-<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">On-demand postprocessing</span><a class="headerlink" href="#id11" title="Link to this code"></a></div>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">On-demand postprocessing</span><a class="headerlink" href="#id12" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">TimeParams</span><span class="p">:</span>
     <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span>
@@ -649,8 +695,8 @@
 <h2>Performance Results<a class="headerlink" href="#performance-results" title="Link to this heading"></a></h2>
 <section id="summary-of-optimization-impact">
 <h3>Summary of Optimization Impact<a class="headerlink" href="#summary-of-optimization-impact" title="Link to this heading"></a></h3>
-<table class="docutils align-default" id="id12">
-<caption><span class="caption-number">Table 3 </span><span class="caption-text">Performance Evolution</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Performance Evolution</span><a class="headerlink" href="#id13" title="Link to this table"></a></caption>
 <colgroup>
 <col style="width: 30.0%" />
 <col style="width: 20.0%" />
@@ -695,11 +741,11 @@
 </section>
 <section id="detailed-timing-breakdown">
 <h3>Detailed Timing Breakdown<a class="headerlink" href="#detailed-timing-breakdown" title="Link to this heading"></a></h3>
-<figure class="align-center" id="id13">
+<figure class="align-center" id="id14">
 <a class="reference internal image-reference" href="lecture6/_static/figures/performance_comparison.png"><img alt="lecture6/_static/figures/performance_comparison.png" src="lecture6/_static/figures/performance_comparison.png" style="width: 80%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Time distribution across different implementations. Note how bottlenecks shift: assembly dominates initially, then postprocessing becomes critical after numba optimization, finally resolved by on-demand computation.</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Time distribution across different implementations. Note how bottlenecks shift: assembly dominates initially, then postprocessing becomes critical after numba optimization, finally resolved by on-demand computation.</span><a class="headerlink" href="#id14" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>The cumulative effect is dramatic:</p>
@@ -734,11 +780,19 @@
 <li><p>Each has different impact and complexity</p></li>
 </ul>
 </li>
+<li><p><strong>Unified code approach</strong></p>
+<ul class="simple">
+<li><p>Same code works with or without compilation</p></li>
+<li><p>Demonstrates that numba compiles Python, not a different language</p></li>
+<li><p>Zero code duplication = easier maintenance</p></li>
+<li><p>Educational toggle: switch modes to see compilation impact</p></li>
+</ul>
+</li>
 <li><p><strong>Trade-offs matter</strong></p>
 <ul class="simple">
 <li><p>On-demand: less frequent output vs faster simulation</p></li>
 <li><p>Numba: compilation time vs runtime speed</p></li>
-<li><p>Code complexity vs performance gain</p></li>
+<li><p>Code simplicity vs performance gain</p></li>
 </ul>
 </li>
 </ol>
@@ -746,8 +800,8 @@
 <section id="choosing-when-to-optimize">
 <h3>Choosing When to Optimize<a class="headerlink" href="#choosing-when-to-optimize" title="Link to this heading"></a></h3>
 <p>Not all code needs optimization. Consider:</p>
-<table class="docutils align-default" id="id14">
-<caption><span class="caption-number">Table 4 </span><span class="caption-text">When to Optimize</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<table class="docutils align-default" id="id15">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">When to Optimize</span><a class="headerlink" href="#id15" title="Link to this table"></a></caption>
 <colgroup>
 <col style="width: 40.0%" />
 <col style="width: 60.0%" />
@@ -793,16 +847,71 @@
 <li><p><strong>Further optimization</strong></p>
 <p>The element assembly loop could be parallelized using <code class="code docutils literal notranslate"><span class="pre">numba.prange</span></code>. What speedup would you expect on a 4-core CPU? (Hint: Amdahl’s law)</p>
 </li>
+<li><p><strong>Verification</strong></p>
+<p>Run the verification script to confirm Python and Numba modes produce identical results:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>verify_unified_code.py
+</pre></div>
+</div>
+<p>The script automatically tests both modes and reports any differences.</p>
+</li>
 </ol>
+</section>
+<section id="code-verification">
+<h2>Code Verification<a class="headerlink" href="#code-verification" title="Link to this heading"></a></h2>
+<section id="ensuring-correctness">
+<h3>Ensuring Correctness<a class="headerlink" href="#ensuring-correctness" title="Link to this heading"></a></h3>
+<p>When optimizing code, it’s critical to verify that results remain correct. The v3 unified implementation has been rigorously tested:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>============================================================
+UNIFIED CODE VERIFICATION
+============================================================
+Number of datasets compared: 29
+
+Maximum differences:
+  Temperature: 0.000e+00
+  Heat flux X: 0.000e+00
+  Heat flux Y: 0.000e+00
+
+✓ VERIFICATION PASSED
+  Results are identical within machine precision (&lt; 1e-12)
+  Python and Numba modes produce the same output!
+</pre></div>
+</div>
+<p><strong>Key findings:</strong></p>
+<ul class="simple">
+<li><p><strong>Bit-for-bit identical results</strong>: Not just within tolerance, but exactly zero difference</p></li>
+<li><p><strong>All variables verified</strong>: Temperature and heat flux across all timesteps</p></li>
+<li><p><strong>Same algorithm proven</strong>: Unified code approach maintains correctness</p></li>
+</ul>
+<p>This verification demonstrates that:</p>
+<ol class="arabic simple">
+<li><p>The refactoring from dual code paths to unified code was successful</p></li>
+<li><p>Numba compilation preserves numerical accuracy</p></li>
+<li><p>Students can safely toggle between modes for debugging</p></li>
+<li><p>The 11× speedup comes purely from compilation, not algorithm changes</p></li>
+</ol>
+<p>See <a class="reference download internal" download="" href="../_downloads/06d59fae43a3d0e1fbb1609abe112b35/UNIFIED_CODE_VERIFICATION.md"><code class="xref download docutils literal notranslate"><span class="pre">verification</span> <span class="pre">results</span></code></a> for detailed test methodology.</p>
+</section>
 </section>
 <section id="additional-resources">
 <h2>Additional Resources<a class="headerlink" href="#additional-resources" title="Link to this heading"></a></h2>
+<p><strong>Documentation:</strong></p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://docs.python.org/3/library/dataclasses.html">Python dataclasses documentation</a></p></li>
 <li><p><a class="reference external" href="https://numba.readthedocs.io/">Numba user guide</a></p></li>
 <li><p><a class="reference external" href="https://docs.python.org/3/library/profile.html">Performance profiling with cProfile</a></p></li>
+</ul>
+<p><strong>Code examples:</strong></p>
+<ul class="simple">
+<li><p><a class="reference download internal" download="" href="../_downloads/5ea8b5ce96749a30d75b2bcc04c7bd29/2d_fem_transient_triangle.py"><code class="xref download docutils literal notranslate"><span class="pre">Original</span> <span class="pre">FEM</span> <span class="pre">solver</span></code></a></p></li>
+<li><p><a class="reference download internal" download="" href="../_downloads/2834d7bfa2bde8d304ec0139be13145f/2d_fem_transient_triangle_v2.py"><code class="xref download docutils literal notranslate"><span class="pre">Refactored</span> <span class="pre">code</span> <span class="pre">(v2)</span></code></a></p></li>
+<li><p><a class="reference download internal" download="" href="../_downloads/5f6b5db4b27251f5fd5b8254c6aa283f/2d_fem_transient_triangle_v3.py"><code class="xref download docutils literal notranslate"><span class="pre">Optimized</span> <span class="pre">code</span> <span class="pre">(v3)</span></code></a></p></li>
+</ul>
+<p><strong>Analysis and verification:</strong></p>
+<ul class="simple">
 <li><p><code class="xref download docutils literal notranslate"><span class="pre">Performance</span> <span class="pre">analysis</span> <span class="pre">summary</span></code></p></li>
-<li><p><code class="xref download docutils literal notranslate"><span class="pre">Optimization</span> <span class="pre">strategy</span> <span class="pre">guide</span></code></p></li>
+<li><p><a class="reference download internal" download="" href="../_downloads/35f51dbc5faeabf8d4fd030112d3cee3/UNIFIED_CODE_EXPLANATION.md"><code class="xref download docutils literal notranslate"><span class="pre">Unified</span> <span class="pre">code</span> <span class="pre">explanation</span></code></a></p></li>
+<li><p><a class="reference download internal" download="" href="../_downloads/06d59fae43a3d0e1fbb1609abe112b35/UNIFIED_CODE_VERIFICATION.md"><code class="xref download docutils literal notranslate"><span class="pre">Verification</span> <span class="pre">results</span></code></a></p></li>
+<li><p><a class="reference download internal" download="" href="../_downloads/91eed1df4e058b0db802d1d67a29ab18/verify_unified_code.py"><code class="xref download docutils literal notranslate"><span class="pre">Verification</span> <span class="pre">script</span></code></a></p></li>
 </ul>
 </section>
 </section>
