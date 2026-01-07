@@ -1,6 +1,6 @@
 Transient heat diffusion
 =========================================
-The next step is to derive and implement the unsteady (time-dependent) heat diffusion equation and to solve an example problem for the cooling of the lithosphere. The transient heat equation looks like this:
+The next step is to derive and implement the unsteady (time-dependent) heat diffusion equation. The transient heat equation looks like this:
 
 .. math::
     :label: eq:fem_2d_transient
@@ -36,12 +36,11 @@ Now we proceed in the usual way: insert the approximate solution using shape fun
     :label: eq:fem_2d_transient_weak
 
     \int_\Omega  \rho c_p\, N_i N_j\, T^{n+1}_j\, d\Omega 
-    +  \Delta t \int_\Omega \nabla N_i \cdot \big( k\, \nabla N_j \big)\, T^{n+1}_j\, d\Omega
-    = \int_\Omega  \rho c_p\, N_i N_j\, T^{n}_j\, d\Omega  
-    - \Delta t \oint_{\Gamma_N} N_i\, \vec{q}\cdot\vec{n}\, d\Gamma\ \ \ \ \ \ \ i=1,2,...,n
+    -  \Delta t \int_\Omega N_i \nabla \cdot \big( k\, \nabla N_j \big)\, T^{n+1}_j\, d\Omega
+    = \int_\Omega  \rho c_p\, N_i N_j\, T^{n}_j\, d\Omega\ \ \ \ \ \ \ i=1,2,...,n
 
 
-and we obtain this by integrating the diffusion term by parts (moving derivatives from :math:`T` to the test function) and collecting the Neumann boundary term on :math:`\Gamma_N`.
+we proceed with integrating the diffusion term by parts (moving derivatives from :math:`T` to the test function) and collecting the Neumann boundary term on :math:`\Gamma_N`.
 
 .. math::
     :label: eq:fem_2d_transient_weak_v2
@@ -124,10 +123,15 @@ If we look at :eq:`eq:fem_2d_transient_weak_matrix_v2`, we notice that we have t
     :caption: matrix assembly.
 
     # 4. compute element matrix (mass + diffusion)
-    Ael += (rho*cp*np.outer(N, N) + dt*Kel[iel]*(dNdx.T @ dNdx)) * detJ * weights[ip]
+    # mass matrix
+    Me = np.outer(N, N)
+    # diffusion stiffness matrix
+    Ke = dNdx.T @ dNdx
+    # assemble element matrix
+    Ael += (rho*cp*Me + dt*Kel[iel]*Ke) * detJ * weights[ip]
 
     # 5. assemble right-hand side from previous time step
-    Rhs_el += rho*cp * (np.outer(N, N) @ T[EL2NOD[iel, :]]) * detJ * weights[ip]
+    Rhs_el += rho*cp * (Me @ T[EL2NOD[iel, :]]) * detJ * weights[ip]
 
 
 Notice how the logic for the element thermal conductivity has changed - and that we need two additional physical parameters :math:`\rho` and :math:`c_p` . 

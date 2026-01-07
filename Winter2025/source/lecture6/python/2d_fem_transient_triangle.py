@@ -140,7 +140,12 @@ for t in range(0,nt):
             dNdx    = np.matmul(invJ, dNds) # [2,2]*[2,nnodel]
             
             # 4. compute element stiffness matrix
-            Ael     = Ael + (rho*cp*np.outer(N,N) +  dt*Kel[iel]*np.matmul(dNdx.T, dNdx))*detJ*weights[ip] # [nnodel,1]*[1,nnodel] / weights are missing, they are 1
+            # mass matrix
+            Me = np.outer(N, N)
+            # diffusion stiffness matrix
+            Ke = dNdx.T @ dNdx
+            # assemble element matrix
+            Ael += (rho*cp*Me + dt*Kel[iel]*Ke) * detJ * weights[ip]
             
             # 5. assemble right-hand side
             Rhs_el     = Rhs_el + rho*cp*np.matmul(np.outer(N,N), np.take(T, EL2NOD[iel,:], axis=0 ))*detJ*weights[ip] 
