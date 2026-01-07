@@ -18,7 +18,7 @@ We will explore the evolution of two chemical compounds, :math:`A` and :math:`B`
     \end{split}
     \end{align}
 
-In these equations, both compounds are produced at background rates :math:`\gamma a` and :math:`\gamma b`, :math:`A`decays with a rate :math:`\gamma A`, and reaction further produces the ' activator' :math:`A` resulting in a feedback that is described by the non-linear :math:`A^2 B` term, which couples the equations in a non-trivial way. 
+In these equations, both compounds are produced at background rates :math:`\gamma a` and :math:`\gamma b`, :math:`A` decays with a rate :math:`\gamma A` , and reaction further produces the 'activator' :math:`A` resulting in a feedback that is described by the non-linear :math:`A^2 B` term, which couples the equations in a non-trivial way. 
 
 FEM discretization
 ------------------
@@ -90,7 +90,7 @@ The unknown concentrations of :math:`A` and :math:`B` or both showing up in the 
 
 Non-linear terms
 ----------------
-Treating the non-linear source term in an implicit way requires iterations - because the term :math:`A^2B`cannot be directly incorporated into the stiffness matrix. We will use simple direct iterations, in which we solve for :math:`A` and :math:`B`, then update the source terms, and solve again until the solution is converged. Easiest to implement would be a non-linear iteration loop over the entire element loop but that would not be very smart as the stiffness matrix is not changing during iterations. Instead we first assembly the stiffness matrix and then have an iteration loop that updates the source term (right-hand side) until the solution is converged.
+Treating the non-linear source term in an implicit way requires iterations - because the term :math:`A^2B` cannot be directly incorporated into the stiffness matrix. We will use simple direct iterations, in which we solve for :math:`A` and :math:`B` , then update the source terms, and solve again until the solution is converged. Easiest to implement would be a non-linear iteration loop over the entire element loop but that would not be very smart as the stiffness matrix is not changing during iterations. Instead we first assembly the stiffness matrix and then have an iteration loop that updates the source term (right-hand side) until the solution is converged.
 
 
 Python implementation

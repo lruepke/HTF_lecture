@@ -182,7 +182,7 @@
 \frac{\partial B}{\partial t} &amp;= d\nabla^2 B + \gamma (b - A^2 B)
 \end{split}
 \end{align}\end{split}\]</div>
-<p>In these equations, both compounds are produced at background rates <span class="math notranslate nohighlight">\(\gamma a\)</span> and <span class="math notranslate nohighlight">\(\gamma b\)</span>, <span class="math notranslate nohighlight">\(A`decays with a rate :math:\)</span>gamma A`, and reaction further produces the ‘ activator’ <span class="math notranslate nohighlight">\(A\)</span> resulting in a feedback that is described by the non-linear <span class="math notranslate nohighlight">\(A^2 B\)</span> term, which couples the equations in a non-trivial way.</p>
+<p>In these equations, both compounds are produced at background rates <span class="math notranslate nohighlight">\(\gamma a\)</span> and <span class="math notranslate nohighlight">\(\gamma b\)</span>, <span class="math notranslate nohighlight">\(A\)</span> decays with a rate <span class="math notranslate nohighlight">\(\gamma A\)</span> , and reaction further produces the ‘activator’ <span class="math notranslate nohighlight">\(A\)</span> resulting in a feedback that is described by the non-linear <span class="math notranslate nohighlight">\(A^2 B\)</span> term, which couples the equations in a non-trivial way.</p>
 </section>
 <section id="fem-discretization">
 <h2>FEM discretization<a class="headerlink" href="#fem-discretization" title="Link to this heading"></a></h2>
@@ -237,7 +237,7 @@ B_3^{n+1}\\
 </section>
 <section id="non-linear-terms">
 <h2>Non-linear terms<a class="headerlink" href="#non-linear-terms" title="Link to this heading"></a></h2>
-<p>Treating the non-linear source term in an implicit way requires iterations - because the term <span class="math notranslate nohighlight">\(A^2B`cannot be directly incorporated into the stiffness matrix. We will use simple direct iterations, in which we solve for :math:`A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, then update the source terms, and solve again until the solution is converged. Easiest to implement would be a non-linear iteration loop over the entire element loop but that would not be very smart as the stiffness matrix is not changing during iterations. Instead we first assembly the stiffness matrix and then have an iteration loop that updates the source term (right-hand side) until the solution is converged.</p>
+<p>Treating the non-linear source term in an implicit way requires iterations - because the term <span class="math notranslate nohighlight">\(A^2B\)</span> cannot be directly incorporated into the stiffness matrix. We will use simple direct iterations, in which we solve for <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> , then update the source terms, and solve again until the solution is converged. Easiest to implement would be a non-linear iteration loop over the entire element loop but that would not be very smart as the stiffness matrix is not changing during iterations. Instead we first assembly the stiffness matrix and then have an iteration loop that updates the source term (right-hand side) until the solution is converged.</p>
 </section>
 <section id="python-implementation">
 <h2>Python implementation<a class="headerlink" href="#python-implementation" title="Link to this heading"></a></h2>
