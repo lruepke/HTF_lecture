@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Python implementation &mdash; Finite Element Modeling in Geodynamics  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8a2add5" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -108,11 +108,12 @@
 <li class="toctree-l1"><a class="reference internal" href="intro-stokes.html">Introduction to Stokes flow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fem_formulation.html">Finite Element Formulation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Python implementation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data-structures">Data structures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#global-degrees-of-freedom">Global degrees of freedom</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pressure-shape-functions">Pressure shape functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#assembly-of-global-matrices-and-pressure-numbering">Assembly of global matrices and pressure numbering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-problem">Test problem</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#excerices">Excerices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercises">Exercises</a></li>
 </ul>
 </li>
 </ul>
@@ -167,14 +168,40 @@
              
   <section id="python-implementation">
 <span id="id1"></span><h1>Python implementation<a class="headerlink" href="#python-implementation" title="Link to this heading"></a></h1>
-<p>We will use our previously developed 2d FEM code for steady-state diffusion as a starting point and modify it to solve for Stokes flow. There are a number of extra complications in the Stokes flow problem that we need to address:</p>
+<p>We will use our previously developed 2d FEM code for steady-state diffusion as a starting point and modify it to solve for Stokes flow. The implementation follows a dataclass-based architecture for better type safety and code organization, using containers for mesh data, material properties, boundary conditions, and solver parameters.</p>
+<p>There are a number of extra complications in the Stokes flow problem that we need to address:</p>
+<section id="data-structures">
+<h2>Data structures<a class="headerlink" href="#data-structures" title="Link to this heading"></a></h2>
+<p>The implementation uses dataclasses to organize code and data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Mesh</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for mesh data.&quot;&quot;&quot;</span>
+    <span class="n">GCOORD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>   <span class="c1"># Node coordinates</span>
+    <span class="n">EL2NOD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>   <span class="c1"># Element connectivity</span>
+    <span class="n">Phases</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>   <span class="c1"># Phase/material ID per element</span>
+    <span class="n">Node_ids</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="c1"># Node boundary markers</span>
+    <span class="n">nnod</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">nel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">nnodel</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MaterialParams</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for material properties.&quot;&quot;&quot;</span>
+    <span class="n">Mu</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>   <span class="c1"># Shear viscosity per phase</span>
+    <span class="n">Rho</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>  <span class="c1"># Density per phase</span>
+    <span class="n">G</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>    <span class="c1"># Gravity vector [gx, gy]</span>
+</pre></div>
+</div>
+</section>
 <section id="global-degrees-of-freedom">
 <h2>Global degrees of freedom<a class="headerlink" href="#global-degrees-of-freedom" title="Link to this heading"></a></h2>
-<p>In the steady-state diffusion problem, we had one degree of freedom per node. In the Stokes flow problem, we have two degrees of freedom per node: one for the x-velocity and one for the y-velocity. We will therefor have to double the number of degrees of freedom in the global stiffness matrix and the global force vector. We use a numberung where the 0th node has the degree of freedom 0 (x-velocity) and the degree of freedom 1 (y-velocity), the 1st node has the degrees of freedom 2 and 3, and so on. We will have to modify the code to account for this new numbering.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># MAKE ELDOF</span>
-<span class="n">EL2DOF</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nel</span><span class="p">,</span><span class="n">nedof</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
-<span class="n">EL2DOF</span><span class="p">[:,</span><span class="mi">0</span><span class="p">::</span><span class="n">ndim</span><span class="p">]</span> <span class="o">=</span> <span class="n">ndim</span> <span class="o">*</span> <span class="n">EL2NOD</span>
-<span class="n">EL2DOF</span><span class="p">[:,</span><span class="mi">1</span><span class="p">::</span><span class="n">ndim</span><span class="p">]</span> <span class="o">=</span> <span class="n">ndim</span> <span class="o">*</span> <span class="n">EL2NOD</span> <span class="o">+</span> <span class="mi">1</span>
+<p>In the steady-state diffusion problem, we had one degree of freedom per node. In the Stokes flow problem, we have two degrees of freedom per node: one for the x-velocity and one for the y-velocity. We will therefor have to double the number of degrees of freedom in the global stiffness matrix and the global force vector. We use a numbering where the 0th node has the degree of freedom 0 (x-velocity) and the degree of freedom 1 (y-velocity), the 1st node has the degrees of freedom 2 and 3, and so on. We will have to modify the code to account for this new numbering.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># BUILD ELEMENT-TO-DOF MAPPING</span>
+<span class="n">EL2DOF</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nel</span><span class="p">,</span> <span class="n">nedof</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">EL2DOF</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">::</span><span class="n">ndim</span><span class="p">]</span> <span class="o">=</span> <span class="n">ndim</span> <span class="o">*</span> <span class="n">mesh</span><span class="o">.</span><span class="n">EL2NOD</span>
+<span class="n">EL2DOF</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">::</span><span class="n">ndim</span><span class="p">]</span> <span class="o">=</span> <span class="n">ndim</span> <span class="o">*</span> <span class="n">mesh</span><span class="o">.</span><span class="n">EL2NOD</span> <span class="o">+</span> <span class="mi">1</span>
 </pre></div>
 </div>
 <p>We will use this matrix <span class="math notranslate nohighlight">\(EL2DOF\)</span> to construct the global stiffness matrix and the global force vector.</p>
@@ -212,19 +239,20 @@ y
 \[\Pi = P^{-1} Pb\]</div>
 <p>In the python FEM implementation, we will spell out the matrix <span class="math notranslate nohighlight">\(P\)</span> and the vector <span class="math notranslate nohighlight">\(Pb\)</span> using the coordinates of the vertices of the element and the coordinates of the integration point; solving the matrix equation above will give us the pressure shape functions.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># np_edof is the number of pressure degrees of freedom (here 3)</span>
-<span class="c1"># ECOORD_X is a 7x2 matrix constructed ECOORD_X = GCOORD[EL2NOD[iel,:],:], holding the x and y coordinates of the element vertices</span>
+<span class="c1"># ECOORD_X is a 7x2 matrix holding the x and y coordinates of the element vertices</span>
+<span class="n">ECOORD_X</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">GCOORD</span><span class="p">[</span><span class="n">mesh</span><span class="o">.</span><span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:],</span> <span class="p">:]</span>
 <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">np_edof</span><span class="p">))</span>
 <span class="n">P</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ECOORD_X</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 </div>
-<p>Inside the integratin loop, we construct <span class="math notranslate nohighlight">\(Pb\)</span> and solve for the pressure shape functions:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nip</span><span class="p">):</span>
+<p>Inside the integration loop, we construct <span class="math notranslate nohighlight">\(Pb\)</span> and solve for the pressure shape functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">nip</span><span class="p">):</span>
     <span class="c1"># Ni is [7,] and holds the velocity shape functions</span>
     <span class="c1"># Ni @ ECOORD_X is then [2,] and holds the x and y coordinates of the integration point</span>
     <span class="c1"># Pi is [3,] and holds the pressure shape functions</span>
 
     <span class="n">Pb</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">Ni</span> <span class="o">@</span> <span class="n">ECOORD_X</span>
-    <span class="n">Pi</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Pb</span><span class="p">)</span>
+    <span class="n">Pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Pb</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -232,22 +260,38 @@ y
 <h2>Assembly of global matrices and pressure numbering<a class="headerlink" href="#assembly-of-global-matrices-and-pressure-numbering" title="Link to this heading"></a></h2>
 <p>Finally, we need to assemble the global matrices. This includes the global <span class="math notranslate nohighlight">\(Q\)</span> and <span class="math notranslate nohighlight">\(invM\)</span> matrices, which we will use to reconstruct pressure from the velocity solution <span class="xref std std-ref">eq:pressure_static_condensation</span> .</p>
 <p>As the pressure is discontinuous, each element has three independent pressure unknowns. The numbering is therefore that element 0 has unknown pressures 0,1,2 and element 1 has unknown pressures 3,4,5, and so on. For the global <span class="math notranslate nohighlight">\(Q\)</span> matrix, the rows (i index) are therefore given by this continuous pressure numbering and the columns (j-index) by the matrix <span class="math notranslate nohighlight">\(EL2DOF\)</span>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># logic is that each element as three pressure dofs, as the pressure is dicsontinuous, we make ad-hoc numbering.</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build global Q matrix for discontinuous pressure</span>
 <span class="c1"># element[0] -&gt; pressure = [0,1,2]</span>
 <span class="c1"># element[1] -&gt; pressure = [3,4,5]</span>
 <span class="c1"># The velocity dofs come from EL2DOF</span>
 
-<span class="n">Q_i</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="p">(</span><span class="n">nedof</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
-<span class="n">Q_j</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">EL2DOF</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">np_edof</span><span class="p">))</span>
-<span class="n">Q_all</span>   <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">((</span><span class="n">Q_all</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="p">(</span><span class="n">Q_i</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Q_j</span><span class="o">.</span><span class="n">ravel</span><span class="p">())),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">sdof</span><span class="p">))</span>
+<span class="n">Q_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="p">(</span><span class="n">nedof</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="n">Q_j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">EL2DOF</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">np_edof</span><span class="p">))</span>
+<span class="n">Q_all</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">((</span><span class="n">Q_all</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="p">(</span><span class="n">Q_i</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Q_j</span><span class="o">.</span><span class="n">ravel</span><span class="p">())),</span>
+                   <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">sdof</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>The assembly of the global <span class="math notranslate nohighlight">\(invM\)</span> matrix is similar. The rows and columns are both given by the continuous pressure numbering.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">invM_i</span>          <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="p">(</span><span class="n">np_edof</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
-<span class="n">base_sequence</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np_edof</span><span class="p">),</span> <span class="n">nel</span> <span class="o">*</span> <span class="n">np_edof</span><span class="p">)</span>
-<span class="n">offsets</span>         <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nel</span><span class="p">)</span> <span class="o">*</span> <span class="n">np_edof</span><span class="p">,</span> <span class="n">np_edof</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">column_indices</span>  <span class="o">=</span> <span class="n">base_sequence</span> <span class="o">+</span> <span class="n">offsets</span>
-<span class="n">invM_all</span>        <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">((</span><span class="n">invM_all</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="p">(</span><span class="n">invM_i</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">column_indices</span><span class="o">.</span><span class="n">ravel</span><span class="p">())),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">invM_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="p">(</span><span class="n">np_edof</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<span class="n">base_sequence</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np_edof</span><span class="p">),</span> <span class="n">nel</span> <span class="o">*</span> <span class="n">np_edof</span><span class="p">)</span>
+<span class="n">offsets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nel</span><span class="p">)</span> <span class="o">*</span> <span class="n">np_edof</span><span class="p">,</span> <span class="n">np_edof</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">column_indices</span> <span class="o">=</span> <span class="n">base_sequence</span> <span class="o">+</span> <span class="n">offsets</span>
+<span class="n">invM_all</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">((</span><span class="n">invM_all</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="p">(</span><span class="n">invM_i</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">column_indices</span><span class="o">.</span><span class="n">ravel</span><span class="p">())),</span>
+                      <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">,</span> <span class="n">nel</span><span class="o">*</span><span class="n">np_edof</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The solver function signature follows the dataclass pattern:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">solve_mechanical_2d</span><span class="p">(</span>
+    <span class="n">mesh</span><span class="p">:</span> <span class="n">Mesh</span><span class="p">,</span>
+    <span class="n">material</span><span class="p">:</span> <span class="n">MaterialParams</span><span class="p">,</span>
+    <span class="n">bc</span><span class="p">:</span> <span class="n">BoundaryConditions</span><span class="p">,</span>
+    <span class="n">solver</span><span class="p">:</span> <span class="n">SolverParams</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Solution</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Solve 2D incompressible Stokes flow using FEM.</span>
+
+<span class="sd">    Returns Solution object with velocity and pressure fields.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 </pre></div>
 </div>
 <p>There might be a more elegant solution to this; we’d be happy to hear about it!</p>
@@ -260,13 +304,13 @@ y
 </figure>
 <p>You can download the code for this lecture here: <a class="reference download internal" download="" href="../_downloads/154725ec4a9c5d96798fc0e71ffe755b/ip_triangle.py"><code class="xref download docutils literal notranslate"><span class="pre">ip_triangle.py</span></code></a>, <a class="reference download internal" download="" href="../_downloads/140ef2b663477ac9079a03b0c83cdd2f/shp_deriv_triangle.py"><code class="xref download docutils literal notranslate"><span class="pre">shp_deriv_triangle.py</span></code></a>, <a class="reference download internal" download="" href="../_downloads/a9cc556daacdc05c3e3cca9bddece462/mechanical2d_driver.py"><code class="xref download docutils literal notranslate"><span class="pre">mechanical2d_driver.py</span></code></a>, and <a class="reference download internal" download="" href="../_downloads/42118240c1294aae964117a73425fba8/mechanical2d.py"><code class="xref download docutils literal notranslate"><span class="pre">mechanical2d.py</span></code></a>.</p>
 </section>
-<section id="excerices">
-<h2>Excerices<a class="headerlink" href="#excerices" title="Link to this heading"></a></h2>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading"></a></h2>
 <p>Get the code to work and try to solve the following exercises:</p>
 <ol class="arabic simple">
-<li><p>Modify the code to solve for a different problem, e.g., the pure shear problem with inclusions of different viscosity.</p></li>
-<li><p>Modify the code to resolve inclusions of different shape</p></li>
-<li><p>Modify the code to resolve inclusions of different densiy. This involves changes the boundary conditions to no slip. If you want, add a pseudo time loop in which GCOORD is updated using the computed velocities. This will give you a time-dependent problem with a moving inclusion.</p></li>
+<li><p>Modify the <code class="docutils literal notranslate"><span class="pre">MaterialParams</span></code> to solve for a different problem, e.g., the pure shear problem with inclusions of different viscosity contrast.</p></li>
+<li><p>Modify the <code class="docutils literal notranslate"><span class="pre">make_mesh()</span></code> function to create inclusions of different shapes (elliptical, rectangular, etc.).</p></li>
+<li><p>Modify the code to resolve inclusions of different density. This involves changing the boundary conditions to no-slip and adding gravity to <code class="docutils literal notranslate"><span class="pre">MaterialParams.G</span></code>. If you want, add a pseudo time loop in which <code class="docutils literal notranslate"><span class="pre">mesh.GCOORD</span></code> is updated using the computed velocities. This will give you a time-dependent problem with a moving inclusion.</p></li>
 </ol>
 </section>
 </section>

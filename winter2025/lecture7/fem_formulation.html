@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Finite Element Formulation &mdash; Finite Element Modeling in Geodynamics  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8a2add5" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -174,21 +174,21 @@
 <h2>Weak form<a class="headerlink" href="#weak-form" title="Link to this heading"></a></h2>
 <p>To cast <span class="xref std std-ref">eqs:stokes_equation_penalty</span> and <span class="xref std std-ref">eqs:stokes_equation_divergence</span> into a finite element formulation, we need to define the trial and test spaces.  We follow the formulation in <span id="id1">[<a class="reference internal" href="../refs.html#id35" title="M. Dabrowski, M. Krotkiewski, and D. W. Schmid. Milamin: matlab-based finite element method solver for large problems. Geochemistry Geophysics Geosystems, 2008. URL: &lt;Go to ISI&gt;://000255458100002 http://www.agu.org/journals/gc/gc0804/2007GC001719/2007GC001719.pdf, doi:10.1029/2007gc001719.">Dabrowski et al., 2008</a>]</span> and use the the seven-node Crouzeix-Raviart triangle with quadratic velocity shape functions enhanced by a cubic bubble function and discontinuous linear interpolation for the pressure field. This element is stable and the velocity and pressure approximations are independent, which leads to the so-called mixed formulation of the finite element method.</p>
 <div class="math notranslate nohighlight" id="equation-eq-shape-function-stokes">
-<span class="eqno">(163)<a class="headerlink" href="#equation-eq-shape-function-stokes" title="Link to this equation"></a></span>\[\begin{split}\tilde{u}_x(x,y) = \sum_{i=1}^{\text{nnod}} N_i(x,y) u_x^i \\
+<span class="eqno">(164)<a class="headerlink" href="#equation-eq-shape-function-stokes" title="Link to this equation"></a></span>\[\begin{split}\tilde{u}_x(x,y) = \sum_{i=1}^{\text{nnod}} N_i(x,y) u_x^i \\
 \tilde{u}_y(x,y) = \sum_{i=1}^{\text{nnod}} N_i(x,y) u_y^i \\
 \tilde{p}(x,y) = \sum_{i=1}^{\text{np}} \Pi_i(x,y) p^i\end{split}\]</div>
 <p>We can now use the Galerkin method to write the governing equations in their FEM weak form. These were the equations as derived in the previous sections:</p>
 <div class="math notranslate nohighlight" id="equation-eqs-stokes-equation-penalty">
-<span class="eqno">(164)<a class="headerlink" href="#equation-eqs-stokes-equation-penalty" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
+<span class="eqno">(165)<a class="headerlink" href="#equation-eqs-stokes-equation-penalty" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
 \frac{\partial}{\partial x} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_x}{\partial x} - \frac{2}{3}\frac{\partial u_y}{\partial y} \right ) \right ) + \frac{\partial}{\partial y} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial x} + \rho g_x = 0\\
 \frac{\partial}{\partial y} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_y}{\partial y} - \frac{2}{3}\frac{\partial u_x}{\partial x} \right ) \right ) + \frac{\partial}{\partial x} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial y} + \rho g_y = 0\\\
 \end{split}\end{split}\]</div>
 <p>And the continuity equation:</p>
 <div class="math notranslate nohighlight" id="equation-eqs-stokes-equation-penalty-divergence">
-<span class="eqno">(165)<a class="headerlink" href="#equation-eqs-stokes-equation-penalty-divergence" title="Link to this equation"></a></span>\[\frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} = -\frac{p}{\kappa}\]</div>
+<span class="eqno">(166)<a class="headerlink" href="#equation-eqs-stokes-equation-penalty-divergence" title="Link to this equation"></a></span>\[\frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} = -\frac{p}{\kappa}\]</div>
 <p>We now use the shapes functions <span class="xref std std-ref">eq:shape_function_stokes</span> to write the weak form of the equations. The weak form of the equations is obtained by multiplying the equations by a test function and integrating over the domain. The again use the Galerkin method, so that test functions are the same as the shape functions. We also do an integration by parts on the velocity equations. The weak form of the equations is then given by:</p>
 <div class="math notranslate nohighlight" id="equation-eq-weak-form">
-<span class="eqno">(166)<a class="headerlink" href="#equation-eq-weak-form" title="Link to this equation"></a></span>\[ \begin{align}\begin{aligned}\begin{split}\int_{\Omega} \left[ \frac{\partial N_i}{\partial x} \left( \eta \left( \frac{4}{3} \frac{\partial (N_j u_{x,j})}{\partial x} - \frac{2}{3} \frac{\partial (N_j u_{y,j})}{\partial y} \right) \right) + \frac{\partial N_i}{\partial y} \left( \eta \left( \frac{\partial (N_j u_{x,j})}{\partial y} + \frac{\partial (N_j u_{y,j})}{\partial x} \right) \right) - \frac{\partial N_i}{\partial x} (\Pi_j p_j) - N_i f_x \right] \, d\Omega = 0 \\\end{split}\\\begin{split}\int_{\Omega} \left[ \frac{\partial N_i}{\partial y} \left( \eta \left( \frac{4}{3} \frac{\partial (N_j u_{y,j})}{\partial y} - \frac{2}{3} \frac{\partial (N_j u_{x,j})}{\partial x} \right) \right) + \frac{\partial N_i}{\partial x} \left( \eta \left( \frac{\partial (N_j u_{x,j})}{\partial y} + \frac{\partial (N_j u_{y,j})}{\partial x} \right) \right) - \frac{\partial N_i}{\partial y} (\Pi_j p_j) - N_i f_y \right] \, d\Omega = 0 \\\end{split}\\\int_{\Omega} \Pi_i \left( \frac{\partial (N_j u_{x,j})}{\partial x} + \frac{\partial (N_j u_{y,j})}{\partial y} \right) \, d\Omega = 0\end{aligned}\end{align} \]</div>
+<span class="eqno">(167)<a class="headerlink" href="#equation-eq-weak-form" title="Link to this equation"></a></span>\[ \begin{align}\begin{aligned}\begin{split}\int_{\Omega} \left[ \frac{\partial N_i}{\partial x} \left( \eta \left( \frac{4}{3} \frac{\partial (N_j u_{x,j})}{\partial x} - \frac{2}{3} \frac{\partial (N_j u_{y,j})}{\partial y} \right) \right) + \frac{\partial N_i}{\partial y} \left( \eta \left( \frac{\partial (N_j u_{x,j})}{\partial y} + \frac{\partial (N_j u_{y,j})}{\partial x} \right) \right) - \frac{\partial N_i}{\partial x} (\Pi_j p_j) - N_i f_x \right] \, d\Omega = 0 \\\end{split}\\\begin{split}\int_{\Omega} \left[ \frac{\partial N_i}{\partial y} \left( \eta \left( \frac{4}{3} \frac{\partial (N_j u_{y,j})}{\partial y} - \frac{2}{3} \frac{\partial (N_j u_{x,j})}{\partial x} \right) \right) + \frac{\partial N_i}{\partial x} \left( \eta \left( \frac{\partial (N_j u_{x,j})}{\partial y} + \frac{\partial (N_j u_{y,j})}{\partial x} \right) \right) - \frac{\partial N_i}{\partial y} (\Pi_j p_j) - N_i f_y \right] \, d\Omega = 0 \\\end{split}\\\int_{\Omega} \Pi_i \left( \frac{\partial (N_j u_{x,j})}{\partial x} + \frac{\partial (N_j u_{y,j})}{\partial y} \right) \, d\Omega = 0\end{aligned}\end{align} \]</div>
 <p>Note that we obmitted the boundary terms and flipped the sign again after the integration by parts for better readability. The boundary terms contain the stresses acting on the domain. If we have stress free conditions, the terms are zero. If we want to apply a stress, we need to add the stress to the boundary terms and remember the sign flip.</p>
 </section>
 <section id="element-matrices">
@@ -197,7 +197,7 @@
 <h3>The B matrix<a class="headerlink" href="#the-b-matrix" title="Link to this heading"></a></h3>
 <p>We again split the integral in a sum of integrals over our triangular elements. We can then start to write the weak form in matrix form. We start with the matrix <span class="math notranslate nohighlight">\(B\)</span> that turns velocities into strain rates:</p>
 <div class="math notranslate nohighlight" id="equation-eq-b-matrix">
-<span class="eqno">(167)<a class="headerlink" href="#equation-eq-b-matrix" title="Link to this equation"></a></span>\[\begin{split}\begin{pmatrix}
+<span class="eqno">(168)<a class="headerlink" href="#equation-eq-b-matrix" title="Link to this equation"></a></span>\[\begin{split}\begin{pmatrix}
 \dot{\epsilon}_{xx}(x,y) \\
 \dot{\epsilon}_{yy}(x,y) \\
 \dot{\epsilon}_{xy}(x,y)
@@ -218,7 +218,7 @@ u_y^1 \\
 <h3>The D matrix<a class="headerlink" href="#the-d-matrix" title="Link to this heading"></a></h3>
 <p>We then use the matrix <span class="math notranslate nohighlight">\(D\)</span> to turn strain rates into stresses. Remember that deviatoric stresses are are related to deviatoric strain rates by the viscosity:</p>
 <div class="math notranslate nohighlight" id="equation-eq-deviatoric-strain-rates">
-<span class="eqno">(168)<a class="headerlink" href="#equation-eq-deviatoric-strain-rates" title="Link to this equation"></a></span>\[\begin{split}\begin{aligned}
+<span class="eqno">(169)<a class="headerlink" href="#equation-eq-deviatoric-strain-rates" title="Link to this equation"></a></span>\[\begin{split}\begin{aligned}
 \epsilon_{xx}' &amp;= \epsilon_{xx} - \frac{1}{3}(\epsilon_{xx} + \epsilon_{yy} + \epsilon_{zz}) \\
 \epsilon_{yy}' &amp;= \epsilon_{yy} - \frac{1}{3}(\epsilon_{xx} + \epsilon_{yy} + \epsilon_{zz}) \\
 \epsilon_{xy}' &amp;= \epsilon_{xy}
@@ -269,7 +269,7 @@ u_y^1 \\
 \end{pmatrix}\end{split}\]</div>
 <p>And finally get the D matrix:</p>
 <div class="math notranslate nohighlight" id="equation-eq-d-matrix">
-<span class="eqno">(169)<a class="headerlink" href="#equation-eq-d-matrix" title="Link to this equation"></a></span>\[\begin{split}\mathbf{D} =
+<span class="eqno">(170)<a class="headerlink" href="#equation-eq-d-matrix" title="Link to this equation"></a></span>\[\begin{split}\mathbf{D} =
 \eta \begin{pmatrix}
 \frac{4}{3} &amp; -\frac{2}{3} &amp; 0 \\
 -\frac{2}{3} &amp; \frac{4}{3} &amp; 0 \\
@@ -280,13 +280,13 @@ u_y^1 \\
 <h3>The coefficient/stiffness matrix<a class="headerlink" href="#the-coefficient-stiffness-matrix" title="Link to this heading"></a></h3>
 <p>We can now write the first two terms of the weak form in matrix form:</p>
 <div class="math notranslate nohighlight" id="equation-eq-integral-b-tdbu">
-<span class="eqno">(171)<a class="headerlink" href="#equation-eq-integral-b-tdbu" title="Link to this equation"></a></span>\[A = \int_{\Omega_e} \eta \mathbf{B}^T \mathbf{D} \mathbf{B} \, d\Omega_e\]</div>
+<span class="eqno">(172)<a class="headerlink" href="#equation-eq-integral-b-tdbu" title="Link to this equation"></a></span>\[A = \int_{\Omega_e} \eta \mathbf{B}^T \mathbf{D} \mathbf{B} \, d\Omega_e\]</div>
 <p>The third term of the weak form can be written as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-integral-b-tdbu">
-<span class="eqno">(171)<a class="headerlink" href="#equation-eq-integral-b-tdbu" title="Link to this equation"></a></span>\[Q^T = -\int_{\Omega_e} \mathbf{B_{vol}}^T \Pi^T \, d\Omega_e\]</div>
+<span class="eqno">(172)<a class="headerlink" href="#equation-eq-integral-b-tdbu" title="Link to this equation"></a></span>\[Q^T = -\int_{\Omega_e} \mathbf{B_{vol}}^T \Pi^T \, d\Omega_e\]</div>
 <p>We can now write the final element matrix as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-stiffness-matrix">
-<span class="eqno">(172)<a class="headerlink" href="#equation-eq-stiffness-matrix" title="Link to this equation"></a></span>\[\begin{split}\mathbf{K}^e = \begin{pmatrix}
+<span class="eqno">(173)<a class="headerlink" href="#equation-eq-stiffness-matrix" title="Link to this equation"></a></span>\[\begin{split}\mathbf{K}^e = \begin{pmatrix}
 \mathbf{A} &amp; \mathbf{Q}^T \\
 \mathbf{Q} &amp; -\kappa^{-1} \mathbf{M}
 \end{pmatrix}
@@ -301,10 +301,10 @@ u_y^1 \\
 <h2>Static condensation<a class="headerlink" href="#static-condensation" title="Link to this heading"></a></h2>
 <p>Since we use a discontinuous pressure formation, we can then eliminate the pressure field from the equations. This is called static condensation. We can write the pressure field in terms of the velocity field:</p>
 <div class="math notranslate nohighlight" id="equation-eq-pressure-static-condensation">
-<span class="eqno">(173)<a class="headerlink" href="#equation-eq-pressure-static-condensation" title="Link to this equation"></a></span>\[p(x, y) = \kappa \Pi^T(x, y) \mathbf{M}^{-1} \mathbf{Q} \mathbf{u}^e\]</div>
+<span class="eqno">(174)<a class="headerlink" href="#equation-eq-pressure-static-condensation" title="Link to this equation"></a></span>\[p(x, y) = \kappa \Pi^T(x, y) \mathbf{M}^{-1} \mathbf{Q} \mathbf{u}^e\]</div>
 <p>We can now substitute the pressure field in the velocity equations to get the final coefficient matrix:</p>
 <div class="math notranslate nohighlight" id="equation-eq-matrix-equation">
-<span class="eqno">(174)<a class="headerlink" href="#equation-eq-matrix-equation" title="Link to this equation"></a></span>\[\left( \mathbf{A} + \kappa \mathbf{Q}^T \mathbf{M}^{-1} \mathbf{Q} \right) \mathbf{u}^e = \mathbf{f}^e\]</div>
+<span class="eqno">(175)<a class="headerlink" href="#equation-eq-matrix-equation" title="Link to this equation"></a></span>\[\left( \mathbf{A} + \kappa \mathbf{Q}^T \mathbf{M}^{-1} \mathbf{Q} \right) \mathbf{u}^e = \mathbf{f}^e\]</div>
 <p>This is the final matrix equation that we need to solve for the velocity field.</p>
 </section>
 </section>

@@ -3,20 +3,49 @@
 Python implementation
 ===========================
 
-We will use our previously developed 2d FEM code for steady-state diffusion as a starting point and modify it to solve for Stokes flow. There are a number of extra complications in the Stokes flow problem that we need to address:
+We will use our previously developed 2d FEM code for steady-state diffusion as a starting point and modify it to solve for Stokes flow. The implementation follows a dataclass-based architecture for better type safety and code organization, using containers for mesh data, material properties, boundary conditions, and solver parameters.
 
+There are a number of extra complications in the Stokes flow problem that we need to address:
+
+
+Data structures
+------------------------------------------------------
+
+The implementation uses dataclasses to organize code and data:
+
+.. code-block:: python
+
+    from dataclasses import dataclass
+
+    @dataclass
+    class Mesh:
+        """Container for mesh data."""
+        GCOORD: np.ndarray   # Node coordinates
+        EL2NOD: np.ndarray   # Element connectivity
+        Phases: np.ndarray   # Phase/material ID per element
+        Node_ids: np.ndarray # Node boundary markers
+        nnod: int = 0
+        nel: int = 0
+        nnodel: int = 0
+
+    @dataclass
+    class MaterialParams:
+        """Container for material properties."""
+        Mu: np.ndarray   # Shear viscosity per phase
+        Rho: np.ndarray  # Density per phase
+        G: np.ndarray    # Gravity vector [gx, gy]
 
 Global degrees of freedom
 ------------------------------------------------------
 
-In the steady-state diffusion problem, we had one degree of freedom per node. In the Stokes flow problem, we have two degrees of freedom per node: one for the x-velocity and one for the y-velocity. We will therefor have to double the number of degrees of freedom in the global stiffness matrix and the global force vector. We use a numberung where the 0th node has the degree of freedom 0 (x-velocity) and the degree of freedom 1 (y-velocity), the 1st node has the degrees of freedom 2 and 3, and so on. We will have to modify the code to account for this new numbering.
+In the steady-state diffusion problem, we had one degree of freedom per node. In the Stokes flow problem, we have two degrees of freedom per node: one for the x-velocity and one for the y-velocity. We will therefor have to double the number of degrees of freedom in the global stiffness matrix and the global force vector. We use a numbering where the 0th node has the degree of freedom 0 (x-velocity) and the degree of freedom 1 (y-velocity), the 1st node has the degrees of freedom 2 and 3, and so on. We will have to modify the code to account for this new numbering.
 
 .. code-block:: python
 
-    # MAKE ELDOF
-    EL2DOF = np.zeros((nel,nedof), dtype=np.int32)
-    EL2DOF[:,0::ndim] = ndim * EL2NOD
-    EL2DOF[:,1::ndim] = ndim * EL2NOD + 1
+    # BUILD ELEMENT-TO-DOF MAPPING
+    EL2DOF = np.zeros((nel, nedof), dtype=np.int32)
+    EL2DOF[:, 0::ndim] = ndim * mesh.EL2NOD
+    EL2DOF[:, 1::ndim] = ndim * mesh.EL2NOD + 1
 
 We will use this matrix :math:`EL2DOF` to construct the global stiffness matrix and the global force vector.
 
@@ -76,22 +105,23 @@ In the python FEM implementation, we will spell out the matrix :math:`P` and the
 .. code-block:: python
 
         # np_edof is the number of pressure degrees of freedom (here 3)
-        # ECOORD_X is a 7x2 matrix constructed ECOORD_X = GCOORD[EL2NOD[iel,:],:], holding the x and y coordinates of the element vertices
+        # ECOORD_X is a 7x2 matrix holding the x and y coordinates of the element vertices
+        ECOORD_X = mesh.GCOORD[mesh.EL2NOD[iel, :], :]
         P = np.ones((np_edof, np_edof))
         P[1:3, :] = ECOORD_X[:3].T
 
 
-Inside the integratin loop, we construct :math:`Pb` and solve for the pressure shape functions:
+Inside the integration loop, we construct :math:`Pb` and solve for the pressure shape functions:
 
 .. code-block:: python
 
-    for ip in range(nip):
+    for ip in range(solver.nip):
         # Ni is [7,] and holds the velocity shape functions
         # Ni @ ECOORD_X is then [2,] and holds the x and y coordinates of the integration point
         # Pi is [3,] and holds the pressure shape functions
 
         Pb[1:3] = Ni @ ECOORD_X
-        Pi      = np.linalg.solve(P, Pb)
+        Pi = np.linalg.solve(P, Pb)
 
 
 
@@ -104,25 +134,43 @@ As the pressure is discontinuous, each element has three independent pressure un
 
 .. code-block:: python
 
-    # logic is that each element as three pressure dofs, as the pressure is dicsontinuous, we make ad-hoc numbering. 
+    # Build global Q matrix for discontinuous pressure
     # element[0] -> pressure = [0,1,2]
     # element[1] -> pressure = [3,4,5]
     # The velocity dofs come from EL2DOF
 
-    Q_i     = np.tile(np.arange(0, nel*np_edof, dtype=np.int32), (nedof,1)).T
-    Q_j     = np.tile(EL2DOF, (1,np_edof))
-    Q_all   = csr_matrix((Q_all.ravel(), (Q_i.ravel(), Q_j.ravel())), shape=(nel*np_edof, sdof))
+    Q_i = np.tile(np.arange(0, nel*np_edof, dtype=np.int32), (nedof, 1)).T
+    Q_j = np.tile(EL2DOF, (1, np_edof))
+    Q_all = csr_matrix((Q_all.ravel(), (Q_i.ravel(), Q_j.ravel())), 
+                       shape=(nel*np_edof, sdof))
 
 
 The assembly of the global :math:`invM` matrix is similar. The rows and columns are both given by the continuous pressure numbering.
 
 .. code-block:: python
 
-    invM_i          = np.tile(np.arange(0, nel*np_edof, dtype=np.int32), (np_edof, 1)).T
-    base_sequence   = np.tile(np.arange(np_edof), nel * np_edof)
-    offsets         = np.repeat(np.arange(nel) * np_edof, np_edof**2)
-    column_indices  = base_sequence + offsets
-    invM_all        = csr_matrix((invM_all.ravel(), (invM_i.ravel(), column_indices.ravel())), shape=(nel*np_edof, nel*np_edof))    
+    invM_i = np.tile(np.arange(0, nel*np_edof, dtype=np.int32), (np_edof, 1)).T
+    base_sequence = np.tile(np.arange(np_edof), nel * np_edof)
+    offsets = np.repeat(np.arange(nel) * np_edof, np_edof**2)
+    column_indices = base_sequence + offsets
+    invM_all = csr_matrix((invM_all.ravel(), (invM_i.ravel(), column_indices.ravel())), 
+                          shape=(nel*np_edof, nel*np_edof))
+
+The solver function signature follows the dataclass pattern:
+
+.. code-block:: python
+
+    def solve_mechanical_2d(
+        mesh: Mesh,
+        material: MaterialParams,
+        bc: BoundaryConditions,
+        solver: SolverParams
+    ) -> Solution:
+        """
+        Solve 2D incompressible Stokes flow using FEM.
+        
+        Returns Solution object with velocity and pressure fields.
+        """    
 
 
 There might be a more elegant solution to this; we'd be happy to hear about it!
@@ -139,11 +187,11 @@ We will use a test problem from structural geology to test our implementation. T
 
 You can download the code for this lecture here: :download:`ip_triangle.py <python/ip_triangle.py>`, :download:`shp_deriv_triangle.py <python/shp_deriv_triangle.py>`, :download:`mechanical2d_driver.py <python/mechanical2d_driver.py>`, and :download:`mechanical2d.py <python/mechanical2d.py>`.
 
-Excerices
+Exercises
 -----------
 Get the code to work and try to solve the following exercises:
 
-1. Modify the code to solve for a different problem, e.g., the pure shear problem with inclusions of different viscosity.
-2. Modify the code to resolve inclusions of different shape
-3. Modify the code to resolve inclusions of different densiy. This involves changes the boundary conditions to no slip. If you want, add a pseudo time loop in which GCOORD is updated using the computed velocities. This will give you a time-dependent problem with a moving inclusion.
+1. Modify the ``MaterialParams`` to solve for a different problem, e.g., the pure shear problem with inclusions of different viscosity contrast.
+2. Modify the ``make_mesh()`` function to create inclusions of different shapes (elliptical, rectangular, etc.).
+3. Modify the code to resolve inclusions of different density. This involves changing the boundary conditions to no-slip and adding gravity to ``MaterialParams.G``. If you want, add a pseudo time loop in which ``mesh.GCOORD`` is updated using the computed velocities. This will give you a time-dependent problem with a moving inclusion.
 

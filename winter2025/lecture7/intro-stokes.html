@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Introduction to Stokes flow &mdash; Finite Element Modeling in Geodynamics  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8a2add5" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -179,12 +179,12 @@
 <span class="eqno">(152)<a class="headerlink" href="#equation-eqs-continuity-eulerian" title="Link to this equation"></a></span>\[\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho v) = 0\]</div>
 <p>This describes the change of density in a fixed observation cell due to the in- and outflux of mass. Such a fixed node is called an <em>Euler</em> node and is formulated from the node’s point of view.</p>
 <p>Using Leibniz’s Law (<span class="math notranslate nohighlight">\(\frac{\partial}{\partial x} \left(u v\right) = \frac{\partial u}{\partial x} v + \frac{\partial v}{\partial x}  u\)</span>), the continuity equation can be extended:</p>
-<div class="math notranslate nohighlight">
-\[\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho v) = \frac{\partial \rho}{\partial t} + \rho \nabla \cdot v + v \nabla \rho = 0\]</div>
-<p>One term (<span class="math notranslate nohighlight">\(v \nabla \rho\)</span>) describes the change of density in our observation volume due to mass flux through the boundaries with the same velocity but different density. This term describes <em>Advection</em> or <em>Advective transport</em>. The other term (<span class="math notranslate nohighlight">\(\rho \nabla \cdot v\)</span>) describes the change of density in the observational volume due to mass flux of constant density but varying velocity.</p>
+<div class="math notranslate nohighlight" id="equation-eqs-mass-conservation-expanded">
+<span class="eqno">(153)<a class="headerlink" href="#equation-eqs-mass-conservation-expanded" title="Link to this equation"></a></span>\[\frac{\partial \rho}{\partial t} + \nabla \cdot (\rho v) = \frac{\partial \rho}{\partial t} + \rho \nabla \cdot v + v \cdot \nabla \rho = 0\]</div>
+<p>One term (<span class="math notranslate nohighlight">\(v \cdot \nabla \rho\)</span>) is the dot product of the velocity vector <span class="math notranslate nohighlight">\(v\)</span> with the density gradient <span class="math notranslate nohighlight">\(\nabla \rho\)</span>, representing the rate at which density changes as material flows along the velocity field. In 3D, this is <span class="math notranslate nohighlight">\(v_x \frac{\partial \rho}{\partial x} + v_y \frac{\partial \rho}{\partial y} + v_z \frac{\partial \rho}{\partial z}\)</span>. This term describes <em>Advection</em> or <em>Advective transport</em> - the transport of density variations by the flow. The other term (<span class="math notranslate nohighlight">\(\rho \nabla \cdot v\)</span>) describes the change of density in the observational volume due to mass flux of constant density but varying velocity (compression or expansion).</p>
 <p>For the case of constant density, it follows that <span class="math notranslate nohighlight">\(\frac{\partial \rho}{\partial t}=0\)</span>, <span class="math notranslate nohighlight">\(\nabla \rho=0\)</span> and <span class="math notranslate nohighlight">\(\frac{D \rho}{D t}=0\)</span>. This assumption is valid for <em>incompressible</em> material and is often used in geodynamics. The incompressible continuity equation in 2D looks like:</p>
 <div class="math notranslate nohighlight" id="equation-eqs-continuity">
-<span class="eqno">(153)<a class="headerlink" href="#equation-eqs-continuity" title="Link to this equation"></a></span>\[\nabla \cdot v = \frac{\partial v_x}{\partial x} + \frac{\partial v_y}{\partial y} = 0\]</div>
+<span class="eqno">(154)<a class="headerlink" href="#equation-eqs-continuity" title="Link to this equation"></a></span>\[\nabla \cdot v = \frac{\partial v_x}{\partial x} + \frac{\partial v_y}{\partial y} = 0\]</div>
 <p>and describes the conservation of mass in an incompressible material.</p>
 </section>
 <section id="conservation-of-momentum">
@@ -203,10 +203,10 @@
 <p>In the absence of internal forces, the angular momentum has to be conserved. This means that shear stresses can only act on our body if they won’t create a rotational component. This can only be achieved if the following condition is fulfilled: <span class="math notranslate nohighlight">\(\sigma_{ij}=\sigma_{ji}\)</span>.</p>
 <p>The mean of all acting perpendicular stresses defines the pressure in our body. The minus sign appears because stresses are designed as pulling forces, while pressure is the force pushing into the body.</p>
 <div class="math notranslate nohighlight" id="equation-eqs-pressure-definition">
-<span class="eqno">(154)<a class="headerlink" href="#equation-eqs-pressure-definition" title="Link to this equation"></a></span>\[P = -(\sigma_{xx}+\sigma_{yy}+sigma_{zz})/3\]</div>
+<span class="eqno">(155)<a class="headerlink" href="#equation-eqs-pressure-definition" title="Link to this equation"></a></span>\[P = -(\sigma_{xx}+\sigma_{yy}+\sigma_{zz})/3\]</div>
 <p>No shear forces are acting on a fluid at rest. The forces perpendicular to the body define the <em>hydrostatic pressure</em>. In addition, we can now define the <em>deviatoric stress</em> <span class="math notranslate nohighlight">\(\sigma'_{ij}\)</span>, which denotes the deviation in the stress state from hydrostatic pressure.</p>
 <div class="math notranslate nohighlight" id="equation-eqs-deviatoric-stress">
-<span class="eqno">(155)<a class="headerlink" href="#equation-eqs-deviatoric-stress" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
+<span class="eqno">(156)<a class="headerlink" href="#equation-eqs-deviatoric-stress" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
 \sigma'_{ij} = \sigma_{ij} - (-P) = \sigma_{ij} + \delta_{i,j} P\\
 \begin{pmatrix}
 \sigma'_{xx} &amp; \sigma'_{xy}\\
@@ -242,18 +242,18 @@ P &amp; 0\\
 <p>The deformation in each direction and all sides is denoted by the mean of the two deformations working opposite each other:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\epsilon_{ij} = \frac{1}{2} \left(\frac{\partial u_i}{x_j} + \frac{\partial u_j}{x_i}\right)
+\epsilon_{ij} = \frac{1}{2} \left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\right)
 \end{split}\]</div>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{split}
-\epsilon_{xx} &amp;= \frac{1}{2} \left(\frac{\partial u_x}{x} + \frac{\partial u_x}{x}\right) = \frac{\partial u_x}{\partial x}\\
-\epsilon_{xy} &amp;= \frac{1}{2} \left(\frac{\partial u_x}{y} + \frac{\partial u_y}{x}\right) = \epsilon_{yx}\\
-\epsilon_{yx} &amp;= \frac{1}{2} \left(\frac{\partial u_y}{x} + \frac{\partial u_x}{y}\right) = \epsilon_{xy}\\
-\epsilon_{yy} &amp;= \frac{1}{2} \left(\frac{\partial u_y}{y} + \frac{\partial u_y}{y}\right) = \frac{\partial u_y}{\partial y}\\
+\epsilon_{xx} &amp;= \frac{1}{2} \left(\frac{\partial u_x}{\partial x} + \frac{\partial u_x}{\partial x}\right) = \frac{\partial u_x}{\partial x}\\
+\epsilon_{xy} &amp;= \frac{1}{2} \left(\frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x}\right) = \epsilon_{yx}\\
+\epsilon_{yx} &amp;= \frac{1}{2} \left(\frac{\partial u_y}{\partial x} + \frac{\partial u_x}{\partial y}\right) = \epsilon_{xy}\\
+\epsilon_{yy} &amp;= \frac{1}{2} \left(\frac{\partial u_y}{\partial y} + \frac{\partial u_y}{\partial y}\right) = \frac{\partial u_y}{\partial y}\\
 \end{split}\end{split}\]</div>
-<p>In fluids, and therefore in most convection problems in geodynamics, a constituative relationship between stress and strain rate is used and the equations are formulated as the <em>rate of change in material displacement</em> or the <em>strain rate</em> <span class="math notranslate nohighlight">\(\dot{\epsilon}_{ij}\)</span>, which is the change of strain <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> in time. For a displacement velocity <span class="math notranslate nohighlight">\(v_i = \frac{D u_i}{D t}\)</span>, the strain rate can be expressed as:</p>
+<p>In fluids, and therefore in most convection problems in geodynamics, a constitutive relationship between stress and strain rate is used and the equations are formulated as the <em>rate of change in material displacement</em> or the <em>strain rate</em> <span class="math notranslate nohighlight">\(\dot{\epsilon}_{ij}\)</span>, which is the change of strain <span class="math notranslate nohighlight">\(\epsilon_{ij}\)</span> in time. For a displacement velocity <span class="math notranslate nohighlight">\(v_i = \frac{D u_i}{D t}\)</span>, the strain rate can be expressed as:</p>
 <div class="math notranslate nohighlight" id="equation-eqs-sym-strain-rate-tensor">
-<span class="eqno">(156)<a class="headerlink" href="#equation-eqs-sym-strain-rate-tensor" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
+<span class="eqno">(157)<a class="headerlink" href="#equation-eqs-sym-strain-rate-tensor" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
 \dot{\epsilon}_{ij} &amp;= \frac{1}{2} \left(\frac{\partial v_i}{\partial x_j} + \frac{\partial v_j}{\partial x_i}\right)\\
 \begin{pmatrix}
 \dot{\epsilon}_{xx} &amp; \dot{\epsilon}_{xy}\\
@@ -270,7 +270,7 @@ P &amp; 0\\
 <p>From this formulation, we can immediately recognize that <span class="math notranslate nohighlight">\(\dot{\epsilon}_{xy}=\dot{\epsilon}_{yx}\)</span>.</p>
 <p>Similar to the stress tensor, one can define a deviatoric strain rate tensor <span class="math notranslate nohighlight">\(\dot{\epsilon}'_{ij}\)</span> which describes the deviation from strain rate <span class="math notranslate nohighlight">\(\dot{\epsilon}_{ij}\)</span> due to net rotational forces or rigid body rotation. No shear strain rate acts on a rigid body (<span class="math notranslate nohighlight">\(\dot{\epsilon}'_{xy}=\dot{\epsilon}'_{yx}=0\)</span>), and the divergence of such a body is described as <span class="math notranslate nohighlight">\(\nabla \cdot v = \dot{\epsilon}'_{xx} + \dot{\epsilon}'_{yy} = \dot{\epsilon}'_{kk}\)</span>.</p>
 <div class="math notranslate nohighlight" id="equation-eqs-deviatoric-strain-rate">
-<span class="eqno">(157)<a class="headerlink" href="#equation-eqs-deviatoric-strain-rate" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
+<span class="eqno">(158)<a class="headerlink" href="#equation-eqs-deviatoric-strain-rate" title="Link to this equation"></a></span>\[\begin{split}\begin{split}
 \dot{\epsilon}'_{ij} &amp;= \dot{\epsilon}_{ij} - \delta_{ij} \frac{1}{3} \dot{\epsilon}_{kk}\\
 \begin{pmatrix}
 \dot{\epsilon}'_{xx} &amp; \dot{\epsilon}'_{xy}\\
@@ -294,83 +294,81 @@ P &amp; 0\\
 <p>According to Newton’s second law of motion:</p>
 <div class="math notranslate nohighlight">
 \[f = m a\]</div>
-<p>the net force acting on a body is equal to its mass times its acceleration or change of velocity. To apply this in the x-direction, we will need to gather all forces acting on the body in the x-direction.</p>
-<div class="math notranslate nohighlight" id="equation-eqs-nexton-force-balance">
-<span class="eqno">(158)<a class="headerlink" href="#equation-eqs-nexton-force-balance" title="Link to this equation"></a></span>\[f_{x} = f_{xx1} + f_{xx2} + f_{xy1} + f_{xy2} + f_{xz1} + f_{xz2}  + m g_x = m a_x\]</div>
+<p>the net force acting on a body is equal to its mass times its acceleration or change of velocity. To apply this in the x-direction, we will need to gather all forces acting on the body in the x-direction. We consider a 2D control volume of size <span class="math notranslate nohighlight">\(\Delta x \times \Delta y\)</span> with unit thickness in z; the index 1 denotes the face on the negative side (left/bottom) and 2 the face on the positive side (right/top).</p>
+<div class="math notranslate nohighlight" id="equation-eqs-newton-force-balance">
+<span class="eqno">(159)<a class="headerlink" href="#equation-eqs-newton-force-balance" title="Link to this equation"></a></span>\[f_{x} = f_{xx1} + f_{xx2} + f_{xy1} + f_{xy2} + m g_x = m a_x\]</div>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="../_images/3D_stress.png"><img alt="../_images/3D_stress.png" src="../_images/3D_stress.png" style="width: 70%;" />
 </a>
 <figcaption>
-<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Stresses acting on a 1D, 2D, or 3D test volume.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Stresses acting on a 2D test volume (shown in 3D for clarity; unit thickness in z).</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>The forces can be described in terms of stresses:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{split}
-f_{xx1} = -\sigma_{xx1}\Delta y\Delta z\\
-f_{xx2} = \sigma_{xx2} \Delta y\Delta z\\
-f_{xy1} = -\sigma_{xy1}\Delta x\Delta z\\
-f_{xy2} = \sigma_{xy2}\Delta x\Delta z\\
-f_{xz1} = -\sigma_{xz1}\Delta x\Delta y\\
-f_{xz2} = \sigma_{xz2}\Delta x\Delta y\\
-\left(\sigma_{xx2} - \sigma_{xx1}\right)\Delta y \Delta z + \left(\sigma_{xy2} - \sigma_{xy1}\right) \Delta x \Delta z + \left(\sigma_{xz2} - \sigma_{xz1}\right) \Delta x \Delta y  + m g_x = m a_x
+f_{xx1} = -\sigma_{xx1}\Delta y\\
+f_{xx2} = \sigma_{xx2} \Delta y\\
+f_{xy1} = -\sigma_{xy1}\Delta x\\
+f_{xy2} = \sigma_{xy2}\Delta x\\
+\left(\sigma_{xx2} - \sigma_{xx1}\right)\Delta y + \left(\sigma_{xy2} - \sigma_{xy1}\right) \Delta x + m g_x = m a_x
 \end{split}\end{split}\]</div>
-<p>Dividing equation <a class="reference internal" href="#equation-eqs-nexton-force-balance">equation (158)</a> by the volume of our test cube <span class="math notranslate nohighlight">\(V= \Delta x \Delta y \Delta z\)</span> then gives us:</p>
+<p>Dividing equation <a class="reference internal" href="#equation-eqs-newton-force-balance">equation (159)</a> by the area of our 2D test volume <span class="math notranslate nohighlight">\(A= \Delta x \Delta y\)</span> (per unit thickness in z) then gives us:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{split}
-\frac{\left(\sigma_{xx2} - \sigma_{xx1}\right)}{\Delta x} + \frac{\left(\sigma_{xy2} - \sigma_{xy1}\right)}{\Delta y} + \frac{\left(\sigma_{xz2} - \sigma_{xz1}\right)}{\Delta z}  + \rho g_x = \rho a_x\\
-\frac{\partial \sigma_{xj}}{\partial x_j} + \rho g_x = \rho \frac{D v_x}{D t}
+\frac{\left(\sigma_{xx2} - \sigma_{xx1}\right)}{\Delta x} + \frac{\left(\sigma_{xy2} - \sigma_{xy1}\right)}{\Delta y} + \rho g_x = \rho a_x\\
+\frac{\partial \sigma_{xj}}{\partial x_j} + \rho g_x = \rho \frac{D v_x}{D t}\qquad (j \in \{x,y\})
 \end{split}\end{split}\]</div>
 <p>Or in a more general form for all directions:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \frac{\partial \sigma_{ij}}{\partial x_j} + \rho g_i = \rho \frac{D v_i}{D t}
 \end{split}\]</div>
-<p>By making use of equation <a class="reference internal" href="#equation-eqs-deviatoric-stress">equation (155)</a> for the deviatoric stress, we arrive at the Navier-Stokes equation, which describes the conservation of momentum:</p>
+<p>By making use of equation <a class="reference internal" href="#equation-eqs-deviatoric-stress">equation (156)</a> for the deviatoric stress, we arrive at the Navier-Stokes equation, which describes the conservation of momentum:</p>
 <div class="math notranslate nohighlight" id="equation-eqs-navier-stokes">
-<span class="eqno">(159)<a class="headerlink" href="#equation-eqs-navier-stokes" title="Link to this equation"></a></span>\[\frac{\partial \sigma_{ij}'}{\partial x_j} - \frac{\partial P}{\partial x_i} + \rho g_i = \rho \frac{D v_i}{D t}\]</div>
-<p>This equation makes use of the <em>Einstein notation</em> or <em>Einstein summation convention</em>. If an index appears twice in one term, this term actually stands for the sum of all possible values for this index. For example, the first term in the above equation <a class="reference internal" href="#equation-eqs-navier-stokes">equation (159)</a> in 2D formulated in x actually hides the following:</p>
+<span class="eqno">(160)<a class="headerlink" href="#equation-eqs-navier-stokes" title="Link to this equation"></a></span>\[\frac{\partial \sigma_{ij}'}{\partial x_j} - \frac{\partial P}{\partial x_i} + \rho g_i = \rho \frac{D v_i}{D t}\]</div>
+<p>This equation makes use of the <em>Einstein notation</em> or <em>Einstein summation convention</em>. If an index appears twice in one term, this term actually stands for the sum of all possible values for this index. For example, the first term in the above equation <a class="reference internal" href="#equation-eqs-navier-stokes">equation (160)</a> in 2D formulated in x actually hides the following:</p>
 <div class="math notranslate nohighlight">
-\[\frac{\partial \sigma_{ij}'}{\partial x_j} = \frac{\partial \sigma_{xx}'}{\partial x} + \frac{\partial \sigma_{xy}}{\partial x}\]</div>
+\[\frac{\partial \sigma_{ij}'}{\partial x_j} = \frac{\partial \sigma_{xx}'}{\partial x} + \frac{\partial \sigma_{xy}'}{\partial y}\]</div>
 <p>So the full Navier-Stokes equation in 2D actually has more terms and is a system of equations:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{split}
-\frac{\partial \sigma_{xx}'}{\partial x} + \frac{\partial \sigma_{xy}}{\partial y} - \frac{\partial P}{\partial x} + \rho g_x = \rho \frac{D v_x}{D t}\\
-\frac{\partial \sigma_{yx}}{\partial x} + \frac{\partial \sigma_{yy}'}{\partial y} - \frac{\partial P}{\partial y} + \rho g_y = \rho \frac{D v_y}{D t}
+\frac{\partial \sigma_{xx}'}{\partial x} + \frac{\partial \sigma_{xy}'}{\partial y} - \frac{\partial P}{\partial x} + \rho g_x = \rho \frac{D v_x}{D t}\\
+\frac{\partial \sigma_{yx}'}{\partial x} + \frac{\partial \sigma_{yy}'}{\partial y} - \frac{\partial P}{\partial y} + \rho g_y = \rho \frac{D v_y}{D t}
 \end{split}\end{split}\]</div>
 <p>The term <span class="math notranslate nohighlight">\(\rho \frac{D v_i}{D t}\)</span> describes inertia and can be neglected in most geodynamic applications as it is much smaller than the gravitational acceleration. For a typical plate velocity of several <span class="math notranslate nohighlight">\(\mathrm{cm/yr} \, (\sim 10^{-9} \mathrm{m/s})\)</span> and a typical time for change in mantle flow of a few million years (<span class="math notranslate nohighlight">\(\sim 10^{13} \mathrm{s}\)</span>), inertia is of the magnitude of <span class="math notranslate nohighlight">\(\sim 10^{-22} \mathrm{m/s^2}\)</span>. Compared to gravitational acceleration (<span class="math notranslate nohighlight">\(\sim 10 \mathrm{m/s^2}\)</span>), inertia is by a magnitude of <span class="math notranslate nohighlight">\(\sim 10^{-23}\)</span> smaller and can be safely neglected.</p>
 <p>The resulting equation:</p>
 <div class="math notranslate nohighlight" id="equation-eqs-stokes">
-<span class="eqno">(160)<a class="headerlink" href="#equation-eqs-stokes" title="Link to this equation"></a></span>\[\frac{\partial \sigma_{ij}'}{\partial x_j} - \frac{\partial P}{\partial x_i} + \rho g_i = 0\]</div>
+<span class="eqno">(161)<a class="headerlink" href="#equation-eqs-stokes" title="Link to this equation"></a></span>\[\frac{\partial \sigma_{ij}'}{\partial x_j} - \frac{\partial P}{\partial x_i} + \rho g_i = 0\]</div>
 <p>is called the <em>Stokes equation of slow flow</em>.</p>
 </section>
 <section id="stress-strain-rate-relationships">
 <h2>Stress-strain rate relationships<a class="headerlink" href="#stress-strain-rate-relationships" title="Link to this heading"></a></h2>
 <p>In elasticity, the stress is related to the strain by the <em>Hooke’s Law</em>: <span class="math notranslate nohighlight">\(\sigma = C \epsilon\)</span>, where <span class="math notranslate nohighlight">\(C\)</span> is the stiffness tensor.</p>
-<p>In viscous materials, the stress-strain rate relationship is typically written in terms of deviatoric stresses, deviatoric strain rates, and the shear vicscosity <span class="math notranslate nohighlight">\(\eta\)</span>. The shear viscosity is a measure of the resistance of a fluid to flow. The shear viscosity is a scalar in isotropic materials and a tensor in anisotropic materials.</p>
+<p>In viscous materials, the stress-strain rate relationship is typically written in terms of deviatoric stresses, deviatoric strain rates, and the shear viscosity <span class="math notranslate nohighlight">\(\eta\)</span>. The shear viscosity is a measure of the resistance of a fluid to flow. The shear viscosity is a scalar in isotropic materials and a tensor in anisotropic materials.</p>
 <p>The relationship between deviatoric stress and strain rates can be written as:</p>
 <div class="math notranslate nohighlight" id="equation-eqs-constitutive-relation-dev-stress-strain-rate">
-<span class="eqno">(161)<a class="headerlink" href="#equation-eqs-constitutive-relation-dev-stress-strain-rate" title="Link to this equation"></a></span>\[\sigma_{ij}' = 2 \eta \dot{\epsilon}_{ij}'\]</div>
-<p>The factor of 2 is introduced from the way the strain rate tensor is symmetrized in <span class="xref std std-ref">eqs:sym_strain_rate_tensor</span>.</p>
-<p>As our goal is to solve for the velocity field, we write the deviatoric strain rates as full strain rates using <span class="xref std std-ref">deviatoric_strain_rate</span>.</p>
+<span class="eqno">(162)<a class="headerlink" href="#equation-eqs-constitutive-relation-dev-stress-strain-rate" title="Link to this equation"></a></span>\[\sigma_{ij}' = 2 \eta \dot{\epsilon}_{ij}'\]</div>
+<p>The factor of 2 is introduced from the way the strain rate tensor is symmetrized in <a class="reference internal" href="#equation-eqs-sym-strain-rate-tensor">equation (157)</a>.</p>
+<p>As our goal is to solve for the velocity field, we write the deviatoric strain rates as full strain rates using <a class="reference internal" href="#equation-eqs-deviatoric-strain-rate">equation (158)</a>.</p>
 <div class="math notranslate nohighlight" id="equation-eqs-constitutive-relation-dev-stress-full-strain-rate">
-<span class="eqno">(162)<a class="headerlink" href="#equation-eqs-constitutive-relation-dev-stress-full-strain-rate" title="Link to this equation"></a></span>\[\sigma_{ij}' = 2 \eta \left ( \dot{\epsilon}_{ij} - \delta_{ij} \frac{1}{3} \dot{\epsilon}_{kk} \right)\]</div>
-<p>By using this onstituative relation and knowing that <span class="math notranslate nohighlight">\(\dot()\epsilon_{zz}') = 0\)</span>, we can write the equation in terms of full strain rates.</p>
+<span class="eqno">(163)<a class="headerlink" href="#equation-eqs-constitutive-relation-dev-stress-full-strain-rate" title="Link to this equation"></a></span>\[\sigma_{ij}' = 2 \eta \left ( \dot{\epsilon}_{ij} - \delta_{ij} \frac{1}{3} \dot{\epsilon}_{kk} \right)\]</div>
+<p>By using this constitutive relation and assuming 2D plane strain where <span class="math notranslate nohighlight">\(\dot{\epsilon}_{zz}' = 0\)</span>, we can write the equation in terms of full strain rates.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{split}
 \frac{\partial}{\partial x} \left ( \eta \left ( \frac{4}{3} \dot{\epsilon}_{xx} - \frac{2}{3}\dot{\epsilon}_{yy} \right ) \right ) + \frac{\partial}{\partial y} \left ( \eta \left ( \dot{\epsilon}_{xy} \right ) \right ) - \frac{\partial P}{\partial x} + \rho g_x = 0\\
 \frac{\partial}{\partial y} \left ( \eta \left ( \frac{4}{3} \dot{\epsilon}_{yy} - \frac{2}{3}\dot{\epsilon}_{xx} \right ) \right ) + \frac{\partial}{\partial x} \left ( \eta \left ( \dot{\epsilon}_{xy} \right ) \right ) - \frac{\partial P}{\partial y} + \rho g_y = 0\\
 \end{split}\end{split}\]</div>
-<p>And by substituting the defintion of the strain rates tensor, we arrive at the <em>Stokes equation</em> for slow flow in terms of velocities:</p>
+<p>And by substituting the definition of the strain rates tensor, we arrive at the <em>Stokes equation</em> for slow flow in terms of velocities:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{split}
 \frac{\partial}{\partial x} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_x}{\partial x} - \frac{2}{3}\frac{\partial u_y}{\partial y} \right ) \right ) + \frac{\partial}{\partial y} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial x} + \rho g_x = 0\\
-\frac{\partial}{\partial y} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_y}{\partial y} - \frac{2}{3}\frac{\partial u_x}{\partial x} \right ) \right ) + \frac{\partial}{\partial x} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial y} + \rho g_y = 0\\\
+\frac{\partial}{\partial y} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_y}{\partial y} - \frac{2}{3}\frac{\partial u_x}{\partial x} \right ) \right ) + \frac{\partial}{\partial x} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial y} + \rho g_y = 0
 \end{split}\end{split}\]</div>
-<p>These two equations, for the x and y directions, have three unknowns: the x and y components of the velocity field and the pressure field. The pressure field is not directly solved for in the Stokes equation, but is determined by the incompressibility condition <a class="reference internal" href="#equation-eqs-continuity">equation (153)</a>.</p>
+<p>These two equations, for the x and y directions, have three unknowns: the x and y components of the velocity field and the pressure field. Together with the incompressibility condition <a class="reference internal" href="#equation-eqs-continuity">equation (154)</a>, we have a complete system of equations.</p>
 <div class="math notranslate nohighlight">
-\[\frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} = -\frac{p}{\kappa}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\kappa\)</span> is a penalty parameter, a large number. The incompressibility condition is often solved using a penalty method, where the pressure is determined by the velocity field. The pressure is then used to calculate the viscous forces acting on the fluid.</p>
+\[\frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} = 0\]</div>
+<p>In numerical implementations, the incompressibility constraint is often enforced using a penalty method or mixed finite element formulations. In the penalty method, a penalty parameter <span class="math notranslate nohighlight">\(\kappa\)</span> (a large number) relates pressure to the divergence: <span class="math notranslate nohighlight">\(P = -\kappa \nabla \cdot \mathbf{v}\)</span>, which weakly enforces incompressibility.</p>
 </section>
 </section>
 
