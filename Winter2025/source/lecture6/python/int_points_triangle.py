@@ -1,6 +1,28 @@
+"""
+DEPRECATED: This module is deprecated. Use fem_integration.py instead.
+
+This module has been replaced by fem_integration.py which provides:
+- Support for many more quadrature rules (1, 3, 4, 6, 7, 12, 25, 77 points)
+- Comprehensive documentation
+- Accuracy verification
+
+Migration:
+    OLD: from int_points_triangle import int_points_triangle
+    NEW: from fem_integration import ip_triangle
+         OR from fem_integration import int_points_triangle (legacy wrapper)
+"""
+
 import numpy as np
+import warnings
 
 def int_points_triangle(nip) :
+    """DEPRECATED: Use fem_integration.ip_triangle instead."""
+    warnings.warn(
+        "int_points_triangle.py is deprecated. Use fem_integration.py instead:\n"
+        "  from fem_integration import ip_triangle",
+        DeprecationWarning,
+        stacklevel=2
+    )
 
     if nip==3 :
         gauss   = np.array([[ 1/6, 2/3, 1/6], [1/6, 1/6, 2/3]]).T.copy()

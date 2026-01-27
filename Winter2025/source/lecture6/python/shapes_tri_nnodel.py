@@ -1,6 +1,28 @@
+"""
+DEPRECATED: This module is deprecated. Use fem_shapes.py instead.
+
+This module has been replaced by fem_shapes.py which provides:
+- Unified API with default parameters
+- Better documentation
+- Verification functions
+
+Migration:
+    OLD: from shapes_tri_nnodel import shapes_tri
+    NEW: from fem_shapes import shapes_tri
+"""
+
 import numpy as np
+import warnings
 
 def shapes_tri(xi, eta, nnodel):
+    """DEPRECATED: Use fem_shapes.shapes_tri instead."""
+    warnings.warn(
+        "shapes_tri_nnodel.py is deprecated. Use fem_shapes.py instead:\n"
+        "  from fem_shapes import shapes_tri",
+        DeprecationWarning,
+        stacklevel=2
+    )
+
     #shape functions
     eta2 = xi
     eta3 = eta

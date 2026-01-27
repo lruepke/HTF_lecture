@@ -22,10 +22,11 @@ This describes the change of density in a fixed observation cell due to the in- 
 Using Leibniz's Law (:math:`\frac{\partial}{\partial x} \left(u v\right) = \frac{\partial u}{\partial x} v + \frac{\partial v}{\partial x}  u`), the continuity equation can be extended:
 
 .. math::
+    :label: eqs:mass_conservation_expanded
 
-    \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho v) = \frac{\partial \rho}{\partial t} + \rho \nabla \cdot v + v \nabla \rho = 0
+    \frac{\partial \rho}{\partial t} + \nabla \cdot (\rho v) = \frac{\partial \rho}{\partial t} + \rho \nabla \cdot v + v \cdot \nabla \rho = 0
 
-One term (:math:`v \nabla \rho`) describes the change of density in our observation volume due to mass flux through the boundaries with the same velocity but different density. This term describes *Advection* or *Advective transport*. The other term (:math:`\rho \nabla \cdot v`) describes the change of density in the observational volume due to mass flux of constant density but varying velocity.
+One term (:math:`v \cdot \nabla \rho`) is the dot product of the velocity vector :math:`v` with the density gradient :math:`\nabla \rho`, representing the rate at which density changes as material flows along the velocity field. In 3D, this is :math:`v_x \frac{\partial \rho}{\partial x} + v_y \frac{\partial \rho}{\partial y} + v_z \frac{\partial \rho}{\partial z}`. This term describes *Advection* or *Advective transport* - the transport of density variations by the flow. The other term (:math:`\rho \nabla \cdot v`) describes the change of density in the observational volume due to mass flux of constant density but varying velocity (compression or expansion).
 
 For the case of constant density, it follows that :math:`\frac{\partial \rho}{\partial t}=0`, :math:`\nabla \rho=0` and :math:`\frac{D \rho}{D t}=0`. This assumption is valid for *incompressible* material and is often used in geodynamics. The incompressible continuity equation in 2D looks like:
 
@@ -64,7 +65,7 @@ The mean of all acting perpendicular stresses defines the pressure in our body. 
 .. math::
     :label: eqs:pressure_definition
 
-    P = -(\sigma_{xx}+\sigma_{yy}+sigma_{zz})/3
+    P = -(\sigma_{xx}+\sigma_{yy}+\sigma_{zz})/3
 
 No shear forces are acting on a fluid at rest. The forces perpendicular to the body define the *hydrostatic pressure*. In addition, we can now define the *deviatoric stress* :math:`\sigma'_{ij}`, which denotes the deviation in the stress state from hydrostatic pressure.
 
@@ -118,19 +119,19 @@ The deformation in each direction and all sides is denoted by the mean of the tw
 .. math::
 
     \begin{split}
-    \epsilon_{ij} = \frac{1}{2} \left(\frac{\partial u_i}{x_j} + \frac{\partial u_j}{x_i}\right)
+    \epsilon_{ij} = \frac{1}{2} \left(\frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\right)
     \end{split}
 
 .. math::
 
     \begin{split}
-    \epsilon_{xx} &= \frac{1}{2} \left(\frac{\partial u_x}{x} + \frac{\partial u_x}{x}\right) = \frac{\partial u_x}{\partial x}\\
-    \epsilon_{xy} &= \frac{1}{2} \left(\frac{\partial u_x}{y} + \frac{\partial u_y}{x}\right) = \epsilon_{yx}\\
-    \epsilon_{yx} &= \frac{1}{2} \left(\frac{\partial u_y}{x} + \frac{\partial u_x}{y}\right) = \epsilon_{xy}\\
-    \epsilon_{yy} &= \frac{1}{2} \left(\frac{\partial u_y}{y} + \frac{\partial u_y}{y}\right) = \frac{\partial u_y}{\partial y}\\
+    \epsilon_{xx} &= \frac{1}{2} \left(\frac{\partial u_x}{\partial x} + \frac{\partial u_x}{\partial x}\right) = \frac{\partial u_x}{\partial x}\\
+    \epsilon_{xy} &= \frac{1}{2} \left(\frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x}\right) = \epsilon_{yx}\\
+    \epsilon_{yx} &= \frac{1}{2} \left(\frac{\partial u_y}{\partial x} + \frac{\partial u_x}{\partial y}\right) = \epsilon_{xy}\\
+    \epsilon_{yy} &= \frac{1}{2} \left(\frac{\partial u_y}{\partial y} + \frac{\partial u_y}{\partial y}\right) = \frac{\partial u_y}{\partial y}\\
     \end{split}
 
-In fluids, and therefore in most convection problems in geodynamics, a constituative relationship between stress and strain rate is used and the equations are formulated as the *rate of change in material displacement* or the *strain rate* :math:`\dot{\epsilon}_{ij}`, which is the change of strain :math:`\epsilon_{ij}` in time. For a displacement velocity :math:`v_i = \frac{D u_i}{D t}`, the strain rate can be expressed as:
+In fluids, and therefore in most convection problems in geodynamics, a constitutive relationship between stress and strain rate is used and the equations are formulated as the *rate of change in material displacement* or the *strain rate* :math:`\dot{\epsilon}_{ij}`, which is the change of strain :math:`\epsilon_{ij}` in time. For a displacement velocity :math:`v_i = \frac{D u_i}{D t}`, the strain rate can be expressed as:
 
 .. math::
     :label: eqs:sym_strain_rate_tensor
@@ -186,40 +187,38 @@ According to Newton's second law of motion:
 
     f = m a
 
-the net force acting on a body is equal to its mass times its acceleration or change of velocity. To apply this in the x-direction, we will need to gather all forces acting on the body in the x-direction.
+the net force acting on a body is equal to its mass times its acceleration or change of velocity. To apply this in the x-direction, we will need to gather all forces acting on the body in the x-direction. We consider a 2D control volume of size :math:`\Delta x \times \Delta y` with unit thickness in z; the index 1 denotes the face on the negative side (left/bottom) and 2 the face on the positive side (right/top).
 
 .. math::
-    :label: eqs:Nexton_force_balance
+    :label: eqs:Newton_force_balance
 
-    f_{x} = f_{xx1} + f_{xx2} + f_{xy1} + f_{xy2} + f_{xz1} + f_{xz2}  + m g_x = m a_x
+    f_{x} = f_{xx1} + f_{xx2} + f_{xy1} + f_{xy2} + m g_x = m a_x
 
 .. figure:: /_figures/3D_stress.*
     :width: 70%
     :align: center
 
-    Stresses acting on a 1D, 2D, or 3D test volume.
+    Stresses acting on a 2D test volume (shown in 3D for clarity; unit thickness in z).
 
 The forces can be described in terms of stresses:
 
 .. math::
 
     \begin{split}
-    f_{xx1} = -\sigma_{xx1}\Delta y\Delta z\\
-    f_{xx2} = \sigma_{xx2} \Delta y\Delta z\\
-    f_{xy1} = -\sigma_{xy1}\Delta x\Delta z\\
-    f_{xy2} = \sigma_{xy2}\Delta x\Delta z\\
-    f_{xz1} = -\sigma_{xz1}\Delta x\Delta y\\
-    f_{xz2} = \sigma_{xz2}\Delta x\Delta y\\
-    \left(\sigma_{xx2} - \sigma_{xx1}\right)\Delta y \Delta z + \left(\sigma_{xy2} - \sigma_{xy1}\right) \Delta x \Delta z + \left(\sigma_{xz2} - \sigma_{xz1}\right) \Delta x \Delta y  + m g_x = m a_x
+    f_{xx1} = -\sigma_{xx1}\Delta y\\
+    f_{xx2} = \sigma_{xx2} \Delta y\\
+    f_{xy1} = -\sigma_{xy1}\Delta x\\
+    f_{xy2} = \sigma_{xy2}\Delta x\\
+    \left(\sigma_{xx2} - \sigma_{xx1}\right)\Delta y + \left(\sigma_{xy2} - \sigma_{xy1}\right) \Delta x + m g_x = m a_x
     \end{split}
 
-Dividing equation :eq:`eqs:Nexton_force_balance` by the volume of our test cube :math:`V= \Delta x \Delta y \Delta z` then gives us:
+Dividing equation :eq:`eqs:Newton_force_balance` by the area of our 2D test volume :math:`A= \Delta x \Delta y` (per unit thickness in z) then gives us:
 
 .. math::
 
     \begin{split}
-    \frac{\left(\sigma_{xx2} - \sigma_{xx1}\right)}{\Delta x} + \frac{\left(\sigma_{xy2} - \sigma_{xy1}\right)}{\Delta y} + \frac{\left(\sigma_{xz2} - \sigma_{xz1}\right)}{\Delta z}  + \rho g_x = \rho a_x\\
-    \frac{\partial \sigma_{xj}}{\partial x_j} + \rho g_x = \rho \frac{D v_x}{D t}
+    \frac{\left(\sigma_{xx2} - \sigma_{xx1}\right)}{\Delta x} + \frac{\left(\sigma_{xy2} - \sigma_{xy1}\right)}{\Delta y} + \rho g_x = \rho a_x\\
+    \frac{\partial \sigma_{xj}}{\partial x_j} + \rho g_x = \rho \frac{D v_x}{D t}\qquad (j \in \{x,y\})
     \end{split}
 
 Or in a more general form for all directions:
@@ -241,15 +240,15 @@ This equation makes use of the *Einstein notation* or *Einstein summation conven
 
 .. math::
 
-    \frac{\partial \sigma_{ij}'}{\partial x_j} = \frac{\partial \sigma_{xx}'}{\partial x} + \frac{\partial \sigma_{xy}}{\partial x}
+    \frac{\partial \sigma_{ij}'}{\partial x_j} = \frac{\partial \sigma_{xx}'}{\partial x} + \frac{\partial \sigma_{xy}'}{\partial y}
 
 So the full Navier-Stokes equation in 2D actually has more terms and is a system of equations:
 
 .. math::
 
     \begin{split}
-    \frac{\partial \sigma_{xx}'}{\partial x} + \frac{\partial \sigma_{xy}}{\partial y} - \frac{\partial P}{\partial x} + \rho g_x = \rho \frac{D v_x}{D t}\\
-    \frac{\partial \sigma_{yx}}{\partial x} + \frac{\partial \sigma_{yy}'}{\partial y} - \frac{\partial P}{\partial y} + \rho g_y = \rho \frac{D v_y}{D t}
+    \frac{\partial \sigma_{xx}'}{\partial x} + \frac{\partial \sigma_{xy}'}{\partial y} - \frac{\partial P}{\partial x} + \rho g_x = \rho \frac{D v_x}{D t}\\
+    \frac{\partial \sigma_{yx}'}{\partial x} + \frac{\partial \sigma_{yy}'}{\partial y} - \frac{\partial P}{\partial y} + \rho g_y = \rho \frac{D v_y}{D t}
     \end{split}
 
 The term :math:`\rho \frac{D v_i}{D t}` describes inertia and can be neglected in most geodynamic applications as it is much smaller than the gravitational acceleration. For a typical plate velocity of several :math:`\mathrm{cm/yr} \, (\sim 10^{-9} \mathrm{m/s})` and a typical time for change in mantle flow of a few million years (:math:`\sim 10^{13} \mathrm{s}`), inertia is of the magnitude of :math:`\sim 10^{-22} \mathrm{m/s^2}`. Compared to gravitational acceleration (:math:`\sim 10 \mathrm{m/s^2}`), inertia is by a magnitude of :math:`\sim 10^{-23}` smaller and can be safely neglected.
@@ -269,7 +268,7 @@ Stress-strain rate relationships
 
 In elasticity, the stress is related to the strain by the *Hooke's Law*: :math:`\sigma = C \epsilon`, where :math:`C` is the stiffness tensor.
 
-In viscous materials, the stress-strain rate relationship is typically written in terms of deviatoric stresses, deviatoric strain rates, and the shear vicscosity :math:`\eta`. The shear viscosity is a measure of the resistance of a fluid to flow. The shear viscosity is a scalar in isotropic materials and a tensor in anisotropic materials.
+In viscous materials, the stress-strain rate relationship is typically written in terms of deviatoric stresses, deviatoric strain rates, and the shear viscosity :math:`\eta`. The shear viscosity is a measure of the resistance of a fluid to flow. The shear viscosity is a scalar in isotropic materials and a tensor in anisotropic materials.
 
 The relationship between deviatoric stress and strain rates can be written as:
 
@@ -278,9 +277,9 @@ The relationship between deviatoric stress and strain rates can be written as:
 
     \sigma_{ij}' = 2 \eta \dot{\epsilon}_{ij}'
 
-The factor of 2 is introduced from the way the strain rate tensor is symmetrized in :ref:`eqs:sym_strain_rate_tensor`.
+The factor of 2 is introduced from the way the strain rate tensor is symmetrized in :eq:`eqs:sym_strain_rate_tensor`.
 
-As our goal is to solve for the velocity field, we write the deviatoric strain rates as full strain rates using :ref:`deviatoric_strain_rate`.
+As our goal is to solve for the velocity field, we write the deviatoric strain rates as full strain rates using :eq:`eqs:deviatoric_strain_rate`.
 
 .. math::
     :label: eqs:constitutive_relation_dev_stress_full_strain_rate
@@ -288,7 +287,7 @@ As our goal is to solve for the velocity field, we write the deviatoric strain r
     \sigma_{ij}' = 2 \eta \left ( \dot{\epsilon}_{ij} - \delta_{ij} \frac{1}{3} \dot{\epsilon}_{kk} \right)
 
 
-By using this onstituative relation and knowing that :math:`\dot()\epsilon_{zz}') = 0`, we can write the equation in terms of full strain rates.
+By using this constitutive relation and assuming 2D plane strain where :math:`\dot{\epsilon}_{zz}' = 0`, we can write the equation in terms of full strain rates.
 
 .. math::
 
@@ -297,23 +296,23 @@ By using this onstituative relation and knowing that :math:`\dot()\epsilon_{zz}'
     \frac{\partial}{\partial y} \left ( \eta \left ( \frac{4}{3} \dot{\epsilon}_{yy} - \frac{2}{3}\dot{\epsilon}_{xx} \right ) \right ) + \frac{\partial}{\partial x} \left ( \eta \left ( \dot{\epsilon}_{xy} \right ) \right ) - \frac{\partial P}{\partial y} + \rho g_y = 0\\
     \end{split}
 
-And by substituting the defintion of the strain rates tensor, we arrive at the *Stokes equation* for slow flow in terms of velocities:
+And by substituting the definition of the strain rates tensor, we arrive at the *Stokes equation* for slow flow in terms of velocities:
 
 .. math::
 
     \begin{split}
     \frac{\partial}{\partial x} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_x}{\partial x} - \frac{2}{3}\frac{\partial u_y}{\partial y} \right ) \right ) + \frac{\partial}{\partial y} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial x} + \rho g_x = 0\\
-    \frac{\partial}{\partial y} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_y}{\partial y} - \frac{2}{3}\frac{\partial u_x}{\partial x} \right ) \right ) + \frac{\partial}{\partial x} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial y} + \rho g_y = 0\\\
+    \frac{\partial}{\partial y} \left ( \eta \left ( \frac{4}{3} \frac{\partial u_y}{\partial y} - \frac{2}{3}\frac{\partial u_x}{\partial x} \right ) \right ) + \frac{\partial}{\partial x} \left ( \eta \left ( \frac{\partial u_x}{\partial y} + \frac{\partial u_y}{\partial x} \right ) \right ) - \frac{\partial P}{\partial y} + \rho g_y = 0
     \end{split}
 
 
-These two equations, for the x and y directions, have three unknowns: the x and y components of the velocity field and the pressure field. The pressure field is not directly solved for in the Stokes equation, but is determined by the incompressibility condition :eq:`eqs:continuity`.
+These two equations, for the x and y directions, have three unknowns: the x and y components of the velocity field and the pressure field. Together with the incompressibility condition :eq:`eqs:continuity`, we have a complete system of equations.
 
 .. math::
 
-    \frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} = -\frac{p}{\kappa}
+    \frac{\partial u_x}{\partial x} + \frac{\partial u_y}{\partial y} = 0
 
 
-where :math:`\kappa` is a penalty parameter, a large number. The incompressibility condition is often solved using a penalty method, where the pressure is determined by the velocity field. The pressure is then used to calculate the viscous forces acting on the fluid.
+In numerical implementations, the incompressibility constraint is often enforced using a penalty method or mixed finite element formulations. In the penalty method, a penalty parameter :math:`\kappa` (a large number) relates pressure to the divergence: :math:`P = -\kappa \nabla \cdot \mathbf{v}`, which weakly enforces incompressibility.
 
 

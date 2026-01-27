@@ -7,10 +7,16 @@ from scipy.sparse import csr_matrix
 from scipy.linalg import cho_factor, cho_solve
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from shapes_tri import shapes_tri
-from int_points_triangle import int_points_triangle
+
+# FEM utilities (refactored 2025)
+from fem_shapes import shapes_tri
+from fem_integration import ip_triangle
+from fem_utils import compute_jacobian, create_assembly_indices_2dof, assemble_sparse_matrix_2dof
+from mesh_utils import make_box
+from validation import check_cfl_condition, validate_parameters
+
 import triangle as tr
-import meshio 
+import meshio
 from numpy.random import default_rng
 import time
 
@@ -31,30 +37,27 @@ D_B         = 0.5/4.0
 f_coeff     = 0.055
 k_coeff     = 0.062
 
+# Validate parameters
+params = {
+    'D_A': D_A,
+    'D_B': D_B,
+    'dt': dt,
+    'tottime': tottime,
+    'f_coeff': f_coeff,
+    'k_coeff': k_coeff
+}
+validate_parameters(params)
+
 ## Create the triangle mesh
 # arrays to fill in with input
 vertices = []
 segments = []
 regions = []
 
-# make a box with given dims and place given attribute at its center
-def make_box(x, y, w, h, attribute):
-    i = len(vertices)
+# make_box is now imported from mesh_utils (removed inline definition)
 
-    vertices.extend([[x,   y],
-                        [x+w, y],
-                        [x+w, y+h],
-                        [x,   y+h]])
-
-    segments.extend([(i+0, i+1),
-                        (i+1, i+2),
-                        (i+2, i+3),
-                        (i+3, i+0)])
-
-    regions.append([x+0.01*w, y+0.01*h, attribute,3])
-
-# generate input    
-make_box(x0, y0, lx, ly, 1)
+# generate input - using utility function
+make_box(vertices, segments, regions, x0, y0, lx, ly, attribute=1)
 A = dict(vertices=vertices, segments=segments, regions=regions)
 B = tr.triangulate(A, 'pq33Aa')
 
@@ -69,6 +72,18 @@ nnod   = GCOORD.shape[0]
 sdof   = nnod*2                 # two dof per node
 Phases = np.reshape(Phases,nel)
 print(nnod, nel)
+
+# Estimate characteristic mesh spacing for stability check
+coords_x = GCOORD[:, 0]
+coords_y = GCOORD[:, 1]
+dx = np.sqrt((np.max(coords_x) - np.min(coords_x)) * (np.max(coords_y) - np.min(coords_y)) / nnod)
+
+# Check CFL condition (informational - implicit method is unconditionally stable)
+# Use the larger diffusivity for the check
+D_max = max(D_A, D_B)
+is_stable, cfl, cfl_max = check_cfl_condition(dt, dx, D_max, method='implicit', ndim=2)
+print(f"CFL number: {cfl:.4f} (max for explicit: {cfl_max:.4f})")
+print(f"Using implicit method - unconditionally stable")
 # setup degrees of freedom - two per node
 EL2DOF = np.zeros((nel,2*nnodel), dtype=int)
 EL2DOF[:,0::2] = 2*EL2NOD
@@ -89,17 +104,16 @@ writer.write_points_cells(points, cells)
 
 # Gauss integration points for triangles
 nip   = 3
-gauss, weights = int_points_triangle(nip)
+gauss, weights = ip_triangle(nip)
 
 #gauss = np.array([[ 1/6, 2/3, 1/6], [1/6, 1/6, 2/3]]).T.copy()
 #weights = np.array([1/6, 1/6, 1/6])
 
 
 
-# Storage
-I       = np.zeros((nel,2*nnodel*nnodel))
-J       = np.zeros((nel,2*nnodel*nnodel))
-K       = np.zeros((nel,2*nnodel*nnodel))
+# Storage - use utility function for assembly indices
+I, J = create_assembly_indices_2dof(EL2NOD, nnodel)
+K    = np.zeros((nel,2*nnodel*nnodel))
 
 for iel in range(0,nel):
     ECOORD  = np.take(GCOORD, EL2NOD[iel,:], axis=0 )
@@ -113,9 +127,7 @@ for iel in range(0,nel):
         N, dNds = shapes_tri(xi, eta, nnodel)
         
         # 2. set up Jacobian, inverse of Jacobian, and determinant
-        Jac     = np.matmul(dNds,ECOORD) #[2,nnodel]*[nnodel,2]
-        invJ    = np.linalg.inv(Jac)     
-        detJ    = np.linalg.det(Jac)
+        Jac, invJ, detJ = compute_jacobian(dNds, ECOORD)
         
         # 3. get global derivatives
         dNdx    = np.matmul(invJ, dNds) # [2,2]*[2,nnodel]
@@ -129,9 +141,7 @@ for iel in range(0,nel):
 #        RhsB_el     = RhsB_el + np.matmul(np.outer(N,N), np.take(B, EL2NOD[iel,:], axis=0 ))*detJ*weights[ip] 
 
 
-    # assemble coefficients
-    I[iel,:]  =  np.concatenate((np.outer(2*EL2NOD[iel,:],np.ones(nnodel, dtype=int)).reshape(nnodel*nnodel),np.outer(2*EL2NOD[iel,:]+1,np.ones(nnodel, dtype=int)).reshape(nnodel*nnodel)))
-    J[iel,:]  =  np.concatenate((np.outer(np.ones(nnodel, dtype=int),2*EL2NOD[iel,:]).reshape(nnodel*nnodel),np.outer(np.ones(nnodel, dtype=int),2*EL2NOD[iel,:]+1).reshape(nnodel*nnodel)))
+    # assemble element stiffness coefficients (I, J already created by utility function)
     K[iel,:]  =  np.concatenate((Ael_A.reshape(nnodel*nnodel),Ael_B.reshape(nnodel*nnodel)))
     
 #    Rhs_all[2*EL2NOD[iel,:]]   += RhsA_el
@@ -166,28 +176,27 @@ while t<tottime:
 
         for iel in range(0,nel):
             RhsA_el = np.zeros(nnodel)
-            RhsB_el = np.zeros(nnodel)        
+            RhsB_el = np.zeros(nnodel)
             FA_el   = np.zeros(nnodel)
             FB_el   = np.zeros(nnodel)
             ECOORD  = np.take(GCOORD, EL2NOD[iel,:], axis=0 )
-            
-            # set up Jacobian, inverse of Jacobian, and determinant
-            Jac     = np.matmul(dNds,ECOORD) #[2,nnodel]*[nnodel,2]
-            invJ    = np.linalg.inv(Jac)     
-            detJ    = np.linalg.det(Jac)
 
-            for ip in range(0,nip):        
-                # 1. update shape functions
+            for ip in range(0,nip):
+                # 1. update shape functions at integration point
                 xi      = gauss[ip,0]
                 eta     = gauss[ip,1]
                 N, dNds = shapes_tri(xi, eta, nnodel)
-                
-                #3. integrate force vector
-                RhsA_el = RhsA_el + np.matmul(np.outer(N,N), np.take(A_old, EL2NOD[iel,:], axis=0 ))*detJ*weights[ip] 
-                RhsB_el = RhsB_el + np.matmul(np.outer(N,N), np.take(B_old, EL2NOD[iel,:], axis=0 ))*detJ*weights[ip] 
+
+                # 2. set up Jacobian, inverse of Jacobian, and determinant
+                # (moved inside integration point loop - FIX for undefined dNds bug)
+                Jac, invJ, detJ = compute_jacobian(dNds, ECOORD)
+
+                # 3. integrate force vector
+                RhsA_el = RhsA_el + np.matmul(np.outer(N,N), np.take(A_old, EL2NOD[iel,:], axis=0 ))*detJ*weights[ip]
+                RhsB_el = RhsB_el + np.matmul(np.outer(N,N), np.take(B_old, EL2NOD[iel,:], axis=0 ))*detJ*weights[ip]
                 Ai      = np.dot(N,np.take(A, EL2NOD[iel,:], axis=0 ))
                 Bi      = np.dot(N,np.take(B, EL2NOD[iel,:], axis=0 ))
-                FA_el   = FA_el + N*dt*(-Ai*Bi**2 + f_coeff*(1-Ai))*detJ*weights[ip] # (dt*g_coeff*N*a_coeff+dt*g_coeff*N*np.dot(N,np.take(A, EL2NOD[iel,:], axis=0 ))**2*np.dot(N,np.take(B, EL2NOD[iel,:], axis=0 )))*detJ*weights[ip] 
+                FA_el   = FA_el + N*dt*(-Ai*Bi**2 + f_coeff*(1-Ai))*detJ*weights[ip] # (dt*g_coeff*N*a_coeff+dt*g_coeff*N*np.dot(N,np.take(A, EL2NOD[iel,:], axis=0 ))**2*np.dot(N,np.take(B, EL2NOD[iel,:], axis=0 )))*detJ*weights[ip]
                 FB_el   = FB_el + N*dt*(Ai*Bi**2 - (k_coeff+f_coeff)*Bi)*detJ*weights[ip] # (dt*g_coeff*N*b_coeff-dt*g_coeff*N*np.dot(N,np.take(A, EL2NOD[iel,:], axis=0 ))**2*np.dot(N,np.take(B, EL2NOD[iel,:], axis=0 )))*detJ*weights[ip] 
 
             # We don't have boundary conditions, as everything is zero flux      

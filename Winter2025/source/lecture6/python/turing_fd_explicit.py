@@ -6,14 +6,15 @@ from scipy.sparse import csr_matrix
 from scipy.linalg import cho_factor, cho_solve
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-from shapes_tri import shapes_tri
-from int_points_triangle import int_points_triangle
 import triangle as tr
-import meshio 
+import meshio
 from numpy.random import default_rng
 import time
 from scipy import ndimage, misc
 from matplotlib import animation
+
+# FEM utilities (refactored 2025) - for validation only
+from validation import check_cfl_condition, validate_parameters
 
 
 # periodic boundary condition laplacian FD scheme
@@ -27,6 +28,15 @@ da      =  1   # diffusion A
 db      = .5  # diffusion B
 f       = .055 # feed rate
 k       = .062 # kill rate
+
+# Validate parameters
+params = {
+    'da': da,
+    'db': db,
+    'f': f,
+    'k': k
+}
+validate_parameters(params)
 
 #Mesh and initial conditions
 nx      = 128
@@ -44,6 +54,20 @@ xv, yv = np.meshgrid(x, y)
 dt      = .25
 tottime = 5000
 t       = 0
+
+# Calculate grid spacing
+dx = 127.0 / (nx - 1)
+
+# Check CFL condition (CRITICAL for explicit method!)
+# Use the larger diffusivity for the check
+D_max = max(da, db)
+is_stable, cfl, cfl_max = check_cfl_condition(dt, dx, D_max, method='explicit', ndim=2)
+print(f"CFL number: {cfl:.4f} (max for stability: {cfl_max:.4f})")
+if is_stable:
+    print("✓ CFL condition satisfied - simulation should be stable")
+else:
+    print("✗ WARNING: CFL condition violated - simulation may be unstable!")
+    print(f"  Reduce dt to < {cfl_max * dx**2 / D_max:.4f} for stability")
 
 # run model
 while t<tottime:
