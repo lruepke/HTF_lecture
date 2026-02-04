@@ -1,16 +1,16 @@
 """
 Driver script for 2D mechanical Stokes flow FEM solver.
 
-This script sets up and solves a 2D incompressible Stokes flow problem
-with multiple circular inclusions of different viscosity.
+BLOCKED VECTORIZED version - processes elements in blocks for
+better cache utilization and vectorized assembly.
 """
 
 from dataclasses import dataclass
 import numpy as np
 import matplotlib.pyplot as plt
 import triangle as tr
-from mechanical2d import (
-    Mesh, MaterialParams, BoundaryConditions, 
+from mechanical2d_blocked import (
+    Mesh, MaterialParams, BoundaryConditions,
     SolverParams, solve_mechanical_2d
 )
 
@@ -71,7 +71,7 @@ def make_mesh(geom: GeometryParams, el_ids=(1, 100), el_sizes=(0.1, 0.01)) -> Me
 
     def _make_inclusion(center: tuple, radius: float) -> None:
         """Add circular inclusion to mesh.
-        
+
         Parameters
         ----------
         center : tuple
@@ -170,12 +170,6 @@ def plot_solution(mesh: Mesh, velocity: np.ndarray, pressure: np.ndarray,
     plt.triplot(mesh.GCOORD[:, 0], mesh.GCOORD[:, 1], mesh.EL2NOD[:, 0:3],
                color='black', linewidth=0.1, alpha=0.3)
 
-    # Add velocity vectors (subsample for clarity)
-    skip = max(1, mesh.nnod // 1000)  # Adjust to show ~1000 vectors
-    #plt.quiver(mesh.GCOORD[::skip, 0], mesh.GCOORD[::skip, 1],
-    #          Vel_x[::skip], Vel_y[::skip],
-    #          color='white', scale=5, width=0.003, alpha=0.8)
-
     plt.colorbar(contours, label='Pressure')
     plt.xlabel('X')
     plt.ylabel('Y')
@@ -192,7 +186,7 @@ def main() -> None:
     Main driver for 2D mechanical Stokes flow FEM simulation.
     """
     print("\n" + "="*70)
-    print("2D STOKES FLOW - FEM SOLVER")
+    print("2D STOKES FLOW - FEM SOLVER (BLOCKED VECTORIZED)")
     print("="*70)
 
     # Geometry parameters with multiple inclusions
@@ -235,8 +229,8 @@ def main() -> None:
     n_matrix = np.sum(mesh.Phases == el_ids[0])
     n_inclusion = np.sum(mesh.Phases == el_ids[1])
     print(f"\nMaterial distribution:")
-    print(f"  - Matrix elements (μ={material.Mu[el_ids[0]]}): {n_matrix}")
-    print(f"  - Inclusion elements (μ={material.Mu[el_ids[1]]}): {n_inclusion}")
+    print(f"  - Matrix elements (mu={material.Mu[el_ids[0]]}): {n_matrix}")
+    print(f"  - Inclusion elements (mu={material.Mu[el_ids[1]]}): {n_inclusion}")
 
     # Set boundary conditions (pure shear: u = 0.5*x, v = -0.5*y)
     print("\nApplying boundary conditions...")
