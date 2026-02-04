@@ -108,6 +108,12 @@
 <li class="toctree-l1"><a class="reference internal" href="lecture7/fem_formulation.html">Finite Element Formulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lecture7/python-implementation.html">Python implementation</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture8/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture8/blocked_assembly.html">Blocked Vectorized Assembly</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture8/viscous-folding.html">Viscous single-layer folding</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="refs.html">References</a></li>
@@ -392,6 +398,40 @@
 <li class="toctree-l2"><a class="reference internal" href="lecture7/python-implementation.html#assembly-of-global-matrices-and-pressure-numbering">Assembly of global matrices and pressure numbering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lecture7/python-implementation.html#test-problem">Test problem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lecture7/python-implementation.html#exercises">Exercises</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lecture8/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture8/blocked_assembly.html">Blocked Vectorized Assembly</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#why-element-by-element-assembly-is-slow">Why element-by-element assembly is slow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#the-blocking-strategy">The blocking strategy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#extracting-block-data">Extracting block data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#vectorized-jacobian-computation">Vectorized Jacobian computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#vectorized-b-matrix-and-stiffness-assembly">Vectorized B matrix and stiffness assembly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#vectorized-pressure-shape-functions">Vectorized pressure shape functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#vectorized-pressure-coupling-and-mass-matrix">Vectorized pressure coupling and mass matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#vectorized-static-condensation">Vectorized static condensation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#scattering-the-right-hand-side">Scattering the right-hand side</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#sparse-matrix-index-construction">Sparse matrix index construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#summary-of-array-shapes">Summary of array shapes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#performance-comparison">Performance comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/blocked_assembly.html#exercises">Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lecture8/viscous-folding.html">Viscous single-layer folding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/viscous-folding.html#physical-setup">Physical setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/viscous-folding.html#lagrangian-advection">Lagrangian advection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/viscous-folding.html#mesh-generation">Mesh generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/viscous-folding.html#updating-boundary-conditions">Updating boundary conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/viscous-folding.html#output-format">Output format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/viscous-folding.html#default-parameters">Default parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/viscous-folding.html#running-the-simulation">Running the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lecture8/viscous-folding.html#exercises">Exercises</a></li>
 </ul>
 </li>
 </ul>

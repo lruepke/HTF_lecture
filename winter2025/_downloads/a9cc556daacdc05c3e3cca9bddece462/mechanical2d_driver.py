@@ -2,7 +2,7 @@
 Driver script for 2D mechanical Stokes flow FEM solver.
 
 This script sets up and solves a 2D incompressible Stokes flow problem
-with a circular inclusion of different viscosity.
+with multiple circular inclusions of different viscosity.
 """
 
 from dataclasses import dataclass
@@ -22,14 +22,14 @@ class GeometryParams:
     x_max: float
     y_min: float
     y_max: float
-    c_inc: tuple   # Center of inclusion (x, y)
-    radius: float
+    c_inc: list    # List of inclusion centers [(x1, y1), (x2, y2), ...]
+    radius: list   # List of radii [r1, r2, ...]
     no_pts: int    # Number of points for inclusion boundary
 
 
 def make_mesh(geom: GeometryParams, el_ids=(1, 100), el_sizes=(0.1, 0.01)) -> Mesh:
     """
-    Create an unstructured triangle mesh with circular inclusion.
+    Create an unstructured triangle mesh with multiple circular inclusions.
 
     Parameters
     ----------
@@ -69,16 +69,24 @@ def make_mesh(geom: GeometryParams, el_ids=(1, 100), el_sizes=(0.1, 0.01)) -> Me
         ])
         segment_markers.extend([101, 102, 103, 104])
 
-    def _make_inclusion() -> None:
-        """Add circular inclusion to mesh."""
+    def _make_inclusion(center: tuple, radius: float) -> None:
+        """Add circular inclusion to mesh.
+        
+        Parameters
+        ----------
+        center : tuple
+            Center coordinates (x, y) of the inclusion
+        radius : float
+            Radius of the inclusion
+        """
         theta = np.linspace(0, 2*np.pi, geom.no_pts, endpoint=False)
         xx = np.cos(theta)
         yy = np.sin(theta)
 
         i = len(vertices)
         vertices.extend(
-            np.array([geom.c_inc[0] + geom.radius*xx,
-                     geom.c_inc[1] + geom.radius*yy]).T
+            np.array([center[0] + radius*xx,
+                     center[1] + radius*yy]).T
         )
 
         Tmp = np.array([np.arange(i, i+geom.no_pts),
@@ -87,11 +95,13 @@ def make_mesh(geom: GeometryParams, el_ids=(1, 100), el_sizes=(0.1, 0.01)) -> Me
         segments.extend(Tmp)
         segment_markers.extend(1001 * np.ones(len(Tmp)))
 
-        regions.append([geom.c_inc[0], geom.c_inc[1], el_ids[1], el_sizes[1]])
+        regions.append([center[0], center[1], el_ids[1], el_sizes[1]])
 
     # Build geometry
     _make_box()
-    _make_inclusion()
+    # Add all inclusions
+    for center, radius in zip(geom.c_inc, geom.radius):
+        _make_inclusion(center, radius)
 
     # Generate mesh using Triangle
     A = dict(
@@ -129,14 +139,14 @@ def make_mesh(geom: GeometryParams, el_ids=(1, 100), el_sizes=(0.1, 0.01)) -> Me
 def plot_solution(mesh: Mesh, velocity: np.ndarray, pressure: np.ndarray,
                  filename: str = 'pressure_field.png') -> None:
     """
-    Visualize pressure field and mesh.
+    Visualize pressure field, mesh, and velocity vectors.
 
     Parameters
     ----------
     mesh : Mesh
         Mesh object
     velocity : np.ndarray
-        Velocity field (not plotted but available)
+        Velocity field (2*nnod DOFs: [vx0, vy0, vx1, vy1, ...])
     pressure : np.ndarray
         Pressure field (discontinuous, 3 values per element)
     filename : str
@@ -149,18 +159,28 @@ def plot_solution(mesh: Mesh, velocity: np.ndarray, pressure: np.ndarray,
     )).reshape(2, -1).T
     EN_BIG = np.arange(3 * mesh.nel).reshape(-1, 3)
 
+    # Extract velocity components
+    Vel_x = velocity[0::2]  # x-components at nodes
+    Vel_y = velocity[1::2]  # y-components at nodes
+
     plt.figure(figsize=(10, 8))
     levels = np.linspace(pressure.min(), pressure.max(), num=100)
     contours = plt.tricontourf(GC_BIG[:, 0], GC_BIG[:, 1], EN_BIG,
                                pressure, levels=levels, cmap='jet')
     plt.triplot(mesh.GCOORD[:, 0], mesh.GCOORD[:, 1], mesh.EL2NOD[:, 0:3],
-               color='black', linewidth=0.1)
+               color='black', linewidth=0.1, alpha=0.3)
+
+    # Add velocity vectors (subsample for clarity)
+    skip = max(1, mesh.nnod // 1000)  # Adjust to show ~1000 vectors
+    #plt.quiver(mesh.GCOORD[::skip, 0], mesh.GCOORD[::skip, 1],
+    #          Vel_x[::skip], Vel_y[::skip],
+    #          color='white', scale=5, width=0.003, alpha=0.8)
 
     plt.colorbar(contours, label='Pressure')
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.axis('equal')
-    plt.title('Pressure Field (Discontinuous P-1)')
+    plt.title('Pressure Field and Velocity Vectors')
     plt.tight_layout()
     plt.savefig(filename, dpi=300)
     print(f"Figure saved as {filename}")
@@ -175,20 +195,22 @@ def main() -> None:
     print("2D STOKES FLOW - FEM SOLVER")
     print("="*70)
 
-    # Geometry parameters
+    # Geometry parameters with multiple inclusions
     geom = GeometryParams(
         x_min=-1.0,
         x_max=1.0,
         y_min=-1.0,
         y_max=1.0,
-        c_inc=(0.0, 0.0),
-        radius=0.2,
+        #c_inc=[(0.0, 0.0)],  # Multiple inclusion centers
+        #radius=[0.2],                       # Corresponding radii
+        c_inc=[(0.0, 0.0), (-0.5, 0.5), (0.5, -0.5), (0.25, 0.25), (0.4,0.05), (0.5, -.15)],  # Multiple inclusion centers
+        radius=[0.2, 0.15, 0.18, 0.1, 0.1, 0.1],                       # Corresponding radii
         no_pts=60
     )
 
     # Material parameters
     material = MaterialParams(
-        Mu=np.array([1e0, 1e3]),    # Viscosity [matrix, inclusion]
+        Mu=np.array([1e0, 2e0]),    # Viscosity [matrix, inclusion]
         Rho=np.array([1.0, 2.0]),   # Density [matrix, inclusion]
         G=np.array([0.0, 0.0])      # Gravity [gx, gy]
     )

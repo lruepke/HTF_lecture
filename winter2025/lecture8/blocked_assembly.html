@@ -1,0 +1,586 @@
+
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blocked Vectorized Assembly &mdash; Finite Element Modeling in Geodynamics  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=379f3234" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/tabs.js?v=3ee01567"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=9b54adf2"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Viscous single-layer folding" href="viscous-folding.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Finite Element Modeling in Geodynamics
+              <img src="../_static/triangle_fem_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/course-details.html">Course details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general-info/installation.html">Installation guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_intro.html">Introduction: The Finite Differences Method (FDM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_1.html">Example 1: Cooling dike</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_2.html">Example 2: Cooling dike - implicit version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/example_3.html">Example 3: Periodic variations in seafloor temperature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture1/fdm_advection.html">Transport problems with FDM</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_intro.html">Introduction: Method of Weighted Residuals (MWR)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/mwr_examples.html">MWR solutions of the steady advection-diffusion equation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture2/excercises.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html">Introduction Finite Element Method (FEM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_intro.html#fem-implementation">FEM implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture3/fem_advection.html">FEM and advection problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html">2-D FEM - elliptic problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture4/fem_in_2d.html#implementation">Implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html">Triangles: unstructured meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture5/FEM_triangles.html#excercise">Excercise</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/transient_problems.html">Transient heat diffusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/code_optimization.html">Code Refactoring and Performance Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture6/turing_coupled_problem.html">Coupled diffusion problems</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../lecture7/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture7/intro-stokes.html">Introduction to Stokes flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture7/fem_formulation.html">Finite Element Formulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lecture7/python-implementation.html">Python implementation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Blocked Vectorized Assembly</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#why-element-by-element-assembly-is-slow">Why element-by-element assembly is slow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-blocking-strategy">The blocking strategy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extracting-block-data">Extracting block data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vectorized-jacobian-computation">Vectorized Jacobian computation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#understanding-np-einsum">Understanding <code class="docutils literal notranslate"><span class="pre">np.einsum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vectorized-2x2-matrix-inversion">Vectorized 2x2 matrix inversion</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#vectorized-b-matrix-and-stiffness-assembly">Vectorized B matrix and stiffness assembly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vectorized-pressure-shape-functions">Vectorized pressure shape functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vectorized-pressure-coupling-and-mass-matrix">Vectorized pressure coupling and mass matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vectorized-static-condensation">Vectorized static condensation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scattering-the-right-hand-side">Scattering the right-hand side</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sparse-matrix-index-construction">Sparse matrix index construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary-of-array-shapes">Summary of array shapes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-comparison">Performance comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download">Download</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exercises">Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="viscous-folding.html">Viscous single-layer folding</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/FEM_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Finite Element Modeling in Geodynamics</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Blocked Vectorized Assembly</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main//source/lecture8/blocked_assembly.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="blocked-vectorized-assembly">
+<span id="blocked-assembly"></span><h1>Blocked Vectorized Assembly<a class="headerlink" href="#blocked-vectorized-assembly" title="Link to this heading"></a></h1>
+<p>In the previous sections, we implemented a 2D Stokes flow solver using an element-by-element assembly loop. While correct and readable, this approach becomes a performance bottleneck for large meshes. In this section, we explain how to refactor the assembly loop using a <strong>blocked vectorized</strong> strategy that processes many elements simultaneously using NumPy array operations.</p>
+<p>The key idea is simple: instead of looping over elements one at a time, we group elements into <strong>blocks</strong> and perform all operations on the entire block at once using NumPy’s vectorized operations and <code class="docutils literal notranslate"><span class="pre">np.einsum</span></code>.</p>
+<section id="why-element-by-element-assembly-is-slow">
+<h2>Why element-by-element assembly is slow<a class="headerlink" href="#why-element-by-element-assembly-is-slow" title="Link to this heading"></a></h2>
+<p>In our original implementation (<code class="docutils literal notranslate"><span class="pre">mechanical2d.py</span></code>), the assembly loop processes one element at a time:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">iel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nel</span><span class="p">):</span>
+    <span class="n">ECOORD_X</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">GCOORD</span><span class="p">[</span><span class="n">mesh</span><span class="o">.</span><span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:],</span> <span class="p">:]</span>
+    <span class="n">EMu</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Mu</span><span class="p">[</span><span class="n">mesh</span><span class="o">.</span><span class="n">Phases</span><span class="p">[</span><span class="n">iel</span><span class="p">]]</span>
+
+    <span class="n">A_elem</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nedof</span><span class="p">,</span> <span class="n">nedof</span><span class="p">))</span>
+    <span class="c1"># ... integration point loop ...</span>
+    <span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">nip</span><span class="p">):</span>
+        <span class="n">Jac</span> <span class="o">=</span> <span class="n">dNdui</span> <span class="o">@</span> <span class="n">ECOORD_X</span>
+        <span class="n">invJ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Jac</span><span class="p">)</span>
+        <span class="c1"># ... build B, accumulate A_elem, Q_elem, M_elem ...</span>
+
+    <span class="c1"># Static condensation</span>
+    <span class="n">invM_elem</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">M_elem</span><span class="p">)</span>
+    <span class="n">A_elem</span> <span class="o">+=</span> <span class="n">PF</span> <span class="o">*</span> <span class="p">(</span><span class="n">Q_elem</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">invM_elem</span> <span class="o">@</span> <span class="n">Q_elem</span><span class="p">)</span>
+
+    <span class="n">A_all</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">A_elem</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This has two problems:</p>
+<ol class="arabic simple">
+<li><p><strong>Python loop overhead</strong>: Each iteration through a Python <code class="docutils literal notranslate"><span class="pre">for</span></code> loop incurs interpreter overhead. For a mesh with 10,000 elements and 6 integration points, that is 60,000 iterations of pure Python.</p></li>
+<li><p><strong>Poor cache utilization</strong>: Processing one element at a time means each <code class="docutils literal notranslate"><span class="pre">np.linalg.inv</span></code> or matrix multiply operates on a single tiny matrix (2x2 or 3x3). The CPU spends more time on function call overhead than on actual computation.</p></li>
+</ol>
+<p>NumPy is fast when it operates on <strong>large arrays</strong>. A single call to invert 10,000 matrices at once is much faster than 10,000 calls to invert one matrix each.</p>
+</section>
+<section id="the-blocking-strategy">
+<h2>The blocking strategy<a class="headerlink" href="#the-blocking-strategy" title="Link to this heading"></a></h2>
+<p>The blocked approach divides elements into chunks (blocks) and processes each block using vectorized NumPy operations:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Elements:  [0, 1, 2, ..., 9999, 10000, 10001, ..., 19999, 20000, ...]
+           |---- Block 0 -------|------- Block 1 ---------|-- Block 2 ...
+
+For each block:
+    - Extract coordinates for ALL elements in block     (n_el, 7, 2)
+    - For each integration point (small loop, 6 iterations):
+        - Compute ALL Jacobians at once                  (n_el, 2, 2)
+        - Invert ALL Jacobians at once                   (n_el, 2, 2)
+        - Build ALL B matrices at once                   (n_el, 3, 14)
+        - Accumulate ALL element matrices at once        (n_el, 14, 14)
+    - Static condensation for ALL elements at once
+</pre></div>
+</div>
+<p>The block size is a tuning parameter. A block of 10,000 elements uses roughly:</p>
+<div class="math notranslate nohighlight">
+\[10{,}000 \times 14 \times 14 \times 8\,\text{bytes} \approx 15\,\text{MB}\]</div>
+<p>This fits comfortably in modern CPU L3 caches (typically 8–32 MB), which means data stays close to the CPU during the integration point loop.</p>
+</section>
+<section id="extracting-block-data">
+<h2>Extracting block data<a class="headerlink" href="#extracting-block-data" title="Link to this heading"></a></h2>
+<p>The first step in each block is to gather coordinates and material properties for all elements at once:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">block_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_blocks</span><span class="p">):</span>
+    <span class="n">start_el</span> <span class="o">=</span> <span class="n">block_idx</span> <span class="o">*</span> <span class="n">block_size</span>
+    <span class="n">end_el</span> <span class="o">=</span> <span class="nb">min</span><span class="p">((</span><span class="n">block_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">block_size</span><span class="p">,</span> <span class="n">nel</span><span class="p">)</span>
+    <span class="n">n_el_block</span> <span class="o">=</span> <span class="n">end_el</span> <span class="o">-</span> <span class="n">start_el</span>
+
+    <span class="c1"># Fancy indexing: extract coordinates for all elements in block</span>
+    <span class="n">EL2NOD_block</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">EL2NOD</span><span class="p">[</span><span class="n">start_el</span><span class="p">:</span><span class="n">end_el</span><span class="p">]</span>         <span class="c1"># (n_el, 7)</span>
+    <span class="n">ECOORD_block</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">GCOORD</span><span class="p">[</span><span class="n">EL2NOD_block</span><span class="p">]</span>            <span class="c1"># (n_el, 7, 2)</span>
+    <span class="n">EMu_block</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">Mu</span><span class="p">[</span><span class="n">mesh</span><span class="o">.</span><span class="n">Phases</span><span class="p">[</span><span class="n">start_el</span><span class="p">:</span><span class="n">end_el</span><span class="p">]]</span>  <span class="c1"># (n_el,)</span>
+</pre></div>
+</div>
+<p>The expression <code class="docutils literal notranslate"><span class="pre">mesh.GCOORD[EL2NOD_block]</span></code> uses NumPy’s advanced indexing: <code class="docutils literal notranslate"><span class="pre">EL2NOD_block</span></code> has shape <code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">7)</span></code> containing node indices, and indexing into <code class="docutils literal notranslate"><span class="pre">GCOORD</span></code> (shape <code class="docutils literal notranslate"><span class="pre">(nnod,</span> <span class="pre">2)</span></code>) returns an array of shape <code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">7,</span> <span class="pre">2)</span></code> — the x,y coordinates of all 7 nodes for every element in the block.</p>
+</section>
+<section id="vectorized-jacobian-computation">
+<h2>Vectorized Jacobian computation<a class="headerlink" href="#vectorized-jacobian-computation" title="Link to this heading"></a></h2>
+<p>In the original code, the Jacobian is computed for one element:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Original: single element, shapes (2, 7) @ (7, 2) = (2, 2)</span>
+<span class="n">Jac</span> <span class="o">=</span> <span class="n">dNdui</span> <span class="o">@</span> <span class="n">ECOORD_X</span>
+<span class="n">invJ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Jac</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the blocked version, we compute Jacobians for the entire block using <code class="docutils literal notranslate"><span class="pre">np.einsum</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Blocked: all elements at once</span>
+<span class="c1"># dNdui:        (2, 7)       - same for all elements (reference element)</span>
+<span class="c1"># ECOORD_block: (n_el, 7, 2) - different per element</span>
+<span class="c1"># Result:       (n_el, 2, 2) - one Jacobian per element</span>
+<span class="n">Jac_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ik,nkj-&gt;nij&#39;</span><span class="p">,</span> <span class="n">dNdui</span><span class="p">,</span> <span class="n">ECOORD_block</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="understanding-np-einsum">
+<h3>Understanding <code class="docutils literal notranslate"><span class="pre">np.einsum</span></code><a class="headerlink" href="#understanding-np-einsum" title="Link to this heading"></a></h3>
+<p>The Einstein summation convention <code class="docutils literal notranslate"><span class="pre">'ik,nkj-&gt;nij'</span></code> reads as:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ik</span></code> — the first array has indices <code class="docutils literal notranslate"><span class="pre">i</span></code> (rows) and <code class="docutils literal notranslate"><span class="pre">k</span></code> (columns)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nkj</span></code> — the second array has indices <code class="docutils literal notranslate"><span class="pre">n</span></code> (element), <code class="docutils literal notranslate"><span class="pre">k</span></code> (node), <code class="docutils literal notranslate"><span class="pre">j</span></code> (x/y)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nij</span></code> — the output has indices <code class="docutils literal notranslate"><span class="pre">n</span></code> (element), <code class="docutils literal notranslate"><span class="pre">i</span></code> (row), <code class="docutils literal notranslate"><span class="pre">j</span></code> (col)</p></li>
+<li><p>The repeated index <code class="docutils literal notranslate"><span class="pre">k</span></code> is summed over (matrix contraction)</p></li>
+</ul>
+<p>This is equivalent to <code class="docutils literal notranslate"><span class="pre">Jac[n,</span> <span class="pre">i,</span> <span class="pre">j]</span> <span class="pre">=</span> <span class="pre">sum_k</span> <span class="pre">dNdui[i,</span> <span class="pre">k]</span> <span class="pre">*</span> <span class="pre">ECOORD[n,</span> <span class="pre">k,</span> <span class="pre">j]</span></code> for every element <code class="docutils literal notranslate"><span class="pre">n</span></code> — a batched matrix multiply.</p>
+</section>
+<section id="vectorized-2x2-matrix-inversion">
+<h3>Vectorized 2x2 matrix inversion<a class="headerlink" href="#vectorized-2x2-matrix-inversion" title="Link to this heading"></a></h3>
+<p>Rather than calling <code class="docutils literal notranslate"><span class="pre">np.linalg.inv</span></code> on each 2x2 Jacobian, we invert all of them using the analytical formula:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">batch_invert_2x2</span><span class="p">(</span><span class="n">matrices</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Invert n matrices of shape (n, 2, 2) simultaneously.&quot;&quot;&quot;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">matrices</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">matrices</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">matrices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">matrices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">det</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">d</span> <span class="o">-</span> <span class="n">b</span> <span class="o">*</span> <span class="n">c</span>
+
+    <span class="n">inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">matrices</span><span class="p">)</span>
+    <span class="n">inv</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span>  <span class="n">d</span> <span class="o">/</span> <span class="n">det</span>
+    <span class="n">inv</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="n">det</span>
+    <span class="n">inv</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span> <span class="n">det</span>
+    <span class="n">inv</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span>  <span class="n">a</span> <span class="o">/</span> <span class="n">det</span>
+
+    <span class="k">return</span> <span class="n">inv</span><span class="p">,</span> <span class="n">det</span>
+</pre></div>
+</div>
+<p>Each line operates on arrays of length <code class="docutils literal notranslate"><span class="pre">n_el</span></code>, so inverting 10,000 Jacobians is essentially as fast as inverting one.</p>
+</section>
+</section>
+<section id="vectorized-b-matrix-and-stiffness-assembly">
+<h2>Vectorized B matrix and stiffness assembly<a class="headerlink" href="#vectorized-b-matrix-and-stiffness-assembly" title="Link to this heading"></a></h2>
+<p>The strain-displacement matrix <span class="math notranslate nohighlight">\(\mathbf{B}\)</span> maps nodal velocities to strain rates. In the original code, it is built for one element:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Original: single element</span>
+<span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dNdX</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># dN/dx for x-velocity DOFs</span>
+<span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dNdX</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># dN/dy for y-velocity DOFs</span>
+<span class="n">B</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dNdX</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># dN/dy for x-velocity DOFs (shear)</span>
+<span class="n">B</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dNdX</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># dN/dx for y-velocity DOFs (shear)</span>
+</pre></div>
+</div>
+<p>In the blocked version, this becomes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Blocked: all elements, B_block has shape (n_el, 3, 14)</span>
+<span class="n">B_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_el_block</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">nedof</span><span class="p">))</span>
+<span class="n">B_block</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dNdX_block</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>   <span class="c1"># (n_el, 7)</span>
+<span class="n">B_block</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dNdX_block</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">B_block</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dNdX_block</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">B_block</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dNdX_block</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+<p>The element stiffness <span class="math notranslate nohighlight">\(\mathbf{A}^e = \int \eta\, \mathbf{B}^T \mathbf{D}\, \mathbf{B}\, d\Omega\)</span> is then computed for all elements at once:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV is (3, 3) - constant for all elements</span>
+<span class="c1"># B_block is (n_el, 3, 14)</span>
+
+<span class="c1"># Step 1: D @ B for all elements → (n_el, 3, 14)</span>
+<span class="n">DEV_B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij,njk-&gt;nik&#39;</span><span class="p">,</span> <span class="n">DEV</span><span class="p">,</span> <span class="n">B_block</span><span class="p">)</span>
+
+<span class="c1"># Step 2: B^T @ (D @ B) for all elements → (n_el, 14, 14)</span>
+<span class="n">BtDB_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;nji,njk-&gt;nik&#39;</span><span class="p">,</span> <span class="n">B_block</span><span class="p">,</span> <span class="n">DEV_B</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Scale by weight * viscosity per element</span>
+<span class="n">A_block</span> <span class="o">+=</span> <span class="p">(</span><span class="n">weight_block</span> <span class="o">*</span> <span class="n">EMu_block</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">BtDB_block</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">[:,</span> <span class="pre">np.newaxis,</span> <span class="pre">np.newaxis]</span></code> broadcasting trick turns the per-element scalar <code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">*</span> <span class="pre">mu</span></code> from shape <code class="docutils literal notranslate"><span class="pre">(n_el,)</span></code> into shape <code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">1,</span> <span class="pre">1)</span></code> so it can multiply the <code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">14,</span> <span class="pre">14)</span></code> stiffness matrices element-wise.</p>
+</section>
+<section id="vectorized-pressure-shape-functions">
+<h2>Vectorized pressure shape functions<a class="headerlink" href="#vectorized-pressure-shape-functions" title="Link to this heading"></a></h2>
+<p>The pressure interpolation matrix <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> and vector <span class="math notranslate nohighlight">\(\mathbf{P}_b\)</span> are element-specific because they depend on the corner node coordinates. In the original code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Original: per element</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">P</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ECOORD_X</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>     <span class="c1"># corner coordinates</span>
+<span class="c1"># Inside ip loop:</span>
+<span class="n">Pb</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">Ni</span> <span class="o">@</span> <span class="n">ECOORD_X</span>        <span class="c1"># integration point coordinates</span>
+<span class="n">Pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Pb</span><span class="p">)</span>    <span class="c1"># pressure shape functions</span>
+</pre></div>
+</div>
+<p>In the blocked version, we construct <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> for all elements and invert it once per block (outside the integration point loop):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Blocked: P for all elements, shape (n_el, 3, 3)</span>
+<span class="n">P_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_el_block</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">P_block</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ECOORD_block</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Invert P once per block (reused for all integration points)</span>
+<span class="n">P_inv_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">P_block</span><span class="p">)</span>   <span class="c1"># (n_el, 3, 3)</span>
+
+<span class="c1"># Inside the ip loop: compute Pi = P^{-1} @ Pb for all elements</span>
+<span class="n">ip_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;k,nkj-&gt;nj&#39;</span><span class="p">,</span> <span class="n">Ni</span><span class="p">,</span> <span class="n">ECOORD_block</span><span class="p">)</span>  <span class="c1"># (n_el, 2)</span>
+<span class="n">Pb_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_el_block</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">Pb_block</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ip_coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">Pb_block</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">ip_coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">Pi_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;nij,nj-&gt;ni&#39;</span><span class="p">,</span> <span class="n">P_inv_block</span><span class="p">,</span> <span class="n">Pb_block</span><span class="p">)</span>  <span class="c1"># (n_el, 3)</span>
+</pre></div>
+</div>
+<p>Since <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> only depends on corner coordinates (constant per element), precomputing <span class="math notranslate nohighlight">\(\mathbf{P}^{-1}\)</span> avoids calling <code class="docutils literal notranslate"><span class="pre">np.linalg.solve</span></code> at every integration point. The batched <code class="docutils literal notranslate"><span class="pre">np.linalg.inv</span></code> handles all elements in one call.</p>
+</section>
+<section id="vectorized-pressure-coupling-and-mass-matrix">
+<h2>Vectorized pressure coupling and mass matrix<a class="headerlink" href="#vectorized-pressure-coupling-and-mass-matrix" title="Link to this heading"></a></h2>
+<p>The pressure-velocity coupling <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> and pressure mass matrix <span class="math notranslate nohighlight">\(\mathbf{M}\)</span> involve outer products of the pressure shape functions <span class="math notranslate nohighlight">\(\Pi\)</span> with the volumetric strain operator <span class="math notranslate nohighlight">\(\mathbf{B}_{\text{vol}}\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Original: per element</span>
+<span class="n">Q_elem</span> <span class="o">-=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">Pi</span><span class="p">,</span> <span class="n">Bvol</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>     <span class="c1"># (3,) x (14,) → (3, 14)</span>
+<span class="n">M_elem</span> <span class="o">+=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">Pi</span><span class="p">,</span> <span class="n">Pi</span><span class="p">)</span>                <span class="c1"># (3,) x (3,)  → (3, 3)</span>
+</pre></div>
+</div>
+<p>In the blocked version, <code class="docutils literal notranslate"><span class="pre">np.einsum</span></code> computes outer products for all elements simultaneously:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Blocked: outer products for all elements</span>
+<span class="c1"># Pi_block: (n_el, 3), Bvol_ravel_block: (n_el, 14)</span>
+<span class="n">Q_block</span> <span class="o">-=</span> <span class="n">weight_block</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ni,nj-&gt;nij&#39;</span><span class="p">,</span> <span class="n">Pi_block</span><span class="p">,</span> <span class="n">Bvol_ravel_block</span><span class="p">)</span>
+<span class="n">M_block</span> <span class="o">+=</span> <span class="n">weight_block</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ni,nj-&gt;nij&#39;</span><span class="p">,</span> <span class="n">Pi_block</span><span class="p">,</span> <span class="n">Pi_block</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The volumetric strain <span class="math notranslate nohighlight">\(\mathbf{B}_{\text{vol}}\)</span> is obtained by rearranging the global shape function derivatives:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># dNdX_block has shape (n_el, 2, 7)</span>
+<span class="c1"># We need [dNdx_0, dNdy_0, dNdx_1, dNdy_1, ...] per element → (n_el, 14)</span>
+<span class="n">Bvol_ravel_block</span> <span class="o">=</span> <span class="n">dNdX_block</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_el_block</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="vectorized-static-condensation">
+<h2>Vectorized static condensation<a class="headerlink" href="#vectorized-static-condensation" title="Link to this heading"></a></h2>
+<p>After the integration point loop, the pressure DOFs are eliminated via static condensation. The original code does this per element:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Original: per element</span>
+<span class="n">invM_elem</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">M_elem</span><span class="p">)</span>                      <span class="c1"># (3, 3)</span>
+<span class="n">A_elem</span> <span class="o">+=</span> <span class="n">PF</span> <span class="o">*</span> <span class="p">(</span><span class="n">Q_elem</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">invM_elem</span> <span class="o">@</span> <span class="n">Q_elem</span><span class="p">)</span>         <span class="c1"># (14, 14)</span>
+</pre></div>
+</div>
+<p>The blocked version uses batched inversion and <code class="docutils literal notranslate"><span class="pre">np.einsum</span></code> for the triple matrix product:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Blocked: static condensation for all elements</span>
+<span class="n">invM_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">M_block</span><span class="p">)</span>                         <span class="c1"># (n_el, 3, 3)</span>
+<span class="n">invM_Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;nij,njk-&gt;nik&#39;</span><span class="p">,</span> <span class="n">invM_block</span><span class="p">,</span> <span class="n">Q_block</span><span class="p">)</span>    <span class="c1"># (n_el, 3, 14)</span>
+<span class="n">QtinvMQ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;nji,njk-&gt;nik&#39;</span><span class="p">,</span> <span class="n">Q_block</span><span class="p">,</span> <span class="n">invM_Q</span><span class="p">)</span>       <span class="c1"># (n_el, 14, 14)</span>
+<span class="n">A_block</span> <span class="o">+=</span> <span class="n">PF</span> <span class="o">*</span> <span class="n">QtinvMQ</span>
+</pre></div>
+</div>
+<p>Here <code class="docutils literal notranslate"><span class="pre">np.linalg.inv</span></code> natively supports batch dimensions, so inverting all 3x3 pressure mass matrices is a single function call.</p>
+</section>
+<section id="scattering-the-right-hand-side">
+<h2>Scattering the right-hand side<a class="headerlink" href="#scattering-the-right-hand-side" title="Link to this heading"></a></h2>
+<p>The right-hand side vector requires scattering element contributions to global DOFs. Since multiple elements share nodes, we cannot simply use array indexing (which would silently drop duplicate contributions). Instead, <code class="docutils literal notranslate"><span class="pre">np.add.at</span></code> performs unbuffered in-place addition:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Scatter RHS from block to global vector</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nedof</span><span class="p">):</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">Rhs_all</span><span class="p">,</span> <span class="n">EL2DOF_block</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">Rhs_block</span><span class="p">[:,</span> <span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>This replaces the original <code class="docutils literal notranslate"><span class="pre">Rhs_all[EL2DOF[iel,</span> <span class="pre">:]]</span> <span class="pre">+=</span> <span class="pre">Rhs_elem</span></code> which only handled one element at a time. The small loop over <code class="docutils literal notranslate"><span class="pre">nedof</span></code> (14 iterations) is unavoidable because <code class="docutils literal notranslate"><span class="pre">np.add.at</span></code> needs a 1D index array.</p>
+</section>
+<section id="sparse-matrix-index-construction">
+<h2>Sparse matrix index construction<a class="headerlink" href="#sparse-matrix-index-construction" title="Link to this heading"></a></h2>
+<p>In the original code, sparse matrix row/column indices are built inside the element loop:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Original: per element</span>
+<span class="n">I</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">EL2DOF</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:],</span> <span class="p">(</span><span class="n">nedof</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">J</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">EL2DOF</span><span class="p">[</span><span class="n">iel</span><span class="p">,</span> <span class="p">:],</span> <span class="p">(</span><span class="n">nedof</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In the blocked version, this is done once for <strong>all</strong> elements outside the block loop:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Vectorized: all elements at once</span>
+<span class="n">I_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">EL2DOF</span><span class="p">,</span> <span class="n">nedof</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># each DOF repeated nedof times</span>
+<span class="n">J_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">EL2DOF</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nedof</span><span class="p">))</span>         <span class="c1"># DOF array tiled nedof times</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">np.repeat</span></code> and <code class="docutils literal notranslate"><span class="pre">np.tile</span></code> operate on the full <code class="docutils literal notranslate"><span class="pre">(nel,</span> <span class="pre">14)</span></code> array, producing the <code class="docutils literal notranslate"><span class="pre">(nel,</span> <span class="pre">196)</span></code> index arrays in one call.</p>
+</section>
+<section id="summary-of-array-shapes">
+<h2>Summary of array shapes<a class="headerlink" href="#summary-of-array-shapes" title="Link to this heading"></a></h2>
+<p>The following table summarizes how array dimensions change from element-by-element to blocked processing:</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-number">Table 5 </span><span class="caption-text">Array shapes: original vs. blocked</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 37.5%" />
+<col style="width: 31.2%" />
+<col style="width: 31.2%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Quantity</p></th>
+<th class="head"><p>Original (per element)</p></th>
+<th class="head"><p>Blocked (per block)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Coordinates</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(7,</span> <span class="pre">2)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">7,</span> <span class="pre">2)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Jacobian</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">2,</span> <span class="pre">2)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Shape function derivatives</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">7)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">2,</span> <span class="pre">7)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>B matrix</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">14)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">3,</span> <span class="pre">14)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Element stiffness A</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(14,</span> <span class="pre">14)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">14,</span> <span class="pre">14)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Pressure coupling Q</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">14)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">3,</span> <span class="pre">14)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Pressure mass M</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">3)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">3,</span> <span class="pre">3)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Pressure shape functions Pi</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(3,)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">(n_el,</span> <span class="pre">3)</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>The pattern is consistent: every per-element quantity gains an extra leading dimension <code class="docutils literal notranslate"><span class="pre">n_el</span></code> (the block size).</p>
+</section>
+<section id="performance-comparison">
+<h2>Performance comparison<a class="headerlink" href="#performance-comparison" title="Link to this heading"></a></h2>
+<p>For a mesh with approximately 9,500 elements (7-node triangles, 6 integration points):</p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text">Assembly time comparison</span><a class="headerlink" href="#id2" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 46.7%" />
+<col style="width: 26.7%" />
+<col style="width: 26.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Version</p></th>
+<th class="head"><p>Assembly time</p></th>
+<th class="head"><p>Speedup</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Original (element-by-element)</p></td>
+<td><p>~100 ms</p></td>
+<td><p>1.0x</p></td>
+</tr>
+<tr class="row-odd"><td><p>Blocked vectorized</p></td>
+<td><p>~5 ms</p></td>
+<td><p>~20x</p></td>
+</tr>
+</tbody>
+</table>
+<p>The overall solver speedup is smaller because the linear solve (<code class="docutils literal notranslate"><span class="pre">spsolve</span></code>) dominates for large systems, but the assembly phase — previously the bottleneck for moderately-sized meshes — is effectively eliminated as a concern.</p>
+<p>The blocked implementation has been verified to produce results identical to the original (velocity differences &lt; <span class="math notranslate nohighlight">\(10^{-12}\)</span>, pressure differences &lt; <span class="math notranslate nohighlight">\(10^{-10}\)</span>).</p>
+</section>
+<section id="download">
+<h2>Download<a class="headerlink" href="#download" title="Link to this heading"></a></h2>
+<p>You can download the blocked implementation here: <a class="reference download internal" download="" href="../_downloads/64406aad6b7d69971e2f8b008ed70a63/mechanical2d_blocked.py"><code class="xref download docutils literal notranslate"><span class="pre">mechanical2d_blocked.py</span></code></a> and <a class="reference download internal" download="" href="../_downloads/b843dd86ff1c03b0b80d71528a081fc0/mechanical2d_driver_blocked.py"><code class="xref download docutils literal notranslate"><span class="pre">mechanical2d_driver_blocked.py</span></code></a>.</p>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Block size tuning</strong>: Run the blocked solver with different <code class="docutils literal notranslate"><span class="pre">BLOCK_SIZE</span></code> values (100, 1000, 10000, 50000). How does assembly time change? Can you explain the behavior in terms of CPU cache sizes?</p></li>
+<li><p><strong>Profiling</strong>: Compare the timing breakdown between the original and blocked versions. At what mesh size does the assembly cease to be the bottleneck?</p></li>
+<li><p><strong>einsum practice</strong>: Write out the index notation for each <code class="docutils literal notranslate"><span class="pre">np.einsum</span></code> call in the blocked assembly. Verify on paper that the contraction indices are correct for one of the operations (e.g., the <code class="docutils literal notranslate"><span class="pre">B^T</span> <span class="pre">D</span> <span class="pre">B</span></code> computation).</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="viscous-folding.html" class="btn btn-neutral float-right" title="Viscous single-layer folding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+      
+        <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+          <span class="rst-current-version" data-toggle="rst-current-version">
+            <span class="fa fa-book"> Finite Element Modeling in Geodynamics</span>
+            v: latest
+            <span class="fa fa-caret-down"></span>
+          </span>
+          <div class="rst-other-versions">
+            <dl>
+              
+                
+                <dd><a href="https://lruepke.github.io/FEM_lecture/downloads/LectureNote.pdf">latest</a></dd>
+                
+                <dd><a href="#/LectureNote.pdf">2.0</a></dd>
+                
+              
+          </div>
+        </div>
+      
+    
+
+</body>
+</html>

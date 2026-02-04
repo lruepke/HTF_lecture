@@ -101,6 +101,16 @@ The majority of this course will be spent in front of a computer working on exer
     lecture7/intro-stokes
     lecture7/fem_formulation
     lecture7/python-implementation
+    lecture7/viscous-folding
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Lecture 8
+
+    lecture8/overview
+    lecture8/blocked_assembly
+    lecture8/viscous-folding
+
 
 .. toctree::
    :maxdepth: 2
