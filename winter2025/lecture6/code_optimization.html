@@ -239,7 +239,7 @@
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Mesh</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for mesh data.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Container for mesh data."""</span>
     <span class="n">GCOORD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>  <span class="c1"># Node coordinates, shape (nnod, 2)</span>
     <span class="n">EL2NOD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>  <span class="c1"># Element connectivity, shape (nel, nnodel)</span>
     <span class="n">Phases</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>  <span class="c1"># Phase/material ID per element</span>
@@ -249,7 +249,7 @@
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">MaterialParams</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for material properties.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Container for material properties."""</span>
     <span class="n">rho</span><span class="p">:</span> <span class="nb">float</span>   <span class="c1"># Density</span>
     <span class="n">cp</span><span class="p">:</span> <span class="nb">float</span>    <span class="c1"># Heat capacity</span>
     <span class="n">k1</span><span class="p">:</span> <span class="nb">float</span>    <span class="c1"># Thermal conductivity (matrix)</span>
@@ -257,13 +257,13 @@
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">BoundaryConditions</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for boundary conditions.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Container for boundary conditions."""</span>
     <span class="n">Ttop</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Temperature at top boundary</span>
     <span class="n">Tbot</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># Temperature at bottom boundary</span>
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">TimeParams</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for time stepping parameters.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Container for time stepping parameters."""</span>
     <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span>    <span class="c1"># Time step</span>
     <span class="n">nt</span><span class="p">:</span> <span class="nb">int</span>      <span class="c1"># Number of time steps</span>
 </pre></div>
@@ -294,7 +294,7 @@
     <span class="n">writer</span><span class="p">:</span> <span class="n">meshio</span><span class="o">.</span><span class="n">xdmf</span><span class="o">.</span><span class="n">TimeSeriesWriter</span><span class="p">,</span>
     <span class="n">t</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Variables</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Solve 2D transient heat diffusion using FEM.</span>
 
 <span class="sd">    Parameters</span>
@@ -311,7 +311,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    Variables</span>
 <span class="sd">        Updated temperature and conductivity fields</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># Implementation here</span>
     <span class="k">pass</span>
 </pre></div>
@@ -331,7 +331,7 @@
 <div class="literal-block-wrapper docutils container" id="id4">
 <div class="code-block-caption"><span class="caption-number">Listing 8 </span><span class="caption-text">Organized main function</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main driver for 2D transient heat diffusion FEM simulation.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Main driver for 2D transient heat diffusion FEM simulation."""</span>
 
     <span class="c1"># Define all parameters using dataclasses</span>
     <span class="n">geom</span> <span class="o">=</span> <span class="n">GeometryParams</span><span class="p">(</span><span class="n">x0</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y0</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">lx</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">ly</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
@@ -395,7 +395,7 @@
     <span class="c1"># ... more timing sections ...</span>
 
     <span class="c1"># Report timings</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Element assembly: </span><span class="si">{</span><span class="n">t_assembly</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ms (</span><span class="si">{</span><span class="n">t_assembly</span><span class="o">/</span><span class="n">t_total</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Element assembly: </span><span class="si">{</span><span class="n">t_assembly</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> ms (</span><span class="si">{</span><span class="n">t_assembly</span><span class="o">/</span><span class="n">t_total</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -422,12 +422,12 @@
 <div class="literal-block-wrapper docutils container" id="id6">
 <div class="code-block-caption"><span class="caption-number">Listing 10 </span><span class="caption-text">Pre-computing shape functions</span><a class="headerlink" href="#id6" title="Link to this code"></a></div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">precompute_shape_functions</span><span class="p">(</span><span class="n">integration</span><span class="p">:</span> <span class="n">IntegrationParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IntegrationParams</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Pre-compute shape functions at all integration points.</span>
 
 <span class="sd">    For triangular elements, N and dNds are constant at each</span>
 <span class="sd">    integration point - no need to recompute every timestep.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">nip</span> <span class="o">=</span> <span class="n">integration</span><span class="o">.</span><span class="n">nip</span>
     <span class="n">nnodel</span> <span class="o">=</span> <span class="mi">3</span>
 
@@ -483,7 +483,7 @@
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">NUMBA_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">USE_NUMBA</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: Numba not available, falling back to pure Python&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"Warning: Numba not available, falling back to pure Python"</span><span class="p">)</span>
     <span class="n">USE_NUMBA</span> <span class="o">=</span> <span class="kc">False</span>
 </pre></div>
 </div>
@@ -513,12 +513,12 @@
     <span class="n">cp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Element assembly loop.</span>
 
 <span class="sd">    This function works as pure Python OR can be JIT-compiled by numba.</span>
 <span class="sd">    The code is IDENTICAL in both cases - only execution speed differs.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">nel</span> <span class="o">=</span> <span class="n">EL2NOD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">nnodel</span> <span class="o">=</span> <span class="n">EL2NOD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">nnod</span> <span class="o">=</span> <span class="n">GCOORD</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -587,7 +587,7 @@
 
 <span class="c1"># Optionally compile to machine code</span>
 <span class="k">if</span> <span class="n">USE_NUMBA</span> <span class="ow">and</span> <span class="n">NUMBA_AVAILABLE</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Applying numba JIT compilation...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Applying numba JIT compilation..."</span><span class="p">)</span>
     <span class="n">assemble_system_optimized</span> <span class="o">=</span> <span class="n">njit</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">assemble_system_optimized</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -677,8 +677,8 @@ Same code, 11× speedup!
     <span class="k">if</span> <span class="n">write_output</span><span class="p">:</span>
         <span class="c1"># Only compute flux when needed</span>
         <span class="n">Q_x</span><span class="p">,</span> <span class="n">Q_y</span> <span class="o">=</span> <span class="n">compute_heat_flux_numba</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-        <span class="n">writer</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">point_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="n">T</span><span class="p">},</span>
-                        <span class="n">cell_data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;U&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">U</span><span class="p">],</span> <span class="s2">&quot;K&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">Kel</span><span class="p">]})</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">point_data</span><span class="o">=</span><span class="p">{</span><span class="s2">"T"</span><span class="p">:</span> <span class="n">T</span><span class="p">},</span>
+                        <span class="n">cell_data</span><span class="o">=</span><span class="p">{</span><span class="s2">"U"</span><span class="p">:</span> <span class="p">[</span><span class="n">U</span><span class="p">],</span> <span class="s2">"K"</span><span class="p">:</span> <span class="p">[</span><span class="n">Kel</span><span class="p">]})</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># Skip postprocessing entirely</span>
         <span class="k">pass</span>
@@ -914,7 +914,7 @@ Maximum differences:
 </ul>
 <p><strong>Analysis and verification:</strong></p>
 <ul class="simple">
-<li><p><code class="xref download docutils literal notranslate"><span class="pre">Performance</span> <span class="pre">analysis</span> <span class="pre">summary</span></code></p></li>
+<li><p><a class="reference download internal" download="" href="../_downloads/e47429c9fa69c9b1eff2ac491bcb49ff/PERFORMANCE_SUMMARY.md"><code class="xref download docutils literal notranslate"><span class="pre">Performance</span> <span class="pre">analysis</span> <span class="pre">summary</span></code></a></p></li>
 <li><p><a class="reference download internal" download="" href="../_downloads/35f51dbc5faeabf8d4fd030112d3cee3/UNIFIED_CODE_EXPLANATION.md"><code class="xref download docutils literal notranslate"><span class="pre">Unified</span> <span class="pre">code</span> <span class="pre">explanation</span></code></a></p></li>
 <li><p><a class="reference download internal" download="" href="../_downloads/06d59fae43a3d0e1fbb1609abe112b35/UNIFIED_CODE_VERIFICATION.md"><code class="xref download docutils literal notranslate"><span class="pre">Verification</span> <span class="pre">results</span></code></a></p></li>
 <li><p><a class="reference download internal" download="" href="../_downloads/91eed1df4e058b0db802d1d67a29ab18/verify_unified_code.py"><code class="xref download docutils literal notranslate"><span class="pre">Verification</span> <span class="pre">script</span></code></a></p></li>

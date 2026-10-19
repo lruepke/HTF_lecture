@@ -21,20 +21,31 @@ from folding_solver import (
 )
 
 
-def make_folding_mesh(fp: FoldingParams) -> Mesh:
+def make_folding_mesh(fp: FoldingParams, 
+                      layer_centers: list[float] | None = None,
+                      layer_thicknesses: list[float] | None = None,
+                      layer_amplitudes: list[float] | None = None,
+                      layer_wavelengths: list[float] | None = None) -> Mesh:
     """
-    Create an unstructured triangle mesh with a folding layer.
+    Create an unstructured triangle mesh with one or more folding layers.
 
-    The domain is rectangular with a horizontal layer defined by two
-    sinusoidal interfaces. Three regions are created:
-      - matrix below the layer  (phase 0)
-      - the competent layer     (phase 1)
-      - matrix above the layer  (phase 0)
+    The domain is rectangular with horizontal layers defined by sinusoidal
+    interfaces. Multiple regions are created:
+      - matrix regions between layers (phase 0)
+      - competent layers (phase 1, 2, 3, ...)
 
     Parameters
     ----------
     fp : FoldingParams
-        Folding parameters (domain size, layer geometry, element sizes)
+        Folding parameters (domain size, default layer geometry, element sizes)
+    layer_centers : list[float], optional
+        Y-coordinates of layer centers. If None, uses single layer at y=0.
+    layer_thicknesses : list[float], optional
+        Thickness of each layer. If None, uses fp.h for all layers.
+    layer_amplitudes : list[float], optional
+        Perturbation amplitude for each layer. If None, uses fp.A for all.
+    layer_wavelengths : list[float], optional
+        Wavelength for each layer. If None, uses fp.wavelength for all.
 
     Returns
     -------
@@ -45,6 +56,30 @@ def make_folding_mesh(fp: FoldingParams) -> Mesh:
     x_max =  fp.Lx / 2
     y_min = -fp.Ly / 2
     y_max =  fp.Ly / 2
+
+    # ---- Handle default single-layer case ----
+    if layer_centers is None:
+        layer_centers = [0.0]
+    n_layers = len(layer_centers)
+    
+    if layer_thicknesses is None:
+        layer_thicknesses = [fp.h] * n_layers
+    if layer_amplitudes is None:
+        layer_amplitudes = [fp.A] * n_layers
+    if layer_wavelengths is None:
+        layer_wavelengths = [fp.wavelength] * n_layers
+    
+    # Validate input lengths
+    assert len(layer_thicknesses) == n_layers, "layer_thicknesses must match layer_centers"
+    assert len(layer_amplitudes) == n_layers, "layer_amplitudes must match layer_centers"
+    assert len(layer_wavelengths) == n_layers, "layer_wavelengths must match layer_centers"
+    
+    # Sort layers by y-center (bottom to top)
+    sorted_indices = np.argsort(layer_centers)
+    layer_centers = [layer_centers[i] for i in sorted_indices]
+    layer_thicknesses = [layer_thicknesses[i] for i in sorted_indices]
+    layer_amplitudes = [layer_amplitudes[i] for i in sorted_indices]
+    layer_wavelengths = [layer_wavelengths[i] for i in sorted_indices]
 
     vertices = []
     segments = []
@@ -60,54 +95,85 @@ def make_folding_mesh(fp: FoldingParams) -> Mesh:
         [x_min, y_max],   # 3 - top-left
     ])
     # Bottom edge (marker 101), right (102), top (103), left (104)
+    # We'll remove right and left edges later as they get split by interfaces
     segments.extend([
-        (i0 + 0, i0 + 1),
-        (i0 + 1, i0 + 2),
-        (i0 + 2, i0 + 3),
-        (i0 + 3, i0 + 0),
+        (i0 + 0, i0 + 1),  # bottom - keep
+        (i0 + 1, i0 + 2),  # right - will remove
+        (i0 + 2, i0 + 3),  # top - keep
+        (i0 + 3, i0 + 0),  # left - will remove
     ])
     segment_markers.extend([101, 102, 103, 104])
 
-    # ---- Discretize bottom interface ----
     n_pts = fp.n_interface_pts
     x_pts = np.linspace(x_min, x_max, n_pts)
-    y_bot = -fp.h / 2 + fp.A * np.cos(2 * np.pi * x_pts / fp.wavelength)
-    y_top =  fp.h / 2 + fp.A * np.cos(2 * np.pi * x_pts / fp.wavelength)
 
-    # Add bottom interface vertices
-    i_bot_start = len(vertices)
-    for k in range(n_pts):
-        vertices.append([x_pts[k], y_bot[k]])
-    # Segments along the bottom interface (marker 201)
-    for k in range(n_pts - 1):
-        segments.append((i_bot_start + k, i_bot_start + k + 1))
-        segment_markers.append(201)
-
-    # ---- Add top interface vertices ----
-    i_top_start = len(vertices)
-    for k in range(n_pts):
-        vertices.append([x_pts[k], y_top[k]])
-    # Segments along the top interface (marker 202)
-    for k in range(n_pts - 1):
-        segments.append((i_top_start + k, i_top_start + k + 1))
-        segment_markers.append(202)
+    # ---- Create interfaces for all layers ----
+    # Store interface info: list of (y_bot_array, y_top_array, i_bot_start, i_top_start)
+    layer_interfaces = []
+    
+    for layer_idx in range(n_layers):
+        y_center = layer_centers[layer_idx]
+        h = layer_thicknesses[layer_idx]
+        A = layer_amplitudes[layer_idx]
+        wavelength = layer_wavelengths[layer_idx]
+        
+        y_bot = y_center - h / 2 + A * np.cos(2 * np.pi * x_pts / wavelength)
+        y_top = y_center + h / 2 + A * np.cos(2 * np.pi * x_pts / wavelength)
+        
+        # Add bottom interface vertices
+        i_bot_start = len(vertices)
+        for k in range(n_pts):
+            vertices.append([x_pts[k], y_bot[k]])
+        # Segments along the bottom interface (marker 201 + 2*layer_idx)
+        marker_bot = 201 + 2 * layer_idx
+        for k in range(n_pts - 1):
+            segments.append((i_bot_start + k, i_bot_start + k + 1))
+            segment_markers.append(marker_bot)
+        
+        # Add top interface vertices
+        i_top_start = len(vertices)
+        for k in range(n_pts):
+            vertices.append([x_pts[k], y_top[k]])
+        # Segments along the top interface (marker 202 + 2*layer_idx)
+        marker_top = 202 + 2 * layer_idx
+        for k in range(n_pts - 1):
+            segments.append((i_top_start + k, i_top_start + k + 1))
+            segment_markers.append(marker_top)
+        
+        layer_interfaces.append({
+            'y_bot': y_bot,
+            'y_top': y_top,
+            'i_bot_start': i_bot_start,
+            'i_top_start': i_top_start,
+        })
 
     # ---- Connect interfaces to domain boundary at left and right edges ----
-    # Left side connections
-    segments.append((i0 + 3, i_top_start))
-    segment_markers.append(104)
-    segments.append((i_top_start, i_bot_start))
-    segment_markers.append(104)
-    segments.append((i_bot_start, i0 + 0))
-    segment_markers.append(104)
-
-    # Right side connections
-    segments.append((i0 + 1, i_bot_start + n_pts - 1))
-    segment_markers.append(102)
-    segments.append((i_bot_start + n_pts - 1, i_top_start + n_pts - 1))
-    segment_markers.append(102)
-    segments.append((i_top_start + n_pts - 1, i0 + 2))
-    segment_markers.append(102)
+    # Build connection chain from top-left corner down to bottom-left corner (left edge)
+    # and from bottom-right corner up to top-right corner (right edge)
+    
+    # Left side: start from top-left (i0+3), go through all interfaces (top to bottom), end at bottom-left (i0+0)
+    left_chain = [i0 + 3]  # top-left corner
+    for layer_idx in range(n_layers - 1, -1, -1):  # top to bottom
+        iface = layer_interfaces[layer_idx]
+        left_chain.append(iface['i_top_start'])      # top interface left endpoint
+        left_chain.append(iface['i_bot_start'])      # bottom interface left endpoint
+    left_chain.append(i0 + 0)  # bottom-left corner
+    
+    for k in range(len(left_chain) - 1):
+        segments.append((left_chain[k], left_chain[k + 1]))
+        segment_markers.append(104)
+    
+    # Right side: start from bottom-right (i0+1), go through all interfaces (bottom to top), end at top-right (i0+2)
+    right_chain = [i0 + 1]  # bottom-right corner
+    for layer_idx in range(n_layers):  # bottom to top
+        iface = layer_interfaces[layer_idx]
+        right_chain.append(iface['i_bot_start'] + n_pts - 1)  # bottom interface right endpoint
+        right_chain.append(iface['i_top_start'] + n_pts - 1)  # top interface right endpoint
+    right_chain.append(i0 + 2)  # top-right corner
+    
+    for k in range(len(right_chain) - 1):
+        segments.append((right_chain[k], right_chain[k + 1]))
+        segment_markers.append(102)
 
     # Remove original left (index 3) and right (index 1) boundary segments
     # since they are now split by the interface connections above
@@ -122,10 +188,33 @@ def make_folding_mesh(fp: FoldingParams) -> Mesh:
     segment_markers = new_markers
 
     # ---- Region points ----
-    y_region_below = (y_min + y_bot.min()) / 2
+    # We need region points for:
+    # - Matrix below all layers (phase 0)
+    # - Each layer (phase 1, 2, 3, ...)
+    # - Matrix between layers (phase 0)
+    # - Matrix above all layers (phase 0)
+    
+    # Matrix below all layers
+    y_lowest_bot = min(iface['y_bot'].min() for iface in layer_interfaces)
+    y_region_below = (y_min + y_lowest_bot) / 2
     regions.append([0.0, y_region_below, 0, fp.el_size_matrix])
-    regions.append([0.0, 0.0, 1, fp.el_size_layer])
-    y_region_above = (y_max + y_top.max()) / 2
+    
+    # Layers and matrix between them
+    for layer_idx in range(n_layers):
+        iface = layer_interfaces[layer_idx]
+        y_center = layer_centers[layer_idx]
+        # Layer region (phase = layer_idx + 1)
+        regions.append([0.0, y_center, layer_idx + 1, fp.el_size_layer])
+        
+        # Matrix above this layer (if not the topmost layer)
+        if layer_idx < n_layers - 1:
+            next_iface = layer_interfaces[layer_idx + 1]
+            y_gap_center = (iface['y_top'].max() + next_iface['y_bot'].min()) / 2
+            regions.append([0.0, y_gap_center, 0, fp.el_size_matrix])
+    
+    # Matrix above all layers
+    y_highest_top = max(iface['y_top'].max() for iface in layer_interfaces)
+    y_region_above = (y_max + y_highest_top) / 2
     regions.append([0.0, y_region_above, 0, fp.el_size_matrix])
 
     # ---- Triangulate ----
@@ -144,7 +233,7 @@ def make_folding_mesh(fp: FoldingParams) -> Mesh:
 
     # ---- Fix boundary markers ----
     # Interface endpoint nodes on the domain boundary may receive interface
-    # markers (201/202) from triangle instead of boundary markers. Fix by
+    # markers from triangle instead of boundary markers. Fix by
     # coordinate: any node on the domain edge must have a boundary marker.
     tol = 1e-10 * max(fp.Lx, fp.Ly)
     on_bottom = np.abs(GCOORD[:, 1] - y_min) < tol
@@ -356,14 +445,14 @@ def main() -> None:
         mu_matrix=1.0,
         mu_layer=100.0,
         eps_bg=0.5,
-        el_size_layer=0.02,
+        el_size_layer=0.005,
         el_size_matrix=0.05,
         n_interface_pts=100,
     )
 
     tp = TimeParams(
         dt=0.005,
-        nt=100,
+        nt=300,
         output_freq=5,
     )
 
@@ -408,8 +497,8 @@ def main() -> None:
     print("STARTING TIME LOOP")
     print(f"{'='*70}")
 
-    xmf_fname = "folding.xmf"
-    h5_fname = "folding.h5"
+    xmf_fname = "folding_multi.xmf"
+    h5_fname = "folding_multi.h5"
 
     h5file = h5py.File(h5_fname, "w")
     step_info = []

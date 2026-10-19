@@ -163,7 +163,7 @@ def make_mesh(geom: GeometryParams) -> Mesh:
                         (i+2, i+3),
                         (i+3, i+0)])
 
-        regions.append([x+0.01*w, y+0.01*h, attribute, 0.005])
+        regions.append([x+0.01*w, y+0.01*h, attribute, 0.0001])
 
     def _make_inclusion(center_x: float, center_y: float, radius: float,
                        points_inc: int, attribute: float,
@@ -180,7 +180,7 @@ def make_mesh(geom: GeometryParams) -> Mesh:
         Tmp[-1, 1] = i
         segments.extend(Tmp)
 
-        regions.append([center_x, center_y, attribute, 0.001])
+        regions.append([center_x, center_y, attribute, 0.0001])
 
     # generate input
     _make_box(geom.x0, geom.y0, geom.lx, geom.ly, 1, vertices, segments, regions)

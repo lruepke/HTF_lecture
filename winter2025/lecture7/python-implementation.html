@@ -183,7 +183,7 @@
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Mesh</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for mesh data.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Container for mesh data."""</span>
     <span class="n">GCOORD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>   <span class="c1"># Node coordinates</span>
     <span class="n">EL2NOD</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>   <span class="c1"># Element connectivity</span>
     <span class="n">Phases</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>   <span class="c1"># Phase/material ID per element</span>
@@ -194,7 +194,7 @@
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">MaterialParams</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for material properties.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Container for material properties."""</span>
     <span class="n">Mu</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>   <span class="c1"># Shear viscosity per phase</span>
     <span class="n">Rho</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>  <span class="c1"># Density per phase</span>
     <span class="n">G</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>    <span class="c1"># Gravity vector [gx, gy]</span>
@@ -293,11 +293,11 @@ y
     <span class="n">bc</span><span class="p">:</span> <span class="n">BoundaryConditions</span><span class="p">,</span>
     <span class="n">solver</span><span class="p">:</span> <span class="n">SolverParams</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Solution</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Solve 2D incompressible Stokes flow using FEM.</span>
 
 <span class="sd">    Returns Solution object with velocity and pressure fields.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 </pre></div>
 </div>
 <p>There might be a more elegant solution to this; we’d be happy to hear about it!</p>

@@ -266,7 +266,7 @@ For each block:
 <span class="c1"># dNdui:        (2, 7)       - same for all elements (reference element)</span>
 <span class="c1"># ECOORD_block: (n_el, 7, 2) - different per element</span>
 <span class="c1"># Result:       (n_el, 2, 2) - one Jacobian per element</span>
-<span class="n">Jac_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ik,nkj-&gt;nij&#39;</span><span class="p">,</span> <span class="n">dNdui</span><span class="p">,</span> <span class="n">ECOORD_block</span><span class="p">)</span>
+<span class="n">Jac_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'ik,nkj-&gt;nij'</span><span class="p">,</span> <span class="n">dNdui</span><span class="p">,</span> <span class="n">ECOORD_block</span><span class="p">)</span>
 </pre></div>
 </div>
 <section id="understanding-np-einsum">
@@ -284,7 +284,7 @@ For each block:
 <h3>Vectorized 2x2 matrix inversion<a class="headerlink" href="#vectorized-2x2-matrix-inversion" title="Link to this heading"></a></h3>
 <p>Rather than calling <code class="docutils literal notranslate"><span class="pre">np.linalg.inv</span></code> on each 2x2 Jacobian, we invert all of them using the analytical formula:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">batch_invert_2x2</span><span class="p">(</span><span class="n">matrices</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Invert n matrices of shape (n, 2, 2) simultaneously.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Invert n matrices of shape (n, 2, 2) simultaneously."""</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">matrices</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">matrices</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">matrices</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
@@ -328,10 +328,10 @@ For each block:
 <span class="c1"># B_block is (n_el, 3, 14)</span>
 
 <span class="c1"># Step 1: D @ B for all elements → (n_el, 3, 14)</span>
-<span class="n">DEV_B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij,njk-&gt;nik&#39;</span><span class="p">,</span> <span class="n">DEV</span><span class="p">,</span> <span class="n">B_block</span><span class="p">)</span>
+<span class="n">DEV_B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'ij,njk-&gt;nik'</span><span class="p">,</span> <span class="n">DEV</span><span class="p">,</span> <span class="n">B_block</span><span class="p">)</span>
 
 <span class="c1"># Step 2: B^T @ (D @ B) for all elements → (n_el, 14, 14)</span>
-<span class="n">BtDB_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;nji,njk-&gt;nik&#39;</span><span class="p">,</span> <span class="n">B_block</span><span class="p">,</span> <span class="n">DEV_B</span><span class="p">)</span>
+<span class="n">BtDB_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'nji,njk-&gt;nik'</span><span class="p">,</span> <span class="n">B_block</span><span class="p">,</span> <span class="n">DEV_B</span><span class="p">)</span>
 
 <span class="c1"># Step 3: Scale by weight * viscosity per element</span>
 <span class="n">A_block</span> <span class="o">+=</span> <span class="p">(</span><span class="n">weight_block</span> <span class="o">*</span> <span class="n">EMu_block</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">BtDB_block</span>
@@ -359,12 +359,12 @@ For each block:
 <span class="n">P_inv_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">P_block</span><span class="p">)</span>   <span class="c1"># (n_el, 3, 3)</span>
 
 <span class="c1"># Inside the ip loop: compute Pi = P^{-1} @ Pb for all elements</span>
-<span class="n">ip_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;k,nkj-&gt;nj&#39;</span><span class="p">,</span> <span class="n">Ni</span><span class="p">,</span> <span class="n">ECOORD_block</span><span class="p">)</span>  <span class="c1"># (n_el, 2)</span>
+<span class="n">ip_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'k,nkj-&gt;nj'</span><span class="p">,</span> <span class="n">Ni</span><span class="p">,</span> <span class="n">ECOORD_block</span><span class="p">)</span>  <span class="c1"># (n_el, 2)</span>
 <span class="n">Pb_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_el_block</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="n">Pb_block</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ip_coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
 <span class="n">Pb_block</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">ip_coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
 
-<span class="n">Pi_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;nij,nj-&gt;ni&#39;</span><span class="p">,</span> <span class="n">P_inv_block</span><span class="p">,</span> <span class="n">Pb_block</span><span class="p">)</span>  <span class="c1"># (n_el, 3)</span>
+<span class="n">Pi_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'nij,nj-&gt;ni'</span><span class="p">,</span> <span class="n">P_inv_block</span><span class="p">,</span> <span class="n">Pb_block</span><span class="p">)</span>  <span class="c1"># (n_el, 3)</span>
 </pre></div>
 </div>
 <p>Since <span class="math notranslate nohighlight">\(\mathbf{P}\)</span> only depends on corner coordinates (constant per element), precomputing <span class="math notranslate nohighlight">\(\mathbf{P}^{-1}\)</span> avoids calling <code class="docutils literal notranslate"><span class="pre">np.linalg.solve</span></code> at every integration point. The batched <code class="docutils literal notranslate"><span class="pre">np.linalg.inv</span></code> handles all elements in one call.</p>
@@ -380,8 +380,8 @@ For each block:
 <p>In the blocked version, <code class="docutils literal notranslate"><span class="pre">np.einsum</span></code> computes outer products for all elements simultaneously:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Blocked: outer products for all elements</span>
 <span class="c1"># Pi_block: (n_el, 3), Bvol_ravel_block: (n_el, 14)</span>
-<span class="n">Q_block</span> <span class="o">-=</span> <span class="n">weight_block</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ni,nj-&gt;nij&#39;</span><span class="p">,</span> <span class="n">Pi_block</span><span class="p">,</span> <span class="n">Bvol_ravel_block</span><span class="p">)</span>
-<span class="n">M_block</span> <span class="o">+=</span> <span class="n">weight_block</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ni,nj-&gt;nij&#39;</span><span class="p">,</span> <span class="n">Pi_block</span><span class="p">,</span> <span class="n">Pi_block</span><span class="p">)</span>
+<span class="n">Q_block</span> <span class="o">-=</span> <span class="n">weight_block</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'ni,nj-&gt;nij'</span><span class="p">,</span> <span class="n">Pi_block</span><span class="p">,</span> <span class="n">Bvol_ravel_block</span><span class="p">)</span>
+<span class="n">M_block</span> <span class="o">+=</span> <span class="n">weight_block</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'ni,nj-&gt;nij'</span><span class="p">,</span> <span class="n">Pi_block</span><span class="p">,</span> <span class="n">Pi_block</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The volumetric strain <span class="math notranslate nohighlight">\(\mathbf{B}_{\text{vol}}\)</span> is obtained by rearranging the global shape function derivatives:</p>
@@ -402,8 +402,8 @@ For each block:
 <p>The blocked version uses batched inversion and <code class="docutils literal notranslate"><span class="pre">np.einsum</span></code> for the triple matrix product:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Blocked: static condensation for all elements</span>
 <span class="n">invM_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">M_block</span><span class="p">)</span>                         <span class="c1"># (n_el, 3, 3)</span>
-<span class="n">invM_Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;nij,njk-&gt;nik&#39;</span><span class="p">,</span> <span class="n">invM_block</span><span class="p">,</span> <span class="n">Q_block</span><span class="p">)</span>    <span class="c1"># (n_el, 3, 14)</span>
-<span class="n">QtinvMQ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;nji,njk-&gt;nik&#39;</span><span class="p">,</span> <span class="n">Q_block</span><span class="p">,</span> <span class="n">invM_Q</span><span class="p">)</span>       <span class="c1"># (n_el, 14, 14)</span>
+<span class="n">invM_Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'nij,njk-&gt;nik'</span><span class="p">,</span> <span class="n">invM_block</span><span class="p">,</span> <span class="n">Q_block</span><span class="p">)</span>    <span class="c1"># (n_el, 3, 14)</span>
+<span class="n">QtinvMQ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">'nji,njk-&gt;nik'</span><span class="p">,</span> <span class="n">Q_block</span><span class="p">,</span> <span class="n">invM_Q</span><span class="p">)</span>       <span class="c1"># (n_el, 14, 14)</span>
 <span class="n">A_block</span> <span class="o">+=</span> <span class="n">PF</span> <span class="o">*</span> <span class="n">QtinvMQ</span>
 </pre></div>
 </div>
