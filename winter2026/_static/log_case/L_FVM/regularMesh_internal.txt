@@ -1,0 +1,236 @@
+Access internal mesh
+0: face center (-0.04 -0.01 0.005)
+0: face area vector (0.0001 0 0)
+0: face area 0.0001
+0: face delta coeff 100
+0: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+1: face center (-0.045 -0.005 0.005)
+1: face area vector (0 0.0001 0)
+1: face area 0.0001
+1: face delta coeff 100
+1: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+2: face center (-0.03 -0.01 0.005)
+2: face area vector (0.0001 0 0)
+2: face area 0.0001
+2: face delta coeff 100
+2: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+3: face center (-0.035 -0.005 0.005)
+3: face area vector (0 0.0001 0)
+3: face area 0.0001
+3: face delta coeff 100
+3: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+4: face center (-0.02 -0.01 0.005)
+4: face area vector (0.0001 0 0)
+4: face area 0.0001
+4: face delta coeff 100
+4: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+5: face center (-0.025 -0.005 0.005)
+5: face area vector (0 0.0001 0)
+5: face area 0.0001
+5: face delta coeff 100
+5: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+6: face center (-0.01 -0.01 0.005)
+6: face area vector (0.0001 0 0)
+6: face area 0.0001
+6: face delta coeff 100
+6: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+7: face center (-0.015 -0.005 0.005)
+7: face area vector (0 0.0001 0)
+7: face area 0.0001
+7: face delta coeff 100
+7: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+8: face center (0 -0.01 0.005)
+8: face area vector (0.0001 0 0)
+8: face area 0.0001
+8: face delta coeff 100
+8: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+9: face center (-0.005 -0.005 0.005)
+9: face area vector (0 0.0001 0)
+9: face area 0.0001
+9: face delta coeff 100
+9: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+10: face center (0.01 -0.01 0.005)
+10: face area vector (0.0001 0 0)
+10: face area 0.0001
+10: face delta coeff 100
+10: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+11: face center (0.005 -0.005 0.005)
+11: face area vector (0 0.0001 0)
+11: face area 0.0001
+11: face delta coeff 100
+11: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+12: face center (0.02 -0.01 0.005)
+12: face area vector (0.0001 0 0)
+12: face area 0.0001
+12: face delta coeff 100
+12: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+13: face center (0.015 -0.005 0.005)
+13: face area vector (0 0.0001 0)
+13: face area 0.0001
+13: face delta coeff 100
+13: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+14: face center (0.03 -0.01 0.005)
+14: face area vector (0.0001 0 0)
+14: face area 0.0001
+14: face delta coeff 100
+14: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+15: face center (0.025 -0.005 0.005)
+15: face area vector (0 0.0001 0)
+15: face area 0.0001
+15: face delta coeff 100
+15: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+16: face center (0.04 -0.01 0.005)
+16: face area vector (0.0001 0 0)
+16: face area 0.0001
+16: face delta coeff 100
+16: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+17: face center (0.035 -0.005 0.005)
+17: face area vector (0 0.0001 0)
+17: face area 0.0001
+17: face delta coeff 100
+17: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+18: face center (0.045 -0.005 0.005)
+18: face area vector (0 0.0001 0)
+18: face area 0.0001
+18: face delta coeff 100
+18: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+19: face center (-0.04 0 0.005)
+19: face area vector (0.0001 0 0)
+19: face area 0.0001
+19: face delta coeff 100
+19: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+20: face center (-0.045 0.005 0.005)
+20: face area vector (0 0.0001 0)
+20: face area 0.0001
+20: face delta coeff 100
+20: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+21: face center (-0.03 0 0.005)
+21: face area vector (0.0001 0 0)
+21: face area 0.0001
+21: face delta coeff 100
+21: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+22: face center (-0.035 0.005 0.005)
+22: face area vector (0 0.0001 0)
+22: face area 0.0001
+22: face delta coeff 100
+22: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+23: face center (-0.02 0 0.005)
+23: face area vector (0.0001 0 0)
+23: face area 0.0001
+23: face delta coeff 100
+23: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+24: face center (-0.025 0.005 0.005)
+24: face area vector (0 0.0001 0)
+24: face area 0.0001
+24: face delta coeff 100
+24: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+25: face center (-0.01 0 0.005)
+25: face area vector (0.0001 0 0)
+25: face area 0.0001
+25: face delta coeff 100
+25: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+26: face center (-0.015 0.005 0.005)
+26: face area vector (0 0.0001 0)
+26: face area 0.0001
+26: face delta coeff 100
+26: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+27: face center (0 0 0.005)
+27: face area vector (0.0001 0 0)
+27: face area 0.0001
+27: face delta coeff 100
+27: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+28: face center (-0.005 0.005 0.005)
+28: face area vector (0 0.0001 0)
+28: face area 0.0001
+28: face delta coeff 100
+28: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+29: face center (0.01 0 0.005)
+29: face area vector (0.0001 0 0)
+29: face area 0.0001
+29: face delta coeff 100
+29: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+30: face center (0.005 0.005 0.005)
+30: face area vector (0 0.0001 0)
+30: face area 0.0001
+30: face delta coeff 100
+30: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+31: face center (0.02 0 0.005)
+31: face area vector (0.0001 0 0)
+31: face area 0.0001
+31: face delta coeff 100
+31: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+32: face center (0.015 0.005 0.005)
+32: face area vector (0 0.0001 0)
+32: face area 0.0001
+32: face delta coeff 100
+32: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+33: face center (0.03 0 0.005)
+33: face area vector (0.0001 0 0)
+33: face area 0.0001
+33: face delta coeff 100
+33: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+34: face center (0.025 0.005 0.005)
+34: face area vector (0 0.0001 0)
+34: face area 0.0001
+34: face delta coeff 100
+34: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+35: face center (0.04 0 0.005)
+35: face area vector (0.0001 0 0)
+35: face area 0.0001
+35: face delta coeff 100
+35: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+36: face center (0.035 0.005 0.005)
+36: face area vector (0 0.0001 0)
+36: face area 0.0001
+36: face delta coeff 100
+36: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+37: face center (0.045 0.005 0.005)
+37: face area vector (0 0.0001 0)
+37: face area 0.0001
+37: face delta coeff 100
+37: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+38: face center (-0.04 0.01 0.005)
+38: face area vector (0.0001 0 0)
+38: face area 0.0001
+38: face delta coeff 100
+38: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+39: face center (-0.03 0.01 0.005)
+39: face area vector (0.0001 0 0)
+39: face area 0.0001
+39: face delta coeff 100
+39: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+40: face center (-0.02 0.01 0.005)
+40: face area vector (0.0001 0 0)
+40: face area 0.0001
+40: face delta coeff 100
+40: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+41: face center (-0.01 0.01 0.005)
+41: face area vector (0.0001 0 0)
+41: face area 0.0001
+41: face delta coeff 100
+41: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+42: face center (0 0.01 0.005)
+42: face area vector (0.0001 0 0)
+42: face area 0.0001
+42: face delta coeff 100
+42: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+43: face center (0.01 0.01 0.005)
+43: face area vector (0.0001 0 0)
+43: face area 0.0001
+43: face delta coeff 100
+43: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+44: face center (0.02 0.01 0.005)
+44: face area vector (0.0001 0 0)
+44: face area 0.0001
+44: face delta coeff 100
+44: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+45: face center (0.03 0.01 0.005)
+45: face area vector (0.0001 0 0)
+45: face area 0.0001
+45: face delta coeff 100
+45: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
+46: face center (0.04 0.01 0.005)
+46: face area vector (0.0001 0 0)
+46: face area 0.0001
+46: face delta coeff 100
+46: coeff(D*magSf*deltacoeff) ((100*DT)*0.0001) [0 2 -1 0 0 0 0] 4e-07
