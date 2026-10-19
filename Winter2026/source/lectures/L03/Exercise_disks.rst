@@ -42,7 +42,7 @@ We will again use `porespy <https://porespy.org>`_ to generate a random packing 
 
 
     # 2. generate the spheres and show / ~ to stay with earlier convention that black is solid    
-    im = ~ps.generators.random_spheres(im_or_shape=shape, r=r, clearance=clearance, volume_fraction=volume_fraction, edges=edges)
+    im = ~ps.generators.random_spheres(shape=shape, r=r, clearance=clearance, phi=volume_fraction, edges=edges)
     fig, ax = plt.subplots(1, 1, figsize=[4, 4])
     ax.axis(False) # turn off decoration
     ax.imshow(im, origin='lower', interpolation='none', cmap='gray');
