@@ -75,17 +75,17 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#docker">Docker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#visual-studio-code">Visual Studio Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sec-install-paraview">Paraview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#python">Python</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#download-and-install-miniconda">Download and install miniconda</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#create-a-virtual-environment">Create a virtual environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#switching-between-environments">Switching between environments</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#integration-with-visual-studio-code">Integration with Visual Studio Code</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#test-your-installation">Test your installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-desktop">Docker Desktop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sec-install-paraview">ParaView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-course-container">The course container</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#daily-use">Daily use</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#visual-studio-code">Visual Studio Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jupyterlab">JupyterLab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-your-installation">Test your installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="OpenFoam.html">Getting started with OpenFoam</a></li>
@@ -198,175 +198,126 @@
              
   <section id="installation-guide">
 <span id="id1"></span><h1>Installation guide<a class="headerlink" href="#installation-guide" title="Link to this heading"></a></h1>
-<p>We will be using the Foundation version of <a class="reference external" href="https://openfoam.org">OpenFOAM</a> and our own hydrothermal flow solver <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> , which is based on OpenFoam. Detailed installation instructions can be found on the webpages of HydrothermalFoam. During this class we will rely on a virtualized environment and use a pre-configured docker container.</p>
-<section id="docker">
-<span id="sec-install-docker"></span><h2>Docker<a class="headerlink" href="#docker" title="Link to this heading"></a></h2>
-<p>We will rely on <a class="reference internal" href="#docker">docker</a> and use a virtual Ubuntu Linux installation that has OpenFoam and HydrothermalFoam installed. The image is based on a clean Ubuntu 22.04 LTS and <a class="reference external" href="https://openfoam.org">OpenFOAM</a> 9 build from source. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> is our hydrothermal flow solver and xthermo our  implementation of the <span id="id2">[<a class="reference internal" href="../../refs.html#id31" title="T. Driesner and C. A. Heinrich. The system h2o-nacl. part i: correlation formulae for phase relations in temperature-pressure-composition space from 0 to 1000 degrees c, 0 to 5000 bar, and 0 to 1 x-nacl. Geochimica Et Cosmochimica Acta, 71(20):4880-4901, 2007. Driesner, Thomas Heinrich, Christoph A. URL: &lt;Go to ISI&gt;://000250948100006, doi:10.1016/i.gca.2006.01.033.">Driesner &amp; Heinrich, 2007</a>]</span> equation-of-state for the system H<sub>2</sub>O-NaCl. Docker images are lightweight, standalone, and immutable templates for creating containers, while containers are runtime instances of these images that include the application and its dependencies. These are the necessary steps:</p>
+<p>We will be using the Foundation version of <a class="reference external" href="https://openfoam.org">OpenFOAM</a> (version 10) and our own hydrothermal flow solver <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a>, which is based on OpenFOAM. Everything you need for the class comes in one pre-configured <a class="reference external" href="https://www.docker.com">Docker</a> container:</p>
+<ul class="simple">
+<li><p>OpenFOAM 10, built from source on Ubuntu 22.04 Linux</p></li>
+<li><p>HydrothermalFoam with its solver <code class="code docutils literal notranslate"><span class="pre">HTFoam</span></code>, and xThermo, our implementation of the <span id="id2">[<a class="reference internal" href="../../refs.html#id31" title="T. Driesner and C. A. Heinrich. The system h2o-nacl. part i: correlation formulae for phase relations in temperature-pressure-composition space from 0 to 1000 degrees c, 0 to 5000 bar, and 0 to 1 x-nacl. Geochimica Et Cosmochimica Acta, 71(20):4880-4901, 2007. Driesner, Thomas Heinrich, Christoph A. URL: &lt;Go to ISI&gt;://000250948100006, doi:10.1016/i.gca.2006.01.033.">Driesner &amp; Heinrich, 2007</a>]</span> equation-of-state for the system H<sub>2</sub>O-NaCl</p></li>
+<li><p>Python 3.12 with all packages we use in class (numpy, scipy, matplotlib, pandas, vtk, meshio, porespy, iapws, …)</p></li>
+<li><p>JupyterLab and Visual Studio Code, which you use in your web browser</p></li>
+</ul>
+<p>You only install two programs on your computer: <strong>Docker Desktop</strong>, which runs the container, and <strong>ParaView</strong>, which we use to look at the results.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Docker images are templates that contain an operating system with installed software. A container is a running instance of an image, a bit like a virtual Linux computer inside your computer. You can stop and restart it, and your files stay where they are.</p>
+</div>
+<section id="docker-desktop">
+<span id="sec-install-docker"></span><h2>Docker Desktop<a class="headerlink" href="#docker-desktop" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p><strong>Install</strong> <a class="reference external" href="https://www.docker.com/products/docker-desktop">docker desktop</a> and keep it running.</p></li>
-<li><p><strong>Register</strong> an account with <a class="reference external" href="https://hub.docker.com/">docker hub</a>, a marketplace for docker images.</p></li>
-<li><p><strong>Log-into</strong> your newly created account from your docker desktop application.</p></li>
+<li><p><strong>Install</strong> <a class="reference external" href="https://www.docker.com/products/docker-desktop">Docker Desktop</a> and start it. It needs to be running whenever you work on the class.</p></li>
+<li><p><strong>Optional:</strong> register an account at <a class="reference external" href="https://hub.docker.com/">Docker Hub</a> and log in from Docker Desktop. You can download the course image also without an account.</p></li>
 </ol>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>Steps 2 and 3 are  optional and you should be able to download the docker image also without a docker hub account.</p>
-</div>
-<p>Now we are ready to pull the provided docker image, which can be found here <a class="reference external" href="https://hub.docker.com/repository/docker/lruepke/hydrothermalfoam-openfoam9/general">lruepke/hydrothermalfoam-openfoam9:latest</a>.</p>
-<p>Open a shell (powershell under windows or a terminal under MacOS) and pull the image by typing this command.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>lruepke/hydrothermalfoam-openfoam9:latest
-</pre></div>
-</div>
-<p>The image is about 4GB, so this can take a while. The “:latest” tag points to a multiplatform image and you should get the right image regardless whether you are on an Intel/AMD or ARM/M-chip machine. After the download is finished, you can build the docker container. Use this command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>hydrothermalfoam9<span class="w"> </span>-v<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/HydrothermalFoam_runs&quot;</span>:<span class="s2">&quot;/home/openfoam/HydrothermalFoam_runs&quot;</span><span class="w"> </span>lruepke/hydrothermalfoam-openfoam9:latest
-</pre></div>
-</div>
-<p>This complicated looking command builds the docker container and creates a “shared” folder called HydrothermalFoam_runs in your home directory (this is what the -v option does). If you want it somewhere else, you can change this “$HOME/HydrothermalFoam_runs” part of the above statement. Please do not uses path and directory names with spaces or special characters in it (if you are on windows).</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<dl class="simple">
-<dt>Just in case you do not like to type statement that you don’t fully understand – this is what the other options do:</dt><dd><ul class="simple">
-<li><p>-it allocate a pseudo-TTY connected to the container’s stdin; creating an interactive bash shell in the container (plain language, this allows you to interact with (type inside) the container)</p></li>
-<li><p>– name hydrothermalfoam give the container its name</p></li>
-<li><p>-v makes a shared file system</p></li>
-<li><p>-d starts the container in detached mode (in the background)</p></li>
-<li><p>lruepke/hydrothermalfoam-openfoam9:latest is the name of the image we just downloaded</p></li>
-</ul>
-</dd>
-</dl>
-</div>
-<p>Now that you have built the docker container you can use these basic docker commands to interact with it:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>hydrothermalfoam9
-docker<span class="w"> </span>attach<span class="w"> </span>hydrothermalfoam9
-docker<span class="w"> </span>stop<span class="w"> </span>hydrothermalfoam9
-</pre></div>
-</div>
-<p>The first command starts the container and the second one attaches it to the current shell. As you will see below, you will typically run these two commands from the right-hand side shell in your VS code when you start your work. To stop the container, just run the stop command from another shell.</p>
-<p>While we recommend to use the command line to interact with docker, there is als a GUI that you can use to check on your docker containers and images. Just right-click on the icon in the task bar and chose dashboard.</p>
-<figure class="align-center" id="id4" style="width: 70%">
-<img alt="../../_images/docker_desktop.png" src="../../_images/docker_desktop.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Docker dashboard showing your images and containers.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
-</figcaption>
-</figure>
-</section>
-<section id="visual-studio-code">
-<span id="sec-install-vscode"></span><h2>Visual Studio Code<a class="headerlink" href="#visual-studio-code" title="Link to this heading"></a></h2>
-<p>Working with OpenFoam involves a lot of editing of text files and you can use your favorite text editor for this. However, we strongly recommend to use <a class="reference external" href="https://code.visualstudio.com/">Microsoft’s Visual Studio Code</a>.</p>
-<p>Open Visual Studio Code and open two shells side-by-side at the bottom (powershell on Windows and terminal on Mac). We will use the convention that we use the terminal to the right-hand side as our “virtual machine (docker) shell” and the terminal to the left as our local shell.</p>
-<p>Start and attach the docker container to the right-hand-side shell by typing</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>hydrothermalfoam9
-docker<span class="w"> </span>attach<span class="w"> </span>hydrothermalfoam9
-</pre></div>
-</div>
-<p>If you want things to be pretty, try starting a z-shell (instead of the default bash):</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zsh
-</pre></div>
-</div>
-<p>You can stop the container whenever you want and your files will remain intact, just like in any other virtual machine. To stop the container type</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>hydrothermalfoam9
-</pre></div>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>It really helps to have syntax highlighting when manipulating OpenFoam files. To get it search for openfoam in the Extensions Tab of Visual Studio Code and you will find an extension provided by Zhikui Guo. Install the plug-in and copy the file associations into the settings.json file. To do so, type CMD/CTRL + SHIFT + P and search for “Open Settings (JSON)”.</p>
+<p>The course image needs about 8 GB of disk space. On Windows, Docker Desktop uses WSL 2; just accept the defaults during the installation.</p>
 </div>
 </section>
 <section id="sec-install-paraview">
-<span id="id3"></span><h2>Paraview<a class="headerlink" href="#sec-install-paraview" title="Link to this heading"></a></h2>
-<p>We will use Kiteware’s <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize the modeling results. Download and install the latest version. It also really helps to add paraview to the system path, so that it can be called from the command line.</p>
+<span id="id4"></span><h2>ParaView<a class="headerlink" href="#sec-install-paraview" title="Link to this heading"></a></h2>
+<p>We will use Kitware’s <a class="reference external" href="https://www.paraview.org">ParaView</a> to visualize the modeling results. Download and install the latest version for your computer. ParaView runs on your computer, not in the container, and opens the result files from your course folder.</p>
+</section>
+<section id="the-course-container">
+<span id="sec-install-container"></span><h2>The course container<a class="headerlink" href="#the-course-container" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Create a <strong>course folder</strong> on your computer, for example <code class="code docutils literal notranslate"><span class="pre">HTF_course</span></code> in your home directory. Please do not use spaces or special characters in the folder name and in the path to it.</p></li>
+<li><p>Download the file <a class="reference download internal" download="" href="../../_downloads/a7ba7189d4ba90cc64b1150f91f1058b/docker-compose.yml"><code class="xref download docutils literal notranslate"><span class="pre">docker-compose.yml</span></code></a> and save it into your course folder. It describes the course container.</p></li>
+<li><p>Open a terminal (Terminal on macOS and Linux, PowerShell on Windows), go to your course folder, and start the container:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>HTF_course
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</pre></div>
+</div>
+<p>The first time, this downloads the course image, which takes a while. Afterwards, the container starts within seconds.</p>
+</li>
+<li><p>Open the two tools in your web browser:</p>
+<ul class="simple">
+<li><p><strong>Visual Studio Code</strong>: <a class="reference external" href="http://localhost:8080">http://localhost:8080</a></p></li>
+<li><p><strong>JupyterLab</strong>: <a class="reference external" href="http://localhost:8888">http://localhost:8888</a></p></li>
+</ul>
+</li>
+</ol>
+<p>Docker created a folder <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> in your course folder. Inside the container, the same folder is <code class="code docutils literal notranslate"><span class="pre">/home/openfoam/HydrothermalFoam_runs</span></code>. This is where all your work goes: everything you save there is directly visible on your computer (e.g. for ParaView), and everything you put there on your computer is visible in the container.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Only the files in <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> are stored on your computer. Everything else in the container is lost when the container is removed (e.g. by <code class="code docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span> <span class="pre">down</span></code> or when the course image is updated). So always work in <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code>.</p>
+</div>
+<section id="daily-use">
+<h3>Daily use<a class="headerlink" href="#daily-use" title="Link to this heading"></a></h3>
+<p>Run these commands in a terminal in your course folder:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w">      </span><span class="c1"># start the container</span>
+docker<span class="w"> </span>compose<span class="w"> </span>stop<span class="w">       </span><span class="c1"># stop the container when you are done</span>
+</pre></div>
+</div>
+<p>You can also start and stop the container in Docker Desktop.</p>
+<figure class="align-center" id="id5" style="width: 70%">
+<img alt="../../_images/docker_desktop.png" src="../../_images/docker_desktop.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Docker Desktop shows your images and containers.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="visual-studio-code">
+<span id="sec-install-vscode"></span><h2>Visual Studio Code<a class="headerlink" href="#visual-studio-code" title="Link to this heading"></a></h2>
+<p>Working with OpenFOAM involves a lot of editing of text files and running commands in a Linux shell. We do both in Visual Studio Code, which runs inside the container and which you open in your browser at <a class="reference external" href="http://localhost:8080">http://localhost:8080</a>. It opens the folder <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code>.</p>
+<ul class="simple">
+<li><p>Open a terminal with <em>Terminal → New Terminal</em> (or CTRL + `). This is a Linux shell inside the container, with OpenFOAM and HydrothermalFoam ready to use. All OpenFOAM commands in this class are typed in such a terminal.</p></li>
+<li><p>Open a file in the editor by clicking on it, or from the terminal with <code class="code docutils literal notranslate"><span class="pre">code</span> <span class="pre">filename</span></code>.</p></li>
+<li><p>Python files and Jupyter notebooks also work in Visual Studio Code. The course Python is already selected.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can also get a shell in the container from a terminal on your computer, without Visual Studio Code: <code class="code docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span> <span class="pre">exec</span> <span class="pre">htf</span> <span class="pre">bash</span></code></p>
+</div>
+</section>
+<section id="jupyterlab">
+<h2>JupyterLab<a class="headerlink" href="#jupyterlab" title="Link to this heading"></a></h2>
+<p>JupyterLab runs inside the container as well; open it at <a class="reference external" href="http://localhost:8888">http://localhost:8888</a>. New notebooks use the course Python with all packages installed. Terminals in JupyterLab are Linux shells in the container, just like in Visual Studio Code.</p>
 </section>
 <section id="python">
 <h2>Python<a class="headerlink" href="#python" title="Link to this heading"></a></h2>
-<p>We will use python to analyze some of the numerical results and to dive deeper in to the details of the numerical methods use. In case you are already having a working python environment, read no further. If not, we recommend <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a>. Follow the miniconda installation instructions and afterwards create a virtual environment for this course. If you are asked to automatically activate the base environment (add it to the system path), chose “no”. It’s usually a good idea to keep the normal OS python environment intact and only activate a miniconda environment when you need it.</p>
-<section id="download-and-install-miniconda">
-<h3>Download and install miniconda<a class="headerlink" href="#download-and-install-miniconda" title="Link to this heading"></a></h3>
-<p>Just follow the installation instructions and keep the default options. We recommend to install python 3. During the installation, choose to <strong>not</strong> add it to your path (that’s the default). Adding miniconda/anaconda to your <code class="code docutils literal notranslate"><span class="pre">$PATH</span></code> may seem convenient but there are several reason to not do it.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Python is used by many different tools on your computer, which probably expect that just calling python will use the Python (and additional packages) installed by the operating system. None of these will be available to Miniconda’s Python.</p></li>
-<li><p>The conda environment we will create contains several binary dependencies and we do not want to interfere with defaults on your system when, e.g. compiling software unrelated to our lecture.</p></li>
-</ul>
-</div></blockquote>
-</section>
-<section id="create-a-virtual-environment">
-<h3>Create a virtual environment<a class="headerlink" href="#create-a-virtual-environment" title="Link to this heading"></a></h3>
-<p>We will create a so-called virtual environment with all the python packages we will use during this class. To not interfere with your default python installation, we will do this in a virtual environment. To get started open a terminal with activated base miniconda installation.</p>
-<div class="admonition-starting-python admonition">
-<p class="admonition-title">Starting python</p>
-<p>If you are on Windows, start an Anaconda Powershell Prompt from the start menu.</p>
-<p>On MacOS / Linux, open a terminal and type</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>base
-</pre></div>
-</div>
-<p>You can also do that in the terminal within Visual Studio Code (on MacOS).</p>
-</div>
-<p>It can sometimes be a bit irritating to understand which environments are used in for example jupyter notebooks. In addition, conda has various so-called <em>channels</em> from which we can install packages. We will use the conda-forge channel. This is the setup we will be using:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>the base environment will not be used to do any work. It will just be our starting point from where we start jupyter (if you don’t know what jupyter is, no worries, you will know soon)</p></li>
-<li><p>we will create another environment for the actual work. In this environment we will install the package <em>ipykernel</em> to make sure that jupyterlab recognizes the new environment as a kernel.</p></li>
-</ul>
-</div></blockquote>
-<p>Alright, let’s install some basic packages into the base environment:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-n<span class="w"> </span>base<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>jupyterlab<span class="w"> </span>nb_conda_kernels
-</pre></div>
-</div>
-<p>Now we can proceed and create our working environment.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>py3_htf_class<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span><span class="w"> </span>numpy<span class="w"> </span>pandas<span class="w"> </span>matplotlib<span class="w"> </span>vtk<span class="w"> </span>h5py<span class="w"> </span>scipy<span class="w"> </span>ipykernel
-</pre></div>
-</div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>py3_htf_class
-</pre></div>
-</div>
-<p>And add a few more packages that are not directly available form anaconda using pip:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>meshio
-pip<span class="w"> </span>install<span class="w"> </span>iapws
-</pre></div>
-</div>
-</section>
-<section id="switching-between-environments">
-<h3>Switching between environments<a class="headerlink" href="#switching-between-environments" title="Link to this heading"></a></h3>
-<p>You can activate and deactivate environments like this:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>py3_htf_class
-conda<span class="w"> </span>deactivate
-</pre></div>
-</div>
-</section>
-<section id="integration-with-visual-studio-code">
-<h3>Integration with Visual Studio Code<a class="headerlink" href="#integration-with-visual-studio-code" title="Link to this heading"></a></h3>
-<p>You will need to install Microsoft’s Python extension. Just search for Python under Extensions and chose the one from Microsoft (usually the first option). Finally, you will have to set the Python interpreter. Do this by pushing CMD/CTRL+SHIFT+P. Type Python: Select Interpretor and select our newly created anaconda environment. If it doesn’t show up, close and re-open Visual Studio Code.</p>
+<p>Python is already installed in the container with all packages we need in class: you do not have to install or activate anything. <code class="code docutils literal notranslate"><span class="pre">python</span></code> in a terminal, notebooks in JupyterLab, and Python files in Visual Studio Code all use the same course environment.</p>
+<p>If you need an extra package, install it with <code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">&lt;package&gt;</span></code> in a terminal in the container. Note that such packages are lost when the container is removed (see the warning above).</p>
 </section>
 <section id="test-your-installation">
-<h3>Test your installation<a class="headerlink" href="#test-your-installation" title="Link to this heading"></a></h3>
-<p>Check that you everything is working by, for example, importing the meshio package and by executing some simple code. Do this in Visual Studio Code and in JupyterLab.</p>
-<div class="tab-set docutils container">
-<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Visual Studio Code</label><div class="tab-content docutils container">
-<p>First, let’s check that VS Code finds our new kernel:</p>
-<ul class="simple">
-<li><p>start VS Code and get a shell (Terminal-&gt;New Terminal)</p></li>
-<li><p>choose the right python interpreter STRG/CMD+SHIFT+P and chose py3_htf_class</p></li>
-<li><p>type <code class="code docutils literal notranslate"><span class="pre">code</span> <span class="pre">hello.ipynb</span></code> into the shell</p></li>
-<li><p>enter the example code from the figure below into the notebook</p></li>
-<li><p>execute the cell with SHIFT+RETURN</p></li>
-</ul>
-<figure class="align-center" style="width: 70%">
-<img alt="../../_images/python_install.png" src="../../_images/python_install.png" />
-</figure>
+<h2>Test your installation<a class="headerlink" href="#test-your-installation" title="Link to this heading"></a></h2>
+<p>Open a terminal in Visual Studio Code and check that OpenFOAM and HydrothermalFoam are available:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">$WM_PROJECT_VERSION</span><span class="w">    </span><span class="c1"># should print 10</span>
+which<span class="w"> </span>HTFoam
+</pre></div>
 </div>
-<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--2">JupyterLab</label><div class="tab-content docutils container">
-<p>Now we check the jupyter installation:</p>
-<ul class="simple">
-<li><p>open a terminal (linux/mac) or a miniconda powershell (Windows)</p></li>
-<li><p>make sure you are in the base environment by typing <code class="code docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">base</span></code></p></li>
-<li><p>start jupyterlab with <code class="code docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code></p></li>
-<li><p>check that you can chose your py3_htf_class kernel</p></li>
-</ul>
-<figure class="align-center" style="width: 70%">
-<img alt="../../_images/jupyter_lab.png" src="../../_images/jupyter_lab.png" />
-</figure>
+<p>Then create a new notebook in JupyterLab (or a file <code class="code docutils literal notranslate"><span class="pre">hello.ipynb</span></code> in Visual Studio Code), and run this code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">meshio</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
 </div>
-</div>
+<p>You should see a sine curve. If everything works, you are ready for the <a class="reference internal" href="FirstCase.html#l01-firstcase"><span class="std std-ref">A first test case - heat diffusion</span></a>.</p>
 </section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<ul>
+<li><p><strong>“Cannot connect to the Docker daemon”</strong>: Docker Desktop is not running. Start it and try again.</p></li>
+<li><p><strong>“port is already allocated”</strong>: another program uses port 8080 or 8888. Stop it, or change the first number in the <code class="code docutils literal notranslate"><span class="pre">ports</span></code> section of <code class="code docutils literal notranslate"><span class="pre">docker-compose.yml</span></code> (e.g. <code class="code docutils literal notranslate"><span class="pre">&quot;127.0.0.1:8081:8080&quot;</span></code>) and open <a class="reference external" href="http://localhost:8081">http://localhost:8081</a> instead.</p></li>
+<li><p><strong>A new version of the course image</strong>: if we announce an update, run this in your course folder (your files in <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> are kept):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>pull
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</pre></div>
+</div>
+</li>
+</ul>
 </section>
 </section>
 

@@ -52,7 +52,7 @@
     "r               = 25                # radius of the spheres in same units as the image\n",
     "\n",
     "# 2. generate the spheres and show / ~ to stay with earlier convention that black is solid\n",
-    "im = ~ps.generators.random_spheres(im_or_shape=shape, r=r, clearance=clearance, volume_fraction=volume_fraction, edges=edges)\n",
+    "im = ~ps.generators.random_spheres(shape=shape, r=r, clearance=clearance, phi=volume_fraction, edges=edges)\n",
     "fig, ax = plt.subplots(1, 1, figsize=[4, 4])\n",
     "ax.axis(False) # turn off decoration\n",
     "ax.imshow(im, origin='lower', interpolation='none', cmap='gray');\n",

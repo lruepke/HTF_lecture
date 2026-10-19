@@ -240,17 +240,9 @@
 </div></blockquote>
 <section id="python-pre-processing">
 <h3>Python pre-processing<a class="headerlink" href="#python-pre-processing" title="Link to this heading"></a></h3>
-<p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it and the first step is to install porespy into our python virtual environment (we should already have PIL, which is also needed).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span><span class="s2">&quot;your_environment_name&quot;</span>
-conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>porespy
-</pre></div>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>If conda install fails, you can also use <code class="code docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">porespy</span></code></p>
-</div>
+<p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it, which is already installed in the course container (together with PIL, which is also needed).</p>
 <p>Now we are good to go and it’s time to download the data. The complete openFOAM case can be downloaded from <a class="reference download internal" download="" href="../../_downloads/65ca8e602751cf5a43c9c804c6623d86/DRP_permeability_2D.zip"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a> .</p>
-<p>Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup).</p>
+<p>Copy the case into your shared working directory <code class="code docutils literal notranslate"><span class="pre">$HOME/HydrothermalFoam_runs</span></code>. You need to do this within the docker container, i.e. in a terminal in Visual Studio Code.</p>
 <p>Check out the directory structure shown in <a class="reference internal" href="#lst-drp-case-tree"><span class="std std-numref">Listing 13</span></a>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-drp-case-tree">
 <div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">File tree structure of the Digital Rock Physics case.</span><a class="headerlink" href="#lst-drp-case-tree" title="Link to this code"></a></div>
@@ -305,7 +297,7 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
 <span class="n">ps</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">to_vtk</span><span class="p">(</span><span class="n">arr_stacked</span><span class="p">,</span> <span class="s1">&#39;geometry/porous_model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You can put this little script into a jupyter notebook or save it as .py (e.g. png2vti.py), then activate the right kernel (e.g. <code class="code docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">py3_htf_class</span></code>), and do this:</p>
+<p>You can put this little script into a jupyter notebook or save it as .py (e.g. png2vti.py) and run it in a terminal in the container:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>png2vti.py
 </pre></div>
 </div>
@@ -333,7 +325,7 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
 <div><ol class="arabic simple">
 <li><p>use paraview’s graphical user interface</p></li>
 <li><p>use paraview’s inbuild python shell</p></li>
-<li><p>install paraview into a conda environment and use a jupyter notebook</p></li>
+<li><p>use <code class="code docutils literal notranslate"><span class="pre">pvpython</span></code>, paraview’s command-line python, from a terminal on your computer</p></li>
 </ol>
 </div></blockquote>
 <figure class="align-center" id="fig-paraview-figure-fig" style="width: 85%">
@@ -367,7 +359,7 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
 <span class="n">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>An easy way to exectute the python scrip is to call it from the python shell in paraview <a class="reference internal" href="#fig-paraview-figure-fig"><span class="std std-numref">Fig. 13</span></a>. Within the shell, you first make sure that you are in your case directory; then you make the correct folder to hold the .stl file that we will create (<code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>).</p>
+<p>An easy way to exectute the python scrip is to call it from the python shell in paraview <a class="reference internal" href="#fig-paraview-figure-fig"><span class="std std-numref">Fig. 13</span></a>. Within the shell, you first make sure that you are in your case directory (paraview runs on your computer, so this is the case directory in the <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> folder of your course folder); then you make the correct folder to hold the .stl file that we will create (<code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;your_case_directory&quot;</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;constant/triSurface&#39;</span><span class="p">)</span>
@@ -382,12 +374,15 @@ mv<span class="w"> </span>./porous_model.stl<span class="w"> </span>./constant/t
 </div>
 <div class="admonition-doing-it-the-proper-way admonition">
 <p class="admonition-title">Doing it the proper way</p>
-<p>The more elegant way would have been to avoid the in-build paraview shell and do everything in a jupyter notebook or a stand-alone python file. Unfortunately, installing the <code class="code docutils literal notranslate"><span class="pre">paraview.simple</span></code> module can be a pain - and even the paraview conda package is incompatible with other packages (like vtk, which we will need later in the class).</p>
-<p>Here is a way to get this to work: make a clean conda environment that has paraview and some other useful things, activate the base environment, startup jupyter and choose the newly created py3_htf_paraview kernel for a new notebook, and finally copy and paste the code above into notebook. Try it!</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>py3_htf_paraview<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span><span class="w"> </span>numpy<span class="w"> </span>pandas<span class="w"> </span>matplotlib<span class="w"> </span>paraview<span class="w"> </span>scipy<span class="w"> </span>ipykernel
+<p>The more elegant way is to avoid the in-build paraview shell and run the script as a stand-alone python file. The <code class="code docutils literal notranslate"><span class="pre">paraview.simple</span></code> module is not part of the course container, because paraview runs on your computer. But paraview comes with its own python, <code class="code docutils literal notranslate"><span class="pre">pvpython</span></code>, which you can use from a terminal on your computer (not in the container). Save the code above as <code class="code docutils literal notranslate"><span class="pre">make_stl.py</span></code> in your case directory, create the folder <code class="code docutils literal notranslate"><span class="pre">constant/triSurface</span></code>, and run it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># macOS (adjust the version number)</span>
+/Applications/ParaView-5.13.2.app/Contents/bin/pvpython<span class="w"> </span>make_stl.py
 
-conda<span class="w"> </span>activate<span class="w"> </span>base
-jupyter<span class="w"> </span>notebook
+<span class="c1"># Windows, in PowerShell (adjust the version number)</span>
+<span class="p">&amp;</span><span class="w"> </span><span class="s2">&quot;C:\Program Files\ParaView 5.13.2\bin\pvpython.exe&quot;</span><span class="w"> </span>make_stl.py
+
+<span class="c1"># Linux</span>
+pvpython<span class="w"> </span>make_stl.py
 </pre></div>
 </div>
 </div>
@@ -489,7 +484,7 @@ jupyter<span class="w"> </span>notebook
 <span class="linenos">87</span>
 <span class="linenos">88</span>    <span class="n">frontAndBack</span>
 <span class="linenos">89</span>    <span class="p">{</span>
-<span class="linenos">90</span>        <span class="kt">type</span> <span class="n">empty</span><span class="p">;</span>
+<span class="linenos">90</span>        <span class="kt">type</span> <span class="n">patch</span><span class="p">;</span>    <span class="c1">// set to empty after snappyHexMesh (see run.sh)</span>
 <span class="linenos">91</span>        <span class="k">faces</span>
 <span class="linenos">92</span>        <span class="p">(</span>
 <span class="linenos">93</span>            <span class="p">(</span><span class="mi">0</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">)</span>
@@ -501,15 +496,17 @@ jupyter<span class="w"> </span>notebook
 </div>
 </div>
 <p>Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions.</p>
+<p>The mesh is only one cell thick, because we are doing a 2-D simulation. In 2-D cases, the front and back faces usually get the type <code class="code docutils literal notranslate"><span class="pre">empty</span></code>. snappyHexMesh, however, only works on 3-D meshes, so we keep <code class="code docutils literal notranslate"><span class="pre">frontAndBack</span></code> as a normal <code class="code docutils literal notranslate"><span class="pre">patch</span></code> during meshing and change it to <code class="code docutils literal notranslate"><span class="pre">empty</span></code> afterwards.</p>
 <p>Now have a look at <code class="code docutils literal notranslate"><span class="pre">system/snappyHexMeshDict</span></code>. We will not go into details here, just explore the general structure yourself if you are interested using the resources linked above.</p>
 <p>Time to make the mesh! Run each of the steps below individually and check out the results in paraview.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>blockMesh
 snappyHexMesh<span class="w"> </span>-overwrite
+foamDictionary<span class="w"> </span>constant/polyMesh/boundary<span class="w"> </span>-entry<span class="w"> </span>entry0/frontAndBack/type<span class="w"> </span>-set<span class="w"> </span>empty
 checkMesh<span class="w"> </span>-allTopology<span class="w"> </span>-allGeometry
-transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class="s2">&quot;(1e-6 1e-6 1e-6)&quot;</span>
+transformPoints<span class="w"> </span><span class="s2">&quot;scale=(1e-6 1e-6 1e-6)&quot;</span>
 </pre></div>
 </div>
-<p>The final conversion turns everything in micrometer (<span class="math notranslate nohighlight">\(10^{-6} m\)</span>). Check out the final mesh in paraview!</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">foamDictionary</span></code> command sets the type of <code class="code docutils literal notranslate"><span class="pre">frontAndBack</span></code> to <code class="code docutils literal notranslate"><span class="pre">empty</span></code> in the final mesh (<code class="code docutils literal notranslate"><span class="pre">constant/polyMesh/boundary</span></code>). The final conversion turns everything in micrometer (<span class="math notranslate nohighlight">\(10^{-6} m\)</span>). Check out the final mesh in paraview!</p>
 </section>
 <section id="boundary-conditions">
 <h3>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading"></a></h3>

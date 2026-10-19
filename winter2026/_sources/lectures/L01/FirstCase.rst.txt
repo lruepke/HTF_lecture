@@ -44,7 +44,7 @@ Our first case is the **flange** case from the `OpenFoam tutorials <https://cfd.
 .. tip::
     It is good practice to never change the original tutorials, which reside in $FOAM_TUTORIALS but to always make a copy to your working directory.
  
-To get started, just copy the whole case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:
+To get started, just copy the whole case into your shared working directory :code:`$HOME/HydrothermalFoam_runs`. You need to do this within the docker container, i.e. in a terminal in Visual Studio Code (see :ref:`Installation guide`). Cd into your shared folder and type this:
 
 .. code-block:: bash 
     :name: lst:cpFlangeToWorkDir
@@ -113,13 +113,13 @@ Again, you can use command of :code:`tree` to explore what changes in the case f
         ├── fvSchemes
         └── fvSolution
 
-After converting the mesh, you can use Paraview_ to visualize the mesh. Create a new file named :code:`a.foam` in your working directory. This is a dummy file that Paraview uses to open OpenFOAM cases. You can do this by typing the command below in your docker or local shell:
+After converting the mesh, you can use Paraview_ to visualize the mesh. Create a new file named :code:`a.foam` in your case directory. This is a dummy file that Paraview uses to open OpenFOAM cases. You can do this by typing the command below in your terminal:
 
 .. code-block:: bash
 
     touch a.foam
 
-Then open Paraview and load the :code:`a.foam` file. You can find the file in your working directory. In the left-hand panel, you can see the mesh files. Select the :code:`a.foam` mesh and click on :code:`Apply`. You should be able to see the mesh in Paraview.
+Then open Paraview on your computer and load the :code:`a.foam` file. You find it in your course folder under :code:`HydrothermalFoam_runs/flange`. In the left-hand panel, you can see the mesh files. Select the :code:`a.foam` mesh and click on :code:`Apply`. You should be able to see the mesh in Paraview.
 
 .. only:: html
 
@@ -139,7 +139,7 @@ Then open Paraview and load the :code:`a.foam` file. You can find the file in yo
 Boundary conditions
 -------------------
 
-Next we need to set boundary conditions. Open the file T inside the 0 directory from your local left-hand shell.
+Next we need to set boundary conditions. Open the file T inside the 0 directory in Visual Studio Code, either by clicking on it or from the terminal:
 
 .. code-block:: bash 
 
@@ -155,7 +155,7 @@ Next we need to set boundary conditions. Open the file T inside the 0 directory 
     =========                 |
     \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
      \\    /   O peration     | Website:  https://openfoam.org
-      \\  /    A nd           | Version:  7
+      \\  /    A nd           | Version:  10
        \\/     M anipulation  |
     \*---------------------------------------------------------------------------*/
     FoamFile
@@ -221,7 +221,7 @@ Next we need to set the value of the thermal diffusivity.
     =========                 |
     \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
      \\    /   O peration     | Website:  https://openfoam.org
-      \\  /    A nd           | Version:  7
+      \\  /    A nd           | Version:  10
        \\/     M anipulation  |
     \*---------------------------------------------------------------------------*/
     FoamFile
@@ -260,7 +260,7 @@ Finally, we need to set some control parameters like the time step, run time, ou
     =========                 |
     \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
      \\    /   O peration     | Website:  https://openfoam.org
-      \\  /    A nd           | Version:  7
+      \\  /    A nd           | Version:  10
        \\/     M anipulation  |
     \*---------------------------------------------------------------------------*/
     FoamFile
@@ -307,7 +307,7 @@ You can find detailed descriptions of the different parameters in the `OpenFoam 
 
 Running the case
 ----------------
-Now we are finally ready to run our first test case. Just type this into your docker shell:
+Now we are finally ready to run our first test case. Just type this into your terminal:
 
 .. code-block:: bash 
 

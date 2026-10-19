@@ -58,21 +58,11 @@ The steps involved are shown in :numref:`fig:figure_workflow_fig` . Starting fro
 Python pre-processing
 ^^^^^^^^^^^^^^^^^^^^^
 
-Let's work through the steps involved and assume we received a 2-D image of scanned pore space ( :numref:`fig:figure_workflow_fig` A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it and the first step is to install porespy into our python virtual environment (we should already have PIL, which is also needed).
+Let's work through the steps involved and assume we received a 2-D image of scanned pore space ( :numref:`fig:figure_workflow_fig` A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it, which is already installed in the course container (together with PIL, which is also needed).
 
-.. code-block:: bash
-
-      conda activate "your_environment_name"
-      conda install -c conda-forge porespy
-
-.. tip::
-
-    If conda install fails, you can also use :code:`pip install porespy`
-    
-    
 Now we are good to go and it's time to download the data. The complete openFOAM case can be downloaded from :download:`here <cases/DRP_permeability_2D.zip>` . 
 
-Copy the case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup).
+Copy the case into your shared working directory :code:`$HOME/HydrothermalFoam_runs`. You need to do this within the docker container, i.e. in a terminal in Visual Studio Code.
 
 Check out the directory structure shown in :numref:`lst:drp_case:tree`.
 
@@ -133,7 +123,7 @@ Next we import the .png file from the :code:`geometry` folder and convert it to 
     # 3.2 save as vti using porespy                                              
     ps.io.to_vtk(arr_stacked, 'geometry/porous_model') 
 
-You can put this little script into a jupyter notebook or save it as .py (e.g. png2vti.py), then activate the right kernel (e.g. :code:`conda activate py3_htf_class`), and do this:
+You can put this little script into a jupyter notebook or save it as .py (e.g. png2vti.py) and run it in a terminal in the container:
 
 .. code-block:: bash
 
@@ -166,7 +156,7 @@ Now comes the segmentation and triangulation part to make an stl file that openF
 
     #. use paraview's graphical user interface
     #. use paraview's inbuild python shell
-    #. install paraview into a conda environment and use a jupyter notebook
+    #. use :code:`pvpython`, paraview's command-line python, from a terminal on your computer
 
 .. figure:: /_figures/paraview_python.*
    :align: center
@@ -204,7 +194,7 @@ Here is some python code that uses the paraview python bindings. You can save it
     write_stl(vti_file, stl_file)
 
 
-An easy way to exectute the python scrip is to call it from the python shell in paraview :numref:`fig:paraview_figure_fig`. Within the shell, you first make sure that you are in your case directory; then you make the correct folder to hold the .stl file that we will create (:code:`./constant/triSurface`).
+An easy way to exectute the python scrip is to call it from the python shell in paraview :numref:`fig:paraview_figure_fig`. Within the shell, you first make sure that you are in your case directory (paraview runs on your computer, so this is the case directory in the :code:`HydrothermalFoam_runs` folder of your course folder); then you make the correct folder to hold the .stl file that we will create (:code:`./constant/triSurface`).
 
 .. code:: python
 
@@ -225,16 +215,18 @@ If you used the paraview GUI, you might have to do some cleanup, so that the fil
 
 .. admonition:: Doing it the proper way
 
-    The more elegant way would have been to avoid the in-build paraview shell and do everything in a jupyter notebook or a stand-alone python file. Unfortunately, installing the :code:`paraview.simple` module can be a pain - and even the paraview conda package is incompatible with other packages (like vtk, which we will need later in the class). 
-
-    Here is a way to get this to work: make a clean conda environment that has paraview and some other useful things, activate the base environment, startup jupyter and choose the newly created py3_htf_paraview kernel for a new notebook, and finally copy and paste the code above into notebook. Try it!
+    The more elegant way is to avoid the in-build paraview shell and run the script as a stand-alone python file. The :code:`paraview.simple` module is not part of the course container, because paraview runs on your computer. But paraview comes with its own python, :code:`pvpython`, which you can use from a terminal on your computer (not in the container). Save the code above as :code:`make_stl.py` in your case directory, create the folder :code:`constant/triSurface`, and run it:
 
     .. code-block:: bash
 
-        conda create -n py3_htf_paraview python=3 numpy pandas matplotlib paraview scipy ipykernel
+        # macOS (adjust the version number)
+        /Applications/ParaView-5.13.2.app/Contents/bin/pvpython make_stl.py
 
-        conda activate base 
-        jupyter notebook
+        # Windows, in PowerShell (adjust the version number)
+        & "C:\Program Files\ParaView 5.13.2\bin\pvpython.exe" make_stl.py
+
+        # Linux
+        pvpython make_stl.py
 
 
 OpenFOAM case
@@ -340,7 +332,7 @@ Great, back to openfoam for the final mesh making! Making the mesh with SHM is a
 
         frontAndBack
         {
-            type empty;
+            type patch;    // set to empty after snappyHexMesh (see run.sh)
             faces
             (
                 (0 3 2 1)
@@ -352,6 +344,8 @@ Great, back to openfoam for the final mesh making! Making the mesh with SHM is a
 
 Notice how we set the vertical and horizontal extents to 1196 and 1494, which is the pixel resolution of the image. We will scale it later to physical dimensions.
 
+The mesh is only one cell thick, because we are doing a 2-D simulation. In 2-D cases, the front and back faces usually get the type :code:`empty`. snappyHexMesh, however, only works on 3-D meshes, so we keep :code:`frontAndBack` as a normal :code:`patch` during meshing and change it to :code:`empty` afterwards.
+
 Now have a look at :code:`system/snappyHexMeshDict`. We will not go into details here, just explore the general structure yourself if you are interested using the resources linked above.
 
 Time to make the mesh! Run each of the steps below individually and check out the results in paraview.
@@ -360,10 +354,11 @@ Time to make the mesh! Run each of the steps below individually and check out th
 
     blockMesh
     snappyHexMesh -overwrite
+    foamDictionary constant/polyMesh/boundary -entry entry0/frontAndBack/type -set empty
     checkMesh -allTopology -allGeometry
-    transformPoints -scale "(1e-6 1e-6 1e-6)"
+    transformPoints "scale=(1e-6 1e-6 1e-6)"
 
-The final conversion turns everything in micrometer (:math:`10^{-6} m`). Check out the final mesh in paraview!
+The :code:`foamDictionary` command sets the type of :code:`frontAndBack` to :code:`empty` in the final mesh (:code:`constant/polyMesh/boundary`). The final conversion turns everything in micrometer (:math:`10^{-6} m`). Check out the final mesh in paraview!
 
 
 Boundary conditions

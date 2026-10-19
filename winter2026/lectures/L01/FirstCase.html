@@ -223,7 +223,7 @@
 <p class="admonition-title">Tip</p>
 <p>It is good practice to never change the original tutorials, which reside in $FOAM_TUTORIALS but to always make a copy to your working directory.</p>
 </div>
-<p>To get started, just copy the whole case into your shared working directory (probably $HOME/HydrothermalFoam_runs). You need to do this within the docker container (your right-hand shell in Visual Studio Code if you followed the recommended setup). Cd into your shared folder and type this:</p>
+<p>To get started, just copy the whole case into your shared working directory <code class="code docutils literal notranslate"><span class="pre">$HOME/HydrothermalFoam_runs</span></code>. You need to do this within the docker container, i.e. in a terminal in Visual Studio Code (see <a class="reference internal" href="Installation.html#installation-guide"><span class="std std-ref">Installation guide</span></a>). Cd into your shared folder and type this:</p>
 <div class="highlight-bash notranslate" id="lst-cpflangetoworkdir"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
 cp<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$FOAM_TUTORIALS</span>/basic/laplacianFoam/flange<span class="w"> </span>.
 </pre></div>
@@ -280,11 +280,11 @@ Again, you can use command of <code class="code docutils literal notranslate"><s
 </pre></div>
 </div>
 </div>
-<p>After converting the mesh, you can use <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize the mesh. Create a new file named <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> in your working directory. This is a dummy file that Paraview uses to open OpenFOAM cases. You can do this by typing the command below in your docker or local shell:</p>
+<p>After converting the mesh, you can use <a class="reference external" href="https://www.paraview.org">Paraview</a> to visualize the mesh. Create a new file named <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> in your case directory. This is a dummy file that Paraview uses to open OpenFOAM cases. You can do this by typing the command below in your terminal:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>a.foam
 </pre></div>
 </div>
-<p>Then open Paraview and load the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> file. You can find the file in your working directory. In the left-hand panel, you can see the mesh files. Select the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> mesh and click on <code class="code docutils literal notranslate"><span class="pre">Apply</span></code>. You should be able to see the mesh in Paraview.</p>
+<p>Then open Paraview on your computer and load the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> file. You find it in your course folder under <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs/flange</span></code>. In the left-hand panel, you can see the mesh files. Select the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> mesh and click on <code class="code docutils literal notranslate"><span class="pre">Apply</span></code>. You should be able to see the mesh in Paraview.</p>
 <div class="tab-set docutils container">
 <input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"><label class="tab-label" for="tab-set--0-input--1">Mesh of flange</label><div class="tab-content docutils container">
 <figure class="align-center" id="id1">
@@ -300,7 +300,7 @@ Again, you can use command of <code class="code docutils literal notranslate"><s
 </section>
 <section id="boundary-conditions">
 <h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading"></a></h2>
-<p>Next we need to set boundary conditions. Open the file T inside the 0 directory from your local left-hand shell.</p>
+<p>Next we need to set boundary conditions. Open the file T inside the 0 directory in Visual Studio Code, either by clicking on it or from the terminal:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/T
 </pre></div>
 </div>
@@ -310,7 +310,7 @@ Again, you can use command of <code class="code docutils literal notranslate"><s
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
 <span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
-<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  10</span>
 <span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
@@ -370,7 +370,7 @@ Again, you can use command of <code class="code docutils literal notranslate"><s
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
 <span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
-<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  10</span>
 <span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
@@ -404,7 +404,7 @@ Again, you can use command of <code class="code docutils literal notranslate"><s
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
 <span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
-<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  10</span>
 <span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
@@ -453,7 +453,7 @@ Again, you can use command of <code class="code docutils literal notranslate"><s
 </section>
 <section id="running-the-case">
 <h2>Running the case<a class="headerlink" href="#running-the-case" title="Link to this heading"></a></h2>
-<p>Now we are finally ready to run our first test case. Just type this into your docker shell:</p>
+<p>Now we are finally ready to run our first test case. Just type this into your terminal:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>laplacianFoam
 </pre></div>
 </div>

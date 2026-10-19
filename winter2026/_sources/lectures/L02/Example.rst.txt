@@ -210,7 +210,7 @@ Next we look into the pressure boundary conditions.
     =========                 |
     \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
      \\    /   O peration     | Website:  https://openfoam.org
-      \\  /    A nd           | Version:  7
+      \\  /    A nd           | Version:  10
        \\/     M anipulation  |
     \*---------------------------------------------------------------------------*/
     FoamFile

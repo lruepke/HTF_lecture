@@ -217,12 +217,12 @@
 </div>
 <p>Unfortunately, theree is no file <code class="code docutils literal notranslate"><span class="pre">system/decomposeParDict</span></code> in our example case… Fortunately, there is probably an example file somewhere in all the provided tutorials. A simple way to find and copy one is this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find<span class="w">  </span><span class="nv">$FOAM_TUTORIALS</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;decomposeParDict&quot;</span>
-/opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/fluid/decomposeParDict
-/opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/decomposeParDict
-/opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/metal/decomposeParDict
-/opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/externalCoupledCavity/system/decomposeParDict
-/opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/iglooWithFridges/system/decomposeParDict
-cp<span class="w"> </span>/opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/iglooWithFridges/system/decomposeParDict<span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs/cavity3D_par
+...
+/opt/OpenFOAM-10/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/decomposeParDict
+/opt/OpenFOAM-10/tutorials/heatTransfer/buoyantFoam/externalCoupledCavity/system/decomposeParDict
+/opt/OpenFOAM-10/tutorials/heatTransfer/buoyantFoam/iglooWithFridges/system/decomposeParDict
+...
+cp<span class="w"> </span>/opt/OpenFOAM-10/tutorials/heatTransfer/buoyantFoam/iglooWithFridges/system/decomposeParDict<span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs/cavity3D_par/system
 </pre></div>
 </div>
 <p>Now open this file and edit it; it should look like this</p>
@@ -232,7 +232,7 @@ cp<span class="w"> </span>/opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFo
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
 <span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
-<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  10</span>
 <span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
