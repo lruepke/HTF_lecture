@@ -107,7 +107,7 @@
     }
    ],
    "source": [
-    "casePath='/Users/lruepke/Research/Lectures/HTF_lecture/Summer2022/source/lectures/L05/cases/Jupp_Schultz' # set your own path!!!\n",
+    "casePath='..'\n",
     "caseDir='Jupp_Schultz'\n",
     "time='9460800000'\n",
     "vtkfile='%s/VTK/%s_%s.vtk'%(casePath,caseDir, time)\n",

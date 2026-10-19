@@ -4,11 +4,11 @@ Course details
 Course schedule
 ---------------
 
-**Summer Semester 2025**
+**Winter Semester 2026**
 
 - Class sessions
 
-  - Monday at 14:00 CET (28.04.2025 - 14.07.2025)
+  - Monday at 14:00 CET (26.10.2026 - 01.02.2027)
 
 - Semester breaks
 
