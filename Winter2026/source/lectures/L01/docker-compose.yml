@@ -1,0 +1,21 @@
+# HydrothermalFoam course container (Winter 2026)
+#
+# Put this file into your course folder and, in a terminal in that folder, run:
+#   docker compose up -d      start the container (downloads the image the first time)
+#   docker compose stop       stop it
+#
+# Then open in your browser:
+#   http://localhost:8080     VS Code
+#   http://localhost:8888     JupyterLab
+#
+# Your files are in the folder HydrothermalFoam_runs next to this file.
+services:
+  htf:
+    image: lruepke/hydrothermalfoam-teaching:winter2026
+    container_name: htf
+    init: true
+    ports:
+      - "127.0.0.1:8080:8080"   # VS Code
+      - "127.0.0.1:8888:8888"   # JupyterLab
+    volumes:
+      - ./HydrothermalFoam_runs:/home/openfoam/HydrothermalFoam_runs

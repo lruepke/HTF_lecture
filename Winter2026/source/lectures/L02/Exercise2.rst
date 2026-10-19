@@ -41,12 +41,12 @@ Unfortunately, theree is no file :code:`system/decomposeParDict` in our example 
 .. code-block:: bash 
     
     find  $FOAM_TUTORIALS -name "decomposeParDict"
-    /opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/fluid/decomposeParDict
-    /opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/decomposeParDict
-    /opt/OpenFOAM-9/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/metal/decomposeParDict
-    /opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/externalCoupledCavity/system/decomposeParDict
-    /opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/iglooWithFridges/system/decomposeParDict
-    cp /opt/OpenFOAM-9/tutorials/heatTransfer/buoyantSimpleFoam/iglooWithFridges/system/decomposeParDict $HOME/HydrothermalFoam_runs/cavity3D_par
+    ...
+    /opt/OpenFOAM-10/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/decomposeParDict
+    /opt/OpenFOAM-10/tutorials/heatTransfer/buoyantFoam/externalCoupledCavity/system/decomposeParDict
+    /opt/OpenFOAM-10/tutorials/heatTransfer/buoyantFoam/iglooWithFridges/system/decomposeParDict
+    ...
+    cp /opt/OpenFOAM-10/tutorials/heatTransfer/buoyantFoam/iglooWithFridges/system/decomposeParDict $HOME/HydrothermalFoam_runs/cavity3D_par/system
 
 Now open this file and edit it; it should look like this
 
@@ -60,7 +60,7 @@ Now open this file and edit it; it should look like this
     =========                 |
     \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
      \\    /   O peration     | Website:  https://openfoam.org
-      \\  /    A nd           | Version:  7
+      \\  /    A nd           | Version:  10
        \\/     M anipulation  |
     \*---------------------------------------------------------------------------*/
     FoamFile

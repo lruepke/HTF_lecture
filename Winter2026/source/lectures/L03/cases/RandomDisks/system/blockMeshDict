@@ -87,7 +87,7 @@ boundary
 
     frontAndBack
     {
-        type empty;
+        type patch;    // set to empty after snappyHexMesh (see run.sh)
         faces
         (
             (0 3 2 1)
