@@ -9,23 +9,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.3.4
-
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
+        uses: actions/checkout@v5
         with:
-          python-version: 3.9
+          fetch-depth: 0  # full history, needed to detect which lectures changed
 
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      # Same package versions as locally: poetry installs from poetry.lock
+      # (this also provides hugo via the "hugo" python package)
       - name: Install tools
         run: |
-          pip install sphinx sphinx_rtd_theme sphinxcontrib-bibtex matplotlib pandas numpy nbconvert ipykernel sphinx_inline_tabs sphinx_copybutton nbsphinx
-          sudo apt-get install pandoc
-          sudo apt-get install hugo
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+          pip install poetry
+          poetry config virtualenvs.create false
+          poetry install --no-root --no-interaction
 
       - name: Generate main pages and sphinx pages
         run: |
           # 0. Set lectures
-          lectures="Winter2020 Summer2021 Summer2022 Winter2022 Winter2023 Summer2024 Summer2025 Dome2025 Winter2025"
+          lectures="Winter2020 Summer2021 Summer2022 Winter2022 Winter2023 Summer2024 Summer2025 Dome2025 Winter2025 Winter2026"
           commitIDFile_stored=commit.ID
 
           # 1. Fetch history
@@ -52,8 +58,6 @@ jobs:
           cp -rf home/public/ .
 
           # 3. Build each lecture
-          git pull origin --unshallow || true  # avoid error if already full
-
           for lecture in $lectures
           do
             lectureName_hugo=$(echo "$lecture" | awk '{print tolower($0)}')
@@ -103,7 +107,7 @@ jobs:
           done
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public

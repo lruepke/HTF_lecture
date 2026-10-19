@@ -1,0 +1,56 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  6                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      functionObject;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+functions
+{
+
+    massFlowRate_raw
+    {
+        type            surfaceFieldValue;
+        functionObjectLibs ("libfieldFunctionObjects.dylib");
+        enabled         true;
+        writeFields     true;
+        surfaceFormat   raw; //raw,vtk
+        regionType          patch;
+        name      seafloor;
+        operation       none;
+        fields
+        (
+            phi
+            T
+            permeability
+        );
+
+    }
+    massFlowRate_vtk
+    {
+        type            surfaceFieldValue;
+        functionObjectLibs ("libfieldFunctionObjects.dylib");
+        enabled         true;
+        writeFields     true;
+        surfaceFormat   vtk; //raw,vtk
+        regionType          patch;
+        name      seafloor;
+        operation       none;
+        fields
+        (
+            phi
+            T
+            permeability
+        );
+
+    }
+}

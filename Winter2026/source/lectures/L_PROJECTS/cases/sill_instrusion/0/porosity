@@ -1,0 +1,87 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      porosity;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 0 0 0 0];
+
+//internalField   uniform 278.15;
+internalField #codeStream
+{
+    codeInclude
+    #{
+        #include "fvCFD.H"
+    #};
+    codeOptions
+    #{
+        -I$(LIB_SRC)/finiteVolume/lnInclude \
+        -I$(LIB_SRC)/meshTools/lnInclude
+    #};
+    codeLibs 
+    #{
+        -lmeshTools \
+        -lfiniteVolume 
+    #};
+    localCode
+    #{
+        static double calPorosity(const scalar minY, const scalar maxY, const scalar minT, const scalar maxT, scalar y)
+        {
+            //return (minT-y*(maxT-minT)/(maxY-minY));
+            return (0.4464*exp(0.2353*y/1000)); //put geothermal gradient here if you want one
+        }
+    #};
+    code 
+    #{
+        const IOdictionary& d = static_cast<const IOdictionary&>(dict);
+        const fvMesh& mesh = refCast<const fvMesh>(d.db());
+        scalarField porosity(mesh.nCells(), 0.03);
+        scalar minT = 278.15, maxT = 1073.15;
+        vector maxC = Foam::gMax(mesh.C());
+        vector minC = Foam::gMin(mesh.C());
+        scalar minY = minC[1], maxY = maxC[1];
+
+        forAll(porosity, i)
+        {
+            const scalar y = mesh.C()[i][1];
+            porosity[i]=calPorosity(minY, maxY, minT, maxT, y);            
+        }
+
+        forAll(mesh.cellZones(), zoneI)
+        {
+            const cellZone& cz = mesh.cellZones()[zoneI];
+            const labelList& cells = cz;
+
+            if (cz.name() == "intrusion")
+            {
+                forAll(cells, iCells)
+                {   
+                    const label cellId = cells[iCells];
+                    porosity[cellId] = 0.003;
+                }
+            }
+        }
+
+        writeEntry(os, "", porosity); //
+    #};
+};
+
+
+boundaryField
+{
+    seafloor{ type            zeroGradient; }
+    bottom{ type            zeroGradient; }
+    sidewalls{ type            zeroGradient; }
+}
+// ************************************************************************* //

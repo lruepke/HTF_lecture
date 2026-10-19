@@ -117,6 +117,12 @@ hasChildren = true
   url = "winter2025"
   weight = 5
 
+  [[Languages.en.menu.main]]
+  parent = "Lectures"
+  name = "Winter2026"
+  url = "winter2026"
+  weight = 6
+
 [Languages.en.params.banner]
 title = "Lectures on numerical fluid dynamics in geophysics"
 subtitle = "Welcome to the course notes on the numerical fluid dynamics lecture series taught in the geophysics master at Kiel University"

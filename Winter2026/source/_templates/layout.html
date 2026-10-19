@@ -1,0 +1,29 @@
+{# Import the theme's layout. #}
+{% extends "!layout.html" %}
+
+{%- block extrahead %} 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+{% endblock %}
+
+{% block menu %}
+    {{ super() }}
+
+    {% if menu_links %}
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            {% for text, link in menu_links %}
+                <li class="toctree-l1"><a href="{{ link }}">{{ text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

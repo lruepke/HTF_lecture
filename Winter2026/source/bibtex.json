@@ -1,0 +1,63 @@
+{
+    "cited": {
+        "lectures/L03/Overview": [
+            "ingebritsen2010numerical",
+            "hasenclever2014hybrid"
+        ],
+        "lectures/L04/Exercise2": [
+            "jupp2000thermodynamic",
+            "driesner2010",
+            "coumou2008",
+            "andersen2015"
+        ],
+        "lectures/L04/Exercise3": [
+            "driesner2010interplay"
+        ],
+        "lectures/L04/intro": [
+            "Nakamura2014",
+            "jupp2000thermodynamic",
+            "Jupp2004"
+        ],
+        "lectures/L05/Exercise2": [
+            "andersen2015"
+        ],
+        "lectures/L05/intro": [
+            "german2016",
+            "deMartin2007",
+            "andersen2015"
+        ],
+        "lectures/L_FVM/Exercise1": [
+            "moukalled2016finite"
+        ],
+        "lectures/L_PROJECTS/Project1": [
+            "Andersen2017",
+            "andersen2015",
+            "driesner2010",
+            "deMartin2007",
+            "McCaig2007",
+            "McCaig2010",
+            "Escartin2008"
+        ],
+        "lectures/L_PROJECTS/Project2": [
+            "Baker2007",
+            "Germanovich2015",
+            "Svensen2004",
+            "Aarnes2010",
+            "Iyer2017",
+            "Lund2011",
+            "Crowley2015",
+            "Lund2016",
+            "Galerne2019",
+            "Andersen2017"
+        ],
+        "lectures/L_PROJECTS/Project3": [
+            "Aarnes2010",
+            "Iyer2017",
+            "Weis2012",
+            "Cox2010",
+            "Rozhko2007",
+            "Galerne2019",
+            "Svensen2004"
+        ]
+    }
+}

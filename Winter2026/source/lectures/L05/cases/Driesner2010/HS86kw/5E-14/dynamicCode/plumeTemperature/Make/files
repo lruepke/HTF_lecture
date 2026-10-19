@@ -1,0 +1,6 @@
+/* dynamicCode:
+ * SHA1 = 458a6d83b7c6a4a9daeed2389c4cb96ebf80410e
+ */
+functionObjectTemplate.C
+
+LIB = $(PWD)/../platforms/$(WM_OPTIONS)/lib/libplumeTemperature_458a6d83b7c6a4a9daeed2389c4cb96ebf80410e

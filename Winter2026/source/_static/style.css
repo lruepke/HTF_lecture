@@ -1,0 +1,15 @@
+/* for equation number */
+span.eqno {
+    float: right;
+}
+/* code block highlight fill color */
+/* span.hll{
+    border: 1px solid rgb(240, 238, 238);
+} */
+/* remove blue signs after equations */
+.headerlink{
+    color: transparent;
+}
+/* .headerlink:hover{
+    color: red;
+} */

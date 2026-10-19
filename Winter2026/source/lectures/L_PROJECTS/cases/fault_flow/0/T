@@ -1,0 +1,61 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 277.15;     //4 deg.C
+
+boundaryField
+{
+    seafloor
+    {
+        type            inletOutlet;
+        phi                     phi;
+        inletValue      uniform 278.15;
+    }
+    bottom
+    {
+        // type    fixedValue;
+        // value   uniform 873.15;
+        type            codedFixedValue;
+        value           uniform 873.15; //placeholder
+        name            gaussShapeT;
+        code            #{
+                            scalarField x(this->patch().Cf().component(0)); 
+                            double wGauss=1000;
+                            double x0=2750;
+                            double Tmin=573;
+                            double Tmax=1073.15;
+                            scalarField T(Tmin+(Tmax-Tmin)*exp(-(x-x0)*(x-x0)/(2*wGauss*wGauss)));
+                            operator==(T);
+                        #};
+
+        // type        hydrothermalHeatFlux;
+        // q           uniform 0.05; //placeholder
+        // value       uniform 0; //placeholder
+        // shape       gaussian2d;
+        // x0          6500;
+        // qmax        12.5;//W/m^2, 12.5kW/m / 8000 m = 
+        // qmin        1;
+        // c           1250;
+    }
+    sidewalls
+    {
+        type            zeroGradient;
+    }
+}
+
+// ************************************************************************* //
