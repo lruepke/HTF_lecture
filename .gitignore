@@ -3,3 +3,19 @@ _build
 *.zip
 source/_figures/*.pdf
 .vscode
+# Python caches
+__pycache__/
+*.pyc
+*.nbi
+*.nbc
+
+# Simulation output
+*.h5
+*.xmf
+
+# Plots written by the scripts (figures used in the docs live in _figures/)
+pressure_field.png
+!**/_figures/pressure_field.png
+
+# macOS
+.DS_Store
