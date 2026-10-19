@@ -1,0 +1,22 @@
+name: py312_fem_class
+
+    channels:
+    - conda-forge
+    - nodefaults
+
+    dependencies:
+    - python=3.12
+    - ipykernel
+    - matplotlib
+    - numpy
+    - pandas
+    - vtk
+    - pyevtk
+    - h5py
+    - scipy
+    - ipykernel
+    - pip
+
+    - pip:
+        - meshio
+        - triangle
