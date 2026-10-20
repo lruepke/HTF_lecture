@@ -90,6 +90,28 @@ Working with OpenFOAM involves a lot of editing of text files and running comman
 .. tip::
     You can also get a shell in the container from a terminal on your computer, without Visual Studio Code: :code:`docker compose exec htf bash`
 
+.. _sec:install_ai:
+
+AI assistants (optional)
+^^^^^^^^^^^^^^^^^^^^^^^^
+You do not need an AI assistant for this class. If you want to use one, there are two ways.
+
+**In the browser Visual Studio Code.** The Visual Studio Code in the container installs extensions from `Open VSX <https://open-vsx.org>`_, where GitHub Copilot is not available. Other assistants are, e.g. *Claude Code*, *Codex* (OpenAI), *Gemini Code Assist*, or *Continue*, which works with many providers. Install one from the Extensions panel on the left and log in with your own account. Extensions you install yourself are kept when you stop the container, but are lost when it is removed or the course image is updated; you then simply install them again.
+
+**In Visual Studio Code on your computer, e.g. for GitHub Copilot.** You can also connect a Visual Studio Code installed on your computer to the running course container. You then work inside the container just like in the browser version, but with all extensions of the regular Visual Studio Code, including GitHub Copilot. As a student, you can get Copilot for free through `GitHub Education <https://education.github.com>`_.
+
+1. Install `Visual Studio Code <https://code.visualstudio.com>`_ on your computer, and in it the extension *Dev Containers* (by Microsoft).
+2. Start the course container as usual with :code:`docker compose up -d`.
+3. In Visual Studio Code, open the Command Palette (*View → Command Palette*, or CTRL/CMD + SHIFT + P) and run *Dev Containers: Attach to Running Container...*. Choose :code:`htf`.
+4. In the new window, open the folder :code:`/home/openfoam/HydrothermalFoam_runs` (*File → Open Folder*).
+5. Install the *Python* and *Jupyter* extensions in the container when Visual Studio Code suggests it, and select the course Python :code:`/opt/htf-class/bin/python` as interpreter (*Python: Select Interpreter* in the Command Palette).
+6. Install GitHub Copilot from the Extensions panel and sign in with your GitHub account.
+
+Terminals in this window are Linux shells in the container, with OpenFOAM and HydrothermalFoam ready to use. Next time, *File → Open Recent* brings you back to the container directly, as long as it is running.
+
+.. note::
+    AI assistants send your code and files to the company that runs them. Do not use them with data you are not allowed to share.
+
 JupyterLab
 ----------
 JupyterLab runs inside the container as well; open it at http://localhost:8888. New notebooks use the course Python with all packages installed. Terminals in JupyterLab are Linux shells in the container, just like in Visual Studio Code.

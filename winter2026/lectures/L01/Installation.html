@@ -81,7 +81,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#daily-use">Daily use</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#visual-studio-code">Visual Studio Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visual-studio-code">Visual Studio Code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ai-assistants-optional">AI assistants (optional)</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#jupyterlab">JupyterLab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#python">Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#test-your-installation">Test your installation</a></li>
@@ -257,10 +260,10 @@ docker<span class="w"> </span>compose<span class="w"> </span>stop<span class="w"
 </pre></div>
 </div>
 <p>You can also start and stop the container in Docker Desktop.</p>
-<figure class="align-center" id="id5" style="width: 70%">
+<figure class="align-center" id="id6" style="width: 70%">
 <img alt="../../_images/docker_desktop.png" src="../../_images/docker_desktop.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Docker Desktop shows your images and containers.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Docker Desktop shows your images and containers.</span><a class="headerlink" href="#id6" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -277,6 +280,25 @@ docker<span class="w"> </span>compose<span class="w"> </span>stop<span class="w"
 <p class="admonition-title">Tip</p>
 <p>You can also get a shell in the container from a terminal on your computer, without Visual Studio Code: <code class="code docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span> <span class="pre">exec</span> <span class="pre">htf</span> <span class="pre">bash</span></code></p>
 </div>
+<section id="ai-assistants-optional">
+<span id="sec-install-ai"></span><h3>AI assistants (optional)<a class="headerlink" href="#ai-assistants-optional" title="Link to this heading"></a></h3>
+<p>You do not need an AI assistant for this class. If you want to use one, there are two ways.</p>
+<p><strong>In the browser Visual Studio Code.</strong> The Visual Studio Code in the container installs extensions from <a class="reference external" href="https://open-vsx.org">Open VSX</a>, where GitHub Copilot is not available. Other assistants are, e.g. <em>Claude Code</em>, <em>Codex</em> (OpenAI), <em>Gemini Code Assist</em>, or <em>Continue</em>, which works with many providers. Install one from the Extensions panel on the left and log in with your own account. Extensions you install yourself are kept when you stop the container, but are lost when it is removed or the course image is updated; you then simply install them again.</p>
+<p><strong>In Visual Studio Code on your computer, e.g. for GitHub Copilot.</strong> You can also connect a Visual Studio Code installed on your computer to the running course container. You then work inside the container just like in the browser version, but with all extensions of the regular Visual Studio Code, including GitHub Copilot. As a student, you can get Copilot for free through <a class="reference external" href="https://education.github.com">GitHub Education</a>.</p>
+<ol class="arabic simple">
+<li><p>Install <a class="reference external" href="https://code.visualstudio.com">Visual Studio Code</a> on your computer, and in it the extension <em>Dev Containers</em> (by Microsoft).</p></li>
+<li><p>Start the course container as usual with <code class="code docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span> <span class="pre">up</span> <span class="pre">-d</span></code>.</p></li>
+<li><p>In Visual Studio Code, open the Command Palette (<em>View → Command Palette</em>, or CTRL/CMD + SHIFT + P) and run <em>Dev Containers: Attach to Running Container…</em>. Choose <code class="code docutils literal notranslate"><span class="pre">htf</span></code>.</p></li>
+<li><p>In the new window, open the folder <code class="code docutils literal notranslate"><span class="pre">/home/openfoam/HydrothermalFoam_runs</span></code> (<em>File → Open Folder</em>).</p></li>
+<li><p>Install the <em>Python</em> and <em>Jupyter</em> extensions in the container when Visual Studio Code suggests it, and select the course Python <code class="code docutils literal notranslate"><span class="pre">/opt/htf-class/bin/python</span></code> as interpreter (<em>Python: Select Interpreter</em> in the Command Palette).</p></li>
+<li><p>Install GitHub Copilot from the Extensions panel and sign in with your GitHub account.</p></li>
+</ol>
+<p>Terminals in this window are Linux shells in the container, with OpenFOAM and HydrothermalFoam ready to use. Next time, <em>File → Open Recent</em> brings you back to the container directly, as long as it is running.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>AI assistants send your code and files to the company that runs them. Do not use them with data you are not allowed to share.</p>
+</div>
+</section>
 </section>
 <section id="jupyterlab">
 <h2>JupyterLab<a class="headerlink" href="#jupyterlab" title="Link to this heading"></a></h2>
