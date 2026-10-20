@@ -51,7 +51,7 @@ OpenFOAM's scalarTransportFoam application solves the 3-D advection-diffusion eq
 
 with :code:`T` being the transported scalar, :code:`DT` the diffusivity with units of :math:`m^2/s` , and :code:`ST` is a source term. Note that it is tempting to think of T as temperature but here it is simply a transported scalar (like a solute in groundwater flow). The energy conservation equation written in terms of temperature looks slightly different, as we will learn in the next chapter.
 
-The key source code of `scalarTransportFoam <https://cpp.openfoam.org/v9/scalarTransportFoam_8C_source.html>`_ looks like this:
+The key source code of `scalarTransportFoam <https://cpp.openfoam.org/v10/scalarTransportFoam_8C_source.html>`_ looks like this:
 
 .. code-block:: foam
 
@@ -73,7 +73,7 @@ The key source code of `scalarTransportFoam <https://cpp.openfoam.org/v9/scalarT
 
 Since we have already computed the velocity field (and made the mesh etc.), we can now use our results as the starting point for a scalarTransportFoam case. The foam tuturials are always a good starting point for a new case. scalarTransportFoam is handled in :code:`$FOAM_TUTORIALS/basic/scalarTransportFoam/pitzDaily/` . Let's copy it over to our working directory, add our velocity field and mesh, and modify the control dictionaries.
 
-In the docker do this:
+In a terminal in the container (e.g. in Visual Studio Code) do this:
 
 .. code-block:: bash
 
@@ -84,10 +84,10 @@ In the docker do this:
 
 This assumes that you used the  case and directory names; if not, modify the names accordingly.
 
-Now go back to our local shell and Visual Studio and modify the scripts:
+Now open the files in Visual Studio Code and modify them:
 
     * :code:`0/T` to make "temperature" 1 at the inlet and zeroGradient at the outlet
-    * :code:`constant/transportProperties` set the diffusivity to something small, like :math:`1e-{12}`, so that the problem is advection-dominated
+    * :code:`constant/physicalProperties` set the diffusivity to something small, like :math:`1e-{12}`, so that the problem is advection-dominated
     * change :code:`system/controlDict` so that the endTime is 20, deltaT is 0.1, and writeInterval   is 3e-1. These are somewhat arbitrary changes making sure we get a reasonable solution for our synthetic setup.
 
 That's it, run it and explore the solution!

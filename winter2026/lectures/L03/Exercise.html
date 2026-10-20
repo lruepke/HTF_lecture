@@ -227,7 +227,7 @@
 <div class="math notranslate nohighlight" id="equation-eq-scalar-transport">
 <span class="eqno">(16)<a class="headerlink" href="#equation-eq-scalar-transport" title="Link to this equation"></a></span>\[    \frac{\partial T}{\partial t} = -\nabla \cdot ( \vec{U} T ) + \nabla \cdot (D_T \nabla T) + S_T,\]</div>
 <p>with <code class="code docutils literal notranslate"><span class="pre">T</span></code> being the transported scalar, <code class="code docutils literal notranslate"><span class="pre">DT</span></code> the diffusivity with units of <span class="math notranslate nohighlight">\(m^2/s\)</span> , and <code class="code docutils literal notranslate"><span class="pre">ST</span></code> is a source term. Note that it is tempting to think of T as temperature but here it is simply a transported scalar (like a solute in groundwater flow). The energy conservation equation written in terms of temperature looks slightly different, as we will learn in the next chapter.</p>
-<p>The key source code of <a class="reference external" href="https://cpp.openfoam.org/v9/scalarTransportFoam_8C_source.html">scalarTransportFoam</a> looks like this:</p>
+<p>The key source code of <a class="reference external" href="https://cpp.openfoam.org/v10/scalarTransportFoam_8C_source.html">scalarTransportFoam</a> looks like this:</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="p">...</span>
 <span class="n">fvScalarMatrix</span> <span class="n">TEqn</span>
 <span class="p">(</span>
@@ -246,7 +246,7 @@
 </pre></div>
 </div>
 <p>Since we have already computed the velocity field (and made the mesh etc.), we can now use our results as the starting point for a scalarTransportFoam case. The foam tuturials are always a good starting point for a new case. scalarTransportFoam is handled in <code class="code docutils literal notranslate"><span class="pre">$FOAM_TUTORIALS/basic/scalarTransportFoam/pitzDaily/</span></code> . Let’s copy it over to our working directory, add our velocity field and mesh, and modify the control dictionaries.</p>
-<p>In the docker do this:</p>
+<p>In a terminal in the container (e.g. in Visual Studio Code) do this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
 cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$FOAM_TUTORIALS</span>/basic/scalarTransportFoam/pitzDaily/<span class="w"> </span>./DRP_transport
 cp<span class="w"> </span>-r<span class="w"> </span>./DRP_permeability_2D/constant/polyMesh<span class="w"> </span>./DRP_transport/constant/
@@ -254,11 +254,11 @@ cp<span class="w"> </span>./DRP_permeability_2D/0/U<span class="w"> </span>./DRP
 </pre></div>
 </div>
 <p>This assumes that you used the  case and directory names; if not, modify the names accordingly.</p>
-<p>Now go back to our local shell and Visual Studio and modify the scripts:</p>
+<p>Now open the files in Visual Studio Code and modify them:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><code class="code docutils literal notranslate"><span class="pre">0/T</span></code> to make “temperature” 1 at the inlet and zeroGradient at the outlet</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">constant/transportProperties</span></code> set the diffusivity to something small, like <span class="math notranslate nohighlight">\(1e-{12}\)</span>, so that the problem is advection-dominated</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">constant/physicalProperties</span></code> set the diffusivity to something small, like <span class="math notranslate nohighlight">\(1e-{12}\)</span>, so that the problem is advection-dominated</p></li>
 <li><p>change <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code> so that the endTime is 20, deltaT is 0.1, and writeInterval   is 3e-1. These are somewhat arbitrary changes making sure we get a reasonable solution for our synthetic setup.</p></li>
 </ul>
 </div></blockquote>
