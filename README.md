@@ -55,7 +55,7 @@ poetry update <package>       # update one package within the limits in pyprojec
 
 Commit `pyproject.toml` and `poetry.lock` afterwards, otherwise the website build will not have the package.
 
-Students do not use this environment. In the FEM courses they install a smaller conda environment, described in `<Semester>/source/general-info/installation.rst`.
+Students do not use this environment. In the FEM courses they install a smaller conda environment, described in `<Semester>/source/general-info/installation.rst`. In the HydrothermalFoam courses from Winter2026 on, they use the course Docker image `lruepke/hydrothermalfoam-teaching` with OpenFOAM, HydrothermalFoam, Python, JupyterLab and VS Code, started with the `docker-compose.yml` from `Winter2026/source/lectures/L01/` (see `L01/Installation.rst`).
 
 ## Building the website
 
