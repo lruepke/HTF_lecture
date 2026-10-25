@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
@@ -9,24 +7,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The advection term &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
 
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../../_static/doctools.js?v=9a2dae69"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../../_static/tabs.js?v=3ee01567"></script>
-      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=9b54adf2"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=9b54adf2"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -203,11 +205,11 @@
 <div class="admonition-forms-of-the-advection-term admonition">
 <p class="admonition-title">Forms of the advection term</p>
 <p>Did you notice the difference between the temperature equation for hydrothermal convection and the general advection equation? In the form given for hydrothermal convection, the specific heat <span class="math notranslate nohighlight">\(c_p\)</span>, the density <span class="math notranslate nohighlight">\(\rho\)</span>, and the velocity <span class="math notranslate nohighlight">\(\vec{u}\)</span> are outside the divergence, while in the general form they are inside (due to the conservative form of the equation). The advection term is also called the convective term.</p>
-<p>The reason is not that these variables are constant but lies in the way the energy conservation equation is derived. If it is written in terms of energy (e.g. enthalpy or internal energy), we would have the respective terms included in the divergence. If we use the temperature form, using the specific heat, those terms end up outside the divergence. You can check <span id="id1">[<a class="reference internal" href="../../refs.html#id30" title="Z. Guo, L. Rüpke, and C. Tao. Hydrothermalfoam v1.0: a 3-d hydro-thermo-transport model fornatural submarine hydrothermal systems. Geoscientific Model Development, 2020.">Guo et al., 2020</a>]</span> for details.</p>
+<p>The reason is not that these variables are constant but lies in the way the energy conservation equation is derived. If it is written in terms of energy (e.g. enthalpy or internal energy), we would have the respective terms included in the divergence. If we use the temperature form, using the specific heat, those terms end up outside the divergence. You can check <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../../refs.html#id30" title="Z. Guo, L. Rüpke, and C. Tao. Hydrothermalfoam v1.0: a 3-d hydro-thermo-transport model fornatural submarine hydrothermal systems. Geoscientific Model Development, 2020.">Guo et al., 2020</a>]</span> for details.</p>
 </div>
 <section id="resolving-advection">
 <h2>Resolving advection<a class="headerlink" href="#resolving-advection" title="Link to this heading"></a></h2>
-<p>The core of the advection or transport term solving process involves the discretization of the convective fluxes across the control volume faces. This discretization is crucial as it directly influences the stability and accuracy of the simulation. OpenFOAM provides a range of discretization schemes, such as the upwind, linear, and higher-order schemes like QUICK and cubic, which are discussed and presented in <span id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The choice of scheme can significantly affect the numerical diffusion and the overall solution’s fidelity.</p>
+<p>The core of the advection or transport term solving process involves the discretization of the convective fluxes across the control volume faces. This discretization is crucial as it directly influences the stability and accuracy of the simulation. OpenFOAM provides a range of discretization schemes, such as the upwind, linear, and higher-order schemes like QUICK and cubic, which are discussed and presented in <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The choice of scheme can significantly affect the numerical diffusion and the overall solution’s fidelity.</p>
 <p>For instance, the upwind scheme, while robust and simple, can introduce considerable numerical diffusion, leading to a less accurate representation of sharp gradients. On the other hand, higher-order schemes offer improved accuracy but can lead to numerical instabilities if not handled properly. You can find an introduction to different advection scheme in the companian lecture on finite elements and general numerical methods (<a class="reference external" href="https://lruepke.github.io/HTF_lecture/winter2022/lecture1/fdm_advection.html">Link</a>)</p>
 <p>Moreover, OpenFOAM incorporates the concept of boundedness through the use of Total Variation Diminishing (TVD) schemes to ensure that the physical and numerical bounds are respected, especially in cases involving steep gradients or when dealing with scalar quantities like concentration or temperature.</p>
 <p>In essence, the numerics of solving the advection/transport term in OpenFOAM involve a careful balance between accuracy, stability, and computational efficiency, with the choice of discretization schemes and iterative solvers playing pivotal roles in the outcome of the CFD simulations.</p>
@@ -226,7 +228,7 @@
 <span class="linenos">10</span>  <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
 <span class="linenos">11</span>  <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
 <span class="linenos">12</span>  <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
-<span class="linenos">13</span>  <span class="kt">location</span>    <span class="s">&quot;system&quot;</span><span class="p">;</span>
+<span class="linenos">13</span>  <span class="kt">location</span>    <span class="s">"system"</span><span class="p">;</span>
 <span class="linenos">14</span>  <span class="kt">object</span>      <span class="k">fvSchemes</span><span class="p">;</span>
 <span class="linenos">15</span><span class="p">}</span>
 <span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>

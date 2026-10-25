@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
@@ -9,24 +7,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Finite Element Formulation &mdash; Finite Element Modeling in Geodynamics  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8a2add5" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../_static/style.css?v=379f3234" />
 
   
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../_static/doctools.js?v=9a2dae69"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../_static/tabs.js?v=3ee01567"></script>
-      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../_static/copybutton.js?v=9b54adf2"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=9b54adf2"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -178,7 +180,7 @@
 <span id="fem-formulation"></span><h1>Finite Element Formulation<a class="headerlink" href="#finite-element-formulation" title="Link to this heading"></a></h1>
 <section id="weak-form">
 <h2>Weak form<a class="headerlink" href="#weak-form" title="Link to this heading"></a></h2>
-<p>To cast <span class="xref std std-ref">eqs:stokes_equation_penalty</span> and <span class="xref std std-ref">eqs:stokes_equation_divergence</span> into a finite element formulation, we need to define the trial and test spaces.  We follow the formulation in <span id="id1">[<a class="reference internal" href="../refs.html#id35" title="M. Dabrowski, M. Krotkiewski, and D. W. Schmid. Milamin: matlab-based finite element method solver for large problems. Geochemistry Geophysics Geosystems, 2008. URL: &lt;Go to ISI&gt;://000255458100002 http://www.agu.org/journals/gc/gc0804/2007GC001719/2007GC001719.pdf, doi:10.1029/2007gc001719.">Dabrowski et al., 2008</a>]</span> and use the the seven-node Crouzeix-Raviart triangle with quadratic velocity shape functions enhanced by a cubic bubble function and discontinuous linear interpolation for the pressure field. This element is stable and the velocity and pressure approximations are independent, which leads to the so-called mixed formulation of the finite element method.</p>
+<p>To cast <span class="xref std std-ref">eqs:stokes_equation_penalty</span> and <span class="xref std std-ref">eqs:stokes_equation_divergence</span> into a finite element formulation, we need to define the trial and test spaces.  We follow the formulation in <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../refs.html#id35" title="M. Dabrowski, M. Krotkiewski, and D. W. Schmid. Milamin: matlab-based finite element method solver for large problems. Geochemistry Geophysics Geosystems, 2008. URL: &lt;Go to ISI&gt;://000255458100002 http://www.agu.org/journals/gc/gc0804/2007GC001719/2007GC001719.pdf, doi:10.1029/2007gc001719.">Dabrowski et al., 2008</a>]</span> and use the the seven-node Crouzeix-Raviart triangle with quadratic velocity shape functions enhanced by a cubic bubble function and discontinuous linear interpolation for the pressure field. This element is stable and the velocity and pressure approximations are independent, which leads to the so-called mixed formulation of the finite element method.</p>
 <div class="math notranslate nohighlight" id="equation-eq-shape-function-stokes">
 <span class="eqno">(164)<a class="headerlink" href="#equation-eq-shape-function-stokes" title="Link to this equation"></a></span>\[\begin{split}\tilde{u}_x(x,y) = \sum_{i=1}^{\text{nnod}} N_i(x,y) u_x^i \\
 \tilde{u}_y(x,y) = \sum_{i=1}^{\text{nnod}} N_i(x,y) u_y^i \\

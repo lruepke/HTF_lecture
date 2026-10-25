@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
@@ -9,21 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coupled diffusion problems &mdash; Finite Element Modeling in Geodynamics  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d8a2add5" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../_static/style.css?v=379f3234" />
 
   
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../_static/doctools.js?v=9a2dae69"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../_static/tabs.js?v=3ee01567"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/tabs.js?v=3ee01567"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -161,7 +163,7 @@
   <section id="coupled-diffusion-problems">
 <h1>Coupled diffusion problems<a class="headerlink" href="#coupled-diffusion-problems" title="Link to this heading"></a></h1>
 <p>So far we have looked at problems that included a single unknown (e.g. temperature) at each node. Sometimes it is necessary to solve for multiple unknowns at each node simultaneously. This could just be multiple displacement or velocity components (as in mechanics), or this could be necessary when equations are strongly coupled.</p>
-<p>One example, where a coupled system of equations needs to be solved are so-called Turing pattern <span id="id1">[<a class="reference internal" href="../refs.html#id36" title="A. M. Turing. The chemical basis of morphogenesis. Philosophical Transactions of the Royal Society of London Series B-Biological Sciences, 237(641):37-72, 1952. URL: &lt;Go to ISI&gt;://WOS:A1952YF90500001, doi:10.1098/rstb.1952.0012.">Turing, 1952</a>]</span>, which appear to emerge in many biological and chemical systems quasi spontaneously from near homogeneous starting conditions. A modern look at it can be found in the paper by <span id="id2">[<a class="reference internal" href="../refs.html#id37" title="Philip K. Maini, Thomas E. Woolley, Ruth E. Baker, Eamonn A. Gaffney, and S. Seirin Lee. Turing's model for biological pattern formation and the robustness problem. Interface Focus, 2(4):487-496, 2012. URL: https://doi.org/10.1098/rsfs.2011.0113, doi:10.1098/rsfs.2011.0113.">Maini et al., 2012</a>]</span>. Here we follow the implementation and problem description given in the FEM book by Guy Simpson <span id="id3">[<a class="reference internal" href="../refs.html#id31" title="Guy Simpson. Practical Finite Element Modeling in Earth Science Using Matlab. John Wiley &amp; Sons, Ltd, 2017. ISBN 9781119248644. URL: https://onlinelibrary.wiley.com/doi/abs/10.1002/9781119248644.part1, arXiv:https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781119248644.part1, doi:https://doi.org/10.1002/9781119248644.part1.">Simpson, 2017</a>]</span>.</p>
+<p>One example, where a coupled system of equations needs to be solved are so-called Turing pattern <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../refs.html#id36" title="A. M. Turing. The chemical basis of morphogenesis. Philosophical Transactions of the Royal Society of London Series B-Biological Sciences, 237(641):37-72, 1952. URL: &lt;Go to ISI&gt;://WOS:A1952YF90500001, doi:10.1098/rstb.1952.0012.">Turing, 1952</a>]</span>, which appear to emerge in many biological and chemical systems quasi spontaneously from near homogeneous starting conditions. A modern look at it can be found in the paper by <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../refs.html#id37" title="Philip K. Maini, Thomas E. Woolley, Ruth E. Baker, Eamonn A. Gaffney, and S. Seirin Lee. Turing's model for biological pattern formation and the robustness problem. Interface Focus, 2(4):487-496, 2012. URL: https://doi.org/10.1098/rsfs.2011.0113, doi:10.1098/rsfs.2011.0113.">Maini et al., 2012</a>]</span>. Here we follow the implementation and problem description given in the FEM book by Guy Simpson <span class="bibtex-citation" id="id3">[<a class="reference internal" href="../refs.html#id31" title="Guy Simpson. Practical Finite Element Modeling in Earth Science Using Matlab. John Wiley &amp; Sons, Ltd, 2017. ISBN 9781119248644. URL: https://onlinelibrary.wiley.com/doi/abs/10.1002/9781119248644.part1, arXiv:https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781119248644.part1, doi:https://doi.org/10.1002/9781119248644.part1.">Simpson, 2017</a>]</span>.</p>
 <section id="governing-equations">
 <h2>Governing equations<a class="headerlink" href="#governing-equations" title="Link to this heading"></a></h2>
 <p>We will explore the evolution of two chemical compounds, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, which affect each other. One is an ‘activator’ and one is an ‘inhibitor’. Both compounds are also produced by a background rate and the their concentrations control each other. This can be expressed by a set of coupled equations.</p>
@@ -357,7 +359,7 @@ B_3^{n+1}\\
 <span class="hll">            <span class="n">FA_el</span>     <span class="o">=</span> <span class="n">FA_el</span> <span class="o">+</span> <span class="n">N</span><span class="o">*</span><span class="n">dt</span><span class="o">*</span><span class="n">g_coeff</span><span class="o">*</span><span class="p">(</span><span class="n">a_coeff</span><span class="o">+</span><span class="n">Bi</span><span class="o">*</span><span class="n">Ai</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">detJ</span><span class="o">*</span><span class="n">weights</span><span class="p">[</span><span class="n">ip</span><span class="p">]</span> <span class="c1"># (dt*g_coeff*N*a_coeff+dt*g_coeff*N*np.dot(N,np.take(A, EL2NOD[iel,:], axis=0 ))**2*np.dot(N,np.take(B, EL2NOD[iel,:], axis=0 )))*detJ*weights[ip]</span>
 </span><span class="hll">            <span class="n">FB_el</span>     <span class="o">=</span> <span class="n">FB_el</span> <span class="o">+</span> <span class="n">N</span><span class="o">*</span><span class="n">dt</span><span class="o">*</span><span class="n">g_coeff</span><span class="o">*</span><span class="p">(</span><span class="n">b_coeff</span><span class="o">-</span><span class="n">Bi</span><span class="o">*</span><span class="n">Ai</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">detJ</span><span class="o">*</span><span class="n">weights</span><span class="p">[</span><span class="n">ip</span><span class="p">]</span> <span class="c1"># (dt*g_coeff*N*b_coeff-dt*g_coeff*N*np.dot(N,np.take(A, EL2NOD[iel,:], axis=0 ))**2*np.dot(N,np.take(B, EL2NOD[iel,:], axis=0 )))*detJ*weights[ip]</span>
 </span>
-        <span class="c1"># We don&#39;t have boundary conditions, as everything is zero flux</span>
+        <span class="c1"># We don't have boundary conditions, as everything is zero flux</span>
 <span class="hll">        <span class="n">Tmp</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,:]]</span>   <span class="o">+=</span> <span class="n">FA_el</span>
 </span><span class="hll">        <span class="n">Tmp</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">EL2NOD</span><span class="p">[</span><span class="n">iel</span><span class="p">,:]</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">FB_el</span>
 </span>

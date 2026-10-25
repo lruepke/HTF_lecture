@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
@@ -9,21 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Flow on the pore scale &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
 
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../../_static/doctools.js?v=9a2dae69"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../../_static/tabs.js?v=3ee01567"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -234,7 +236,7 @@
 <section id="python-pre-processing">
 <h3>Python pre-processing<a class="headerlink" href="#python-pre-processing" title="Link to this heading"></a></h3>
 <p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it and the first step is to install porespy into our python virtual environment (we should already have PIL, which is also needed).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span><span class="s2">&quot;your_environment_name&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span><span class="s2">"your_environment_name"</span>
 conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>porespy
 </pre></div>
 </div>
@@ -280,22 +282,22 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
 <span class="kn">import</span><span class="w"> </span><span class="nn">porespy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ps</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-<span class="n">impath</span> <span class="o">=</span> <span class="s1">&#39;./geometry&#39;</span>         <span class="c1"># image path</span>
-<span class="n">imname</span> <span class="o">=</span> <span class="s1">&#39;porousModel.png&#39;</span>   <span class="c1"># file name</span>
+<span class="n">impath</span> <span class="o">=</span> <span class="s1">'./geometry'</span>         <span class="c1"># image path</span>
+<span class="n">imname</span> <span class="o">=</span> <span class="s1">'porousModel.png'</span>   <span class="c1"># file name</span>
 
 <span class="c1"># 1. use PIL to load the image</span>
-<span class="c1"># convert(&quot;L&quot;) converts RGB into greyscale, L = R * 299/1000 + G * 587/1000 + B * 114/1000</span>
-<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">impath</span><span class="p">,</span> <span class="n">imname</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+<span class="c1"># convert("L") converts RGB into greyscale, L = R * 299/1000 + G * 587/1000 + B * 114/1000</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">impath</span><span class="p">,</span> <span class="n">imname</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">"L"</span><span class="p">)</span>
 
-<span class="c1"># 2. convert image into numpy array with &quot;normal&quot; integer values</span>
+<span class="c1"># 2. convert image into numpy array with "normal" integer values</span>
 <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 
-<span class="c1"># 3. save as vti (VTK&#39;s image format)</span>
+<span class="c1"># 3. save as vti (VTK's image format)</span>
 <span class="c1"># 3.1 make 3D by repeating in new axis=2 dimension (openfoam and porespy want 3D)</span>
 <span class="n">arr_stacked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">arr</span><span class="p">,</span><span class="n">arr</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># 3.2 save as vti using porespy</span>
-<span class="n">ps</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">to_vtk</span><span class="p">(</span><span class="n">arr_stacked</span><span class="p">,</span> <span class="s1">&#39;geometry/porous_model&#39;</span><span class="p">)</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">to_vtk</span><span class="p">(</span><span class="n">arr_stacked</span><span class="p">,</span> <span class="s1">'geometry/porous_model'</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>You can put this little script into a jupyter notebook or save it as .py (e.g. png2vti.py), then activate the right kernel (e.g. <code class="code docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">py3_htf_class</span></code>), and do this:</p>
@@ -306,13 +308,13 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>If you are interested in the vti file format, this is what we have just written to porous_model.vti</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;VTKFile<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;ImageData&quot;</span><span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="w"> </span><span class="nv">byte_order</span><span class="o">=</span><span class="s2">&quot;LittleEndian&quot;</span><span class="w"> </span><span class="nv">header_type</span><span class="o">=</span><span class="s2">&quot;UInt64&quot;</span>&gt;
-<span class="w">    </span>&lt;ImageData<span class="w"> </span><span class="nv">WholeExtent</span><span class="o">=</span><span class="s2">&quot;0 1196 0 1494 0 2&quot;</span><span class="w"> </span><span class="nv">Origin</span><span class="o">=</span><span class="s2">&quot;0 0 0&quot;</span><span class="w"> </span><span class="nv">Spacing</span><span class="o">=</span><span class="s2">&quot;1 1 1&quot;</span><span class="w"> </span><span class="nv">Direction</span><span class="o">=</span><span class="s2">&quot;1 0 0 0 1 0 0 0 1&quot;</span>&gt;
-<span class="w">        </span>&lt;Piece<span class="w"> </span><span class="nv">Extent</span><span class="o">=</span><span class="s2">&quot;0 1196 0 1494 0 2&quot;</span>&gt;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;VTKFile<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">"ImageData"</span><span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">"1.0"</span><span class="w"> </span><span class="nv">byte_order</span><span class="o">=</span><span class="s2">"LittleEndian"</span><span class="w"> </span><span class="nv">header_type</span><span class="o">=</span><span class="s2">"UInt64"</span>&gt;
+<span class="w">    </span>&lt;ImageData<span class="w"> </span><span class="nv">WholeExtent</span><span class="o">=</span><span class="s2">"0 1196 0 1494 0 2"</span><span class="w"> </span><span class="nv">Origin</span><span class="o">=</span><span class="s2">"0 0 0"</span><span class="w"> </span><span class="nv">Spacing</span><span class="o">=</span><span class="s2">"1 1 1"</span><span class="w"> </span><span class="nv">Direction</span><span class="o">=</span><span class="s2">"1 0 0 0 1 0 0 0 1"</span>&gt;
+<span class="w">        </span>&lt;Piece<span class="w"> </span><span class="nv">Extent</span><span class="o">=</span><span class="s2">"0 1196 0 1494 0 2"</span>&gt;
 <span class="w">        </span>&lt;PointData&gt;
 <span class="w">        </span>&lt;/PointData&gt;
-<span class="w">        </span>&lt;CellData<span class="w"> </span><span class="nv">Scalars</span><span class="o">=</span><span class="s2">&quot;im&quot;</span>&gt;
-<span class="w">        </span>&lt;DataArray<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">&quot;Int64&quot;</span><span class="w"> </span><span class="nv">Name</span><span class="o">=</span><span class="s2">&quot;im&quot;</span><span class="w"> </span><span class="nv">format</span><span class="o">=</span><span class="s2">&quot;ascii&quot;</span><span class="w"> </span><span class="nv">RangeMin</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="w"> </span><span class="nv">RangeMax</span><span class="o">=</span><span class="s2">&quot;255&quot;</span>&gt;
+<span class="w">        </span>&lt;CellData<span class="w"> </span><span class="nv">Scalars</span><span class="o">=</span><span class="s2">"im"</span>&gt;
+<span class="w">        </span>&lt;DataArray<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">"Int64"</span><span class="w"> </span><span class="nv">Name</span><span class="o">=</span><span class="s2">"im"</span><span class="w"> </span><span class="nv">format</span><span class="o">=</span><span class="s2">"ascii"</span><span class="w"> </span><span class="nv">RangeMin</span><span class="o">=</span><span class="s2">"0"</span><span class="w"> </span><span class="nv">RangeMax</span><span class="o">=</span><span class="s2">"255"</span>&gt;
 <span class="w">            </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span>
 <span class="w">            </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span>
 <span class="w">            </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span>
@@ -344,7 +346,7 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
     <span class="c1"># 1. load vti file</span>
     <span class="n">data</span>            <span class="o">=</span> <span class="n">OpenDataFile</span><span class="p">(</span><span class="n">vti_file</span><span class="p">)</span>
     <span class="c1"># 2. clip at some intermediate value (we have 0 and 255 as pores and grains)</span>
-    <span class="n">clip1</span>           <span class="o">=</span> <span class="n">Clip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ClipType</span> <span class="o">=</span> <span class="s1">&#39;Scalar&#39;</span><span class="p">,</span> <span class="n">Scalars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CELLS&#39;</span><span class="p">,</span> <span class="s1">&#39;im&#39;</span><span class="p">],</span> <span class="n">Value</span> <span class="o">=</span> <span class="mf">127.5</span><span class="p">,</span> <span class="n">Invert</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">clip1</span>           <span class="o">=</span> <span class="n">Clip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ClipType</span> <span class="o">=</span> <span class="s1">'Scalar'</span><span class="p">,</span> <span class="n">Scalars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'CELLS'</span><span class="p">,</span> <span class="s1">'im'</span><span class="p">],</span> <span class="n">Value</span> <span class="o">=</span> <span class="mf">127.5</span><span class="p">,</span> <span class="n">Invert</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
     <span class="c1"># 3. make a surface of the remaining grains</span>
     <span class="n">extractSurface1</span> <span class="o">=</span> <span class="n">ExtractSurface</span><span class="p">(</span><span class="n">clip1</span><span class="p">)</span>
     <span class="c1"># 4. and triangulate it for stl export</span>
@@ -354,17 +356,17 @@ conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> <
     <span class="n">SaveData</span><span class="p">(</span><span class="n">stl_file</span><span class="p">,</span> <span class="n">proxy</span> <span class="o">=</span> <span class="n">triangulate1</span><span class="p">)</span>
 
 <span class="c1"># main part</span>
-<span class="n">vti_file</span> <span class="o">=</span> <span class="s1">&#39;porous_model.vti&#39;</span>      <span class="c1"># input .vti file</span>
-<span class="n">stl_file</span> <span class="o">=</span> <span class="s1">&#39;porous_model.stl&#39;</span>  <span class="c1"># output .stl file</span>
+<span class="n">vti_file</span> <span class="o">=</span> <span class="s1">'porous_model.vti'</span>      <span class="c1"># input .vti file</span>
+<span class="n">stl_file</span> <span class="o">=</span> <span class="s1">'porous_model.stl'</span>  <span class="c1"># output .stl file</span>
 <span class="c1"># call function</span>
 <span class="n">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>An easy way to exectute the python scrip is to call it from the python shell in paraview <a class="reference internal" href="#fig-paraview-figure-fig"><span class="std std-numref">Fig. 13</span></a>. Within the shell, you first make sure that you are in your case directory; then you make the correct folder to hold the .stl file that we will create (<code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;your_case_directory&quot;</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;constant/triSurface&#39;</span><span class="p">)</span>
-<span class="n">exec</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;your_file_name.py&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">"your_case_directory"</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">'constant/triSurface'</span><span class="p">)</span>
+<span class="n">exec</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">"your_file_name.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 </pre></div>
 </div>
 <p>This will create a .stl file, which we will use in the meshing process.</p>
@@ -499,7 +501,7 @@ jupyter<span class="w"> </span>notebook
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>blockMesh
 snappyHexMesh<span class="w"> </span>-overwrite
 checkMesh<span class="w"> </span>-allTopology<span class="w"> </span>-allGeometry
-transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class="s2">&quot;(1e-6 1e-6 1e-6)&quot;</span>
+transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class="s2">"(1e-6 1e-6 1e-6)"</span>
 </pre></div>
 </div>
 <p>The final conversion turns everything in micrometer (<span class="math notranslate nohighlight">\(10^{-6} m\)</span>). Check out the final mesh in paraview!</p>
@@ -525,7 +527,7 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 <span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
 <span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
 <span class="linenos">12</span>    <span class="kt">class</span>       <span class="n">volScalarField</span><span class="p">;</span>
-<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;0&quot;</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">"0"</span><span class="p">;</span>
 <span class="linenos">14</span>    <span class="kt">object</span>      <span class="k">p</span><span class="p">;</span>
 <span class="linenos">15</span><span class="p">}</span>
 <span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
@@ -586,7 +588,7 @@ transformPoints<span class="w"> </span>-scale<span class="w"> </span><span class
 <span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
 <span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
 <span class="linenos">12</span>    <span class="kt">class</span>       <span class="n">volVectorField</span><span class="p">;</span>
-<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">&quot;0&quot;</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">"0"</span><span class="p">;</span>
 <span class="linenos">14</span>    <span class="kt">object</span>      <span class="n">U</span><span class="p">;</span>
 <span class="linenos">15</span><span class="p">}</span>
 <span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
@@ -772,7 +774,7 @@ End
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># load VTK data</span>
-<span class="n">vtkFile</span> <span class="o">=</span> <span class="s1">&#39;VTK/DRP_permeability_2D_537.vtk&#39;</span>
+<span class="n">vtkFile</span> <span class="o">=</span> <span class="s1">'VTK/DRP_permeability_2D_537.vtk'</span>
 <span class="n">reader</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkUnstructuredGridReader</span><span class="p">()</span>
 <span class="n">reader</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">vtkFile</span><span class="p">)</span>
 <span class="n">reader</span><span class="o">.</span><span class="n">ReadAllScalarsOn</span><span class="p">()</span>
@@ -782,8 +784,8 @@ End
 
 
 <span class="c1"># extract velocity arrays</span>
-<span class="n">Vcells</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">&#39;V&#39;</span><span class="p">))</span>
-<span class="n">U</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">))</span>
+<span class="n">Vcells</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">'V'</span><span class="p">))</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">'U'</span><span class="p">))</span>
 <span class="n">Umag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">U</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">U</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">U</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">Ux</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">Uy</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
@@ -814,7 +816,7 @@ End
 
 <span class="n">kxx</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">U_Darcy_x</span><span class="o">/</span><span class="n">DP</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bulk permeability: </span><span class="si">%5.3e</span><span class="s1"> m2&#39;</span> <span class="o">%</span> <span class="n">kxx</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Bulk permeability: </span><span class="si">%5.3e</span><span class="s1"> m2'</span> <span class="o">%</span> <span class="n">kxx</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>We made it! <span class="math notranslate nohighlight">\(2.71e^{-11} m^2\)</span> is our predicted effective permeability of our sample.</p>

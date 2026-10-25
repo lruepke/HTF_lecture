@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
@@ -9,24 +7,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FVM and OpenFoam &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
 
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../../_static/doctools.js?v=9a2dae69"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../../_static/tabs.js?v=3ee01567"></script>
-      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=9b54adf2"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=9b54adf2"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -269,7 +271,7 @@ therefore <span class="math notranslate nohighlight">\(T\)</span> is the only un
 </section>
 <section id="spatial-discretization-the-diffusion-term">
 <h2>Spatial discretization: The diffusion term<a class="headerlink" href="#spatial-discretization-the-diffusion-term" title="Link to this heading"></a></h2>
-<p>The equation discretization step is performed over each element of the computational domain to yield an algebraic relation that connects the value of a variable in an element to the values of the variable in the neighboring elements <span id="id1">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>.</p>
+<p>The equation discretization step is performed over each element of the computational domain to yield an algebraic relation that connects the value of a variable in an element to the values of the variable in the neighboring elements <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>.</p>
 <div class="admonition-goal admonition">
 <p class="admonition-title">Goal</p>
 <p>Transform partial differential <a class="reference internal" href="#equation-eq-fvm-laplacian-dif">equation (57)</a> into a set of algebraic equations: <span class="math notranslate nohighlight">\(\mathbf{A} T = \mathbf{b}\)</span>.</p>
@@ -314,10 +316,9 @@ the <a class="reference internal" href="#equation-eq-fvm-surface-sum">equation (
 <span class="eqno">(63)<a class="headerlink" href="#equation-fvm-flux-gaussian-integral" title="Link to this equation"></a></span>\[\color{red}{\iint_{f_{23}}\vec{J}^{T,D}_{f_{23}} \cdot \vec{S}_{f_{23}}} = \iint_{f_{23}} (\vec{J}^{T,D}_{f_{23}} \cdot \vec{n}_{f_{23}}) dS_{f_{23}} \approx \color{orange}{\sum\limits_{ip\sim ip(f_{23})} (\vec{J}^{T,D} \cdot \vec{n}_{ip})\omega_{ip} S_{f_{23}}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(S_f\)</span> is the area of face <span class="math notranslate nohighlight">\(f_{23}\)</span>, <span class="math notranslate nohighlight">\(ip\)</span> refers to a integration point and <span class="math notranslate nohighlight">\(ip(f_{23})\)</span> the number of integration points along surface <span class="math notranslate nohighlight">\(f_{23}\)</span>, <span class="math notranslate nohighlight">\(\omega_{ip}\)</span> is the integral weights.</p>
 <figure class="align-center" id="fig-fig5-2">
-<a class="reference internal image-reference" href="../../_images/Fig5.2_RedBook.svg"><img alt="../../_images/Fig5.2_RedBook.svg" src="../../_images/Fig5.2_RedBook.svg" style="width: 100%;" />
-</a>
+<a class="reference internal image-reference" href="../../_images/Fig5.2_RedBook.svg"><img alt="../../_images/Fig5.2_RedBook.svg" src="../../_images/Fig5.2_RedBook.svg" style="width: 100%;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 44 </span><span class="caption-text">Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points <span id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The total flux <span class="math notranslate nohighlight">\(FluxT_f\)</span> is computed as linear combinations of the two cell values plus a source term.</span><a class="headerlink" href="#fig-fig5-2" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 44 </span><span class="caption-text">Surface integration of fluxes using (a) one integration point, (b) two integration points, and (c) three integration points <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../../refs.html#id2" title="Fadl Moukalled, L Mangani, Marwan Darwish, and others. The finite volume method in computational fluid dynamics. Volume 6. Springer, 2016.">Moukalled et al., 2016</a>]</span>. The total flux <span class="math notranslate nohighlight">\(FluxT_f\)</span> is computed as linear combinations of the two cell values plus a source term.</span><a class="headerlink" href="#fig-fig5-2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition important">
@@ -531,8 +532,8 @@ Therefore, in order to find the value of <span class="math notranslate nohighlig
 <span class="linenos"> 23</span>
 <span class="linenos"> 24</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 25</span>
-<span class="linenos"> 26</span><span class="cp">#include</span> <span class="cpf">&quot;gaussGrad.H&quot;</span>
-<span class="linenos"> 27</span><span class="cp">#include</span> <span class="cpf">&quot;extrapolatedCalculatedFvPatchField.H&quot;</span>
+<span class="linenos"> 26</span><span class="cp">#include</span> <span class="cpf">"gaussGrad.H"</span>
+<span class="linenos"> 27</span><span class="cp">#include</span> <span class="cpf">"extrapolatedCalculatedFvPatchField.H"</span>
 <span class="linenos"> 28</span>
 <span class="linenos"> 29</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
 <span class="linenos"> 30</span>
@@ -571,7 +572,7 @@ Therefore, in order to find the value of <span class="math notranslate nohighlig
 <span class="linenos"> 63</span>            <span class="n">mesh</span><span class="p">,</span>
 <span class="linenos"> 64</span>            <span class="n">dimensioned</span><span class="o">&lt;</span><span class="n">GradType</span><span class="o">&gt;</span>
 <span class="linenos"> 65</span>            <span class="p">(</span>
-<span class="linenos"> 66</span>               <span class="s">&quot;0&quot;</span><span class="p">,</span>
+<span class="linenos"> 66</span>               <span class="s">"0"</span><span class="p">,</span>
 <span class="linenos"> 67</span>               <span class="n">ssf</span><span class="p">.</span><span class="kt">dimensions</span><span class="p">()</span><span class="o">/</span><span class="n">dimLength</span><span class="p">,</span>
 <span class="linenos"> 68</span>               <span class="n">Zero</span>
 <span class="linenos"> 69</span>            <span class="p">),</span>

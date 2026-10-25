@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
@@ -9,21 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exercise 3: Permeability and Tvent &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
 
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../../_static/doctools.js?v=9a2dae69"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../../_static/tabs.js?v=3ee01567"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -198,12 +200,12 @@
 <img alt="../../_images/Flux_interface.png" src="../../_images/Flux_interface.png" />
 </figure>
 <p>Clearly, mass flux is increasing and temperature is decreasing. What do you think is happening to the convective heat flux?</p>
-<p>We will now explore the interplay between permeability and bottom heat flux. The research question is: what kind of permeability is needed to sustain a high-temperature hydrothermal system? This question has been addressed by <span id="id1">[<a class="reference internal" href="../../refs.html#id3" title="T Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132–141, 2010. URL: http://doi.wiley.com/10.1111/j.1468-8123.2009.00273.x, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010b</a>]</span>.</p>
+<p>We will now explore the interplay between permeability and bottom heat flux. The research question is: what kind of permeability is needed to sustain a high-temperature hydrothermal system? This question has been addressed by <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../../refs.html#id3" title="T Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132–141, 2010. URL: http://doi.wiley.com/10.1111/j.1468-8123.2009.00273.x, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010b</a>]</span>.</p>
 <p>Let’s first go through the theory. The flux into the reaction zone of hydrothermal convection cell can be written as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-heat-flux-rz">
 <span class="eqno">(39)<a class="headerlink" href="#equation-eq-heat-flux-rz" title="Link to this equation"></a></span>\[\vec{q_{in}} = 2\frac{L\lambda (T_D - T_U)}{H_R}\]</div>
 <p><span class="math notranslate nohighlight">\(L\)</span> is the half-width of the reaction zone, <span class="math notranslate nohighlight">\(\lambda\)</span> is the thermal conductivity, <span class="math notranslate nohighlight">\(T_D\)</span> the temperature of the driving heat source, <span class="math notranslate nohighlight">\(T_U\)</span> the upflow temperature, and <span class="math notranslate nohighlight">\(H_R\)</span> the thickness of the reaction zone.</p>
-<p>Let’s follow <span id="id2">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> and explore the heat transported by hydrothermal convection. For this we have to make a few assumptions. The first is that the pressure gradient in the upwflow is close to cold hydrostatic <span class="math notranslate nohighlight">\(\rho_0 g\)</span>, which is a reasonable assumption based on convection experiments.</p>
+<p>Let’s follow <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../../refs.html#id4" title="Tim Jupp and Adam Schultz. A thermodynamic explanation for black smoker temperatures. Nature, 403(6772):880–883, 2000.">Jupp &amp; Schultz, 2000</a>]</span> and explore the heat transported by hydrothermal convection. For this we have to make a few assumptions. The first is that the pressure gradient in the upwflow is close to cold hydrostatic <span class="math notranslate nohighlight">\(\rho_0 g\)</span>, which is a reasonable assumption based on convection experiments.</p>
 <p>Now we can use Darcy’s law to spell out the vertical velocity and mass flux:</p>
 <div class="math notranslate nohighlight" id="equation-eq-mass-flux-1">
 <span class="eqno">(40)<a class="headerlink" href="#equation-eq-mass-flux-1" title="Link to this equation"></a></span>\[\vec{u} = -\frac{k}{\mu}( \nabla P - \rho \vec{g} )\]</div>
@@ -237,7 +239,7 @@
 <h2>Numerical solution<a class="headerlink" href="#numerical-solution" title="Link to this heading"></a></h2>
 <p>Next we will explore this using our numerical model.  A basic setup can be downloaded from here: <a class="reference download internal" download="" href="../../_downloads/368b2a5809e62ae64f20c8ee48e0d72a/Driesner2010.zip"><code class="xref download docutils literal notranslate"><span class="pre">Driesner2010</span></code></a>.</p>
 <p>The magma heat source is simulated by a heat flux boundary condition, which can be set by customized boundary condition type of <code class="code docutils literal notranslate"><span class="pre">hydrothermalHeatFlux</span></code> (see <a class="reference external" href="https://www.hydrothermalfoam.info/manual/en/Models_Equations/index.html#heat-flux-bc-hydrothermalheatflux">doc</a> ).
-The model in <span id="id3">[<a class="reference internal" href="../../refs.html#id3" title="T Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132–141, 2010. URL: http://doi.wiley.com/10.1111/j.1468-8123.2009.00273.x, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010b</a>]</span> is 1 m thick, 3 km wide, 1 km height, the heat source is simulated by a Gaussian-shaped heat flux profile with total heat input 86 kW/m, half-width 500 m and center 1500 m.</p>
+The model in <span class="bibtex-citation" id="id3">[<a class="reference internal" href="../../refs.html#id3" title="T Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132–141, 2010. URL: http://doi.wiley.com/10.1111/j.1468-8123.2009.00273.x, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010b</a>]</span> is 1 m thick, 3 km wide, 1 km height, the heat source is simulated by a Gaussian-shaped heat flux profile with total heat input 86 kW/m, half-width 500 m and center 1500 m.</p>
 <p>Let’s see how to set this boundary condition in HydrothermalFoam.
 <code class="code docutils literal notranslate"><span class="pre">hydrothermalHeatFlux</span></code> supports Gaussian-shape (<code class="code docutils literal notranslate"><span class="pre">shape</span> <span class="pre">gaussian2d;</span></code>) distribution and the shape is defined by four parameters <code class="code docutils literal notranslate"><span class="pre">x0,</span> <span class="pre">qmax,</span> <span class="pre">qmin,</span> <span class="pre">c</span></code>, the equation of the shape is</p>
 <div class="math notranslate nohighlight" id="equation-eq-gauss-hf">

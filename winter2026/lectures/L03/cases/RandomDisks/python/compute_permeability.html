@@ -6,7 +6,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>&lt;no title&gt; &mdash; HydrothermalFoam Lecture  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=3d3fbe02" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=d8a2add5" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/plot_directive.css" />
@@ -186,10 +186,10 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">vtk</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">vtk.util</span> <span class="kn">import</span> <span class="n">numpy_support</span> <span class="k">as</span> <span class="n">VN</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">vtk</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">vtk.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">numpy_support</span> <span class="k">as</span> <span class="n">VN</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <br/></pre></div>
 </div>
 </div>
@@ -211,7 +211,7 @@
 
 
 <span class="c1"># load VTK data</span>
-<span class="n">vtkFile</span> <span class="o">=</span> <span class="s1">&#39;../VTK/phi_05_945.vtk&#39;</span>
+<span class="n">vtkFile</span> <span class="o">=</span> <span class="s1">'../VTK/phi_05_945.vtk'</span>
 <span class="n">reader</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkUnstructuredGridReader</span><span class="p">()</span>
 <span class="n">reader</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">vtkFile</span><span class="p">)</span>
 <span class="n">reader</span><span class="o">.</span><span class="n">ReadAllScalarsOn</span><span class="p">()</span>
@@ -221,8 +221,8 @@
 
 
 <span class="c1"># extract velocity arrays</span>
-<span class="n">Vcells</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">&#39;V&#39;</span><span class="p">))</span>
-<span class="n">U</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">))</span>
+<span class="n">Vcells</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">'V'</span><span class="p">))</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">VN</span><span class="o">.</span><span class="n">vtk_to_numpy</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">GetCellData</span><span class="p">()</span><span class="o">.</span><span class="n">GetArray</span><span class="p">(</span><span class="s1">'U'</span><span class="p">))</span>
 <span class="n">Umag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">U</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">U</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">U</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">Ux</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">Uy</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
@@ -245,7 +245,7 @@
 
 <span class="c1"># print permeability and porosity</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bulk permeability: </span><span class="si">%5.2e</span><span class="s1"> m2, Porosity: </span><span class="si">%3.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">kxx</span><span class="p">,</span> <span class="n">porosity</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Bulk permeability: </span><span class="si">%5.2e</span><span class="s1"> m2, Porosity: </span><span class="si">%3.2f</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">kxx</span><span class="p">,</span> <span class="n">porosity</span><span class="p">))</span>
 <br/><br/><br/><br/><br/></pre></div>
 </div>
 </div>

@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
@@ -9,24 +7,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project 1: Flow along a detachment fault &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
 
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../../_static/doctools.js?v=9a2dae69"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../../_static/tabs.js?v=3ee01567"></script>
-      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="../../_static/copybutton.js?v=9b54adf2"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=9b54adf2"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -205,7 +207,7 @@
 <figure class="align-center" id="fig-fault-2017-fig" style="width: 70%">
 <img alt="../../_images/andersen_fault_2017.png" src="../../_images/andersen_fault_2017.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 55 </span><span class="caption-text">Figure taken from <span id="id1">[<a class="reference internal" href="../../refs.html#id18" title="C. Andersen, S. Theissen-Krah, M. D. Hannington, L. Rüpke, and S. Petersen. Faulting and off-axis submarine massive sulfide accumulation at slow-spreading mid-ocean ridges: a numerical modeling perspective. Geochemistry Geophysics Geosystems, 2017.">Andersen et al., 2017</a>]</span> ; preferential fluid flow along a fault zone.</span><a class="headerlink" href="#fig-fault-2017-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 55 </span><span class="caption-text">Figure taken from <span class="bibtex-citation" id="id1">[<a class="reference internal" href="../../refs.html#id18" title="C. Andersen, S. Theissen-Krah, M. D. Hannington, L. Rüpke, and S. Petersen. Faulting and off-axis submarine massive sulfide accumulation at slow-spreading mid-ocean ridges: a numerical modeling perspective. Geochemistry Geophysics Geosystems, 2017.">Andersen et al., 2017</a>]</span> ; preferential fluid flow along a fault zone.</span><a class="headerlink" href="#fig-fault-2017-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <section id="deliverables">
@@ -249,11 +251,11 @@
 <h2>Background reading<a class="headerlink" href="#background-reading" title="Link to this heading"></a></h2>
 <blockquote>
 <div><ul class="simple">
-<li><p><span id="id2">[<a class="reference internal" href="../../refs.html#id11" title="C. Andersen, LH Rüpke, J. Hasenclever, I. Grevemeyer, and S. Petersen. Fault geometry and permeability contrast control vent temperatures at the logatchev 1 hydrothermal field, mid-atlantic ridge. Geology, 43(1):51-54, 2015. doi:doi:10.1130/G36113.1.">Andersen et al., 2015</a>]</span> illustrates the problem for the Logatchev field</p></li>
-<li><p><span id="id3">[<a class="reference internal" href="../../refs.html#id9" title="T. Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132-141, 2010. URL: &lt;Go to ISI&gt;://WOS:000277410200010, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010a</a>]</span> explains relationship between vent temperature and permeability</p></li>
-<li><p><span id="id4">[<a class="reference internal" href="../../refs.html#id13" title="B. J. deMartin, R. A. R. Canales, J. P. Canales, and S. E. Humphris. Kinematics and geometry of active detachment faulting beneath the trans-atlantic geotraverse (tag) hydrothermal field on the mid-atlantic ridge. Geology, 35(8):711-714, 2007. URL: &lt;Go to ISI&gt;://000248430500010.">deMartin et al., 2007</a>]</span> background paper on detachment faulting at the TAG vent field</p></li>
-<li><p><span id="id5">[<a class="reference internal" href="../../refs.html#id14" title="A. M. McCaig, R. A. Cliff, J. Escartin, A. E. Fallick, and C. J. MacLeod. Oceanic detachment faults focus very large volumes of black smoker fluids. Geology, 35(10):935-938, 2007. URL: &lt;Go to ISI&gt;://WOS:000250102800018, doi:10.1130/G23657a.1.">McCaig et al., 2007</a>]</span> <span id="id6">[<a class="reference internal" href="../../refs.html#id15" title="Andrew M. McCaig, AdéLie Delacour, Anthony E. Fallick, Teddy Castelain, and Gretchen L. FrüH-Green. Detachment fault control on hydrothermal circulation systems: interpreting the subsurface beneath the tag hydrothermal field using the isotopic and geological evolution of oceanic core complexes in the atlantic. Diversity Of Hydrothermal Systems On Slow Spreading Ocean Ridges, 2010. URL: https://doi.org/10.1029/2008GM000729, doi:doi:10.1029/2008GM000729 10.1029/2008GM000729.">McCaig et al., 2010</a>]</span> more paper on fluid flow along detachments</p></li>
-<li><p><span id="id7">[<a class="reference internal" href="../../refs.html#id22" title="J. Escartin, D. K. Smith, J. Cann, H. Schouten, C. H. Langmuir, and S. Escrig. Central role of detachment faults in accretion of slow-spreading oceanic lithosphere. Nature, 455(7214):790-U5, 2008. doi:10.1038/nature07333.">Escartin et al., 2008</a>]</span> classic paper on oceanic detachments</p></li>
+<li><p><span class="bibtex-citation" id="id2">[<a class="reference internal" href="../../refs.html#id11" title="C. Andersen, LH Rüpke, J. Hasenclever, I. Grevemeyer, and S. Petersen. Fault geometry and permeability contrast control vent temperatures at the logatchev 1 hydrothermal field, mid-atlantic ridge. Geology, 43(1):51-54, 2015. doi:doi:10.1130/G36113.1.">Andersen et al., 2015</a>]</span> illustrates the problem for the Logatchev field</p></li>
+<li><p><span class="bibtex-citation" id="id3">[<a class="reference internal" href="../../refs.html#id9" title="T. Driesner. The interplay of permeability and fluid properties as a first order control of heat transport, venting temperatures and venting salinities at mid-ocean ridge hydrothermal systems. Geofluids, 10(1-2):132-141, 2010. URL: &lt;Go to ISI&gt;://WOS:000277410200010, doi:10.1111/j.1468-8123.2009.00273.x.">Driesner, 2010a</a>]</span> explains relationship between vent temperature and permeability</p></li>
+<li><p><span class="bibtex-citation" id="id4">[<a class="reference internal" href="../../refs.html#id13" title="B. J. deMartin, R. A. R. Canales, J. P. Canales, and S. E. Humphris. Kinematics and geometry of active detachment faulting beneath the trans-atlantic geotraverse (tag) hydrothermal field on the mid-atlantic ridge. Geology, 35(8):711-714, 2007. URL: &lt;Go to ISI&gt;://000248430500010.">deMartin et al., 2007</a>]</span> background paper on detachment faulting at the TAG vent field</p></li>
+<li><p><span class="bibtex-citation" id="id5">[<a class="reference internal" href="../../refs.html#id14" title="A. M. McCaig, R. A. Cliff, J. Escartin, A. E. Fallick, and C. J. MacLeod. Oceanic detachment faults focus very large volumes of black smoker fluids. Geology, 35(10):935-938, 2007. URL: &lt;Go to ISI&gt;://WOS:000250102800018, doi:10.1130/G23657a.1.">McCaig et al., 2007</a>]</span> <span class="bibtex-citation" id="id6">[<a class="reference internal" href="../../refs.html#id15" title="Andrew M. McCaig, AdéLie Delacour, Anthony E. Fallick, Teddy Castelain, and Gretchen L. FrüH-Green. Detachment fault control on hydrothermal circulation systems: interpreting the subsurface beneath the tag hydrothermal field using the isotopic and geological evolution of oceanic core complexes in the atlantic. Diversity Of Hydrothermal Systems On Slow Spreading Ocean Ridges, 2010. URL: https://doi.org/10.1029/2008GM000729, doi:doi:10.1029/2008GM000729 10.1029/2008GM000729.">McCaig et al., 2010</a>]</span> more paper on fluid flow along detachments</p></li>
+<li><p><span class="bibtex-citation" id="id7">[<a class="reference internal" href="../../refs.html#id22" title="J. Escartin, D. K. Smith, J. Cann, H. Schouten, C. H. Langmuir, and S. Escrig. Central role of detachment faults in accretion of slow-spreading oceanic lithosphere. Nature, 455(7214):790-U5, 2008. doi:10.1038/nature07333.">Escartin et al., 2008</a>]</span> classic paper on oceanic detachments</p></li>
 </ul>
 </div></blockquote>
 </section>

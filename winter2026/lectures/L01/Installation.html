@@ -6,7 +6,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Installation guide &mdash; HydrothermalFoam Lecture  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=3d3fbe02" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
@@ -204,7 +204,7 @@
 <p>We will be using the Foundation version of <a class="reference external" href="https://openfoam.org">OpenFOAM</a> (version 10) and our own hydrothermal flow solver <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a>, which is based on OpenFOAM. Everything you need for the class comes in one pre-configured <a class="reference external" href="https://www.docker.com">Docker</a> container:</p>
 <ul class="simple">
 <li><p>OpenFOAM 10, built from source on Ubuntu 22.04 Linux</p></li>
-<li><p>HydrothermalFoam with its solver <code class="code docutils literal notranslate"><span class="pre">HTFoam</span></code>, and xThermo, our implementation of the <span id="id2">[<a class="reference internal" href="../../refs.html#id31" title="T. Driesner and C. A. Heinrich. The system h2o-nacl. part i: correlation formulae for phase relations in temperature-pressure-composition space from 0 to 1000 degrees c, 0 to 5000 bar, and 0 to 1 x-nacl. Geochimica Et Cosmochimica Acta, 71(20):4880-4901, 2007. Driesner, Thomas Heinrich, Christoph A. URL: &lt;Go to ISI&gt;://000250948100006, doi:10.1016/i.gca.2006.01.033.">Driesner &amp; Heinrich, 2007</a>]</span> equation-of-state for the system H<sub>2</sub>O-NaCl</p></li>
+<li><p>HydrothermalFoam with its solver <code class="code docutils literal notranslate"><span class="pre">HTFoam</span></code>, and xThermo, our implementation of the <span class="bibtex-citation" id="id2">[<a class="reference internal" href="../../refs.html#id31" title="T. Driesner and C. A. Heinrich. The system h2o-nacl. part i: correlation formulae for phase relations in temperature-pressure-composition space from 0 to 1000 degrees c, 0 to 5000 bar, and 0 to 1 x-nacl. Geochimica Et Cosmochimica Acta, 71(20):4880-4901, 2007. Driesner, Thomas Heinrich, Christoph A. URL: &lt;Go to ISI&gt;://000250948100006, doi:10.1016/i.gca.2006.01.033.">Driesner &amp; Heinrich, 2007</a>]</span> equation-of-state for the system H<sub>2</sub>O-NaCl</p></li>
 <li><p>Python 3.12 with all packages we use in class (numpy, scipy, matplotlib, pandas, vtk, meshio, porespy, iapws, …)</p></li>
 <li><p>JupyterLab and Visual Studio Code, which you use in your web browser</p></li>
 </ul>
@@ -317,9 +317,9 @@ which<span class="w"> </span>HTFoam
 </pre></div>
 </div>
 <p>Then create a new notebook in JupyterLab (or a file <code class="code docutils literal notranslate"><span class="pre">hello.ipynb</span></code> in Visual Studio Code), and run this code:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">meshio</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">meshio</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>

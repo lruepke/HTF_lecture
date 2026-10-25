@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
@@ -9,21 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Exercise 1: Fluid properties &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
       <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
 
   
-      <script src="../../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="../../_static/doctools.js?v=9a2dae69"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../../_static/tabs.js?v=3ee01567"></script>
-      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -205,13 +207,13 @@
 <span class="n">steam</span><span class="o">=</span><span class="n">iapws</span><span class="o">.</span><span class="n">IAPWS97</span><span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="o">+</span><span class="mf">273.15</span><span class="p">,</span> <span class="n">P</span><span class="o">=</span><span class="n">p</span><span class="p">)</span> <span class="c1"># note that iaapws uses temperature in K and pressure in MPa</span>
 
 <span class="c1">#format the output for printing</span>
-<span class="n">output_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:&lt;17}</span><span class="s2"> = </span><span class="si">{:&gt;10.2f}</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>
-<span class="n">viscosity_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:&lt;17}</span><span class="s2"> = </span><span class="si">{:&gt;10.2e}</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="n">output_format</span> <span class="o">=</span> <span class="s2">"</span><span class="si">{:&lt;17}</span><span class="s2"> = </span><span class="si">{:&gt;10.2f}</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">"</span>
+<span class="n">viscosity_format</span> <span class="o">=</span> <span class="s2">"</span><span class="si">{:&lt;17}</span><span class="s2"> = </span><span class="si">{:&gt;10.2e}</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">"</span>
 
-<span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="n">output_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="s2">&quot;kg/m</span><span class="se">\u00B3</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">+</span>
-         <span class="n">output_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Specific heat&quot;</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">cp</span><span class="o">*</span><span class="mi">1000</span><span class="p">,</span> <span class="s2">&quot;J/(kg</span><span class="se">\u00B7</span><span class="s2">K)&quot;</span><span class="p">)</span> <span class="o">+</span>
-         <span class="n">viscosity_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Viscosity&quot;</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="s2">&quot;Pa</span><span class="se">\u00B7</span><span class="s2">s&quot;</span><span class="p">)</span> <span class="o">+</span>
-         <span class="n">output_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Specific enthalpy&quot;</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="s2">&quot;J/kg&quot;</span><span class="p">))</span>
+<span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="n">output_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">"Density"</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span> <span class="s2">"kg/m</span><span class="se">\u00B3</span><span class="s2">"</span><span class="p">)</span> <span class="o">+</span>
+         <span class="n">output_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">"Specific heat"</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">cp</span><span class="o">*</span><span class="mi">1000</span><span class="p">,</span> <span class="s2">"J/(kg</span><span class="se">\u00B7</span><span class="s2">K)"</span><span class="p">)</span> <span class="o">+</span>
+         <span class="n">viscosity_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">"Viscosity"</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">mu</span><span class="p">,</span> <span class="s2">"Pa</span><span class="se">\u00B7</span><span class="s2">s"</span><span class="p">)</span> <span class="o">+</span>
+         <span class="n">output_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">"Specific enthalpy"</span><span class="p">,</span> <span class="n">steam</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="s2">"J/kg"</span><span class="p">))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span><span class="c1"># import water properties</span>
 </pre></div>
@@ -242,10 +244,10 @@ Specific<span class="w"> </span><span class="nv">enthalpy</span><span class="w">
 <p>Sometimes Visual Studio’s way of setting the python interpretor is not that “intuitive”. In principle, you set the the interpretor (your python environment) using CMD/CTRL+SHIFT+P and typing Python: Select Interpretor. Then you can chose the python environment of the class that has all the necessarry packages installed.</p>
 <p>Problem is, .ipynb files also contain information on the interpretor that should be used with a notbook and Visual Studio uses that information. Therefore, if you download the scripts from us, there is a non-zero chance that your Visual Studio will chose the “wrong” interpretor and that you get an error message that certain packages are not installed.</p>
 <p>In that case you need to follow a workaround. Rename your .ipynb file to .ipynb.json and open that file. Find the section on kernelspec:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;kernelspec&quot;</span>:<span class="w"> </span><span class="o">{</span>
-<span class="s2">&quot;display_name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Python 3&quot;</span>,
-<span class="s2">&quot;language&quot;</span>:<span class="w"> </span><span class="s2">&quot;python&quot;</span>,
-<span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;python3&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="s2">"kernelspec"</span>:<span class="w"> </span><span class="o">{</span>
+<span class="s2">"display_name"</span>:<span class="w"> </span><span class="s2">"Python 3"</span>,
+<span class="s2">"language"</span>:<span class="w"> </span><span class="s2">"python"</span>,
+<span class="s2">"name"</span>:<span class="w"> </span><span class="s2">"python3"</span>
 <span class="o">}</span>,
 </pre></div>
 </div>
