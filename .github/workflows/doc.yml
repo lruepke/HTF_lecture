@@ -76,7 +76,8 @@ jobs:
             build_lecture="no"
             if [[ -n "$lastcommit" ]] && git cat-file -e ${lastcommit}^{commit} 2>/dev/null; then
               echo "Valid commit found. Checking for changes..."
-              if git diff --quiet ${lastcommit} -- ${lecture}/; then
+              # Also rebuild all lectures when the Python packages change
+              if git diff --quiet ${lastcommit} -- ${lecture}/ poetry.lock pyproject.toml; then
               echo "$lecture is not updated."
               if [ -d "../history/${lectureName_hugo}" ]; then
                 echo "Copying previous pages from history."
