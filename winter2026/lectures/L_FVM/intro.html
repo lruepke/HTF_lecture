@@ -81,9 +81,9 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Excercise 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Excercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFOAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Exercise 2</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul>
@@ -506,7 +506,7 @@ Therefore, in order to find the value of <span class="math notranslate nohighlig
 <p class="admonition-title">Tip</p>
 <p>Check out how openfoam makes use of this face-centered logic to compute the average gradient of a field in the <code class="code docutils literal notranslate"><span class="pre">gaussGrad</span></code> function in <code class="code docutils literal notranslate"><span class="pre">src/finiteVolume/finiteVolume/gradSchemes/gaussGrad/gaussGrad.C</span></code> (see below). The forAll loop is on the faces and the owner and neighbour functions are used to get the indices of the cells that are connected to a given face.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-number">Listing 28 </span><span class="caption-text">src/finiteVolume/finiteVolume/gradSchemes/gaussGrad/gaussGrad.C</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 29 </span><span class="caption-text">src/finiteVolume/finiteVolume/gradSchemes/gaussGrad/gaussGrad.C</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="cm">/*---------------------------------------------------------------------------*\</span>
 <span class="linenos">  2</span><span class="cm">  =========                 |</span>
 <span class="linenos">  3</span><span class="cm">  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>

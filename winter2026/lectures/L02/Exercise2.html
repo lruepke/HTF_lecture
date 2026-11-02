@@ -5,7 +5,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Excercise 2 &mdash; HydrothermalFoam Lecture  documentation</title>
+  <title>Exercise 2 &mdash; HydrothermalFoam Lecture  documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
@@ -33,7 +33,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Lecture overview" href="../L03/Overview.html" />
-    <link rel="prev" title="Excercise 1" href="Exercise1.html" /> 
+    <link rel="prev" title="Exercise 1" href="Exercise1.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -81,9 +81,9 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Example.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Excercise 1</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Excercise 2</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="Example.html">Navier-Stokes flow with OpenFOAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 2</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#d-cavity-flow">3-D cavity flow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-fancy-let-s-make-a-parallel-run">Getting fancy - let’s make a parallel run</a></li>
 </ul>
@@ -177,7 +177,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Excercise 2</li>
+      <li class="breadcrumb-item active">Exercise 2</li>
       <li class="wy-breadcrumbs-aside">
               <a href="https://github.com/lruepke/HTF_lecture/blob/main/Winter2026/source/lectures/L02/Exercise2.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
@@ -187,35 +187,45 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="excercise-2">
-<span id="l02-exercise2"></span><h1>Excercise 2<a class="headerlink" href="#excercise-2" title="Link to this heading"></a></h1>
-<p>After we have mananged to solve for 2-D cavity flow, it’s time to try 3-D. And parralel proccessing!</p>
+  <section id="exercise-2">
+<span id="l02-exercise2"></span><h1>Exercise 2<a class="headerlink" href="#exercise-2" title="Link to this heading"></a></h1>
+<p>After we have managed to solve for 2-D cavity flow, it’s time to try 3-D. And parallel processing!</p>
 <section id="d-cavity-flow">
 <h2>3-D cavity flow<a class="headerlink" href="#d-cavity-flow" title="Link to this heading"></a></h2>
-<p>First, try to make a 3-D simulations. Start by copying the case to a new folder and to clean the case</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>-r<span class="w"> </span>cavity2D<span class="w"> </span>cavity3D
+<p>First, try to make a 3-D simulation. Start by copying the case to a new folder and clean it</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp<span class="w"> </span>-r<span class="w"> </span>cavity2D<span class="w"> </span>cavity3D
+<span class="nb">cd</span><span class="w"> </span>cavity3D
 ./clean.sh
 </pre></div>
 </div>
 <div class="admonition-now-these-things-have-to-happen admonition">
 <p class="admonition-title">Now these things have to happen</p>
 <ul class="simple">
-<li><p>make the mesh 3-D by having cells in the z-direction</p></li>
-<li><p>make sure the the front and back sides are not set to “empty” anymore</p></li>
-<li><p>set proper boundary conditions for front and back</p></li>
+<li><p>make the mesh 3-D by having cells in the z-direction (<code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>)</p></li>
+<li><p>make the domain a cube: the cavity is only 0.01 m thick so far. Which vertex coordinates do you have to change?</p></li>
+<li><p>the front and back sides must not be “empty” anymore. There are three places where you have to change this: the patch type in <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>, and the boundary conditions in <code class="code docutils literal notranslate"><span class="pre">0/U</span></code> and <code class="code docutils literal notranslate"><span class="pre">0/p</span></code></p></li>
+<li><p>set proper boundary conditions for front and back: they are walls now, just like the fixed walls</p></li>
+<li><p>check the Courant number in the log file</p></li>
 <li><p>run it and hope for the best!</p></li>
 </ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If something goes wrong, read the error message carefully, it usually names the file and the patch with the problem. A frequent error is a patch that is <code class="code docutils literal notranslate"><span class="pre">empty</span></code> in one file but not in the others.</p>
 </div>
 </section>
 <section id="getting-fancy-let-s-make-a-parallel-run">
 <h2>Getting fancy - let’s make a parallel run<a class="headerlink" href="#getting-fancy-let-s-make-a-parallel-run" title="Link to this heading"></a></h2>
-<p>Three-dimensional simulations need a lot of computing resources and thankfully OpenFoam is fully parallelized and very efficient in making parallel runs. The standard parallelization technique in OpenFoam is called “domain decompositon”. This means that the compuational domain is split into sub-domains and each sub-domain is send to one of the computional cores. As always, all of this is controlled via a dictionary file. This file is called <code class="code docutils literal notranslate"><span class="pre">system/decomposeParDict</span></code> .</p>
+<p>Three-dimensional simulations need a lot of computing resources and thankfully OpenFOAM is fully parallelized and very efficient in making parallel runs. The standard parallelization technique in OpenFOAM is called “domain decomposition”. This means that the computational domain is split into sub-domains and each sub-domain is sent to one of the computational cores. As always, all of this is controlled via a dictionary file. This file is called <code class="code docutils literal notranslate"><span class="pre">system/decomposeParDict</span></code> .</p>
 <p>To get started we make a copy of our 3-D case.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>-r<span class="w"> </span>cavity3D<span class="w"> </span>cavity3D_par
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp<span class="w"> </span>-r<span class="w"> </span>cavity3D<span class="w"> </span>cavity3D_par
+<span class="nb">cd</span><span class="w"> </span>cavity3D_par
 ./clean.sh
 </pre></div>
 </div>
-<p>Unfortunately, theree is no file <code class="code docutils literal notranslate"><span class="pre">system/decomposeParDict</span></code> in our example case… Fortunately, there is probably an example file somewhere in all the provided tutorials. A simple way to find and copy one is this:</p>
+<p>Unfortunately, there is no file <code class="code docutils literal notranslate"><span class="pre">system/decomposeParDict</span></code> in our example case… Fortunately, there is probably an example file somewhere in all the provided tutorials. A simple way to find and copy one is this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find<span class="w">  </span><span class="nv">$FOAM_TUTORIALS</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">"decomposeParDict"</span>
 ...
 /opt/OpenFOAM-10/tutorials/heatTransfer/chtMultiRegionFoam/heatedDuct/system/decomposeParDict
@@ -225,42 +235,43 @@
 cp<span class="w"> </span>/opt/OpenFOAM-10/tutorials/heatTransfer/buoyantFoam/iglooWithFridges/system/decomposeParDict<span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs/cavity3D_par/system
 </pre></div>
 </div>
-<p>Now open this file and edit it; it should look like this</p>
+<p>Now open this file and edit it. The tutorial file is set up for two subdomains; change it to four subdomains and to the method <code class="code docutils literal notranslate"><span class="pre">simple</span></code>, so that it looks like this (the other coefficient blocks in the file are not used and you can delete them):</p>
 <div class="literal-block-wrapper docutils container" id="lst-3dcavity-par">
-<div class="code-block-caption"><span class="caption-number">Listing 11 </span><span class="caption-text">Domain decomposition and parallel processing.</span><a class="headerlink" href="#lst-3dcavity-par" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 12 </span><span class="caption-text">Domain decomposition and parallel processing.</span><a class="headerlink" href="#lst-3dcavity-par" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
-<span class="linenos"> 2</span><span class="cm">=========                 |</span>
-<span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
-<span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
-<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  10</span>
-<span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
+<span class="linenos"> 2</span><span class="cm">  =========                 |</span>
+<span class="linenos"> 3</span><span class="cm">  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
+<span class="linenos"> 4</span><span class="cm">   \\    /   O peration     | Website:  https://openfoam.org</span>
+<span class="linenos"> 5</span><span class="cm">    \\  /    A nd           | Version:  10</span>
+<span class="linenos"> 6</span><span class="cm">     \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
 <span class="linenos"> 9</span><span class="p">{</span>
-<span class="linenos">10</span>    <span class="kt">version</span>     <span class="mf">2.0</span><span class="p">;</span>
-<span class="linenos">11</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
-<span class="linenos">12</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
-<span class="linenos">13</span>    <span class="kt">location</span>    <span class="s">"system"</span><span class="p">;</span>
-<span class="linenos">14</span>    <span class="kt">object</span>      <span class="n">decomposeParDict</span><span class="p">;</span>
-<span class="linenos">15</span><span class="p">}</span>
-<span class="linenos">16</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
-<span class="linenos">17</span>
-<span class="hll"><span class="linenos">18</span><span class="k">numberOfSubdomains</span> <span class="mi">4</span><span class="p">;</span>
+<span class="linenos">10</span>    <span class="kt">format</span>      <span class="k">ascii</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="kt">class</span>       <span class="k">dictionary</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="kt">object</span>      <span class="n">decomposeParDict</span><span class="p">;</span>
+<span class="linenos">13</span><span class="p">}</span>
+<span class="linenos">14</span><span class="c1">// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //</span>
+<span class="linenos">15</span>
+<span class="hll"><span class="linenos">16</span><span class="k">numberOfSubdomains</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class="linenos">17</span>
+<span class="hll"><span class="linenos">18</span><span class="n">method</span>          <span class="n">simple</span><span class="p">;</span>
 </span><span class="linenos">19</span>
-<span class="linenos">20</span><span class="n">method</span>          <span class="n">scotch</span><span class="p">;</span>
-<span class="linenos">21</span>
-<span class="linenos">22</span><span class="k">simpleCoeffs</span>
-<span class="linenos">23</span><span class="p">{</span>
-<span class="hll"><span class="linenos">24</span>    <span class="k">n</span>               <span class="p">(</span><span class="mi">2</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">);</span>
-</span><span class="linenos">25</span>    <span class="k">delta</span>           <span class="mf">0.001</span><span class="p">;</span>
-<span class="linenos">26</span><span class="p">}</span>
-<span class="linenos">27</span><span class="c1">// ************************************************************************* //</span>
+<span class="linenos">20</span><span class="k">simpleCoeffs</span>
+<span class="linenos">21</span><span class="p">{</span>
+<span class="hll"><span class="linenos">22</span>    <span class="k">n</span>               <span class="p">(</span><span class="mi">2</span> <span class="mi">2</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class="linenos">23</span><span class="p">}</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="c1">// ************************************************************************* //</span>
 </pre></div>
 </div>
 </div>
-<p>The domain is split into four equally sized blocks. Again details on this can be found in the <a class="reference external" href="https://cfd.direct/openfoam/user-guide/">OpenFoam User Guide</a>.</p>
+<p>With the method <code class="code docutils literal notranslate"><span class="pre">simple</span></code>, the domain is split into equally sized blocks: <code class="code docutils literal notranslate"><span class="pre">n</span> <span class="pre">(2</span> <span class="pre">2</span> <span class="pre">1)</span></code> means two blocks in the x direction, two in the y direction, and one in the z direction. The product of the three numbers must equal <code class="code docutils literal notranslate"><span class="pre">numberOfSubdomains</span></code>. Other methods, e.g. <code class="code docutils literal notranslate"><span class="pre">scotch</span></code>, split the domain automatically and do not use <code class="code docutils literal notranslate"><span class="pre">simpleCoeffs</span></code>. Details can be found in the <a class="reference external" href="https://doc.cfd.direct/openfoam/user-guide-v10/running-applications-parallel">OpenFOAM User Guide</a>.</p>
 <figure class="align-center" id="fig-decomposed-mesh-fig">
 <img alt="../../_images/decomposed_mesh.png" src="../../_images/decomposed_mesh.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">A 3-D cavity mesh decomposed into four subdomains. Each colour is the part of the mesh that one processor works on.</span><a class="headerlink" href="#fig-decomposed-mesh-fig" title="Link to this image"></a></p>
+</figcaption>
 </figure>
 <p>Next you need to modify the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script to invoke a parallel run.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>run.sh<span class="w"> </span>run_par.sh
@@ -269,7 +280,7 @@ cp<span class="w"> </span>/opt/OpenFOAM-10/tutorials/heatTransfer/buoyantFoam/ig
 <p>It should look like this:</p>
 <blockquote>
 <div><div class="literal-block-wrapper docutils container" id="lst-2dcav-run-tree">
-<div class="code-block-caption"><span class="caption-number">Listing 12 </span><span class="caption-text">The run_par.sh file.</span><a class="headerlink" href="#lst-2dcav-run-tree" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">The run_par.sh file.</span><a class="headerlink" href="#lst-2dcav-run-tree" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/bin/sh</span>
 <span class="linenos"> 2</span><span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">0</span><span class="p">%/*</span><span class="si">}</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="w">    </span><span class="c1"># Run from this directory</span>
 <span class="linenos"> 3</span>
@@ -301,7 +312,7 @@ cp<span class="w"> </span>/opt/OpenFOAM-10/tutorials/heatTransfer/buoyantFoam/ig
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Exercise1.html" class="btn btn-neutral float-left" title="Excercise 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Exercise1.html" class="btn btn-neutral float-left" title="Exercise 1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../L03/Overview.html" class="btn btn-neutral float-right" title="Lecture overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

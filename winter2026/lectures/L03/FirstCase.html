@@ -81,9 +81,9 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFoam</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Excercise 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Excercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFOAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Exercise 2</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
 <ul class="current">
@@ -243,9 +243,9 @@
 <p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it, which is already installed in the course container (together with PIL, which is also needed).</p>
 <p>Now we are good to go and it’s time to download the data. The complete openFOAM case can be downloaded from <a class="reference download internal" download="" href="../../_downloads/65ca8e602751cf5a43c9c804c6623d86/DRP_permeability_2D.zip"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a> .</p>
 <p>Copy the case into your shared working directory <code class="code docutils literal notranslate"><span class="pre">$HOME/HydrothermalFoam_runs</span></code>. You need to do this within the docker container, i.e. in a terminal in Visual Studio Code.</p>
-<p>Check out the directory structure shown in <a class="reference internal" href="#lst-drp-case-tree"><span class="std std-numref">Listing 13</span></a>.</p>
+<p>Check out the directory structure shown in <a class="reference internal" href="#lst-drp-case-tree"><span class="std std-numref">Listing 14</span></a>.</p>
 <div class="literal-block-wrapper docutils container" id="lst-drp-case-tree">
-<div class="code-block-caption"><span class="caption-number">Listing 13 </span><span class="caption-text">File tree structure of the Digital Rock Physics case.</span><a class="headerlink" href="#lst-drp-case-tree" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">File tree structure of the Digital Rock Physics case.</span><a class="headerlink" href="#lst-drp-case-tree" title="Link to this code"></a></div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.
 ├──<span class="w"> </span><span class="m">0</span>
 │<span class="w">   </span>├──<span class="w"> </span>U
@@ -394,7 +394,7 @@ pvpython<span class="w"> </span>make_stl.py
 <h3>Making the mesh<a class="headerlink" href="#making-the-mesh" title="Link to this heading"></a></h3>
 <p>Great, back to openfoam for the final mesh making! Making the mesh with SHM is a two-step process. First we make a standard blockMesh background mesh. This is, as usual, controlled by <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>:</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-number">Listing 14 </span><span class="caption-text">blockMeshDict</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">blockMeshDict</span><a class="headerlink" href="#id1" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -516,7 +516,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-bc-p">
-<div class="code-block-caption"><span class="caption-number">Listing 15 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-p" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-p" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -577,7 +577,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-bc-u">
-<div class="code-block-caption"><span class="caption-number">Listing 16 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-u" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">Boundary conditions</span><a class="headerlink" href="#lst-drp-bc-u" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -638,7 +638,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-tp">
-<div class="code-block-caption"><span class="caption-number">Listing 17 </span><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-drp-tp" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">Transport properties</span><a class="headerlink" href="#lst-drp-tp" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
@@ -672,7 +672,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 </pre></div>
 </div>
 <div class="literal-block-wrapper docutils container" id="lst-drp-cdict">
-<div class="code-block-caption"><span class="caption-number">Listing 18 </span><span class="caption-text">controlDict of the DRP case.</span><a class="headerlink" href="#lst-drp-cdict" title="Link to this code"></a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 19 </span><span class="caption-text">controlDict of the DRP case.</span><a class="headerlink" href="#lst-drp-cdict" title="Link to this code"></a></div>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cm">/*--------------------------------*- C++ -*----------------------------------*\</span>
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
