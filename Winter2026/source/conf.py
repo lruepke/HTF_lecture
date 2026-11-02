@@ -47,7 +47,8 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', '**.ipynb_checkpoints']
+# The L02 notebook is offered as a download only (without outputs, students run it themselves)
+exclude_patterns = ['_build', '**.ipynb_checkpoints', 'lectures/L02/meshes_and_time_steps.ipynb']
 
 # config plot 
 plot_html_show_source_link=True
