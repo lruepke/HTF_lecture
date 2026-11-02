@@ -81,6 +81,7 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Primer.html">Meshes and time steps in a nutshell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Example.html">Navier-Stokes flow with OpenFOAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 2</a><ul>
@@ -270,7 +271,7 @@ cp<span class="w"> </span>/opt/OpenFOAM-10/tutorials/heatTransfer/buoyantFoam/ig
 <figure class="align-center" id="fig-decomposed-mesh-fig">
 <img alt="../../_images/decomposed_mesh.png" src="../../_images/decomposed_mesh.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 9 </span><span class="caption-text">A 3-D cavity mesh decomposed into four subdomains. Each colour is the part of the mesh that one processor works on.</span><a class="headerlink" href="#fig-decomposed-mesh-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">A 3-D cavity mesh decomposed into four subdomains. Each colour is the part of the mesh that one processor works on.</span><a class="headerlink" href="#fig-decomposed-mesh-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Next you need to modify the <code class="code docutils literal notranslate"><span class="pre">run.sh</span></code> script to invoke a parallel run.</p>
@@ -302,7 +303,7 @@ cp<span class="w"> </span>/opt/OpenFOAM-10/tutorials/heatTransfer/buoyantFoam/ig
 <figure class="align-center" id="fig-3dcavity-fig">
 <img alt="../../_images/3dcavity.png" src="../../_images/3dcavity.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Results of the 3-D parallel cavity flow simulation.</span><a class="headerlink" href="#fig-3dcavity-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Results of the 3-D parallel cavity flow simulation.</span><a class="headerlink" href="#fig-3dcavity-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>

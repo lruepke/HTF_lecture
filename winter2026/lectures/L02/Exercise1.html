@@ -81,6 +81,7 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Primer.html">Meshes and time steps in a nutshell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Example.html">Navier-Stokes flow with OpenFOAM</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Exercise 1</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#transient-flow-in-a-lid-driven-cavity">Transient flow in a lid-driven cavity</a></li>
@@ -206,7 +207,7 @@
 <h3>Reynolds number<a class="headerlink" href="#reynolds-number" title="Link to this heading"></a></h3>
 <p>One important dimensionless number in fluid dynamics is the <strong>Reynolds number</strong>. It is defined as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-re-cavity">
-<span class="eqno">(4)<a class="headerlink" href="#equation-eq-re-cavity" title="Link to this equation"></a></span>\[Re = \frac{UL}{\nu}\]</div>
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-re-cavity" title="Link to this equation"></a></span>\[Re = \frac{UL}{\nu}\]</div>
 <p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(U\)</span> is the characteristic velocity (e.g., lid speed),</p></li>
@@ -266,7 +267,7 @@
 <p>We are defining a 3-D mesh with a width and height of 0.1 m and a thickness of 0.01 m.  A potential pitfall is line 16, where a global scaling of the spatial dimensions is introduced. The 3rd dimension does not matter here, as we are running the simulation in 2d mode (boundary faces are set to <code class="docutils literal notranslate"><span class="pre">empty</span></code>). The lid velocity is set in <code class="code docutils literal notranslate"><span class="pre">0/U</span></code> to 1 m/s. The kinematic viscosity is set in <code class="code docutils literal notranslate"><span class="pre">constant/physicalProperties</span></code> to 0.01 m^2/s. The numerical resolution is set in <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code> to 20 cells in the x and y direction, which gives us a grid spacing of 0.005 m.</p>
 <p>The Reynolds number for this case is:</p>
 <div class="math notranslate nohighlight" id="equation-eq-re-cavity-num">
-<span class="eqno">(5)<a class="headerlink" href="#equation-eq-re-cavity-num" title="Link to this equation"></a></span>\[Re = \frac{UL}{\nu} = \frac{1~\text{m/s} \cdot 0.1~\text{m}}{0.01~\text{m}^2/\text{s}} = 10\]</div>
+<span class="eqno">(6)<a class="headerlink" href="#equation-eq-re-cavity-num" title="Link to this equation"></a></span>\[Re = \frac{UL}{\nu} = \frac{1~\text{m/s} \cdot 0.1~\text{m}}{0.01~\text{m}^2/\text{s}} = 10\]</div>
 <p>This is a small Reynolds number: viscosity dominates, and we expect a smooth, laminar flow with a single large vortex.</p>
 </section>
 <section id="time-scales">
@@ -275,7 +276,7 @@
 <div><p>Let’s check the time scales of the problem. One time scale of interest is the <strong>convection time scale</strong>, which is given by:</p>
 </div></blockquote>
 <div class="math notranslate nohighlight" id="equation-eq-t-conv">
-<span class="eqno">(6)<a class="headerlink" href="#equation-eq-t-conv" title="Link to this equation"></a></span>\[t_\text{conv} \sim \frac{L}{U}\]</div>
+<span class="eqno">(7)<a class="headerlink" href="#equation-eq-t-conv" title="Link to this equation"></a></span>\[t_\text{conv} \sim \frac{L}{U}\]</div>
 <p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(L\)</span> is the characteristic length scale of the domain (e.g., cavity height or length),</p></li>
@@ -283,13 +284,13 @@
 </ul>
 <p>This relation tells us how long it takes for a fluid parcel to travel the length of the domain. For our case, this is:</p>
 <div class="math notranslate nohighlight" id="equation-eq-t-conv-num">
-<span class="eqno">(7)<a class="headerlink" href="#equation-eq-t-conv-num" title="Link to this equation"></a></span>\[t_\text{conv} \sim \frac{0.1~\text{m}}{1~\text{m/s}} = 0.1~\text{s}\]</div>
+<span class="eqno">(8)<a class="headerlink" href="#equation-eq-t-conv-num" title="Link to this equation"></a></span>\[t_\text{conv} \sim \frac{0.1~\text{m}}{1~\text{m/s}} = 0.1~\text{s}\]</div>
 <p>Another important time scale is the <strong>viscous diffusion time scale</strong>, which is given by:</p>
 <div class="math notranslate nohighlight" id="equation-eq-t-visc">
-<span class="eqno">(8)<a class="headerlink" href="#equation-eq-t-visc" title="Link to this equation"></a></span>\[t_\text{visc} \sim \frac{L^2}{\nu}\]</div>
+<span class="eqno">(9)<a class="headerlink" href="#equation-eq-t-visc" title="Link to this equation"></a></span>\[t_\text{visc} \sim \frac{L^2}{\nu}\]</div>
 <p>This relation tells us how quickly the motion of the lid spreads into the fluid. Higher viscosity or smaller domains lead to faster development of flow patterns. For our case, this is:</p>
 <div class="math notranslate nohighlight" id="equation-eq-t-visc-num">
-<span class="eqno">(9)<a class="headerlink" href="#equation-eq-t-visc-num" title="Link to this equation"></a></span>\[t_\text{visc} \sim \frac{(0.1~\text{m})^2}{0.01~\text{m}^2/\text{s}} = 1~\text{s}\]</div>
+<span class="eqno">(10)<a class="headerlink" href="#equation-eq-t-visc-num" title="Link to this equation"></a></span>\[t_\text{visc} \sim \frac{(0.1~\text{m})^2}{0.01~\text{m}^2/\text{s}} = 1~\text{s}\]</div>
 <div class="admonition-you-know-this-from-heat-conduction admonition">
 <p class="admonition-title">You know this from heat conduction</p>
 <p>The time it takes heat to diffuse over a distance <span class="math notranslate nohighlight">\(L\)</span> is <span class="math notranslate nohighlight">\(t \sim L^2/\kappa\)</span>, with the thermal diffusivity <span class="math notranslate nohighlight">\(\kappa\)</span>. This is how we estimate how long a dike or the oceanic lithosphere needs to cool. Viscosity works the same way: the kinematic viscosity <span class="math notranslate nohighlight">\(\nu\)</span> is the “diffusivity of momentum”, and it has the same units as <span class="math notranslate nohighlight">\(\kappa\)</span> (m²/s). The fluid in the cavity starts at rest, and the motion of the lid diffuses into it just like heat diffuses into cold rock.</p>
@@ -300,7 +301,7 @@
 <h3>Courant number and numerical stability<a class="headerlink" href="#courant-number-and-numerical-stability" title="Link to this heading"></a></h3>
 <p>Finally, we need to check the <strong>Courant number</strong>. It tells us whether our time step is small enough for the mesh we use (we will get to the details later). The Courant number is defined as:</p>
 <div class="math notranslate nohighlight" id="equation-eq-co">
-<span class="eqno">(10)<a class="headerlink" href="#equation-eq-co" title="Link to this equation"></a></span>\[Co = \frac{U \Delta t}{\Delta x}\]</div>
+<span class="eqno">(11)<a class="headerlink" href="#equation-eq-co" title="Link to this equation"></a></span>\[Co = \frac{U \Delta t}{\Delta x}\]</div>
 <p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(U\)</span> is the characteristic velocity (e.g., lid speed),</p></li>
@@ -310,7 +311,7 @@
 <p>The Courant number tells us how many cells the fluid moves in one time step. The rule of thumb is: <strong>in one time step, the fluid should not move further than one cell</strong>, so <span class="math notranslate nohighlight">\(Co\)</span> should stay below 1. If it gets larger, the simulation can become unstable: the results start to oscillate and the run eventually crashes.
 For our case, the Courant number is:</p>
 <div class="math notranslate nohighlight" id="equation-eq-co-num">
-<span class="eqno">(11)<a class="headerlink" href="#equation-eq-co-num" title="Link to this equation"></a></span>\[Co = \frac{1~\text{m/s} \cdot 0.005~\text{s}}{0.005~\text{m}} = 1\]</div>
+<span class="eqno">(12)<a class="headerlink" href="#equation-eq-co-num" title="Link to this equation"></a></span>\[Co = \frac{1~\text{m/s} \cdot 0.005~\text{s}}{0.005~\text{m}} = 1\]</div>
 <p>This is just about acceptable. If we increase the lid speed or make the cells smaller, we have to make the time step smaller as well.</p>
 <p>You do not have to calculate the Courant number by hand: the solver reports it in every time step. If you run the case with <code class="code docutils literal notranslate"><span class="pre">./run.sh</span></code>, look into the log file:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span><span class="s2">"Courant"</span><span class="w"> </span>log.icoFoam<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1

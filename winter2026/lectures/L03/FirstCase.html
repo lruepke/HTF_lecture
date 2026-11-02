@@ -81,6 +81,7 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Primer.html">Meshes and time steps in a nutshell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFOAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Exercise 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Exercise 2</a></li>
@@ -207,17 +208,17 @@
 <figure class="align-center" id="fig-porousmodel-fig" style="width: 70%">
 <img alt="../../_images/porousModel.png" src="../../_images/porousModel.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Synthetic image of the pore geometry. Pores are white; solids are black.</span><a class="headerlink" href="#fig-porousmodel-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Synthetic image of the pore geometry. Pores are white; solids are black.</span><a class="headerlink" href="#fig-porousmodel-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>To compute permeability, we will apply constant pressure boundary conditions and evaluate the flow rate through the sample. Once we have that, we can re-arrange Darcy’s law to solve for permeability:</p>
 <div class="math notranslate nohighlight" id="equation-eq-darcy-perm">
-<span class="eqno">(15)<a class="headerlink" href="#equation-eq-darcy-perm" title="Link to this equation"></a></span>\[    K_{i,j} \, = \, \mu \Biggl( \frac{ \Delta P}{ \Delta x_j} \Biggr)^{-1} \, \Biggl( \frac{1}{V} \int_V u_i \, dV \Biggr) \; .\]</div>
+<span class="eqno">(16)<a class="headerlink" href="#equation-eq-darcy-perm" title="Link to this equation"></a></span>\[    K_{i,j} \, = \, \mu \Biggl( \frac{ \Delta P}{ \Delta x_j} \Biggr)^{-1} \, \Biggl( \frac{1}{V} \int_V u_i \, dV \Biggr) \; .\]</div>
 <p>Ok, let’s do it!</p>
 </section>
 <section id="mesh-generation">
 <h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Link to this heading"></a></h2>
-<p>The first major step is to generate a mesh of the pore space (<a class="reference internal" href="#fig-porousmodel-fig"><span class="std std-numref">Fig. 11</span></a>). For this purpose, we will use <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4">OpenFOAM’s snappyHexMesh tool</a>. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
+<p>The first major step is to generate a mesh of the pore space (<a class="reference internal" href="#fig-porousmodel-fig"><span class="std std-numref">Fig. 12</span></a>). For this purpose, we will use <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4">OpenFOAM’s snappyHexMesh tool</a>. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>We will not go into the details of snappyHexMesh (SHM) works. If you want to use and/or understand it, a good starting point is the user guide linked above. Another great resource is the <a class="reference external" href="https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic">Rock Vapor Classic tutorial series</a>.</p>
@@ -226,10 +227,10 @@
 <figure class="align-center" id="fig-figure-workflow-fig" style="width: 85%">
 <img alt="../../_images/figure_workflow.jpg" src="../../_images/figure_workflow.jpg" />
 <figcaption>
-<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Workflow illustrating the meshing process.</span><a class="headerlink" href="#fig-figure-workflow-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Workflow illustrating the meshing process.</span><a class="headerlink" href="#fig-figure-workflow-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
-<p>The steps involved are shown in <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> . Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters and the workflow is this.</p>
+<p>The steps involved are shown in <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 13</span></a> . Starting from an image, an stl file is created that is then used during the meshing process. Most of the steps will rely on paraview filters and the workflow is this.</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li><p>Start with an image (A).</p></li>
@@ -240,7 +241,7 @@
 </div></blockquote>
 <section id="python-pre-processing">
 <h3>Python pre-processing<a class="headerlink" href="#python-pre-processing" title="Link to this heading"></a></h3>
-<p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 12</span></a> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it, which is already installed in the course container (together with PIL, which is also needed).</p>
+<p>Let’s work through the steps involved and assume we received a 2-D image of scanned pore space ( <a class="reference internal" href="#fig-figure-workflow-fig"><span class="std std-numref">Fig. 13</span></a> A). We need to translate it into something that Paraview understands, so that we can do the segmentation and surface generation. We will use porespy for it, which is already installed in the course container (together with PIL, which is also needed).</p>
 <p>Now we are good to go and it’s time to download the data. The complete openFOAM case can be downloaded from <a class="reference download internal" download="" href="../../_downloads/65ca8e602751cf5a43c9c804c6623d86/DRP_permeability_2D.zip"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a> .</p>
 <p>Copy the case into your shared working directory <code class="code docutils literal notranslate"><span class="pre">$HOME/HydrothermalFoam_runs</span></code>. You need to do this within the docker container, i.e. in a terminal in Visual Studio Code.</p>
 <p>Check out the directory structure shown in <a class="reference internal" href="#lst-drp-case-tree"><span class="std std-numref">Listing 14</span></a>.</p>
@@ -331,7 +332,7 @@
 <figure class="align-center" id="fig-paraview-figure-fig" style="width: 85%">
 <img alt="../../_images/paraview_python.png" src="../../_images/paraview_python.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Using the paraview python shell.</span><a class="headerlink" href="#fig-paraview-figure-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Using the paraview python shell.</span><a class="headerlink" href="#fig-paraview-figure-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Here is some python code that uses the paraview python bindings. You can save it into your case directory. Or, you use the paraview GUI to create the stl file.</p>
@@ -359,7 +360,7 @@
 <span class="n">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>An easy way to exectute the python scrip is to call it from the python shell in paraview <a class="reference internal" href="#fig-paraview-figure-fig"><span class="std std-numref">Fig. 13</span></a>. Within the shell, you first make sure that you are in your case directory (paraview runs on your computer, so this is the case directory in the <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> folder of your course folder); then you make the correct folder to hold the .stl file that we will create (<code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>).</p>
+<p>An easy way to exectute the python scrip is to call it from the python shell in paraview <a class="reference internal" href="#fig-paraview-figure-fig"><span class="std std-numref">Fig. 14</span></a>. Within the shell, you first make sure that you are in your case directory (paraview runs on your computer, so this is the case directory in the <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> folder of your course folder); then you make the correct folder to hold the .stl file that we will create (<code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">"your_case_directory"</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">'constant/triSurface'</span><span class="p">)</span>
@@ -633,7 +634,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 </section>
 <section id="transport-properties">
 <h3>Transport properties<a class="headerlink" href="#transport-properties" title="Link to this heading"></a></h3>
-<p>Final step is to set the remaining free parameter (viscosity) in <a class="reference internal" href="intro.html#equation-eq-mom-con">equation (13)</a>.</p>
+<p>Final step is to set the remaining free parameter (viscosity) in <a class="reference internal" href="intro.html#equation-eq-mom-con">equation (14)</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span>constant/transportProperties
 </pre></div>
 </div>
@@ -754,13 +755,13 @@ End
 <figure class="align-center" id="fig-porousmodel-solution-fig" style="width: 100%">
 <img alt="../../_images/paraview_DRP_solution.png" src="../../_images/paraview_DRP_solution.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Predicted velocity field.</span><a class="headerlink" href="#fig-porousmodel-solution-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Predicted velocity field.</span><a class="headerlink" href="#fig-porousmodel-solution-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="post-processing-effective-permeability">
 <h3>Post-processing / Effective permeability<a class="headerlink" href="#post-processing-effective-permeability" title="Link to this heading"></a></h3>
-<p>Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve <a class="reference internal" href="#equation-eq-darcy-perm">equation (15)</a>, which requires are few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM’s <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/">postProcess</a> functionality handy. Just do this:</p>
+<p>Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve <a class="reference internal" href="#equation-eq-darcy-perm">equation (16)</a>, which requires are few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM’s <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/">postProcess</a> functionality handy. Just do this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>postProcess<span class="w"> </span>-func<span class="w"> </span>writeCellVolumes
 </pre></div>
 </div>

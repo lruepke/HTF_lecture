@@ -81,6 +81,7 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Primer.html">Meshes and time steps in a nutshell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFOAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Exercise 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Exercise 2</a></li>
@@ -205,7 +206,7 @@
 <figure class="align-center" id="fig-rp-vert-perm-fig" style="width: 100%">
 <img alt="../../_images/DRP_vert_perm.png" src="../../_images/DRP_vert_perm.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Pore-level flow in the vertical direction.</span><a class="headerlink" href="#fig-rp-vert-perm-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Pore-level flow in the vertical direction.</span><a class="headerlink" href="#fig-rp-vert-perm-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
@@ -225,7 +226,7 @@
 <p>In the next session, we will progress towards submarine hydrothermal systems and will explore Darcy flow in detail. In preparation for that, let’s explore how scalar transport (like advecting temperature) would look like in our synthetic pore model.</p>
 <p>OpenFOAM’s scalarTransportFoam application solves the 3-D advection-diffusion equation for a given velocity field:</p>
 <div class="math notranslate nohighlight" id="equation-eq-scalar-transport">
-<span class="eqno">(16)<a class="headerlink" href="#equation-eq-scalar-transport" title="Link to this equation"></a></span>\[    \frac{\partial T}{\partial t} = -\nabla \cdot ( \vec{U} T ) + \nabla \cdot (D_T \nabla T) + S_T,\]</div>
+<span class="eqno">(17)<a class="headerlink" href="#equation-eq-scalar-transport" title="Link to this equation"></a></span>\[    \frac{\partial T}{\partial t} = -\nabla \cdot ( \vec{U} T ) + \nabla \cdot (D_T \nabla T) + S_T,\]</div>
 <p>with <code class="code docutils literal notranslate"><span class="pre">T</span></code> being the transported scalar, <code class="code docutils literal notranslate"><span class="pre">DT</span></code> the diffusivity with units of <span class="math notranslate nohighlight">\(m^2/s\)</span> , and <code class="code docutils literal notranslate"><span class="pre">ST</span></code> is a source term. Note that it is tempting to think of T as temperature but here it is simply a transported scalar (like a solute in groundwater flow). The energy conservation equation written in terms of temperature looks slightly different, as we will learn in the next chapter.</p>
 <p>The key source code of <a class="reference external" href="https://cpp.openfoam.org/v10/scalarTransportFoam_8C_source.html">scalarTransportFoam</a> looks like this:</p>
 <div class="highlight-foam notranslate"><div class="highlight"><pre><span></span><span class="p">...</span>

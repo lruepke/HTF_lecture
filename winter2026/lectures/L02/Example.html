@@ -33,7 +33,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Exercise 1" href="Exercise1.html" />
-    <link rel="prev" title="Lecture overview" href="Overview.html" /> 
+    <link rel="prev" title="Meshes and time steps in a nutshell" href="Primer.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
     <script>
@@ -81,6 +81,7 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Primer.html">Meshes and time steps in a nutshell</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Navier-Stokes flow with OpenFOAM</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#d-cavity-flow">2D cavity flow</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#preparing-the-case">Preparing the case</a></li>
@@ -218,11 +219,11 @@
 <p>In <code class="docutils literal notranslate"><span class="pre">icoFoam</span></code>, these equations are solved using the <strong>finite volume method</strong> and the <strong>PISO algorithm</strong> (Pressure Implicit with Splitting of Operators) to ensure pressure–velocity coupling and divergence-free velocity fields at each time step. We will get into the details of the numerical methods later in the course. For now, we will just use the solver and its capabilities.</p>
 <section id="d-cavity-flow">
 <h2>2D cavity flow<a class="headerlink" href="#d-cavity-flow" title="Link to this heading"></a></h2>
-<p>Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a kinematic boundary condition at one side, while all other sides are walls with zero velocity. The model setup is shown in <a class="reference internal" href="#fig-2dcavity-setup"><span class="std std-numref">Fig. 3</span></a> .</p>
+<p>Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a kinematic boundary condition at one side, while all other sides are walls with zero velocity. The model setup is shown in <a class="reference internal" href="#fig-2dcavity-setup"><span class="std std-numref">Fig. 4</span></a> .</p>
 <figure class="align-center" id="fig-2dcavity-setup">
 <img alt="../../_images/2d_cavity_setup.png" src="../../_images/2d_cavity_setup.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Two-dimensional cavity model geometry and boundary conditions. Note a mistake in the figure: the domain size is actually 0.1 m by 0.1 m in the tutorial.</span><a class="headerlink" href="#fig-2dcavity-setup" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Two-dimensional cavity model geometry and boundary conditions. Note a mistake in the figure: the domain size is actually 0.1 m by 0.1 m in the tutorial.</span><a class="headerlink" href="#fig-2dcavity-setup" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <section id="preparing-the-case">
@@ -292,21 +293,21 @@ tree
 <figure class="align-center" id="fig-cavity2d-bm">
 <img alt="../../_images/cavity2d_bm.png" src="../../_images/cavity2d_bm.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Structure of the blockMeshDict</span><a class="headerlink" href="#fig-cavity2d-bm" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Structure of the blockMeshDict</span><a class="headerlink" href="#fig-cavity2d-bm" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>First we need to define the vertices of the mesh, the nodes.</p>
 <figure class="align-center" id="fig-cavity2d-vertices">
 <img alt="../../_images/cavity2d_vertices.png" src="../../_images/cavity2d_vertices.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Numbering of the vertices.</span><a class="headerlink" href="#fig-cavity2d-vertices" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">Numbering of the vertices.</span><a class="headerlink" href="#fig-cavity2d-vertices" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>The next step is to define the connectivity between the vertices in order to describe the modeling domain.</p>
 <figure class="align-center" id="fig-cavity2d-vorder">
 <img alt="../../_images/cavity2d_vorder.png" src="../../_images/cavity2d_vorder.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 6 </span><span class="caption-text">The order by which the vertices are passed to the hex command matters!</span><a class="headerlink" href="#fig-cavity2d-vorder" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">The order by which the vertices are passed to the hex command matters!</span><a class="headerlink" href="#fig-cavity2d-vorder" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition-order-of-vertices admonition">
@@ -331,7 +332,7 @@ tree
 <figure class="align-center" id="fig-cavity2d-bounds">
 <img alt="../../_images/cavity2d_bounds.png" src="../../_images/cavity2d_bounds.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Assigning boundary labels and types.</span><a class="headerlink" href="#fig-cavity2d-bounds" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Assigning boundary labels and types.</span><a class="headerlink" href="#fig-cavity2d-bounds" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Now we are ready to run the <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> utility and create the mesh</p>
@@ -523,11 +524,11 @@ tree
 <li><p><code class="docutils literal notranslate"><span class="pre">runTimeModifiable</span></code>: Allow runtime dictionary edits (<code class="docutils literal notranslate"><span class="pre">true</span></code> = yes).</p></li>
 </ul>
 <p>These are the most important entries. There are many more options available, which can be found in the <a class="reference external" href="https://doc.cfd.direct/openfoam/user-guide-v10/controldict">OpenFOAM User Guide</a></p>
-<p>In case you wondered how OpenFOAM is solving the equations. We will cover the details later in the course, but you can have a preview by opening the <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code> file. In this dictionary, the various discretization schemes can be set. <a class="reference internal" href="#fig-cavity2d-num-fig"><span class="std std-numref">Fig. 8</span></a> gives some further explanations.</p>
+<p>In case you wondered how OpenFOAM is solving the equations. We will cover the details later in the course, but you can have a preview by opening the <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code> file. In this dictionary, the various discretization schemes can be set. <a class="reference internal" href="#fig-cavity2d-num-fig"><span class="std std-numref">Fig. 9</span></a> gives some further explanations.</p>
 <figure class="align-center" id="fig-cavity2d-num-fig">
 <img alt="../../_images/cavity2_num.png" src="../../_images/cavity2_num.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 8 </span><span class="caption-text">The exact discretization schemes can be set in <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code>.</span><a class="headerlink" href="#fig-cavity2d-num-fig" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">The exact discretization schemes can be set in <code class="code docutils literal notranslate"><span class="pre">system/fvSchemes</span></code>.</span><a class="headerlink" href="#fig-cavity2d-num-fig" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>Time to run the case! Use the script you have written, which creates the mesh and runs the solver:</p>
@@ -547,7 +548,7 @@ tree
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Overview.html" class="btn btn-neutral float-left" title="Lecture overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Primer.html" class="btn btn-neutral float-left" title="Meshes and time steps in a nutshell" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="Exercise1.html" class="btn btn-neutral float-right" title="Exercise 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

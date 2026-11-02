@@ -81,6 +81,7 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Primer.html">Meshes and time steps in a nutshell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFOAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Exercise 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Exercise 2</a></li>
@@ -193,41 +194,41 @@
 <section id="theoretical-background">
 <h2>Theoretical background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
 <p>In the last lecture, we had made Navier-Stokes simulations on the pore-scale, which resolved the full dynamics of fluid flow. As we have already learned, in porous media studies flow is often approximated by Darcy’s, in which flow is proportional to the pressure gradient. The invovled constants are viscosity and permeability.</p>
-<p>During this lecture we will study single-phase hydrothermal flow in submarine hydrothermal systems. The respective solver is named <code class="code docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam</span></code>. The hydrothermal fluid flow is governed by Darcy’s law (Eqn. <a class="reference internal" href="#equation-eq-darcy-l04">equation (30)</a>),
-mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti-l04">equation (31)</a>) and energy conservation (Eqn. <a class="reference internal" href="#equation-eq-temperature">equation (36)</a>) equations shown below,</p>
+<p>During this lecture we will study single-phase hydrothermal flow in submarine hydrothermal systems. The respective solver is named <code class="code docutils literal notranslate"><span class="pre">HydrothermalSinglePhaseDarcyFoam</span></code>. The hydrothermal fluid flow is governed by Darcy’s law (Eqn. <a class="reference internal" href="#equation-eq-darcy-l04">equation (31)</a>),
+mass continuity (Eqn. <a class="reference internal" href="#equation-eq-conti-l04">equation (32)</a>) and energy conservation (Eqn. <a class="reference internal" href="#equation-eq-temperature">equation (37)</a>) equations shown below,</p>
 <div class="math notranslate nohighlight" id="equation-eq-darcy-l04">
-<span class="eqno">(30)<a class="headerlink" href="#equation-eq-darcy-l04" title="Link to this equation"></a></span>\[\vec{U} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})\]</div>
+<span class="eqno">(31)<a class="headerlink" href="#equation-eq-darcy-l04" title="Link to this equation"></a></span>\[\vec{U} = - \frac{k}{\mu_f} (\nabla p -\rho \vec{g})\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-conti-l04">
-<span class="eqno">(31)<a class="headerlink" href="#equation-eq-conti-l04" title="Link to this equation"></a></span>\[\varepsilon \frac{\partial \rho_f}{\partial t} + \nabla \cdot (\vec{U} \rho_f) = 0\]</div>
+<span class="eqno">(32)<a class="headerlink" href="#equation-eq-conti-l04" title="Link to this equation"></a></span>\[\varepsilon \frac{\partial \rho_f}{\partial t} + \nabla \cdot (\vec{U} \rho_f) = 0\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-rho-to-pt">
-<span class="eqno">(32)<a class="headerlink" href="#equation-eq-rho-to-pt" title="Link to this equation"></a></span>\[\frac{\partial \rho}{\partial t} =   \frac{\partial \rho}{\partial P}\frac{\partial P}{\partial t}\rvert_T +  \frac{\partial \rho}{\partial T}\frac{\partial T}{\partial t}\rvert_P\]</div>
+<span class="eqno">(33)<a class="headerlink" href="#equation-eq-rho-to-pt" title="Link to this equation"></a></span>\[\frac{\partial \rho}{\partial t} =   \frac{\partial \rho}{\partial P}\frac{\partial P}{\partial t}\rvert_T +  \frac{\partial \rho}{\partial T}\frac{\partial T}{\partial t}\rvert_P\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-beta">
-<span class="eqno">(33)<a class="headerlink" href="#equation-eq-beta" title="Link to this equation"></a></span>\[\beta = \frac{1}{\rho}\frac{\partial \rho}{\partial P}\]</div>
+<span class="eqno">(34)<a class="headerlink" href="#equation-eq-beta" title="Link to this equation"></a></span>\[\beta = \frac{1}{\rho}\frac{\partial \rho}{\partial P}\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-alpha">
-<span class="eqno">(34)<a class="headerlink" href="#equation-eq-alpha" title="Link to this equation"></a></span>\[\alpha = -\frac{1}{\rho}\frac{\partial \rho}{\partial T}\]</div>
+<span class="eqno">(35)<a class="headerlink" href="#equation-eq-alpha" title="Link to this equation"></a></span>\[\alpha = -\frac{1}{\rho}\frac{\partial \rho}{\partial T}\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-pressure">
-<span class="eqno">(35)<a class="headerlink" href="#equation-eq-pressure" title="Link to this equation"></a></span>\[\varepsilon \rho_f \left( \beta_f \frac{\partial p}{\partial t} - \alpha_f \frac{\partial T}{\partial t} \right) = \nabla \cdot \left( \rho_f \frac{k}{\mu_f} (\nabla p - \rho_f \vec{g}) \right)\]</div>
+<span class="eqno">(36)<a class="headerlink" href="#equation-eq-pressure" title="Link to this equation"></a></span>\[\varepsilon \rho_f \left( \beta_f \frac{\partial p}{\partial t} - \alpha_f \frac{\partial T}{\partial t} \right) = \nabla \cdot \left( \rho_f \frac{k}{\mu_f} (\nabla p - \rho_f \vec{g}) \right)\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-temperature">
-<span class="eqno">(36)<a class="headerlink" href="#equation-eq-temperature" title="Link to this equation"></a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{pr})\frac{\partial T}{\partial t} = \nabla \cdot (\lambda_r \nabla T) - \rho_f C_{pf} \vec{U}\cdot \nabla T + \frac{\mu_f}{k} \parallel \vec{U} \parallel ^2 - \left( \frac{\partial ln \rho_f}{\partial ln T} \right)_p \frac{Dp}{Dt}\]</div>
-<p>where the pressure equation <a class="reference internal" href="#equation-eq-pressure">equation (35)</a> is derived from continuity equation <a class="reference internal" href="#equation-eq-conti-l04">equation (31)</a> and Darcy’s law <a class="reference internal" href="#equation-eq-darcy-l04">equation (30)</a>.</p>
+<span class="eqno">(37)<a class="headerlink" href="#equation-eq-temperature" title="Link to this equation"></a></span>\[(\varepsilon \rho_f C_{pf} + (1-\varepsilon)\rho_r C_{pr})\frac{\partial T}{\partial t} = \nabla \cdot (\lambda_r \nabla T) - \rho_f C_{pf} \vec{U}\cdot \nabla T + \frac{\mu_f}{k} \parallel \vec{U} \parallel ^2 - \left( \frac{\partial ln \rho_f}{\partial ln T} \right)_p \frac{Dp}{Dt}\]</div>
+<p>where the pressure equation <a class="reference internal" href="#equation-eq-pressure">equation (36)</a> is derived from continuity equation <a class="reference internal" href="#equation-eq-conti-l04">equation (32)</a> and Darcy’s law <a class="reference internal" href="#equation-eq-darcy-l04">equation (31)</a>.</p>
 </section>
 <section id="implementation">
 <h2>Implementation<a class="headerlink" href="#implementation" title="Link to this heading"></a></h2>
-<p>The details of the OpenFoam implementation can be found in the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> documentation. Here we only show a brief summary. <a class="reference internal" href="#fig-htf-solution"><span class="std std-numref">Fig. 19</span></a> shows how the energy equation is solved within the OpenFoam framework.</p>
+<p>The details of the OpenFoam implementation can be found in the <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> documentation. Here we only show a brief summary. <a class="reference internal" href="#fig-htf-solution"><span class="std std-numref">Fig. 20</span></a> shows how the energy equation is solved within the OpenFoam framework.</p>
 <figure class="align-center" id="fig-htf-solution">
 <img alt="../../_images/solution_algorithm.svg" src="../../_images/solution_algorithm.svg" />
 <figcaption>
-<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Implementation of the energy conservation equation.</span><a class="headerlink" href="#fig-htf-solution" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Implementation of the energy conservation equation.</span><a class="headerlink" href="#fig-htf-solution" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
 <section id="equation-of-state">
 <h2>Equation-of-state<a class="headerlink" href="#equation-of-state" title="Link to this heading"></a></h2>
-<p>The fluid properties like density, viscosity, specific heat are determined from the equation-of-state of pure water. <a class="reference internal" href="#fig-phase-diagram"><span class="std std-numref">Fig. 20</span></a> shows the phase diagram of pure water. At sub-critical conditions (P&lt; 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems.</p>
+<p>The fluid properties like density, viscosity, specific heat are determined from the equation-of-state of pure water. <a class="reference internal" href="#fig-phase-diagram"><span class="std std-numref">Fig. 21</span></a> shows the phase diagram of pure water. At sub-critical conditions (P&lt; 22 MPa), the boiling curve divides the regions of liquid water and water vapor. At super-critical conditions, there is a gradual transition from a liquid-like to a vapor-like fluid phase. <a class="reference external" href="https://gitlab.com/gmdpapers/hydrothermalfoam">HydrothermalFoam</a> is a single phaes code and can only be used in regions, where a single fluid phase is present, i.e. under pure liquid water, water vapor, or supercritical conditions; boiling cannot be resolved. As we will find out later, the thermodynamic properties of water have first order control on flow dynamics and upflow temperatures in submarine hydrothermal systems.</p>
 <figure class="align-center" id="fig-phase-diagram">
 <img alt="../../_images/PhaseDiagram.svg" src="../../_images/PhaseDiagram.svg" />
 <figcaption>
-<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Phase diagram of pure water.</span><a class="headerlink" href="#fig-phase-diagram" title="Link to this image"></a></p>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Phase diagram of pure water.</span><a class="headerlink" href="#fig-phase-diagram" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>

@@ -60,6 +60,7 @@ The majority of this course will be spent in front of a computer working on exer
     :caption: Lecture 2
 
     lectures/L02/Overview
+    lectures/L02/Primer
     lectures/L02/Example
     lectures/L02/Exercise1
     lectures/L02/Exercise2  

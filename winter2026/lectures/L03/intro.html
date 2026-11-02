@@ -81,6 +81,7 @@
 <p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L02/Primer.html">Meshes and time steps in a nutshell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Example.html">Navier-Stokes flow with OpenFOAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise1.html">Exercise 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../L02/Exercise2.html">Exercise 2</a></li>
@@ -196,10 +197,10 @@
 <h2>Theoretical Background<a class="headerlink" href="#theoretical-background" title="Link to this heading"></a></h2>
 <p>Flow in porous media occurs at various scales, and different theoretical frameworks are used to describe flow depending on the scale. <strong>Direct simulations</strong> are based on solving the Navier-Stokes equations using a discretized representation (mesh) of the pore space. These simulations provide a detailed description of the flow field within the pore network. Naturally, such simulations are computationally demanding, as the nano- to micrometer-sized pores must be fully resolved. The simplified Navier-Stokes equations for incompressible, steady-state flow are:</p>
 <div class="math notranslate nohighlight" id="equation-eq-continuity">
-<span class="eqno">(12)<a class="headerlink" href="#equation-eq-continuity" title="Link to this equation"></a></span>\[\nabla \cdot \vec{U} = 0\]</div>
+<span class="eqno">(13)<a class="headerlink" href="#equation-eq-continuity" title="Link to this equation"></a></span>\[\nabla \cdot \vec{U} = 0\]</div>
 <div class="math notranslate nohighlight" id="equation-eq-mom-con">
-<span class="eqno">(13)<a class="headerlink" href="#equation-eq-mom-con" title="Link to this equation"></a></span>\[\nabla \cdot (\vec{U} \vec{U}) = \nabla \cdot (\nu \nabla \vec{U}) - \nabla p\]</div>
-<p>Here, <a class="reference internal" href="#equation-eq-continuity">equation (12)</a> is the continuity equation (expressing mass conservation), and <a class="reference internal" href="#equation-eq-mom-con">equation (13)</a> is the momentum balance equation. <span class="math notranslate nohighlight">\(\nu\)</span> is the kinematic viscosity, and <span class="math notranslate nohighlight">\(p\)</span> is the kinematic pressure.</p>
+<span class="eqno">(14)<a class="headerlink" href="#equation-eq-mom-con" title="Link to this equation"></a></span>\[\nabla \cdot (\vec{U} \vec{U}) = \nabla \cdot (\nu \nabla \vec{U}) - \nabla p\]</div>
+<p>Here, <a class="reference internal" href="#equation-eq-continuity">equation (13)</a> is the continuity equation (expressing mass conservation), and <a class="reference internal" href="#equation-eq-mom-con">equation (14)</a> is the momentum balance equation. <span class="math notranslate nohighlight">\(\nu\)</span> is the kinematic viscosity, and <span class="math notranslate nohighlight">\(p\)</span> is the kinematic pressure.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>There are many resources on the derivation of the Navier–Stokes equations, including several tailored to OpenFOAM. We particularly recommend <a class="reference external" href="https://holzmann-cfd.com/community/publications/mathematics-numerics-derivations-and-openfoam">Tobias Holzmann’s book</a>. Also see the new <a class="reference external" href="https://doc.cfd.direct/notes/cfd-general-principles/contents">book by CFD Direct</a>.
@@ -208,7 +209,7 @@ There is also a great pdf on the relationship between Navier-Stokes and Darcy fl
 <p>An alternative approach is <strong>continuum simulation</strong>. In continuum models, volume-averaged properties are used to describe flow behavior. The two key parameters in such models are porosity and permeability. Porosity represents the void fraction within a control volume, while permeability quantifies how easily fluids can flow through it under a pressure gradient. Although these properties are correlated, the exact relationship often needs to be determined empirically or estimated using <em>Digital Rock Physics</em> methods.</p>
 <p>Flow at the continuum scale is described by <em>Darcy’s law</em>:</p>
 <div class="math notranslate nohighlight" id="equation-eq-darcy">
-<span class="eqno">(14)<a class="headerlink" href="#equation-eq-darcy" title="Link to this equation"></a></span>\[\vec{u} = - \frac{k}{\mu_f} (\nabla p - \rho \vec{g})\]</div>
+<span class="eqno">(15)<a class="headerlink" href="#equation-eq-darcy" title="Link to this equation"></a></span>\[\vec{u} = - \frac{k}{\mu_f} (\nabla p - \rho \vec{g})\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\vec{u}\)</span> is the <strong>Darcy velocity</strong>, which is the volume-averaged flow velocity through the porous medium. We will discuss this further, but note that it relates to the pore velocity via <span class="math notranslate nohighlight">\(\vec{u} = \epsilon \vec{v}\)</span>, where <span class="math notranslate nohighlight">\(\epsilon\)</span> is the porosity and <span class="math notranslate nohighlight">\(\vec{v}\)</span> the actual fluid velocity in the pores. The parameters <span class="math notranslate nohighlight">\(\mu_f\)</span> and <span class="math notranslate nohighlight">\(k\)</span> are the fluid’s dynamic viscosity and the medium’s permeability, respectively.</p>
 <p>Extensive theoretical work has clarified the relationship between Navier-Stokes flow and Darcy flow, the latter originally proposed as a phenomenological equation.</p>
 <p>Note that <strong>direct</strong> and <strong>continuum</strong> simulations are not <em>per se</em> related to absolute scales (like mm vs meters) but simply refer to differing relative length scales / processes that are resolved.</p>

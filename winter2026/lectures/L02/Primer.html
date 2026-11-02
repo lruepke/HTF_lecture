@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meshes and time steps in a nutshell &mdash; HydrothermalFoam Lecture  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d8a2add5" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=379f3234" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/tabs.js?v=3ee01567"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=9b54adf2"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Navier-Stokes flow with OpenFOAM" href="Example.html" />
+    <link rel="prev" title="Lecture overview" href="Overview.html" /> 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-EJ32EEFYRN');
+    </script>   
+
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HydrothermalFoam Lecture
+              <img src="../../_static/DRP_vert_cover.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <p class="caption" role="heading"><span class="caption-text">Course information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general-info/course-details.html">Course details</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/Installation.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/OpenFoam.html">Getting started with OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L01/FirstCase.html">A first test case - heat diffusion</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Overview.html">Lecture overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Meshes and time steps in a nutshell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-mesh">The mesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#time-steps">Time steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mesh-and-time-step-belong-together">Mesh and time step belong together</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#try-it-yourself">Try it yourself</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Example.html">Navier-Stokes flow with OpenFOAM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/intro.html">Digital Rock Physics - Effective Permeability of Rocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/FirstCase.html">Flow on the pore scale</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise.html">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Exercise_disks.html">Exercise - Permeability of randomly packed disks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L03/Theory.html">Theoretical background</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/intro.html">Porous Flow - Submarine Hydrothermal Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/FirstCase.html">Hydrothermal convection test case</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L04/Exercise.html">Excercises</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/intro.html">Upflow temperatures in submarine hydrothermal systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise1.html">Exercise 1: Fluid properties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise2.html">Exercise 2: Fluxibility and Tvent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L05/Exercise3.html">Exercise 3: Permeability and Tvent</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/intro.html">Structural controls on hydrothermal flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L06/Exercise2.html">Exercise 2</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Overview.html">Lecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/intro.html">FVM and OpenFoam</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Implementation1.html">OpenFoam implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Advection1.html">The advection term</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_FVM/Excercise_adv.html">Excercise on advection schemes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project1.html">Project 1: Flow along a detachment fault</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project2.html">Project 2: How long can a magmatic intrusion sustain high temperature venting?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../L_PROJECTS/Project3.html">Project 3: Hydrofracturing and localized venting above sill intrusion?</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../refs.html">References</a></li>
+</ul>
+
+
+    
+        <p class="caption">
+            <span class="caption-text">Getting help</span>
+        </p>
+        <ul>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/imprint/"><i class="fa fa-stamp"></i> Imprint</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:lruepke@geomar.de"><i class="fa fa-envelope fa-fw"></i> Prof. Lars Ruepke</a></li>
+            
+                <li class="toctree-l1"><a href="mailto:zguo@geomar.de"><i class="fa fa-envelope fa-fw"></i> Dr. Zhikui Guo</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.hydrothermalfoam.info"><i class="fa fa-gitlab fa-fw"></i> HydrothermalFoam</a></li>
+            
+                <li class="toctree-l1"><a href="https://www.openfoam.org"><i class="fa fa-github fa-fw"></i> OpenFOAM</a></li>
+            
+                <li class="toctree-l1"><a href="https://lruepke.github.io/HTF_lecture/"><i class="fa fa-home fa-fw"></i> Public site</a></li>
+            
+                <li class="toctree-l1"><a href="https://lms.uni-kiel.de/url/RepositoryEntry/3664576582"><i class="fa fa-home fa-fw"></i> University site</a></li>
+            
+        </ul>
+    
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HydrothermalFoam Lecture</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Meshes and time steps in a nutshell</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/lruepke/HTF_lecture/blob/main/Winter2026/source/lectures/L02/Primer.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="meshes-and-time-steps-in-a-nutshell">
+<span id="l02-primer"></span><h1>Meshes and time steps in a nutshell<a class="headerlink" href="#meshes-and-time-steps-in-a-nutshell" title="Link to this heading"></a></h1>
+<p>In the first lecture, you ran a model without worrying about how OpenFOAM computes the solution. Before we set up our own models, we need two basic ideas: the <strong>mesh</strong> and the <strong>time step</strong>. You will set both in every model you make. Here we only build an intuition; how the solver actually computes the solution comes later in the course (<a class="reference internal" href="../L_FVM/intro.html#l-fvm-intro"><span class="std std-ref">FVM and OpenFoam</span></a>).</p>
+<section id="the-mesh">
+<h2>The mesh<a class="headerlink" href="#the-mesh" title="Link to this heading"></a></h2>
+<p>The equations we solve, e.g. for heat conduction or fluid flow, describe how a quantity like temperature or velocity changes at every point in space. A computer cannot handle infinitely many points. Instead, we cut the model domain into many small boxes, the <strong>cells</strong>. All cells together are called the <strong>mesh</strong>.</p>
+<p>The most important thing to remember is: <strong>the solver knows only one value per cell.</strong> This value is the average over the cell. Everything that happens on a scale smaller than a cell is invisible to the model.</p>
+<figure class="align-center" id="fig-primer-cells">
+<img alt="../../_images/primer_cells.png" src="../../_images/primer_cells.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">A temperature profile represented on a coarse mesh (left) and on a finer mesh (right). With 10 cells, the broad anomaly is captured roughly, but the narrow peak is almost lost. With 40 cells, both are represented well.</span><a class="headerlink" href="#fig-primer-cells" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>This has some consequences:</p>
+<ul class="simple">
+<li><p>Features need several cells to be resolved. A narrow peak that is smaller than a cell is smeared out over that cell, or lost completely.</p></li>
+<li><p>More cells give more accurate results, but the model needs more memory and takes longer to run.</p></li>
+<li><p>The number of cells grows quickly: 100 cells in each direction are 10,000 cells in 2-D, but 1,000,000 cells in 3-D.</p></li>
+</ul>
+<p>You have already seen two meshes: the flange in lecture 1, whose mesh was made with another program and has cells of different shapes and sizes, and the cavity in this lecture, whose mesh we make ourselves with <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code>: a square cut into 20 × 20 equal cells. The cell size is then simply <span class="math notranslate nohighlight">\(\Delta x = L / n\)</span>, the length of the domain divided by the number of cells.</p>
+</section>
+<section id="time-steps">
+<h2>Time steps<a class="headerlink" href="#time-steps" title="Link to this heading"></a></h2>
+<p>Most of our models change with time: a fluid starts to flow, or an intrusion cools down. The solver cannot compute the solution continuously in time either. Instead, it advances in small <strong>time steps</strong> of size <span class="math notranslate nohighlight">\(\Delta t\)</span>, a bit like the frames of a film: starting from the initial conditions, it computes the new values in all cells from the values of the previous time step, then takes the next step, and so on until the end time.</p>
+<p>In OpenFOAM, the time stepping is set in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>. Three entries are easily confused:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 50.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Entry</p></th>
+<th class="head"><p>Meaning</p></th>
+<th class="head"><p>Cavity example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">deltaT</span></code></p></td>
+<td><p>Time step of the solver</p></td>
+<td><p>0.005 s</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="code docutils literal notranslate"><span class="pre">endTime</span></code></p></td>
+<td><p>When the run stops</p></td>
+<td><p>0.5 s, i.e. 100 time steps</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="code docutils literal notranslate"><span class="pre">writeInterval</span></code></p></td>
+<td><p>How often results are saved to disk. With <code class="code docutils literal notranslate"><span class="pre">writeControl</span> <span class="pre">timeStep;</span></code> it counts time steps.</p></td>
+<td><p>every 20 time steps, i.e. every 0.1 s</p></td>
+</tr>
+</tbody>
+</table>
+<p>So the solver computes many more time steps than it saves. The time step controls the accuracy and stability of the solution; the write interval only controls how many snapshots you can look at in ParaView.</p>
+</section>
+<section id="mesh-and-time-step-belong-together">
+<h2>Mesh and time step belong together<a class="headerlink" href="#mesh-and-time-step-belong-together" title="Link to this heading"></a></h2>
+<p>The time step cannot be chosen independently of the mesh. In a flowing fluid, the rule of thumb is: <strong>in one time step, the fluid should not move further than one cell.</strong> This is measured by the <strong>Courant number</strong></p>
+<div class="math notranslate nohighlight" id="equation-eq-co-primer">
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-co-primer" title="Link to this equation"></a></span>\[Co = \frac{U \Delta t}{\Delta x}\]</div>
+<p>where <span class="math notranslate nohighlight">\(U\)</span> is the flow velocity. <span class="math notranslate nohighlight">\(Co\)</span> should be smaller than 1. If the time step is too large, the solution becomes unstable: it starts to oscillate and the run eventually crashes.</p>
+<p>This also means that a finer mesh is expensive twice: if you halve the cell size, you get more cells <em>and</em> you have to halve the time step. In 2-D, this makes the run about 8 times longer, in 3-D about 16 times.</p>
+</section>
+<section id="try-it-yourself">
+<h2>Try it yourself<a class="headerlink" href="#try-it-yourself" title="Link to this heading"></a></h2>
+<p>Download the notebook <a class="reference download internal" download="" href="../../_downloads/db506a38e876b4f346f7f53033e1d05b/meshes_and_time_steps.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">meshes_and_time_steps.ipynb</span></code></a> and save it in the folder <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> in your course folder. Open it in JupyterLab (<a class="reference external" href="http://localhost:8888">http://localhost:8888</a>) and run the cells one after the other (SHIFT + ENTER).</p>
+<p>The notebook moves a pulse with a constant velocity through a 1-D domain, a much simpler problem than the ones we solve in OpenFOAM, but with the same effects. You only change two numbers: the number of cells and the time step. Work through the questions in the notebook; it takes about 20 minutes.</p>
+<div class="admonition-what-you-should-take-away admonition">
+<p class="admonition-title">What you should take away</p>
+<ul class="simple">
+<li><p>The solver knows only one value per cell: features smaller than a few cells are smeared out or lost.</p></li>
+<li><p>The solver advances in time steps (<code class="code docutils literal notranslate"><span class="pre">deltaT</span></code>); saving results (<code class="code docutils literal notranslate"><span class="pre">writeInterval</span></code>) is a separate setting.</p></li>
+<li><p>Time step and cell size belong together: keep the Courant number below 1. Smaller cells need smaller time steps.</p></li>
+</ul>
+</div>
+<p>You will meet all of this again in the cavity flow exercises of this lecture.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Overview.html" class="btn btn-neutral float-left" title="Lecture overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Example.html" class="btn btn-neutral float-right" title="Navier-Stokes flow with OpenFOAM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Lars Ruepke and Zhikui Guo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
