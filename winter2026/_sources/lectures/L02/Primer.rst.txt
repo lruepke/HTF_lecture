@@ -64,7 +64,7 @@ The time step cannot be chosen independently of the mesh. In a flowing fluid, th
 
     Co = \frac{U \Delta t}{\Delta x}
 
-where :math:`U` is the flow velocity. :math:`Co` should be smaller than 1. If the time step is too large, the solution becomes unstable: it starts to oscillate and the run eventually crashes.
+where :math:`U` is the flow velocity. :math:`Co` should be smaller than 1. If the time step is too large, the results become inaccurate or, even worse, the solution becomes unstable: it starts to oscillate and grows until the values are meaningless.
 
 This also means that a finer mesh is expensive twice: if you halve the cell size, you get more cells *and* you have to halve the time step. In 2-D, this makes the run about 8 times longer, in 3-D about 16 times.
 

@@ -202,7 +202,7 @@ where:
 - :math:`\Delta x` is the grid spacing (e.g., cell size).
 
 
-The Courant number tells us how many cells the fluid moves in one time step. The rule of thumb is: **in one time step, the fluid should not move further than one cell**, so :math:`Co` should stay below 1. If it gets larger, the simulation can become unstable: the results start to oscillate and the run eventually crashes.
+The Courant number tells us how many cells the fluid moves in one time step. The rule of thumb is: **in one time step, the fluid should not move further than one cell**, so :math:`Co` should stay below 1. If it gets larger, the results become less accurate, and the simulation can become unstable: the values start to oscillate and grow until they are meaningless.
 For our case, the Courant number is:
 
 .. math::
@@ -280,7 +280,23 @@ Let's modify the base case and explore how the flow develops under different phy
 
    - Discuss numerical vs physical convergence.
 
+5. **A deep cavity: how many vortices?**
 
+   - Make a copy of the base case and make the cavity four times as deep as it is wide (0.1 m wide, 0.4 m deep). In :code:`system/blockMeshDict`, change the y coordinates of the upper vertices. Which ones are they? Also change the number of cells in the y direction, so that the cells stay square.
+   - Set :code:`endTime 1;` in :code:`system/controlDict`.
+   - **Predict first:** before you run the case, sketch the flow you expect on a piece of paper. How many vortices will there be, and in which direction do they rotate?
+   - Run the case and look at it in ParaView:
+
+     - Color it by the velocity magnitude. What do you see?
+     - Now switch to a logarithmic color scale: in the *Color Map Editor*, tick *Use Log Scale When Mapping Data To Colors* (click on the gear icon if you do not see this option), and set the range to 1e-7 to 1 with *Rescale to Custom Range*. What do you see now?
+     - Apply a *Stream Tracer* with the seed type *Line* along the vertical center line of the cavity, from (0.05 0 0.005) to (0.05 0.4 0.005).
+
+   - Questions to explore:
+
+     - How many vortices are there, and how do they rotate? Was your sketch right?
+     - Use *Plot Over Line* along the vertical center line and look at the horizontal velocity :code:`U_X` in the *SpreadSheet View*. How much weaker is each vortex than the one above it?
+     - What does this mean for the fluid at the bottom of a deep, narrow cavity, e.g. a deep fissure below a flowing current?
+     - Optional: try a cavity that is two or three times as deep as it is wide. How does the number of vortices depend on the depth?
 
 .. admonition:: Things to keep in mind
 
@@ -301,6 +317,7 @@ Expected Observations
 - **High viscosity**: Flow develops quickly and becomes smooth and laminar.
 - **Low viscosity**: Transient lasts longer, possible oscillations or instabilities.
 - **High lid velocity**: Stronger vortices, higher Reynolds number, more complex flow.
+- **Deep cavity** (four times as deep as wide): three vortices on top of each other, with centers at about 0.38, 0.24 and 0.09 m height, i.e. about 1.4 cavity widths apart. Neighboring vortices rotate in opposite directions, like gears. Each vortex is about 350 times weaker than the one above it: the largest horizontal velocities on the center line are about 0.19, 5e-4 and 1e-6 m/s. With a linear color scale, only the top vortex is visible. The fluid at the bottom is practically at rest. These stacked vortices are known as *Moffatt eddies*, after the fluid dynamicist Keith Moffatt, who described them in 1964.
 - **Fine mesh**: Captures finer details (e.g., secondary vortices), more accurate but slower to compute.
 
 .. admonition:: Why is the flow steady after 0.07 s and not after 1 s?

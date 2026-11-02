@@ -90,6 +90,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Example.html">Navier-Stokes flow with OpenFOAM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Debugging.html">Exercise: Fix a broken case</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise2.html">Exercise 2</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
@@ -249,7 +250,7 @@
 <p>The time step cannot be chosen independently of the mesh. In a flowing fluid, the rule of thumb is: <strong>in one time step, the fluid should not move further than one cell.</strong> This is measured by the <strong>Courant number</strong></p>
 <div class="math notranslate nohighlight" id="equation-eq-co-primer">
 <span class="eqno">(4)<a class="headerlink" href="#equation-eq-co-primer" title="Link to this equation"></a></span>\[Co = \frac{U \Delta t}{\Delta x}\]</div>
-<p>where <span class="math notranslate nohighlight">\(U\)</span> is the flow velocity. <span class="math notranslate nohighlight">\(Co\)</span> should be smaller than 1. If the time step is too large, the solution becomes unstable: it starts to oscillate and the run eventually crashes.</p>
+<p>where <span class="math notranslate nohighlight">\(U\)</span> is the flow velocity. <span class="math notranslate nohighlight">\(Co\)</span> should be smaller than 1. If the time step is too large, the results become inaccurate or, even worse, the solution becomes unstable: it starts to oscillate and grows until the values are meaningless.</p>
 <p>This also means that a finer mesh is expensive twice: if you halve the cell size, you get more cells <em>and</em> you have to halve the time step. In 2-D, this makes the run about 8 times longer, in 3-D about 16 times.</p>
 </section>
 <section id="try-it-yourself">

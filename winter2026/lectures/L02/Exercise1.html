@@ -32,7 +32,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Exercise 2" href="Exercise2.html" />
+    <link rel="next" title="Exercise: Fix a broken case" href="Debugging.html" />
     <link rel="prev" title="Navier-Stokes flow with OpenFOAM" href="Example.html" /> 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ32EEFYRN"></script>
@@ -95,6 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#expected-observations">Expected Observations</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Debugging.html">Exercise: Fix a broken case</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exercise2.html">Exercise 2</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
@@ -354,7 +355,7 @@
 <li><p><span class="math notranslate nohighlight">\(\Delta t\)</span> is the time step size,</p></li>
 <li><p><span class="math notranslate nohighlight">\(\Delta x\)</span> is the grid spacing (e.g., cell size).</p></li>
 </ul>
-<p>The Courant number tells us how many cells the fluid moves in one time step. The rule of thumb is: <strong>in one time step, the fluid should not move further than one cell</strong>, so <span class="math notranslate nohighlight">\(Co\)</span> should stay below 1. If it gets larger, the simulation can become unstable: the results start to oscillate and the run eventually crashes.
+<p>The Courant number tells us how many cells the fluid moves in one time step. The rule of thumb is: <strong>in one time step, the fluid should not move further than one cell</strong>, so <span class="math notranslate nohighlight">\(Co\)</span> should stay below 1. If it gets larger, the results become less accurate, and the simulation can become unstable: the values start to oscillate and grow until they are meaningless.
 For our case, the Courant number is:</p>
 <div class="math notranslate nohighlight" id="equation-eq-co-num">
 <span class="eqno">(12)<a class="headerlink" href="#equation-eq-co-num" title="Link to this equation"></a></span>\[Co = \frac{1~\text{m/s} \cdot 0.005~\text{s}}{0.005~\text{m}} = 1\]</div>
@@ -424,6 +425,28 @@ For our case, the Courant number is:</p>
 <li><p>Discuss numerical vs physical convergence.</p></li>
 </ul>
 </li>
+<li><p><strong>A deep cavity: how many vortices?</strong></p>
+<ul class="simple">
+<li><p>Make a copy of the base case and make the cavity four times as deep as it is wide (0.1 m wide, 0.4 m deep). In <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>, change the y coordinates of the upper vertices. Which ones are they? Also change the number of cells in the y direction, so that the cells stay square.</p></li>
+<li><p>Set <code class="code docutils literal notranslate"><span class="pre">endTime</span> <span class="pre">1;</span></code> in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>.</p></li>
+<li><p><strong>Predict first:</strong> before you run the case, sketch the flow you expect on a piece of paper. How many vortices will there be, and in which direction do they rotate?</p></li>
+<li><p>Run the case and look at it in ParaView:</p>
+<ul>
+<li><p>Color it by the velocity magnitude. What do you see?</p></li>
+<li><p>Now switch to a logarithmic color scale: in the <em>Color Map Editor</em>, tick <em>Use Log Scale When Mapping Data To Colors</em> (click on the gear icon if you do not see this option), and set the range to 1e-7 to 1 with <em>Rescale to Custom Range</em>. What do you see now?</p></li>
+<li><p>Apply a <em>Stream Tracer</em> with the seed type <em>Line</em> along the vertical center line of the cavity, from (0.05 0 0.005) to (0.05 0.4 0.005).</p></li>
+</ul>
+</li>
+<li><p>Questions to explore:</p>
+<ul>
+<li><p>How many vortices are there, and how do they rotate? Was your sketch right?</p></li>
+<li><p>Use <em>Plot Over Line</em> along the vertical center line and look at the horizontal velocity <code class="code docutils literal notranslate"><span class="pre">U_X</span></code> in the <em>SpreadSheet View</em>. How much weaker is each vortex than the one above it?</p></li>
+<li><p>What does this mean for the fluid at the bottom of a deep, narrow cavity, e.g. a deep fissure below a flowing current?</p></li>
+<li><p>Optional: try a cavity that is two or three times as deep as it is wide. How does the number of vortices depend on the depth?</p></li>
+</ul>
+</li>
+</ul>
+</li>
 </ol>
 <div class="admonition-things-to-keep-in-mind admonition">
 <p class="admonition-title">Things to keep in mind</p>
@@ -444,6 +467,7 @@ For our case, the Courant number is:</p>
 <li><p><strong>High viscosity</strong>: Flow develops quickly and becomes smooth and laminar.</p></li>
 <li><p><strong>Low viscosity</strong>: Transient lasts longer, possible oscillations or instabilities.</p></li>
 <li><p><strong>High lid velocity</strong>: Stronger vortices, higher Reynolds number, more complex flow.</p></li>
+<li><p><strong>Deep cavity</strong> (four times as deep as wide): three vortices on top of each other, with centers at about 0.38, 0.24 and 0.09 m height, i.e. about 1.4 cavity widths apart. Neighboring vortices rotate in opposite directions, like gears. Each vortex is about 350 times weaker than the one above it: the largest horizontal velocities on the center line are about 0.19, 5e-4 and 1e-6 m/s. With a linear color scale, only the top vortex is visible. The fluid at the bottom is practically at rest. These stacked vortices are known as <em>Moffatt eddies</em>, after the fluid dynamicist Keith Moffatt, who described them in 1964.</p></li>
 <li><p><strong>Fine mesh</strong>: Captures finer details (e.g., secondary vortices), more accurate but slower to compute.</p></li>
 </ul>
 <div class="admonition-why-is-the-flow-steady-after-0-07-s-and-not-after-1-s admonition">
@@ -466,7 +490,7 @@ For our case, the Courant number is:</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="Example.html" class="btn btn-neutral float-left" title="Navier-Stokes flow with OpenFOAM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Exercise2.html" class="btn btn-neutral float-right" title="Exercise 2" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Debugging.html" class="btn btn-neutral float-right" title="Exercise: Fix a broken case" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
