@@ -102,6 +102,40 @@ The Reynolds number for this case is:
 
 This is a small Reynolds number: viscosity dominates, and we expect a smooth, laminar flow with a single large vortex.
 
+To get a feeling for the numbers, here are some flows from the Earth sciences. The kinematic viscosity is the dynamic viscosity :math:`\eta` (in Pa s) divided by the density: :math:`\nu = \eta/\rho`.
+
+.. list-table:: Reynolds numbers of some geological flows (rough values).
+   :header-rows: 1
+   :widths: 28 18 16 20 18
+
+   * - Flow
+     - Velocity :math:`U`
+     - Length :math:`L`
+     - Viscosity :math:`\nu`
+     - :math:`Re`
+   * - Mantle flow below a moving tectonic plate
+     - 5 cm/yr :math:`\approx 2 \times 10^{-9}` m/s
+     - 1000 km
+     - :math:`10^{21}` Pa s / 3300 kg/m³ :math:`\approx 3 \times 10^{17}` m²/s
+     - :math:`\approx 10^{-20}`
+   * - Hot water flowing through the pores of a rock
+     - 1 m/yr :math:`\approx 3 \times 10^{-8}` m/s
+     - 1 mm (pore size)
+     - :math:`10^{-7}` m²/s
+     - :math:`\approx 10^{-6}`
+   * - Our cavity
+     - 1 m/s
+     - 0.1 m
+     - 0.01 m²/s
+     - 10
+   * - An ocean current like the Gulf Stream
+     - 1 m/s
+     - 100 km
+     - :math:`10^{-6}` m²/s (water)
+     - :math:`\approx 10^{11}`
+
+The range is enormous. The mantle is so viscous that inertia plays no role at all: if a plate stopped moving, the mantle flow below it would stop practically at once. This is why mantle convection is modeled with the Stokes equations, which are the Navier-Stokes equations without the inertia terms. The ocean is the other extreme: its currents are fully turbulent and full of eddies of all sizes. The flow through the pores of a rock, which is what this course is about, is again dominated by viscosity (see the box "Why this matters for hydrothermal flow" above).
+
 
 Time scales
 ^^^^^^^^^^^^
@@ -263,9 +297,24 @@ Let's modify the base case and explore how the flow develops under different phy
 Expected Observations
 ---------------------
 
-- **Baseline**: the velocity in the center reaches 99 % of its final value after about 0.07 s, more than ten times faster than the estimate :math:`t_\text{visc} \sim 1` s. So the original case was already steady at its first output time (0.1 s). The estimate gets the trend right (twice the viscosity, twice as fast), but not the exact number.
+- **Baseline**: the velocity in the center reaches 99 % of its final value after about 0.07 s, more than ten times faster than the estimate :math:`t_\text{visc} \sim 1` s. So the original case was already steady at its first output time (0.1 s). The estimate gets the trend right (twice the viscosity, twice as fast), but not the exact number. See the box below for why.
 - **High viscosity**: Flow develops quickly and becomes smooth and laminar.
 - **Low viscosity**: Transient lasts longer, possible oscillations or instabilities.
 - **High lid velocity**: Stronger vortices, higher Reynolds number, more complex flow.
 - **Fine mesh**: Captures finer details (e.g., secondary vortices), more accurate but slower to compute.
+
+.. admonition:: Why is the flow steady after 0.07 s and not after 1 s?
+
+    The estimate :math:`t_\text{visc} \sim L^2/\nu` only tells us the order of magnitude. Two things make the real time shorter:
+
+    1. The motion of the lid does not have to diffuse across the whole cavity. The flow pattern is set up once the motion has reached about the center of the cavity, which is only half the distance, :math:`L/2`. Because the distance enters squared, half the distance needs only a quarter of the time.
+    2. The distance over which something diffuses in the time :math:`t` is about :math:`2\sqrt{\nu t}`, not :math:`\sqrt{\nu t}`. You know this from the cooling of the oceanic lithosphere, whose thickness grows as about :math:`2.3\sqrt{\kappa t}`.
+
+    Together, the motion reaches the center when :math:`2\sqrt{\nu t} \approx L/2`, i.e. after
+
+    .. math::
+
+        t \approx \frac{L^2}{16\,\nu} = \frac{(0.1~\text{m})^2}{16 \cdot 0.01~\text{m}^2/\text{s}} \approx 0.06~\text{s},
+
+    close to what we measured. The dependence on :math:`\nu` stays the same: with a ten times smaller viscosity, :math:`\nu = 0.001~\text{m}^2/\text{s}`, the flow needs about 0.7 s, ten times longer. The lesson: scaling estimates are great for trends and for comparing cases, but numerical factors like :math:`1/16` can make a big difference in absolute numbers.
 

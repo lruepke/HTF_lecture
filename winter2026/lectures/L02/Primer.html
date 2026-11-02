@@ -254,7 +254,18 @@
 </section>
 <section id="try-it-yourself">
 <h2>Try it yourself<a class="headerlink" href="#try-it-yourself" title="Link to this heading"></a></h2>
-<p>Download the notebook <a class="reference download internal" download="" href="../../_downloads/db506a38e876b4f346f7f53033e1d05b/meshes_and_time_steps.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">meshes_and_time_steps.ipynb</span></code></a> and save it in the folder <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> in your course folder. Open it in JupyterLab (<a class="reference external" href="http://localhost:8888">http://localhost:8888</a>) and run the cells one after the other (SHIFT + ENTER).</p>
+<ol class="arabic simple">
+<li><p>Download the notebook <a class="reference download internal" download="" href="../../_downloads/db506a38e876b4f346f7f53033e1d05b/meshes_and_time_steps.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">meshes_and_time_steps.ipynb</span></code></a>. Your browser probably saves it in your Downloads folder.</p></li>
+<li><p>Move the file into the folder <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> in your course folder, so that the container can see it.</p></li>
+<li><p>Make sure the container is running (<code class="code docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span> <span class="pre">up</span> <span class="pre">-d</span></code> in your course folder), and open JupyterLab in your browser: <a class="reference external" href="http://localhost:8888">http://localhost:8888</a></p></li>
+<li><p>In the file browser on the left of JupyterLab, double-click on <code class="code docutils literal notranslate"><span class="pre">meshes_and_time_steps.ipynb</span></code> to open it.</p></li>
+<li><p>Click into the first cell and press SHIFT + ENTER. This runs the cell and moves to the next one. Go through the notebook cell by cell this way: read the text cells, run the code cells, and look at the plots.</p></li>
+<li><p>To try another value, change the number in a code cell and run that cell again with SHIFT + ENTER.</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Instead of moving the file in step 2, you can also upload it in JupyterLab with the <em>Upload Files</em> button (arrow pointing up) at the top of the file browser.</p>
+</div>
 <p>The notebook moves a pulse with a constant velocity through a 1-D domain, a much simpler problem than the ones we solve in OpenFOAM, but with the same effects. You only change two numbers: the number of cells and the time step. Work through the questions in the notebook; it takes about 20 minutes.</p>
 <div class="admonition-what-you-should-take-away admonition">
 <p class="admonition-title">What you should take away</p>

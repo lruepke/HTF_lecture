@@ -269,6 +269,52 @@
 <div class="math notranslate nohighlight" id="equation-eq-re-cavity-num">
 <span class="eqno">(6)<a class="headerlink" href="#equation-eq-re-cavity-num" title="Link to this equation"></a></span>\[Re = \frac{UL}{\nu} = \frac{1~\text{m/s} \cdot 0.1~\text{m}}{0.01~\text{m}^2/\text{s}} = 10\]</div>
 <p>This is a small Reynolds number: viscosity dominates, and we expect a smooth, laminar flow with a single large vortex.</p>
+<p>To get a feeling for the numbers, here are some flows from the Earth sciences. The kinematic viscosity is the dynamic viscosity <span class="math notranslate nohighlight">\(\eta\)</span> (in Pa s) divided by the density: <span class="math notranslate nohighlight">\(\nu = \eta/\rho\)</span>.</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Reynolds numbers of some geological flows (rough values).</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 18.0%" />
+<col style="width: 16.0%" />
+<col style="width: 20.0%" />
+<col style="width: 18.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Flow</p></th>
+<th class="head"><p>Velocity <span class="math notranslate nohighlight">\(U\)</span></p></th>
+<th class="head"><p>Length <span class="math notranslate nohighlight">\(L\)</span></p></th>
+<th class="head"><p>Viscosity <span class="math notranslate nohighlight">\(\nu\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(Re\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Mantle flow below a moving tectonic plate</p></td>
+<td><p>5 cm/yr <span class="math notranslate nohighlight">\(\approx 2 \times 10^{-9}\)</span> m/s</p></td>
+<td><p>1000 km</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{21}\)</span> Pa s / 3300 kg/m³ <span class="math notranslate nohighlight">\(\approx 3 \times 10^{17}\)</span> m²/s</p></td>
+<td><p><span class="math notranslate nohighlight">\(\approx 10^{-20}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Hot water flowing through the pores of a rock</p></td>
+<td><p>1 m/yr <span class="math notranslate nohighlight">\(\approx 3 \times 10^{-8}\)</span> m/s</p></td>
+<td><p>1 mm (pore size)</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-7}\)</span> m²/s</p></td>
+<td><p><span class="math notranslate nohighlight">\(\approx 10^{-6}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Our cavity</p></td>
+<td><p>1 m/s</p></td>
+<td><p>0.1 m</p></td>
+<td><p>0.01 m²/s</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p>An ocean current like the Gulf Stream</p></td>
+<td><p>1 m/s</p></td>
+<td><p>100 km</p></td>
+<td><p><span class="math notranslate nohighlight">\(10^{-6}\)</span> m²/s (water)</p></td>
+<td><p><span class="math notranslate nohighlight">\(\approx 10^{11}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>The range is enormous. The mantle is so viscous that inertia plays no role at all: if a plate stopped moving, the mantle flow below it would stop practically at once. This is why mantle convection is modeled with the Stokes equations, which are the Navier-Stokes equations without the inertia terms. The ocean is the other extreme: its currents are fully turbulent and full of eddies of all sizes. The flow through the pores of a rock, which is what this course is about, is again dominated by viscosity (see the box “Why this matters for hydrothermal flow” above).</p>
 </section>
 <section id="time-scales">
 <h3>Time scales<a class="headerlink" href="#time-scales" title="Link to this heading"></a></h3>
@@ -394,12 +440,24 @@ For our case, the Courant number is:</p>
 <section id="expected-observations">
 <h2>Expected Observations<a class="headerlink" href="#expected-observations" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Baseline</strong>: the velocity in the center reaches 99 % of its final value after about 0.07 s, more than ten times faster than the estimate <span class="math notranslate nohighlight">\(t_\text{visc} \sim 1\)</span> s. So the original case was already steady at its first output time (0.1 s). The estimate gets the trend right (twice the viscosity, twice as fast), but not the exact number.</p></li>
+<li><p><strong>Baseline</strong>: the velocity in the center reaches 99 % of its final value after about 0.07 s, more than ten times faster than the estimate <span class="math notranslate nohighlight">\(t_\text{visc} \sim 1\)</span> s. So the original case was already steady at its first output time (0.1 s). The estimate gets the trend right (twice the viscosity, twice as fast), but not the exact number. See the box below for why.</p></li>
 <li><p><strong>High viscosity</strong>: Flow develops quickly and becomes smooth and laminar.</p></li>
 <li><p><strong>Low viscosity</strong>: Transient lasts longer, possible oscillations or instabilities.</p></li>
 <li><p><strong>High lid velocity</strong>: Stronger vortices, higher Reynolds number, more complex flow.</p></li>
 <li><p><strong>Fine mesh</strong>: Captures finer details (e.g., secondary vortices), more accurate but slower to compute.</p></li>
 </ul>
+<div class="admonition-why-is-the-flow-steady-after-0-07-s-and-not-after-1-s admonition">
+<p class="admonition-title">Why is the flow steady after 0.07 s and not after 1 s?</p>
+<p>The estimate <span class="math notranslate nohighlight">\(t_\text{visc} \sim L^2/\nu\)</span> only tells us the order of magnitude. Two things make the real time shorter:</p>
+<ol class="arabic simple">
+<li><p>The motion of the lid does not have to diffuse across the whole cavity. The flow pattern is set up once the motion has reached about the center of the cavity, which is only half the distance, <span class="math notranslate nohighlight">\(L/2\)</span>. Because the distance enters squared, half the distance needs only a quarter of the time.</p></li>
+<li><p>The distance over which something diffuses in the time <span class="math notranslate nohighlight">\(t\)</span> is about <span class="math notranslate nohighlight">\(2\sqrt{\nu t}\)</span>, not <span class="math notranslate nohighlight">\(\sqrt{\nu t}\)</span>. You know this from the cooling of the oceanic lithosphere, whose thickness grows as about <span class="math notranslate nohighlight">\(2.3\sqrt{\kappa t}\)</span>.</p></li>
+</ol>
+<p>Together, the motion reaches the center when <span class="math notranslate nohighlight">\(2\sqrt{\nu t} \approx L/2\)</span>, i.e. after</p>
+<div class="math notranslate nohighlight">
+\[t \approx \frac{L^2}{16\,\nu} = \frac{(0.1~\text{m})^2}{16 \cdot 0.01~\text{m}^2/\text{s}} \approx 0.06~\text{s},\]</div>
+<p>close to what we measured. The dependence on <span class="math notranslate nohighlight">\(\nu\)</span> stays the same: with a ten times smaller viscosity, <span class="math notranslate nohighlight">\(\nu = 0.001~\text{m}^2/\text{s}\)</span>, the flow needs about 0.7 s, ten times longer. The lesson: scaling estimates are great for trends and for comparing cases, but numerical factors like <span class="math notranslate nohighlight">\(1/16\)</span> can make a big difference in absolute numbers.</p>
+</div>
 </section>
 </section>
 

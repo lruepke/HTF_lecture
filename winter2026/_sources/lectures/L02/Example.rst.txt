@@ -79,6 +79,19 @@ The 0 directory now contains the boundary and initial conditions for pressure an
 
 The two files :code:`run.sh` and :code:`clean.sh` are actually not included and we need to create them. These files are usually part of every OpenFOAM case; :code:`run.sh` includes all commands that need to be executed to run the case and :code:`clean.sh` cleans the case (removes mesh and output directories).
 
+To create them, make sure you are in the case directory and open a new, empty file in the editor of Visual Studio Code:
+
+.. code-block:: bash
+
+    cd $HOME/HydrothermalFoam_runs/cavity2D
+    code run.sh
+
+Copy the content of the first listing below (:code:`run.sh`) into the editor and save the file (CTRL/CMD + S). Then do the same for :code:`clean.sh` with the second listing:
+
+.. code-block:: bash
+
+    code clean.sh
+
 .. code-block:: bash 
     :linenos:
     :caption: The run.sh file.

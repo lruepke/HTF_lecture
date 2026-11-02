@@ -71,7 +71,15 @@ This also means that a finer mesh is expensive twice: if you halve the cell size
 Try it yourself
 ---------------
 
-Download the notebook :download:`meshes_and_time_steps.ipynb <meshes_and_time_steps.ipynb>` and save it in the folder :code:`HydrothermalFoam_runs` in your course folder. Open it in JupyterLab (http://localhost:8888) and run the cells one after the other (SHIFT + ENTER).
+1. Download the notebook :download:`meshes_and_time_steps.ipynb <meshes_and_time_steps.ipynb>`. Your browser probably saves it in your Downloads folder.
+2. Move the file into the folder :code:`HydrothermalFoam_runs` in your course folder, so that the container can see it.
+3. Make sure the container is running (:code:`docker compose up -d` in your course folder), and open JupyterLab in your browser: http://localhost:8888
+4. In the file browser on the left of JupyterLab, double-click on :code:`meshes_and_time_steps.ipynb` to open it.
+5. Click into the first cell and press SHIFT + ENTER. This runs the cell and moves to the next one. Go through the notebook cell by cell this way: read the text cells, run the code cells, and look at the plots.
+6. To try another value, change the number in a code cell and run that cell again with SHIFT + ENTER.
+
+.. tip::
+    Instead of moving the file in step 2, you can also upload it in JupyterLab with the *Upload Files* button (arrow pointing up) at the top of the file browser.
 
 The notebook moves a pulse with a constant velocity through a 1-D domain, a much simpler problem than the ones we solve in OpenFOAM, but with the same effects. You only change two numbers: the number of cells and the time step. Work through the questions in the notebook; it takes about 20 minutes.
 
