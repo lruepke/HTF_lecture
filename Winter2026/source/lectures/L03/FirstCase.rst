@@ -178,7 +178,7 @@ Then follow these steps in ParaView:
    and click *Apply*. Only the grains are left.
 #. **Make a surface.** Apply *Filters → Alphabetical → Extract Surface* to the clip, and click *Apply*.
 #. **Triangulate it.** Apply *Filters → Alphabetical → Triangulate* to the surface, and click *Apply*. The stl format can only store triangles.
-#. **Save it.** Select the :code:`Triangulate` filter, choose *File → Save Data*, select the file type *STL*, and save it as :code:`porous_model.stl` in the folder :code:`constant/triSurface` of your case.
+#. **Save it.** Select the :code:`Triangulate` filter, choose *File → Save Data*, select the file type *STL*, and save it as :code:`porous_model.stl` in the folder :code:`constant/triSurface` of your case. ParaView then asks for two options: keep *File Type* at :code:`Binary` (the file is much smaller than in ASCII, and OpenFOAM reads both), and leave *Choose Arrays To Write* unticked (an stl file only stores the surface triangles, no data). Click *OK*.
 
 Check that the file :code:`constant/triSurface/porous_model.stl` exists. That's it: the geometry is ready for meshing.
 

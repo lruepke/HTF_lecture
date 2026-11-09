@@ -9,26 +9,31 @@ Now that we have simulated 2-D cavity flow, it is time to try 3-D flow and paral
 
 3-D cavity flow
 -----------------------------------
-First, try to make a 3-D simulation. Start by copying the original square cavity case to a new folder and cleaning it:
+First, try to make a 3-D simulation. Start from a fresh copy of the original tutorial, not from your own :code:`cavity2D`: you have probably changed the mesh, the viscosity, or the time step there, and a combination that worked in 2-D may not work in 3-D. Copy the two scripts from your 2-D case:
 
 .. code-block:: bash
-    
+
     cd $HOME/HydrothermalFoam_runs
-    cp -r cavity2D cavity3D
+    cp -r $FOAM_TUTORIALS/incompressible/icoFoam/cavity/cavity cavity3D
+    cp cavity2D/run.sh cavity2D/clean.sh cavity3D/
     cd cavity3D
-    ./clean.sh
 
 .. admonition:: Now these things have to happen
 
-    - make the mesh 3-D by using several cells in the z direction (:code:`system/blockMeshDict`)
-    - make the domain a cube: the cavity is only 0.01 m thick so far. Which vertex coordinates do you have to change?
+    - make the mesh 3-D: in :code:`system/blockMeshDict`, use **20 cells in each direction**, :code:`(20 20 20)`
+    - make the domain a cube: the cavity is only 0.01 m thick so far. Change the z coordinate of the four vertices with z = :code:`0.1` to :code:`1`, so that the cavity is 0.1 m deep (remember :code:`convertToMeters 0.1`)
     - the front and back sides must not be "empty" anymore. There are three places where you have to change this: the patch type in :code:`system/blockMeshDict`, and the boundary conditions in :code:`0/U` and :code:`0/p`
     - set proper boundary conditions for front and back: they are walls now, just like the fixed walls. Which conditions do the fixed walls have in :code:`0/U` and :code:`0/p`?
-    - check the Courant number in the log file
-    - run :code:`./run.sh` and inspect the results in ParaView
+    - keep the time settings of the tutorial in :code:`system/controlDict`: :code:`deltaT 0.005`, :code:`endTime 0.5`, :code:`writeInterval 20` (results every 0.1 s)
+    - run :code:`./run.sh`, check the Courant number in :code:`log.icoFoam`, and inspect the results in ParaView
+
+With these settings, the maximum Courant number is about 0.85, and the run takes only a few seconds.
 
 .. tip::
     If something goes wrong, read the error message carefully, it usually names the file and the patch with the problem. A frequent error is a patch that is :code:`empty` in one file but not in the others.
+
+.. warning::
+    **A finer mesh needs a smaller time step.** With 40 cells in each direction, the cells are half as large, so :code:`deltaT` must be halved as well: use :code:`deltaT 0.0025` and :code:`writeInterval 40`. The run then takes about half a minute. If you keep :code:`deltaT 0.005`, the Courant number is about 2, the solution grows until it becomes :code:`nan` ("not a number") after about 0.2 s, and the results are useless. Depending on your computer, the run then either stops with a :code:`Floating point exception`, or it continues to the end without an error message, so always check :code:`Courant Number` in the log.
 
 
 Getting fancy - let's make a parallel run
