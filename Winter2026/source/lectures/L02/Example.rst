@@ -1,7 +1,7 @@
 Navier-Stokes flow with OpenFOAM
 ================================
 
-In this lecture we will solve the famous Navier-Stokes equation for flow. There are many different forms of the Navier-Stokes equations, depending on the assumptions made. Here we solve the form that is treated in the ``icoFoam`` solver in OpenFOAM. It treats **incompressible**, **laminar**, and **transient** fluid flow and solves the following equations:
+In this lecture we will solve the Navier-Stokes equations for fluid flow. There are many different forms of the Navier-Stokes equations, depending on the assumptions made. Here we solve the form that is treated in the ``icoFoam`` solver in OpenFOAM. It treats **incompressible**, **laminar**, and **transient** flow of a Newtonian fluid with constant kinematic viscosity and solves the following equations:
 
 .. math::
 
@@ -21,18 +21,18 @@ where:
 The first equation is the **momentum conservation equation**:
 
 - :math:`\partial \mathbf{U} / \partial t` represents unsteady acceleration (how velocity changes over time),
-- :math:`(\mathbf{U} \cdot \nabla)\mathbf{U}` is the advection (fluid moving itself),
-- :math:`-\nabla p` is the pressure gradient force,
+- :math:`(\mathbf{U} \cdot \nabla)\mathbf{U}` is advective acceleration (velocity changes as fluid moves through a spatially varying velocity field),
+- :math:`-\nabla p` is the pressure-gradient force per unit mass,
 - :math:`\nu \nabla^2 \mathbf{U}` is the viscous diffusion of momentum.
 
 The second equation enforces **incompressibility**, meaning the volume of fluid elements does not change over time.
 
-In ``icoFoam``, these equations are solved using the **finite volume method** and the **PISO algorithm** (Pressure Implicit with Splitting of Operators) to ensure pressure–velocity coupling and divergence-free velocity fields at each time step. We will get into the details of the numerical methods later in the course. For now, we will just use the solver and its capabilities.
+In ``icoFoam``, these equations are solved using the **finite volume method** and the **PISO algorithm** (Pressure Implicit with Splitting of Operators) to couple pressure and velocity and enforce continuity to within numerical tolerances at each time step. We will get into the details of the numerical methods later in the course. For now, we will just use the solver and its capabilities.
 
 
 2D cavity flow
 ------------------------
-Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a kinematic boundary condition at one side, while all other sides are walls with zero velocity. The model setup is shown in :numref:`fig:2dcavity_setup` .
+Our first example of simulating Navier-Stokes flow is flow within a 2D cavity. Flow is driven by a lid moving at a prescribed velocity, while the other three sides are stationary walls. The model setup is shown in :numref:`fig:2dcavity_setup` .
 
 .. figure:: /_figures/2d_cavity_setup.*
    :align: center
@@ -77,7 +77,7 @@ Go into the case and check the directory structure with :code:`tree`:
 
 The 0 directory now contains the boundary and initial conditions for pressure and velocity (our primary variables), the constant directory has the physical properties (here the kinematic viscosity), and the system directory contains information on the mesh, time steps, numerical schemes etc.
 
-The two files :code:`run.sh` and :code:`clean.sh` are actually not included and we need to create them. These files are usually part of every OpenFOAM case; :code:`run.sh` includes all commands that need to be executed to run the case and :code:`clean.sh` cleans the case (removes mesh and output directories).
+We will create two helper scripts, :code:`run.sh` and :code:`clean.sh`. They are convenient, but are not required by OpenFOAM. The first runs the commands for the case; the second removes the generated mesh, results, and logs. Similar scripts in the official tutorials are often named :code:`Allrun` and :code:`Allclean`.
 
 To create them, make sure you are in the case directory and open a new, empty file in the editor of Visual Studio Code:
 
@@ -140,7 +140,7 @@ We will use OpenFOAM's blockMesh utility to make a simple 2D mesh. The correspon
 
    Structure of the blockMeshDict
 
-First we need to define the vertices of the mesh, the nodes.
+First we define the vertices of the block. The block will then be subdivided into cells.
 
 .. figure:: /_figures/cavity2d_vertices.*
    :align: center
@@ -158,7 +158,7 @@ The next step is to define the connectivity between the vertices in order to des
 
 .. admonition:: Order of vertices
 
-    The OpenFOAM documentation provides a nice description of the vertices ordering.
+    The OpenFOAM documentation provides a description of the vertex ordering.
     
     * the axis origin is the first entry in the block definition, vertex 0 in our example
     * the x direction is described by moving from vertex 0 to vertex 1
@@ -171,7 +171,7 @@ Next boundary patches are defined and labeled in the blockMeshDict. Also here ca
 
     * apply the right-hand rule, which means if the thumb of your right hand points to the outside of a face, the numbering has to follow your fingers.
 
-    * or, looking onto a face and starting from any vertex, the numbering has to be counter-clockwise.
+    * or, looking at a face **from outside the block** and starting from any vertex, the numbering has to be counter-clockwise.
 
 .. figure:: /_figures/cavity2d_bounds.*
    :align: center
@@ -179,7 +179,7 @@ Next boundary patches are defined and labeled in the blockMeshDict. Also here ca
 
    Assigning boundary labels and types.
 
-Now we are ready to run the :code:`blockMesh` utility and create the mesh
+Now we are ready to run the :code:`blockMesh` utility and create the mesh:
 
 .. code-block:: bash 
     :name: lst:2dCavityrbm
@@ -250,7 +250,7 @@ We now have velocity and pressure as primary variables and need to set initial a
 
     // ************************************************************************* //
 
-The dimensions of the field are m/s (line 16). Velocity is a vector with three components, so the initial condition :code:`uniform (0 0 0)` (line 18) means that the fluid is at rest everywhere in the domain. The lid (:code:`movingWall`) moves with 1 m/s in the x direction, and :code:`noSlip` sets the velocity to zero at the fixed walls.
+The dimensions of the field are m/s (line 16). Velocity is a vector with three components, so the initial condition :code:`uniform (0 0 0)` (line 18) means that the fluid is at rest everywhere in the domain. The lid (:code:`movingWall`) moves at 1 m/s in the x direction, and :code:`noSlip` sets the velocity to zero at the fixed walls.
 
 Next we look into the pressure boundary conditions.
 
@@ -305,7 +305,7 @@ Next we look into the pressure boundary conditions.
     // ************************************************************************* //
 
 .. tip::
-    One has to be careful about the dimensions of pressure in OpenFOAM. In incompressible runs, like we are doing here, the solver uses the kinematic pressure :math:`p/\rho` (the pressure divided by the density), which has units of m²/s². This is why the dimensions in :code:`0/p` are :code:`[0 2 -2 0 0 0 0]` and not those of Pa.
+    One has to be careful about the dimensions of pressure in OpenFOAM. In incompressible runs, like we are doing here, the field named :code:`p` stores kinematic pressure (physical pressure divided by density), which has units of m²/s². This is why the dimensions in :code:`0/p` are :code:`[0 2 -2 0 0 0 0]` and not those of Pa.
 
 
 Run controls
@@ -377,7 +377,7 @@ Here is a short explanation of the most important entries:
 - ``endTime``: Final simulation time.
 - ``deltaT``: Time step size.
 - ``writeControl``: When to write output (``timeStep`` = every N time steps).
-- ``writeInterval``: Write output every N time steps.
+- ``writeInterval``: With ``writeControl timeStep``, write output every N time steps.
 - ``purgeWrite``: Max number of saved time steps (``0`` = keep all).
 - ``writeFormat``: Output file format (``ascii`` or ``binary``).
 - ``writePrecision``: Number of digits in numerical output.
@@ -387,10 +387,10 @@ Here is a short explanation of the most important entries:
 - ``runTimeModifiable``: Allow runtime dictionary edits (``true`` = yes).
 
 
-These are the most important entries. There are many more options available, which can be found in the `OpenFOAM User Guide <https://doc.cfd.direct/openfoam/user-guide-v10/controldict>`_
+These are the most important entries. There are many more options available, which can be found in the `OpenFOAM User Guide <https://doc.cfd.direct/openfoam/user-guide-v10/controldict>`_.
 
 
-In case you wondered how OpenFOAM is solving the equations. We will cover the details later in the course, but you can have a preview by opening the :code:`system/fvSchemes` file. In this dictionary, the various discretization schemes can be set. :numref:`fig:cavity2d_num_fig` gives some further explanations.
+We will cover how OpenFOAM solves the equations later in the course. For a preview, open the :code:`system/fvSchemes` file. In this dictionary, the various discretization schemes can be set. :numref:`fig:cavity2d_num_fig` gives some further explanations.
 
 
 .. figure:: /_figures/cavity2_num.*
@@ -410,5 +410,5 @@ The output of the solver is written to the file :code:`log.icoFoam`. Have a look
 
 Visualization
 ^^^^^^^^^^^^^^^^^^^
-Open the case in ParaView and look at the results. They are actually quite boring because the flow is steady and laminar; and because we have not first thought about the expected results. Let's do that better in the next exercise.
+Open the case in ParaView and look at the results. They are actually quite boring: the saved time steps look almost the same. Why? In the next exercise, we will first think about the expected results, estimate the relevant time scales, and then find out.
 
