@@ -1,3 +1,5 @@
+# Run with pvpython from the geometry folder, or in the Python shell of ParaView
+from paraview.simple import *
 import os
 
 def write_stl(vti_file, stl_file):
@@ -19,5 +21,7 @@ def write_stl(vti_file, stl_file):
 print(f"Current working directory: {os.getcwd()}")
 vti_file = 'porous_model_spheres.vti'      # input .vti file
 stl_file = '../constant/triSurface/porous_model_spheres.stl'  # output .stl file
+# create the folder for the stl file, if it does not exist yet
+os.makedirs(os.path.dirname(stl_file), exist_ok=True)
 # call function
 write_stl(vti_file, stl_file)
