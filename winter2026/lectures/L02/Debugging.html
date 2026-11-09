@@ -191,7 +191,7 @@
              
   <section id="exercise-fix-a-broken-case">
 <span id="l02-debugging"></span><h1>Exercise: Fix a broken case<a class="headerlink" href="#exercise-fix-a-broken-case" title="Link to this heading"></a></h1>
-<p>Sooner or later, every OpenFOAM model stops with an error message. This is normal, also for experienced users. The error messages look scary at first, but they usually tell you quite precisely what is wrong and where. In this exercise, you practice reading them.</p>
+<p>Sooner or later, every OpenFOAM model stops with an error message. This is normal, even for experienced users. The error messages look scary at first, but they usually tell you quite precisely what is wrong and where. In this exercise, you practice reading them.</p>
 <section id="getting-the-cases">
 <h2>Getting the cases<a class="headerlink" href="#getting-the-cases" title="Link to this heading"></a></h2>
 <p>Download <a class="reference download internal" download="" href="../../_downloads/0c40888750c43bd4bd8f868e652fc89a/broken_cases.zip"><code class="xref download docutils literal notranslate"><span class="pre">broken_cases.zip</span></code></a>, move it into the folder <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> in your course folder, and unpack it in a terminal in the container:</p>
@@ -214,11 +214,11 @@ icoFoam
 </pre></div>
 </div>
 </li>
-<li><p>Find the block that starts with <code class="code docutils literal notranslate"><span class="pre">--&gt;</span> <span class="pre">FOAM</span> <span class="pre">FATAL</span> <span class="pre">ERROR</span></code> or <code class="code docutils literal notranslate"><span class="pre">--&gt;</span> <span class="pre">FOAM</span> <span class="pre">FATAL</span> <span class="pre">IO</span> <span class="pre">ERROR</span></code> and read it carefully. Which file does it name? Which keyword or patch?</p></li>
+<li><p>Find the block that starts with <code class="code docutils literal notranslate"><span class="pre">--&gt;</span> <span class="pre">FOAM</span> <span class="pre">FATAL</span> <span class="pre">ERROR</span></code> or <code class="code docutils literal notranslate"><span class="pre">--&gt;</span> <span class="pre">FOAM</span> <span class="pre">FATAL</span> <span class="pre">IO</span> <span class="pre">ERROR</span></code> and read it carefully. Does it name a case file, a keyword, or a patch?</p></li>
 <li><p>Open the file in Visual Studio Code, find the error and fix it.</p></li>
 <li><p>Run <code class="code docutils literal notranslate"><span class="pre">icoFoam</span></code> again (and <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code>, if you changed the mesh) until the case runs to the end. Then go to the next case with <code class="code docutils literal notranslate"><span class="pre">cd</span> <span class="pre">../broken2</span></code>.</p></li>
 </ol>
-<p>Write down for each case what the error message said and what the actual error was. Did the message point directly to the problem?</p>
+<p>For each case, write down what the error message said and what the actual error was. Did the message point directly to the problem?</p>
 <div class="admonition-how-to-read-an-openfoam-error-message admonition">
 <p class="admonition-title">How to read an OpenFOAM error message</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>--&gt; FOAM FATAL IO ERROR:

@@ -197,7 +197,7 @@
 <section id="the-mesh">
 <h2>The mesh<a class="headerlink" href="#the-mesh" title="Link to this heading"></a></h2>
 <p>The equations we solve, e.g. for heat conduction or fluid flow, describe how a quantity like temperature or velocity changes at every point in space. A computer cannot handle infinitely many points. Instead, we cut the model domain into many small boxes, the <strong>cells</strong>. All cells together are called the <strong>mesh</strong>.</p>
-<p>The most important thing to remember is: <strong>the solver knows only one value per cell.</strong> This value is the average over the cell. Everything that happens on a scale smaller than a cell is invisible to the model.</p>
+<p>The most important thing to remember is: <strong>each solved field is represented by one value per cell</strong> (or one vector for velocity). Think of this as a value representing the whole cell. The model cannot resolve variations within a cell.</p>
 <figure class="align-center" id="fig-primer-cells">
 <img alt="../../_images/primer_cells.png" src="../../_images/primer_cells.png" />
 <figcaption>
@@ -207,10 +207,10 @@
 <p>This has some consequences:</p>
 <ul class="simple">
 <li><p>Features need several cells to be resolved. A narrow peak that is smaller than a cell is smeared out over that cell, or lost completely.</p></li>
-<li><p>More cells give more accurate results, but the model needs more memory and takes longer to run.</p></li>
+<li><p>A finer mesh can resolve more detail and reduce spatial discretization errors, but the model needs more memory and takes longer to run.</p></li>
 <li><p>The number of cells grows quickly: 100 cells in each direction are 10,000 cells in 2-D, but 1,000,000 cells in 3-D.</p></li>
 </ul>
-<p>You have already seen two meshes: the flange in lecture 1, whose mesh was made with another program and has cells of different shapes and sizes, and the cavity in this lecture, whose mesh we make ourselves with <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code>: a square cut into 20 × 20 equal cells. The cell size is then simply <span class="math notranslate nohighlight">\(\Delta x = L / n\)</span>, the length of the domain divided by the number of cells.</p>
+<p>The two meshes used at the start of this course are: the flange in lecture 1, whose mesh was made with another program and has cells of different shapes and sizes, and the cavity in this lecture, whose mesh we make ourselves with <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code>: a square cut into 20 × 20 equal cells. The cell size is then simply <span class="math notranslate nohighlight">\(\Delta x = L / n\)</span>, the length of the domain divided by the number of cells.</p>
 </section>
 <section id="time-steps">
 <h2>Time steps<a class="headerlink" href="#time-steps" title="Link to this heading"></a></h2>
@@ -250,8 +250,8 @@
 <p>The time step cannot be chosen independently of the mesh. In a flowing fluid, the rule of thumb is: <strong>in one time step, the fluid should not move further than one cell.</strong> This is measured by the <strong>Courant number</strong></p>
 <div class="math notranslate nohighlight" id="equation-eq-co-primer">
 <span class="eqno">(4)<a class="headerlink" href="#equation-eq-co-primer" title="Link to this equation"></a></span>\[Co = \frac{U \Delta t}{\Delta x}\]</div>
-<p>where <span class="math notranslate nohighlight">\(U\)</span> is the flow velocity. <span class="math notranslate nohighlight">\(Co\)</span> should be smaller than 1. If the time step is too large, the results become inaccurate or, even worse, the solution becomes unstable: it starts to oscillate and grows until the values are meaningless.</p>
-<p>This also means that a finer mesh is expensive twice: if you halve the cell size, you get more cells <em>and</em> you have to halve the time step. In 2-D, this makes the run about 8 times longer, in 3-D about 16 times.</p>
+<p>where <span class="math notranslate nohighlight">\(U\)</span> is the flow speed in the direction considered. For our <code class="code docutils literal notranslate"><span class="pre">icoFoam</span></code> exercises, keep the maximum <span class="math notranslate nohighlight">\(Co\)</span> below 1. The stability limit depends on the numerical method; this is a practical guideline for these exercises, rather than a universal rule for every solver. If the time step is too large, the results become inaccurate or, even worse, the solution becomes unstable: it starts to oscillate and grows until the values are meaningless.</p>
+<p>This also means that a finer mesh is expensive twice: if you halve the cell size, you get more cells <em>and</em> you have to halve the time step. For the same simulated duration, this means roughly 8 times as much computational work in 2-D and 16 times in 3-D, assuming the cost per cell per time step stays similar.</p>
 </section>
 <section id="try-it-yourself">
 <h2>Try it yourself<a class="headerlink" href="#try-it-yourself" title="Link to this heading"></a></h2>
@@ -271,7 +271,7 @@
 <div class="admonition-what-you-should-take-away admonition">
 <p class="admonition-title">What you should take away</p>
 <ul class="simple">
-<li><p>The solver knows only one value per cell: features smaller than a few cells are smeared out or lost.</p></li>
+<li><p>Each solved field has one value per cell: features smaller than a few cells are smeared out or lost.</p></li>
 <li><p>The solver advances in time steps (<code class="code docutils literal notranslate"><span class="pre">deltaT</span></code>); saving results (<code class="code docutils literal notranslate"><span class="pre">writeInterval</span></code>) is a separate setting.</p></li>
 <li><p>Time step and cell size belong together: keep the Courant number below 1. Smaller cells need smaller time steps.</p></li>
 </ul>

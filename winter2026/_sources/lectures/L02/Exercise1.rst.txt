@@ -9,7 +9,7 @@ Exercise 1
 Transient flow in a lid-driven cavity
 --------------------------------------
 
-In this section, we explore how the fluid flow in a lid-driven cavity develops over time, and how the *behavior* and *time scales* of the simulation are influenced by model parameters. Understanding this helps to interpret simulation results and perform meaningful parametric studies.
+In this section, we explore how the fluid flow in a lid-driven cavity develops over time, and how the *flow pattern* and *time scales* are influenced by model parameters. Understanding this helps to interpret simulation results and perform meaningful parametric studies.
 
 Time scales and regimes of viscous flow
 ------------------------------------------
@@ -34,14 +34,14 @@ where:
 
 The Reynolds number compares inertia (moving fluid tends to keep moving) with viscosity (friction within the fluid, which slows the motion down):
 
-- **Small Re**: viscosity wins. The flow is smooth and predictable, and the fluid moves in orderly layers. This is called *laminar* flow.
-- **Large Re**: inertia wins. The flow becomes more complex, with additional vortices and eventually unsteady flow, and at very large Re it becomes *turbulent* (chaotic).
+- **Small Re**: viscous forces dominate inertia. We expect smooth, *laminar* flow, in which the fluid moves in orderly layers.
+- **Large Re**: inertia becomes more important. Depending on the geometry and forcing, the flow may develop additional vortices, become unsteady, and eventually become *turbulent*, i.e. chaotic.
 
 The values of Re at which these changes happen depend on the geometry of the problem, so there is no single threshold that applies to all flows.
 
 .. admonition:: Why this matters for hydrothermal flow
 
-    Later in the course we model fluid flow through porous rocks. There, the pores are tiny and the flow is very slow, so the Reynolds number is much smaller than 1. Viscosity wins completely, and the flow can be described by the much simpler Darcy's law instead of the full Navier-Stokes equations.
+    Later in the course we model fluid flow through porous rocks. For the porous-flow cases we study, pore sizes and flow speeds are small, so the Reynolds number based on pore size and pore-scale velocity is much smaller than 1. Viscosity wins completely, and the flow can be described by the much simpler Darcy's law instead of the full Navier-Stokes equations.
 
 
 Let's carefully check our base case. The spatial dimensions are set in :code:`system/blockMeshDict`:
@@ -90,7 +90,7 @@ Let's carefully check our base case. The spatial dimensions are set in :code:`sy
 
 
 
-We are defining a 3-D mesh with a width and height of 0.1 m and a thickness of 0.01 m.  A potential pitfall is line 16, where a global scaling of the spatial dimensions is introduced. The 3rd dimension does not matter here, as we are running the simulation in 2d mode (boundary faces are set to ``empty``). The lid velocity is set in :code:`0/U` to 1 m/s. The kinematic viscosity is set in :code:`constant/physicalProperties` to 0.01 m^2/s. The numerical resolution is set in :code:`system/blockMeshDict` to 20 cells in the x and y direction, which gives us a grid spacing of 0.005 m. 
+We are defining a 3-D mesh with a width and height of 0.1 m and a thickness of 0.01 m.  A potential pitfall is line 16, where a global scaling of the spatial dimensions is introduced. The mesh is one cell thick in the z direction, with ``empty`` conditions on the front and back faces, so the solution is two-dimensional. The lid velocity is set in :code:`0/U` to 1 m/s. The kinematic viscosity is set in :code:`constant/physicalProperties` to :math:`0.01~\text{m}^2/\text{s}`. The numerical resolution is set in :code:`system/blockMeshDict` to 20 cells in each of the x and y directions, which gives us a grid spacing of 0.005 m.
 
 The Reynolds number for this case is:
 
@@ -100,7 +100,7 @@ The Reynolds number for this case is:
     Re = \frac{UL}{\nu} = \frac{1~\text{m/s} \cdot 0.1~\text{m}}{0.01~\text{m}^2/\text{s}} = 10
 
 
-This is a small Reynolds number: viscosity dominates, and we expect a smooth, laminar flow with a single large vortex.
+This is a small Reynolds number: viscosity dominates, and we expect a smooth, laminar flow with one dominant vortex. Much weaker corner vortices may also be present.
 
 To get a feeling for the numbers, here are some flows from the Earth sciences. The kinematic viscosity is the dynamic viscosity :math:`\eta` (in Pa s) divided by the density: :math:`\nu = \eta/\rho`.
 
@@ -134,13 +134,13 @@ To get a feeling for the numbers, here are some flows from the Earth sciences. T
      - :math:`10^{-6}` m²/s (water)
      - :math:`\approx 10^{11}`
 
-The range is enormous. The mantle is so viscous that inertia plays no role at all: if a plate stopped moving, the mantle flow below it would stop practically at once. This is why mantle convection is modeled with the Stokes equations, which are the Navier-Stokes equations without the inertia terms. The ocean is the other extreme: its currents are fully turbulent and full of eddies of all sizes. The flow through the pores of a rock, which is what this course is about, is again dominated by viscosity (see the box "Why this matters for hydrothermal flow" above).
+The range is enormous. The mantle is so viscous that inertia plays no role at all: if the driving forces vanished, inertia would not keep the mantle moving for an appreciable time. This is why mantle convection is modeled with the Stokes equations, which are the Navier-Stokes equations without the inertia terms. The ocean is the other extreme: its currents are fully turbulent and full of eddies of all sizes. The flow through the pores of a rock, which is what this course is about, is again dominated by viscosity (see the box "Why this matters for hydrothermal flow" above).
 
 
 Time scales
 ^^^^^^^^^^^^
 
- Let's check the time scales of the problem. One time scale of interest is the **convection time scale**, which is given by:
+Let's check the time scales of the problem. One time scale of interest is the **convection time scale**, which is given by:
 
 .. math::
     :label: eq:t_conv
@@ -154,7 +154,7 @@ where:
 - :math:`U` is the characteristic velocity (e.g., lid speed).
 
 
-This relation tells us how long it takes for a fluid parcel to travel the length of the domain. For our case, this is:
+This estimates the time to travel a distance :math:`L` at speed :math:`U`. Fluid inside the cavity moves more slowly than the lid, so this is not the actual circulation time of a fluid parcel. For our case, this is:
 
 .. math::
     :label: eq:t_conv_num
@@ -181,7 +181,7 @@ This relation tells us how quickly the motion of the lid spreads into the fluid.
 
     The time it takes heat to diffuse over a distance :math:`L` is :math:`t \sim L^2/\kappa`, with the thermal diffusivity :math:`\kappa`. This is how we estimate how long a dike or the oceanic lithosphere needs to cool. Viscosity works the same way: the kinematic viscosity :math:`\nu` is the "diffusivity of momentum", and it has the same units as :math:`\kappa` (m²/s). The fluid in the cavity starts at rest, and the motion of the lid diffuses into it just like heat diffuses into cold rock.
 
-So :math:`t_\text{visc}` is our estimate for how long it takes until the whole cavity is moving and the flow is steady. Such estimates tell you whether something takes milliseconds, seconds or hours. They are not exact: expect them to be off by a factor of ten or more. How good is the estimate here? Our base case runs until 0.5 s and writes results every 0.1 s. You will measure the time to steady state yourself in the first task below.
+So :math:`t_\text{visc}` gives a characteristic time for momentum to diffuse across the cavity. It is a useful starting estimate for the transient duration, rather than a prediction of when every part of the flow reaches steady state. Such estimates tell you whether something takes milliseconds, seconds or hours. They are not exact: expect them to be off by a factor of ten or more. How good is the estimate here? Our base case runs until 0.5 s and writes results every 0.1 s. You will measure the time to steady state yourself in the first task below.
 
 
 Courant number and numerical stability
@@ -211,7 +211,7 @@ For our case, the Courant number is:
     Co = \frac{1~\text{m/s} \cdot 0.005~\text{s}}{0.005~\text{m}} = 1
 
 
-This is just about acceptable. If we increase the lid speed or make the cells smaller, we have to make the time step smaller as well.
+This estimate is at the upper limit of our guideline. Check the maximum Courant number reported by the solver and reduce the time step if needed. If we increase the lid speed or make the cells smaller, we have to make the time step smaller as well.
 
 You do not have to calculate the Courant number by hand: the solver reports it in every time step. If you run the case with :code:`./run.sh`, look into the log file:
 
@@ -223,7 +223,7 @@ You do not have to calculate the Courant number by hand: the solver reports it i
 
     Courant Number mean: 0.222158 max: 0.852134
 
-The maximum is a bit smaller than our estimate, because the fluid inside the cavity moves slower than the lid. Check this line whenever you change the velocity, the mesh, or the time step.
+The reported maximum can be smaller than the estimate based on lid speed: OpenFOAM computes it from face fluxes, and the interior fluid generally moves more slowly than the lid. Check the maximum throughout the run whenever you change the velocity, mesh, or time step. A Courant number below 1 is a practical guideline for :code:`icoFoam`, not a guarantee of accuracy; time-step sensitivity also matters.
 
 
 
@@ -264,20 +264,20 @@ Let's modify the base case and explore how the flow develops under different phy
 
    - **Predict first:** before you run anything, write down when you expect the flow to be steady, based on the time scales above.
 
-   - **Measure:** set :code:`writeInterval 2;` in :code:`system/controlDict`, so that results are written every 0.01 s, and run the case again. In ParaView, select :code:`a.foam` and apply *Filters → Data Analysis → Probe Location* with the point in the center of the cavity, (0.05 0.05 0.005). Then apply *Filters → Data Analysis → Plot Data Over Time* to the probe and plot the velocity magnitude against time.
+   - **Measure:** set :code:`writeInterval 2;` in :code:`system/controlDict`, so that results are written every 0.01 s, and run the case again. In ParaView, select :code:`a.foam` and apply *Filters → Data Analysis → Probe Location* with the point in the center of the cavity, (0.05 0.05 0.005). Then apply *Filters → Data Analysis → Plot Data Over Time* to the probe and plot the velocity magnitude against time. Use the final saved value as an initial reference: when does the magnitude stay within 1 % of it? Extend the run if the final value is still changing. This measures settling at one point; check another point or a velocity profile before calling the whole flow steady.
 
    - Questions to explore:
 
      - After how much time does the velocity in the center stop changing? Compare this with your prediction. By what factor were you off, and why can a scaling estimate be off by that much?
      - Look at the time steps written by the original case (every 0.1 s). Why did the original case look so "boring"?
      - What is the shape of the vortex, and where is its center?
-     - How does the velocity field look like?
+     - What does the velocity field look like?
 
 2. **Vary Viscosity**
    
    - Change the viscosity in :code:`constant/physicalProperties` from :math:`\nu = 0.01~\text{m}^2/\text{s}` to :math:`0.1~\text{m}^2/\text{s}` and to :math:`0.001~\text{m}^2/\text{s}`. Use a copy of the case for each value.
 
-   - Before you run: calculate :math:`Re` and :math:`t_\text{visc}` for each value. Does the run time of 0.5 s still make sense? For :math:`\nu = 0.001~\text{m}^2/\text{s}`, increase :code:`endTime` in :code:`system/controlDict` (e.g. to 2 s).
+   - Before you run: calculate :math:`Re` and :math:`t_\text{visc}` for each value. Does the simulated duration of 0.5 s still make sense? At the higher viscosity, reduce :code:`deltaT` and save more frequently if the transient is too short to resolve. For :math:`\nu = 0.001~\text{m}^2/\text{s}`, increase :code:`endTime` in :code:`system/controlDict` (e.g. to 2 s).
 
    - Questions to explore:
 
@@ -299,7 +299,7 @@ Let's modify the base case and explore how the flow develops under different phy
 
    - Observe differences in vortex shape and location.
 
-   - Discuss numerical vs physical convergence.
+   - Distinguish reaching steady flow in time from obtaining a result that changes little when the mesh is refined.
 
 5. **A deep cavity: how many vortices?**
 
@@ -312,15 +312,15 @@ Let's modify the base case and explore how the flow develops under different phy
      - Now switch to a logarithmic color scale: in the *Color Map Editor*, tick *Use Log Scale When Mapping Data To Colors* (click on the gear icon if you do not see this option), and set the range to 1e-7 to 1 with *Rescale to Custom Range*. What do you see now?
      - Make the flow paths visible with *Surface LIC*, a display mode that draws fine streaks along the flow direction:
 
-       1. Apply a *Calculator* with the result name :code:`direction` and the expression :code:`U/mag(U)`. This is the flow direction, with all vectors of the same length. Without it, the slow vortices would not show up.
-       2. Apply a second *Calculator* to the first one, with the result name :code:`log_speed` and the expression :code:`log10(mag(U))`.
+       1. Apply a *Calculator* with the result name :code:`direction` and the expression :code:`U/max(mag(U), 1e-12)`. Away from zero velocity, this gives vectors of unit length, making weak vortices easier to see. The small lower bound avoids division by zero at stationary walls and stagnation points.
+       2. Apply a second *Calculator* to the first one, with the result name :code:`log_speed` and the expression :code:`log10(max(mag(U), 1e-12))`. The lower bound avoids taking the logarithm of zero; the numerical values of :code:`U` are in m/s.
        3. In the toolbar, change the display mode from *Surface* to *Surface LIC*. In the *Properties* panel, set *Vectors* to :code:`direction`.
        4. Color by :code:`log_speed` and set the range to -6 to 0 with *Rescale to Custom Range*. The color now shows the speed: -1 means 0.1 m/s, -6 means 0.000001 m/s.
 
    - Questions to explore:
 
      - How many vortices are there? Was your sketch right?
-     - The streaks show the paths of the fluid, but not in which direction it moves. Think: the lid moves to the right, so in which direction does the top vortex rotate? Where two vortices touch, the fluid of both moves in the same direction, like two gears. So in which direction do the middle and the bottom vortex rotate?
+     - The streaks show the local flow orientation, but not the direction of motion. In steady flow, streamlines also trace fluid paths. Think: the lid moves to the right, so in which direction does the top vortex rotate? Where two vortices touch, the fluid of both moves in the same direction, like two gears. So in which direction do the middle and the bottom vortex rotate?
      - Check your answer: use *Plot Over Line* along the vertical center line, from (0.05 0 0.005) to (0.05 0.4 0.005), and look at the horizontal velocity :code:`U_X` in the *SpreadSheet View*. Positive values mean flow to the right, negative values flow to the left. How much weaker is each vortex than the one above it?
      - What does this mean for the fluid at the bottom of a deep, narrow cavity, e.g. a deep fissure below a flowing current?
      - Optional: try a cavity that is two or three times as deep as it is wide. How does the number of vortices depend on the depth?
@@ -330,8 +330,8 @@ Let's modify the base case and explore how the flow develops under different phy
         - You may have to adjust the time step size to maintain a stable Courant number. 
         - When changing time step size, make sure to adjust the output interval accordingly.
         - Make a copy of the case for each variation, and show the results next to each other in ParaView (see "Comparing runs side by side" above).
-        - Use the "plot over line" filter in ParaView to extract velocity profiles and compare different cases
-        - Use the "stream tracer" filter in ParaView to visualize the flow field and vortex structure.
+        - Use the *Plot Over Line* filter in ParaView to extract velocity profiles and compare different cases.
+        - Use the *Stream Tracer* filter in ParaView to visualize streamlines and vortex structure.
 
 
 
@@ -339,19 +339,19 @@ Let's modify the base case and explore how the flow develops under different phy
 Expected Observations
 ---------------------
 
-- **Baseline**: the velocity in the center reaches 99 % of its final value after about 0.07 s, more than ten times faster than the estimate :math:`t_\text{visc} \sim 1` s. So the original case was already steady at its first output time (0.1 s). The estimate gets the trend right (twice the viscosity, twice as fast), but not the exact number. See the box below for why.
-- **High viscosity**: Flow develops quickly and becomes smooth and laminar.
-- **Low viscosity**: Transient lasts longer, possible oscillations or instabilities.
-- **High lid velocity**: Stronger vortices, higher Reynolds number, more complex flow.
-- **Deep cavity** (four times as deep as wide): three vortices on top of each other, with centers at about 0.38, 0.24 and 0.09 m height, i.e. about 1.4 cavity widths apart. Neighboring vortices rotate in opposite directions, like gears. Each vortex is about 350 times weaker than the one above it: the largest horizontal velocities on the center line are about 0.19, 5e-4 and 1e-6 m/s. With a linear color scale, only the top vortex is visible; with *Surface LIC* on the direction field, all three show up as closed loops. Seen from the front, the top vortex rotates clockwise, the middle one counterclockwise, and the bottom one clockwise again. The fluid at the bottom is practically at rest. These stacked vortices are known as *Moffatt eddies*, after the fluid dynamicist Keith Moffatt, who described them in 1964.
-- **Fine mesh**: Captures finer details (e.g., secondary vortices), more accurate but slower to compute.
+- **Baseline**: expect the center velocity to settle well before the characteristic diffusion time :math:`t_\text{visc} \sim 1` s. Test the approximate reference value of 0.07 s with your probe and 1 % criterion. The original output interval of 0.1 s misses much of this transient. A settled center velocity alone does not prove that the entire flow is steady.
+- **High viscosity**: the transient is shorter and the Reynolds number is smaller. All three viscosity cases here are expected to remain laminar.
+- **Low viscosity**: the transient is generally longer and inertial effects are stronger. Here :math:`Re = 100`; turbulence is not expected. Investigate growing oscillations for numerical causes before interpreting them as physical instabilities.
+- **High lid velocity**: higher velocities and Reynolds number. The flow pattern may change, but the viscous diffusion time :math:`L^2/\nu` is unchanged; there is no general rule that the transient must become shorter or longer.
+- **Deep cavity** (four times as deep as wide): three vortices on top of each other, with centers at about 0.38, 0.24 and 0.09 m height, i.e. about 1.4 cavity widths apart. Neighboring vortices rotate in opposite directions, like gears. The velocity decreases by a factor of several hundred between successive vortices: the largest horizontal velocities on the center line are about 0.19, 5e-4 and 1e-6 m/s. With a linear color scale, only the top vortex is visible; with *Surface LIC* on the direction field, all three show up as closed loops. Seen from the front, the top vortex rotates clockwise, the middle one counterclockwise, and the bottom one clockwise again. The fluid at the bottom is practically at rest. These are approximate reference values for comparison with your results; the weakest vortex is especially sensitive to mesh resolution and run duration. The alternating, rapidly weakening eddies are related to the viscous eddy sequences described by `Moffatt (1964) <https://www.damtp.cam.ac.uk/user/hkm2/PDFs/Moffatt_1964_JFM_18_1.pdf>`_, including the case of flow between parallel walls.
+- **Fine mesh**: can capture finer details (e.g., secondary vortices) and reduce spatial discretization errors, at greater computational cost. Compare profiles to assess whether the solution is sufficiently resolved.
 
-.. admonition:: Why is the flow steady after 0.07 s and not after 1 s?
+.. admonition:: Why is the center steady after about 0.07 s and not after 1 s?
 
-    The estimate :math:`t_\text{visc} \sim L^2/\nu` only tells us the order of magnitude. Two things make the real time shorter:
+    The estimate :math:`t_\text{visc} \sim L^2/\nu` gives a characteristic time scale, not the exact time at which a chosen velocity stops changing. A rough picture, not an exact calculation, helps to understand why the measured time is so much shorter:
 
-    1. The motion of the lid does not have to diffuse across the whole cavity. The flow pattern is set up once the motion has reached about the center of the cavity, which is only half the distance, :math:`L/2`. Because the distance enters squared, half the distance needs only a quarter of the time.
-    2. The distance over which something diffuses in the time :math:`t` is about :math:`2\sqrt{\nu t}`, not :math:`\sqrt{\nu t}`. You know this from the cooling of the oceanic lithosphere, whose thickness grows as about :math:`2.3\sqrt{\kappa t}`.
+    1. The motion of the lid does not have to diffuse across the whole cavity. The vortex is set up once the motion has reached about the center of the cavity, which is only half the distance, :math:`L/2`. Because the distance enters squared, half the distance needs only a quarter of the time.
+    2. In the time :math:`t`, diffusion reaches about :math:`2\sqrt{\nu t}`, not :math:`\sqrt{\nu t}`. You know this from the cooling of the oceanic lithosphere, whose thickness grows as about :math:`2.3\sqrt{\kappa t}`.
 
     Together, the motion reaches the center when :math:`2\sqrt{\nu t} \approx L/2`, i.e. after
 
@@ -359,5 +359,6 @@ Expected Observations
 
         t \approx \frac{L^2}{16\,\nu} = \frac{(0.1~\text{m})^2}{16 \cdot 0.01~\text{m}^2/\text{s}} \approx 0.06~\text{s},
 
-    close to what we measured. The dependence on :math:`\nu` stays the same: with a ten times smaller viscosity, :math:`\nu = 0.001~\text{m}^2/\text{s}`, the flow needs about 0.7 s, ten times longer. The lesson: scaling estimates are great for trends and for comparing cases, but numerical factors like :math:`1/16` can make a big difference in absolute numbers.
+    which is close to what we measure at the center. Diffusion has no sharp front, so the factor 1/16 is only approximate, and other parts of the cavity may need longer.
 
+    At sufficiently low Reynolds number, increasing :math:`\nu` shortens the transient approximately in proportion to :math:`1/\nu`. Changing viscosity also changes :math:`Re`, so this proportionality need not be exact across all our runs. Use the scaling to predict trends, then measure the transient and check that your time step and output interval resolve it.

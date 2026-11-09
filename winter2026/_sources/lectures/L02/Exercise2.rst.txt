@@ -5,13 +5,13 @@
 Exercise 2
 ===========
 
-After we have managed to solve for 2-D cavity flow, it's time to try 3-D. And parallel processing!
+Now that we have simulated 2-D cavity flow, it is time to try 3-D flow and parallel processing.
 
 3-D cavity flow
 -----------------------------------
-First, try to make a 3-D simulation. Start by copying the case to a new folder and clean it
+First, try to make a 3-D simulation. Start by copying the original square cavity case to a new folder and cleaning it:
 
-.. code-block:: bash 
+.. code-block:: bash
     
     cd $HOME/HydrothermalFoam_runs
     cp -r cavity2D cavity3D
@@ -20,12 +20,12 @@ First, try to make a 3-D simulation. Start by copying the case to a new folder a
 
 .. admonition:: Now these things have to happen
 
-    - make the mesh 3-D by having cells in the z-direction (:code:`system/blockMeshDict`)
+    - make the mesh 3-D by using several cells in the z direction (:code:`system/blockMeshDict`)
     - make the domain a cube: the cavity is only 0.01 m thick so far. Which vertex coordinates do you have to change?
     - the front and back sides must not be "empty" anymore. There are three places where you have to change this: the patch type in :code:`system/blockMeshDict`, and the boundary conditions in :code:`0/U` and :code:`0/p`
-    - set proper boundary conditions for front and back: they are walls now, just like the fixed walls
+    - set proper boundary conditions for front and back: they are walls now, just like the fixed walls. Which conditions do the fixed walls have in :code:`0/U` and :code:`0/p`?
     - check the Courant number in the log file
-    - run it and hope for the best!
+    - run :code:`./run.sh` and inspect the results in ParaView
 
 .. tip::
     If something goes wrong, read the error message carefully, it usually names the file and the patch with the problem. A frequent error is a patch that is :code:`empty` in one file but not in the others.
@@ -34,11 +34,11 @@ First, try to make a 3-D simulation. Start by copying the case to a new folder a
 Getting fancy - let's make a parallel run
 -----------------------------------------
 
-Three-dimensional simulations need a lot of computing resources and thankfully OpenFOAM is fully parallelized and very efficient in making parallel runs. The standard parallelization technique in OpenFOAM is called "domain decomposition". This means that the computational domain is split into sub-domains and each sub-domain is sent to one of the computational cores. As always, all of this is controlled via a dictionary file. This file is called :code:`system/decomposeParDict` .
+Three-dimensional simulations can need substantial computing resources. OpenFOAM can distribute the work across several processor cores. The standard parallelization technique in OpenFOAM is called "domain decomposition". This means that the computational domain is split into sub-domains and each subdomain is handled by a separate process, usually running on its own processor core. As always, all of this is controlled via a dictionary file. This file is called :code:`system/decomposeParDict` .
 
 To get started we make a copy of our 3-D case.
 
-.. code-block:: bash 
+.. code-block:: bash
     
     cd $HOME/HydrothermalFoam_runs
     cp -r cavity3D cavity3D_par
@@ -47,7 +47,7 @@ To get started we make a copy of our 3-D case.
 
 Unfortunately, there is no file :code:`system/decomposeParDict` in our example case... Fortunately, there is probably an example file somewhere in all the provided tutorials. A simple way to find and copy one is this:
 
-.. code-block:: bash 
+.. code-block:: bash
     
     find  $FOAM_TUTORIALS -name "decomposeParDict"
     ...
@@ -91,7 +91,7 @@ Now open this file and edit it. The tutorial file is set up for two subdomains; 
 
     // ************************************************************************* //
 
-With the method :code:`simple`, the domain is split into equally sized blocks: :code:`n (2 2 1)` means two blocks in the x direction, two in the y direction, and one in the z direction. The product of the three numbers must equal :code:`numberOfSubdomains`. Other methods, e.g. :code:`scotch`, split the domain automatically and do not use :code:`simpleCoeffs`. Details can be found in the `OpenFOAM User Guide <https://doc.cfd.direct/openfoam/user-guide-v10/running-applications-parallel>`_.
+With the method :code:`simple`, our uniform rectangular domain is split into equally sized blocks: :code:`n (2 2 1)` means two blocks in the x direction, two in the y direction, and one in the z direction. The product of the three numbers must equal :code:`numberOfSubdomains`. Other methods, e.g. :code:`scotch`, split the domain automatically and do not use :code:`simpleCoeffs`. Details can be found in the `OpenFOAM User Guide <https://doc.cfd.direct/openfoam/user-guide-v10/running-applications-parallel>`_.
 
 .. figure:: /_figures/decomposed_mesh.*
    :align: center
@@ -102,13 +102,13 @@ With the method :code:`simple`, the domain is split into equally sized blocks: :
 
 Next you need to modify the :code:`run.sh` script to invoke a parallel run. 
 
-.. code-block:: bash 
+.. code-block:: bash
     
     cp run.sh run_par.sh
 
 It should look like this:
 
- .. code-block:: bash 
+.. code-block:: bash
     :linenos:
     :name: lst:2dcav_run:tree
     :caption: The run_par.sh file.
@@ -127,7 +127,15 @@ It should look like this:
     runParallel $application
     reconstructPar
 
-Now it's time to run the case. Results should look like this:
+Run the parallel script in the container:
+
+.. code-block:: bash
+
+    ./run_par.sh
+
+The :code:`runParallel` function uses :code:`numberOfSubdomains` to launch the solver. Make sure Docker has at least four CPU cores available for this example. The final :code:`reconstructPar` command combines the results from the processor directories so that you can open :code:`a.foam` in ParaView as before.
+
+Compare the results and the run time (:code:`ExecutionTime` at the end of :code:`log.icoFoam`) with the serial run. With 20 × 20 × 20 cells, both runs take only about a second, so you will hardly notice a difference. The benefit becomes clear for larger meshes: in our test, a version with 60 × 60 × 60 cells (and a correspondingly smaller time step) took about 150 s on one core, 80 s on two, and 43 s on four cores. Note that the speedup is good, but less than the number of cores. The flow should look like this:
 
 
 .. figure:: /_figures/3dcavity.*

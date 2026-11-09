@@ -12,7 +12,7 @@ The mesh
 
 The equations we solve, e.g. for heat conduction or fluid flow, describe how a quantity like temperature or velocity changes at every point in space. A computer cannot handle infinitely many points. Instead, we cut the model domain into many small boxes, the **cells**. All cells together are called the **mesh**.
 
-The most important thing to remember is: **the solver knows only one value per cell.** This value is the average over the cell. Everything that happens on a scale smaller than a cell is invisible to the model.
+The most important thing to remember is: **each solved field is represented by one value per cell** (or one vector for velocity). Think of this as a value representing the whole cell. The model cannot resolve variations within a cell.
 
 .. figure:: /_figures/primer_cells.png
    :align: center
@@ -23,10 +23,10 @@ The most important thing to remember is: **the solver knows only one value per c
 This has some consequences:
 
 * Features need several cells to be resolved. A narrow peak that is smaller than a cell is smeared out over that cell, or lost completely.
-* More cells give more accurate results, but the model needs more memory and takes longer to run.
+* A finer mesh can resolve more detail and reduce spatial discretization errors, but the model needs more memory and takes longer to run.
 * The number of cells grows quickly: 100 cells in each direction are 10,000 cells in 2-D, but 1,000,000 cells in 3-D.
 
-You have already seen two meshes: the flange in lecture 1, whose mesh was made with another program and has cells of different shapes and sizes, and the cavity in this lecture, whose mesh we make ourselves with :code:`blockMesh`: a square cut into 20 × 20 equal cells. The cell size is then simply :math:`\Delta x = L / n`, the length of the domain divided by the number of cells.
+The two meshes used at the start of this course are: the flange in lecture 1, whose mesh was made with another program and has cells of different shapes and sizes, and the cavity in this lecture, whose mesh we make ourselves with :code:`blockMesh`: a square cut into 20 × 20 equal cells. The cell size is then simply :math:`\Delta x = L / n`, the length of the domain divided by the number of cells.
 
 Time steps
 ----------
@@ -64,9 +64,9 @@ The time step cannot be chosen independently of the mesh. In a flowing fluid, th
 
     Co = \frac{U \Delta t}{\Delta x}
 
-where :math:`U` is the flow velocity. :math:`Co` should be smaller than 1. If the time step is too large, the results become inaccurate or, even worse, the solution becomes unstable: it starts to oscillate and grows until the values are meaningless.
+where :math:`U` is the flow speed in the direction considered. For our :code:`icoFoam` exercises, keep the maximum :math:`Co` below 1. The stability limit depends on the numerical method; this is a practical guideline for these exercises, rather than a universal rule for every solver. If the time step is too large, the results become inaccurate or, even worse, the solution becomes unstable: it starts to oscillate and grows until the values are meaningless.
 
-This also means that a finer mesh is expensive twice: if you halve the cell size, you get more cells *and* you have to halve the time step. In 2-D, this makes the run about 8 times longer, in 3-D about 16 times.
+This also means that a finer mesh is expensive twice: if you halve the cell size, you get more cells *and* you have to halve the time step. For the same simulated duration, this means roughly 8 times as much computational work in 2-D and 16 times in 3-D, assuming the cost per cell per time step stays similar.
 
 Try it yourself
 ---------------
@@ -85,7 +85,7 @@ The notebook moves a pulse with a constant velocity through a 1-D domain, a much
 
 .. admonition:: What you should take away
 
-    * The solver knows only one value per cell: features smaller than a few cells are smeared out or lost.
+    * Each solved field has one value per cell: features smaller than a few cells are smeared out or lost.
     * The solver advances in time steps (:code:`deltaT`); saving results (:code:`writeInterval`) is a separate setting.
     * Time step and cell size belong together: keep the Courant number below 1. Smaller cells need smaller time steps.
 

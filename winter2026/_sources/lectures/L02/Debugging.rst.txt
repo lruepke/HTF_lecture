@@ -5,7 +5,7 @@
 Exercise: Fix a broken case
 ===========================
 
-Sooner or later, every OpenFOAM model stops with an error message. This is normal, also for experienced users. The error messages look scary at first, but they usually tell you quite precisely what is wrong and where. In this exercise, you practice reading them.
+Sooner or later, every OpenFOAM model stops with an error message. This is normal, even for experienced users. The error messages look scary at first, but they usually tell you quite precisely what is wrong and where. In this exercise, you practice reading them.
 
 Getting the cases
 -----------------
@@ -34,11 +34,11 @@ For each case:
        blockMesh
        icoFoam
 
-2. Find the block that starts with :code:`--> FOAM FATAL ERROR` or :code:`--> FOAM FATAL IO ERROR` and read it carefully. Which file does it name? Which keyword or patch?
+2. Find the block that starts with :code:`--> FOAM FATAL ERROR` or :code:`--> FOAM FATAL IO ERROR` and read it carefully. Does it name a case file, a keyword, or a patch?
 3. Open the file in Visual Studio Code, find the error and fix it.
 4. Run :code:`icoFoam` again (and :code:`blockMesh`, if you changed the mesh) until the case runs to the end. Then go to the next case with :code:`cd ../broken2`.
 
-Write down for each case what the error message said and what the actual error was. Did the message point directly to the problem?
+For each case, write down what the error message said and what the actual error was. Did the message point directly to the problem?
 
 .. admonition:: How to read an OpenFOAM error message
 
