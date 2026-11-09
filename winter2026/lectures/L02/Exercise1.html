@@ -372,7 +372,25 @@ For our case, the Courant number is:</p>
 </section>
 <section id="exploration-framework">
 <h2>Exploration Framework<a class="headerlink" href="#exploration-framework" title="Link to this heading"></a></h2>
-<p>Let’s modify the base case and explore how the flow develops under different physical and numerical conditions.</p>
+<p>Let’s modify the base case and explore how the flow develops under different physical and numerical conditions. Most of the tasks below compare several runs, e.g. with different viscosities. Here is how to set this up.</p>
+<div class="admonition-comparing-runs-side-by-side admonition">
+<p class="admonition-title">Comparing runs side by side</p>
+<p><strong>One folder per run.</strong> Never change a case that you want to compare with. Make a copy for every variation and give it a name that says what is different, e.g. for a smaller viscosity:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
+cp<span class="w"> </span>-r<span class="w"> </span>cavity2D<span class="w"> </span>cavity2D_nu0.001
+<span class="nb">cd</span><span class="w"> </span>cavity2D_nu0.001
+</pre></div>
+</div>
+<p>Change the parameter, e.g. <code class="code docutils literal notranslate"><span class="pre">nu</span></code> in <code class="code docutils literal notranslate"><span class="pre">constant/physicalProperties</span></code>, and run the case with <code class="code docutils literal notranslate"><span class="pre">./run.sh</span></code>. The script cleans the copied results first.</p>
+<p><strong>Results next to each other in ParaView.</strong></p>
+<ol class="arabic simple">
+<li><p>Open the <code class="code docutils literal notranslate"><span class="pre">a.foam</span></code> files of both cases (<em>File → Open</em>, once for each case folder) and click <em>Apply</em>. Both cases now lie on top of each other.</p></li>
+<li><p>Select the second case in the <em>Pipeline Browser</em> and apply <em>Filters → Alphabetical → Transform</em>. In its properties, set <em>Translate</em> to <code class="code docutils literal notranslate"><span class="pre">0.12</span> <span class="pre">0</span> <span class="pre">0</span></code> and click <em>Apply</em>. This moves the second case 0.12 m to the right, next to the first one. For a third case, use <code class="code docutils literal notranslate"><span class="pre">0.24</span> <span class="pre">0</span> <span class="pre">0</span></code>, and so on.</p></li>
+<li><p>If the original second case is still visible, hide it with the eye icon in the <em>Pipeline Browser</em>, so that only the moved copy is shown.</p></li>
+<li><p>Color both by the same field and give them the <strong>same color range</strong> (<em>Rescale to Custom Range</em>). Otherwise, the same color means different values in the two cases.</p></li>
+</ol>
+<p>Further filters, e.g. a <em>Calculator</em> or <em>Surface LIC</em>, are applied to the transformed case. To compare profiles, apply <em>Plot Over Line</em> to the <strong>original</strong> cases, not to the moved one, so that you can use the same line for both. Show both lines in the same <em>Line Chart View</em>: then they are directly on top of each other.</p>
+</div>
 <ol class="arabic simple">
 <li><p><strong>Baseline Case: predict, then measure</strong></p>
 <ul class="simple">
@@ -434,13 +452,21 @@ For our case, the Courant number is:</p>
 <ul>
 <li><p>Color it by the velocity magnitude. What do you see?</p></li>
 <li><p>Now switch to a logarithmic color scale: in the <em>Color Map Editor</em>, tick <em>Use Log Scale When Mapping Data To Colors</em> (click on the gear icon if you do not see this option), and set the range to 1e-7 to 1 with <em>Rescale to Custom Range</em>. What do you see now?</p></li>
-<li><p>Apply a <em>Stream Tracer</em> with the seed type <em>Line</em> along the vertical center line of the cavity, from (0.05 0 0.005) to (0.05 0.4 0.005).</p></li>
+<li><p>Make the flow paths visible with <em>Surface LIC</em>, a display mode that draws fine streaks along the flow direction:</p>
+<ol class="arabic simple">
+<li><p>Apply a <em>Calculator</em> with the result name <code class="code docutils literal notranslate"><span class="pre">direction</span></code> and the expression <code class="code docutils literal notranslate"><span class="pre">U/mag(U)</span></code>. This is the flow direction, with all vectors of the same length. Without it, the slow vortices would not show up.</p></li>
+<li><p>Apply a second <em>Calculator</em> to the first one, with the result name <code class="code docutils literal notranslate"><span class="pre">log_speed</span></code> and the expression <code class="code docutils literal notranslate"><span class="pre">log10(mag(U))</span></code>.</p></li>
+<li><p>In the toolbar, change the display mode from <em>Surface</em> to <em>Surface LIC</em>. In the <em>Properties</em> panel, set <em>Vectors</em> to <code class="code docutils literal notranslate"><span class="pre">direction</span></code>.</p></li>
+<li><p>Color by <code class="code docutils literal notranslate"><span class="pre">log_speed</span></code> and set the range to -6 to 0 with <em>Rescale to Custom Range</em>. The color now shows the speed: -1 means 0.1 m/s, -6 means 0.000001 m/s.</p></li>
+</ol>
+</li>
 </ul>
 </li>
 <li><p>Questions to explore:</p>
 <ul>
-<li><p>How many vortices are there, and how do they rotate? Was your sketch right?</p></li>
-<li><p>Use <em>Plot Over Line</em> along the vertical center line and look at the horizontal velocity <code class="code docutils literal notranslate"><span class="pre">U_X</span></code> in the <em>SpreadSheet View</em>. How much weaker is each vortex than the one above it?</p></li>
+<li><p>How many vortices are there? Was your sketch right?</p></li>
+<li><p>The streaks show the paths of the fluid, but not in which direction it moves. Think: the lid moves to the right, so in which direction does the top vortex rotate? Where two vortices touch, the fluid of both moves in the same direction, like two gears. So in which direction do the middle and the bottom vortex rotate?</p></li>
+<li><p>Check your answer: use <em>Plot Over Line</em> along the vertical center line, from (0.05 0 0.005) to (0.05 0.4 0.005), and look at the horizontal velocity <code class="code docutils literal notranslate"><span class="pre">U_X</span></code> in the <em>SpreadSheet View</em>. Positive values mean flow to the right, negative values flow to the left. How much weaker is each vortex than the one above it?</p></li>
 <li><p>What does this mean for the fluid at the bottom of a deep, narrow cavity, e.g. a deep fissure below a flowing current?</p></li>
 <li><p>Optional: try a cavity that is two or three times as deep as it is wide. How does the number of vortices depend on the depth?</p></li>
 </ul>
@@ -453,8 +479,7 @@ For our case, the Courant number is:</p>
 <ul class="simple">
 <li><p>You may have to adjust the time step size to maintain a stable Courant number.</p></li>
 <li><p>When changing time step size, make sure to adjust the output interval accordingly.</p></li>
-<li><p>Make copies of the case for each variation to keep track of different simulations.</p></li>
-<li><p>You can visualize multiple simulations in ParaView by loading multiple case folders at once.</p></li>
+<li><p>Make a copy of the case for each variation, and show the results next to each other in ParaView (see “Comparing runs side by side” above).</p></li>
 <li><p>Use the “plot over line” filter in ParaView to extract velocity profiles and compare different cases</p></li>
 <li><p>Use the “stream tracer” filter in ParaView to visualize the flow field and vortex structure.</p></li>
 </ul>
@@ -467,7 +492,7 @@ For our case, the Courant number is:</p>
 <li><p><strong>High viscosity</strong>: Flow develops quickly and becomes smooth and laminar.</p></li>
 <li><p><strong>Low viscosity</strong>: Transient lasts longer, possible oscillations or instabilities.</p></li>
 <li><p><strong>High lid velocity</strong>: Stronger vortices, higher Reynolds number, more complex flow.</p></li>
-<li><p><strong>Deep cavity</strong> (four times as deep as wide): three vortices on top of each other, with centers at about 0.38, 0.24 and 0.09 m height, i.e. about 1.4 cavity widths apart. Neighboring vortices rotate in opposite directions, like gears. Each vortex is about 350 times weaker than the one above it: the largest horizontal velocities on the center line are about 0.19, 5e-4 and 1e-6 m/s. With a linear color scale, only the top vortex is visible. The fluid at the bottom is practically at rest. These stacked vortices are known as <em>Moffatt eddies</em>, after the fluid dynamicist Keith Moffatt, who described them in 1964.</p></li>
+<li><p><strong>Deep cavity</strong> (four times as deep as wide): three vortices on top of each other, with centers at about 0.38, 0.24 and 0.09 m height, i.e. about 1.4 cavity widths apart. Neighboring vortices rotate in opposite directions, like gears. Each vortex is about 350 times weaker than the one above it: the largest horizontal velocities on the center line are about 0.19, 5e-4 and 1e-6 m/s. With a linear color scale, only the top vortex is visible; with <em>Surface LIC</em> on the direction field, all three show up as closed loops. Seen from the front, the top vortex rotates clockwise, the middle one counterclockwise, and the bottom one clockwise again. The fluid at the bottom is practically at rest. These stacked vortices are known as <em>Moffatt eddies</em>, after the fluid dynamicist Keith Moffatt, who described them in 1964.</p></li>
 <li><p><strong>Fine mesh</strong>: Captures finer details (e.g., secondary vortices), more accurate but slower to compute.</p></li>
 </ul>
 <div class="admonition-why-is-the-flow-steady-after-0-07-s-and-not-after-1-s admonition">
