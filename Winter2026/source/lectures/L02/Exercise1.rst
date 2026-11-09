@@ -230,7 +230,28 @@ The maximum is a bit smaller than our estimate, because the fluid inside the cav
 Exploration Framework
 ---------------------
 
-Let's modify the base case and explore how the flow develops under different physical and numerical conditions. 
+Let's modify the base case and explore how the flow develops under different physical and numerical conditions. Most of the tasks below compare several runs, e.g. with different viscosities. Here is how to set this up.
+
+.. admonition:: Comparing runs side by side
+
+    **One folder per run.** Never change a case that you want to compare with. Make a copy for every variation and give it a name that says what is different, e.g. for a smaller viscosity:
+
+    .. code-block:: bash
+
+        cd $HOME/HydrothermalFoam_runs
+        cp -r cavity2D cavity2D_nu0.001
+        cd cavity2D_nu0.001
+
+    Change the parameter, e.g. :code:`nu` in :code:`constant/physicalProperties`, and run the case with :code:`./run.sh`. The script cleans the copied results first.
+
+    **Results next to each other in ParaView.**
+
+    1. Open the :code:`a.foam` files of both cases (*File → Open*, once for each case folder) and click *Apply*. Both cases now lie on top of each other.
+    2. Select the second case in the *Pipeline Browser* and apply *Filters → Alphabetical → Transform*. In its properties, set *Translate* to :code:`0.12 0 0` and click *Apply*. This moves the second case 0.12 m to the right, next to the first one. For a third case, use :code:`0.24 0 0`, and so on.
+    3. If the original second case is still visible, hide it with the eye icon in the *Pipeline Browser*, so that only the moved copy is shown.
+    4. Color both by the same field and give them the **same color range** (*Rescale to Custom Range*). Otherwise, the same color means different values in the two cases.
+
+    Further filters, e.g. a *Calculator* or *Surface LIC*, are applied to the transformed case. To compare profiles, apply *Plot Over Line* to the **original** cases, not to the moved one, so that you can use the same line for both. Show both lines in the same *Line Chart View*: then they are directly on top of each other.
 
 
 1. **Baseline Case: predict, then measure**
@@ -289,12 +310,18 @@ Let's modify the base case and explore how the flow develops under different phy
 
      - Color it by the velocity magnitude. What do you see?
      - Now switch to a logarithmic color scale: in the *Color Map Editor*, tick *Use Log Scale When Mapping Data To Colors* (click on the gear icon if you do not see this option), and set the range to 1e-7 to 1 with *Rescale to Custom Range*. What do you see now?
-     - Apply a *Stream Tracer* with the seed type *Line* along the vertical center line of the cavity, from (0.05 0 0.005) to (0.05 0.4 0.005).
+     - Make the flow paths visible with *Surface LIC*, a display mode that draws fine streaks along the flow direction:
+
+       1. Apply a *Calculator* with the result name :code:`direction` and the expression :code:`U/mag(U)`. This is the flow direction, with all vectors of the same length. Without it, the slow vortices would not show up.
+       2. Apply a second *Calculator* to the first one, with the result name :code:`log_speed` and the expression :code:`log10(mag(U))`.
+       3. In the toolbar, change the display mode from *Surface* to *Surface LIC*. In the *Properties* panel, set *Vectors* to :code:`direction`.
+       4. Color by :code:`log_speed` and set the range to -6 to 0 with *Rescale to Custom Range*. The color now shows the speed: -1 means 0.1 m/s, -6 means 0.000001 m/s.
 
    - Questions to explore:
 
-     - How many vortices are there, and how do they rotate? Was your sketch right?
-     - Use *Plot Over Line* along the vertical center line and look at the horizontal velocity :code:`U_X` in the *SpreadSheet View*. How much weaker is each vortex than the one above it?
+     - How many vortices are there? Was your sketch right?
+     - The streaks show the paths of the fluid, but not in which direction it moves. Think: the lid moves to the right, so in which direction does the top vortex rotate? Where two vortices touch, the fluid of both moves in the same direction, like two gears. So in which direction do the middle and the bottom vortex rotate?
+     - Check your answer: use *Plot Over Line* along the vertical center line, from (0.05 0 0.005) to (0.05 0.4 0.005), and look at the horizontal velocity :code:`U_X` in the *SpreadSheet View*. Positive values mean flow to the right, negative values flow to the left. How much weaker is each vortex than the one above it?
      - What does this mean for the fluid at the bottom of a deep, narrow cavity, e.g. a deep fissure below a flowing current?
      - Optional: try a cavity that is two or three times as deep as it is wide. How does the number of vortices depend on the depth?
 
@@ -302,8 +329,7 @@ Let's modify the base case and explore how the flow develops under different phy
 
         - You may have to adjust the time step size to maintain a stable Courant number. 
         - When changing time step size, make sure to adjust the output interval accordingly.
-        - Make copies of the case for each variation to keep track of different simulations.
-        - You can visualize multiple simulations in ParaView by loading multiple case folders at once.
+        - Make a copy of the case for each variation, and show the results next to each other in ParaView (see "Comparing runs side by side" above).
         - Use the "plot over line" filter in ParaView to extract velocity profiles and compare different cases
         - Use the "stream tracer" filter in ParaView to visualize the flow field and vortex structure.
 
@@ -317,7 +343,7 @@ Expected Observations
 - **High viscosity**: Flow develops quickly and becomes smooth and laminar.
 - **Low viscosity**: Transient lasts longer, possible oscillations or instabilities.
 - **High lid velocity**: Stronger vortices, higher Reynolds number, more complex flow.
-- **Deep cavity** (four times as deep as wide): three vortices on top of each other, with centers at about 0.38, 0.24 and 0.09 m height, i.e. about 1.4 cavity widths apart. Neighboring vortices rotate in opposite directions, like gears. Each vortex is about 350 times weaker than the one above it: the largest horizontal velocities on the center line are about 0.19, 5e-4 and 1e-6 m/s. With a linear color scale, only the top vortex is visible. The fluid at the bottom is practically at rest. These stacked vortices are known as *Moffatt eddies*, after the fluid dynamicist Keith Moffatt, who described them in 1964.
+- **Deep cavity** (four times as deep as wide): three vortices on top of each other, with centers at about 0.38, 0.24 and 0.09 m height, i.e. about 1.4 cavity widths apart. Neighboring vortices rotate in opposite directions, like gears. Each vortex is about 350 times weaker than the one above it: the largest horizontal velocities on the center line are about 0.19, 5e-4 and 1e-6 m/s. With a linear color scale, only the top vortex is visible; with *Surface LIC* on the direction field, all three show up as closed loops. Seen from the front, the top vortex rotates clockwise, the middle one counterclockwise, and the bottom one clockwise again. The fluid at the bottom is practically at rest. These stacked vortices are known as *Moffatt eddies*, after the fluid dynamicist Keith Moffatt, who described them in 1964.
 - **Fine mesh**: Captures finer details (e.g., secondary vortices), more accurate but slower to compute.
 
 .. admonition:: Why is the flow steady after 0.07 s and not after 1 s?
