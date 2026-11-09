@@ -51,8 +51,8 @@ The steps involved are shown in :numref:`fig:figure_workflow_fig` . Starting fro
 
     #. Start with an image (A).
     #. Save it as a .vti file that is easily understood by Paraview. We use `porespy <https://porespy.org/>`_ for this step.
-    #. Load the vti file into paraview and use the *clip* (B) and *triangulation* (B) filters to create a surface of the pore space (C).
-    #. Save this surface as a stl file
+    #. Load the vti file into paraview and use the *clip* (B) and *triangulate* (B) filters to create a surface of the solid grains (C).
+    #. Save this surface as an stl file.
 
 
 Python pre-processing
@@ -133,85 +133,85 @@ You can put this little script into a jupyter notebook or save it as .py (e.g. p
 After running it, you should  have a file :code:`porous_model.vti` in the geometry folder. 
 
 .. tip::
-    If you are interested in the vti file format, this is what we have just written to porous_model.vti
+    If you are interested in the vti file format: the file is too large to open in the editor (about 28 MB), because the image data is stored in binary form. But the first lines are plain text and describe the data. Show them in the terminal:
 
     .. code-block:: bash
 
+        head -n 9 geometry/porous_model.vti
+
+    .. code-block:: none
+
+        <?xml version="1.0"?>
         <VTKFile type="ImageData" version="1.0" byte_order="LittleEndian" header_type="UInt64">
-            <ImageData WholeExtent="0 1196 0 1494 0 2" Origin="0 0 0" Spacing="1 1 1" Direction="1 0 0 0 1 0 0 0 1">
-                <Piece Extent="0 1196 0 1494 0 2">
-                <PointData>
-                </PointData>
-                <CellData Scalars="im">
-                <DataArray type="Int64" Name="im" format="ascii" RangeMin="0" RangeMax="255">
-                    255 255 255 255 255 255
-                    255 255 255 255 255 255
-                    255 255 255 255 255 255
-                    ...
+        <ImageData WholeExtent="0 1196 0 1494 0 2" Origin="0.0 0.0 0.0 " Spacing="1 1 1 ">
+        <Piece Extent="0 1196 0 1494 0 2">
+        <CellData Scalars="im">
+        <DataArray Name="im" NumberOfComponents="1" type="Int64" format="appended" offset="0"/>
+        </CellData>
+        </Piece>
+        </ImageData>
 
-    Notice how this is written as cell data. The total extents are 1197x1495x3, the voxel size is 1, and the cell data is 1196x1494x2 (our two images).
+    Notice how the image is written as cell data with the name :code:`im`. The extents count points: 1197 x 1495 x 3 points enclose 1196 x 1494 x 2 cells, i.e. one cell per pixel of our two stacked images, and the voxel size (:code:`Spacing`) is 1. :code:`format="appended"` means that the actual values (0 or 255 for every pixel) follow after this header as raw binary data, which is why the file looks like garbage after these lines.
 
 
-Now comes the segmentation and triangulation part to make an stl file that openFOAM understands. We will use paraview for this and there are different ways of doing this:
+Making the stl file in ParaView
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    #. use paraview's graphical user interface
-    #. use paraview's inbuild python shell
-    #. use :code:`pvpython`, paraview's command-line python, from a terminal on your computer
+Now comes the segmentation: we separate the grains from the pores and turn the grains into a triangulated surface, an stl file that openFOAM understands. We do this in ParaView, which runs on your computer, so all files are in the case directory in the :code:`HydrothermalFoam_runs` folder of your course folder.
 
-.. figure:: /_figures/paraview_python.*
-   :align: center
-   :name: fig:paraview_figure_fig
-   :figwidth: 85%
+First, create the folder that will hold the stl file. In a terminal in the container, in the case directory, type:
 
-   Using the paraview python shell.
+.. code-block:: bash
 
+    mkdir -p constant/triSurface
 
-Here is some python code that uses the paraview python bindings. You can save it into your case directory. Or, you use the paraview GUI to create the stl file.
+Then follow these steps in ParaView:
 
-.. code-block:: python
+#. **Open the image.** *File → Open*, select :code:`geometry/porous_model.vti` and click *Apply*. You see the image as a gray-scale picture; color it by :code:`im` if it is not colored yet. Pores have the value 255 (white), grains the value 0 (black).
+#. **Cut out the grains.** Select :code:`porous_model.vti` in the *Pipeline Browser* and apply *Filters → Alphabetical → Clip*. In the *Properties* panel, set
 
-    # workflow as python code using the paraview.simple module
-    from paraview.simple import *
-    import os
+   * *Clip Type* to :code:`Scalar`,
+   * *Scalars* to :code:`im`,
+   * *Value* to :code:`127.5`, halfway between pores and grains,
+   * leave *Invert* ticked, so that the cells with values below 127.5, the grains, are kept,
 
-    def write_stl(vti_file, stl_file):
-        # 1. load vti file
-        data            = OpenDataFile(vti_file)
-        # 2. clip at some intermediate value (we have 0 and 255 as pores and grains)
-        clip1           = Clip(data, ClipType = 'Scalar', Scalars = ['CELLS', 'im'], Value = 127.5, Invert = 1)
-        # 3. make a surface of the remaining grains
-        extractSurface1 = ExtractSurface(clip1)
-        # 4. and triangulate it for stl export
-        triangulate1    = Triangulate(extractSurface1)
-    
-        # 5. finally save it as an stl file
-        SaveData(stl_file, proxy = triangulate1)
-    
-    # main part, run from the case directory
-    vti_file = 'geometry/porous_model.vti'              # input .vti file
-    stl_file = 'constant/triSurface/porous_model.stl'   # output .stl file, where OpenFOAM expects it
-    # create the folder for the stl file, if it does not exist yet
-    os.makedirs(os.path.dirname(stl_file), exist_ok=True)
-    # call function
-    write_stl(vti_file, stl_file)
+   and click *Apply*. Only the grains are left.
+#. **Make a surface.** Apply *Filters → Alphabetical → Extract Surface* to the clip, and click *Apply*.
+#. **Triangulate it.** Apply *Filters → Alphabetical → Triangulate* to the surface, and click *Apply*. The stl format can only store triangles.
+#. **Save it.** Select the :code:`Triangulate` filter, choose *File → Save Data*, select the file type *STL*, and save it as :code:`porous_model.stl` in the folder :code:`constant/triSurface` of your case.
 
+Check that the file :code:`constant/triSurface/porous_model.stl` exists. That's it: the geometry is ready for meshing.
 
-An easy way to execute the python script is to call it from the python shell in paraview (:numref:`fig:paraview_figure_fig`). Within the shell, you first change into your case directory (paraview runs on your computer, so this is the case directory in the :code:`HydrothermalFoam_runs` folder of your course folder), and then run the script. It reads :code:`geometry/porous_model.vti` and writes the stl file into :code:`constant/triSurface`, where OpenFOAM expects it.
+.. admonition:: Optional: the same steps as a Python script
 
-.. code:: python
+    Clicking through the filters becomes tedious if you have to do it for many images, e.g. in the exercise with random disk packings. ParaView can also be controlled with Python, and the following script does exactly the steps above. Save it as :code:`make_stl.py` in your case directory.
 
-    import os
-    os.chdir("your_case_directory")
-    exec(open("your_file_name.py").read())
+    .. code-block:: python
 
+        # make_stl.py: segment the image and save the grains as stl file
+        from paraview.simple import *
+        import os
 
-This will create a .stl file, which we will use in the meshing process.
+        vti_file = 'geometry/porous_model.vti'              # input image
+        stl_file = 'constant/triSurface/porous_model.stl'   # output surface, where OpenFOAM expects it
 
-If you used the paraview GUI instead (*File → Save Data*), make sure that the stl file ends up as :code:`constant/triSurface/porous_model.stl` in the case directory. Create the folder :code:`constant/triSurface` first, if it does not exist yet.
+        data          = OpenDataFile(vti_file)                                       # 1. open the image
+        clip          = Clip(Input=data, ClipType='Scalar', Scalars=['CELLS', 'im'],
+                             Value=127.5, Invert=1)                                  # 2. keep the grains
+        surface       = ExtractSurface(Input=clip)                                   # 3. make a surface
+        triangulated  = Triangulate(Input=surface)                                   # 4. triangulate it
+        os.makedirs(os.path.dirname(stl_file), exist_ok=True)
+        SaveData(stl_file, proxy=triangulated)                                       # 5. save it
 
-.. admonition:: Doing it the proper way
+    To run it, open the Python shell in ParaView (*View → Python Shell*, :numref:`fig:paraview_figure_fig`), change into your case directory, and execute the script:
 
-    The more elegant way is to avoid the in-build paraview shell and run the script as a stand-alone python file. The :code:`paraview.simple` module is not part of the course container, because paraview runs on your computer. But paraview comes with its own python, :code:`pvpython`, which you can use from a terminal on your computer (not in the container). Save the code above as :code:`make_stl.py` in your case directory, and run it from there:
+    .. code-block:: python
+
+        import os
+        os.chdir("/path/to/your/HydrothermalFoam_runs/DRP_permeability_2D")
+        exec(open("make_stl.py").read())
+
+    You can also run it without opening ParaView, with :code:`pvpython`, ParaView's own Python, from a terminal **on your computer** (not in the container), in the case directory:
 
     .. code-block:: bash
 
@@ -223,6 +223,13 @@ If you used the paraview GUI instead (*File → Save Data*), make sure that the 
 
         # Linux
         pvpython make_stl.py
+
+.. figure:: /_figures/paraview_python.*
+   :align: center
+   :name: fig:paraview_figure_fig
+   :figwidth: 85%
+
+   The Python shell in ParaView.
 
 
 OpenFOAM case

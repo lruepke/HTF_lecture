@@ -95,6 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#objective">Objective</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mesh-generation">Mesh generation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#python-pre-processing">Python pre-processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#making-the-stl-file-in-paraview">Making the stl file in ParaView</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#openfoam-case">OpenFOAM case</a><ul>
@@ -236,8 +237,8 @@
 <div><ol class="arabic simple">
 <li><p>Start with an image (A).</p></li>
 <li><p>Save it as a .vti file that is easily understood by Paraview. We use <a class="reference external" href="https://porespy.org/">porespy</a> for this step.</p></li>
-<li><p>Load the vti file into paraview and use the <em>clip</em> (B) and <em>triangulation</em> (B) filters to create a surface of the pore space (C).</p></li>
-<li><p>Save this surface as a stl file</p></li>
+<li><p>Load the vti file into paraview and use the <em>clip</em> (B) and <em>triangulate</em> (B) filters to create a surface of the solid grains (C).</p></li>
+<li><p>Save this surface as an stl file.</p></li>
 </ol>
 </div></blockquote>
 <section id="python-pre-processing">
@@ -306,74 +307,74 @@
 <p>After running it, you should  have a file <code class="code docutils literal notranslate"><span class="pre">porous_model.vti</span></code> in the geometry folder.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If you are interested in the vti file format, this is what we have just written to porous_model.vti</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;VTKFile<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">"ImageData"</span><span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">"1.0"</span><span class="w"> </span><span class="nv">byte_order</span><span class="o">=</span><span class="s2">"LittleEndian"</span><span class="w"> </span><span class="nv">header_type</span><span class="o">=</span><span class="s2">"UInt64"</span>&gt;
-<span class="w">    </span>&lt;ImageData<span class="w"> </span><span class="nv">WholeExtent</span><span class="o">=</span><span class="s2">"0 1196 0 1494 0 2"</span><span class="w"> </span><span class="nv">Origin</span><span class="o">=</span><span class="s2">"0 0 0"</span><span class="w"> </span><span class="nv">Spacing</span><span class="o">=</span><span class="s2">"1 1 1"</span><span class="w"> </span><span class="nv">Direction</span><span class="o">=</span><span class="s2">"1 0 0 0 1 0 0 0 1"</span>&gt;
-<span class="w">        </span>&lt;Piece<span class="w"> </span><span class="nv">Extent</span><span class="o">=</span><span class="s2">"0 1196 0 1494 0 2"</span>&gt;
-<span class="w">        </span>&lt;PointData&gt;
-<span class="w">        </span>&lt;/PointData&gt;
-<span class="w">        </span>&lt;CellData<span class="w"> </span><span class="nv">Scalars</span><span class="o">=</span><span class="s2">"im"</span>&gt;
-<span class="w">        </span>&lt;DataArray<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s2">"Int64"</span><span class="w"> </span><span class="nv">Name</span><span class="o">=</span><span class="s2">"im"</span><span class="w"> </span><span class="nv">format</span><span class="o">=</span><span class="s2">"ascii"</span><span class="w"> </span><span class="nv">RangeMin</span><span class="o">=</span><span class="s2">"0"</span><span class="w"> </span><span class="nv">RangeMax</span><span class="o">=</span><span class="s2">"255"</span>&gt;
-<span class="w">            </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span>
-<span class="w">            </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span>
-<span class="w">            </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span><span class="w"> </span><span class="m">255</span>
-<span class="w">            </span>...
+<p>If you are interested in the vti file format: the file is too large to open in the editor (about 28 MB), because the image data is stored in binary form. But the first lines are plain text and describe the data. Show them in the terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">9</span><span class="w"> </span>geometry/porous_model.vti
 </pre></div>
 </div>
-<p>Notice how this is written as cell data. The total extents are 1197x1495x3, the voxel size is 1, and the cell data is 1196x1494x2 (our two images).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;?xml version="1.0"?&gt;
+&lt;VTKFile type="ImageData" version="1.0" byte_order="LittleEndian" header_type="UInt64"&gt;
+&lt;ImageData WholeExtent="0 1196 0 1494 0 2" Origin="0.0 0.0 0.0 " Spacing="1 1 1 "&gt;
+&lt;Piece Extent="0 1196 0 1494 0 2"&gt;
+&lt;CellData Scalars="im"&gt;
+&lt;DataArray Name="im" NumberOfComponents="1" type="Int64" format="appended" offset="0"/&gt;
+&lt;/CellData&gt;
+&lt;/Piece&gt;
+&lt;/ImageData&gt;
+</pre></div>
 </div>
-<p>Now comes the segmentation and triangulation part to make an stl file that openFOAM understands. We will use paraview for this and there are different ways of doing this:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li><p>use paraview’s graphical user interface</p></li>
-<li><p>use paraview’s inbuild python shell</p></li>
-<li><p>use <code class="code docutils literal notranslate"><span class="pre">pvpython</span></code>, paraview’s command-line python, from a terminal on your computer</p></li>
+<p>Notice how the image is written as cell data with the name <code class="code docutils literal notranslate"><span class="pre">im</span></code>. The extents count points: 1197 x 1495 x 3 points enclose 1196 x 1494 x 2 cells, i.e. one cell per pixel of our two stacked images, and the voxel size (<code class="code docutils literal notranslate"><span class="pre">Spacing</span></code>) is 1. <code class="code docutils literal notranslate"><span class="pre">format=&quot;appended&quot;</span></code> means that the actual values (0 or 255 for every pixel) follow after this header as raw binary data, which is why the file looks like garbage after these lines.</p>
+</div>
+</section>
+<section id="making-the-stl-file-in-paraview">
+<h3>Making the stl file in ParaView<a class="headerlink" href="#making-the-stl-file-in-paraview" title="Link to this heading"></a></h3>
+<p>Now comes the segmentation: we separate the grains from the pores and turn the grains into a triangulated surface, an stl file that openFOAM understands. We do this in ParaView, which runs on your computer, so all files are in the case directory in the <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> folder of your course folder.</p>
+<p>First, create the folder that will hold the stl file. In a terminal in the container, in the case directory, type:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>constant/triSurface
+</pre></div>
+</div>
+<p>Then follow these steps in ParaView:</p>
+<ol class="arabic">
+<li><p><strong>Open the image.</strong> <em>File → Open</em>, select <code class="code docutils literal notranslate"><span class="pre">geometry/porous_model.vti</span></code> and click <em>Apply</em>. You see the image as a gray-scale picture; color it by <code class="code docutils literal notranslate"><span class="pre">im</span></code> if it is not colored yet. Pores have the value 255 (white), grains the value 0 (black).</p></li>
+<li><p><strong>Cut out the grains.</strong> Select <code class="code docutils literal notranslate"><span class="pre">porous_model.vti</span></code> in the <em>Pipeline Browser</em> and apply <em>Filters → Alphabetical → Clip</em>. In the <em>Properties</em> panel, set</p>
+<ul class="simple">
+<li><p><em>Clip Type</em> to <code class="code docutils literal notranslate"><span class="pre">Scalar</span></code>,</p></li>
+<li><p><em>Scalars</em> to <code class="code docutils literal notranslate"><span class="pre">im</span></code>,</p></li>
+<li><p><em>Value</em> to <code class="code docutils literal notranslate"><span class="pre">127.5</span></code>, halfway between pores and grains,</p></li>
+<li><p>leave <em>Invert</em> ticked, so that the cells with values below 127.5, the grains, are kept,</p></li>
+</ul>
+<p>and click <em>Apply</em>. Only the grains are left.</p>
+</li>
+<li><p><strong>Make a surface.</strong> Apply <em>Filters → Alphabetical → Extract Surface</em> to the clip, and click <em>Apply</em>.</p></li>
+<li><p><strong>Triangulate it.</strong> Apply <em>Filters → Alphabetical → Triangulate</em> to the surface, and click <em>Apply</em>. The stl format can only store triangles.</p></li>
+<li><p><strong>Save it.</strong> Select the <code class="code docutils literal notranslate"><span class="pre">Triangulate</span></code> filter, choose <em>File → Save Data</em>, select the file type <em>STL</em>, and save it as <code class="code docutils literal notranslate"><span class="pre">porous_model.stl</span></code> in the folder <code class="code docutils literal notranslate"><span class="pre">constant/triSurface</span></code> of your case.</p></li>
 </ol>
-</div></blockquote>
-<figure class="align-center" id="fig-paraview-figure-fig" style="width: 85%">
-<img alt="../../_images/paraview_python.png" src="../../_images/paraview_python.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Using the paraview python shell.</span><a class="headerlink" href="#fig-paraview-figure-fig" title="Link to this image"></a></p>
-</figcaption>
-</figure>
-<p>Here is some python code that uses the paraview python bindings. You can save it into your case directory. Or, you use the paraview GUI to create the stl file.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># workflow as python code using the paraview.simple module</span>
+<p>Check that the file <code class="code docutils literal notranslate"><span class="pre">constant/triSurface/porous_model.stl</span></code> exists. That’s it: the geometry is ready for meshing.</p>
+<div class="admonition-optional-the-same-steps-as-a-python-script admonition">
+<p class="admonition-title">Optional: the same steps as a Python script</p>
+<p>Clicking through the filters becomes tedious if you have to do it for many images, e.g. in the exercise with random disk packings. ParaView can also be controlled with Python, and the following script does exactly the steps above. Save it as <code class="code docutils literal notranslate"><span class="pre">make_stl.py</span></code> in your case directory.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># make_stl.py: segment the image and save the grains as stl file</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">paraview.simple</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">):</span>
-    <span class="c1"># 1. load vti file</span>
-    <span class="n">data</span>            <span class="o">=</span> <span class="n">OpenDataFile</span><span class="p">(</span><span class="n">vti_file</span><span class="p">)</span>
-    <span class="c1"># 2. clip at some intermediate value (we have 0 and 255 as pores and grains)</span>
-    <span class="n">clip1</span>           <span class="o">=</span> <span class="n">Clip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ClipType</span> <span class="o">=</span> <span class="s1">'Scalar'</span><span class="p">,</span> <span class="n">Scalars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'CELLS'</span><span class="p">,</span> <span class="s1">'im'</span><span class="p">],</span> <span class="n">Value</span> <span class="o">=</span> <span class="mf">127.5</span><span class="p">,</span> <span class="n">Invert</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="c1"># 3. make a surface of the remaining grains</span>
-    <span class="n">extractSurface1</span> <span class="o">=</span> <span class="n">ExtractSurface</span><span class="p">(</span><span class="n">clip1</span><span class="p">)</span>
-    <span class="c1"># 4. and triangulate it for stl export</span>
-    <span class="n">triangulate1</span>    <span class="o">=</span> <span class="n">Triangulate</span><span class="p">(</span><span class="n">extractSurface1</span><span class="p">)</span>
+<span class="n">vti_file</span> <span class="o">=</span> <span class="s1">'geometry/porous_model.vti'</span>              <span class="c1"># input image</span>
+<span class="n">stl_file</span> <span class="o">=</span> <span class="s1">'constant/triSurface/porous_model.stl'</span>   <span class="c1"># output surface, where OpenFOAM expects it</span>
 
-    <span class="c1"># 5. finally save it as an stl file</span>
-    <span class="n">SaveData</span><span class="p">(</span><span class="n">stl_file</span><span class="p">,</span> <span class="n">proxy</span> <span class="o">=</span> <span class="n">triangulate1</span><span class="p">)</span>
-
-<span class="c1"># main part, run from the case directory</span>
-<span class="n">vti_file</span> <span class="o">=</span> <span class="s1">'geometry/porous_model.vti'</span>              <span class="c1"># input .vti file</span>
-<span class="n">stl_file</span> <span class="o">=</span> <span class="s1">'constant/triSurface/porous_model.stl'</span>   <span class="c1"># output .stl file, where OpenFOAM expects it</span>
-<span class="c1"># create the folder for the stl file, if it does not exist yet</span>
+<span class="n">data</span>          <span class="o">=</span> <span class="n">OpenDataFile</span><span class="p">(</span><span class="n">vti_file</span><span class="p">)</span>                                       <span class="c1"># 1. open the image</span>
+<span class="n">clip</span>          <span class="o">=</span> <span class="n">Clip</span><span class="p">(</span><span class="n">Input</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">ClipType</span><span class="o">=</span><span class="s1">'Scalar'</span><span class="p">,</span> <span class="n">Scalars</span><span class="o">=</span><span class="p">[</span><span class="s1">'CELLS'</span><span class="p">,</span> <span class="s1">'im'</span><span class="p">],</span>
+                     <span class="n">Value</span><span class="o">=</span><span class="mf">127.5</span><span class="p">,</span> <span class="n">Invert</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>                                  <span class="c1"># 2. keep the grains</span>
+<span class="n">surface</span>       <span class="o">=</span> <span class="n">ExtractSurface</span><span class="p">(</span><span class="n">Input</span><span class="o">=</span><span class="n">clip</span><span class="p">)</span>                                   <span class="c1"># 3. make a surface</span>
+<span class="n">triangulated</span>  <span class="o">=</span> <span class="n">Triangulate</span><span class="p">(</span><span class="n">Input</span><span class="o">=</span><span class="n">surface</span><span class="p">)</span>                                   <span class="c1"># 4. triangulate it</span>
 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">stl_file</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># call function</span>
-<span class="n">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">)</span>
+<span class="n">SaveData</span><span class="p">(</span><span class="n">stl_file</span><span class="p">,</span> <span class="n">proxy</span><span class="o">=</span><span class="n">triangulated</span><span class="p">)</span>                                       <span class="c1"># 5. save it</span>
 </pre></div>
 </div>
-<p>An easy way to execute the python script is to call it from the python shell in paraview (<a class="reference internal" href="#fig-paraview-figure-fig"><span class="std std-numref">Fig. 14</span></a>). Within the shell, you first change into your case directory (paraview runs on your computer, so this is the case directory in the <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> folder of your course folder), and then run the script. It reads <code class="code docutils literal notranslate"><span class="pre">geometry/porous_model.vti</span></code> and writes the stl file into <code class="code docutils literal notranslate"><span class="pre">constant/triSurface</span></code>, where OpenFOAM expects it.</p>
+<p>To run it, open the Python shell in ParaView (<em>View → Python Shell</em>, <a class="reference internal" href="#fig-paraview-figure-fig"><span class="std std-numref">Fig. 14</span></a>), change into your case directory, and execute the script:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">"your_case_directory"</span><span class="p">)</span>
-<span class="n">exec</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">"your_file_name.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">"/path/to/your/HydrothermalFoam_runs/DRP_permeability_2D"</span><span class="p">)</span>
+<span class="n">exec</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">"make_stl.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>This will create a .stl file, which we will use in the meshing process.</p>
-<p>If you used the paraview GUI instead (<em>File → Save Data</em>), make sure that the stl file ends up as <code class="code docutils literal notranslate"><span class="pre">constant/triSurface/porous_model.stl</span></code> in the case directory. Create the folder <code class="code docutils literal notranslate"><span class="pre">constant/triSurface</span></code> first, if it does not exist yet.</p>
-<div class="admonition-doing-it-the-proper-way admonition">
-<p class="admonition-title">Doing it the proper way</p>
-<p>The more elegant way is to avoid the in-build paraview shell and run the script as a stand-alone python file. The <code class="code docutils literal notranslate"><span class="pre">paraview.simple</span></code> module is not part of the course container, because paraview runs on your computer. But paraview comes with its own python, <code class="code docutils literal notranslate"><span class="pre">pvpython</span></code>, which you can use from a terminal on your computer (not in the container). Save the code above as <code class="code docutils literal notranslate"><span class="pre">make_stl.py</span></code> in your case directory, and run it from there:</p>
+<p>You can also run it without opening ParaView, with <code class="code docutils literal notranslate"><span class="pre">pvpython</span></code>, ParaView’s own Python, from a terminal <strong>on your computer</strong> (not in the container), in the case directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># macOS (adjust the version number)</span>
 /Applications/ParaView-5.13.2.app/Contents/bin/pvpython<span class="w"> </span>make_stl.py
 
@@ -385,6 +386,12 @@ pvpython<span class="w"> </span>make_stl.py
 </pre></div>
 </div>
 </div>
+<figure class="align-center" id="fig-paraview-figure-fig" style="width: 85%">
+<img alt="../../_images/paraview_python.png" src="../../_images/paraview_python.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">The Python shell in ParaView.</span><a class="headerlink" href="#fig-paraview-figure-fig" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 <section id="openfoam-case">
