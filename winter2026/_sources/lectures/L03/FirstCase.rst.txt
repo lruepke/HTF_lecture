@@ -31,10 +31,10 @@ Ok, let's do it!
 Mesh generation
 ---------------
 
-The first major step is to generate a mesh of the pore space (:numref:`fig:porousModel_fig`). For this purpose, we will use `OpenFOAM's snappyHexMesh tool <https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4>`_. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made. 
+The first major step is to generate a mesh of the pore space (:numref:`fig:porousModel_fig`). For this purpose, we will use `OpenFOAM's snappyHexMesh tool <https://doc.cfd.direct/openfoam/user-guide-v10/snappyhexmesh>`_. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made. 
 
 .. tip::
-    We will not go into the details of snappyHexMesh (SHM) works. If you want to use and/or understand it, a good starting point is the user guide linked above. Another great resource is the `Rock Vapor Classic tutorial series <https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic>`_.
+    We will not go into the details of how snappyHexMesh (SHM) works. If you want to use and/or understand it, a good starting point is the user guide linked above. Another great resource is the `Rock Vapor Classic tutorial series <https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic>`_.
 
 In a nutshell, snappyHexMesh (SHM) is about starting from a blockMesh (as in the previous lecture), cutting out the solid grain (described by a triangulated surface), and then *snapping* the mesh to this surface. A typical way to describe this surface is an .stl file - a file format for triangulated surfaces that is often used for 3D printing.
 
@@ -51,7 +51,7 @@ The steps involved are shown in :numref:`fig:figure_workflow_fig` . Starting fro
 
     #. Start with an image (A).
     #. Save it as a .vti file that is easily understood by Paraview. We use `porespy <https://porespy.org/>`_ for this step.
-    #. Load the vti file into paraview and use the *clip* (B) and *triangulation* (B) filers to created a surface of the pore space (C).
+    #. Load the vti file into paraview and use the *clip* (B) and *triangulation* (B) filters to create a surface of the pore space (C).
     #. Save this surface as a stl file
 
 
@@ -187,35 +187,31 @@ Here is some python code that uses the paraview python bindings. You can save it
         # 5. finally save it as an stl file
         SaveData(stl_file, proxy = triangulate1)
     
-    # main part
-    vti_file = 'porous_model.vti'      # input .vti file
-    stl_file = 'porous_model.stl'  # output .stl file
+    # main part, run from the case directory
+    vti_file = 'geometry/porous_model.vti'              # input .vti file
+    stl_file = 'constant/triSurface/porous_model.stl'   # output .stl file, where OpenFOAM expects it
+    # create the folder for the stl file, if it does not exist yet
+    os.makedirs(os.path.dirname(stl_file), exist_ok=True)
     # call function
     write_stl(vti_file, stl_file)
 
 
-An easy way to exectute the python scrip is to call it from the python shell in paraview :numref:`fig:paraview_figure_fig`. Within the shell, you first make sure that you are in your case directory (paraview runs on your computer, so this is the case directory in the :code:`HydrothermalFoam_runs` folder of your course folder); then you make the correct folder to hold the .stl file that we will create (:code:`./constant/triSurface`).
+An easy way to execute the python script is to call it from the python shell in paraview (:numref:`fig:paraview_figure_fig`). Within the shell, you first change into your case directory (paraview runs on your computer, so this is the case directory in the :code:`HydrothermalFoam_runs` folder of your course folder), and then run the script. It reads :code:`geometry/porous_model.vti` and writes the stl file into :code:`constant/triSurface`, where OpenFOAM expects it.
 
 .. code:: python
 
-    import os 
+    import os
     os.chdir("your_case_directory")
-    os.mkdir('constant/triSurface')
     exec(open("your_file_name.py").read())
 
 
 This will create a .stl file, which we will use in the meshing process.
 
-If you used the paraview GUI, you might have to do some cleanup, so that the files are in the correct location. Move the vti file into :code:`./geometry` and the stl file into :code:`./constant/triSurface`, where openFOAM expects it. This assumes that you are in the case directory.
-
-.. code:: bash
-
-    mv ./porous_model.vti ./geometry/
-    mv ./porous_model.stl ./constant/triSurface/
+If you used the paraview GUI instead (*File → Save Data*), make sure that the stl file ends up as :code:`constant/triSurface/porous_model.stl` in the case directory. Create the folder :code:`constant/triSurface` first, if it does not exist yet.
 
 .. admonition:: Doing it the proper way
 
-    The more elegant way is to avoid the in-build paraview shell and run the script as a stand-alone python file. The :code:`paraview.simple` module is not part of the course container, because paraview runs on your computer. But paraview comes with its own python, :code:`pvpython`, which you can use from a terminal on your computer (not in the container). Save the code above as :code:`make_stl.py` in your case directory, create the folder :code:`constant/triSurface`, and run it:
+    The more elegant way is to avoid the in-build paraview shell and run the script as a stand-alone python file. The :code:`paraview.simple` module is not part of the course container, because paraview runs on your computer. But paraview comes with its own python, :code:`pvpython`, which you can use from a terminal on your computer (not in the container). Save the code above as :code:`make_stl.py` in your case directory, and run it from there:
 
     .. code-block:: bash
 
@@ -247,7 +243,7 @@ Great, back to openfoam for the final mesh making! Making the mesh with SHM is a
     =========                 |
     \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
      \\    /   O peration     | Website:  https://openfoam.org
-      \\  /    A nd           | Version:  7
+      \\  /    A nd           | Version:  10
        \\/     M anipulation  |
     \*---------------------------------------------------------------------------*/
     FoamFile
@@ -358,7 +354,10 @@ Time to make the mesh! Run each of the steps below individually and check out th
     checkMesh -allTopology -allGeometry
     transformPoints "scale=(1e-6 1e-6 1e-6)"
 
-The :code:`foamDictionary` command sets the type of :code:`frontAndBack` to :code:`empty` in the final mesh (:code:`constant/polyMesh/boundary`). The final conversion turns everything in micrometer (:math:`10^{-6} m`). Check out the final mesh in paraview!
+The :code:`foamDictionary` command sets the type of :code:`frontAndBack` to :code:`empty` in the final mesh (:code:`constant/polyMesh/boundary`). The final conversion turns everything into micrometers (:math:`10^{-6}` m). Check out the final mesh in paraview!
+
+.. note::
+    :code:`checkMesh` reports :code:`Failed 1 mesh checks` for this mesh, because some cells cut by the grain surfaces have a small determinant. For this case, this is not a problem: the solver converges without difficulties.
 
 
 Boundary conditions
@@ -366,7 +365,7 @@ Boundary conditions
 
 Next we need to set boundary conditions. Our "rock" sample is 1196 and 1494 :math:`\mu m` and we will apply a constant pressure drop of 1 Pa. We will further use openFOAM's **simpleFoam** solver, which resolves incompressible steady-state flow. One important thing to remember is that openFOAM uses the *kinematic* pressure in incompressible simulations, which is the pressure divided by density. If we assume that water with a density of :math:`1000kg/m^3` is flowing through our example, we will need to set a constant pressure value of :math:`P_{left}=0.001 m^2/s^2`. The pressure on the right-hand side will be set to zero. 
 
-Open the file p inside the 0 directory from your local left-hand shell.
+Open the file :code:`0/p` in Visual Studio Code:
 
 .. code-block:: bash 
 
@@ -382,7 +381,7 @@ Open the file p inside the 0 directory from your local left-hand shell.
     =========                 |
     \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
      \\    /   O peration     | Website:  https://openfoam.org
-      \\  /    A nd           | Version:  7
+      \\  /    A nd           | Version:  10
        \\/     M anipulation  |
     \*---------------------------------------------------------------------------*/
     FoamFile
@@ -429,9 +428,9 @@ Open the file p inside the 0 directory from your local left-hand shell.
         }
     }
 
-The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the sides have constant values. The top and bottom are symmetry planes and the internal boundaries with the solid grains get a :code:`zeroGradient` condition. As we are performing a 2-D simulations, the frontAndBack faces are set to :code:`empty`. 
+The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the sides have constant values. The top and bottom are symmetry planes and the internal boundaries with the solid grains get a :code:`zeroGradient` condition. As we are performing a 2-D simulation, the frontAndBack faces are set to :code:`empty`. 
 
-Remember that units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a 2 in the second and third column, we get the correct units for the kinematic pressure. 
+Remember that units are set by the dimensions keyword. The entries refer to the standard SI units [kg m s K mol A cd]. By having a 2 in the second and third column, we get the correct units for the kinematic pressure. 
 
 We also need to set boundary conditions for the velocity.
 
@@ -449,7 +448,7 @@ We also need to set boundary conditions for the velocity.
     =========                 |
     \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
      \\    /   O peration     | Website:  https://openfoam.org
-      \\  /    A nd           | Version:  7
+      \\  /    A nd           | Version:  10
        \\/     M anipulation  |
     \*---------------------------------------------------------------------------*/
     FoamFile
@@ -494,7 +493,7 @@ We also need to set boundary conditions for the velocity.
         }
     }
 
-The top and bottom are again symmetry planes and the :code:`zeroGradient` condition ensure that fluids can freely flow in and out. The contacts with the solid grains get :code:`noSlip`, which makes the velocity go to zero; frontAndBack are again set tp :code:`empty`.
+The top and bottom are again symmetry planes and the :code:`zeroGradient` condition ensures that fluids can freely flow in and out. The contacts with the solid grains get :code:`noSlip`, which makes the velocity go to zero; frontAndBack are again set to :code:`empty`.
 
 
 Transport properties
@@ -516,7 +515,7 @@ Final step is to set the remaining free parameter (viscosity) in :eq:`eq:mom_con
     =========                 |
     \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
      \\    /   O peration     | Website:  https://openfoam.org
-      \\  /    A nd           | Version:  7
+      \\  /    A nd           | Version:  10
        \\/     M anipulation  |
     \*---------------------------------------------------------------------------*/
     FoamFile
@@ -535,7 +534,7 @@ Final step is to set the remaining free parameter (viscosity) in :eq:`eq:mom_con
     // ************************************************************************* //
 
 
-Again, in incompressible simulations (where we can divide the momentum balance equation by density) the kinematic viscosity is used, which has units of :math:`m^2/s`. The value of :math:`1e{-6} m^2/s` with an assumed density of :math:`1000kg/m^3` is :math:`1 mPa` - a typical value for water at room temperature. 
+Again, in incompressible simulations (where we can divide the momentum balance equation by density) the kinematic viscosity is used, which has units of :math:`m^2/s`. The value of :math:`1e{-6} m^2/s` with an assumed density of :math:`1000~kg/m^3` corresponds to a dynamic viscosity of 1 mPa s - a typical value for water at room temperature. 
 
 
 Case control
@@ -557,7 +556,7 @@ Finally, we need to set some control parameters in :code:`system/controlDict`. O
     =========                 |
     \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
      \\    /   O peration     | Website:  https://openfoam.org
-      \\  /    A nd           | Version:  7
+      \\  /    A nd           | Version:  10
        \\/     M anipulation  |
     \*---------------------------------------------------------------------------*/
     FoamFile
@@ -599,12 +598,12 @@ Finally, we need to set some control parameters in :code:`system/controlDict`. O
 
     runTimeModifiable true;
 
-The solver is a stead-state solver, so that the settings are quite simple with respect to transient simulations.
+The solver is a steady-state solver, so the settings are simpler than in transient simulations: the "time" is just the iteration counter.
 
 
 Running the case
 ^^^^^^^^^^^^^^^^
-Now we are finally ready to run the case! Just type this into your docker shell:
+Now we are finally ready to run the case! Type this into a terminal in the container:
 
 .. code-block:: bash 
 
@@ -621,7 +620,7 @@ Notice how one new directory is appearing, which contains the steady-state solut
 
 .. code-block:: bash
 
-    tail -15 tail -15 log.simpleFoam
+    tail -15 log.simpleFoam
 
     Time = 537
 
@@ -650,21 +649,21 @@ And explore the solution in Paraview!
 Post-processing / Effective permeability
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve :eq:`eq:darcy_perm`, which requires are few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM's `postProcess <https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/>`_ functionality handy. Just do this:
+Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve :eq:`eq:darcy_perm`, which requires a few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here, openFOAM's `postProcess <https://doc.cfd.direct/openfoam/user-guide-v10/post-processing-cli>`_ functionality comes in handy. Just do this:
 
 .. code-block:: bash 
 
     postProcess -func writeCellVolumes
 
 
-This will create a new variable :math:`V` in in the output directories, which is the volume of each cell. Next we can save the full solution as a vtk file, so that we can postprocess it with python.
+This will create a new variable :math:`V` in the output directories, which is the volume of each cell. Next we can save the full solution as a vtk file, so that we can postprocess it with python.
 
 .. code-block:: bash 
 
     foamToVTK -useTimeName -latestTime -poly
 
 
-Check that a new :code:`VTK` directory was created. Now we are ready for some more fancy post-processing using python.
+Check that a new :code:`VTK` directory was created. The file name contains the name of the case folder and the iteration, e.g. :code:`VTK/DRP_permeability_2D_537.vtk`; adjust the name in the script below if your folder name or the number of iterations differ. Now we are ready for some more fancy post-processing using python.
 
 Here is an example script for computing permeability. You can turn it into a jupyter notebook or save it as a .py file into your case directory and run it from there.
 
@@ -705,7 +704,7 @@ Here is an example script for computing permeability. You can turn it into a jup
         
     # simulation parameters
     DP = 1                       # pressure drop [Pa]
-    nu = 1e-06                   # kinematic viscosity [m²/s²]
+    nu = 1e-06                   # kinematic viscosity [m²/s]
     rho = 1000                   # density [kg/m³]
     mu = nu * rho                # dynamic viscosity [kg/(m*s)]
     dx = 0.001196                # model length x [m]

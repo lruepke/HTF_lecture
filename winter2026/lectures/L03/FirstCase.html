@@ -219,10 +219,10 @@
 </section>
 <section id="mesh-generation">
 <h2>Mesh generation<a class="headerlink" href="#mesh-generation" title="Link to this heading"></a></h2>
-<p>The first major step is to generate a mesh of the pore space (<a class="reference internal" href="#fig-porousmodel-fig"><span class="std std-numref">Fig. 12</span></a>). For this purpose, we will use <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-snappyHexMesh/#x27-1970005.4">OpenFOAM’s snappyHexMesh tool</a>. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
+<p>The first major step is to generate a mesh of the pore space (<a class="reference internal" href="#fig-porousmodel-fig"><span class="std std-numref">Fig. 12</span></a>). For this purpose, we will use <a class="reference external" href="https://doc.cfd.direct/openfoam/user-guide-v10/snappyhexmesh">OpenFOAM’s snappyHexMesh tool</a>. It allows meshing arbitrary and complex geometries and is very powerful. Unfortunately, it can also be infuriating to use as it asks for many user-defined parameters and can be quite picky about the choices made.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>We will not go into the details of snappyHexMesh (SHM) works. If you want to use and/or understand it, a good starting point is the user guide linked above. Another great resource is the <a class="reference external" href="https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic">Rock Vapor Classic tutorial series</a>.</p>
+<p>We will not go into the details of how snappyHexMesh (SHM) works. If you want to use and/or understand it, a good starting point is the user guide linked above. Another great resource is the <a class="reference external" href="https://holzmann-cfd.com/community/training-videos/openfoam-usage/rock-vapor-classic">Rock Vapor Classic tutorial series</a>.</p>
 </div>
 <p>In a nutshell, snappyHexMesh (SHM) is about starting from a blockMesh (as in the previous lecture), cutting out the solid grain (described by a triangulated surface), and then <em>snapping</em> the mesh to this surface. A typical way to describe this surface is an .stl file - a file format for triangulated surfaces that is often used for 3D printing.</p>
 <figure class="align-center" id="fig-figure-workflow-fig" style="width: 85%">
@@ -236,7 +236,7 @@
 <div><ol class="arabic simple">
 <li><p>Start with an image (A).</p></li>
 <li><p>Save it as a .vti file that is easily understood by Paraview. We use <a class="reference external" href="https://porespy.org/">porespy</a> for this step.</p></li>
-<li><p>Load the vti file into paraview and use the <em>clip</em> (B) and <em>triangulation</em> (B) filers to created a surface of the pore space (C).</p></li>
+<li><p>Load the vti file into paraview and use the <em>clip</em> (B) and <em>triangulation</em> (B) filters to create a surface of the pore space (C).</p></li>
 <li><p>Save this surface as a stl file</p></li>
 </ol>
 </div></blockquote>
@@ -354,29 +354,26 @@
     <span class="c1"># 5. finally save it as an stl file</span>
     <span class="n">SaveData</span><span class="p">(</span><span class="n">stl_file</span><span class="p">,</span> <span class="n">proxy</span> <span class="o">=</span> <span class="n">triangulate1</span><span class="p">)</span>
 
-<span class="c1"># main part</span>
-<span class="n">vti_file</span> <span class="o">=</span> <span class="s1">'porous_model.vti'</span>      <span class="c1"># input .vti file</span>
-<span class="n">stl_file</span> <span class="o">=</span> <span class="s1">'porous_model.stl'</span>  <span class="c1"># output .stl file</span>
+<span class="c1"># main part, run from the case directory</span>
+<span class="n">vti_file</span> <span class="o">=</span> <span class="s1">'geometry/porous_model.vti'</span>              <span class="c1"># input .vti file</span>
+<span class="n">stl_file</span> <span class="o">=</span> <span class="s1">'constant/triSurface/porous_model.stl'</span>   <span class="c1"># output .stl file, where OpenFOAM expects it</span>
+<span class="c1"># create the folder for the stl file, if it does not exist yet</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">stl_file</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1"># call function</span>
 <span class="n">write_stl</span><span class="p">(</span><span class="n">vti_file</span><span class="p">,</span> <span class="n">stl_file</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>An easy way to exectute the python scrip is to call it from the python shell in paraview <a class="reference internal" href="#fig-paraview-figure-fig"><span class="std std-numref">Fig. 14</span></a>. Within the shell, you first make sure that you are in your case directory (paraview runs on your computer, so this is the case directory in the <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> folder of your course folder); then you make the correct folder to hold the .stl file that we will create (<code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>).</p>
+<p>An easy way to execute the python script is to call it from the python shell in paraview (<a class="reference internal" href="#fig-paraview-figure-fig"><span class="std std-numref">Fig. 14</span></a>). Within the shell, you first change into your case directory (paraview runs on your computer, so this is the case directory in the <code class="code docutils literal notranslate"><span class="pre">HydrothermalFoam_runs</span></code> folder of your course folder), and then run the script. It reads <code class="code docutils literal notranslate"><span class="pre">geometry/porous_model.vti</span></code> and writes the stl file into <code class="code docutils literal notranslate"><span class="pre">constant/triSurface</span></code>, where OpenFOAM expects it.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">"your_case_directory"</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">'constant/triSurface'</span><span class="p">)</span>
 <span class="n">exec</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">"your_file_name.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 </pre></div>
 </div>
 <p>This will create a .stl file, which we will use in the meshing process.</p>
-<p>If you used the paraview GUI, you might have to do some cleanup, so that the files are in the correct location. Move the vti file into <code class="code docutils literal notranslate"><span class="pre">./geometry</span></code> and the stl file into <code class="code docutils literal notranslate"><span class="pre">./constant/triSurface</span></code>, where openFOAM expects it. This assumes that you are in the case directory.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mv<span class="w"> </span>./porous_model.vti<span class="w"> </span>./geometry/
-mv<span class="w"> </span>./porous_model.stl<span class="w"> </span>./constant/triSurface/
-</pre></div>
-</div>
+<p>If you used the paraview GUI instead (<em>File → Save Data</em>), make sure that the stl file ends up as <code class="code docutils literal notranslate"><span class="pre">constant/triSurface/porous_model.stl</span></code> in the case directory. Create the folder <code class="code docutils literal notranslate"><span class="pre">constant/triSurface</span></code> first, if it does not exist yet.</p>
 <div class="admonition-doing-it-the-proper-way admonition">
 <p class="admonition-title">Doing it the proper way</p>
-<p>The more elegant way is to avoid the in-build paraview shell and run the script as a stand-alone python file. The <code class="code docutils literal notranslate"><span class="pre">paraview.simple</span></code> module is not part of the course container, because paraview runs on your computer. But paraview comes with its own python, <code class="code docutils literal notranslate"><span class="pre">pvpython</span></code>, which you can use from a terminal on your computer (not in the container). Save the code above as <code class="code docutils literal notranslate"><span class="pre">make_stl.py</span></code> in your case directory, create the folder <code class="code docutils literal notranslate"><span class="pre">constant/triSurface</span></code>, and run it:</p>
+<p>The more elegant way is to avoid the in-build paraview shell and run the script as a stand-alone python file. The <code class="code docutils literal notranslate"><span class="pre">paraview.simple</span></code> module is not part of the course container, because paraview runs on your computer. But paraview comes with its own python, <code class="code docutils literal notranslate"><span class="pre">pvpython</span></code>, which you can use from a terminal on your computer (not in the container). Save the code above as <code class="code docutils literal notranslate"><span class="pre">make_stl.py</span></code> in your case directory, and run it from there:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># macOS (adjust the version number)</span>
 /Applications/ParaView-5.13.2.app/Contents/bin/pvpython<span class="w"> </span>make_stl.py
 
@@ -401,7 +398,7 @@ pvpython<span class="w"> </span>make_stl.py
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
 <span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
-<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  10</span>
 <span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
@@ -508,12 +505,16 @@ checkMesh<span class="w"> </span>-allTopology<span class="w"> </span>-allGeometr
 transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"</span>
 </pre></div>
 </div>
-<p>The <code class="code docutils literal notranslate"><span class="pre">foamDictionary</span></code> command sets the type of <code class="code docutils literal notranslate"><span class="pre">frontAndBack</span></code> to <code class="code docutils literal notranslate"><span class="pre">empty</span></code> in the final mesh (<code class="code docutils literal notranslate"><span class="pre">constant/polyMesh/boundary</span></code>). The final conversion turns everything in micrometer (<span class="math notranslate nohighlight">\(10^{-6} m\)</span>). Check out the final mesh in paraview!</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">foamDictionary</span></code> command sets the type of <code class="code docutils literal notranslate"><span class="pre">frontAndBack</span></code> to <code class="code docutils literal notranslate"><span class="pre">empty</span></code> in the final mesh (<code class="code docutils literal notranslate"><span class="pre">constant/polyMesh/boundary</span></code>). The final conversion turns everything into micrometers (<span class="math notranslate nohighlight">\(10^{-6}\)</span> m). Check out the final mesh in paraview!</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="code docutils literal notranslate"><span class="pre">checkMesh</span></code> reports <code class="code docutils literal notranslate"><span class="pre">Failed</span> <span class="pre">1</span> <span class="pre">mesh</span> <span class="pre">checks</span></code> for this mesh, because some cells cut by the grain surfaces have a small determinant. For this case, this is not a problem: the solver converges without difficulties.</p>
+</div>
 </section>
 <section id="boundary-conditions">
 <h3>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading"></a></h3>
 <p>Next we need to set boundary conditions. Our “rock” sample is 1196 and 1494 <span class="math notranslate nohighlight">\(\mu m\)</span> and we will apply a constant pressure drop of 1 Pa. We will further use openFOAM’s <strong>simpleFoam</strong> solver, which resolves incompressible steady-state flow. One important thing to remember is that openFOAM uses the <em>kinematic</em> pressure in incompressible simulations, which is the pressure divided by density. If we assume that water with a density of <span class="math notranslate nohighlight">\(1000kg/m^3\)</span> is flowing through our example, we will need to set a constant pressure value of <span class="math notranslate nohighlight">\(P_{left}=0.001 m^2/s^2\)</span>. The pressure on the right-hand side will be set to zero.</p>
-<p>Open the file p inside the 0 directory from your local left-hand shell.</p>
+<p>Open the file <code class="code docutils literal notranslate"><span class="pre">0/p</span></code> in Visual Studio Code:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/p
 </pre></div>
 </div>
@@ -523,7 +524,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
 <span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
-<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  10</span>
 <span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
@@ -572,8 +573,8 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 </pre></div>
 </div>
 </div>
-<p>The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the sides have constant values. The top and bottom are symmetry planes and the internal boundaries with the solid grains get a <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> condition. As we are performing a 2-D simulations, the frontAndBack faces are set to <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
-<p>Remember that units are set by the dimensions keyword. The entries refer to the standard SI units [Kg m s K mol A cd]. By having a 2 in the second and third column, we get the correct units for the kinematic pressure.</p>
+<p>The boundary conditions are again set for the patches that were defined in the blockMeshDict. Notice how the sides have constant values. The top and bottom are symmetry planes and the internal boundaries with the solid grains get a <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> condition. As we are performing a 2-D simulation, the frontAndBack faces are set to <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
+<p>Remember that units are set by the dimensions keyword. The entries refer to the standard SI units [kg m s K mol A cd]. By having a 2 in the second and third column, we get the correct units for the kinematic pressure.</p>
 <p>We also need to set boundary conditions for the velocity.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>code<span class="w"> </span><span class="m">0</span>/U
 </pre></div>
@@ -584,7 +585,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
 <span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
-<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  10</span>
 <span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
@@ -631,7 +632,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 </pre></div>
 </div>
 </div>
-<p>The top and bottom are again symmetry planes and the <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> condition ensure that fluids can freely flow in and out. The contacts with the solid grains get <code class="code docutils literal notranslate"><span class="pre">noSlip</span></code>, which makes the velocity go to zero; frontAndBack are again set tp <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
+<p>The top and bottom are again symmetry planes and the <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> condition ensures that fluids can freely flow in and out. The contacts with the solid grains get <code class="code docutils literal notranslate"><span class="pre">noSlip</span></code>, which makes the velocity go to zero; frontAndBack are again set to <code class="code docutils literal notranslate"><span class="pre">empty</span></code>.</p>
 </section>
 <section id="transport-properties">
 <h3>Transport properties<a class="headerlink" href="#transport-properties" title="Link to this heading"></a></h3>
@@ -645,7 +646,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
 <span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
-<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  10</span>
 <span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
@@ -665,7 +666,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 </pre></div>
 </div>
 </div>
-<p>Again, in incompressible simulations (where we can divide the momentum balance equation by density) the kinematic viscosity is used, which has units of <span class="math notranslate nohighlight">\(m^2/s\)</span>. The value of <span class="math notranslate nohighlight">\(1e{-6} m^2/s\)</span> with an assumed density of <span class="math notranslate nohighlight">\(1000kg/m^3\)</span> is <span class="math notranslate nohighlight">\(1 mPa\)</span> - a typical value for water at room temperature.</p>
+<p>Again, in incompressible simulations (where we can divide the momentum balance equation by density) the kinematic viscosity is used, which has units of <span class="math notranslate nohighlight">\(m^2/s\)</span>. The value of <span class="math notranslate nohighlight">\(1e{-6} m^2/s\)</span> with an assumed density of <span class="math notranslate nohighlight">\(1000~kg/m^3\)</span> corresponds to a dynamic viscosity of 1 mPa s - a typical value for water at room temperature.</p>
 </section>
 <section id="case-control">
 <h3>Case control<a class="headerlink" href="#case-control" title="Link to this heading"></a></h3>
@@ -679,7 +680,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 <span class="linenos"> 2</span><span class="cm">=========                 |</span>
 <span class="linenos"> 3</span><span class="cm">\\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox</span>
 <span class="linenos"> 4</span><span class="cm"> \\    /   O peration     | Website:  https://openfoam.org</span>
-<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  7</span>
+<span class="linenos"> 5</span><span class="cm">  \\  /    A nd           | Version:  10</span>
 <span class="linenos"> 6</span><span class="cm">   \\/     M anipulation  |</span>
 <span class="linenos"> 7</span><span class="cm">\*---------------------------------------------------------------------------*/</span>
 <span class="linenos"> 8</span><span class="k">FoamFile</span>
@@ -723,11 +724,11 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 </pre></div>
 </div>
 </div>
-<p>The solver is a stead-state solver, so that the settings are quite simple with respect to transient simulations.</p>
+<p>The solver is a steady-state solver, so the settings are simpler than in transient simulations: the “time” is just the iteration counter.</p>
 </section>
 <section id="running-the-case">
 <h3>Running the case<a class="headerlink" href="#running-the-case" title="Link to this heading"></a></h3>
-<p>Now we are finally ready to run the case! Just type this into your docker shell:</p>
+<p>Now we are finally ready to run the case! Type this into a terminal in the container:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run.sh
 </pre></div>
 </div>
@@ -736,7 +737,7 @@ transformPoints<span class="w"> </span><span class="s2">"scale=(1e-6 1e-6 1e-6)"
 </pre></div>
 </div>
 <p>Notice how one new directory is appearing, which contains the steady-state solution. Check that the solution has converged by looking at the <code class="code docutils literal notranslate"><span class="pre">log.simpleFoam</span></code> file.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tail<span class="w"> </span>-15<span class="w"> </span>tail<span class="w"> </span>-15<span class="w"> </span>log.simpleFoam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tail<span class="w"> </span>-15<span class="w"> </span>log.simpleFoam
 
 <span class="nv">Time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">537</span>
 
@@ -762,15 +763,15 @@ End
 </section>
 <section id="post-processing-effective-permeability">
 <h3>Post-processing / Effective permeability<a class="headerlink" href="#post-processing-effective-permeability" title="Link to this heading"></a></h3>
-<p>Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve <a class="reference internal" href="#equation-eq-darcy-perm">equation (16)</a>, which requires are few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here comes openFOAM’s <a class="reference external" href="https://cfd.direct/openfoam/user-guide/v7-post-processing-cli/">postProcess</a> functionality handy. Just do this:</p>
+<p>Time to get back to our initial objective. What is the predicted permeability of our sample? We need to postprocess our solution and solve <a class="reference internal" href="#equation-eq-darcy-perm">equation (16)</a>, which requires a few intermediate steps. First, we need to compute the cell volumes, so that we can integrate the velocity over the total volume. Here, openFOAM’s <a class="reference external" href="https://doc.cfd.direct/openfoam/user-guide-v10/post-processing-cli">postProcess</a> functionality comes in handy. Just do this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>postProcess<span class="w"> </span>-func<span class="w"> </span>writeCellVolumes
 </pre></div>
 </div>
-<p>This will create a new variable <span class="math notranslate nohighlight">\(V\)</span> in in the output directories, which is the volume of each cell. Next we can save the full solution as a vtk file, so that we can postprocess it with python.</p>
+<p>This will create a new variable <span class="math notranslate nohighlight">\(V\)</span> in the output directories, which is the volume of each cell. Next we can save the full solution as a vtk file, so that we can postprocess it with python.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>foamToVTK<span class="w"> </span>-useTimeName<span class="w"> </span>-latestTime<span class="w"> </span>-poly
 </pre></div>
 </div>
-<p>Check that a new <code class="code docutils literal notranslate"><span class="pre">VTK</span></code> directory was created. Now we are ready for some more fancy post-processing using python.</p>
+<p>Check that a new <code class="code docutils literal notranslate"><span class="pre">VTK</span></code> directory was created. The file name contains the name of the case folder and the iteration, e.g. <code class="code docutils literal notranslate"><span class="pre">VTK/DRP_permeability_2D_537.vtk</span></code>; adjust the name in the script below if your folder name or the number of iterations differ. Now we are ready for some more fancy post-processing using python.</p>
 <p>Here is an example script for computing permeability. You can turn it into a jupyter notebook or save it as a .py file into your case directory and run it from there.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">vtk</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -806,7 +807,7 @@ End
 
 <span class="c1"># simulation parameters</span>
 <span class="n">DP</span> <span class="o">=</span> <span class="mi">1</span>                       <span class="c1"># pressure drop [Pa]</span>
-<span class="n">nu</span> <span class="o">=</span> <span class="mf">1e-06</span>                   <span class="c1"># kinematic viscosity [m²/s²]</span>
+<span class="n">nu</span> <span class="o">=</span> <span class="mf">1e-06</span>                   <span class="c1"># kinematic viscosity [m²/s]</span>
 <span class="n">rho</span> <span class="o">=</span> <span class="mi">1000</span>                   <span class="c1"># density [kg/m³]</span>
 <span class="n">mu</span> <span class="o">=</span> <span class="n">nu</span> <span class="o">*</span> <span class="n">rho</span>                <span class="c1"># dynamic viscosity [kg/(m*s)]</span>
 <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.001196</span>                <span class="c1"># model length x [m]</span>

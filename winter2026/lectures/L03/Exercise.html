@@ -252,23 +252,27 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
 cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$FOAM_TUTORIALS</span>/basic/scalarTransportFoam/pitzDaily/<span class="w"> </span>./DRP_transport
 cp<span class="w"> </span>-r<span class="w"> </span>./DRP_permeability_2D/constant/polyMesh<span class="w"> </span>./DRP_transport/constant/
-cp<span class="w"> </span>./DRP_permeability_2D/0/U<span class="w"> </span>./DRP_transport/0/
+cp<span class="w"> </span>./DRP_permeability_2D/537/U<span class="w"> </span>./DRP_transport/0/
 </pre></div>
 </div>
-<p>This assumes that you used the  case and directory names; if not, modify the names accordingly.</p>
+<p>This assumes that you used the same case and directory names; if not, modify the names accordingly. Note that we copy the velocity field of the <strong>converged solution</strong> (here iteration 537, the last directory written by simpleFoam), not the initial field in <code class="code docutils literal notranslate"><span class="pre">0/U</span></code>, which is zero everywhere.</p>
 <p>Now open the files in Visual Studio Code and modify them:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="code docutils literal notranslate"><span class="pre">0/T</span></code> to make “temperature” 1 at the inlet and zeroGradient at the outlet</p></li>
-<li><p><code class="code docutils literal notranslate"><span class="pre">constant/physicalProperties</span></code> set the diffusivity to something small, like <span class="math notranslate nohighlight">\(1e-{12}\)</span>, so that the problem is advection-dominated</p></li>
-<li><p>change <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code> so that the endTime is 20, deltaT is 0.1, and writeInterval   is 3e-1. These are somewhat arbitrary changes making sure we get a reasonable solution for our synthetic setup.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">0/T</span></code>: the boundary conditions must use the patch names of our mesh. Set “temperature” to 1 at the <code class="code docutils literal notranslate"><span class="pre">inlet</span></code> (<code class="code docutils literal notranslate"><span class="pre">fixedValue</span></code>) and use <code class="code docutils literal notranslate"><span class="pre">zeroGradient</span></code> at the <code class="code docutils literal notranslate"><span class="pre">outlet</span></code> and on the <code class="code docutils literal notranslate"><span class="pre">solids</span></code>. <code class="code docutils literal notranslate"><span class="pre">top</span></code> and <code class="code docutils literal notranslate"><span class="pre">bottom</span></code> are of type <code class="code docutils literal notranslate"><span class="pre">symmetryPlane</span></code>, and <code class="code docutils literal notranslate"><span class="pre">frontAndBack</span></code> is <code class="code docutils literal notranslate"><span class="pre">empty</span></code>. Look at <code class="code docutils literal notranslate"><span class="pre">0/p</span></code> of the DRP case if you are unsure about the names.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">constant/physicalProperties</span></code>: set the diffusivity to something small, like <span class="math notranslate nohighlight">\(10^{-12}~m^2/s\)</span>, so that the problem is advection-dominated. Keep the format of the line: <code class="code docutils literal notranslate"><span class="pre">DT</span> <span class="pre">DT</span> <span class="pre">[0</span> <span class="pre">2</span> <span class="pre">-1</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0</span> <span class="pre">0]</span> <span class="pre">1e-12;</span></code></p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>: set <code class="code docutils literal notranslate"><span class="pre">endTime</span></code> to 20, <code class="code docutils literal notranslate"><span class="pre">deltaT</span></code> to 0.1, and <code class="code docutils literal notranslate"><span class="pre">writeInterval</span></code> to 3. With <code class="code docutils literal notranslate"><span class="pre">writeControl</span> <span class="pre">timeStep</span></code>, the write interval counts time steps, so results are written every 0.3 s. These values are somewhat arbitrary, but give a reasonable solution for our synthetic setup.</p></li>
 </ul>
 </div></blockquote>
 <p>That’s it, run it and explore the solution!</p>
 <video width=100% autoplay muted controls loop>
    <source src="../../_static/video/scalarTransport.mp4" type="video/mp4">
    Your browser does not support HTML video.
-</video><p>Would the temperature evolution in our rock sample look like this? What would the grains do the speed of the thermal front?</p>
+</video><p>Would the temperature evolution in our rock sample look like this? What would the grains do to the speed of the thermal front?</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Have a look at the range of <code class="code docutils literal notranslate"><span class="pre">T</span></code>: you will find values slightly below 0 and above 1, although the inlet value is 1. These over- and undershoots come from the numerical scheme for the advection term, not from the physics. We will come back to this when we look at advection schemes later in the course.</p>
+</div>
 </section>
 </section>
 

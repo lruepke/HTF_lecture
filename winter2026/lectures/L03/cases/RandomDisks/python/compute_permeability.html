@@ -188,20 +188,21 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">vtk</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">vtk</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">vtk.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">numpy_support</span> <span class="k">as</span> <span class="n">VN</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulation parameters</span>
 <span class="n">DP</span> <span class="o">=</span> <span class="mi">1</span>                       <span class="c1"># pressure drop [Pa]</span>
-<span class="n">nu</span> <span class="o">=</span> <span class="mf">1e-06</span>                   <span class="c1"># kinematic viscosity [m²/s²]</span>
+<span class="n">nu</span> <span class="o">=</span> <span class="mf">1e-06</span>                   <span class="c1"># kinematic viscosity [m²/s]</span>
 <span class="n">rho</span> <span class="o">=</span> <span class="mi">1000</span>                   <span class="c1"># density [kg/m³]</span>
 <span class="n">mu</span> <span class="o">=</span> <span class="n">nu</span> <span class="o">*</span> <span class="n">rho</span>                <span class="c1"># dynamic viscosity [kg/(m*s)]</span>
 <span class="n">dx</span> <span class="o">=</span> <span class="mi">1256</span><span class="o">*</span><span class="mf">1e-6</span>                <span class="c1"># model length x [m]</span>
@@ -213,7 +214,9 @@
 
 
 <span class="c1"># load VTK data</span>
-<span class="n">vtkFile</span> <span class="o">=</span> <span class="s1">'../VTK/phi_05_945.vtk'</span>
+<span class="c1"># the VTK file written by foamToVTK, e.g. ../VTK/RandomDisks_557.vtk</span>
+<span class="n">vtkFile</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'../VTK/*.vtk'</span><span class="p">))[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Reading </span><span class="si">{</span><span class="n">vtkFile</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 <span class="n">reader</span> <span class="o">=</span> <span class="n">vtk</span><span class="o">.</span><span class="n">vtkUnstructuredGridReader</span><span class="p">()</span>
 <span class="n">reader</span><span class="o">.</span><span class="n">SetFileName</span><span class="p">(</span><span class="n">vtkFile</span><span class="p">)</span>
 <span class="n">reader</span><span class="o">.</span><span class="n">ReadAllScalarsOn</span><span class="p">()</span>
@@ -248,7 +251,7 @@
 <span class="c1"># print permeability and porosity</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">'Bulk permeability: </span><span class="si">%5.2e</span><span class="s1"> m2, Porosity: </span><span class="si">%3.2f</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">kxx</span><span class="p">,</span> <span class="n">porosity</span><span class="p">))</span>
-<br/><br/><br/><br/><br/></pre></div>
+</pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -256,7 +259,8 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Bulk permeability: 1.05e-11 m2, Porosity: 0.56
+Reading ../VTK/RandomDisks_525.vtk
+Bulk permeability: 1.95e-11 m2, Porosity: 0.59
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">

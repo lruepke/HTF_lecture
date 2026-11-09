@@ -195,9 +195,9 @@
 <section id="background">
 <h2>Background<a class="headerlink" href="#background" title="Link to this heading"></a></h2>
 <p>The permeability of natural rocks is a complex function of pore geometry, grain size, and arrangement. As we have learned in the previous exercise, this pore geometry can be inferred from cT-scanned images of rock samples and many examples can be found in the literature and the <a class="reference external" href="https://digitalporousmedia.org">digital porous media portal</a>.</p>
-<p>In this exercise, we will explore the permeability of a synthetic rock sample consisting of randomly packed disks. The goal is to understand how the permeability changes with porosity and how flow self-organizations into dominant preferential flow paths.</p>
-<p>The problem of how densely disks and spheres can be packed is a well-studied problem in physics and mathematics. The maximum packing density of disks in 2D is about 0.91, while for spheres in 3D it is about 0.74. The 3D problem is known as the Kepler conjecture, which states that the densest packing of spheres is achieved by stacking them in a face-centered cubic lattice arrangement. However, in practice, natural rocks often have lower packing densities due to irregularities and imperfections in the grain shapes and arrangements. The 2D was studied by Joseph Louis Lagrange, who proved in 1773 that the densest packing of disks is achieved by a hexagonal arrangement.</p>
-<p>We want to explore cases, where the disks are randomly packed but are not touching each other, to ensure that we have connected pore space and a well-defined mesh. As a consequence, the minimum porosity will be higher than in the maximum packing density case and we will only be able study porosities of approximately 60% and higher.</p>
+<p>In this exercise, we will explore the permeability of a synthetic rock sample consisting of randomly packed disks. The goal is to understand how the permeability changes with porosity and how flow self-organizes into dominant preferential flow paths.</p>
+<p>How densely disks and spheres can be packed is a classic problem in physics and mathematics. The densest packing of equal disks in 2D is the hexagonal arrangement, which fills about 91 % of the plane. Lagrange showed in 1773 that it is the densest <em>lattice</em> packing; that no other arrangement is denser was proven only in the 20th century. For equal spheres in 3D, the densest packing fills about 74 % of the space, e.g. in a face-centered cubic arrangement. This was conjectured by Kepler in 1611 and proven by Thomas Hales only in 1998. Random packings are much less dense, and natural rocks often have lower packing densities due to irregularities in grain shapes and arrangements.</p>
+<p>We want to explore cases where the disks are randomly packed but do not touch each other, to ensure that we have connected pore space and a well-defined mesh. As a consequence, the minimum porosity will be much higher than for the densest packing, and we will only be able to study porosities of approximately 60 % and higher.</p>
 </section>
 <section id="random-disk-packing">
 <h2>Random disk packing<a class="headerlink" href="#random-disk-packing" title="Link to this heading"></a></h2>
@@ -214,14 +214,15 @@
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Current working directory: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="n">shape</span>           <span class="o">=</span> <span class="p">[</span><span class="mi">1256</span><span class="p">,</span> <span class="mi">1256</span><span class="p">]</span>      <span class="c1"># size of the image in pixels</span>
-<span class="n">volume_fraction</span> <span class="o">=</span> <span class="mi">1</span>               <span class="c1"># approximately 1-porosity depending on radius and the boundary conditions</span>
+<span class="n">volume_fraction</span> <span class="o">=</span> <span class="mi">1</span>                 <span class="c1"># approximately 1-porosity depending on radius and the boundary conditions</span>
 <span class="n">edges</span>           <span class="o">=</span> <span class="s1">'extended'</span>        <span class="c1"># 'extended' means that the spheres can extend beyond the image boundaries</span>
-<span class="n">clearance</span>       <span class="o">=</span> <span class="mi">10</span>               <span class="c1"># minimum distance between spheres in pixels</span>
+<span class="n">clearance</span>       <span class="o">=</span> <span class="mi">10</span>                <span class="c1"># minimum distance between spheres in pixels</span>
 <span class="n">r</span>               <span class="o">=</span> <span class="mi">25</span>                <span class="c1"># radius of the spheres in same units as the image</span>
+<span class="n">seed</span>            <span class="o">=</span> <span class="mi">1</span>                 <span class="c1"># random seed: the same seed always gives the same packing</span>
 
 
 <span class="c1"># 2. generate the spheres and show / ~ to stay with earlier convention that black is solid</span>
-<span class="n">im</span> <span class="o">=</span> <span class="o">~</span><span class="n">ps</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">random_spheres</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">clearance</span><span class="o">=</span><span class="n">clearance</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="n">volume_fraction</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="o">~</span><span class="n">ps</span><span class="o">.</span><span class="n">generators</span><span class="o">.</span><span class="n">random_spheres</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">clearance</span><span class="o">=</span><span class="n">clearance</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="n">volume_fraction</span><span class="p">,</span> <span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># turn off decoration</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">'lower'</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'gray'</span><span class="p">);</span>
@@ -238,7 +239,7 @@
 <span class="n">im_pil</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">'porous_model_spheres.png'</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The above script can be used as a starting point to generate images of randomly packed spheres (<a class="reference internal" href="#fig-exercise-randomdisk-geometry-fig"><span class="std std-numref">Fig. 17</span></a>).</p>
+<p>The above script can be used as a starting point to generate images of randomly packed disks (<a class="reference internal" href="#fig-exercise-randomdisk-geometry-fig"><span class="std std-numref">Fig. 17</span></a>). The <code class="code docutils literal notranslate"><span class="pre">seed</span></code> makes the packing reproducible: the same seed always gives the same packing, and a different seed gives a new random packing.</p>
 <figure class="align-center" id="fig-exercise-randomdisk-geometry-fig" style="width: 70%">
 <img alt="../../_images/porous_model_spheres.png" src="../../_images/porous_model_spheres.png" />
 <figcaption>
@@ -252,28 +253,40 @@
 <li><p>What happens if you increase the radius of the disks?</p></li>
 <li><p>What happens if you increase the clearance?</p></li>
 <li><p>What happens if you decrease the volume fraction?</p></li>
+<li><p>What happens if you change the seed?</p></li>
 <li><p>What is the minimum porosity you can achieve with this method?</p></li>
 </ul>
 </div>
 </section>
 <section id="generate-model-input">
 <h2>Generate model input<a class="headerlink" href="#generate-model-input" title="Link to this heading"></a></h2>
-<p>The workflow to generate the model input is the same as in the previous exercise:</p>
+<p>You can download an example case from <a class="reference download internal" download="" href="../../_downloads/21b2dbac54587199d3670919c940d26f/RandomDisks.zip"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a>. It contains two notebooks and a ParaView script:</p>
 <ul class="simple">
-<li><p>Use paraview to segment the image file (vti) and generate triangulated stl file of the grains</p></li>
-<li><p>Use the <cite>blockMesh</cite> utility to generate the underlying regular mesh</p></li>
-<li><p>Run the <cite>snappyHexMesh</cite> utility to generate a mesh from the triangulated stl file</p></li>
-<li><p>Remember to set <cite>locationInMesh</cite> to a point inside the pores space in <cite>system/snappyHexMeshDict`</cite></p></li>
-<li><p>Scale the mesh by a factor of 1e-6</p></li>
-<li><p>Calculate the flow field using the <cite>simpleFoam</cite> solver</p></li>
-<li><p>Post-process the results to compute the permeability and visualize the flow field</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">geometry/make_porous_model.ipynb</span></code> makes the disk packing with the script above and saves it as <code class="code docutils literal notranslate"><span class="pre">.vti</span></code> and <code class="code docutils literal notranslate"><span class="pre">.png</span></code>. Its last cell prints a point for <code class="code docutils literal notranslate"><span class="pre">locationInMesh</span></code> (see below).</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">geometry/make_stl_in_paraview.py</span></code> turns the <code class="code docutils literal notranslate"><span class="pre">.vti</span></code> file into the <code class="code docutils literal notranslate"><span class="pre">.stl</span></code> surface of the disks, as in the previous exercise. Run it with <code class="code docutils literal notranslate"><span class="pre">pvpython</span></code> on your computer from the <code class="code docutils literal notranslate"><span class="pre">geometry</span></code> folder, or in the Python shell of ParaView.</p></li>
+<li><p><code class="code docutils literal notranslate"><span class="pre">python/compute_permeability.ipynb</span></code> computes porosity and permeability from the result.</p></li>
 </ul>
-<p>You can download an example case from here: <a class="reference download internal" download="" href="../../_downloads/21b2dbac54587199d3670919c940d26f/RandomDisks.zip"><code class="xref download docutils literal notranslate"><span class="pre">here</span></code></a>. The scripts to generate the model input at in <cite>geometry</cite> and <cite>python</cite> directories.</p>
+<p>The workflow is the same as in the previous exercise:</p>
+<ol class="arabic simple">
+<li><p>Run <code class="code docutils literal notranslate"><span class="pre">geometry/make_porous_model.ipynb</span></code> in the container (e.g. in JupyterLab).</p></li>
+<li><p>Run <code class="code docutils literal notranslate"><span class="pre">geometry/make_stl_in_paraview.py</span></code> on your computer to create <code class="code docutils literal notranslate"><span class="pre">constant/triSurface/porous_model_spheres.stl</span></code>.</p></li>
+<li><p>Copy the <code class="code docutils literal notranslate"><span class="pre">locationInMesh</span></code> line printed by the notebook into <code class="code docutils literal notranslate"><span class="pre">system/snappyHexMeshDict</span></code>.</p></li>
+<li><p>Run <code class="code docutils literal notranslate"><span class="pre">./run.sh</span></code> in the case folder. It makes the mesh with <code class="code docutils literal notranslate"><span class="pre">blockMesh</span></code> and <code class="code docutils literal notranslate"><span class="pre">snappyHexMesh</span></code>, scales it by a factor of 1e-6, and runs <code class="code docutils literal notranslate"><span class="pre">simpleFoam</span></code>.</p></li>
+<li><p>Run <code class="code docutils literal notranslate"><span class="pre">postProcess</span> <span class="pre">-func</span> <span class="pre">writeCellVolumes</span> <span class="pre">-latestTime</span></code> and <code class="code docutils literal notranslate"><span class="pre">foamToVTK</span> <span class="pre">-useTimeName</span> <span class="pre">-latestTime</span> <span class="pre">-poly</span></code>, and then <code class="code docutils literal notranslate"><span class="pre">python/compute_permeability.ipynb</span></code>.</p></li>
+</ol>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>Set</strong> <code class="code docutils literal notranslate"><span class="pre">locationInMesh</span></code> <strong>for every new packing.</strong> snappyHexMesh keeps only the part of the mesh that is connected to this point. If the point lies inside a disk or in a small, closed pore, the mesh contains only a few cells, and <code class="code docutils literal notranslate"><span class="pre">simpleFoam</span></code> stops with an error like “Unable to set reference cell for field p”. The point printed by the notebook lies in the middle of the largest pore. The example case is set up for the packing with <code class="code docutils literal notranslate"><span class="pre">seed</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><strong>Mesh resolution and run time.</strong> The background mesh in <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code> has 314 × 314 cells, i.e. one cell for every 4 × 4 pixels of the image. The mesh has about 60,000 cells, and a run takes less than a minute. With one cell per pixel (1256 × 1256 cells), the mesh has about one million cells and a run takes about 20 minutes, and the permeability comes out about 20 % higher. The coarse mesh is good enough to compare different packings with each other, which is what this exercise is about. Keep the mesh resolution the same for all packings you want to compare.</p>
+</div>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <ul class="simple">
-<li><p>Use the <cite>porespy</cite> package different disk packings and porosities.</p></li>
-<li><p>Explore how porosity and permeability is related</p></li>
+<li><p>Use the <cite>porespy</cite> package to make different disk packings and porosities.</p></li>
+<li><p>Explore how porosity and permeability are related.</p></li>
 </ul>
 </div>
 <figure class="align-center" id="fig-disk-flow-fig" style="width: 100%">
