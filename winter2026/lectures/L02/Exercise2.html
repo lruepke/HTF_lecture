@@ -194,27 +194,32 @@
 <p>Now that we have simulated 2-D cavity flow, it is time to try 3-D flow and parallel processing.</p>
 <section id="d-cavity-flow">
 <h2>3-D cavity flow<a class="headerlink" href="#d-cavity-flow" title="Link to this heading"></a></h2>
-<p>First, try to make a 3-D simulation. Start by copying the original square cavity case to a new folder and cleaning it:</p>
+<p>First, try to make a 3-D simulation. Start from a fresh copy of the original tutorial, not from your own <code class="code docutils literal notranslate"><span class="pre">cavity2D</span></code>: you have probably changed the mesh, the viscosity, or the time step there, and a combination that worked in 2-D may not work in 3-D. Copy the two scripts from your 2-D case:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span><span class="nv">$HOME</span>/HydrothermalFoam_runs
-cp<span class="w"> </span>-r<span class="w"> </span>cavity2D<span class="w"> </span>cavity3D
+cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$FOAM_TUTORIALS</span>/incompressible/icoFoam/cavity/cavity<span class="w"> </span>cavity3D
+cp<span class="w"> </span>cavity2D/run.sh<span class="w"> </span>cavity2D/clean.sh<span class="w"> </span>cavity3D/
 <span class="nb">cd</span><span class="w"> </span>cavity3D
-./clean.sh
 </pre></div>
 </div>
 <div class="admonition-now-these-things-have-to-happen admonition">
 <p class="admonition-title">Now these things have to happen</p>
 <ul class="simple">
-<li><p>make the mesh 3-D by using several cells in the z direction (<code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>)</p></li>
-<li><p>make the domain a cube: the cavity is only 0.01 m thick so far. Which vertex coordinates do you have to change?</p></li>
+<li><p>make the mesh 3-D: in <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>, use <strong>20 cells in each direction</strong>, <code class="code docutils literal notranslate"><span class="pre">(20</span> <span class="pre">20</span> <span class="pre">20)</span></code></p></li>
+<li><p>make the domain a cube: the cavity is only 0.01 m thick so far. Change the z coordinate of the four vertices with z = <code class="code docutils literal notranslate"><span class="pre">0.1</span></code> to <code class="code docutils literal notranslate"><span class="pre">1</span></code>, so that the cavity is 0.1 m deep (remember <code class="code docutils literal notranslate"><span class="pre">convertToMeters</span> <span class="pre">0.1</span></code>)</p></li>
 <li><p>the front and back sides must not be “empty” anymore. There are three places where you have to change this: the patch type in <code class="code docutils literal notranslate"><span class="pre">system/blockMeshDict</span></code>, and the boundary conditions in <code class="code docutils literal notranslate"><span class="pre">0/U</span></code> and <code class="code docutils literal notranslate"><span class="pre">0/p</span></code></p></li>
 <li><p>set proper boundary conditions for front and back: they are walls now, just like the fixed walls. Which conditions do the fixed walls have in <code class="code docutils literal notranslate"><span class="pre">0/U</span></code> and <code class="code docutils literal notranslate"><span class="pre">0/p</span></code>?</p></li>
-<li><p>check the Courant number in the log file</p></li>
-<li><p>run <code class="code docutils literal notranslate"><span class="pre">./run.sh</span></code> and inspect the results in ParaView</p></li>
+<li><p>keep the time settings of the tutorial in <code class="code docutils literal notranslate"><span class="pre">system/controlDict</span></code>: <code class="code docutils literal notranslate"><span class="pre">deltaT</span> <span class="pre">0.005</span></code>, <code class="code docutils literal notranslate"><span class="pre">endTime</span> <span class="pre">0.5</span></code>, <code class="code docutils literal notranslate"><span class="pre">writeInterval</span> <span class="pre">20</span></code> (results every 0.1 s)</p></li>
+<li><p>run <code class="code docutils literal notranslate"><span class="pre">./run.sh</span></code>, check the Courant number in <code class="code docutils literal notranslate"><span class="pre">log.icoFoam</span></code>, and inspect the results in ParaView</p></li>
 </ul>
 </div>
+<p>With these settings, the maximum Courant number is about 0.85, and the run takes only a few seconds.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>If something goes wrong, read the error message carefully, it usually names the file and the patch with the problem. A frequent error is a patch that is <code class="code docutils literal notranslate"><span class="pre">empty</span></code> in one file but not in the others.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>A finer mesh needs a smaller time step.</strong> With 40 cells in each direction, the cells are half as large, so <code class="code docutils literal notranslate"><span class="pre">deltaT</span></code> must be halved as well: use <code class="code docutils literal notranslate"><span class="pre">deltaT</span> <span class="pre">0.0025</span></code> and <code class="code docutils literal notranslate"><span class="pre">writeInterval</span> <span class="pre">40</span></code>. The run then takes about half a minute. If you keep <code class="code docutils literal notranslate"><span class="pre">deltaT</span> <span class="pre">0.005</span></code>, the Courant number is about 2, the solution grows until it becomes <code class="code docutils literal notranslate"><span class="pre">nan</span></code> (“not a number”) after about 0.2 s, and the results are useless. Depending on your computer, the run then either stops with a <code class="code docutils literal notranslate"><span class="pre">Floating</span> <span class="pre">point</span> <span class="pre">exception</span></code>, or it continues to the end without an error message, so always check <code class="code docutils literal notranslate"><span class="pre">Courant</span> <span class="pre">Number</span></code> in the log.</p>
 </div>
 </section>
 <section id="getting-fancy-let-s-make-a-parallel-run">
